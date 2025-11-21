@@ -1,3 +1,16 @@
+[workspace]
+members = [
+    ".",
+    "windjammer-ui-macro",
+]
+
+[workspace.package]
+version = "0.34.0"
+edition = "2021"
+authors = ["Jeffrey Friedman <jeffrey@example.com>", "Windjammer Contributors"]
+license = "MIT OR Apache-2.0"
+rust-version = "1.90"
+
 [package]
 name = "windjammer-ui"
 version.workspace = true
@@ -24,7 +37,7 @@ path = "src/bin/counter_wasm.rs"
 
 [dependencies]
 # Proc macro for #[component]
-windjammer-ui-macro = { path = "../windjammer-ui-macro", version = "0.34.0" }
+windjammer-ui-macro = { path = "windjammer-ui-macro", version = "0.34.0" }
 
 # Core dependencies
 serde = { version = "1.0", features = ["derive"] }
