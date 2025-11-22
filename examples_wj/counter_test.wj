@@ -1,0 +1,14 @@
+// Simple counter component to test codegen integration
+
+@component
+fn Counter() -> UI {
+    let count = signal(0)
+    
+    VStack {
+        Text("Count: {count}")
+        Button("Increment", on_click: || count += 1)
+        Button("Decrement", on_click: || count -= 1)
+        Button("Reset", on_click: || count = 0)
+    }
+}
+

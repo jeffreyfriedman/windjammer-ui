@@ -1,0 +1,292 @@
+// Inspector Panel (Pure Windjammer)
+// Property editor for selected game objects
+
+@component
+fn Inspector() -> UI {
+    // Selected object
+    let selected_object = signal(Some({
+        id: "player",
+        name: "Player",
+        type: "GameObject",
+        transform: {
+            position: [0.0, 0.0, 0.0],
+            rotation: [0.0, 0.0, 0.0],
+            scale: [1.0, 1.0, 1.0]
+        },
+        components: [
+            {
+                type: "MeshRenderer",
+                enabled: true,
+                properties: {
+                    mesh: "player_mesh.obj",
+                    material: "player_material.mat"
+                }
+            },
+            {
+                type: "BoxCollider",
+                enabled: true,
+                properties: {
+                    center: [0.0, 1.0, 0.0],
+                    size: [1.0, 2.0, 1.0]
+                }
+            }
+        ]
+    }))
+    
+    VStack {
+        // Header
+        if let Some(obj) = selected_object {
+            HStack {
+                Text("🔍 Inspector")
+                    .size(TextSize::Large)
+                    .bold()
+                
+                Spacer()
+                
+                Button("+ Add Component", on_click: || {
+                    // Show component picker
+                })
+                .variant(ButtonVariant::Primary)
+                .compact()
+            }
+            .padding("16px")
+            .background("#252525")
+            
+            Divider()
+            
+            // Object info
+            HStack {
+                Input()
+                    .value(obj.name)
+                    .on_change(|name| obj.name = name)
+                    .flex(1)
+                
+                Switch(obj.enabled)
+                    .size(SwitchSize::Small)
+                    .on_change(|enabled| obj.enabled = enabled)
+                
+                Text("Active")
+                    .size(TextSize::Small)
+                    .color("#9D9D9D")
+            }
+            .padding("12px")
+            
+            Divider()
+            
+            // Properties
+            ScrollArea {
+                VStack {
+                    // Transform component
+                    CollapsibleSection("Transform", expanded: true) {
+                        VStack {
+                            PropertyRow("Position", {
+                                Vector3Input(
+                                    obj.transform.position,
+                                    on_change: |pos| obj.transform.position = pos
+                                )
+                            })
+                            
+                            PropertyRow("Rotation", {
+                                Vector3Input(
+                                    obj.transform.rotation,
+                                    on_change: |rot| obj.transform.rotation = rot
+                                )
+                            })
+                            
+                            PropertyRow("Scale", {
+                                Vector3Input(
+                                    obj.transform.scale,
+                                    on_change: |scale| obj.transform.scale = scale
+                                )
+                            })
+                        }
+                        .spacing("8px")
+                    }
+                    
+                    Spacer().height("8px")
+                    
+                    // Other components
+                    for component in obj.components {
+                        ComponentInspector(component)
+                        Spacer().height("8px")
+                    }
+                }
+                .padding("12px")
+            }
+            .flex(1)
+        } else {
+            // No selection
+            VStack {
+                Spacer()
+                
+                VStack {
+                    Text("👆")
+                        .size(TextSize::XLarge)
+                    
+                    Spacer().height("8px")
+                    
+                    Text("No Object Selected")
+                        .size(TextSize::Medium)
+                        .bold()
+                    
+                    Text("Select an object in the hierarchy")
+                        .size(TextSize::Small)
+                        .color("#9D9D9D")
+                }
+                .align(Alignment::Center)
+                
+                Spacer()
+            }
+            .flex(1)
+        }
+    }
+    .background("#2D2D2D")
+    .border_radius("8px")
+    .shadow("0 2px 8px rgba(0, 0, 0, 0.3)")
+}
+
+// Property Row
+@component
+fn PropertyRow(label: String, value: UI) -> UI {
+    HStack {
+        Text(label)
+            .size(TextSize::Small)
+            
+            .width("35%")
+            .color("#9D9D9D")
+        
+        value.width("65%")
+    }
+    .padding("4px 0")
+    .height("32px")
+}
+
+// Vector3 Input
+@component
+fn Vector3Input(
+    value: [f32; 3],
+    on_change: fn([f32; 3])
+) -> UI {
+    HStack {
+        // X
+        HStack {
+            Text("X")
+                .size(TextSize::Tiny)
+                .color("#F48771")
+                .bold()
+                .width("16px")
+            
+            Input()
+                .value(format!("{:.2}", value[0]))
+                .on_change(|x| {
+                    let mut new_val = value
+                    new_val[0] = x.parse().unwrap_or(0.0)
+                    on_change(new_val)
+                })
+                .flex(1)
+        }
+        .spacing("4px")
+        
+        // Y
+        HStack {
+            Text("Y")
+                .size(TextSize::Tiny)
+                .color("#4EC9B0")
+                .bold()
+                .width("16px")
+            
+            Input()
+                .value(format!("{:.2}", value[1]))
+                .on_change(|y| {
+                    let mut new_val = value
+                    new_val[1] = y.parse().unwrap_or(0.0)
+                    on_change(new_val)
+                })
+                .flex(1)
+        }
+        .spacing("4px")
+        
+        // Z
+        HStack {
+            Text("Z")
+                .size(TextSize::Tiny)
+                .color("#007ACC")
+                .bold()
+                .width("16px")
+            
+            Input()
+                .value(format!("{:.2}", value[2]))
+                .on_change(|z| {
+                    let mut new_val = value
+                    new_val[2] = z.parse().unwrap_or(0.0)
+                    on_change(new_val)
+                })
+                .flex(1)
+        }
+        .spacing("4px")
+    }
+    .spacing("8px")
+}
+
+// Component Inspector
+@component
+fn ComponentInspector(component: Component) -> UI {
+    CollapsibleSection(component.type, expanded: true) {
+        VStack {
+            // Enabled toggle
+            HStack {
+                Text("Enabled")
+                    .size(TextSize::Small)
+                    .color("#9D9D9D")
+                
+                Spacer()
+                
+                Switch(component.enabled)
+                    .size(SwitchSize::Small)
+                    .on_change(|enabled| component.enabled = enabled)
+            }
+            .padding("4px 0")
+            
+            Divider().margin("8px 0")
+            
+            // Component-specific properties
+            match component.type {
+                "MeshRenderer" => {
+                    PropertyRow("Mesh", {
+                        Input()
+                            .value(component.properties.mesh)
+                            .on_change(|mesh| component.properties.mesh = mesh)
+                    })
+                    
+                    PropertyRow("Material", {
+                        Input()
+                            .value(component.properties.material)
+                            .on_change(|mat| component.properties.material = mat)
+                    })
+                },
+                "BoxCollider" => {
+                    PropertyRow("Center", {
+                        Vector3Input(
+                            component.properties.center,
+                            on_change: |center| component.properties.center = center
+                        )
+                    })
+                    
+                    PropertyRow("Size", {
+                        Vector3Input(
+                            component.properties.size,
+                            on_change: |size| component.properties.size = size
+                        )
+                    })
+                },
+                _ => {
+                    Text("No properties")
+                        .size(TextSize::Small)
+                        .color("#6E6E6E")
+                }
+            }
+        }
+        .spacing("8px")
+    }
+}
+

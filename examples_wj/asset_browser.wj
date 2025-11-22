@@ -1,0 +1,435 @@
+// Asset Browser Panel (Pure Windjammer)
+// File browser for project assets with preview
+
+@component
+fn AssetBrowser() -> UI {
+    // Current directory
+    let current_path = signal("Assets/")
+    
+    // File list
+    let files = signal([
+        { name: "Textures", type: "folder", size: None, date: "2025-11-20" },
+        { name: "Models", type: "folder", size: None, date: "2025-11-20" },
+        { name: "Materials", type: "folder", size: None, date: "2025-11-20" },
+        { name: "Scripts", type: "folder", size: None, date: "2025-11-20" },
+        { name: "Sounds", type: "folder", size: None, date: "2025-11-20" },
+        { name: "player_texture.png", type: "image", size: Some(2048), date: "2025-11-22" },
+        { name: "enemy_model.obj", type: "model", size: Some(5120), date: "2025-11-21" },
+        { name: "terrain_material.mat", type: "material", size: Some(1024), date: "2025-11-20" },
+    ])
+    
+    // Selected file
+    let selected_file = signal(None)
+    
+    // View mode
+    let view_mode = signal("grid") // "grid" or "list"
+    
+    // Sort mode
+    let sort_by = signal("name") // "name", "type", "size", "date"
+    
+    // Search filter
+    let search_filter = signal("")
+    
+    VStack {
+        // Header
+        HStack {
+            Text("📁 Asset Browser")
+                .size(TextSize::Large)
+                .bold()
+            
+            Spacer()
+            
+            // View toggle
+            HStack {
+                Button("⊞", on_click: || view_mode = "grid")
+                    .variant(if view_mode == "grid" { ButtonVariant::Primary } else { ButtonVariant::Ghost })
+                    .compact()
+                    .tooltip("Grid View")
+                
+                Button("☰", on_click: || view_mode = "list")
+                    .variant(if view_mode == "list" { ButtonVariant::Primary } else { ButtonVariant::Ghost })
+                    .compact()
+                    .tooltip("List View")
+            }
+            .spacing("4px")
+        }
+        .padding("16px")
+        .background("#252525")
+        
+        Divider()
+        
+        // Path breadcrumbs
+        HStack {
+            Button("🏠", on_click: || current_path = "Assets/")
+                .variant(ButtonVariant::Ghost)
+                .compact()
+            
+            for part in current_path.split("/").filter(|p| !p.is_empty()) {
+                Text("/")
+                    .size(TextSize::Small)
+                    .color("#6E6E6E")
+                
+                Button(part, on_click: || {
+                    // Navigate to this path level
+                })
+                .variant(ButtonVariant::Ghost)
+                .compact()
+            }
+            
+            Spacer()
+            
+            // Sort dropdown
+            Select()
+                .value(sort_by)
+                .option("name", "Name")
+                .option("type", "Type")
+                .option("size", "Size")
+                .option("date", "Date")
+                .on_change(|sort| sort_by = sort)
+        }
+        .padding("8px 12px")
+        .background("#252525")
+        
+        Divider()
+        
+        // Search
+        HStack {
+            Input()
+                .placeholder("Search assets...")
+                .value(search_filter)
+                .on_change(|text| search_filter = text)
+            
+            if !search_filter.is_empty() {
+                Button("✕", on_click: || search_filter = "")
+                    .variant(ButtonVariant::Ghost)
+                    .compact()
+            }
+        }
+        .padding("12px")
+        
+        Divider()
+        
+        // File display
+        HStack {
+            // File list/grid
+            ScrollArea {
+                if view_mode == "grid" {
+                    Grid {
+                        for file in filter_and_sort_files(files, search_filter, sort_by) {
+                            AssetGridItem(
+                                file: file,
+                                selected: selected_file,
+                                on_select: |name| selected_file = Some(name),
+                                on_open: |name| {
+                                    if file.type == "folder" {
+                                        current_path = format!("{}{}/", current_path, name)
+                                    }
+                                }
+                            )
+                        }
+                    }
+                    .columns(4)
+                    .gap("12px")
+                    .padding("12px")
+                } else {
+                    VStack {
+                        // List header
+                        HStack {
+                            Text("Name")
+                                .size(TextSize::Small)
+                                .bold()
+                                .flex(2)
+                            
+                            Text("Type")
+                                .size(TextSize::Small)
+                                .bold()
+                                .width("100px")
+                            
+                            Text("Size")
+                                .size(TextSize::Small)
+                                .bold()
+                                .width("80px")
+                            
+                            Text("Date")
+                                .size(TextSize::Small)
+                                .bold()
+                                .width("100px")
+                        }
+                        .padding("8px 12px")
+                        .background("#252525")
+                        
+                        Divider()
+                        
+                        // List items
+                        for file in filter_and_sort_files(files, search_filter, sort_by) {
+                            AssetListItem(
+                                file: file,
+                                selected: selected_file,
+                                on_select: |name| selected_file = Some(name),
+                                on_open: |name| {
+                                    if file.type == "folder" {
+                                        current_path = format!("{}{}/", current_path, name)
+                                    }
+                                }
+                            )
+                        }
+                    }
+                    .padding("0")
+                }
+            }
+            .flex(1)
+            
+            // Preview panel (if file selected)
+            if let Some(filename) = selected_file {
+                Divider().vertical()
+                
+                AssetPreview(
+                    file: files.iter().find(|f| f.name == filename)
+                )
+                .width("300px")
+            }
+        }
+        .flex(1)
+        
+        Divider()
+        
+        // Actions
+        HStack {
+            Button("+ Import", on_click: || {
+                // Open file picker
+            })
+            .variant(ButtonVariant::Primary)
+            .compact()
+            
+            Button("📁 New Folder", on_click: || {
+                // Create new folder
+            })
+            .variant(ButtonVariant::Secondary)
+            .compact()
+            
+            Spacer()
+            
+            if let Some(_) = selected_file {
+                Button("🗑 Delete", on_click: || {
+                    // Delete selected file
+                    selected_file = None
+                })
+                .variant(ButtonVariant::Danger)
+                .compact()
+            }
+        }
+        .padding("12px")
+        .background("#252525")
+    }
+    .background("#2D2D2D")
+    .border_radius("8px")
+    .shadow("0 2px 8px rgba(0, 0, 0, 0.3)")
+}
+
+// Grid Item
+@component
+fn AssetGridItem(
+    file: AssetFile,
+    selected: Signal<Option<String>>,
+    on_select: fn(String),
+    on_open: fn(String)
+) -> UI {
+    let is_selected = selected.get() == Some(file.name)
+    
+    VStack {
+        // Icon/thumbnail
+        Container {
+            Text(get_icon_for_type(file.type))
+                .size(TextSize::XLarge)
+        }
+        .width("100%")
+        .height("100px")
+        .background(if is_selected { "#264F78" } else { "#1E1E1E" })
+        .border_radius("4px")
+        .align(Alignment::Center)
+        .on_click(|| on_select(file.name))
+        .on_double_click(|| on_open(file.name))
+        .hover_background(if is_selected { "#264F78" } else { "#333333" })
+        .cursor("pointer")
+        
+        // Name
+        Text(file.name)
+            .size(TextSize::Tiny)
+            .color(if is_selected { "#007ACC" } else { "#D4D4D4" })
+            .max_lines(2)
+            .ellipsis()
+            .align(Alignment::Center)
+    }
+    .width("120px")
+    .spacing("4px")
+}
+
+// List Item
+@component
+fn AssetListItem(
+    file: AssetFile,
+    selected: Signal<Option<String>>,
+    on_select: fn(String),
+    on_open: fn(String)
+) -> UI {
+    let is_selected = selected.get() == Some(file.name)
+    
+    HStack {
+        Text(get_icon_for_type(file.type))
+            .size(TextSize::Small)
+        
+        Text(file.name)
+            .size(TextSize::Small)
+            .flex(2)
+            .color(if is_selected { "#007ACC" } else { "#D4D4D4" })
+        
+        Badge(file.type)
+            .variant(BadgeVariant::Secondary)
+            .size(BadgeSize::Small)
+            .width("100px")
+        
+        Text(format_size(file.size))
+            .size(TextSize::Small)
+            .color("#9D9D9D")
+            .width("80px")
+        
+        Text(file.date)
+            .size(TextSize::Small)
+            .color("#9D9D9D")
+            .width("100px")
+    }
+    .padding("8px 12px")
+    .background(if is_selected { "#264F78" } else { "transparent" })
+    .hover_background(if is_selected { "#264F78" } else { "#333333" })
+    .on_click(|| on_select(file.name))
+    .on_double_click(|| on_open(file.name))
+    .cursor("pointer")
+}
+
+// Preview Panel
+@component
+fn AssetPreview(file: Option<AssetFile>) -> UI {
+    VStack {
+        Text("Preview")
+            .size(TextSize::Medium)
+            .bold()
+            .padding("16px")
+        
+        Divider()
+        
+        if let Some(f) = file {
+            ScrollArea {
+                VStack {
+                    // Preview (placeholder)
+                    Container {
+                        VStack {
+                            Text(get_icon_for_type(f.type))
+                                .size(TextSize::XLarge)
+                            
+                            Spacer().height("8px")
+                            
+                            Text(f.name)
+                                .size(TextSize::Small)
+                                .color("#9D9D9D")
+                                .max_lines(2)
+                                .ellipsis()
+                        }
+                        .align(Alignment::Center)
+                    }
+                    .width("100%")
+                    .height("200px")
+                    .background("#1E1E1E")
+                    .border_radius("4px")
+                    .align(Alignment::Center)
+                    
+                    Spacer().height("16px")
+                    
+                    // File info
+                    PropertyRow("Type", Text(f.type))
+                    PropertyRow("Size", Text(format_size(f.size)))
+                    PropertyRow("Date", Text(f.date))
+                    
+                    Spacer().height("16px")
+                    
+                    // Actions
+                    Button("Open", on_click: || {
+                        // Open file in editor
+                    })
+                    .variant(ButtonVariant::Primary)
+                    .full_width()
+                }
+                .padding("12px")
+            }
+            .flex(1)
+        } else {
+            VStack {
+                Spacer()
+                
+                Text("No preview")
+                    .size(TextSize::Small)
+                    .color("#6E6E6E")
+                    .align(Alignment::Center)
+                
+                Spacer()
+            }
+            .flex(1)
+        }
+    }
+    .background("#252525")
+}
+
+// Helper functions
+fn get_icon_for_type(type: String) -> String {
+    match type {
+        "folder" => "📁",
+        "image" => "🖼️",
+        "model" => "🎲",
+        "material" => "🎨",
+        "script" => "📜",
+        "sound" => "🔊",
+        _ => "📄"
+    }
+}
+
+fn format_size(size: Option<i32>) -> String {
+    match size {
+        Some(kb) if kb < 1024 => format!("{} KB", kb),
+        Some(kb) => format!("{:.1} MB", kb as f32 / 1024.0),
+        None => "-".to_string()
+    }
+}
+
+fn filter_and_sort_files(
+    files: Vec<AssetFile>,
+    filter: String,
+    sort_by: String
+) -> Vec<AssetFile> {
+    // Filter
+    let mut filtered = if filter.is_empty() {
+        files
+    } else {
+        files.into_iter()
+            .filter(|f| f.name.to_lowercase().contains(filter.to_lowercase()))
+            .collect()
+    }
+    
+    // Sort
+    match sort_by {
+        "name" => filtered.sort_by(|a, b| a.name.cmp(&b.name)),
+        "type" => filtered.sort_by(|a, b| a.type.cmp(&b.type)),
+        "size" => filtered.sort_by(|a, b| a.size.cmp(&b.size)),
+        "date" => filtered.sort_by(|a, b| a.date.cmp(&b.date)),
+        _ => {}
+    }
+    
+    filtered
+}
+
+// Type definitions
+struct AssetFile {
+    name: String,
+    type: String,
+    size: Option<i32>,
+    date: String
+}
+

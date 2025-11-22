@@ -1,0 +1,120 @@
+// Contact Form Example - Form Validation
+// Demonstrates: Form inputs, validation, error handling, submission
+
+use std::ui::*
+
+@export
+fn start() {
+    println!("📬 Starting Contact Form")
+    
+    // Form state
+    let name = Signal::new("".to_string())
+    let email = Signal::new("".to_string())
+    let message = Signal::new("".to_string())
+    
+    // Validation errors
+    let name_error = Signal::new("".to_string())
+    let email_error = Signal::new("".to_string())
+    let message_error = Signal::new("".to_string())
+    
+    // Submission state
+    let is_submitting = Signal::new(false)
+    let submit_success = Signal::new(false)
+    
+    // Clone signals for closures
+    let name_display = name.clone()
+    let email_display = email.clone()
+    let message_display = message.clone()
+    let name_submit = name.clone()
+    let email_submit = email.clone()
+    let message_submit = message.clone()
+    let name_error_display = name_error.clone()
+    let email_error_display = email_error.clone()
+    let message_error_display = message_error.clone()
+    let is_submitting_display = is_submitting.clone()
+    let submit_success_display = submit_success.clone()
+    
+    // Build UI
+    let ui = Container::new()
+        .max_width("600px")
+        .child(
+            Flex::new()
+                .direction(FlexDirection::Column)
+                .gap("20px")
+                .child(
+                    Text::new("📬 Contact Us")
+                        .size(TextSize::XLarge)
+                        .bold()
+                )
+                .child(
+                    Text::new("We'd love to hear from you")
+                        .size(TextSize::Medium)
+                )
+                .child(
+                    Flex::new()
+                        .direction(FlexDirection::Column)
+                        .gap("16px")
+                        .child(
+                            Flex::new()
+                                .direction(FlexDirection::Column)
+                                .gap("4px")
+                                .child(Text::new("Name *").size(TextSize::Small))
+                                .child(
+                                    Input::new()
+                                        .placeholder("Your name")
+                                        .value(name_display.get())
+                                )
+                        )
+                        .child(
+                            Flex::new()
+                                .direction(FlexDirection::Column)
+                                .gap("4px")
+                                .child(Text::new("Email *").size(TextSize::Small))
+                                .child(
+                                    Input::new()
+                                        .placeholder("your.email@example.com")
+                                        .value(email_display.get())
+                                )
+                        )
+                        .child(
+                            Flex::new()
+                                .direction(FlexDirection::Column)
+                                .gap("4px")
+                                .child(Text::new("Message *").size(TextSize::Small))
+                                .child(
+                                    Input::new()
+                                        .placeholder("Your message...")
+                                        .value(message_display.get())
+                                )
+                        )
+                        .child(
+                            Button::new("Send Message")
+                                .variant(ButtonVariant::Primary)
+                                .on_click(move || {
+                                    // Simple validation
+                                    let has_name = !name_submit.get().is_empty()
+                                    let has_email = email_submit.get().contains("@")
+                                    let has_message = !message_submit.get().is_empty()
+                                    
+                                    if has_name && has_email && has_message {
+                                        is_submitting.set(true)
+                                        println!("Form submitted successfully!")
+                                        submit_success.set(true)
+                                        // Reset form
+                                        name_submit.set("".to_string())
+                                        email_submit.set("".to_string())
+                                        message_submit.set("".to_string())
+                                    } else {
+                                        println!("Validation failed")
+                                    }
+                                })
+                        )
+                )
+        )
+    
+    App::new("Contact Form", ui.to_vnode()).run()
+}
+
+fn main() {
+    start()
+}

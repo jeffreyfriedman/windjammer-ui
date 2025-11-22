@@ -1,0 +1,190 @@
+// material_editor.wj - PBR Material Editor
+// Demonstrates: Complex state, color pickers, sliders, file pickers
+
+use windjammer_ui.*
+
+struct Material {
+    albedo_color: Color,
+    metallic: f32,
+    roughness: f32,
+    normal_strength: f32,
+    emissive_color: Color,
+    emissive_strength: f32,
+    
+    albedo_texture: Option<String>,
+    metallic_texture: Option<String>,
+    roughness_texture: Option<String>,
+    normal_texture: Option<String>,
+}
+
+@component
+fn MaterialEditor() -> UI {
+    let material = signal(Material {
+        albedo_color: Color.rgb(200, 200, 200),
+        metallic: 0.0,
+        roughness: 0.5,
+        normal_strength: 1.0,
+        emissive_color: Color.rgb(0, 0, 0),
+        emissive_strength: 0.0,
+        albedo_texture: None,
+        metallic_texture: None,
+        roughness_texture: None,
+        normal_texture: None,
+    })
+    
+    VStack(padding: 0, spacing: 0) {
+        // Header
+        HStack(
+            padding: 12,
+            spacing: 8,
+            background: Color.rgb(50, 50, 50)
+        ) {
+            Text("🎨 PBR Material Editor", size: 18, weight: "bold", color: Color.rgb(255, 255, 255))
+            Spacer()
+            IconButton(icon: "save", tooltip: "Save Material", on_click: || save_material(material))
+        }
+        
+        // Content
+        ScrollArea {
+            VStack(padding: 16, spacing: 16) {
+                // Base Color Section
+                Section(title: "Base Color") {
+                    ColorPicker(
+                        label: "Albedo",
+                        value: material.albedo_color,
+                        alpha: true
+                    )
+                    
+                    TextureSlot(
+                        label: "Albedo Texture",
+                        texture: material.albedo_texture,
+                        on_load: |path| material.albedo_texture = Some(path),
+                        on_clear: || material.albedo_texture = None
+                    )
+                }
+                
+                // Surface Properties
+                Section(title: "Surface Properties") {
+                    Slider(
+                        label: "Metallic",
+                        value: material.metallic,
+                        min: 0.0,
+                        max: 1.0,
+                        step: 0.01
+                    )
+                    
+                    TextureSlot(
+                        label: "Metallic Texture",
+                        texture: material.metallic_texture,
+                        on_load: |path| material.metallic_texture = Some(path),
+                        on_clear: || material.metallic_texture = None
+                    )
+                    
+                    Slider(
+                        label: "Roughness",
+                        value: material.roughness,
+                        min: 0.0,
+                        max: 1.0,
+                        step: 0.01
+                    )
+                    
+                    TextureSlot(
+                        label: "Roughness Texture",
+                        texture: material.roughness_texture,
+                        on_load: |path| material.roughness_texture = Some(path),
+                        on_clear: || material.roughness_texture = None
+                    )
+                }
+                
+                // Normal Map
+                Section(title: "Normal Map") {
+                    Slider(
+                        label: "Strength",
+                        value: material.normal_strength,
+                        min: 0.0,
+                        max: 2.0,
+                        step: 0.1
+                    )
+                    
+                    TextureSlot(
+                        label: "Normal Texture",
+                        texture: material.normal_texture,
+                        on_load: |path| material.normal_texture = Some(path),
+                        on_clear: || material.normal_texture = None
+                    )
+                }
+                
+                // Emissive
+                Section(title: "Emissive") {
+                    ColorPicker(
+                        label: "Emissive Color",
+                        value: material.emissive_color
+                    )
+                    
+                    Slider(
+                        label: "Strength",
+                        value: material.emissive_strength,
+                        min: 0.0,
+                        max: 10.0,
+                        step: 0.1
+                    )
+                }
+            }
+        }
+    }
+}
+
+@component
+fn Section(title: String, children: UI) -> UI {
+    VStack(
+        spacing: 8,
+        padding: 12,
+        background: Color.rgb(245, 245, 245),
+        border_radius: 8
+    ) {
+        Text(title, size: 16, weight: "semibold")
+        Separator()
+        children
+    }
+}
+
+@component
+fn TextureSlot(
+    label: String,
+    texture: Option<String>,
+    on_load: fn(String) -> void,
+    on_clear: fn() -> void
+) -> UI {
+    HStack(spacing: 8, align: "center") {
+        Text(label, width: 120)
+        
+        if let Some(path) = texture {
+            HStack(spacing: 4, align: "center") {
+                Image(url: path, width: 32, height: 32, fit: "cover")
+                Text(file_name(path), color: Color.rgb(100, 100, 100))
+                IconButton(icon: "trash", size: 16, on_click: on_clear)
+            }
+        } else {
+            Button("📁 Load Texture", on_click: || {
+                let file = file_picker(
+                    title: "Select Texture",
+                    filters: [("Images", ["png", "jpg", "jpeg", "tga"])],
+                    multiple: false
+                )
+                if let Some(path) = file {
+                    on_load(path)
+                }
+            })
+        }
+    }
+}
+
+fn main() {
+    App {
+        title: "Material Editor",
+        width: 500,
+        height: 700,
+        MaterialEditor()
+    }
+}
+

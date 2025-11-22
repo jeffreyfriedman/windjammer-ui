@@ -1,0 +1,111 @@
+// Dashboard Example - Business Metrics
+// Demonstrates: Cards, grids, statistics display, data visualization
+
+use std::ui::*
+
+@export
+fn start() {
+    println!("📊 Starting Dashboard")
+    
+    // Mock data
+    let total_users = Signal::new(1247)
+    let active_users = Signal::new(892)
+    let revenue = Signal::new(45678)
+    let growth = Signal::new(12)
+    
+    // Clone signals for display
+    let total_display = total_users.clone()
+    let active_display = active_users.clone()
+    let revenue_display = revenue.clone()
+    let growth_display = growth.clone()
+    
+    // Build UI
+    let ui = Container::new()
+        .max_width("1200px")
+        .child(
+            Flex::new()
+                .direction(FlexDirection::Column)
+                .gap("24px")
+                .child(
+                    Flex::new()
+                        .direction(FlexDirection::Row)
+                        .gap("16px")
+                        .child(
+                            Text::new("📊 Dashboard")
+                                .size(TextSize::XLarge)
+                                .bold()
+                        )
+                )
+                .child(
+                    Flex::new()
+                        .direction(FlexDirection::Row)
+                        .gap("16px")
+                        .child(
+                            Card::new()
+                                .child(
+                                    Flex::new()
+                                        .direction(FlexDirection::Column)
+                                        .gap("8px")
+                                        .child(Text::new("👥 Total Users").size(TextSize::Small))
+                                        .child(
+                                            Text::new(format!("{}", total_display.get()))
+                                                .size(TextSize::XLarge)
+                                                .bold()
+                                        )
+                                )
+                        )
+                        .child(
+                            Card::new()
+                                .child(
+                                    Flex::new()
+                                        .direction(FlexDirection::Column)
+                                        .gap("8px")
+                                        .child(Text::new("✓ Active Users").size(TextSize::Small))
+                                        .child(
+                                            Text::new(format!("{}", active_display.get()))
+                                                .size(TextSize::XLarge)
+                                                .bold()
+                                        )
+                                )
+                        )
+                        .child(
+                            Card::new()
+                                .child(
+                                    Flex::new()
+                                        .direction(FlexDirection::Column)
+                                        .gap("8px")
+                                        .child(Text::new("💰 Revenue").size(TextSize::Small))
+                                        .child(
+                                            Text::new(format!("${}", revenue_display.get()))
+                                                .size(TextSize::XLarge)
+                                                .bold()
+                                        )
+                                )
+                        )
+                        .child(
+                            Card::new()
+                                .child(
+                                    Flex::new()
+                                        .direction(FlexDirection::Column)
+                                        .gap("8px")
+                                        .child(Text::new("📈 Growth").size(TextSize::Small))
+                                        .child(
+                                            Text::new(format!("{}%", growth_display.get()))
+                                                .size(TextSize::XLarge)
+                                                .bold()
+                                        )
+                                )
+                        )
+                )
+                .child(
+                    Text::new("Welcome back! Here's your overview.")
+                        .size(TextSize::Medium)
+                )
+        )
+    
+    App::new("Dashboard", ui.to_vnode()).run()
+}
+
+fn main() {
+    start()
+}
