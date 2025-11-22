@@ -1,0 +1,84 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+   0.703398459s  INFO prepare_target{force=false package_id=windjammer-ui v0.34.0 (/Users/jeffreyfriedman/src/wj/windjammer-ui) target="button_click_test"}: cargo::core::compiler::fingerprint: fingerprint error for windjammer-ui v0.34.0 (/Users/jeffreyfriedman/src/wj/windjammer-ui)/Check { test: true }/TargetInner { kind: "test", name: "button_click_test", benched: false, ..: with_path("/Users/jeffreyfriedman/src/wj/windjammer-ui/tests/button_click_test.rs", Edition2021) }
+   0.703416625s  INFO prepare_target{force=false package_id=windjammer-ui v0.34.0 (/Users/jeffreyfriedman/src/wj/windjammer-ui) target="button_click_test"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/jeffreyfriedman/src/wj/windjammer-ui/target/debug/.fingerprint/windjammer-ui-eb1fecfd1b5bc2c8/test-integration-test-button_click_test`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: std::backtrace::Backtrace::create
+   1: std::backtrace::Backtrace::capture
+   2: cargo_util::paths::read_bytes
+   3: cargo_util::paths::read
+   4: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   5: cargo::core::compiler::fingerprint::prepare_target
+   6: cargo::core::compiler::compile
+   7: <cargo::core::compiler::build_runner::BuildRunner>::compile
+   8: cargo::ops::cargo_compile::compile_ws
+   9: cargo::ops::cargo_compile::compile_with_exec
+  10: cargo::ops::cargo_compile::compile
+  11: cargo::commands::check::exec
+  12: <cargo::cli::Exec>::exec
+  13: cargo::main
+  14: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  15: std::rt::lang_start::<()>::{closure#0}
+  16: std::rt::lang_start_internal
+  17: _main
+   0.749854667s  INFO prepare_target{force=false package_id=windjammer-ui v0.34.0 (/Users/jeffreyfriedman/src/wj/windjammer-ui) target="editor_kittest"}: cargo::core::compiler::fingerprint: fingerprint error for windjammer-ui v0.34.0 (/Users/jeffreyfriedman/src/wj/windjammer-ui)/Check { test: true }/TargetInner { kind: "test", name: "editor_kittest", benched: false, ..: with_path("/Users/jeffreyfriedman/src/wj/windjammer-ui/tests/editor_kittest.rs", Edition2021) }
+   0.749873417s  INFO prepare_target{force=false package_id=windjammer-ui v0.34.0 (/Users/jeffreyfriedman/src/wj/windjammer-ui) target="editor_kittest"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/jeffreyfriedman/src/wj/windjammer-ui/target/debug/.fingerprint/windjammer-ui-a9ce75130752a98a/test-integration-test-editor_kittest`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: std::backtrace::Backtrace::create
+   1: std::backtrace::Backtrace::capture
+   2: cargo_util::paths::read_bytes
+   3: cargo_util::paths::read
+   4: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   5: cargo::core::compiler::fingerprint::prepare_target
+   6: cargo::core::compiler::compile
+   7: <cargo::core::compiler::build_runner::BuildRunner>::compile
+   8: cargo::ops::cargo_compile::compile_ws
+   9: cargo::ops::cargo_compile::compile_with_exec
+  10: cargo::ops::cargo_compile::compile
+  11: cargo::commands::check::exec
+  12: <cargo::cli::Exec>::exec
+  13: cargo::main
+  14: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  15: std::rt::lang_start::<()>::{closure#0}
+  16: std::rt::lang_start_internal
+  17: _main
+   0.750677500s  INFO prepare_target{force=false package_id=windjammer-ui v0.34.0 (/Users/jeffreyfriedman/src/wj/windjammer-ui) target="editor_visual_test"}: cargo::core::compiler::fingerprint: fingerprint error for windjammer-ui v0.34.0 (/Users/jeffreyfriedman/src/wj/windjammer-ui)/Check { test: true }/TargetInner { kind: "test", name: "editor_visual_test", benched: false, ..: with_path("/Users/jeffreyfriedman/src/wj/windjammer-ui/tests/editor_visual_test.rs", Edition2021) }
+   0.750685750s  INFO prepare_target{force=false package_id=windjammer-ui v0.34.0 (/Users/jeffreyfriedman/src/wj/windjammer-ui) target="editor_visual_test"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/jeffreyfriedman/src/wj/windjammer-ui/target/debug/.fingerprint/windjammer-ui-20b6ecff7e6a081a/test-integration-test-editor_visual_test`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: std::backtrace::Backtrace::create
+   1: std::backtrace::Backtrace::capture
+   2: cargo_util::paths::read_bytes
+   3: cargo_util::paths::read
+   4: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   5: cargo::core::compiler::fingerprint::prepare_target
+   6: cargo::core::compiler::compile
+   7: <cargo::core::compiler::build_runner::BuildRunner>::compile
+   8: cargo::ops::cargo_compile::compile_ws
+   9: cargo::ops::cargo_compile::compile_with_exec
+  10: cargo::ops::cargo_compile::compile
+  11: cargo::commands::check::exec
+  12: <cargo::cli::Exec>::exec
+  13: cargo::main
+  14: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  15: std::rt::lang_start::<()>::{closure#0}
+  16: std::rt::lang_start_internal
+  17: _main
+    Checking windjammer-ui v0.34.0 (/Users/jeffreyfriedman/src/wj/windjammer-ui)
+error: could not compile `windjammer-ui` (test "button_click_test") due to 9 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `windjammer-ui` (test "editor_kittest") due to 13 previous errors; 1 warning emitted
+error: could not compile `windjammer-ui` (test "editor_visual_test") due to 10 previous errors
