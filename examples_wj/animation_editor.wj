@@ -1,0 +1,411 @@
+// Animation Editor Panel (Pure Windjammer)
+// Timeline-based animation editor with keyframe control
+
+@component
+fn AnimationEditor() -> UI {
+    // Animation state
+    let current_time = signal(0.0) // in seconds
+    let total_duration = signal(5.0)
+    let is_playing = signal(false)
+    let playback_speed = signal(1.0)
+    
+    // Selected animation
+    let selected_anim = signal(Some({
+        name: "Player_Walk",
+        duration: 5.0,
+        fps: 30,
+        tracks: [
+            {
+                name: "Position.Y",
+                type: "float",
+                keyframes: [
+                    { time: 0.0, value: 0.0, interpolation: "linear" },
+                    { time: 1.0, value: 0.5, interpolation: "ease-in-out" },
+                    { time: 2.0, value: 0.0, interpolation: "linear" }
+                ]
+            },
+            {
+                name: "Rotation.Y",
+                type: "float",
+                keyframes: [
+                    { time: 0.0, value: 0.0, interpolation: "linear" },
+                    { time: 2.5, value: 180.0, interpolation: "linear" },
+                    { time: 5.0, value: 360.0, interpolation: "linear" }
+                ]
+            }
+        ]
+    }))
+    
+    // Selected keyframe
+    let selected_keyframe = signal(None)
+    
+    // Zoom level for timeline
+    let timeline_zoom = signal(1.0)
+    
+    VStack {
+        // Header
+        HStack {
+            Text("🎬 Animation Editor")
+                .size(TextSize::Large)
+                .bold()
+            
+            Spacer()
+            
+            // Animation selector
+            Select()
+                .placeholder("Select animation...")
+                .option("Player_Walk", "Player Walk")
+                .option("Player_Run", "Player Run")
+                .option("Player_Jump", "Player Jump")
+                .value("Player_Walk")
+        }
+        .padding("16px")
+        .background("#252525")
+        
+        Divider()
+        
+        // Playback controls
+        HStack {
+            // Play/Pause
+            Button(
+                if is_playing { "⏸" } else { "▶" },
+                on_click: || is_playing = !is_playing
+            )
+            .variant(ButtonVariant::Primary)
+            .compact()
+            
+            // Stop
+            Button("⏹", on_click: || {
+                is_playing = false
+                current_time = 0.0
+            })
+            .variant(ButtonVariant::Secondary)
+            .compact()
+            
+            Spacer().width("16px")
+            
+            // Current time
+            Text(format!("{:.2}s", current_time))
+                .size(TextSize::Small)
+                .color("#9D9D9D")
+                .font_family("monospace")
+            
+            Text("/")
+                .size(TextSize::Small)
+                .color("#6E6E6E")
+            
+            Text(format!("{:.2}s", total_duration))
+                .size(TextSize::Small)
+                .color("#9D9D9D")
+                .font_family("monospace")
+            
+            Spacer().width("16px")
+            
+            // Playback speed
+            Text("Speed:")
+                .size(TextSize::Small)
+                .color("#9D9D9D")
+            
+            Select()
+                .value(format!("{:.1}x", playback_speed))
+                .option("0.25", "0.25x")
+                .option("0.5", "0.5x")
+                .option("1.0", "1.0x")
+                .option("2.0", "2.0x")
+                .on_change(|speed| playback_speed = speed.parse().unwrap_or(1.0))
+                .compact()
+            
+            Spacer()
+            
+            // Zoom controls
+            Text("Zoom:")
+                .size(TextSize::Small)
+                .color("#9D9D9D")
+            
+            Button("−", on_click: || timeline_zoom = max(0.25, timeline_zoom * 0.8))
+                .variant(ButtonVariant::Ghost)
+                .compact()
+            
+            Text(format!("{}%", (timeline_zoom * 100.0) as i32))
+                .size(TextSize::Small)
+                .color("#9D9D9D")
+                .font_family("monospace")
+                .width("50px")
+                .align(Alignment::Center)
+            
+            Button("+", on_click: || timeline_zoom = min(4.0, timeline_zoom * 1.25))
+                .variant(ButtonVariant::Ghost)
+                .compact()
+        }
+        .padding("12px")
+        .background("#252525")
+        
+        Divider()
+        
+        // Timeline view
+        VStack {
+            // Track list + timeline
+            HStack {
+                // Track names (left panel)
+                VStack {
+                    // Header
+                    Container {
+                        Text("Tracks")
+                            .size(TextSize::Small)
+                            .bold()
+                            .padding("8px 12px")
+                    }
+                    .background("#252525")
+                    .height("40px")
+                    
+                    // Track list
+                    ScrollArea {
+                        VStack {
+                            if let Some(anim) = selected_anim {
+                                for track in anim.tracks {
+                                    HStack {
+                                        Text(track.name)
+                                            .size(TextSize::Small)
+                                        
+                                        Spacer()
+                                        
+                                        Badge(track.type)
+                                            .variant(BadgeVariant::Secondary)
+                                            .size(BadgeSize::Tiny)
+                                    }
+                                    .padding("8px 12px")
+                                    .background("#2D2D2D")
+                                    .hover_background("#333333")
+                                    .cursor("pointer")
+                                    .height("32px")
+                                    
+                                    Divider()
+                                }
+                            }
+                        }
+                    }
+                }
+                .width("200px")
+                .background("#2D2D2D")
+                
+                Divider().vertical()
+                
+                // Timeline (scrollable)
+                VStack {
+                    // Timeline ruler
+                    TimelineRuler(
+                        duration: total_duration,
+                        current_time: current_time,
+                        zoom: timeline_zoom
+                    )
+                    
+                    // Keyframe tracks
+                    ScrollArea {
+                        VStack {
+                            if let Some(anim) = selected_anim {
+                                for track in anim.tracks {
+                                    KeyframeTrack(
+                                        track: track,
+                                        duration: total_duration,
+                                        current_time: current_time,
+                                        zoom: timeline_zoom,
+                                        selected: selected_keyframe,
+                                        on_select: |kf| selected_keyframe = Some(kf)
+                                    )
+                                    
+                                    Divider()
+                                }
+                            }
+                        }
+                    }
+                }
+                .flex(1)
+            }
+            .flex(1)
+        }
+        .flex(1)
+        .background("#1E1E1E")
+        
+        Divider()
+        
+        // Keyframe properties (bottom panel)
+        if let Some(kf) = selected_keyframe {
+            VStack {
+                Text("Keyframe Properties")
+                    .size(TextSize::Small)
+                    .bold()
+                    .padding("8px 12px")
+                    .background("#252525")
+                
+                Divider()
+                
+                HStack {
+                    PropertyRow("Time", {
+                        Input()
+                            .value(format!("{:.3}", kf.time))
+                            .on_change(|t| kf.time = t.parse().unwrap_or(0.0))
+                            .width("80px")
+                    })
+                    
+                    PropertyRow("Value", {
+                        Input()
+                            .value(format!("{:.3}", kf.value))
+                            .on_change(|v| kf.value = v.parse().unwrap_or(0.0))
+                            .width("80px")
+                    })
+                    
+                    PropertyRow("Interpolation", {
+                        Select()
+                            .value(kf.interpolation)
+                            .option("linear", "Linear")
+                            .option("ease-in", "Ease In")
+                            .option("ease-out", "Ease Out")
+                            .option("ease-in-out", "Ease In-Out")
+                            .option("step", "Step")
+                            .on_change(|interp| kf.interpolation = interp)
+                    })
+                }
+                .padding("12px")
+                .spacing("16px")
+            }
+            .background("#2D2D2D")
+            .height("100px")
+        }
+        
+        Divider()
+        
+        // Actions
+        HStack {
+            Button("+ Add Keyframe", on_click: || {
+                // Add keyframe at current time
+            })
+            .variant(ButtonVariant::Primary)
+            .compact()
+            
+            Button("+ Add Track", on_click: || {
+                // Add new track
+            })
+            .variant(ButtonVariant::Secondary)
+            .compact()
+            
+            Spacer()
+            
+            if let Some(_) = selected_keyframe {
+                Button("🗑 Delete Keyframe", on_click: || {
+                    selected_keyframe = None
+                })
+                .variant(ButtonVariant::Danger)
+                .compact()
+            }
+        }
+        .padding("12px")
+        .background("#252525")
+    }
+    .background("#2D2D2D")
+    .border_radius("8px")
+    .shadow("0 2px 8px rgba(0, 0, 0, 0.3)")
+}
+
+// Timeline Ruler
+@component
+fn TimelineRuler(
+    duration: Signal<f32>,
+    current_time: Signal<f32>,
+    zoom: Signal<f32>
+) -> UI {
+    let width = duration * 100.0 * zoom // 100px per second
+    
+    Container {
+        HStack {
+            // Time markers
+            for i in 0..=(duration as i32) {
+                let time = i as f32
+                
+                VStack {
+                    Text(format!("{:.1}s", time))
+                        .size(TextSize::Tiny)
+                        .color("#9D9D9D")
+                    
+                    Container {}
+                        .width("1px")
+                        .height("8px")
+                        .background("#6E6E6E")
+                }
+                .width(format!("{}px", 100.0 * zoom))
+            }
+            
+            // Playhead
+            Container {}
+                .width("2px")
+                .height("100%")
+                .background("#007ACC")
+                .position("absolute")
+                .left(format!("{}px", current_time * 100.0 * zoom))
+        }
+    }
+    .width(format!("{}px", width))
+    .height("40px")
+    .background("#252525")
+    .position("relative")
+}
+
+// Keyframe Track
+@component
+fn KeyframeTrack(
+    track: AnimationTrack,
+    duration: Signal<f32>,
+    current_time: Signal<f32>,
+    zoom: Signal<f32>,
+    selected: Signal<Option<Keyframe>>,
+    on_select: fn(Keyframe)
+) -> UI {
+    let width = duration * 100.0 * zoom
+    
+    Container {
+        HStack {
+            // Keyframe diamonds
+            for kf in track.keyframes {
+                let is_selected = selected.get().map(|s| s.time == kf.time).unwrap_or(false)
+                
+                Container {
+                    Text("◆")
+                        .size(TextSize::Small)
+                        .color(if is_selected { "#007ACC" } else { "#4EC9B0" })
+                }
+                .position("absolute")
+                .left(format!("{}px", kf.time * 100.0 * zoom - 8.0))
+                .top("8px")
+                .width("16px")
+                .height("16px")
+                .on_click(|| on_select(kf))
+                .cursor("pointer")
+                .hover_transform("scale(1.2)")
+            }
+        }
+    }
+    .width(format!("{}px", width))
+    .height("32px")
+    .background("#2D2D2D")
+    .position("relative")
+}
+
+// Type definitions
+struct Animation {
+    name: String,
+    duration: f32,
+    fps: i32,
+    tracks: Vec<AnimationTrack>
+}
+
+struct AnimationTrack {
+    name: String,
+    type: String,
+    keyframes: Vec<Keyframe>
+}
+
+struct Keyframe {
+    time: f32,
+    value: f32,
+    interpolation: String
+}
+

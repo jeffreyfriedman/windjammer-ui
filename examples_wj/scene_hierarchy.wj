@@ -1,0 +1,294 @@
+// Scene Hierarchy Panel (Pure Windjammer)
+// Tree-based scene graph editor for game objects
+
+@component
+fn SceneHierarchy() -> UI {
+    // Scene tree state
+    let scene_nodes = signal([
+        {
+            id: "root",
+            name: "Scene Root",
+            type: "Scene",
+            children: [
+                {
+                    id: "camera",
+                    name: "Main Camera",
+                    type: "Camera",
+                    children: []
+                },
+                {
+                    id: "light",
+                    name: "Directional Light",
+                    type: "Light",
+                    children: []
+                },
+                {
+                    id: "player",
+                    name: "Player",
+                    type: "GameObject",
+                    children: [
+                        {
+                            id: "mesh",
+                            name: "Player Mesh",
+                            type: "MeshRenderer",
+                            children: []
+                        },
+                        {
+                            id: "collider",
+                            name: "Player Collider",
+                            type: "BoxCollider",
+                            children: []
+                        }
+                    ]
+                },
+                {
+                    id: "environment",
+                    name: "Environment",
+                    type: "GameObject",
+                    children: [
+                        {
+                            id: "terrain",
+                            name: "Terrain",
+                            type: "Terrain",
+                            children: []
+                        },
+                        {
+                            id: "sky",
+                            name: "Skybox",
+                            type: "Skybox",
+                            children: []
+                        }
+                    ]
+                }
+            ]
+        }
+    ])
+    
+    // Selected node
+    let selected_node = signal(None)
+    
+    // Search filter
+    let search_filter = signal("")
+    
+    // UI state
+    let show_icons = signal(true)
+    let show_components = signal(true)
+    
+    VStack {
+        // Header
+        HStack {
+            Text("🌳 Scene Hierarchy")
+                .size(TextSize::Large)
+                .bold()
+            
+            Spacer()
+            
+            // View options
+            Button("👁", on_click: || show_icons = !show_icons)
+                .variant(ButtonVariant::Ghost)
+                .compact()
+                .tooltip("Toggle Icons")
+            
+            Button("🔧", on_click: || show_components = !show_components)
+                .variant(ButtonVariant::Ghost)
+                .compact()
+                .tooltip("Toggle Components")
+        }
+        .padding("16px")
+        .background("#252525")
+        
+        Divider()
+        
+        // Search bar
+        HStack {
+            Input()
+                .placeholder("Search scene...")
+                .value(search_filter)
+                .on_change(|text| search_filter = text)
+            
+            Button("✕", on_click: || search_filter = "")
+                .variant(ButtonVariant::Ghost)
+                .compact()
+        }
+        .padding("12px")
+        
+        Divider()
+        
+        // Scene tree
+        ScrollArea {
+            VStack {
+                for node in scene_nodes {
+                    if filter_node(node, search_filter) {
+                        SceneNode(
+                            node: node,
+                            selected: selected_node,
+                            show_icons: show_icons,
+                            show_components: show_components,
+                            on_select: |id| selected_node = Some(id)
+                        )
+                    }
+                }
+            }
+            .padding("8px")
+        }
+        .flex(1)
+        
+        Divider()
+        
+        // Actions
+        HStack {
+            Button("+ Add Object", on_click: || {
+                // Add new game object
+            })
+            .variant(ButtonVariant::Primary)
+            .compact()
+            
+            Button("+ Add Light", on_click: || {
+                // Add light
+            })
+            .variant(ButtonVariant::Secondary)
+            .compact()
+            
+            Button("+ Add Camera", on_click: || {
+                // Add camera
+            })
+            .variant(ButtonVariant::Secondary)
+            .compact()
+            
+            Spacer()
+            
+            if let Some(id) = selected_node {
+                Button("🗑 Delete", on_click: || {
+                    // Delete selected node
+                    selected_node = None
+                })
+                .variant(ButtonVariant::Danger)
+                .compact()
+            }
+        }
+        .padding("12px")
+        .background("#252525")
+    }
+    .background("#2D2D2D")
+    .border_radius("8px")
+    .shadow("0 2px 8px rgba(0, 0, 0, 0.3)")
+}
+
+// Helper: Filter nodes by search
+fn filter_node(node: SceneNode, filter: String) -> bool {
+    if filter.is_empty() {
+        return true
+    }
+    
+    node.name.to_lowercase().contains(filter.to_lowercase()) ||
+    node.type.to_lowercase().contains(filter.to_lowercase())
+}
+
+// Scene Node Component
+@component
+fn SceneNode(
+    node: SceneNode,
+    selected: Signal<Option<String>>,
+    show_icons: Signal<bool>,
+    show_components: Signal<bool>,
+    on_select: fn(String),
+    depth: i32 = 0
+) -> UI {
+    let is_selected = selected.get() == Some(node.id)
+    let expanded = signal(true)
+    let has_children = !node.children.is_empty()
+    
+    VStack {
+        // Node row
+        HStack {
+            // Indentation
+            Spacer().width(format!("{}px", depth * 20))
+            
+            // Expand/collapse arrow
+            if has_children {
+                Button(
+                    if expanded { "▼" } else { "▶" },
+                    on_click: || expanded = !expanded
+                )
+                .variant(ButtonVariant::Ghost)
+                .compact()
+                .size(ButtonSize::Small)
+            } else {
+                Spacer().width("24px")
+            }
+            
+            // Icon
+            if show_icons {
+                Text(get_icon_for_type(node.type))
+                    .size(TextSize::Small)
+            }
+            
+            // Name (bold if selected)
+            if is_selected {
+                Text(node.name)
+                    .size(TextSize::Small)
+                    .color("#007ACC")
+                    .bold()
+                    .flex(1)
+            } else {
+                Text(node.name)
+                    .size(TextSize::Small)
+                    .color("#D4D4D4")
+                    .flex(1)
+            }
+            
+            // Type badge (if showing components)
+            if show_components {
+                Badge(node.type)
+                    .variant(BadgeVariant::Secondary)
+                    .size(BadgeSize::Small)
+            }
+        }
+        .padding("4px 8px")
+        .background(if is_selected { "#264F78" } else { "transparent" })
+        .border_radius("4px")
+        .on_click(|| on_select(node.id))
+        .hover_background(if is_selected { "#264F78" } else { "#333333" })
+        .cursor("pointer")
+        
+        // Children (if expanded)
+        if expanded && has_children {
+            VStack {
+                for child in node.children {
+                    SceneNode(
+                        node: child,
+                        selected: selected,
+                        show_icons: show_icons,
+                        show_components: show_components,
+                        on_select: on_select,
+                        depth: depth + 1
+                    )
+                }
+            }
+        }
+    }
+}
+
+// Helper: Get icon for node type
+fn get_icon_for_type(type: String) -> String {
+    match type {
+        "Scene" => "🌐",
+        "Camera" => "📷",
+        "Light" => "💡",
+        "GameObject" => "📦",
+        "MeshRenderer" => "🎨",
+        "BoxCollider" => "🔲",
+        "Terrain" => "🗻",
+        "Skybox" => "🌌",
+        _ => "📄"
+    }
+}
+
+// Type definitions
+struct SceneNode {
+    id: String,
+    name: String,
+    type: String,
+    children: Vec<SceneNode>
+}
+

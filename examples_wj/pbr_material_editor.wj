@@ -1,0 +1,386 @@
+// PBR Material Editor Panel (Pure Windjammer)
+// Modern, ergonomic material editor competitive with Unreal/Unity/Godot
+
+@component
+fn PBRMaterialEditor() -> UI {
+    // Material properties
+    let albedo_color = signal([1.0, 1.0, 1.0, 1.0])
+    let metallic = signal(0.0)
+    let roughness = signal(0.5)
+    let emissive_color = signal([0.0, 0.0, 0.0])
+    let emissive_strength = signal(0.0)
+    let normal_strength = signal(1.0)
+    let ao_strength = signal(1.0)
+    
+    // Texture paths
+    let albedo_texture = signal(None)
+    let metallic_texture = signal(None)
+    let roughness_texture = signal(None)
+    let normal_texture = signal(None)
+    let ao_texture = signal(None)
+    let emissive_texture = signal(None)
+    
+    // Alpha settings
+    let alpha_mode = signal("Opaque")
+    let alpha_cutoff = signal(0.5)
+    
+    // UI state
+    let show_preview = signal(true)
+    
+    VStack {
+        // Header with preview toggle
+        HStack {
+            Text("🎨 PBR Material Editor")
+                .size(TextSize::Large)
+                .bold()
+            
+            Spacer()
+            
+            Button(
+                if show_preview { "Hide Preview" } else { "Show Preview" },
+                on_click: || show_preview = !show_preview
+            )
+            .variant(ButtonVariant::Ghost)
+        }
+        .padding("16px")
+        .background("#252525")
+        
+        Divider()
+        
+        // Main content
+        HStack {
+            // Left side - Properties
+            ScrollArea {
+                VStack {
+                    // Base Color Section
+                    CollapsibleSection("Base Color", expanded: true) {
+                        PropertyRow("Albedo", {
+                            ColorPicker(
+                                albedo_color,
+                                on_change: |color| albedo_color = color
+                            )
+                        })
+                        
+                        PropertyRow("Texture", {
+                            HStack {
+                                if let Some(path) = albedo_texture {
+                                    Text(path).size(TextSize::Small)
+                                    Button("✕", on_click: || albedo_texture = None)
+                                        .variant(ButtonVariant::Ghost)
+                                        .compact()
+                                } else {
+                                    Button("Browse...", on_click: || {
+                                        // Open file picker
+                                        albedo_texture = Some("textures/albedo.png")
+                                    })
+                                    .variant(ButtonVariant::Secondary)
+                                }
+                            }
+                        })
+                    }
+                    
+                    Spacer().height("8px")
+                    
+                    // Metallic Section
+                    CollapsibleSection("Metallic", expanded: true) {
+                        PropertyRow("Value", {
+                            Slider(
+                                metallic,
+                                min: 0.0,
+                                max: 1.0,
+                                on_change: |value| metallic = value
+                            )
+                        })
+                        
+                        PropertyRow("Texture", {
+                            TextureSelector(
+                                metallic_texture,
+                                on_select: |path| metallic_texture = Some(path)
+                            )
+                        })
+                    }
+                    
+                    Spacer().height("8px")
+                    
+                    // Roughness Section
+                    CollapsibleSection("Roughness", expanded: true) {
+                        PropertyRow("Value", {
+                            Slider(
+                                roughness,
+                                min: 0.0,
+                                max: 1.0,
+                                on_change: |value| roughness = value
+                            )
+                        })
+                        
+                        PropertyRow("Texture", {
+                            TextureSelector(
+                                roughness_texture,
+                                on_select: |path| roughness_texture = Some(path)
+                            )
+                        })
+                    }
+                    
+                    Spacer().height("8px")
+                    
+                    // Normal Map Section
+                    CollapsibleSection("Normal Map", expanded: false) {
+                        PropertyRow("Strength", {
+                            Slider(
+                                normal_strength,
+                                min: 0.0,
+                                max: 2.0,
+                                on_change: |value| normal_strength = value
+                            )
+                        })
+                        
+                        PropertyRow("Texture", {
+                            TextureSelector(
+                                normal_texture,
+                                on_select: |path| normal_texture = Some(path)
+                            )
+                        })
+                    }
+                    
+                    Spacer().height("8px")
+                    
+                    // Ambient Occlusion Section
+                    CollapsibleSection("Ambient Occlusion", expanded: false) {
+                        PropertyRow("Strength", {
+                            Slider(
+                                ao_strength,
+                                min: 0.0,
+                                max: 1.0,
+                                on_change: |value| ao_strength = value
+                            )
+                        })
+                        
+                        PropertyRow("Texture", {
+                            TextureSelector(
+                                ao_texture,
+                                on_select: |path| ao_texture = Some(path)
+                            )
+                        })
+                    }
+                    
+                    Spacer().height("8px")
+                    
+                    // Emissive Section
+                    CollapsibleSection("Emissive", expanded: false) {
+                        PropertyRow("Color", {
+                            ColorPicker(
+                                emissive_color,
+                                on_change: |color| emissive_color = color,
+                                show_alpha: false
+                            )
+                        })
+                        
+                        PropertyRow("Strength", {
+                            Slider(
+                                emissive_strength,
+                                min: 0.0,
+                                max: 10.0,
+                                on_change: |value| emissive_strength = value
+                            )
+                        })
+                        
+                        PropertyRow("Texture", {
+                            TextureSelector(
+                                emissive_texture,
+                                on_select: |path| emissive_texture = Some(path)
+                            )
+                        })
+                    }
+                    
+                    Spacer().height("8px")
+                    
+                    // Alpha Section
+                    CollapsibleSection("Alpha", expanded: false) {
+                        PropertyRow("Mode", {
+                            Dropdown(
+                                alpha_mode,
+                                options: ["Opaque", "Mask", "Blend"],
+                                on_change: |mode| alpha_mode = mode
+                            )
+                        })
+                        
+                        if alpha_mode == "Mask" {
+                            PropertyRow("Cutoff", {
+                                Slider(
+                                    alpha_cutoff,
+                                    min: 0.0,
+                                    max: 1.0,
+                                    on_change: |value| alpha_cutoff = value
+                                )
+                            })
+                        }
+                    }
+                    
+                    Spacer().height("16px")
+                    
+                    // Actions
+                    HStack {
+                        Button("Save Material", on_click: || {
+                            // Save material to file
+                        })
+                        .variant(ButtonVariant::Primary)
+                        
+                        Button("Load Material", on_click: || {
+                            // Load material from file
+                        })
+                        .variant(ButtonVariant::Secondary)
+                        
+                        Spacer()
+                        
+                        Button("Reset", on_click: || {
+                            // Reset to default values
+                            albedo_color = [1.0, 1.0, 1.0, 1.0]
+                            metallic = 0.0
+                            roughness = 0.5
+                        })
+                        .variant(ButtonVariant::Ghost)
+                    }
+                }
+                .padding("16px")
+            }
+            .flex(1)
+            
+            // Right side - Preview (if enabled)
+            if show_preview {
+                Divider().vertical()
+                
+                MaterialPreview(
+                    albedo_color,
+                    metallic,
+                    roughness,
+                    emissive_color,
+                    emissive_strength
+                )
+                .width("400px")
+            }
+        }
+    }
+    .background("#2D2D2D")
+    .border_radius("8px")
+    .shadow("0 2px 8px rgba(0, 0, 0, 0.3)")
+}
+
+// Helper component: Property row with label and value
+@component
+fn PropertyRow(label: String, value: UI) -> UI {
+    HStack {
+        Text(label)
+            .size(TextSize::Small)
+            
+            .width("40%")
+            .color("#9D9D9D")
+        
+        value.width("60%")
+    }
+    .padding("8px 0")
+    .height("32px")
+}
+
+// Helper component: Texture selector
+@component
+fn TextureSelector(texture: Signal<Option<String>>, on_select: fn(String)) -> UI {
+    HStack {
+        if let Some(path) = texture.get() {
+            // Show thumbnail if texture exists
+            HStack {
+                // Thumbnail preview (would be actual image in real impl)
+                Container {
+                    Text("🖼️")
+                }
+                .width("32px")
+                .height("32px")
+                .background("#3C3C3C")
+                .border_radius("4px")
+                
+                Text(path)
+                    .size(TextSize::Small)
+                    .flex(1)
+                
+                Button("✕", on_click: || texture.set(None))
+                    .variant(ButtonVariant::Ghost)
+                    .compact()
+            }
+            .spacing("8px")
+        } else {
+            Button("Browse...", on_click: || {
+                // Open file picker
+                on_select("textures/default.png")
+            })
+            .variant(ButtonVariant::Secondary)
+        }
+    }
+}
+
+// Helper component: Material preview
+@component
+fn MaterialPreview(
+    albedo: Signal<[f32; 4]>,
+    metallic: Signal<f32>,
+    roughness: Signal<f32>,
+    emissive: Signal<[f32; 3]>,
+    emissive_strength: Signal<f32>
+) -> UI {
+    VStack {
+        Text("Material Preview")
+            .size(TextSize::Medium)
+            .bold()
+            .padding("16px")
+        
+        Divider()
+        
+        // 3D Preview (would be actual 3D render in real impl)
+        Container {
+            VStack {
+                Text("🔮")
+                    .size(TextSize::XLarge)
+                
+                Text("3D Preview")
+                    .size(TextSize::Small)
+                    .color("#6E6E6E")
+            }
+            .align(Alignment::Center)
+        }
+        .flex(1)
+        .background("#1E1E1E")
+        
+        Divider()
+        
+        // Property values display
+        VStack {
+            Text("Current Values")
+                .size(TextSize::Small)
+                .bold()
+                .padding("12px 16px 8px 16px")
+            
+            PropertyValueDisplay("Metallic", metallic.get())
+            PropertyValueDisplay("Roughness", roughness.get())
+            PropertyValueDisplay("Emissive", emissive_strength.get())
+        }
+        .padding("0 0 16px 0")
+    }
+    .background("#252525")
+}
+
+// Helper component: Display property value
+@component
+fn PropertyValueDisplay(label: String, value: f32) -> UI {
+    HStack {
+        Text(label)
+            .size(TextSize::Tiny)
+            .color("#9D9D9D")
+        
+        Spacer()
+        
+        Text(format!("{:.2}", value))
+            .size(TextSize::Tiny)
+            .color("#007ACC")
+            
+    }
+    .padding("4px 16px")
+}
+
