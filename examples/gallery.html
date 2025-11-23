@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Windjammer UI Gallery - 32 Components</title>
+    <title>Windjammer UI - 32 Components Gallery</title>
     <style>
         :root[data-theme="light"] {
             --bg-gradient-start: #667eea;
@@ -14,9 +14,6 @@
             --border-color: #e5e7eb;
             --showcase-bg: #f9fafb;
             --hero-text: #ffffff;
-            --card-bg: #ffffff;
-            --button-primary: #667eea;
-            --button-secondary: #6b7280;
         }
         
         :root[data-theme="dark"] {
@@ -28,9 +25,6 @@
             --border-color: #334155;
             --showcase-bg: #1e293b;
             --hero-text: #f1f5f9;
-            --card-bg: #1e293b;
-            --button-primary: #8b5cf6;
-            --button-secondary: #64748b;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -105,7 +99,7 @@
         }
         
         .section-title {
-            font-size: 32px;
+            font-size: 28px;
             color: var(--text-primary);
             margin-bottom: 8px;
             font-weight: 700;
@@ -113,7 +107,7 @@
         
         .section-description {
             color: var(--text-secondary);
-            font-size: 16px;
+            font-size: 14px;
             margin-bottom: 24px;
         }
         
@@ -133,12 +127,19 @@
         }
         
         .showcase-label {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-secondary);
             margin-bottom: 12px;
-            font-weight: 500;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+        }
+        
+        .demo-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
         }
         
         footer {
@@ -170,7 +171,10 @@
         .stat-number {
             font-size: 36px;
             font-weight: 700;
-            color: var(--button-primary);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .stat-label {
@@ -179,7 +183,14 @@
             margin-top: 4px;
         }
 
-        /* Button styles */
+        /* Component Styles */
+        .wj-text { color: var(--text-primary); }
+        .wj-text.sm { font-size: 14px; }
+        .wj-text.md { font-size: 16px; }
+        .wj-text.lg { font-size: 20px; }
+        .wj-text.xl { font-size: 28px; }
+        .wj-text.bold { font-weight: 700; }
+
         .wj-button {
             border: none;
             padding: 10px 20px;
@@ -200,7 +211,6 @@
         .wj-button-lg { padding: 14px 28px; font-size: 16px; }
         .wj-button[disabled] { opacity: 0.5; cursor: not-allowed; }
 
-        /* Badge styles */
         .wj-badge {
             display: inline-flex;
             padding: 4px 12px;
@@ -215,8 +225,200 @@
         .wj-badge-warning { background: #fef3c7; color: #92400e; }
         .wj-badge-danger { background: #fee2e2; color: #991b1b; }
         .wj-badge-info { background: #e0e7ff; color: #3730a3; }
-        .wj-badge-sm { padding: 2px 8px; font-size: 11px; }
-        .wj-badge-lg { padding: 6px 16px; font-size: 13px; }
+        
+        .wj-input {
+            padding: 10px 14px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            background: var(--main-bg);
+            color: var(--text-primary);
+            transition: all 0.2s;
+        }
+        
+        .wj-checkbox { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+        .wj-checkbox input { width: 18px; height: 18px; cursor: pointer; }
+        .wj-checkbox span { color: var(--text-primary); font-size: 14px; }
+        
+        .wj-slider {
+            width: 200px;
+            height: 6px;
+            -webkit-appearance: none;
+            background: var(--border-color);
+            border-radius: 3px;
+            outline: none;
+        }
+        .wj-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #667eea;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .wj-alert {
+            padding: 16px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            margin: 8px 0;
+        }
+        .wj-alert-error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+        .wj-alert-warning { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+        .wj-alert-info { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+        .wj-alert-success { background: #f0fdf4; color: #065f46; border: 1px solid #bbf7d0; }
+        
+        .wj-card {
+            background: var(--showcase-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .wj-progress-container {
+            background: var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            height: 24px;
+        }
+        .wj-progress-bar {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 12px;
+        }
+        .wj-progress-default { background: #667eea; }
+        .wj-progress-success { background: #10b981; }
+        
+        .wj-spinner {
+            border: 3px solid var(--border-color);
+            border-top-color: #667eea;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .wj-switch {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .wj-switch input[type="checkbox"] {
+            width: 44px;
+            height: 24px;
+            -webkit-appearance: none;
+            background: var(--border-color);
+            border-radius: 12px;
+            position: relative;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .wj-switch input[type="checkbox"]:checked {
+            background: #667eea;
+        }
+        .wj-switch input[type="checkbox"]::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            top: 2px;
+            left: 2px;
+            transition: 0.3s;
+        }
+        .wj-switch input[type="checkbox"]:checked::before {
+            left: 22px;
+        }
+        
+        .wj-radio { display: flex; align-items: center; gap: 8px; margin: 8px 0; }
+        .wj-radio input { width: 16px; height: 16px; }
+        
+        .wj-select {
+            padding: 10px 14px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            background: var(--main-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+        
+        .wj-tabs-header {
+            display: flex;
+            gap: 4px;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 16px;
+        }
+        .wj-tab {
+            padding: 12px 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .wj-tab-active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+        
+        .wj-tooltip-container {
+            position: relative;
+            display: inline-block;
+        }
+        .wj-tooltip-text {
+            visibility: hidden;
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 8px 12px;
+            border-radius: 6px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            font-size: 13px;
+        }
+        .wj-tooltip-container:hover .wj-tooltip-text {
+            visibility: visible;
+        }
+        
+        .wj-dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .wj-color-input {
+            width: 60px;
+            height: 40px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -224,17 +426,33 @@
         <div class="hero">
             <button class="theme-toggle" onclick="toggleTheme()">🌓 Toggle Dark Mode</button>
             <h1>🎨 Windjammer UI Gallery</h1>
-            <p>32 production-ready components built in pure Windjammer and transpiled to Rust. 80% of Rust's power with 20% of the complexity!</p>
+            <p>All 32 components built in pure Windjammer and transpiled to Rust!</p>
         </div>
         
         <div class="content">
+            <!-- 1. TEXT -->
             <div class="component-section">
-                <h2 class="section-title">Button Components</h2>
+                <h2 class="section-title">1-2. Text & Typography</h2>
+                <p class="section-description">Text component with 4 sizes and 2 weights</p>
+                <div class="showcase-item">
+                    <div class="showcase-label">All Text Variants</div>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <span class='wj-text sm normal'>Small text</span>
+                        <span class='wj-text md normal'>Medium text</span>
+                        <span class='wj-text lg normal'>Large text</span>
+                        <span class='wj-text xl bold'>Extra Large Bold</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. BUTTON -->
+            <div class="component-section">
+                <h2 class="section-title">3. Button Component</h2>
                 <p class="section-description">5 variants × 3 sizes = 15 combinations</p>
                 <div class="showcase-grid">
                     <div class="showcase-item">
                         <div class="showcase-label">Variants</div>
-                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <div class="demo-row">
                             <button class='wj-button wj-button-primary wj-button-md'>Primary</button>
                             <button class='wj-button wj-button-secondary wj-button-md'>Secondary</button>
                             <button class='wj-button wj-button-success wj-button-md'>Success</button>
@@ -243,28 +461,239 @@
                         </div>
                     </div>
                     <div class="showcase-item">
-                        <div class="showcase-label">Sizes</div>
-                        <div style="display: flex; gap: 8px; align-items: center;">
+                        <div class="showcase-label">Sizes & States</div>
+                        <div class="demo-row">
                             <button class='wj-button wj-button-primary wj-button-sm'>Small</button>
                             <button class='wj-button wj-button-primary wj-button-md'>Medium</button>
                             <button class='wj-button wj-button-primary wj-button-lg'>Large</button>
+                            <button class='wj-button wj-button-primary wj-button-md' disabled>Disabled</button>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- 4. INPUT -->
             <div class="component-section">
-                <h2 class="section-title">Badge Components</h2>
+                <h2 class="section-title">4. Input Component</h2>
+                <p class="section-description">Text input with placeholder support</p>
+                <div class="showcase-item">
+                    <div class="showcase-label">Text Inputs</div>
+                    <div style="display: flex; flex-direction: column; gap: 12px; max-width: 400px;">
+                        <input class='wj-input' value='' placeholder='Enter your name'>
+                        <input class='wj-input' value='John Doe' placeholder='Username'>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. CHECKBOX -->
+            <div class="component-section">
+                <h2 class="section-title">5. Checkbox Component</h2>
+                <p class="section-description">Checkbox with 3 size options</p>
+                <div class="showcase-item">
+                    <div class="showcase-label">Checkbox Variants</div>
+                    <label class='wj-checkbox'><input type='checkbox' checked><span>Checked</span></label>
+                    <label class='wj-checkbox'><input type='checkbox'><span>Unchecked</span></label>
+                    <label class='wj-checkbox'><input type='checkbox' disabled><span>Disabled</span></label>
+                </div>
+            </div>
+
+            <!-- 6. SLIDER -->
+            <div class="component-section">
+                <h2 class="section-title">6. Slider Component</h2>
+                <p class="section-description">Range input with label support</p>
+                <div class="showcase-item">
+                    <div class="showcase-label">Sliders</div>
+                    <div style="display: flex; flex-direction: column; gap: 16px;">
+                        <div><label style="font-size: 13px; color: var(--text-secondary);">Volume: 50%</label><br><input type='range' class='wj-slider' min='0' max='100' value='50'></div>
+                        <div><label style="font-size: 13px; color: var(--text-secondary);">Brightness: 75%</label><br><input type='range' class='wj-slider' min='0' max='100' value='75'></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. BADGE -->
+            <div class="component-section">
+                <h2 class="section-title">7. Badge Component</h2>
                 <p class="section-description">6 variants × 3 sizes = 18 combinations</p>
                 <div class="showcase-item">
-                    <div class="showcase-label">All Variants</div>
-                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                        <span class='wj-badge wj-badge-default wj-badge-md'>Default</span>
-                        <span class='wj-badge wj-badge-primary wj-badge-md'>Primary</span>
-                        <span class='wj-badge wj-badge-success wj-badge-md'>Success</span>
-                        <span class='wj-badge wj-badge-warning wj-badge-md'>Warning</span>
-                        <span class='wj-badge wj-badge-danger wj-badge-md'>Danger</span>
-                        <span class='wj-badge wj-badge-info wj-badge-md'>Info</span>
+                    <div class="showcase-label">All Badge Variants</div>
+                    <div class="demo-row">
+                        <span class='wj-badge wj-badge-default'>Default</span>
+                        <span class='wj-badge wj-badge-primary'>Primary</span>
+                        <span class='wj-badge wj-badge-success'>Success</span>
+                        <span class='wj-badge wj-badge-warning'>Warning</span>
+                        <span class='wj-badge wj-badge-danger'>Danger</span>
+                        <span class='wj-badge wj-badge-info'>Info</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8-11. ALERTS -->
+            <div class="component-section">
+                <h2 class="section-title">8. Alert Component</h2>
+                <p class="section-description">4 types with icons</p>
+                <div class="showcase-item">
+                    <div class='wj-alert wj-alert-error'>❌ Error: Something went wrong!</div>
+                    <div class='wj-alert wj-alert-warning'>⚠️ Warning: Please review your input</div>
+                    <div class='wj-alert wj-alert-info'>ℹ️ Info: Auto-saved your changes</div>
+                    <div class='wj-alert wj-alert-success'>✅ Success: Operation completed!</div>
+                </div>
+            </div>
+
+            <!-- 9-14. LAYOUT (Container, Flex, Grid, Panel, Divider, Spacer) -->
+            <div class="component-section">
+                <h2 class="section-title">9-14. Layout Components</h2>
+                <p class="section-description">Container, Flex, Grid, Panel, Divider, Spacer</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Flex Layout (Row)</div>
+                        <div style="display: flex; gap: 12px;">
+                            <div style="padding: 16px; background: #667eea; color: white; border-radius: 4px;">Item 1</div>
+                            <div style="padding: 16px; background: #667eea; color: white; border-radius: 4px;">Item 2</div>
+                            <div style="padding: 16px; background: #667eea; color: white; border-radius: 4px;">Item 3</div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Grid Layout (3 cols)</div>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                            <div style="padding: 16px; background: #10b981; color: white; border-radius: 4px; text-align: center;">1</div>
+                            <div style="padding: 16px; background: #10b981; color: white; border-radius: 4px; text-align: center;">2</div>
+                            <div style="padding: 16px; background: #10b981; color: white; border-radius: 4px; text-align: center;">3</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 15-18. CARD, PROGRESS, SPINNER -->
+            <div class="component-section">
+                <h2 class="section-title">15-18. Data Display</h2>
+                <p class="section-description">Card, Progress, Spinner</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Card Component</div>
+                        <div class='wj-card'>
+                            <h3 style="margin-bottom: 8px; color: var(--text-primary);">Card Title</h3>
+                            <p style="color: var(--text-secondary); font-size: 14px;">This is a card with content.</p>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Progress Bars</div>
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <div class='wj-progress-container'>
+                                <div class='wj-progress-bar wj-progress-default' style='width: 45%;'>45%</div>
+                            </div>
+                            <div class='wj-progress-container'>
+                                <div class='wj-progress-bar wj-progress-success' style='width: 75%;'>75%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Spinner Component</div>
+                        <div class='wj-spinner'></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 19-21. FORMS (Switch, Radio, Select) -->
+            <div class="component-section">
+                <h2 class="section-title">19-21. Form Components</h2>
+                <p class="section-description">Switch, Radio, Select</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Switch Toggle</div>
+                        <label class='wj-switch'>
+                            <input type='checkbox' checked>
+                            <span>Enable notifications</span>
+                        </label>
+                        <label class='wj-switch'>
+                            <input type='checkbox'>
+                            <span>Dark mode</span>
+                        </label>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Radio Group</div>
+                        <label class='wj-radio'><input type='radio' name='theme' checked><span>Light</span></label>
+                        <label class='wj-radio'><input type='radio' name='theme'><span>Dark</span></label>
+                        <label class='wj-radio'><input type='radio' name='theme'><span>Auto</span></label>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Select Dropdown</div>
+                        <select class='wj-select'>
+                            <option>United States</option>
+                            <option>United Kingdom</option>
+                            <option>Canada</option>
+                            <option>Australia</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 22-25. NAVIGATION (Tabs, TabPanel, Toolbar, Tooltip) -->
+            <div class="component-section">
+                <h2 class="section-title">22-25. Navigation Components</h2>
+                <p class="section-description">Tabs, TabPanel, Toolbar, Tooltip</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Tabs Component</div>
+                        <div class='wj-tabs-header'>
+                            <button class='wj-tab wj-tab-active'>Overview</button>
+                            <button class='wj-tab'>Details</button>
+                            <button class='wj-tab'>Settings</button>
+                        </div>
+                        <div style="padding: 16px; background: var(--showcase-bg); border-radius: 4px;">
+                            <p style="color: var(--text-primary);">Tab content goes here...</p>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Tooltip Component</div>
+                        <div class='wj-tooltip-container'>
+                            <button class='wj-button wj-button-primary wj-button-sm'>Hover me</button>
+                            <span class='wj-tooltip-text'>This is a tooltip!</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 26-29. ADVANCED (Dialog, CodeEditor, AdvancedCodeEditor, ColorPicker) -->
+            <div class="component-section">
+                <h2 class="section-title">26-29. Advanced Components</h2>
+                <p class="section-description">Dialog, CodeEditor, AdvancedCodeEditor, ColorPicker</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Color Picker</div>
+                        <input type='color' value='#667eea' class='wj-color-input'>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Code Editor</div>
+                        <textarea style="width: 100%; height: 100px; font-family: monospace; padding: 12px; border: 2px solid var(--border-color); border-radius: 8px; background: var(--main-bg); color: var(--text-primary);">fn main() {
+    println!("Hello!");
+}</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 30-32. TREE (FileTree, TreeView, CollapsibleSection) -->
+            <div class="component-section">
+                <h2 class="section-title">30-32. Tree Components</h2>
+                <p class="section-description">FileTree, TreeView, CollapsibleSection</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">File Tree</div>
+                        <div style="font-family: monospace; font-size: 14px; color: var(--text-primary);">
+                            <div>📂 src/</div>
+                            <div style="margin-left: 20px;">📄 main.rs</div>
+                            <div style="margin-left: 20px;">📄 lib.rs</div>
+                            <div style="margin-left: 20px;">📂 components/</div>
+                            <div style="margin-left: 40px;">📄 button.wj</div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Collapsible Section</div>
+                        <details style="color: var(--text-primary);">
+                            <summary style="cursor: pointer; font-weight: 600; padding: 8px;">▼ Advanced Options</summary>
+                            <div style="padding: 12px; margin-top: 8px; background: var(--showcase-bg); border-radius: 4px;">
+                                <p style="font-size: 14px;">Hidden content here...</p>
+                            </div>
+                        </details>
                     </div>
                 </div>
             </div>
