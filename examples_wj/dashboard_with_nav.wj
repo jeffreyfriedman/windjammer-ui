@@ -1,0 +1,192 @@
+// Dashboard with Navigation Example
+// Demonstrates: Navbar, Sidebar, Grid, Card, Progress, Badge
+
+use std::ui::*
+
+fn main() {
+    println!("📊 Starting Windjammer Dashboard")
+    
+    let ui = Container::new()
+        .child(build_navbar())
+        .child(build_layout())
+        .render()
+    
+    println!("{}", ui)
+}
+
+fn build_navbar() -> string {
+    Navbar::new()
+        .brand("Windjammer Dashboard")
+        .item(NavbarItem::new("Home", "/"))
+        .item(NavbarItem::new("Analytics", "/analytics"))
+        .item(NavbarItem::new("Settings", "/settings"))
+        .position(NavbarPosition::Top)
+        .sticky(true)
+        .render()
+}
+
+fn build_layout() -> string {
+    Flex::new()
+        .direction(FlexDirection::Row)
+        .gap("0px")
+        .child(build_sidebar())
+        .child(build_main_content())
+        .render()
+}
+
+fn build_sidebar() -> string {
+    Sidebar::new()
+        .item(SidebarItem::new("Dashboard").icon("📊").href("/"))
+        .item(SidebarItem::new("Projects").icon("📁").href("/projects"))
+        .item(SidebarItem::new("Team").icon("👥").href("/team"))
+        .item(SidebarItem::new("Settings").icon("⚙️").href("/settings"))
+        .width("250px")
+        .collapsed(false)
+        .position(SidebarPosition::Left)
+        .render()
+}
+
+fn build_main_content() -> string {
+    Container::new()
+        .max_width("1200px")
+        .child(
+            Text::new("Overview")
+                .size(TextSize::XLarge)
+                .bold()
+                .render()
+        )
+        .child(build_stats_grid())
+        .child(build_activity_section())
+        .render()
+}
+
+fn build_stats_grid() -> string {
+    Grid::new()
+        .columns(3)
+        .gap("24px")
+        .child(
+            Card::new()
+                .title("Total Users")
+                .child(
+                    Flex::new()
+                        .direction(FlexDirection::Column)
+                        .gap("12px")
+                        .child(
+                            Text::new("1,234")
+                                .size(TextSize::XLarge)
+                                .bold()
+                                .render()
+                        )
+                        .child(
+                            Badge::new("▲ 12%")
+                                .variant(BadgeVariant::Success)
+                                .render()
+                        )
+                        .render()
+                )
+                .render()
+        )
+        .child(
+            Card::new()
+                .title("Revenue")
+                .child(
+                    Flex::new()
+                        .direction(FlexDirection::Column)
+                        .gap("12px")
+                        .child(
+                            Text::new("$45,678")
+                                .size(TextSize::XLarge)
+                                .bold()
+                                .render()
+                        )
+                        .child(
+                            Badge::new("▲ 8%")
+                                .variant(BadgeVariant::Success)
+                                .render()
+                        )
+                        .render()
+                )
+                .render()
+        )
+        .child(
+            Card::new()
+                .title("Active Projects")
+                .child(
+                    Flex::new()
+                        .direction(FlexDirection::Column)
+                        .gap("12px")
+                        .child(
+                            Text::new("23")
+                                .size(TextSize::XLarge)
+                                .bold()
+                                .render()
+                        )
+                        .child(
+                            Badge::new("▼ 3%")
+                                .variant(BadgeVariant::Warning)
+                                .render()
+                        )
+                        .render()
+                )
+                .render()
+        )
+        .render()
+}
+
+fn build_activity_section() -> string {
+    Card::new()
+        .title("Project Progress")
+        .child(
+            Flex::new()
+                .direction(FlexDirection::Column)
+                .gap("16px")
+                .child(
+                    Flex::new()
+                        .direction(FlexDirection::Column)
+                        .gap("8px")
+                        .child(Text::new("Website Redesign").render())
+                        .child(
+                            Progress::new()
+                                .value(75)
+                                .max(100)
+                                .variant(ProgressVariant::Success)
+                                .show_label(true)
+                                .render()
+                        )
+                        .render()
+                )
+                .child(
+                    Flex::new()
+                        .direction(FlexDirection::Column)
+                        .gap("8px")
+                        .child(Text::new("Mobile App Development").render())
+                        .child(
+                            Progress::new()
+                                .value(45)
+                                .max(100)
+                                .variant(ProgressVariant::Primary)
+                                .show_label(true)
+                                .render()
+                        )
+                        .render()
+                )
+                .child(
+                    Flex::new()
+                        .direction(FlexDirection::Column)
+                        .gap("8px")
+                        .child(Text::new("API Integration").render())
+                        .child(
+                            Progress::new()
+                                .value(90)
+                                .max(100)
+                                .variant(ProgressVariant::Success)
+                                .show_label(true)
+                                .render()
+                        )
+                        .render()
+                )
+                .render()
+        )
+        .render()
+}
+

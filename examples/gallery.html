@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Windjammer UI - 32 Components Gallery</title>
+    <title>Windjammer UI - 49 Components Gallery</title>
     <style>
         :root[data-theme="light"] {
             --bg-gradient-start: #667eea;
@@ -602,8 +602,8 @@
         <div class="hero">
             <button class="theme-toggle" onclick="toggleTheme()">🌓 Toggle Dark Mode</button>
             <h1>🎨 Windjammer UI Gallery</h1>
-            <p>All 40 components built in pure Windjammer and transpiled to Rust!</p>
-            <p style="font-size: 14px; margin-top: 8px; opacity: 0.9;">Featuring Toast, Accordion, Breadcrumb, Avatar, Skeleton, Pagination & more!</p>
+            <p>All 49 components built in pure Windjammer and transpiled to Rust!</p>
+            <p style="font-size: 14px; margin-top: 8px; opacity: 0.9;">Featuring Chat, Navbar, Sidebar, Toast, Accordion, CodeBlock & more! 🆕</p>
         </div>
         
         <div class="content">
@@ -1097,16 +1097,167 @@ fn main() {
                     </div>
                 </div>
             </div>
+            <!-- 41-45. CHAT & MESSAGING -->
+            <div class="component-section">
+                <h2 class="section-title">41-45. Chat & Messaging Components 🆕</h2>
+                <p class="section-description">ChatMessage, MessageList, ChatInput, TypingIndicator, CodeBlock</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Chat Messages</div>
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <!-- User message -->
+                            <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                                <div style="display: flex; flex-direction: column; align-items: flex-end;">
+                                    <div style="padding: 12px 16px; background: #667eea; color: white; border-radius: 16px 16px 4px 16px; max-width: 300px;">
+                                        <p style="margin: 0; font-size: 14px;">What is Windjammer?</p>
+                                    </div>
+                                    <span style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">2:30 PM</span>
+                                </div>
+                                <div style="width: 32px; height: 32px; border-radius: 50%; background: #667eea; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px;">👤</div>
+                            </div>
+                            <!-- Assistant message -->
+                            <div style="display: flex; gap: 12px;">
+                                <div style="width: 32px; height: 32px; border-radius: 50%; background: #10b981; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px;">🤖</div>
+                                <div style="display: flex; flex-direction: column;">
+                                    <div style="padding: 12px 16px; background: var(--showcase-bg); color: var(--text-primary); border-radius: 16px 16px 16px 4px; max-width: 300px; border: 1px solid var(--border-color);">
+                                        <p style="margin: 0; font-size: 14px;">Windjammer is a systems programming language that compiles to Rust!</p>
+                                    </div>
+                                    <span style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">2:30 PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Chat Input (with send button)</div>
+                        <div style="display: flex; gap: 8px; padding: 12px; background: var(--showcase-bg); border-radius: 12px; border: 2px solid var(--border-color);">
+                            <textarea placeholder="Type a message..." style="flex: 1; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--main-bg); color: var(--text-primary); resize: none; font-family: inherit; font-size: 14px;" rows="2"></textarea>
+                            <button style="padding: 8px 16px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 20px;">➤</button>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Typing Indicator</div>
+                        <div style="display: flex; align-items: center; gap: 12px; padding: 16px; background: var(--showcase-bg); border-radius: 8px;">
+                            <div style="display: flex; gap: 4px;">
+                                <span style="width: 8px; height: 8px; background: var(--text-secondary); border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both; animation-delay: -0.32s;"></span>
+                                <span style="width: 8px; height: 8px; background: var(--text-secondary); border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both; animation-delay: -0.16s;"></span>
+                                <span style="width: 8px; height: 8px; background: var(--text-secondary); border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both;"></span>
+                            </div>
+                            <span style="color: var(--text-secondary); font-size: 13px;">AI is typing...</span>
+                        </div>
+                        <style>
+                            @keyframes bounce {
+                                0%, 80%, 100% { transform: scale(0); }
+                                40% { transform: scale(1); }
+                            }
+                        </style>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Code Block (with copy button)</div>
+                        <div style="border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden;">
+                            <div style="display: flex; justify-content: space-between; padding: 8px 12px; background: var(--showcase-bg); border-bottom: 1px solid var(--border-color);">
+                                <span style="font-size: 12px; color: var(--text-secondary); font-weight: 600;">rust</span>
+                                <button onclick="navigator.clipboard.writeText('fn main() {\\n    println!(\"Hello!\");\\n}'); this.textContent='✓ Copied!'; setTimeout(() => this.textContent='📋 Copy', 2000)" style="background: none; border: none; color: #667eea; cursor: pointer; font-size: 12px;">📋 Copy</button>
+                            </div>
+                            <pre style="padding: 12px; margin: 0; background: var(--main-bg); color: var(--text-primary); font-family: 'Monaco', 'Menlo', monospace; font-size: 13px; line-height: 1.5;"><code>fn main() {
+    println!("Hello!");
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 46-49. ADDITIONAL NAVIGATION -->
+            <div class="component-section">
+                <h2 class="section-title">46-49. Additional Navigation 🆕</h2>
+                <p class="section-description">Navbar, Sidebar, HamburgerMenu, ContextMenu</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Navbar (with brand)</div>
+                        <nav style="display: flex; align-items: center; gap: 24px; padding: 12px 24px; background: var(--showcase-bg); border-radius: 8px; border: 1px solid var(--border-color);">
+                            <div style="font-weight: 700; font-size: 18px; color: #667eea;">MyApp</div>
+                            <div style="display: flex; gap: 16px; flex: 1;">
+                                <a href="#" style="color: var(--text-primary); text-decoration: none; font-size: 14px;">Home</a>
+                                <a href="#" style="color: var(--text-primary); text-decoration: none; font-size: 14px;">About</a>
+                                <a href="#" style="color: var(--text-primary); text-decoration: none; font-size: 14px;">Contact</a>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Sidebar (collapsible)</div>
+                        <div style="display: flex; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; height: 200px;">
+                            <aside style="width: 200px; background: var(--showcase-bg); padding: 12px; display: flex; flex-direction: column; gap: 8px;">
+                                <div style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 6px; background: #667eea; color: white; cursor: pointer;">
+                                    <span>📊</span>
+                                    <span style="font-size: 14px;">Dashboard</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 6px; cursor: pointer; color: var(--text-primary);">
+                                    <span>📁</span>
+                                    <span style="font-size: 14px;">Projects</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 6px; cursor: pointer; color: var(--text-primary);">
+                                    <span>⚙️</span>
+                                    <span style="font-size: 14px;">Settings</span>
+                                </div>
+                            </aside>
+                            <div style="flex: 1; padding: 16px; background: var(--main-bg); color: var(--text-primary);">
+                                <p style="font-size: 14px;">Main content area</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Hamburger Menu (click!)</div>
+                        <div style="position: relative;">
+                            <button id="hamburger-btn" onclick="document.getElementById('hamburger-drawer').classList.toggle('show')" style="width: 40px; height: 40px; background: var(--showcase-bg); border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;">
+                                <span style="width: 20px; height: 2px; background: var(--text-primary);"></span>
+                                <span style="width: 20px; height: 2px; background: var(--text-primary);"></span>
+                                <span style="width: 20px; height: 2px; background: var(--text-primary);"></span>
+                            </button>
+                            <div id="hamburger-drawer" style="position: absolute; top: 48px; left: 0; width: 200px; background: var(--showcase-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; display: none; z-index: 100;">
+                                <a href="#" style="display: block; padding: 10px 12px; color: var(--text-primary); text-decoration: none; border-radius: 4px;">Profile</a>
+                                <a href="#" style="display: block; padding: 10px 12px; color: var(--text-primary); text-decoration: none; border-radius: 4px;">Settings</a>
+                                <a href="#" style="display: block; padding: 10px 12px; color: var(--text-primary); text-decoration: none; border-radius: 4px;">Logout</a>
+                            </div>
+                            <style>
+                                #hamburger-drawer.show { display: block; }
+                            </style>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Context Menu (right-click area!)</div>
+                        <div id="context-target" oncontextmenu="event.preventDefault(); const menu = document.getElementById('context-menu-demo'); menu.style.display='block'; menu.style.left=event.pageX+'px'; menu.style.top=event.pageY+'px';" style="padding: 40px; background: var(--showcase-bg); border: 2px dashed var(--border-color); border-radius: 8px; text-align: center; color: var(--text-primary); cursor: pointer;">
+                            Right-click here!
+                        </div>
+                        <div id="context-menu-demo" onclick="this.style.display='none'" style="position: fixed; display: none; background: var(--showcase-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 4px; min-width: 150px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 1000;">
+                            <button style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; background: none; border: none; cursor: pointer; border-radius: 4px; color: var(--text-primary); font-size: 14px;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='none'">
+                                <span>📋</span> Copy
+                            </button>
+                            <button style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; background: none; border: none; cursor: pointer; border-radius: 4px; color: var(--text-primary); font-size: 14px;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='none'">
+                                <span>📄</span> Paste
+                            </button>
+                            <button style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; background: none; border: none; cursor: pointer; border-radius: 4px; color: var(--text-primary); font-size: 14px;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='none'">
+                                <span>🗑️</span> Delete
+                            </button>
+                        </div>
+                        <script>
+                            // Close context menu when clicking elsewhere
+                            document.addEventListener('click', () => {
+                                const menu = document.getElementById('context-menu-demo');
+                                if (menu) menu.style.display = 'none';
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <footer>
             <h3>🚀 Built with Windjammer</h3>
-            <p>All 40 components compiled from pure <code>.wj</code> source files to Rust.</p>
+            <p>All 49 components compiled from pure <code>.wj</code> source files to Rust.</p>
             <p>100% type-safe, zero runtime errors, native performance!</p>
             
             <div class="stats">
                 <div class="stat">
-                    <div class="stat-number">40</div>
+                    <div class="stat-number">49</div>
                     <div class="stat-label">Components</div>
                 </div>
                 <div class="stat">
