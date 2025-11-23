@@ -51,8 +51,7 @@ pub mod event_handler;
 // pub mod scene_gizmos; // TODO: Implement scene gizmos module
 pub mod undo_redo; // Available on all platforms
 
-// Old app_reactive with manual winit+wgpu (deprecated, keeping for reference)
-#[cfg(all(not(target_arch = "wasm32"), not(feature = "desktop")))]
+// Component trait (used by renderer, runtime, ssr)
 pub mod component;
 pub mod component_runtime;
 pub mod components; // Component library

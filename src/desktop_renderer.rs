@@ -424,7 +424,7 @@ impl DesktopRenderer {
         // Simple parser for "background-color: #RRGGBB"
         if let Some(start) = style.find("background-color:") {
             let rest = &style[start + 17..].trim();
-            if let Some(end) = rest.find(';').or_else(|| Some(rest.len())) {
+            if let Some(end) = rest.find(';').or(Some(rest.len())) {
                 let color_str = rest[..end].trim();
                 if color_str.starts_with('#') && color_str.len() == 7 {
                     if let Ok(r) = u8::from_str_radix(&color_str[1..3], 16) {
@@ -537,10 +537,8 @@ impl DesktopRenderer {
                     }
 
                     // Calculate width for each panel
-                    let width = if i == 0 {
-                        total_width * 0.20 // Left: 20%
-                    } else if i == children.len() - 1 {
-                        total_width * 0.20 // Right: 20%
+                    let width = if i == 0 || i == children.len() - 1 {
+                        total_width * 0.20 // Left or Right: 20%
                     } else {
                         total_width * 0.60 // Middle: 60%
                     };
@@ -646,7 +644,7 @@ impl DesktopRenderer {
             } => {
                 if tag == "pre" {
                     for child in children {
-                        self.render_code_span(ui, child);
+                        Self::render_code_span(ui, child);
                     }
                 } else if tag == "span" {
                     let classes = self.get_attr_value(attrs, "class");
@@ -668,11 +666,11 @@ impl DesktopRenderer {
         }
     }
 
-    fn render_code_span(&mut self, ui: &mut Ui, vnode: &VNode) {
+    fn render_code_span(ui: &mut Ui, vnode: &VNode) {
         match vnode {
             VNode::Element { children, .. } => {
                 for child in children {
-                    self.render_code_span(ui, child);
+                    Self::render_code_span(ui, child);
                 }
             }
             VNode::Text(text) => {
@@ -688,7 +686,7 @@ impl DesktopRenderer {
             .show(ui, |ui| {
                 ui.style_mut().override_text_style = Some(egui::TextStyle::Monospace);
                 for child in children {
-                    self.render_code_span(ui, child);
+                    Self::render_code_span(ui, child);
                 }
             });
     }
