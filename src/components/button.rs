@@ -5,7 +5,7 @@ use crate::simple_vnode::{VAttr, VNode};
 use std::cell::RefCell;
 use std::rc::Rc;
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub enum ButtonVariant {
     Primary,
     Secondary,
@@ -14,7 +14,7 @@ pub enum ButtonVariant {
     Ghost,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub enum ButtonSize {
     Small,
     Medium,

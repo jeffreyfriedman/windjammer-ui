@@ -32,6 +32,8 @@ pub struct App {
     pub title: String,
     /// Root UI component (static VNode for now)
     pub root: VNode,
+    /// Optional render function for reactive apps
+    pub render_fn: Option<Box<dyn Fn() -> VNode>>,
 }
 
 impl App {
@@ -40,30 +42,100 @@ impl App {
         Self {
             title: title.into(),
             root,
+            render_fn: None,
         }
     }
-
-    /// Create a new application with a render function (for reactivity)
-    #[cfg(target_arch = "wasm32")]
-    pub fn new_reactive(title: impl Into<String>, render_fn: impl Fn() -> VNode + 'static) -> Self {
-        let render_fn = Rc::new(render_fn);
+    
+    /// Create a new application with a render function (reactive)
+    pub fn new_reactive<F>(title: impl Into<String>, render_fn: F) -> Self
+    where
+        F: Fn() -> VNode + 'static,
+    {
         let initial_vnode = render_fn();
-
         Self {
             title: title.into(),
             root: initial_vnode,
+            render_fn: Some(Box::new(render_fn)),
         }
     }
 
     /// Run the application (WASM only)
     #[cfg(target_arch = "wasm32")]
     pub fn run(self) {
-        match self.run_internal() {
-            Ok(_) => {}
-            Err(e) => {
-                web_sys::console::error_1(&format!("Failed to mount app: {:?}", e).into());
-            }
-        }
+        use crate::simple_renderer;
+        use wasm_bindgen::JsCast;
+        
+        // Get the root element from the DOM
+        let window = web_sys::window().expect("No window found");
+        let document = window.document().expect("No document found");
+        let root_el = document
+            .get_element_by_id("app")
+            .expect("No #app element found in HTML")
+            .dyn_into::<web_sys::HtmlElement>()
+            .expect("Root is not an HTMLElement");
+        
+        // Render the initial UI
+        let render_fn = self.render_fn;
+        let mut current_vnode = self.root;
+        
+        // Simple initial render
+        let html = simple_renderer::render_to_html(&current_vnode);
+        root_el.set_inner_html(&html);
+        
+        web_sys::console::log_1(&format!("✅ {} mounted", self.title).into());
+        
+        // TODO: Add reactive re-rendering support for WASM
+        // For now, just renders the initial state
+    }
+
+    /// Run the application (Desktop with egui/eframe)
+    #[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
+    pub fn run(self) {
+        use crate::desktop_renderer::DesktopRenderer;
+        
+        let title = self.title;
+        let render_fn = self.render_fn;
+        let mut current_vnode = self.root;
+        
+        let options = eframe::NativeOptions {
+            viewport: eframe::egui::ViewportBuilder::default()
+                .with_inner_size([800.0, 600.0])
+                .with_title(title.clone()),
+            ..Default::default()
+        };
+        
+        let _ = eframe::run_simple_native(
+            &title,
+            options,
+            move |ctx, _frame| {
+                // Set up repaint callback for reactive updates
+                let ctx_clone = ctx.clone();
+                crate::desktop_app_context::set_repaint_callback(move || {
+                    ctx_clone.request_repaint();
+                });
+                
+                // Re-generate VNode if we have a render function (reactive mode)
+                if let Some(ref render) = render_fn {
+                    current_vnode = render();
+                }
+                
+                // Render the UI
+                let mut renderer = DesktopRenderer::new();
+                renderer.render(ctx, &current_vnode);
+            },
+        );
+        
+        // Cleanup
+        crate::desktop_app_context::clear_repaint_callback();
+    }
+
+    /// Run the application (Non-desktop, non-WASM - error)
+    #[cfg(all(not(target_arch = "wasm32"), not(feature = "desktop")))]
+    pub fn run(self) {
+        eprintln!("❌ Error: App::run() requires either:");
+        eprintln!("   - WASM target (for browser)");
+        eprintln!("   - 'desktop' feature (for native)");
+        panic!("Cannot run app without a supported platform");
     }
 
     /// Internal run method that returns Result
@@ -107,14 +179,6 @@ impl App {
         web_sys::console::log_1(&"✅ UI mounted successfully!".into());
 
         Ok(())
-    }
-
-    /// Run the application (non-WASM - just prints info)
-    #[cfg(not(target_arch = "wasm32"))]
-    pub fn run(self) {
-        println!("🎮 {} - Windjammer App", self.title);
-        println!("Note: This is a UI application. To see the UI, compile to WASM.");
-        println!("Root component created successfully.");
     }
 }
 

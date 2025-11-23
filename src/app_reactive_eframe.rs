@@ -75,10 +75,11 @@ impl ReactiveApp {
                 *needs_rerender_clone.lock().unwrap() = false;
 
                 let vnode = render_fn_clone();
-                let html = crate::renderer::render_to_html(&vnode);
+                let html = crate::simple_renderer::render_to_html(&vnode);
                 root.set_inner_html(&html);
 
-                crate::renderer::attach_event_listeners(&root, &vnode);
+                // Event listeners are attached in future version
+                // crate::renderer::attach_event_listeners(&root, &vnode);
             }
 
             web_sys::window()

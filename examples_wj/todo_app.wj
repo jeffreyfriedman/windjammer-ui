@@ -4,6 +4,7 @@
 use std::ui::*
 use std::collections::*
 
+@derive(Clone)
 struct TodoItem {
     id: int,
     text: string,

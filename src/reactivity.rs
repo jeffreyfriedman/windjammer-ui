@@ -132,6 +132,12 @@ impl<T: Clone> Signal<T> {
         {
             crate::app_reactive::trigger_rerender();
         }
+        
+        // Trigger UI re-render for desktop apps
+        #[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
+        {
+            crate::desktop_app_context::trigger_repaint();
+        }
     }
 
     /// Get the signal's unique ID

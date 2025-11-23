@@ -1,105 +1,106 @@
-//! Platform abstraction layer for cross-platform compatibility
-//!
-//! This module provides a unified API for different platforms:
-//! - Web (JavaScript/WASM)
-//! - Desktop (macOS, Windows, Linux via Tauri)
-//! - Mobile (iOS, Android)
+// Platform abstraction layer for windjammer-ui
+//
+// This module provides platform-specific implementations for:
+// - Desktop (egui)
+// - Web (WASM)
+// - iOS (UIKit/SwiftUI) - Future
+// - Android (Jetpack Compose) - Future
 
-pub mod capabilities;
-pub mod capability_impl;
-// Desktop platform (old winit+wgpu implementation, deprecated)
-// #[cfg(all(not(target_arch = "wasm32"), feature = "desktop-old"))]
-// pub mod desktop;
-// pub mod desktop_renderer;
-pub mod mobile;
+pub mod desktop;
 pub mod web;
 
-use std::fmt;
+// Mobile platforms (coming soon)
+#[cfg(target_os = "ios")]
+pub mod ios;
 
-/// The type of platform the application is running on
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-pub enum PlatformType {
-    /// Web platform (browser, JavaScript or WASM)
-    Web,
-    /// Desktop platform (macOS, Windows, Linux)
+#[cfg(target_os = "android")]
+pub mod android;
+
+/// Platform target for code generation
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Target {
+    /// Desktop (egui backend)
     Desktop,
-    /// Mobile platform (iOS, Android)
-    Mobile,
+    /// Web (WASM backend)
+    Web,
+    /// iOS (UIKit/SwiftUI backend)
+    IOS,
+    /// Android (Jetpack Compose backend)
+    Android,
 }
 
-impl fmt::Display for PlatformType {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+impl Target {
+    /// Get target from string
+    pub fn from_str(s: &str) -> Option<Self> {
+        match s.to_lowercase().as_str() {
+            "desktop" => Some(Target::Desktop),
+            "web" | "wasm" => Some(Target::Web),
+            "ios" | "iphone" => Some(Target::IOS),
+            "android" => Some(Target::Android),
+            _ => None,
+        }
+    }
+    
+    /// Check if target is mobile
+    pub fn is_mobile(&self) -> bool {
+        matches!(self, Target::IOS | Target::Android)
+    }
+    
+    /// Get target name
+    pub fn name(&self) -> &'static str {
         match self {
-            PlatformType::Web => write!(f, "web"),
-            PlatformType::Desktop => write!(f, "desktop"),
-            PlatformType::Mobile => write!(f, "mobile"),
+            Target::Desktop => "desktop",
+            Target::Web => "web",
+            Target::IOS => "ios",
+            Target::Android => "android",
         }
     }
 }
 
-/// Trait for platform-specific implementations
-pub trait Platform: Send + Sync {
-    /// Get the platform type
-    fn platform_type(&self) -> PlatformType;
-
-    /// Initialize the platform
-    fn init(&mut self) -> Result<(), String>;
-
-    /// Run the event loop (if applicable)
-    fn run(&mut self) -> Result<(), String>;
-
-    /// Check if a capability is supported
-    fn supports_capability(&self, capability: capabilities::Capability) -> bool;
+/// Renderer trait that all platforms must implement
+pub trait Renderer {
+    /// Render a virtual DOM node
+    fn render(&mut self, vnode: &crate::vdom::VNode);
+    
+    /// Handle an event
+    fn handle_event(&mut self, event: Event);
+    
+    /// Update the UI (call after state changes)
+    fn update(&mut self);
 }
 
-/// Detect the current platform at compile time
-pub fn detect_platform() -> PlatformType {
-    #[cfg(all(
-        target_family = "wasm",
-        not(feature = "desktop"),
-        not(feature = "mobile-ios"),
-        not(feature = "mobile-android")
-    ))]
-    {
-        return PlatformType::Web;
-    }
-
-    #[cfg(all(feature = "desktop", not(target_family = "wasm")))]
-    {
-        return PlatformType::Desktop;
-    }
-
-    #[cfg(any(feature = "mobile-ios", feature = "mobile-android"))]
-    #[allow(unreachable_code)]
-    {
-        return PlatformType::Mobile;
-    }
-
-    #[cfg(not(any(
-        target_family = "wasm",
-        feature = "desktop",
-        feature = "mobile-ios",
-        feature = "mobile-android"
-    )))]
-    {
-        // Default to web for unknown platforms
-        return PlatformType::Web;
-    }
-
-    #[allow(unreachable_code)]
-    PlatformType::Web
+/// Platform-agnostic event
+#[derive(Debug, Clone)]
+pub enum Event {
+    /// Click/Tap event
+    Click { x: f32, y: f32 },
+    /// Key press
+    KeyPress { key: String },
+    /// Text input
+    TextInput { text: String },
+    /// Gesture (mobile)
+    Gesture(GestureEvent),
 }
 
-/// Create a platform instance for the current platform
-pub fn create_platform() -> Box<dyn Platform> {
-    match detect_platform() {
-        PlatformType::Web => Box::new(web::WebPlatform::new()),
-        PlatformType::Desktop => {
-            // Desktop platform is now handled by eframe, not a separate platform module
-            panic!("Desktop platform should use eframe directly, not create_platform()")
-        }
-        PlatformType::Mobile => Box::new(mobile::MobilePlatform::new()),
-    }
+/// Mobile gesture events
+#[derive(Debug, Clone)]
+pub enum GestureEvent {
+    /// Swipe gesture
+    Swipe { direction: SwipeDirection, velocity: f32 },
+    /// Pinch gesture (zoom)
+    Pinch { scale: f32 },
+    /// Long press
+    LongPress { x: f32, y: f32, duration: f32 },
+    /// Pan/Drag
+    Pan { dx: f32, dy: f32 },
+}
+
+#[derive(Debug, Clone, Copy)]
+pub enum SwipeDirection {
+    Up,
+    Down,
+    Left,
+    Right,
 }
 
 #[cfg(test)]
@@ -107,24 +108,27 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_platform_detection() {
-        let platform_type = detect_platform();
-        assert!(matches!(
-            platform_type,
-            PlatformType::Web | PlatformType::Desktop | PlatformType::Mobile
-        ));
+    fn test_target_from_str() {
+        assert_eq!(Target::from_str("desktop"), Some(Target::Desktop));
+        assert_eq!(Target::from_str("web"), Some(Target::Web));
+        assert_eq!(Target::from_str("ios"), Some(Target::IOS));
+        assert_eq!(Target::from_str("android"), Some(Target::Android));
+        assert_eq!(Target::from_str("invalid"), None);
     }
 
     #[test]
-    fn test_platform_display() {
-        assert_eq!(PlatformType::Web.to_string(), "web");
-        assert_eq!(PlatformType::Desktop.to_string(), "desktop");
-        assert_eq!(PlatformType::Mobile.to_string(), "mobile");
+    fn test_is_mobile() {
+        assert!(!Target::Desktop.is_mobile());
+        assert!(!Target::Web.is_mobile());
+        assert!(Target::IOS.is_mobile());
+        assert!(Target::Android.is_mobile());
     }
 
     #[test]
-    fn test_create_platform() {
-        let platform = create_platform();
-        assert_eq!(platform.platform_type(), detect_platform());
+    fn test_target_name() {
+        assert_eq!(Target::Desktop.name(), "desktop");
+        assert_eq!(Target::Web.name(), "web");
+        assert_eq!(Target::IOS.name(), "ios");
+        assert_eq!(Target::Android.name(), "android");
     }
 }

@@ -1,0 +1,41 @@
+# Rust
+/target/
+**/*.rs.bk
+*.pdb
+Cargo.lock
+
+# Build artifacts
+/build/
+/build_*/
+/output/
+/test_output/
+/test_output_*/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.bak
+*.log
+
+# Example build outputs
+examples/*/pkg/
+examples/*/target/
+examples/*/build/
+examples/*/build_output/
+examples/*/src/
+examples_wj/build_*/
+build_counter/
+
+# Temp markdown files
+*.md.tmp
+
