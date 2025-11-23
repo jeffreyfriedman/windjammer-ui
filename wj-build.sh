@@ -22,7 +22,7 @@ echo "✓ Found wj CLI at $WJ_CLI"
 echo ""
 
 # Source and output directories  
-SRC_DIR="$SCRIPT_DIR/src_wj/components"
+SRC_DIR="$SCRIPT_DIR/src/components_wj"
 OUT_DIR="$SCRIPT_DIR/src/components/generated"
 
 # Create output directory
