@@ -125,8 +125,8 @@ fn test_scroll_area_directions() {
 
 #[test]
 fn test_spacer_grid_system() {
-    // Test 8px grid system
-    let spacers = vec![
+    // Test 8px grid system - create spacers
+    let spacers = [
         Spacer::xxs(), // 4px
         Spacer::xs(),  // 8px
         Spacer::sm(),  // 12px
@@ -227,5 +227,5 @@ fn test_complete_material_editor_structure() {
     ]);
 
     // If we got here, all widgets are working correctly
-    assert!(true);
+    // Test passes by not panicking
 }
