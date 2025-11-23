@@ -17,9 +17,11 @@ struct TodoItem {
 #[test]
 fn test_list_view_rendering() {
     // Test rendering a list of items
-    let items = ["Item 1".to_string(),
+    let items = [
+        "Item 1".to_string(),
         "Item 2".to_string(),
-        "Item 3".to_string()];
+        "Item 3".to_string(),
+    ];
 
     let list = Flex::new()
         .direction(FlexDirection::Column)

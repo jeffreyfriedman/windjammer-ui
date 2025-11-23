@@ -82,11 +82,13 @@ fn test_pbr_material_editor_widgets() {
 #[test]
 fn test_nested_collapsible_sections() {
     // Test progressive disclosure with multiple collapsible sections
-    let sections = [CollapsibleSection::new("Base Color").expanded(true),
+    let sections = [
+        CollapsibleSection::new("Base Color").expanded(true),
         CollapsibleSection::new("Metallic").expanded(true),
         CollapsibleSection::new("Roughness").expanded(true),
         CollapsibleSection::new("Normal Map").expanded(false),
-        CollapsibleSection::new("Emissive").expanded(false)];
+        CollapsibleSection::new("Emissive").expanded(false),
+    ];
 
     // Verify sections can be created
     assert_eq!(sections.len(), 5);
