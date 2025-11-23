@@ -30,8 +30,8 @@ pub enum Target {
 }
 
 impl Target {
-    /// Get target from string
-    pub fn from_str(s: &str) -> Option<Self> {
+    /// Parse target from string (case-insensitive)
+    pub fn parse(s: &str) -> Option<Self> {
         match s.to_lowercase().as_str() {
             "desktop" => Some(Target::Desktop),
             "web" | "wasm" => Some(Target::Web),

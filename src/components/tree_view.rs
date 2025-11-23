@@ -37,7 +37,7 @@ impl TreeView {
     pub fn render(&self) -> VNode {
         let mut children = Vec::new();
         for item in &self.items {
-            children.push(self.render_item(item, 0));
+            children.push(Self::render_item(item, 0));
         }
 
         VNode::Element {
@@ -47,7 +47,7 @@ impl TreeView {
         }
     }
 
-    fn render_item(&self, item: &TreeItem, depth: usize) -> VNode {
+    fn render_item(item: &TreeItem, depth: usize) -> VNode {
         let mut children = vec![VNode::Text(format!(
             "{}{} {}",
             "  ".repeat(depth),
@@ -57,7 +57,7 @@ impl TreeView {
 
         if item.expanded {
             for child in &item.children {
-                children.push(self.render_item(child, depth + 1));
+                children.push(Self::render_item(child, depth + 1));
             }
         }
 
