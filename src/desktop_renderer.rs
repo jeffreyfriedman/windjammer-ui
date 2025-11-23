@@ -17,6 +17,13 @@ pub struct DesktopRenderer {
 }
 
 #[cfg(not(target_arch = "wasm32"))]
+impl Default for DesktopRenderer {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+#[cfg(not(target_arch = "wasm32"))]
 impl DesktopRenderer {
     pub fn new() -> Self {
         Self {
