@@ -1173,15 +1173,17 @@ fn main() {
                 <div class="showcase-grid">
                     <div class="showcase-item">
                         <div class="showcase-label">Navbar (click links to navigate!)</div>
-                        <nav style="display: flex; align-items: center; gap: 24px; padding: 12px 24px; background: var(--showcase-bg); border-radius: 8px; border: 1px solid var(--border-color);">
-                            <div style="font-weight: 700; font-size: 18px; color: #667eea; cursor: pointer;" onclick="alert('Brand clicked!')">MyApp</div>
+                        <nav style="display: flex; align-items: center; gap: 24px; padding: 12px 24px; background: var(--showcase-bg); border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 8px;">
+                            <div style="font-weight: 700; font-size: 18px; color: #667eea; cursor: pointer;" onclick="navbarNavigate('brand')">MyApp</div>
                             <div style="display: flex; gap: 16px; flex: 1;">
-                                <a href="#" onclick="event.preventDefault(); alert('Home clicked!'); return false;" style="color: var(--text-primary); text-decoration: none; font-size: 14px; padding: 6px 12px; border-radius: 4px; transition: background 0.2s;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='transparent'">Home</a>
-                                <a href="#" onclick="event.preventDefault(); alert('About clicked!'); return false;" style="color: var(--text-primary); text-decoration: none; font-size: 14px; padding: 6px 12px; border-radius: 4px; transition: background 0.2s;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='transparent'">About</a>
-                                <a href="#" onclick="event.preventDefault(); alert('Contact clicked!'); return false;" style="color: var(--text-primary); text-decoration: none; font-size: 14px; padding: 6px 12px; border-radius: 4px; transition: background 0.2s;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='transparent'">Contact</a>
+                                <a href="#" class="navbar-link" data-page="home" onclick="event.preventDefault(); navbarNavigate('home'); return false;" style="color: var(--text-primary); text-decoration: none; font-size: 14px; padding: 6px 12px; border-radius: 4px; transition: all 0.2s; background: #667eea; color: white;" onmouseover="if(!this.classList.contains('active')) this.style.background='var(--border-color)'" onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">Home</a>
+                                <a href="#" class="navbar-link" data-page="about" onclick="event.preventDefault(); navbarNavigate('about'); return false;" style="color: var(--text-primary); text-decoration: none; font-size: 14px; padding: 6px 12px; border-radius: 4px; transition: all 0.2s;" onmouseover="this.style.background='var(--border-color)'" onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">About</a>
+                                <a href="#" class="navbar-link" data-page="contact" onclick="event.preventDefault(); navbarNavigate('contact'); return false;" style="color: var(--text-primary); text-decoration: none; font-size: 14px; padding: 6px 12px; border-radius: 4px; transition: all 0.2s;" onmouseover="this.style.background='var(--border-color)'" onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">Contact</a>
                             </div>
                         </nav>
-                        <p style="font-size: 11px; color: var(--text-secondary); margin-top: 8px;">Click any link to see navigation demo</p>
+                        <div id="navbar-status" style="padding: 12px; background: var(--showcase-bg); border-radius: 6px; color: var(--text-primary); font-size: 13px; border: 1px solid var(--border-color);">
+                            📍 Current page: <strong style="color: #667eea;">Home</strong>
+                        </div>
                     </div>
                     <div class="showcase-item">
                         <div class="showcase-label">Sidebar (click items to navigate!)</div>
@@ -1209,66 +1211,48 @@ fn main() {
                     <div class="showcase-item">
                         <div class="showcase-label">Hamburger Menu (click icon!)</div>
                         <div style="position: relative;">
-                            <button id="hamburger-btn" onclick="document.getElementById('hamburger-drawer').classList.toggle('show')" style="width: 40px; height: 40px; background: var(--showcase-bg); border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; transition: background 0.2s;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='var(--showcase-bg)'">
-                                <span style="width: 20px; height: 2px; background: var(--text-primary); transition: all 0.3s;"></span>
-                                <span style="width: 20px; height: 2px; background: var(--text-primary); transition: all 0.3s;"></span>
-                                <span style="width: 20px; height: 2px; background: var(--text-primary); transition: all 0.3s;"></span>
+                            <button id="hamburger-btn" onclick="toggleHamburgerMenu()" style="width: 48px; height: 48px; background: var(--showcase-bg); border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; transition: all 0.2s;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='var(--showcase-bg)'">
+                                <span style="width: 22px; height: 2px; background: var(--text-primary); transition: all 0.3s;"></span>
+                                <span style="width: 22px; height: 2px; background: var(--text-primary); transition: all 0.3s;"></span>
+                                <span style="width: 22px; height: 2px; background: var(--text-primary); transition: all 0.3s;"></span>
                             </button>
-                            <div id="hamburger-drawer" style="position: absolute; top: 48px; left: 0; width: 200px; background: var(--showcase-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; display: none; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-                                <a href="#" onclick="event.preventDefault(); alert('Profile clicked!'); return false;" style="display: block; padding: 10px 12px; color: var(--text-primary); text-decoration: none; border-radius: 4px; transition: background 0.2s;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='transparent'">👤 Profile</a>
-                                <a href="#" onclick="event.preventDefault(); alert('Settings clicked!'); return false;" style="display: block; padding: 10px 12px; color: var(--text-primary); text-decoration: none; border-radius: 4px; transition: background 0.2s;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='transparent'">⚙️ Settings</a>
-                                <a href="#" onclick="event.preventDefault(); alert('Logout clicked!'); return false;" style="display: block; padding: 10px 12px; color: var(--text-primary); text-decoration: none; border-radius: 4px; transition: background 0.2s;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='transparent'">🚪 Logout</a>
+                            <div id="hamburger-drawer" style="position: absolute; top: 56px; left: 0; width: 200px; background: var(--showcase-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; display: none; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                                <a href="#" onclick="event.preventDefault(); hamburgerAction('profile'); return false;" style="display: block; padding: 10px 12px; color: var(--text-primary); text-decoration: none; border-radius: 4px; transition: background 0.2s; font-size: 14px;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='transparent'">👤 Profile</a>
+                                <a href="#" onclick="event.preventDefault(); hamburgerAction('settings'); return false;" style="display: block; padding: 10px 12px; color: var(--text-primary); text-decoration: none; border-radius: 4px; transition: background 0.2s; font-size: 14px;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='transparent'">⚙️ Settings</a>
+                                <a href="#" onclick="event.preventDefault(); hamburgerAction('logout'); return false;" style="display: block; padding: 10px 12px; color: var(--text-primary); text-decoration: none; border-radius: 4px; transition: background 0.2s; font-size: 14px;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='transparent'">🚪 Logout</a>
                             </div>
                             <style>
-                                #hamburger-drawer.show { display: block; animation: slideDown 0.2s ease; }
+                                #hamburger-drawer.show { display: block !important; animation: slideDown 0.2s ease; }
                                 @keyframes slideDown {
                                     from { opacity: 0; transform: translateY(-10px); }
                                     to { opacity: 1; transform: translateY(0); }
                                 }
                             </style>
                         </div>
-                        <p style="font-size: 11px; color: var(--text-secondary); margin-top: 8px;">Click hamburger icon to toggle menu</p>
+                        <div id="hamburger-status" style="padding: 12px; background: var(--showcase-bg); border-radius: 6px; color: var(--text-secondary); font-size: 13px; border: 1px solid var(--border-color); margin-top: 8px;">
+                            Click the hamburger icon to toggle menu
+                        </div>
                     </div>
                     <div class="showcase-item">
                         <div class="showcase-label">Context Menu (right-click the box!)</div>
-                        <div id="context-target" oncontextmenu="event.preventDefault(); showContextMenu(event);" style="padding: 40px; background: var(--showcase-bg); border: 2px dashed var(--border-color); border-radius: 8px; text-align: center; color: var(--text-primary); cursor: context-menu;">
-                            Right-click here!
+                        <div id="context-target" oncontextmenu="return showContextMenuDemo(event);" style="padding: 50px 40px; background: var(--showcase-bg); border: 2px dashed var(--border-color); border-radius: 8px; text-align: center; color: var(--text-primary); cursor: context-menu; user-select: none; font-weight: 500;">
+                            Right-click here! 🖱️
                         </div>
-                        <div id="context-menu-demo" style="position: fixed; display: none; background: var(--showcase-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 4px; min-width: 150px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 1000;">
-                            <button onclick="contextMenuAction('copy')" style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; background: none; border: none; cursor: pointer; border-radius: 4px; color: var(--text-primary); font-size: 14px; text-align: left;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='none'">
-                                <span>📋</span> Copy
+                        <div id="context-menu-demo" style="position: fixed; display: none; background: var(--main-bg); border: 2px solid var(--border-color); border-radius: 8px; padding: 4px; min-width: 160px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); z-index: 1000;">
+                            <button onclick="contextMenuActionDemo('copy')" style="display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; background: none; border: none; cursor: pointer; border-radius: 4px; color: var(--text-primary); font-size: 14px; text-align: left; transition: background 0.15s;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='transparent'">
+                                <span>📋</span> <span>Copy</span>
                             </button>
-                            <button onclick="contextMenuAction('paste')" style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; background: none; border: none; cursor: pointer; border-radius: 4px; color: var(--text-primary); font-size: 14px; text-align: left;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='none'">
-                                <span>📄</span> Paste
+                            <button onclick="contextMenuActionDemo('paste')" style="display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; background: none; border: none; cursor: pointer; border-radius: 4px; color: var(--text-primary); font-size: 14px; text-align: left; transition: background 0.15s;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='transparent'">
+                                <span>📄</span> <span>Paste</span>
                             </button>
-                            <button onclick="contextMenuAction('delete')" style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; background: none; border: none; cursor: pointer; border-radius: 4px; color: var(--text-primary); font-size: 14px; text-align: left;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='none'">
-                                <span>🗑️</span> Delete
+                            <div style="height: 1px; background: var(--border-color); margin: 4px 0;"></div>
+                            <button onclick="contextMenuActionDemo('delete')" style="display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; background: none; border: none; cursor: pointer; border-radius: 4px; color: #ef4444; font-size: 14px; text-align: left; transition: background 0.15s;" onmouseover="this.style.background='rgba(239, 68, 68, 0.1)'" onmouseout="this.style.background='transparent'">
+                                <span>🗑️</span> <span>Delete</span>
                             </button>
                         </div>
-                        <p style="font-size: 11px; color: var(--text-secondary); margin-top: 8px;">Right-click box to see context menu</p>
-                        <script>
-                            // Show context menu at cursor position
-                            function showContextMenu(event) {
-                                const menu = document.getElementById('context-menu-demo');
-                                menu.style.display = 'block';
-                                menu.style.left = event.pageX + 'px';
-                                menu.style.top = event.pageY + 'px';
-                            }
-                            
-                            // Context menu actions
-                            function contextMenuAction(action) {
-                                alert(`Context menu action: ${action}`);
-                                document.getElementById('context-menu-demo').style.display = 'none';
-                            }
-                            
-                            // Close context menu when clicking elsewhere
-                            document.addEventListener('click', (e) => {
-                                const menu = document.getElementById('context-menu-demo');
-                                if (menu && !menu.contains(e.target)) {
-                                    menu.style.display = 'none';
-                                }
-                            });
-                        </script>
+                        <div id="context-status" style="padding: 12px; background: var(--showcase-bg); border-radius: 6px; color: var(--text-secondary); font-size: 13px; border: 1px solid var(--border-color); margin-top: 8px;">
+                            Right-click the box above to see the context menu
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1427,6 +1411,36 @@ fn main() {
             });
         }
         
+        // Navbar navigation
+        function navbarNavigate(page) {
+            const statusElement = document.getElementById('navbar-status');
+            const pageNames = {
+                'brand': 'Home (Brand)',
+                'home': 'Home',
+                'about': 'About',
+                'contact': 'Contact'
+            };
+            
+            const pageName = pageNames[page] || page;
+            if (statusElement) {
+                statusElement.innerHTML = `📍 Current page: <strong style="color: #667eea;">${pageName}</strong>`;
+            }
+            
+            // Update active state
+            const links = document.querySelectorAll('.navbar-link');
+            links.forEach(link => {
+                if (link.dataset.page === page) {
+                    link.style.background = '#667eea';
+                    link.style.color = 'white';
+                    link.classList.add('active');
+                } else {
+                    link.style.background = 'transparent';
+                    link.style.color = 'var(--text-primary)';
+                    link.classList.remove('active');
+                }
+            });
+        }
+        
         // Sidebar page switching
         function switchSidebarPage(page, element) {
             // Update content
@@ -1456,6 +1470,100 @@ fn main() {
                 });
             }
         }
+        
+        // Hamburger menu toggle
+        function toggleHamburgerMenu() {
+            const drawer = document.getElementById('hamburger-drawer');
+            const status = document.getElementById('hamburger-status');
+            
+            if (drawer) {
+                const isShowing = drawer.classList.contains('show');
+                drawer.classList.toggle('show');
+                
+                if (status) {
+                    if (isShowing) {
+                        status.textContent = 'Menu closed. Click to reopen.';
+                        status.style.color = 'var(--text-secondary)';
+                    } else {
+                        status.textContent = '✓ Menu opened! Click an item or click outside to close.';
+                        status.style.color = '#10b981';
+                    }
+                }
+            }
+        }
+        
+        // Hamburger menu action
+        function hamburgerAction(action) {
+            const status = document.getElementById('hamburger-status');
+            const drawer = document.getElementById('hamburger-drawer');
+            
+            const actionMap = {
+                'profile': '👤 Navigated to Profile',
+                'settings': '⚙️ Navigated to Settings',
+                'logout': '🚪 Logged out'
+            };
+            
+            if (status) {
+                status.textContent = actionMap[action] || 'Action performed';
+                status.style.color = '#667eea';
+            }
+            
+            // Close drawer
+            if (drawer) {
+                drawer.classList.remove('show');
+            }
+        }
+        
+        // Context menu
+        function showContextMenuDemo(event) {
+            event.preventDefault();
+            const menu = document.getElementById('context-menu-demo');
+            if (menu) {
+                menu.style.display = 'block';
+                menu.style.left = event.pageX + 'px';
+                menu.style.top = event.pageY + 'px';
+            }
+            return false;
+        }
+        
+        function contextMenuActionDemo(action) {
+            const status = document.getElementById('context-status');
+            const menu = document.getElementById('context-menu-demo');
+            
+            const actionMap = {
+                'copy': '📋 Copied to clipboard',
+                'paste': '📄 Pasted from clipboard',
+                'delete': '🗑️ Deleted item'
+            };
+            
+            if (status) {
+                status.textContent = actionMap[action] || 'Action performed';
+                status.style.color = '#667eea';
+            }
+            
+            // Close menu
+            if (menu) {
+                menu.style.display = 'none';
+            }
+        }
+        
+        // Close context menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const menu = document.getElementById('context-menu-demo');
+            const target = document.getElementById('context-target');
+            if (menu && !menu.contains(e.target) && e.target !== target) {
+                menu.style.display = 'none';
+            }
+        });
+        
+        // Close hamburger drawer when clicking outside
+        document.addEventListener('click', (e) => {
+            const drawer = document.getElementById('hamburger-drawer');
+            const btn = document.getElementById('hamburger-btn');
+            if (drawer && !drawer.contains(e.target) && e.target !== btn && !btn.contains(e.target)) {
+                drawer.classList.remove('show');
+            }
+        });
     </script>
 </body>
 </html>
