@@ -304,7 +304,7 @@ All examples output HTML that can be:
 
 ```windjammer
 // my_app.wj
-use std::ui::*
+use windjammer_ui::*
 
 fn main() {
     let ui = Container::new()

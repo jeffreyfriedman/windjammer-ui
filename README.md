@@ -13,7 +13,7 @@
 ### Write Pure Windjammer
 
 ```windjammer
-use std::ui::*
+use windjammer_ui::*
 
 fn main() {
     let app = Container::new()
@@ -408,7 +408,7 @@ TreeView::new()
 ### Counter App
 
 ```windjammer
-use std::ui::*
+use windjammer_ui::*
 
 fn main() {
     let mut count = 0
@@ -433,7 +433,7 @@ fn main() {
 ### Dashboard Layout
 
 ```windjammer
-use std::ui::*
+use windjammer_ui::*
 
 fn main() {
     let dashboard = Container::new()
@@ -471,7 +471,7 @@ fn main() {
 ### Form with Validation
 
 ```windjammer
-use std::ui::*
+use windjammer_ui::*
 
 fn main() {
     let form = Card::new()
@@ -522,7 +522,7 @@ wj add windjammer-ui
 ### 3. Write Windjammer code
 
 ```windjammer
-use std::ui::*
+use windjammer_ui::*
 
 fn main() {
     let ui = Button::new("Hello").render()
