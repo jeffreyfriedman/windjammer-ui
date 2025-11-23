@@ -1,0 +1,41 @@
+pub struct Toolbar {
+    items: Vec<string>,
+    position: string,
+}
+
+impl Toolbar {
+    pub fn new() -> Toolbar {
+        Toolbar {
+            items: Vec::new(),
+            position: "top".to_string(),
+        }
+    }
+
+    pub fn item(self, item: string) -> Toolbar {
+        self.items.push(item)
+        self
+    }
+
+    pub fn position(self, position: string) -> Toolbar {
+        self.position = position
+        self
+    }
+
+    pub fn render(self) -> string {
+        let items_html = self.items.join("\n")
+
+        format!("<div class='wj-toolbar wj-toolbar-{}'>
+  {}
+</div>", self.position, items_html)
+    }
+}
+
+fn main() {
+    let toolbar = Toolbar::new()
+        .item("<button>New</button>".to_string())
+        .item("<button>Save</button>".to_string())
+        .item("<button>Export</button>".to_string())
+
+    println!("{}", toolbar.render())
+}
+

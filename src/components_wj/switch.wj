@@ -1,0 +1,76 @@
+pub enum SwitchSize {
+    Small,
+    Medium,
+    Large,
+}
+
+pub struct Switch {
+    label: string,
+    checked: bool,
+    disabled: bool,
+    size: SwitchSize,
+}
+
+impl Switch {
+    pub fn new() -> Switch {
+        Switch {
+            label: "".to_string(),
+            checked: false,
+            disabled: false,
+            size: SwitchSize::Medium,
+        }
+    }
+
+    pub fn label(self, label: string) -> Switch {
+        self.label = label
+        self
+    }
+
+    pub fn checked(self, checked: bool) -> Switch {
+        self.checked = checked
+        self
+    }
+
+    pub fn disabled(self, disabled: bool) -> Switch {
+        self.disabled = disabled
+        self
+    }
+
+    pub fn size(self, size: SwitchSize) -> Switch {
+        self.size = size
+        self
+    }
+
+    pub fn render(self) -> string {
+        let size_class = match self.size {
+            SwitchSize::Small => "wj-switch-sm",
+            SwitchSize::Medium => "wj-switch-md",
+            SwitchSize::Large => "wj-switch-lg",
+        }
+
+        let checked_class = if self.checked { " wj-switch-checked" } else { "" }
+        let disabled_attr = if self.disabled { " disabled" } else { "" }
+        let checked_attr = if self.checked { " checked" } else { "" }
+
+        let label_html = if self.label != "" {
+            format!("<span class='wj-switch-label'>{}</span>", self.label)
+        } else {
+            "".to_string()
+        }
+
+        format!("<label class='wj-switch {}{}'><input type='checkbox'{}{}/><span class='wj-switch-slider'></span>{}</label>",
+            size_class, checked_class, checked_attr, disabled_attr, label_html)
+    }
+}
+
+fn main() {
+    let switch1 = Switch::new().label("Enable notifications".to_string()).checked(true)
+    println!("{}", switch1.render())
+
+    let switch2 = Switch::new().label("Dark mode".to_string()).size(SwitchSize::Large)
+    println!("{}", switch2.render())
+
+    let switch3 = Switch::new().label("Disabled option".to_string()).disabled(true)
+    println!("{}", switch3.render())
+}
+

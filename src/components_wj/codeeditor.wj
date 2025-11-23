@@ -1,0 +1,58 @@
+pub struct CodeEditor {
+    code: string,
+    language: string,
+    theme: string,
+    line_numbers: bool,
+    readonly: bool,
+}
+
+impl CodeEditor {
+    pub fn new(code: string) -> CodeEditor {
+        CodeEditor {
+            code,
+            language: "rust".to_string(),
+            theme: "dark".to_string(),
+            line_numbers: true,
+            readonly: false,
+        }
+    }
+
+    pub fn language(self, language: string) -> CodeEditor {
+        self.language = language
+        self
+    }
+
+    pub fn theme(self, theme: string) -> CodeEditor {
+        self.theme = theme
+        self
+    }
+
+    pub fn line_numbers(self, show: bool) -> CodeEditor {
+        self.line_numbers = show
+        self
+    }
+
+    pub fn readonly(self, readonly: bool) -> CodeEditor {
+        self.readonly = readonly
+        self
+    }
+
+    pub fn render(self) -> string {
+        let readonly_attr = if self.readonly { " readonly" } else { "" }
+        let line_numbers_class = if self.line_numbers { " wj-editor-with-lines" } else { "" }
+
+        format!("<div class='wj-code-editor wj-editor-{} wj-editor-theme-{}{}'>
+  <textarea{}>
+{}</textarea>
+</div>", self.language, self.theme, line_numbers_class, readonly_attr, self.code)
+    }
+}
+
+fn main() {
+    let editor = CodeEditor::new("fn main() {\n    println!(\"Hello\");\n}".to_string())
+        .language("rust".to_string())
+        .theme("dark".to_string())
+
+    println!("{}", editor.render())
+}
+

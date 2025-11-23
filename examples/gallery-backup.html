@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windjammer UI Gallery - Component Showcase</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 24px;
+        }
+        
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 48px 32px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 16px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .content {
+            padding: 48px 32px;
+        }
+        
+        .component-section {
+            margin-bottom: 56px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .component-section:last-child {
+            border-bottom: none;
+        }
+        
+        .section-title {
+            font-size: 32px;
+            color: #1f2937;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        
+        .section-description {
+            color: #6b7280;
+            font-size: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+        
+        .showcase-item {
+            padding: 24px;
+            background: #f9fafb;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .showcase-label {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .component-demo {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        /* Text styles */
+        .wj-text { display: inline-block; margin: 4px 0; }
+        .wj-text.sm { font-size: 14px; }
+        .wj-text.md { font-size: 16px; }
+        .wj-text.lg { font-size: 20px; }
+        .wj-text.xl { font-size: 28px; }
+        .wj-text.bold { font-weight: 700; }
+        .wj-text.normal { font-weight: 400; }
+        
+        /* Button styles */
+        .wj-button {
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .wj-button:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.15); }
+        .wj-button:active { transform: translateY(0); }
+        .wj-button-primary { background: #667eea; color: white; }
+        .wj-button-secondary { background: #6b7280; color: white; }
+        .wj-button-success { background: #10b981; color: white; }
+        .wj-button-danger { background: #ef4444; color: white; }
+        .wj-button-ghost { background: transparent; color: #667eea; border: 2px solid #667eea; }
+        .wj-button-sm { padding: 6px 14px; font-size: 13px; }
+        .wj-button-md { padding: 10px 20px; font-size: 14px; }
+        .wj-button-lg { padding: 14px 28px; font-size: 16px; }
+        .wj-button[disabled] { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+        
+        /* Input styles */
+        .wj-input {
+            padding: 10px 14px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            width: 100%;
+            transition: all 0.2s;
+        }
+        .wj-input:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 4px rgba(102,126,234,0.1); }
+        
+        /* Checkbox styles */
+        .wj-checkbox { display: flex; align-items: center; gap: 10px; cursor: pointer; margin: 8px 0; }
+        .wj-checkbox input { width: 18px; height: 18px; cursor: pointer; accent-color: #667eea; }
+        .wj-checkbox-lg input { width: 22px; height: 22px; }
+        .wj-checkbox-sm input { width: 16px; height: 16px; }
+        .wj-checkbox span { color: #374151; font-size: 14px; }
+        
+        /* Slider styles */
+        .wj-slider {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: #e5e7eb;
+            border-radius: 4px;
+            outline: none;
+        }
+        .wj-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #667eea;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        /* Badge styles */
+        .wj-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .wj-badge-default { background: #f3f4f6; color: #374151; }
+        .wj-badge-primary { background: #dbeafe; color: #1e40af; }
+        .wj-badge-success { background: #d1fae5; color: #065f46; }
+        .wj-badge-warning { background: #fef3c7; color: #92400e; }
+        .wj-badge-danger { background: #fee2e2; color: #991b1b; }
+        .wj-badge-info { background: #e0e7ff; color: #3730a3; }
+        .wj-badge-sm { padding: 2px 8px; font-size: 11px; }
+        .wj-badge-md { padding: 4px 12px; font-size: 12px; }
+        .wj-badge-lg { padding: 6px 16px; font-size: 13px; }
+        
+        /* Alert styles */
+        .wj-alert {
+            padding: 16px 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            margin: 8px 0;
+        }
+        .wj-alert-error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+        .wj-alert-warning { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+        .wj-alert-info { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+        .wj-alert-success { background: #f0fdf4; color: #065f46; border: 1px solid #bbf7d0; }
+        
+        /* Card styles */
+        .wj-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s;
+        }
+        .wj-card:hover {
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        .wj-card-title {
+            font-weight: 700;
+            color: #1f2937;
+        }
+        
+        /* Progress bar styles */
+        .wj-progress-container {
+            background: #e5e7eb;
+        }
+        .wj-progress-bar {
+            transition: width 0.3s ease;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .wj-progress-default { background: #667eea; }
+        .wj-progress-success { background: #10b981; }
+        .wj-progress-warning { background: #f59e0b; }
+        .wj-progress-danger { background: #ef4444; }
+        
+        /* Divider styles */
+        .wj-divider {
+            background: #e5e7eb;
+            margin: 24px 0;
+        }
+        .wj-divider-horizontal {
+            height: 1px;
+            width: 100%;
+        }
+        .wj-divider-vertical {
+            width: 1px;
+            height: 40px;
+            display: inline-block;
+        }
+        
+        /* Spacer styles */
+        .wj-spacer {
+            flex-shrink: 0;
+        }
+        
+        /* Spinner styles */
+        .wj-spinner {
+            border: 3px solid #f3f4f6;
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        .wj-spinner-sm { width: 20px; height: 20px; }
+        .wj-spinner-md { width: 32px; height: 32px; }
+        .wj-spinner-lg { width: 48px; height: 48px; }
+        .wj-spinner-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .wj-spinner-label {
+            color: #6b7280;
+            font-size: 14px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Container & Flex styles */
+        .wj-container { display: block; }
+        .wj-flex { display: flex; }
+        
+        footer {
+            text-align: center;
+            padding: 48px 32px;
+            background: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        footer p {
+            color: #6b7280;
+            font-size: 14px;
+            margin: 8px 0;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 32px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="hero">
+            <h1>🎨 Windjammer UI Gallery</h1>
+            <p>A comprehensive showcase of all UI components built in pure Windjammer and transpiled to Rust. Experience 80% of Rust's power with 20% of the complexity!</p>
+        </div>
+        
+        <div class="content">
+            <!-- Typography Section -->
+            <div class="component-section">
+                <h2 class="section-title">Typography</h2>
+                <p class="section-description">Text components with various sizes and weights</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Text Sizes</div>
+                        <div class="component-demo">
+                            <span class='wj-text sm normal'>Small text example</span>
+                            <span class='wj-text md normal'>Medium text example</span>
+                            <span class='wj-text lg normal'>Large text example</span>
+                            <span class='wj-text xl normal'>Extra large text example</span>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Text Weights</div>
+                        <div class="component-demo">
+                            <span class='wj-text lg normal'>Normal weight</span>
+                            <span class='wj-text lg bold'>Bold weight</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Button Section -->
+            <div class="component-section">
+                <h2 class="section-title">Buttons</h2>
+                <p class="section-description">Interactive button components with multiple variants and sizes</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Button Variants</div>
+                        <div class='wj-flex' style='display: flex; flex-direction: row; gap: 8px; flex-wrap: wrap;'>
+                            <button class='wj-button wj-button-primary wj-button-md'>Primary</button>
+                            <button class='wj-button wj-button-secondary wj-button-md'>Secondary</button>
+                            <button class='wj-button wj-button-success wj-button-md'>Success</button>
+                            <button class='wj-button wj-button-danger wj-button-md'>Danger</button>
+                            <button class='wj-button wj-button-ghost wj-button-md'>Ghost</button>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Button Sizes</div>
+                        <div class='wj-flex' style='display: flex; flex-direction: row; gap: 8px; align-items: center;'>
+                            <button class='wj-button wj-button-primary wj-button-sm'>Small</button>
+                            <button class='wj-button wj-button-primary wj-button-md'>Medium</button>
+                            <button class='wj-button wj-button-primary wj-button-lg'>Large</button>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Button States</div>
+                        <div class='wj-flex' style='display: flex; flex-direction: row; gap: 8px;'>
+                            <button class='wj-button wj-button-primary wj-button-md'>Active</button>
+                            <button class='wj-button wj-button-primary wj-button-md' disabled='true'>Disabled</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Form Inputs Section -->
+            <div class="component-section">
+                <h2 class="section-title">Form Inputs</h2>
+                <p class="section-description">Text inputs, checkboxes, and sliders for user interaction</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Text Inputs</div>
+                        <div class="component-demo">
+                            <input class='wj-input' value='' placeholder='Enter your username'/>
+                            <input class='wj-input' value='john@example.com' placeholder='Email address'/>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Checkboxes</div>
+                        <div class="component-demo">
+                            <label class='wj-checkbox wj-checkbox-md'><input type='checkbox' checked/><span>Default (checked)</span></label>
+                            <label class='wj-checkbox wj-checkbox-sm'><input type='checkbox'/><span>Small size</span></label>
+                            <label class='wj-checkbox wj-checkbox-lg'><input type='checkbox'/><span>Large size</span></label>
+                            <label class='wj-checkbox wj-checkbox-md'><input type='checkbox' disabled/><span>Disabled</span></label>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Sliders</div>
+                        <div class="component-demo">
+                            <div><label style="font-size:13px; color:#6b7280;">Volume (50%)</label><input type='range' class='wj-slider' min='0' max='100' step='1' value='50'></div>
+                            <div><label style="font-size:13px; color:#6b7280;">Brightness (75%)</label><input type='range' class='wj-slider' min='0' max='100' step='1' value='75'></div>
+                            <div><label style="font-size:13px; color:#6b7280;">Disabled</label><input type='range' class='wj-slider' min='0' max='100' step='1' value='25' disabled></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Badges Section -->
+            <div class="component-section">
+                <h2 class="section-title">Badges</h2>
+                <p class="section-description">Status indicators and labels with multiple variants</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Badge Variants</div>
+                        <div class='wj-flex' style='display: flex; flex-direction: row; gap: 8px; flex-wrap: wrap;'>
+                            <span class='wj-badge wj-badge-default wj-badge-md'>Default</span>
+                            <span class='wj-badge wj-badge-primary wj-badge-md'>Primary</span>
+                            <span class='wj-badge wj-badge-success wj-badge-md'>Success</span>
+                            <span class='wj-badge wj-badge-warning wj-badge-md'>Warning</span>
+                            <span class='wj-badge wj-badge-danger wj-badge-md'>Danger</span>
+                            <span class='wj-badge wj-badge-info wj-badge-md'>Info</span>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Badge Sizes</div>
+                        <div class='wj-flex' style='display: flex; flex-direction: row; gap: 8px; align-items: center;'>
+                            <span class='wj-badge wj-badge-primary wj-badge-sm'>Small</span>
+                            <span class='wj-badge wj-badge-primary wj-badge-md'>Medium</span>
+                            <span class='wj-badge wj-badge-primary wj-badge-lg'>Large</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Alerts Section -->
+            <div class="component-section">
+                <h2 class="section-title">Alerts</h2>
+                <p class="section-description">Contextual feedback messages for typical user actions</p>
+                <div class="showcase-item">
+                    <div class="showcase-label">Alert Variants</div>
+                    <div class='wj-alert wj-alert-error'>❌ Error: Something went wrong with your request</div>
+                    <div class='wj-alert wj-alert-warning'>⚠️ Warning: Please review your input before proceeding</div>
+                    <div class='wj-alert wj-alert-info'>ℹ️ Info: Your changes have been auto-saved</div>
+                    <div class='wj-alert wj-alert-success'>✅ Success: Operation completed successfully!</div>
+                </div>
+            </div>
+            
+            <!-- Progress Bars Section -->
+            <div class="component-section">
+                <h2 class="section-title">Progress Bars</h2>
+                <p class="section-description">Visual indicators for task completion status</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Progress Variants</div>
+                        <div class="component-demo">
+                            <div class='wj-progress-container' style='width: 100%; background-color: #e0e0e0; border-radius: 4px; overflow: hidden;'>
+                                <div class='wj-progress-bar wj-progress-default' style='width: 45%; height: 24px; background-color: #667eea; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; transition: width 0.3s ease;'>
+                                    45%
+                                </div>
+                            </div>
+                            <div class='wj-progress-container' style='width: 100%; background-color: #e0e0e0; border-radius: 4px; overflow: hidden; margin-top: 12px;'>
+                                <div class='wj-progress-bar wj-progress-success' style='width: 75%; height: 24px; background-color: #10b981; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; transition: width 0.3s ease;'>
+                                    75%
+                                </div>
+                            </div>
+                            <div class='wj-progress-container' style='width: 100%; background-color: #e0e0e0; border-radius: 4px; overflow: hidden; margin-top: 12px;'>
+                                <div class='wj-progress-bar wj-progress-warning' style='width: 50%; height: 24px; background-color: #f59e0b; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; transition: width 0.3s ease;'>
+                                    50%
+                                </div>
+                            </div>
+                            <div class='wj-progress-container' style='width: 100%; background-color: #e0e0e0; border-radius: 4px; overflow: hidden; margin-top: 12px;'>
+                                <div class='wj-progress-bar wj-progress-danger' style='width: 25%; height: 24px; background-color: #ef4444; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; transition: width 0.3s ease;'>
+                                    25%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cards Section -->
+            <div class="component-section">
+                <h2 class="section-title">Cards</h2>
+                <p class="section-description">Content containers with flexible styling options</p>
+                <div class="showcase-grid">
+                    <div class='wj-card' style='padding: 24px; background-color: #fff; border: 1px solid #e0e0e0; border-radius: 8px;'>
+                        <div class='wj-card-title' style='font-weight: bold; margin-bottom: 12px; font-size: 1.25rem;'>Basic Card</div>
+                        <p>This is a simple card with a title and some content.</p>
+                    </div>
+                    <div class='wj-card' style='padding: 24px; background-color: #f9f9f9; border: 1px solid #3498db; border-radius: 8px;'>
+                        <div class='wj-card-title' style='font-weight: bold; margin-bottom: 12px; font-size: 1.25rem;'>Styled Card</div>
+                        <p>This card has custom background and border colors for visual distinction.</p>
+                    </div>
+                    <div class='wj-card' style='padding: 16px; background-color: #fff; border: 1px solid #e0e0e0; border-radius: 8px;'>
+                        <div class='wj-card-title' style='font-weight: bold; margin-bottom: 12px; font-size: 1.25rem;'>Compact Card</div>
+                        <p>Smaller padding for a more compact appearance.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Spinners Section -->
+            <div class="component-section">
+                <h2 class="section-title">Spinners</h2>
+                <p class="section-description">Loading indicators for asynchronous operations</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Spinner Sizes</div>
+                        <div class='wj-flex' style='display: flex; flex-direction: row; gap: 24px; align-items: center;'>
+                            <div class='wj-spinner wj-spinner-sm'></div>
+                            <div class='wj-spinner wj-spinner-md'></div>
+                            <div class='wj-spinner wj-spinner-lg'></div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Spinner with Label</div>
+                        <div class='wj-spinner-container'>
+                            <div class='wj-spinner wj-spinner-md'></div>
+                            <span class='wj-spinner-label'>Loading data...</span>
+                        </div>
+                        <div class='wj-spinner-container' style='margin-top: 16px;'>
+                            <div class='wj-spinner wj-spinner-lg'></div>
+                            <span class='wj-spinner-label'>Processing your request...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Dividers & Spacers Section -->
+            <div class="component-section">
+                <h2 class="section-title">Dividers & Spacers</h2>
+                <p class="section-description">Horizontal and vertical separators for layout organization</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Horizontal Divider</div>
+                        <div>Section 1</div>
+                        <div class='wj-divider wj-divider-horizontal' style='width: 100%; height: 2px; background: #555; margin: 24px 0;'></div>
+                        <div>Section 2</div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Vertical Divider</div>
+                        <div class='wj-flex' style='display: flex; flex-direction: row; gap: 16px; align-items: center;'>
+                            <span>Left Content</span>
+                            <div class='wj-divider wj-divider-vertical' style='width: 2px; height: 50px; background: #555; margin: 0 8px;'></div>
+                            <span>Right Content</span>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Spacers</div>
+                        <div>Top Content</div>
+                        <div class='wj-spacer' style='height: 24px; '></div>
+                        <div>Bottom Content (with 24px spacer)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Layout Components Section -->
+            <div class="component-section">
+                <h2 class="section-title">Layout Components</h2>
+                <p class="section-description">Flexible container and flex components for building responsive layouts</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Flex Row</div>
+                        <div class='wj-flex' style='display: flex; flex-direction: row; gap: 12px; padding: 16px; background-color: #e3f2fd; border-radius: 8px;'>
+                            <div style='padding:16px; background:#2196f3; color:white; border-radius:4px;'>Item 1</div>
+                            <div style='padding:16px; background:#2196f3; color:white; border-radius:4px;'>Item 2</div>
+                            <div style='padding:16px; background:#2196f3; color:white; border-radius:4px;'>Item 3</div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Flex Column</div>
+                        <div class='wj-flex' style='display: flex; flex-direction: column; gap: 8px; padding: 16px; background-color: #fff3e0; border-radius: 8px;'>
+                            <div style='padding:16px; background:#ff9800; color:white; border-radius:4px;'>Column 1</div>
+                            <div style='padding:16px; background:#ff9800; color:white; border-radius:4px;'>Column 2</div>
+                            <div style='padding:16px; background:#ff9800; color:white; border-radius:4px;'>Column 3</div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Container</div>
+                        <div class='wj-container' style='margin: 0 auto; max-width: 800px; padding: 20px; background-color: #f5f5f5; border-radius: 8px;'>
+                            <p>Centered container with max-width constraint and custom styling.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <h3 style="font-size: 24px; color: #1f2937; margin-bottom: 16px;">🚀 Built with Windjammer</h3>
+            <p>All components compiled from pure <code>.wj</code> source files to Rust.</p>
+            <p>80% of Rust's power with 20% of the complexity!</p>
+            
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">14</div>
+                    <div class="stat-label">Components</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Type Safe</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Errors</div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
