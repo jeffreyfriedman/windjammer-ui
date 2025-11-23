@@ -1172,77 +1172,101 @@ fn main() {
                 <p class="section-description">Navbar, Sidebar, HamburgerMenu, ContextMenu</p>
                 <div class="showcase-grid">
                     <div class="showcase-item">
-                        <div class="showcase-label">Navbar (with brand)</div>
+                        <div class="showcase-label">Navbar (click links to navigate!)</div>
                         <nav style="display: flex; align-items: center; gap: 24px; padding: 12px 24px; background: var(--showcase-bg); border-radius: 8px; border: 1px solid var(--border-color);">
-                            <div style="font-weight: 700; font-size: 18px; color: #667eea;">MyApp</div>
+                            <div style="font-weight: 700; font-size: 18px; color: #667eea; cursor: pointer;" onclick="alert('Brand clicked!')">MyApp</div>
                             <div style="display: flex; gap: 16px; flex: 1;">
-                                <a href="#" style="color: var(--text-primary); text-decoration: none; font-size: 14px;">Home</a>
-                                <a href="#" style="color: var(--text-primary); text-decoration: none; font-size: 14px;">About</a>
-                                <a href="#" style="color: var(--text-primary); text-decoration: none; font-size: 14px;">Contact</a>
+                                <a href="#" onclick="event.preventDefault(); alert('Home clicked!'); return false;" style="color: var(--text-primary); text-decoration: none; font-size: 14px; padding: 6px 12px; border-radius: 4px; transition: background 0.2s;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='transparent'">Home</a>
+                                <a href="#" onclick="event.preventDefault(); alert('About clicked!'); return false;" style="color: var(--text-primary); text-decoration: none; font-size: 14px; padding: 6px 12px; border-radius: 4px; transition: background 0.2s;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='transparent'">About</a>
+                                <a href="#" onclick="event.preventDefault(); alert('Contact clicked!'); return false;" style="color: var(--text-primary); text-decoration: none; font-size: 14px; padding: 6px 12px; border-radius: 4px; transition: background 0.2s;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='transparent'">Contact</a>
                             </div>
                         </nav>
+                        <p style="font-size: 11px; color: var(--text-secondary); margin-top: 8px;">Click any link to see navigation demo</p>
                     </div>
                     <div class="showcase-item">
-                        <div class="showcase-label">Sidebar (collapsible)</div>
+                        <div class="showcase-label">Sidebar (click items to navigate!)</div>
                         <div style="display: flex; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; height: 200px;">
-                            <aside style="width: 200px; background: var(--showcase-bg); padding: 12px; display: flex; flex-direction: column; gap: 8px;">
-                                <div style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 6px; background: #667eea; color: white; cursor: pointer;">
+                            <aside id="demo-sidebar" style="width: 200px; background: var(--showcase-bg); padding: 12px; display: flex; flex-direction: column; gap: 8px;">
+                                <div class="sidebar-item" data-page="dashboard" onclick="switchSidebarPage('dashboard', this)" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 6px; background: #667eea; color: white; cursor: pointer; transition: background 0.2s;">
                                     <span>📊</span>
                                     <span style="font-size: 14px;">Dashboard</span>
                                 </div>
-                                <div style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 6px; cursor: pointer; color: var(--text-primary);">
+                                <div class="sidebar-item" data-page="projects" onclick="switchSidebarPage('projects', this)" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 6px; cursor: pointer; color: var(--text-primary); transition: background 0.2s;" onmouseover="if(this.style.background!='rgb(102, 126, 234)') this.style.background='var(--border-color)'" onmouseout="if(this.style.background!='rgb(102, 126, 234)') this.style.background='transparent'">
                                     <span>📁</span>
                                     <span style="font-size: 14px;">Projects</span>
                                 </div>
-                                <div style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 6px; cursor: pointer; color: var(--text-primary);">
+                                <div class="sidebar-item" data-page="settings" onclick="switchSidebarPage('settings', this)" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 6px; cursor: pointer; color: var(--text-primary); transition: background 0.2s;" onmouseover="if(this.style.background!='rgb(102, 126, 234)') this.style.background='var(--border-color)'" onmouseout="if(this.style.background!='rgb(102, 126, 234)') this.style.background='transparent'">
                                     <span>⚙️</span>
                                     <span style="font-size: 14px;">Settings</span>
                                 </div>
                             </aside>
                             <div style="flex: 1; padding: 16px; background: var(--main-bg); color: var(--text-primary);">
-                                <p style="font-size: 14px;">Main content area</p>
+                                <p id="sidebar-content" style="font-size: 14px;">📊 Dashboard - Main content area</p>
                             </div>
                         </div>
+                        <p style="font-size: 11px; color: var(--text-secondary); margin-top: 8px;">Click sidebar items to see content update</p>
                     </div>
                     <div class="showcase-item">
-                        <div class="showcase-label">Hamburger Menu (click!)</div>
+                        <div class="showcase-label">Hamburger Menu (click icon!)</div>
                         <div style="position: relative;">
-                            <button id="hamburger-btn" onclick="document.getElementById('hamburger-drawer').classList.toggle('show')" style="width: 40px; height: 40px; background: var(--showcase-bg); border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;">
-                                <span style="width: 20px; height: 2px; background: var(--text-primary);"></span>
-                                <span style="width: 20px; height: 2px; background: var(--text-primary);"></span>
-                                <span style="width: 20px; height: 2px; background: var(--text-primary);"></span>
+                            <button id="hamburger-btn" onclick="document.getElementById('hamburger-drawer').classList.toggle('show')" style="width: 40px; height: 40px; background: var(--showcase-bg); border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; transition: background 0.2s;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='var(--showcase-bg)'">
+                                <span style="width: 20px; height: 2px; background: var(--text-primary); transition: all 0.3s;"></span>
+                                <span style="width: 20px; height: 2px; background: var(--text-primary); transition: all 0.3s;"></span>
+                                <span style="width: 20px; height: 2px; background: var(--text-primary); transition: all 0.3s;"></span>
                             </button>
-                            <div id="hamburger-drawer" style="position: absolute; top: 48px; left: 0; width: 200px; background: var(--showcase-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; display: none; z-index: 100;">
-                                <a href="#" style="display: block; padding: 10px 12px; color: var(--text-primary); text-decoration: none; border-radius: 4px;">Profile</a>
-                                <a href="#" style="display: block; padding: 10px 12px; color: var(--text-primary); text-decoration: none; border-radius: 4px;">Settings</a>
-                                <a href="#" style="display: block; padding: 10px 12px; color: var(--text-primary); text-decoration: none; border-radius: 4px;">Logout</a>
+                            <div id="hamburger-drawer" style="position: absolute; top: 48px; left: 0; width: 200px; background: var(--showcase-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; display: none; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                                <a href="#" onclick="event.preventDefault(); alert('Profile clicked!'); return false;" style="display: block; padding: 10px 12px; color: var(--text-primary); text-decoration: none; border-radius: 4px; transition: background 0.2s;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='transparent'">👤 Profile</a>
+                                <a href="#" onclick="event.preventDefault(); alert('Settings clicked!'); return false;" style="display: block; padding: 10px 12px; color: var(--text-primary); text-decoration: none; border-radius: 4px; transition: background 0.2s;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='transparent'">⚙️ Settings</a>
+                                <a href="#" onclick="event.preventDefault(); alert('Logout clicked!'); return false;" style="display: block; padding: 10px 12px; color: var(--text-primary); text-decoration: none; border-radius: 4px; transition: background 0.2s;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='transparent'">🚪 Logout</a>
                             </div>
                             <style>
-                                #hamburger-drawer.show { display: block; }
+                                #hamburger-drawer.show { display: block; animation: slideDown 0.2s ease; }
+                                @keyframes slideDown {
+                                    from { opacity: 0; transform: translateY(-10px); }
+                                    to { opacity: 1; transform: translateY(0); }
+                                }
                             </style>
                         </div>
+                        <p style="font-size: 11px; color: var(--text-secondary); margin-top: 8px;">Click hamburger icon to toggle menu</p>
                     </div>
                     <div class="showcase-item">
-                        <div class="showcase-label">Context Menu (right-click area!)</div>
-                        <div id="context-target" oncontextmenu="event.preventDefault(); const menu = document.getElementById('context-menu-demo'); menu.style.display='block'; menu.style.left=event.pageX+'px'; menu.style.top=event.pageY+'px';" style="padding: 40px; background: var(--showcase-bg); border: 2px dashed var(--border-color); border-radius: 8px; text-align: center; color: var(--text-primary); cursor: pointer;">
+                        <div class="showcase-label">Context Menu (right-click the box!)</div>
+                        <div id="context-target" oncontextmenu="event.preventDefault(); showContextMenu(event);" style="padding: 40px; background: var(--showcase-bg); border: 2px dashed var(--border-color); border-radius: 8px; text-align: center; color: var(--text-primary); cursor: context-menu;">
                             Right-click here!
                         </div>
-                        <div id="context-menu-demo" onclick="this.style.display='none'" style="position: fixed; display: none; background: var(--showcase-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 4px; min-width: 150px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 1000;">
-                            <button style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; background: none; border: none; cursor: pointer; border-radius: 4px; color: var(--text-primary); font-size: 14px;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='none'">
+                        <div id="context-menu-demo" style="position: fixed; display: none; background: var(--showcase-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 4px; min-width: 150px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 1000;">
+                            <button onclick="contextMenuAction('copy')" style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; background: none; border: none; cursor: pointer; border-radius: 4px; color: var(--text-primary); font-size: 14px; text-align: left;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='none'">
                                 <span>📋</span> Copy
                             </button>
-                            <button style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; background: none; border: none; cursor: pointer; border-radius: 4px; color: var(--text-primary); font-size: 14px;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='none'">
+                            <button onclick="contextMenuAction('paste')" style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; background: none; border: none; cursor: pointer; border-radius: 4px; color: var(--text-primary); font-size: 14px; text-align: left;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='none'">
                                 <span>📄</span> Paste
                             </button>
-                            <button style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; background: none; border: none; cursor: pointer; border-radius: 4px; color: var(--text-primary); font-size: 14px;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='none'">
+                            <button onclick="contextMenuAction('delete')" style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; background: none; border: none; cursor: pointer; border-radius: 4px; color: var(--text-primary); font-size: 14px; text-align: left;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='none'">
                                 <span>🗑️</span> Delete
                             </button>
                         </div>
+                        <p style="font-size: 11px; color: var(--text-secondary); margin-top: 8px;">Right-click box to see context menu</p>
                         <script>
-                            // Close context menu when clicking elsewhere
-                            document.addEventListener('click', () => {
+                            // Show context menu at cursor position
+                            function showContextMenu(event) {
                                 const menu = document.getElementById('context-menu-demo');
-                                if (menu) menu.style.display = 'none';
+                                menu.style.display = 'block';
+                                menu.style.left = event.pageX + 'px';
+                                menu.style.top = event.pageY + 'px';
+                            }
+                            
+                            // Context menu actions
+                            function contextMenuAction(action) {
+                                alert(`Context menu action: ${action}`);
+                                document.getElementById('context-menu-demo').style.display = 'none';
+                            }
+                            
+                            // Close context menu when clicking elsewhere
+                            document.addEventListener('click', (e) => {
+                                const menu = document.getElementById('context-menu-demo');
+                                if (menu && !menu.contains(e.target)) {
+                                    menu.style.display = 'none';
+                                }
                             });
                         </script>
                     </div>
@@ -1401,6 +1425,36 @@ fn main() {
                     button.style.color = '#667eea';
                 }, 2000);
             });
+        }
+        
+        // Sidebar page switching
+        function switchSidebarPage(page, element) {
+            // Update content
+            const contentMap = {
+                'dashboard': '📊 Dashboard - Main content area',
+                'projects': '📁 Projects - Your project list appears here',
+                'settings': '⚙️ Settings - Configuration options'
+            };
+            
+            const contentElement = document.getElementById('sidebar-content');
+            if (contentElement) {
+                contentElement.textContent = contentMap[page] || 'Content area';
+            }
+            
+            // Update active state
+            const sidebar = document.getElementById('demo-sidebar');
+            if (sidebar) {
+                const items = sidebar.querySelectorAll('.sidebar-item');
+                items.forEach(item => {
+                    if (item === element) {
+                        item.style.background = '#667eea';
+                        item.style.color = 'white';
+                    } else {
+                        item.style.background = 'transparent';
+                        item.style.color = 'var(--text-primary)';
+                    }
+                });
+            }
         }
     </script>
 </body>
