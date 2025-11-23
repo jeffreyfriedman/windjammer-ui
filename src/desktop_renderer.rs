@@ -13,7 +13,7 @@ use std::rc::Rc;
 pub struct DesktopRenderer {
     // Store event handlers for buttons
     #[allow(dead_code)]
-    event_handlers: Rc<RefCell<Vec<Rc<RefCell<dyn FnMut()>>>>>,
+    event_handlers: Rc<RefCell<Vec<crate::event_handler::EventHandler>>>,
 }
 
 #[cfg(not(target_arch = "wasm32"))]

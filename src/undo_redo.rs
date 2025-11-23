@@ -12,12 +12,12 @@ use std::collections::VecDeque;
 // ============================================================================
 
 /// Command trait that all undoable operations must implement.
-/// 
+///
 /// This allows developers to create custom commands programmatically:
-/// 
+///
 /// ```rust
 /// struct MyCustomCommand { /* ... */ }
-/// 
+///
 /// impl Command for MyCustomCommand {
 ///     fn execute(&mut self) -> Result<(), String> {
 ///         // Perform the operation
@@ -37,13 +37,13 @@ use std::collections::VecDeque;
 pub trait Command: std::any::Any + Send + Sync {
     /// Execute the command (do the operation)
     fn execute(&mut self) -> Result<(), String>;
-    
+
     /// Undo the command (reverse the operation)
     fn undo(&mut self) -> Result<(), String>;
-    
+
     /// Get a human-readable description of the command
     fn description(&self) -> String;
-    
+
     /// Optional: Merge with another command of the same type
     /// Useful for combining multiple similar operations (e.g., continuous dragging)
     fn try_merge(&mut self, _other: &dyn Command) -> bool {
@@ -56,7 +56,7 @@ pub trait Command: std::any::Any + Send + Sync {
 // ============================================================================
 
 /// Transform modification command (position, rotation, scale)
-/// 
+///
 /// Can be used programmatically:
 /// ```rust
 /// let mut cmd = TransformCommand::new(
@@ -91,19 +91,21 @@ impl Command for TransformCommand {
         // For now, we just track the state change
         Ok(())
     }
-    
+
     fn undo(&mut self) -> Result<(), String> {
         // Restore the old transform
         Ok(())
     }
-    
+
     fn description(&self) -> String {
         format!("Transform {}", self.object_id)
     }
-    
+
     fn try_merge(&mut self, other: &dyn Command) -> bool {
         // Try to merge consecutive transform operations on the same object
-        if let Some(other_transform) = (other as &dyn std::any::Any).downcast_ref::<TransformCommand>() {
+        if let Some(other_transform) =
+            (other as &dyn std::any::Any).downcast_ref::<TransformCommand>()
+        {
             if self.object_id == other_transform.object_id {
                 // Keep the old_transform from self, but update new_transform from other
                 self.new_transform = other_transform.new_transform;
@@ -115,7 +117,7 @@ impl Command for TransformCommand {
 }
 
 /// File content modification command
-/// 
+///
 /// Programmatic usage:
 /// ```rust
 /// let mut cmd = FileEditCommand::new(
@@ -147,19 +149,19 @@ impl Command for FileEditCommand {
         // In a real implementation, this would update the file
         Ok(())
     }
-    
+
     fn undo(&mut self) -> Result<(), String> {
         // Restore the old content
         Ok(())
     }
-    
+
     fn description(&self) -> String {
         format!("Edit {}", self.file_path)
     }
 }
 
 /// Object creation command
-/// 
+///
 /// Programmatic usage:
 /// ```rust
 /// let mut cmd = CreateObjectCommand::new(
@@ -188,19 +190,19 @@ impl Command for CreateObjectCommand {
         // Create the object in the scene
         Ok(())
     }
-    
+
     fn undo(&mut self) -> Result<(), String> {
         // Remove the object from the scene
         Ok(())
     }
-    
+
     fn description(&self) -> String {
         format!("Create {}", self.object_id)
     }
 }
 
 /// Object deletion command
-/// 
+///
 /// Programmatic usage:
 /// ```rust
 /// let mut cmd = DeleteObjectCommand::new(
@@ -229,19 +231,19 @@ impl Command for DeleteObjectCommand {
         // Remove the object from the scene
         Ok(())
     }
-    
+
     fn undo(&mut self) -> Result<(), String> {
         // Restore the object to the scene
         Ok(())
     }
-    
+
     fn description(&self) -> String {
         format!("Delete {}", self.object_id)
     }
 }
 
 /// Property modification command
-/// 
+///
 /// Programmatic usage:
 /// ```rust
 /// let mut cmd = PropertyChangeCommand::new(
@@ -261,7 +263,12 @@ pub struct PropertyChangeCommand {
 }
 
 impl PropertyChangeCommand {
-    pub fn new(object_id: String, property_name: String, old_value: String, new_value: String) -> Self {
+    pub fn new(
+        object_id: String,
+        property_name: String,
+        old_value: String,
+        new_value: String,
+    ) -> Self {
         Self {
             object_id,
             property_name,
@@ -276,12 +283,12 @@ impl Command for PropertyChangeCommand {
         // Set the property to new_value
         Ok(())
     }
-    
+
     fn undo(&mut self) -> Result<(), String> {
         // Restore the property to old_value
         Ok(())
     }
-    
+
     fn description(&self) -> String {
         format!("Change {}.{}", self.object_id, self.property_name)
     }
@@ -292,20 +299,20 @@ impl Command for PropertyChangeCommand {
 // ============================================================================
 
 /// Undo/Redo manager that maintains command history.
-/// 
+///
 /// Can be used programmatically without the editor:
-/// 
+///
 /// ```rust
 /// let mut manager = UndoRedoManager::new();
-/// 
+///
 /// // Execute commands
 /// let mut cmd = TransformCommand::new(...);
 /// manager.execute(Box::new(cmd))?;
-/// 
+///
 /// // Undo/Redo
 /// manager.undo()?;
 /// manager.redo()?;
-/// 
+///
 /// // Query state
 /// if manager.can_undo() {
 ///     println!("Can undo: {}", manager.get_undo_description());
@@ -340,7 +347,7 @@ impl UndoRedoManager {
     }
 
     /// Execute a command and add it to the undo stack
-    /// 
+    ///
     /// This is the main entry point for all operations.
     /// Returns an error if the command execution fails.
     pub fn execute(&mut self, mut command: Box<dyn Command>) -> Result<(), String> {
@@ -482,14 +489,14 @@ impl Default for UndoRedoManager {
 // ============================================================================
 
 /// Builder for creating commands programmatically
-/// 
+///
 /// Example usage:
 /// ```rust
 /// let cmd = CommandBuilder::transform("Player")
 ///     .old_position(0.0, 0.0, 0.0)
 ///     .new_position(1.0, 2.0, 3.0)
 ///     .build();
-/// 
+///
 /// manager.execute(cmd)?;
 /// ```
 pub struct CommandBuilder;
@@ -630,21 +637,21 @@ mod tests {
     #[test]
     fn test_undo_redo_basic() {
         let mut manager = UndoRedoManager::new();
-        
+
         let cmd = Box::new(TransformCommand::new(
             "test".to_string(),
             [0.0; 9],
             [1.0, 2.0, 3.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0],
         ));
-        
+
         manager.execute(cmd).unwrap();
         assert!(manager.can_undo());
         assert!(!manager.can_redo());
-        
+
         manager.undo().unwrap();
         assert!(!manager.can_undo());
         assert!(manager.can_redo());
-        
+
         manager.redo().unwrap();
         assert!(manager.can_undo());
         assert!(!manager.can_redo());
@@ -656,14 +663,14 @@ mod tests {
             .old_position(0.0, 0.0, 0.0)
             .new_position(1.0, 2.0, 3.0)
             .build();
-        
+
         assert_eq!(cmd.description(), "Transform Player");
     }
 
     #[test]
     fn test_history_limit() {
         let mut manager = UndoRedoManager::with_max_history(3);
-        
+
         for i in 0..5 {
             let cmd = Box::new(TransformCommand::new(
                 format!("obj{}", i),
@@ -672,8 +679,7 @@ mod tests {
             ));
             manager.execute(cmd).unwrap();
         }
-        
+
         assert_eq!(manager.undo_count(), 3);
     }
 }
-

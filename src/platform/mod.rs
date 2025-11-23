@@ -40,12 +40,12 @@ impl Target {
             _ => None,
         }
     }
-    
+
     /// Check if target is mobile
     pub fn is_mobile(&self) -> bool {
         matches!(self, Target::IOS | Target::Android)
     }
-    
+
     /// Get target name
     pub fn name(&self) -> &'static str {
         match self {
@@ -61,10 +61,10 @@ impl Target {
 pub trait Renderer {
     /// Render a virtual DOM node
     fn render(&mut self, vnode: &crate::vdom::VNode);
-    
+
     /// Handle an event
     fn handle_event(&mut self, event: Event);
-    
+
     /// Update the UI (call after state changes)
     fn update(&mut self);
 }
@@ -86,7 +86,10 @@ pub enum Event {
 #[derive(Debug, Clone)]
 pub enum GestureEvent {
     /// Swipe gesture
-    Swipe { direction: SwipeDirection, velocity: f32 },
+    Swipe {
+        direction: SwipeDirection,
+        velocity: f32,
+    },
     /// Pinch gesture (zoom)
     Pinch { scale: f32 },
     /// Long press

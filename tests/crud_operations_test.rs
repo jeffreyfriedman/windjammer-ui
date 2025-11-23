@@ -1,5 +1,5 @@
 //! CRUD Operations Tests
-//! 
+//!
 //! Test Create, Read, Update, Delete patterns common in applications
 
 use windjammer_ui::components::*;
@@ -22,16 +22,17 @@ fn test_list_view_rendering() {
         "Item 2".to_string(),
         "Item 3".to_string(),
     ];
-    
+
     let list = Flex::new()
         .direction(FlexDirection::Column)
         .children(
-            items.iter()
+            items
+                .iter()
                 .map(|item| Text::new(item.clone()).render())
-                .collect()
+                .collect(),
         )
         .render();
-    
+
     match list {
         VNode::Element { children, .. } => {
             assert_eq!(children.len(), 3);
@@ -45,7 +46,7 @@ fn test_create_button() {
     let create_btn = Button::new("+ Add New")
         .variant(ButtonVariant::Primary)
         .render();
-    
+
     assert!(matches!(create_btn, VNode::Element { .. }));
 }
 
@@ -54,7 +55,7 @@ fn test_delete_button() {
     let delete_btn = Button::new("Delete")
         .variant(ButtonVariant::Danger)
         .render();
-    
+
     assert!(matches!(delete_btn, VNode::Element { .. }));
 }
 
@@ -63,7 +64,7 @@ fn test_edit_button() {
     let edit_btn = Button::new("Edit")
         .variant(ButtonVariant::Secondary)
         .render();
-    
+
     assert!(matches!(edit_btn, VNode::Element { .. }));
 }
 
@@ -79,7 +80,7 @@ fn test_empty_state_display() {
                 .render(),
         ])
         .render();
-    
+
     match empty_state {
         VNode::Element { children, .. } => {
             assert_eq!(children.len(), 2);
@@ -95,15 +96,11 @@ fn test_list_item_with_actions() {
         .direction(FlexDirection::Row)
         .children(vec![
             Text::new("Item Name").render(),
-            Button::new("Edit")
-                .variant(ButtonVariant::Ghost)
-                .render(),
-            Button::new("Delete")
-                .variant(ButtonVariant::Ghost)
-                .render(),
+            Button::new("Edit").variant(ButtonVariant::Ghost).render(),
+            Button::new("Delete").variant(ButtonVariant::Ghost).render(),
         ])
         .render();
-    
+
     match list_item {
         VNode::Element { children, .. } => {
             assert_eq!(children.len(), 3);
@@ -117,7 +114,7 @@ fn test_search_filter_ui() {
     // Test search/filter pattern
     let mut search_input = Input::new();
     search_input.placeholder = "Search...".to_string();
-    
+
     let search_bar = Flex::new()
         .direction(FlexDirection::Row)
         .children(vec![
@@ -127,7 +124,7 @@ fn test_search_filter_ui() {
                 .render(),
         ])
         .render();
-    
+
     match search_bar {
         VNode::Element { children, .. } => {
             assert_eq!(children.len(), 2);
@@ -151,7 +148,7 @@ fn test_pagination_controls() {
                 .render(),
         ])
         .render();
-    
+
     match pagination {
         VNode::Element { children, .. } => {
             assert_eq!(children.len(), 3);
@@ -178,10 +175,10 @@ fn test_confirmation_dialog_pattern() {
                         .variant(ButtonVariant::Danger)
                         .render(),
                 ])
-                .render()
+                .render(),
         ])
         .render();
-    
+
     assert!(matches!(dialog_content, VNode::Element { .. }));
 }
 
@@ -190,10 +187,10 @@ fn test_detail_view_layout() {
     // Test detail view for viewing/editing a single item
     let mut name_input = Input::new();
     name_input.placeholder = "Name".to_string();
-    
+
     let mut desc_input = Input::new();
     desc_input.placeholder = "Description".to_string();
-    
+
     let detail_view = Flex::new()
         .direction(FlexDirection::Column)
         .children(vec![
@@ -203,9 +200,7 @@ fn test_detail_view_layout() {
             Flex::new()
                 .direction(FlexDirection::Row)
                 .children(vec![
-                    Button::new("Save")
-                        .variant(ButtonVariant::Primary)
-                        .render(),
+                    Button::new("Save").variant(ButtonVariant::Primary).render(),
                     Button::new("Cancel")
                         .variant(ButtonVariant::Secondary)
                         .render(),
@@ -213,7 +208,7 @@ fn test_detail_view_layout() {
                 .render(),
         ])
         .render();
-    
+
     match detail_view {
         VNode::Element { children, .. } => {
             assert_eq!(children.len(), 4);
@@ -232,7 +227,7 @@ fn test_loading_state_indicator() {
             Text::new("Loading...").render(),
         ])
         .render();
-    
+
     match loading {
         VNode::Element { children, .. } => {
             assert_eq!(children.len(), 2);
@@ -245,7 +240,7 @@ fn test_loading_state_indicator() {
 fn test_success_message_after_operation() {
     // Test success alert after create/update/delete
     let success = Alert::success("Item successfully created!").render();
-    
+
     assert!(matches!(success, VNode::Element { .. }));
 }
 
@@ -261,7 +256,7 @@ fn test_bulk_actions_ui() {
                 .render(),
         ])
         .render();
-    
+
     match bulk_actions {
         VNode::Element { children, .. } => {
             assert_eq!(children.len(), 2);
@@ -269,4 +264,3 @@ fn test_bulk_actions_ui() {
         _ => panic!("Expected element node"),
     }
 }
-

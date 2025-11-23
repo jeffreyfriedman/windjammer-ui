@@ -45,7 +45,7 @@ impl Progress {
     }
 
     pub fn render(&self) -> VNode {
-        let percentage = (self.value / self.max * 100.0).min(100.0).max(0.0);
+        let percentage = (self.value / self.max * 100.0).clamp(0.0, 100.0);
 
         let mut bar_classes = vec!["wj-progress-bar".to_string()];
         bar_classes.push(

@@ -18,6 +18,12 @@ pub struct TreeItem {
     pub on_click: Option<Rc<RefCell<dyn FnMut()>>>,
 }
 
+impl Default for TreeView {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl TreeView {
     pub fn new() -> Self {
         Self { items: Vec::new() }

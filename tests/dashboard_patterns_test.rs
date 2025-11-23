@@ -1,5 +1,5 @@
 //! Dashboard and Data Display Tests
-//! 
+//!
 //! Test common patterns for business dashboards and data visualization
 
 use windjammer_ui::components::*;
@@ -14,7 +14,7 @@ fn test_stat_card() {
         .child(Text::new("1,234").render())
         .child(Badge::new("+12%").variant(BadgeVariant::Success).render())
         .render();
-    
+
     assert!(matches!(stat_card, VNode::Element { .. }));
 }
 
@@ -30,7 +30,7 @@ fn test_grid_layout_for_stats() {
             Card::new().render(),
         ])
         .render();
-    
+
     match stats_grid {
         VNode::Element { children, .. } => {
             assert_eq!(children.len(), 4);
@@ -44,7 +44,7 @@ fn test_progress_indicator() {
     // Test progress bar for goals/metrics
     let progress = Progress::new(75.0).render();
     assert!(matches!(progress, VNode::Element { .. }));
-    
+
     let circular = Progress::new(60.0)
         .variant(ProgressVariant::Circular)
         .render();
@@ -54,22 +54,16 @@ fn test_progress_indicator() {
 #[test]
 fn test_badge_variants_for_status() {
     // Test different badge types for status indicators
-    let success = Badge::new("Active")
-        .variant(BadgeVariant::Success)
-        .render();
-    
+    let success = Badge::new("Active").variant(BadgeVariant::Success).render();
+
     let warning = Badge::new("Pending")
         .variant(BadgeVariant::Warning)
         .render();
-    
-    let error = Badge::new("Error")
-        .variant(BadgeVariant::Error)
-        .render();
-    
-    let info = Badge::new("Info")
-        .variant(BadgeVariant::Info)
-        .render();
-    
+
+    let error = Badge::new("Error").variant(BadgeVariant::Error).render();
+
+    let info = Badge::new("Info").variant(BadgeVariant::Info).render();
+
     assert!(matches!(success, VNode::Element { .. }));
     assert!(matches!(warning, VNode::Element { .. }));
     assert!(matches!(error, VNode::Element { .. }));
@@ -82,9 +76,7 @@ fn test_activity_feed_layout() {
     let activity_item = Flex::new()
         .direction(FlexDirection::Row)
         .children(vec![
-            Container::new()
-                .child(Text::new("JD").render())
-                .render(), // Avatar
+            Container::new().child(Text::new("JD").render()).render(), // Avatar
             Flex::new()
                 .direction(FlexDirection::Column)
                 .children(vec![
@@ -94,7 +86,7 @@ fn test_activity_feed_layout() {
                 .render(),
         ])
         .render();
-    
+
     match activity_item {
         VNode::Element { children, .. } => {
             assert_eq!(children.len(), 2);
@@ -111,7 +103,7 @@ fn test_tabs_for_different_views() {
         .tab(Tab::new("tab2", "Analytics"))
         .tab(Tab::new("tab3", "Reports"))
         .render();
-    
+
     assert!(matches!(tabs, VNode::Element { .. }));
 }
 
@@ -123,7 +115,7 @@ fn test_split_panel_layout() {
         .left(Text::new("Sidebar").render())
         .right(Text::new("Main Content").render())
         .render();
-    
+
     assert!(matches!(split, VNode::Element { .. }));
 }
 
@@ -135,7 +127,7 @@ fn test_toolbar_with_actions() {
         .child(Button::new("Export").render())
         .child(Button::new("Settings").render())
         .render();
-    
+
     assert!(matches!(toolbar, VNode::Element { .. }));
 }
 
@@ -147,7 +139,7 @@ fn test_card_with_header_and_content() {
         .child(Divider::new().render())
         .child(Text::new("Card content goes here").render())
         .render();
-    
+
     assert!(matches!(card, VNode::Element { .. }));
 }
 
@@ -174,7 +166,7 @@ fn test_metric_comparison() {
                 .render(),
         ])
         .render();
-    
+
     match comparison {
         VNode::Element { children, .. } => {
             assert_eq!(children.len(), 3);
@@ -194,7 +186,7 @@ fn test_time_range_selector() {
             Button::new("Month").variant(ButtonVariant::Ghost).render(),
         ])
         .render();
-    
+
     match time_selector {
         VNode::Element { children, .. } => {
             assert_eq!(children.len(), 3);
@@ -237,7 +229,7 @@ fn test_responsive_dashboard_layout() {
                 .render(),
         ])
         .render();
-    
+
     match dashboard {
         VNode::Element { children, .. } => {
             assert_eq!(children.len(), 3);
@@ -245,4 +237,3 @@ fn test_responsive_dashboard_layout() {
         _ => panic!("Expected element node"),
     }
 }
-

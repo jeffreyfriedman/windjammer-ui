@@ -34,4 +34,3 @@ pub fn clear_repaint_callback() {
         *rc.borrow_mut() = None;
     });
 }
-
