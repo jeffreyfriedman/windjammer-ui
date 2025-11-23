@@ -1,0 +1,81 @@
+// Divider Component - Visual separator between sections
+
+pub enum DividerOrientation {
+    Horizontal,
+    Vertical,
+}
+
+pub struct Divider {
+    orientation: DividerOrientation,
+    color: string,
+    thickness: string,
+    margin: string,
+}
+
+impl Divider {
+    pub fn new() -> Divider {
+        Divider {
+            orientation: DividerOrientation::Horizontal,
+            color: "#3E3E3E".to_string(),
+            thickness: "1px".to_string(),
+            margin: "0".to_string(),
+        }
+    }
+
+    pub fn horizontal() -> Divider {
+        Divider::new()
+    }
+
+    pub fn vertical() -> Divider {
+        Divider {
+            orientation: DividerOrientation::Vertical,
+            color: "#3E3E3E".to_string(),
+            thickness: "1px".to_string(),
+            margin: "0".to_string(),
+        }
+    }
+
+    pub fn color(self, color: string) -> Divider {
+        self.color = color
+        self
+    }
+
+    pub fn thickness(self, thickness: string) -> Divider {
+        self.thickness = thickness
+        self
+    }
+
+    pub fn margin(self, margin: string) -> Divider {
+        self.margin = margin
+        self
+    }
+
+    pub fn render(self) -> string {
+        let orientation_class = match self.orientation {
+            DividerOrientation::Horizontal => "wj-divider-horizontal",
+            DividerOrientation::Vertical => "wj-divider-vertical",
+        }
+
+        let style = match self.orientation {
+            DividerOrientation::Horizontal => {
+                format!("width: 100%; height: {}; background: {}; margin: {} 0;", 
+                    self.thickness, self.color, self.margin)
+            }
+            DividerOrientation::Vertical => {
+                format!("width: {}; height: 100%; background: {}; margin: 0 {};",
+                    self.thickness, self.color, self.margin)
+            }
+        }
+
+        format!("<div class='wj-divider {}' style='{}'></div>", orientation_class, style)
+    }
+}
+
+fn main() {
+    let divider1 = Divider::horizontal()
+    println!("Horizontal: {}", divider1.render())
+
+    let divider2 = Divider::vertical().color("#FF0000".to_string()).thickness("2px".to_string())
+    println!("Vertical: {}", divider2.render())
+}
+

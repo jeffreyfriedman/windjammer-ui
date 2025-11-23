@@ -11,8 +11,8 @@ pub mod generated;
 // LEGACY RUST COMPONENTS (to be migrated to .wj)
 // ===========================================================================
 pub mod advanced_code_editor;
-pub mod alert;
-pub mod badge;
+// pub mod alert; // MIGRATED to generated/alert.wj
+// pub mod badge; // MIGRATED to generated/badge.wj
 // pub mod button; // MIGRATED to generated/button.wj
 pub mod card;
 // pub mod checkbox; // MIGRATED to generated/checkbox.wj
@@ -21,7 +21,7 @@ pub mod collapsible_section;
 pub mod color_picker;
 // pub mod container; // MIGRATED to generated/container.wj
 pub mod dialog;
-pub mod divider;
+// pub mod divider; // MIGRATED to generated/divider.wj
 pub mod file_tree;
 // pub mod flex; // MIGRATED to generated/flex.wj
 pub mod grid;
@@ -32,8 +32,8 @@ pub mod radio;
 pub mod scroll_area;
 pub mod select;
 // pub mod slider; // MIGRATED to generated/slider.wj
-pub mod spacer;
-pub mod spinner;
+// pub mod spacer; // MIGRATED to generated/spacer.wj
+// pub mod spinner; // MIGRATED to generated/spinner.wj
 pub mod split_panel;
 pub mod switch;
 pub mod tab_panel;
@@ -47,22 +47,20 @@ pub mod tree_view;
 // RE-EXPORTS - Generated Windjammer Components
 // ===========================================================================
 pub use generated::{
-    Button, ButtonSize, ButtonVariant, Checkbox, CheckboxSize, Container, Flex, FlexDirection,
-    Input, Slider, Text, TextSize, TextWeight,
+    Alert, AlertVariant, Badge, BadgeSize, BadgeVariant, Button, ButtonSize, ButtonVariant,
+    Checkbox, CheckboxSize, Container, Divider, DividerOrientation, Flex, FlexDirection, Input,
+    Slider, Spacer, Spinner, SpinnerSize, Text, TextSize, TextWeight,
 };
 
 // ===========================================================================
 // RE-EXPORTS - Legacy Rust Components
 // ===========================================================================
 pub use advanced_code_editor::AdvancedCodeEditor;
-pub use alert::{Alert, AlertVariant};
-pub use badge::{Badge, BadgeSize, BadgeVariant};
 pub use card::Card;
 pub use code_editor::CodeEditor;
 pub use collapsible_section::CollapsibleSection;
 pub use color_picker::ColorPicker;
 pub use dialog::Dialog;
-pub use divider::{Divider, DividerOrientation};
 pub use file_tree::{FileNode, FileTree};
 pub use grid::Grid;
 pub use panel::Panel;
@@ -70,8 +68,6 @@ pub use progress::{Progress, ProgressVariant};
 pub use radio::{RadioGroup, RadioOption};
 pub use scroll_area::{ScrollArea, ScrollDirection};
 pub use select::{Select, SelectOption};
-pub use spacer::Spacer;
-pub use spinner::{Spinner, SpinnerSize};
 pub use split_panel::{SplitDirection, SplitPanel};
 pub use switch::{Switch, SwitchSize};
 pub use tab_panel::{Tab as TabPanelTab, TabPanel};

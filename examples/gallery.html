@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windjammer UI Gallery</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #ffffff; }
+        
+        /* Text styles */
+        .wj-text { display: inline-block; margin: 8px 0; }
+        .wj-text.sm { font-size: 14px; }
+        .wj-text.md { font-size: 16px; }
+        .wj-text.lg { font-size: 20px; }
+        .wj-text.xl { font-size: 24px; }
+        .wj-text.bold { font-weight: bold; }
+        
+        /* Button styles */
+        .wj-button {
+            border: none; padding: 8px 16px; cursor: pointer; border-radius: 4px;
+            font-size: 14px; font-weight: 500; transition: all 0.2s;
+        }
+        .wj-button:hover { transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .wj-button-primary { background: #007bff; color: white; }
+        .wj-button-secondary { background: #6c757d; color: white; }
+        .wj-button-success { background: #28a745; color: white; }
+        .wj-button-danger { background: #dc3545; color: white; }
+        .wj-button-ghost { background: transparent; color: #007bff; border: 1px solid #007bff; }
+        .wj-button-sm { padding: 4px 12px; font-size: 12px; }
+        .wj-button-md { padding: 8px 16px; font-size: 14px; }
+        .wj-button-lg { padding: 12px 24px; font-size: 16px; }
+        .wj-button[disabled] { opacity: 0.5; cursor: not-allowed; }
+        
+        /* Input styles */
+        .wj-input {
+            padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px;
+            font-size: 14px; width: 100%; max-width: 400px;
+        }
+        .wj-input:focus { outline: none; border-color: #007bff; box-shadow: 0 0 0 3px rgba(0,123,255,0.1); }
+        
+        /* Checkbox styles */
+        .wj-checkbox { display: flex; align-items: center; gap: 8px; cursor: pointer; margin: 8px 0; }
+        .wj-checkbox input { width: 16px; height: 16px; cursor: pointer; }
+        .wj-checkbox-lg input { width: 20px; height: 20px; }
+        .wj-checkbox-sm input { width: 14px; height: 14px; }
+        
+        /* Slider styles */
+        .wj-slider {
+            width: 100%; max-width: 400px; height: 6px;
+            -webkit-appearance: none; appearance: none; background: #e0e0e0;
+            border-radius: 3px; outline: none;
+        }
+        .wj-slider::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none;
+            width: 18px; height: 18px; background: #007bff;
+            border-radius: 50%; cursor: pointer;
+        }
+        
+        /* Container & Flex styles */
+        .wj-container { display: block; }
+        .wj-flex { display: flex; }
+        
+        h2 { margin: 24px 0 16px 0; color: #2c3e50; font-size: 24px; }
+        h3 { margin: 16px 0 8px 0; color: #34495e; font-size: 18px; }
+        label { font-weight: 500; color: #495057; }
+    </style>
+</head>
+<body>
+    <div class='wj-container' style='margin: 0 auto; max-width: 1200px; padding: 32px; background-color: #f8f9fa; '>
+  <h1 style='margin:0; color:#2c3e50;'>🎨 Windjammer UI Component Gallery</h1>
+  <p style='margin:8px 0 0 0; color:#7f8c8d;'>All components written in pure Windjammer and transpiled to Rust!</p>
+</div>
+    <div class='wj-container' style='margin: 0 auto; max-width: 1200px; padding: 24px; '>
+  <h2>Text Components</h2>
+  <span class='wj-text sm normal'>Small text example</span>
+  <span class='wj-text md normal'>Medium text example</span>
+  <span class='wj-text lg normal'>Large text example</span>
+  <span class='wj-text xl bold'>Bold large text</span>
+</div>
+    <div class='wj-container' style='margin: 0 auto; max-width: 1200px; padding: 24px; '>
+  <h2>Button Components</h2>
+  <div class='wj-flex' style='display: flex; flex-direction: row; gap: 16px;'>
+  <button class='wj-button wj-button-primary wj-button-md'>Primary</button>
+  <button class='wj-button wj-button-secondary wj-button-md'>Secondary</button>
+  <button class='wj-button wj-button-success wj-button-md'>Success</button>
+  <button class='wj-button wj-button-danger wj-button-md'>Danger</button>
+  <button class='wj-button wj-button-ghost wj-button-md'>Ghost</button>
+</div>
+  <br/>
+  <div class='wj-flex' style='display: flex; flex-direction: row; gap: 16px;'>
+  <button class='wj-button wj-button-primary wj-button-sm'>Small</button>
+  <button class='wj-button wj-button-primary wj-button-md'>Medium</button>
+  <button class='wj-button wj-button-primary wj-button-lg'>Large</button>
+  <button class='wj-button wj-button-primary wj-button-md' disabled='true'>Disabled</button>
+</div>
+</div>
+    <div class='wj-container' style='margin: 0 auto; max-width: 1200px; padding: 24px; '>
+  <h2>Form Components</h2>
+  <div class='wj-flex' style='display: flex; flex-direction: column; gap: 16px;'>
+  <label>Username:</label>
+  <input class='wj-input' value='' placeholder='Enter your username'/>
+  <label>Email:</label>
+  <input class='wj-input' value='' placeholder='your@email.com'/>
+  <br/>
+  <label class='wj-checkbox wj-checkbox-md'><input type='checkbox'/><span>I agree to the terms</span></label>
+  <label class='wj-checkbox wj-checkbox-md'><input type='checkbox' checked/><span>Subscribe to newsletter</span></label>
+  <label class='wj-checkbox wj-checkbox-lg'><input type='checkbox'/><span>Enable notifications</span></label>
+</div>
+</div>
+    <div class='wj-container' style='margin: 0 auto; max-width: 1200px; padding: 24px; '>
+  <h2>Slider Components</h2>
+  <label>Volume</label><input type='range' class='wj-slider' min='0' max='100' step='1' value='50'>
+  <br/>
+  <label>Brightness</label><input type='range' class='wj-slider' min='0' max='100' step='1' value='75'>
+  <br/>
+  <label>Precision</label><input type='range' class='wj-slider' min='0' max='10' step='0.1' value='5.5'>
+</div>
+    <div class='wj-container' style='margin: 0 auto; max-width: 1200px; padding: 24px; '>
+  <h2>Layout Components</h2>
+  <h3>Flex Row:</h3>
+  <div class='wj-flex' style='display: flex; flex-direction: row; gap: 16px; padding: 16px; background-color: #e3f2fd;'>
+  <div style='padding:16px; background:#2196f3; color:white;'>Item 1</div>
+  <div style='padding:16px; background:#2196f3; color:white;'>Item 2</div>
+  <div style='padding:16px; background:#2196f3; color:white;'>Item 3</div>
+</div>
+  <br/>
+  <h3>Flex Column:</h3>
+  <div class='wj-flex' style='display: flex; flex-direction: column; gap: 8px; padding: 16px; background-color: #fff3e0;'>
+  <div style='padding:16px; background:#ff9800; color:white;'>Column Item 1</div>
+  <div style='padding:16px; background:#ff9800; color:white;'>Column Item 2</div>
+  <div style='padding:16px; background:#ff9800; color:white;'>Column Item 3</div>
+</div>
+</div>
+    <footer style="text-align:center; padding:48px; color:#7f8c8d; font-size:14px;">
+        <p>🚀 Built with <strong>Windjammer</strong> - 80% of Rust's power with 20% of the complexity!</p>
+        <p style="margin-top:8px;">All components compiled from <code>.wj</code> source files.</p>
+    </footer>
+</body>
+</html>

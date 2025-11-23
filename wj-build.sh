@@ -23,12 +23,9 @@ echo ""
 
 # Source and output directories  
 SRC_DIR="$SCRIPT_DIR/src_wj/components"
-BUILD_DIR="$SCRIPT_DIR/build_components"
 OUT_DIR="$SCRIPT_DIR/src/components/generated"
 
-# Clean and create directories
-rm -rf "$BUILD_DIR"
-mkdir -p "$BUILD_DIR"
+# Create output directory
 mkdir -p "$OUT_DIR"
 
 echo "📦 Transpiling Windjammer components..."
@@ -36,61 +33,66 @@ echo "   Source: $SRC_DIR"
 echo "   Output: $OUT_DIR"
 echo ""
 
-# Build all components to temp directory
-"$WJ_CLI" build "$SRC_DIR" -o "$BUILD_DIR" --target rust
+# Build all components
+"$WJ_CLI" build "$SRC_DIR" -o "$OUT_DIR" --target rust
 
 echo ""
-echo "📝 Processing generated files (removing main(), adding pub)..."
-echo ""
+echo "📝 Cleaning up generated files (removing main() test functions)..."
 
-# Count files
-SUCCESS=0
-FAILED=0
-
-# Process each generated .rs file
-for rs_file in "$BUILD_DIR"/*.rs; do
+# Remove main() functions from generated files (they're for testing only)
+for rs_file in "$OUT_DIR"/*.rs; do
     if [ -f "$rs_file" ]; then
         filename=$(basename "$rs_file")
-        
-        # Skip if it's not a component file
-        if [[ "$filename" == "serve_demo.rs" ]] || [[ "$filename" == "counter.rs" ]] || [[ "$filename" == "contact_form.rs" ]] || [[ "$filename" == "dashboard.rs" ]]; then
+        # Skip if it's the mod.rs we'll create
+        if [[ "$filename" == "mod.rs" ]]; then
             continue
         fi
         
-        echo "  📄 Processing $filename..."
-        
-        # 1. Remove fn main() and its body
-        # 2. Add pub to enum/struct/fn declarations (Bug #8 workaround)
-        if sed '/^fn main()/,/^}$/d' "$rs_file" | \
-           sed 's/^enum /pub enum /' | \
-           sed 's/^struct /pub struct /' | \
-           sed 's/^fn /pub fn /' \
-           > "$OUT_DIR/$filename"; then
-            SUCCESS=$((SUCCESS + 1))
-            echo "     ✅ Generated $OUT_DIR/$filename"
-        else
-            FAILED=$((FAILED + 1))
-            echo "     ❌ Failed to process"
-        fi
+        # Remove fn main() and its body
+        sed -i.bak '/^fn main()/,/^}$/d' "$rs_file" && rm "${rs_file}.bak"
     fi
 done
 
-# Clean up temp build directory
-rm -rf "$BUILD_DIR"
+# Create mod.rs to export all generated modules
+cat > "$OUT_DIR/mod.rs" << 'EOF'
+// Generated Windjammer UI components
+// Auto-generated from src_wj/components/*.wj
+// DO NOT EDIT MANUALLY - run wj-build.sh to regenerate
+
+pub mod alert;
+pub mod badge;
+pub mod button;
+pub mod checkbox;
+pub mod container;
+pub mod divider;
+pub mod flex;
+pub mod input;
+pub mod slider;
+pub mod spacer;
+pub mod spinner;
+pub mod text;
+
+// Re-export main types for convenience
+pub use alert::{Alert, AlertVariant};
+pub use badge::{Badge, BadgeSize, BadgeVariant};
+pub use button::{Button, ButtonSize, ButtonVariant};
+pub use checkbox::{Checkbox, CheckboxSize};
+pub use container::Container;
+pub use divider::{Divider, DividerOrientation};
+pub use flex::{Flex, FlexDirection};
+pub use input::Input;
+pub use slider::Slider;
+pub use spacer::Spacer;
+pub use spinner::{Spinner, SpinnerSize};
+pub use text::{Text, TextSize, TextWeight};
+EOF
 
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-if [ $FAILED -eq 0 ]; then
-    echo "✅ All $SUCCESS component(s) transpiled successfully!"
-    echo ""
-    echo "Generated files in: $OUT_DIR"
-    echo ""
-    echo "⚠️  Note: Bug #8 workaround applied (manually adding pub keywords)"
-    echo ""
-    echo "Next: cargo build && cargo test"
-    exit 0
-else
-    echo "❌ $FAILED component(s) failed"
-    echo "✅ $SUCCESS component(s) succeeded"
-    exit 1
-fi
+echo "✅ All components transpiled successfully!"
+echo ""
+echo "Generated files in: $OUT_DIR"
+echo ""
+echo "🎉 Bug #8 FIXED! pub keywords now generated automatically!"
+echo ""
+echo "Next: cargo build && cargo test"
