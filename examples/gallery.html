@@ -308,6 +308,11 @@
             to { transform: rotate(360deg); }
         }
         
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
         .wj-switch {
             position: relative;
             display: inline-flex;
@@ -472,7 +477,8 @@
         <div class="hero">
             <button class="theme-toggle" onclick="toggleTheme()">🌓 Toggle Dark Mode</button>
             <h1>🎨 Windjammer UI Gallery</h1>
-            <p>All 32 components built in pure Windjammer and transpiled to Rust!</p>
+            <p>All 40 components built in pure Windjammer and transpiled to Rust!</p>
+            <p style="font-size: 14px; margin-top: 8px; opacity: 0.9;">Featuring Toast, Accordion, Breadcrumb, Avatar, Skeleton, Pagination & more!</p>
         </div>
         
         <div class="content">
@@ -769,31 +775,99 @@
                                 <p style="font-size: 14px; margin-top: 8px;">You can put any content here.</p>
                             </div>
                         </details>
-</div>
-</div>
-</div>
-</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 33-40. NEW! Popular Components -->
+            <div class="component-section" style="border-bottom: none;">
+                <h2 class="section-title">🆕 33-40. Popular Components (NEW!)</h2>
+                <p class="section-description">Toast, Accordion, Breadcrumb, Dropdown, Avatar, Skeleton, Pagination, Menu</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Toast Notifications</div>
+                        <div style="display: flex; flex-direction: column; gap: 8px; position: relative;">
+                            <div style="padding: 12px; background: #d1fae5; color: #065f46; border-radius: 8px; display: flex; align-items: center; gap: 8px;">
+                                <span>✓</span>
+                                <span style="flex: 1; font-size: 14px;">Success message!</span>
+                                <button style="background: none; border: none; cursor: pointer; font-size: 20px;">×</button>
+                            </div>
+                            <div style="padding: 12px; background: #fee2e2; color: #991b1b; border-radius: 8px; display: flex; align-items: center; gap: 8px;">
+                                <span>✗</span>
+                                <span style="flex: 1; font-size: 14px;">Error occurred!</span>
+                                <button style="background: none; border: none; cursor: pointer; font-size: 20px;">×</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Accordion</div>
+                        <details style="color: var(--text-primary); margin-bottom: 8px;">
+                            <summary style="cursor: pointer; padding: 8px; background: var(--showcase-bg); border-radius: 4px;">Section 1</summary>
+                            <div style="padding: 12px; font-size: 14px;">Content for section 1</div>
+                        </details>
+                        <details style="color: var(--text-primary); margin-bottom: 8px;">
+                            <summary style="cursor: pointer; padding: 8px; background: var(--showcase-bg); border-radius: 4px;">Section 2</summary>
+                            <div style="padding: 12px; font-size: 14px;">Content for section 2</div>
+                        </details>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Breadcrumb Navigation</div>
+                        <nav style="font-size: 14px; color: var(--text-secondary);">
+                            <a href="#" style="color: #667eea;">Home</a> / 
+                            <a href="#" style="color: #667eea;">Products</a> / 
+                            <span style="color: var(--text-primary);">Item</span>
+                        </nav>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Avatar Components</div>
+                        <div style="display: flex; gap: 12px; align-items: center;">
+                            <div style="width: 40px; height: 40px; border-radius: 50%; background: #667eea; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600;">JD</div>
+                            <div style="width: 48px; height: 48px; border-radius: 50%; background: #10b981; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 20px;">AB</div>
+                            <div style="width: 56px; height: 56px; border-radius: 50%; background: #ef4444; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 24px;">CD</div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Skeleton Loaders</div>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <div style="height: 16px; background: linear-gradient(90deg, var(--border-color) 25%, var(--showcase-bg) 50%, var(--border-color) 75%); border-radius: 4px; animation: shimmer 2s infinite;"></div>
+                            <div style="height: 16px; background: linear-gradient(90deg, var(--border-color) 25%, var(--showcase-bg) 50%, var(--border-color) 75%); border-radius: 4px; width: 80%; animation: shimmer 2s infinite;"></div>
+                            <div style="height: 16px; background: linear-gradient(90deg, var(--border-color) 25%, var(--showcase-bg) 50%, var(--border-color) 75%); border-radius: 4px; width: 60%; animation: shimmer 2s infinite;"></div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Pagination</div>
+                        <nav style="display: flex; gap: 4px; justify-content: center;">
+                            <button style="padding: 8px 12px; border: 1px solid var(--border-color); background: var(--main-bg); color: var(--text-primary); border-radius: 4px; cursor: pointer;">«</button>
+                            <button style="padding: 8px 12px; border: 1px solid var(--border-color); background: var(--main-bg); color: var(--text-primary); border-radius: 4px; cursor: pointer;">1</button>
+                            <button style="padding: 8px 12px; border: 1px solid #667eea; background: #667eea; color: white; border-radius: 4px; cursor: pointer;">2</button>
+                            <button style="padding: 8px 12px; border: 1px solid var(--border-color); background: var(--main-bg); color: var(--text-primary); border-radius: 4px; cursor: pointer;">3</button>
+                            <button style="padding: 8px 12px; border: 1px solid var(--border-color); background: var(--main-bg); color: var(--text-primary); border-radius: 4px; cursor: pointer;">»</button>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
         
         <footer>
             <h3>🚀 Built with Windjammer</h3>
-            <p>All 32 components compiled from pure <code>.wj</code> source files to Rust.</p>
+            <p>All 40 components compiled from pure <code>.wj</code> source files to Rust.</p>
             <p>100% type-safe, zero runtime errors, native performance!</p>
             
             <div class="stats">
                 <div class="stat">
-                    <div class="stat-number">32</div>
+                    <div class="stat-number">40</div>
                     <div class="stat-label">Components</div>
-</div>
+                </div>
                 <div class="stat">
                     <div class="stat-number">100%</div>
                     <div class="stat-label">Windjammer</div>
-</div>
+                </div>
                 <div class="stat">
                     <div class="stat-number">0</div>
                     <div class="stat-label">Errors</div>
-</div>
-</div>
-    </footer>
+                </div>
+            </div>
+        </footer>
     </div>
     
     <script>
