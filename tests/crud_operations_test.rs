@@ -3,11 +3,11 @@
 //! Test Create, Read, Update, Delete patterns common in applications
 
 use windjammer_ui::components::*;
-use windjammer_ui::reactivity::Signal;
 use windjammer_ui::simple_vnode::VNode;
 use windjammer_ui::to_vnode::ToVNode;
 
 #[derive(Clone, Debug, PartialEq)]
+#[allow(dead_code)] // Used in tests for data structure examples
 struct TodoItem {
     id: i32,
     text: String,
@@ -17,11 +17,9 @@ struct TodoItem {
 #[test]
 fn test_list_view_rendering() {
     // Test rendering a list of items
-    let items = vec![
-        "Item 1".to_string(),
+    let items = ["Item 1".to_string(),
         "Item 2".to_string(),
-        "Item 3".to_string(),
-    ];
+        "Item 3".to_string()];
 
     let list = Flex::new()
         .direction(FlexDirection::Column)

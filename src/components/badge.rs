@@ -10,6 +10,7 @@ pub enum BadgeVariant {
     Success,
     Warning,
     Danger,
+    Error, // Alias for Danger for better semantics
     Info,
 }
 
@@ -56,7 +57,7 @@ impl Badge {
                 BadgeVariant::Primary => "wj-badge-primary",
                 BadgeVariant::Success => "wj-badge-success",
                 BadgeVariant::Warning => "wj-badge-warning",
-                BadgeVariant::Danger => "wj-badge-danger",
+                BadgeVariant::Danger | BadgeVariant::Error => "wj-badge-danger",
                 BadgeVariant::Info => "wj-badge-info",
             }
             .to_string(),

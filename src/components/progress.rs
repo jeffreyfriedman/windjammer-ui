@@ -9,6 +9,7 @@ pub enum ProgressVariant {
     Success,
     Warning,
     Danger,
+    Circular,
 }
 
 #[derive(Clone)]
@@ -54,6 +55,7 @@ impl Progress {
                 ProgressVariant::Success => "wj-progress-success",
                 ProgressVariant::Warning => "wj-progress-warning",
                 ProgressVariant::Danger => "wj-progress-danger",
+                ProgressVariant::Circular => "wj-progress-circular",
             }
             .to_string(),
         );

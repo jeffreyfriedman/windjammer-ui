@@ -4,7 +4,6 @@
 
 use windjammer_ui::components::*;
 use windjammer_ui::simple_vnode::VNode;
-use windjammer_ui::to_vnode::ToVNode;
 
 #[test]
 fn test_stat_card() {
@@ -99,9 +98,9 @@ fn test_activity_feed_layout() {
 fn test_tabs_for_different_views() {
     // Test tabs for switching between dashboard views
     let tabs = Tabs::new()
-        .tab(Tab::new("tab1", "Overview"))
-        .tab(Tab::new("tab2", "Analytics"))
-        .tab(Tab::new("tab3", "Reports"))
+        .tab(Tab::new("tab1", Text::new("Overview").render()))
+        .tab(Tab::new("tab2", Text::new("Analytics").render()))
+        .tab(Tab::new("tab3", Text::new("Reports").render()))
         .render();
 
     assert!(matches!(tabs, VNode::Element { .. }));
@@ -110,8 +109,7 @@ fn test_tabs_for_different_views() {
 #[test]
 fn test_split_panel_layout() {
     // Test split panel for dashboard with sidebar
-    let split = SplitPanel::new()
-        .direction(SplitDirection::Horizontal)
+    let split = SplitPanel::new(SplitDirection::Horizontal)
         .left(Text::new("Sidebar").render())
         .right(Text::new("Main Content").render())
         .render();

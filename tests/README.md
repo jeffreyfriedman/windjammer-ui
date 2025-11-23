@@ -3,37 +3,29 @@
 ## Test Status for v0.1.1
 
 ### ✅ Enabled Tests
-- `button_click_test.rs` - **Disabled temporarily** (egui_kittest type inference issues)
-- `simple_button_test.rs` - **Disabled temporarily** (egui_kittest type inference issues)  
-- `crud_operations_test.rs` - **Disabled temporarily** (API mismatches for unimplemented features)
-- `dashboard_patterns_test.rs` - **Disabled temporarily** (API mismatches for unimplemented features)
-- `integration_ui_examples.rs` - ✅ Should work
-- `examples_integration_test.rs` - ✅ Should work
-- `integration_tests.rs` - **Disabled temporarily** (uses removed modules)
+- `crud_operations_test.rs` - Tests CRUD patterns (Card, Text, Badge, etc.)
+- `dashboard_patterns_test.rs` - Tests dashboard UI patterns
+- `examples_integration_test.rs` - Tests .wj example compilation
+- `form_validation_test.rs` - Tests form validation patterns
+- `integration_ui_examples.rs` - Tests UI framework compilation  
+- `widget_integration_test.rs` - Tests widget integration
+
+### 🚧 Temporarily Disabled (egui_kittest issues)
+- `button_click_test.rs` - Needs egui_kittest dev dependency
+- `simple_button_test.rs` - Needs egui_kittest dev dependency
 
 ### ⏭️ Moved to windjammer-game
+- `integration_tests.rs` - Uses undo_redo, build_system, file_watcher (game editor modules)
 - `editor_comprehensive_test.rs` - Uses EditorApp/scene_gizmos/asset_browser
 - `editor_kittest.rs` - Game editor UI tests
 - `editor_visual_test.rs` - Game editor visual tests
 
-## Why are tests disabled?
-
-For v0.1.1, we're focusing on getting the core library published. Some tests use:
-1. **egui_kittest** - Has type inference issues that need investigation
-2. **Unimplemented APIs** - Grid::children(), ProgressVariant::Circular, etc.
-3. **Moved modules** - scene_gizmos, asset_browser (now in windjammer-game)
-
-These will be re-enabled as APIs are finalized and implemented.
-
 ## Running Tests
 
 ```bash
-# Run only enabled tests
+# Run all enabled tests
 cargo test
 
-# Run all tests including ignored
-cargo test -- --ignored
-
-# Run a specific test
-cargo test test_name
+# Run clippy on all targets
+cargo clippy --all-targets --all-features
 ```

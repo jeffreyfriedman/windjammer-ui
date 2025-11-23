@@ -15,7 +15,7 @@ fn test_counter_example_compiles() {
 
     // Test that it compiles with the Windjammer compiler
     let output = Command::new("wj")
-        .args(&["build", "examples_wj/counter.wj"])
+        .args(["build", "examples_wj/counter.wj"])
         .output()
         .expect("Failed to run wj compiler");
 
@@ -36,7 +36,7 @@ fn test_todo_app_example_compiles() {
     }
 
     let output = Command::new("wj")
-        .args(&["build", "examples_wj/todo_app.wj"])
+        .args(["build", "examples_wj/todo_app.wj"])
         .output()
         .expect("Failed to run wj compiler");
 
@@ -57,7 +57,7 @@ fn test_contact_form_example_compiles() {
     }
 
     let output = Command::new("wj")
-        .args(&["build", "examples_wj/contact_form.wj"])
+        .args(["build", "examples_wj/contact_form.wj"])
         .output()
         .expect("Failed to run wj compiler");
 
@@ -78,7 +78,7 @@ fn test_dashboard_example_compiles() {
     }
 
     let output = Command::new("wj")
-        .args(&["build", "examples_wj/dashboard.wj"])
+        .args(["build", "examples_wj/dashboard.wj"])
         .output()
         .expect("Failed to run wj compiler");
 
