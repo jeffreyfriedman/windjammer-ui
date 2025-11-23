@@ -30,8 +30,16 @@ name = "serve_demo"
 path = "serve_demo.rs"
 
 [[bin]]
+name = "text"
+path = "text.rs"
+
+[[bin]]
 name = "dashboard"
 path = "dashboard.rs"
+
+[[bin]]
+name = "button"
+path = "button.rs"
 
 [profile.release]
 opt-level = 3

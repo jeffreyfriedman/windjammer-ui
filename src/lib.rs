@@ -108,10 +108,9 @@ pub mod prelude {
     pub use crate::component;
 
     // Re-export common components
-    pub use crate::components::text::TextWeight;
     pub use crate::components::{
         Alert, AlertVariant, Button, ButtonSize, ButtonVariant, Container, Flex, FlexDirection,
-        Input, Text, TextSize,
+        Input, Text, TextSize, TextWeight,
     };
 }
 
