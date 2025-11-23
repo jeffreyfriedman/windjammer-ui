@@ -536,6 +536,62 @@
             max-width: 500px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
+        
+        /* Accordion styling */
+        .wj-accordion {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .wj-accordion-item {
+            border-bottom: 1px solid var(--border-color);
+        }
+        .wj-accordion-item:last-child {
+            border-bottom: none;
+        }
+        .wj-accordion-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            cursor: pointer;
+            background: var(--showcase-bg);
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: all 0.2s ease;
+            list-style: none;
+            user-select: none;
+        }
+        .wj-accordion-header::-webkit-details-marker {
+            display: none;
+        }
+        .wj-accordion-header:hover {
+            background: var(--border-color);
+        }
+        .wj-accordion-icon {
+            display: inline-block;
+            transition: transform 0.2s ease;
+            color: #667eea;
+            font-size: 12px;
+        }
+        .wj-accordion-item[open] .wj-accordion-icon {
+            transform: rotate(90deg);
+        }
+        .wj-accordion-content {
+            padding: 16px 16px 16px 44px;
+            color: var(--text-primary);
+            font-size: 14px;
+            line-height: 1.6;
+            background: var(--main-bg);
+            animation: accordionSlideDown 0.2s ease;
+        }
+        @keyframes accordionSlideDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .wj-accordion-content p {
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -716,11 +772,13 @@
                     <div class="showcase-item">
                         <div class="showcase-label">Divider & Spacer</div>
                         <div style="color: var(--text-primary);">
-                            <p style="font-size: 14px;">Section 1</p>
-                            <div style="height: 1px; background: var(--border-color); margin: 16px 0;"></div>
-                            <p style="font-size: 14px;">Section 2</p>
-                            <div style="height: 24px;"></div>
-                            <p style="font-size: 14px;">Section 3 (with 24px spacer above)</p>
+                            <p style="font-size: 14px; margin-bottom: 8px;">Section 1</p>
+                            <div style="height: 2px; background: var(--border-color); margin: 12px 0;"></div>
+                            <p style="font-size: 14px; margin: 8px 0;">Section 2</p>
+                            <div style="height: 2px; background: #667eea; margin: 12px 0;"></div>
+                            <p style="font-size: 14px; margin-top: 8px;">Section 3 (colored divider above)</p>
+                            <div style="height: 24px; background: rgba(102, 126, 234, 0.1); margin: 12px 0; border-radius: 4px;"></div>
+                            <p style="font-size: 14px;">Section 4 (spacer above)</p>
                         </div>
                     </div>
                 </div>
@@ -825,14 +883,17 @@
                         </div>
                     </div>
                     <div class="showcase-item">
-                        <div class="showcase-label">TabPanel (Alternative)</div>
+                        <div class="showcase-label">TabPanel (Click tabs!)</div>
                         <div style="border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden;">
                             <div style="display: flex; background: var(--showcase-bg);">
-                                <button style="padding: 12px 16px; border: none; background: #667eea; color: white; cursor: pointer; flex: 1;">Tab 1</button>
-                                <button style="padding: 12px 16px; border: none; background: transparent; color: var(--text-secondary); cursor: pointer; flex: 1;">Tab 2</button>
+                                <button id="tabpanel-btn1" onclick="switchTabPanel(1)" style="padding: 12px 16px; border: none; background: #667eea; color: white; cursor: pointer; flex: 1; transition: all 0.2s;">Tab 1</button>
+                                <button id="tabpanel-btn2" onclick="switchTabPanel(2)" style="padding: 12px 16px; border: none; background: transparent; color: var(--text-secondary); cursor: pointer; flex: 1; transition: all 0.2s;">Tab 2</button>
                             </div>
-                            <div style="padding: 16px;">
-                                <p style="color: var(--text-primary); font-size: 14px;">Active tab content displayed here</p>
+                            <div id="tabpanel-content1" style="padding: 16px;">
+                                <p style="color: var(--text-primary); font-size: 14px;"><strong>Tab 1 Content</strong><br>This is the first tab's content area.</p>
+                            </div>
+                            <div id="tabpanel-content2" style="padding: 16px; display: none;">
+                                <p style="color: var(--text-primary); font-size: 14px;"><strong>Tab 2 Content</strong><br>This is the second tab's content area.</p>
                             </div>
                         </div>
                     </div>
@@ -918,16 +979,29 @@ fn main() {
                 <div class="showcase-grid">
                     <div class="showcase-item">
                         <div class="showcase-label">File Tree</div>
-                        <div style="font-family: monospace; font-size: 14px; color: var(--text-primary);">
-                            <div>📂 src/</div>
-                            <div style="margin-left: 20px;">📄 main.rs</div>
-                            <div style="margin-left: 20px;">📄 lib.rs</div>
-                            <div style="margin-left: 20px;">📂 components/</div>
-                            <div style="margin-left: 40px;">📄 button.wj</div>
+                        <div style="font-family: monospace; font-size: 13px; color: var(--text-primary); background: var(--showcase-bg); padding: 12px; border-radius: 8px;">
+                            <div style="padding: 4px 0;">📂 <strong>src/</strong></div>
+                            <div style="margin-left: 20px; padding: 4px 0;">📄 main.rs</div>
+                            <div style="margin-left: 20px; padding: 4px 0;">📄 lib.rs</div>
+                            <div style="margin-left: 20px; padding: 4px 0;">📂 <strong>components/</strong></div>
+                            <div style="margin-left: 40px; padding: 4px 0;">📄 button.wj</div>
+                            <div style="margin-left: 40px; padding: 4px 0;">📄 card.wj</div>
+                            <div style="margin-left: 40px; padding: 4px 0;">📄 toast.wj</div>
                         </div>
                     </div>
                     <div class="showcase-item">
-                        <div class="showcase-label">Collapsible Section (Click to expand!)</div>
+                        <div class="showcase-label">Tree View</div>
+                        <div style="font-size: 14px; color: var(--text-primary); background: var(--showcase-bg); padding: 12px; border-radius: 8px;">
+                            <div style="padding: 6px 0; cursor: pointer;">▼ <strong>Root Node</strong></div>
+                            <div style="margin-left: 20px; padding: 6px 0; cursor: pointer;">▶ Child Node 1</div>
+                            <div style="margin-left: 20px; padding: 6px 0; cursor: pointer;">▼ Child Node 2</div>
+                            <div style="margin-left: 40px; padding: 6px 0;">• Leaf 2.1</div>
+                            <div style="margin-left: 40px; padding: 6px 0;">• Leaf 2.2</div>
+                            <div style="margin-left: 20px; padding: 6px 0; cursor: pointer;">▶ Child Node 3</div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Collapsible Section (Click!)</div>
                         <details style="color: var(--text-primary);">
                             <summary style="cursor: pointer; font-weight: 600; padding: 8px;">
                                 <span class="arrow">▶</span> Advanced Options
@@ -955,15 +1029,36 @@ fn main() {
                         <p style="font-size: 11px; color: var(--text-secondary); margin-top: 8px;">Click buttons to see toast notifications</p>
                     </div>
                     <div class="showcase-item">
-                        <div class="showcase-label">Accordion</div>
-                        <details style="color: var(--text-primary); margin-bottom: 8px;">
-                            <summary style="cursor: pointer; padding: 8px; background: var(--showcase-bg); border-radius: 4px;">Section 1</summary>
-                            <div style="padding: 12px; font-size: 14px;">Content for section 1</div>
-                        </details>
-                        <details style="color: var(--text-primary); margin-bottom: 8px;">
-                            <summary style="cursor: pointer; padding: 8px; background: var(--showcase-bg); border-radius: 4px;">Section 2</summary>
-                            <div style="padding: 12px; font-size: 14px;">Content for section 2</div>
-                        </details>
+                        <div class="showcase-label">Accordion (Click to expand!)</div>
+                        <div class="wj-accordion">
+                            <details class="wj-accordion-item">
+                                <summary class="wj-accordion-header">
+                                    <span class="wj-accordion-icon">▶</span>
+                                    <span>Getting Started</span>
+                                </summary>
+                                <div class="wj-accordion-content">
+                                    <p>Welcome to Windjammer UI! This accordion has beautiful styling with smooth animations.</p>
+                                </div>
+                            </details>
+                            <details class="wj-accordion-item">
+                                <summary class="wj-accordion-header">
+                                    <span class="wj-accordion-icon">▶</span>
+                                    <span>Features & Benefits</span>
+                                </summary>
+                                <div class="wj-accordion-content">
+                                    <p>Rich content support with proper spacing and typography.</p>
+                                </div>
+                            </details>
+                            <details class="wj-accordion-item" open>
+                                <summary class="wj-accordion-header">
+                                    <span class="wj-accordion-icon">▶</span>
+                                    <span>Advanced Usage (Open)</span>
+                                </summary>
+                                <div class="wj-accordion-content">
+                                    <p>This section is open by default. Click the header to close it!</p>
+                                </div>
+                            </details>
+                        </div>
                     </div>
                     <div class="showcase-item">
                         <div class="showcase-label">Breadcrumb Navigation</div>
@@ -1111,6 +1206,24 @@ fn main() {
                     btn.style.color = 'var(--text-primary)';
                 }
             }
+        }
+        
+        // TabPanel switching
+        function switchTabPanel(tabNum) {
+            // Hide all content
+            document.getElementById('tabpanel-content1').style.display = 'none';
+            document.getElementById('tabpanel-content2').style.display = 'none';
+            
+            // Reset all button styles
+            document.getElementById('tabpanel-btn1').style.background = 'transparent';
+            document.getElementById('tabpanel-btn1').style.color = 'var(--text-secondary)';
+            document.getElementById('tabpanel-btn2').style.background = 'transparent';
+            document.getElementById('tabpanel-btn2').style.color = 'var(--text-secondary)';
+            
+            // Show selected content and highlight button
+            document.getElementById('tabpanel-content' + tabNum).style.display = 'block';
+            document.getElementById('tabpanel-btn' + tabNum).style.background = '#667eea';
+            document.getElementById('tabpanel-btn' + tabNum).style.color = 'white';
         }
     </script>
 </body>
