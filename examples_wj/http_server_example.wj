@@ -1,0 +1,257 @@
+// HTTP Server Example - Serve Windjammer UI Web App
+// This demonstrates what the code will look like when std.net.Server is implemented
+//
+// Future usage: wj run examples_wj/http_server_example.wj
+// Then visit: http://localhost:3000
+
+use windjammer_ui::*
+use std::net::{Server, ServerRequest, ServerResponse}
+
+fn main() {
+    println!("🚀 Starting Windjammer UI Web Server...")
+    println!("📍 Server running at http://localhost:3000")
+    println!("Press Ctrl+C to stop")
+    
+    let server = Server::new("127.0.0.1", 3000)
+    
+    match server.serve(handle_request) {
+        Ok(_) => println!("Server stopped"),
+        Err(e) => println!("Server error: {}", e),
+    }
+}
+
+fn handle_request(req: ServerRequest) -> ServerResponse {
+    println!("📨 {} {}", req.method, req.path)
+    
+    match req.path.as_str() {
+        "/" => serve_home_page(),
+        "/dashboard" => serve_dashboard(),
+        "/chat" => serve_chat_page(),
+        "/api/todos" => serve_api_todos(req),
+        _ => serve_not_found(),
+    }
+}
+
+fn serve_home_page() -> ServerResponse {
+    let html = build_complete_html_page(
+        "Windjammer UI - Home",
+        build_home_content()
+    )
+    
+    ServerResponse::html(html)
+}
+
+fn serve_dashboard() -> ServerResponse {
+    let html = build_complete_html_page(
+        "Dashboard",
+        build_dashboard_content()
+    )
+    
+    ServerResponse::html(html)
+}
+
+fn serve_chat_page() -> ServerResponse {
+    let html = build_complete_html_page(
+        "Chat",
+        build_chat_content()
+    )
+    
+    ServerResponse::html(html)
+}
+
+fn serve_api_todos(req: ServerRequest) -> ServerResponse {
+    // Example API endpoint
+    match req.method.as_str() {
+        "GET" => {
+            let todos = "[{\"id\": 1, \"text\": \"Learn Windjammer\", \"completed\": true}]"
+            ServerResponse::json(todos)
+        }
+        "POST" => {
+            // Parse req.body and create new todo
+            ServerResponse::json("{\"success\": true}")
+                .header("X-Created", "true")
+        }
+        _ => ServerResponse::error(405, "Method not allowed"),
+    }
+}
+
+fn serve_not_found() -> ServerResponse {
+    let html = build_complete_html_page(
+        "404 - Not Found",
+        Alert::error("Page not found!").render()
+    )
+    
+    ServerResponse::new(404, html)
+        .header("Content-Type", "text/html")
+}
+
+fn build_complete_html_page(title: string, content: string) -> string {
+    format!(
+        "<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>{}</title>
+    <style>{}</style>
+</head>
+<body>
+    {}
+    {}
+</body>
+</html>",
+        title,
+        get_base_styles(),
+        build_nav_bar(),
+        content
+    )
+}
+
+fn build_nav_bar() -> string {
+    Navbar::new()
+        .brand("🎨 Windjammer UI")
+        .item(NavbarItem::new("Home", "/"))
+        .item(NavbarItem::new("Dashboard", "/dashboard"))
+        .item(NavbarItem::new("Chat", "/chat"))
+        .sticky(true)
+        .render()
+}
+
+fn build_home_content() -> string {
+    Container::new()
+        .max_width("1200px")
+        .child(
+            Card::new()
+                .title("Welcome to Windjammer UI Web Server!")
+                .child(
+                    Flex::new()
+                        .direction(FlexDirection::Column)
+                        .gap("16px")
+                        .child(
+                            Text::new("This is a complete web application served by Windjammer's built-in HTTP server.")
+                                .size(TextSize::Large)
+                                .render()
+                        )
+                        .child(
+                            Alert::success("All UI components are written in pure Windjammer and compiled to Rust!")
+                                .render()
+                        )
+                        .child(
+                            Grid::new()
+                                .columns(3)
+                                .gap("16px")
+                                .child(
+                                    Button::new("Visit Dashboard")
+                                        .variant(ButtonVariant::Primary)
+                                        .render()
+                                )
+                                .child(
+                                    Button::new("Open Chat")
+                                        .variant(ButtonVariant::Secondary)
+                                        .render()
+                                )
+                                .child(
+                                    Button::new("View Docs")
+                                        .variant(ButtonVariant::Ghost)
+                                        .render()
+                                )
+                                .render()
+                        )
+                        .render()
+                )
+                .padding("32px")
+                .render()
+        )
+        .render()
+}
+
+fn build_dashboard_content() -> string {
+    Container::new()
+        .max_width("1200px")
+        .child(
+            Grid::new()
+                .columns(3)
+                .gap("24px")
+                .child(
+                    Card::new()
+                        .title("Users")
+                        .child(
+                            Text::new("1,234")
+                                .size(TextSize::XLarge)
+                                .bold()
+                                .render()
+                        )
+                        .child(Badge::new("▲ 12%").variant(BadgeVariant::Success).render())
+                        .padding("24px")
+                        .render()
+                )
+                .child(
+                    Card::new()
+                        .title("Revenue")
+                        .child(
+                            Text::new("$45,678")
+                                .size(TextSize::XLarge)
+                                .bold()
+                                .render()
+                        )
+                        .child(Badge::new("▲ 8%").variant(BadgeVariant::Success).render())
+                        .padding("24px")
+                        .render()
+                )
+                .child(
+                    Card::new()
+                        .title("Projects")
+                        .child(
+                            Text::new("23")
+                                .size(TextSize::XLarge)
+                                .bold()
+                                .render()
+                        )
+                        .child(Badge::new("▼ 3%").variant(BadgeVariant::Warning).render())
+                        .padding("24px")
+                        .render()
+                )
+                .render()
+        )
+        .render()
+}
+
+fn build_chat_content() -> string {
+    Container::new()
+        .max_width("800px")
+        .child(
+            Card::new()
+                .title("Chat with AI")
+                .child(
+                    MessageList::new()
+                        .height("400px")
+                        .message(
+                            ChatMessage::new("Hello! How can I help you?")
+                                .role(MessageRole::Assistant)
+                                .render()
+                        )
+                        .message(
+                            ChatMessage::new("Tell me about Windjammer!")
+                                .role(MessageRole::User)
+                                .render()
+                        )
+                        .message(TypingIndicator::new().render())
+                        .render()
+                )
+                .child(ChatInput::new().placeholder("Type a message...").render())
+                .padding("20px")
+                .render()
+        )
+        .render()
+}
+
+fn get_base_styles() -> string {
+    "* { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f9fafb; }
+    .wj-button { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.2s; }
+    .wj-button-primary { background: #667eea; color: white; }
+    .wj-button-primary:hover { background: #5568d3; }
+    .wj-button-secondary { background: #e5e7eb; color: #374151; }
+    .wj-button-ghost { background: transparent; color: #667eea; border: 1px solid #667eea; }"
+}
+
