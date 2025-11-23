@@ -49,8 +49,6 @@ pub mod generated;
 // RE-EXPORTS - ALL Windjammer Components (32 total!)
 // ===========================================================================
 pub use generated::{
-    // Advanced Components
-    AdvancedCodeEditor,
     // Basic Components
     Alert,
     AlertVariant,
@@ -60,56 +58,98 @@ pub use generated::{
     Button,
     ButtonSize,
     ButtonVariant,
-    Card,
     Checkbox,
     CheckboxSize,
-    CodeEditor,
-    CollapsibleSection,
-    ColorPicker,
+    Input,
+    Slider,
+    Text,
+    TextSize,
+    TextWeight,
+    
     // Layout Components
     Container,
-    Dialog,
     Divider,
     DividerOrientation,
-    FileNode,
-    FileTree,
     Flex,
     FlexDirection,
     Grid,
-    Input,
     Panel,
-    Progress,
-    ProgressVariant,
-    // Form Components
-    RadioGroup,
-    RadioOption,
     ScrollArea,
     ScrollDirection,
-    Select,
-    SelectOption,
-    Slider,
     Spacer,
-    Spinner,
-    SpinnerSize,
     SplitDirection,
     SplitPanel,
-
+    
+    // Form Components
+    ColorPicker,
+    RadioGroup,
+    RadioOption,
+    Select,
+    SelectOption,
     Switch,
     SwitchSize,
-
+    
+    // Data Display
+    Card,
+    Progress,
+    ProgressVariant,
+    Spinner,
+    SpinnerSize,
+    Avatar,
+    AvatarSize,
+    Skeleton,
+    SkeletonVariant,
+    
     // Navigation Components
+    Breadcrumb,
+    BreadcrumbItem,
+    Dropdown,
+    DropdownItem,
+    HamburgerMenu,
+    HamburgerMenuItem,
+    Menu,
+    MenuItem,
+    Navbar,
+    NavbarItem,
+    NavbarPosition,
+    Pagination,
+    Sidebar,
+    SidebarItem,
+    SidebarPosition,
     Tab,
     TabPanel,
     TabPanelTab,
     Tabs,
-    Text,
-    TextSize,
-    TextWeight,
-
     Toolbar,
     Tooltip,
     TooltipPosition,
-
+    
+    // Advanced Components
+    Accordion,
+    AccordionItem,
+    AdvancedCodeEditor,
+    CodeBlock,
+    CodeEditor,
+    CollapsibleSection,
+    Dialog,
+    Toast,
+    ToastPosition,
+    ToastVariant,
+    
+    // Tree Components
+    FileNode,
+    FileTree,
     TreeItem,
     TreeView,
+    
+    // Chat Components
+    ChatInput,
+    ChatMessage,
+    MessageList,
+    MessageRole,
+    TypingIndicator,
+    
+    // Interaction Components
+    ContextMenu,
+    ContextMenuItem,
 };

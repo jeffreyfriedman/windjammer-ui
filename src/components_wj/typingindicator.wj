@@ -1,0 +1,31 @@
+pub struct TypingIndicator {
+    label: string,
+}
+
+impl TypingIndicator {
+    pub fn new() -> TypingIndicator {
+        TypingIndicator {
+            label: String::from("AI is typing"),
+        }
+    }
+    
+    pub fn label(self, label: string) -> TypingIndicator {
+        self.label = label
+        self
+    }
+    
+    pub fn render(self) -> string {
+        format!(
+            "<div class='wj-typing-indicator'>
+                <div class='wj-typing-dots'>
+                    <span class='wj-typing-dot'></span>
+                    <span class='wj-typing-dot'></span>
+                    <span class='wj-typing-dot'></span>
+                </div>
+                <span class='wj-typing-label'>{}</span>
+            </div>",
+            self.label
+        )
+    }
+}
+
