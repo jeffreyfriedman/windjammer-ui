@@ -14,7 +14,7 @@ pub mod advanced_code_editor;
 // pub mod alert; // MIGRATED to generated/alert.wj
 // pub mod badge; // MIGRATED to generated/badge.wj
 // pub mod button; // MIGRATED to generated/button.wj
-pub mod card;
+// pub mod card; // MIGRATED to generated/card.wj
 // pub mod checkbox; // MIGRATED to generated/checkbox.wj
 pub mod code_editor;
 pub mod collapsible_section;
@@ -27,7 +27,7 @@ pub mod file_tree;
 pub mod grid;
 // pub mod input; // MIGRATED to generated/input.wj
 pub mod panel;
-pub mod progress;
+// pub mod progress; // MIGRATED to generated/progress.wj
 pub mod radio;
 pub mod scroll_area;
 pub mod select;
@@ -47,16 +47,15 @@ pub mod tree_view;
 // RE-EXPORTS - Generated Windjammer Components
 // ===========================================================================
 pub use generated::{
-    Alert, AlertVariant, Badge, BadgeSize, BadgeVariant, Button, ButtonSize, ButtonVariant,
+    Alert, AlertVariant, Badge, BadgeSize, BadgeVariant, Button, ButtonSize, ButtonVariant, Card,
     Checkbox, CheckboxSize, Container, Divider, DividerOrientation, Flex, FlexDirection, Input,
-    Slider, Spacer, Spinner, SpinnerSize, Text, TextSize, TextWeight,
+    Progress, ProgressVariant, Slider, Spacer, Spinner, SpinnerSize, Text, TextSize, TextWeight,
 };
 
 // ===========================================================================
 // RE-EXPORTS - Legacy Rust Components
 // ===========================================================================
 pub use advanced_code_editor::AdvancedCodeEditor;
-pub use card::Card;
 pub use code_editor::CodeEditor;
 pub use collapsible_section::CollapsibleSection;
 pub use color_picker::ColorPicker;
@@ -64,7 +63,6 @@ pub use dialog::Dialog;
 pub use file_tree::{FileNode, FileTree};
 pub use grid::Grid;
 pub use panel::Panel;
-pub use progress::{Progress, ProgressVariant};
 pub use radio::{RadioGroup, RadioOption};
 pub use scroll_area::{ScrollArea, ScrollDirection};
 pub use select::{Select, SelectOption};
