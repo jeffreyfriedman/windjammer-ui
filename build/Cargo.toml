@@ -7,13 +7,31 @@ edition = "2021"
 [workspace]
 
 [dependencies]
-std::fs = "*"
-std::http = "*"
-std::mime = "*"
+smallvec = "1.13"
+serde = { version = "1.0", features = ["derive"] }
+windjammer-runtime = { path = "./crates/windjammer-runtime" }
+windjammer-ui = { path = "./crates/windjammer-ui" }
+windjammer-ui-macro = { path = "./crates/windjammer-ui-macro" }
+
+[[bin]]
+name = "todo_app"
+path = "todo_app.rs"
+
+[[bin]]
+name = "contact_form"
+path = "contact_form.rs"
+
+[[bin]]
+name = "counter"
+path = "counter.rs"
 
 [[bin]]
 name = "serve_demo"
 path = "serve_demo.rs"
+
+[[bin]]
+name = "dashboard"
+path = "dashboard.rs"
 
 [profile.release]
 opt-level = 3

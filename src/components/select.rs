@@ -117,7 +117,17 @@ impl Select {
             children.push(select_option);
         }
 
-        let mut select_attrs = vec![("class".to_string(), VAttr::Static("wj-select".to_string()))];
+        let mut select_attrs = vec![
+            ("class".to_string(), VAttr::Static("wj-select".to_string())),
+            (
+                "style".to_string(),
+                VAttr::Static(
+                    "background: #3C3C3C; color: #D4D4D4; border: 1px solid #3E3E3E; \
+                     border-radius: 4px; padding: 8px 12px; font-size: 14px; height: 32px; \
+                     cursor: pointer; outline: none; transition: border-color 100ms ease-out;".to_string()
+                ),
+            ),
+        ];
 
         if self.disabled {
             select_attrs.push(("disabled".to_string(), VAttr::Static("true".to_string())));

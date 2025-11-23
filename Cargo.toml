@@ -5,11 +5,14 @@ members = [
 ]
 
 [workspace.package]
-version = "0.34.0"
+version = "0.1.0"
 edition = "2021"
-authors = ["Jeffrey Friedman <jeffrey@example.com>", "Windjammer Contributors"]
+authors = ["Jeffrey Friedman <20387583+jeffreyfriedman@users.noreply.github.com>", "Windjammer Contributors"]
 license = "MIT OR Apache-2.0"
 rust-version = "1.90"
+repository = "https://github.com/jeffreyfriedman/windjammer-ui"
+homepage = "https://github.com/jeffreyfriedman/windjammer-ui"
+documentation = "https://docs.rs/windjammer-ui"
 
 [package]
 name = "windjammer-ui"
@@ -18,6 +21,9 @@ edition.workspace = true
 authors.workspace = true
 license.workspace = true
 rust-version.workspace = true
+repository.workspace = true
+homepage.workspace = true
+documentation.workspace = true
 description = "Cross-platform UI framework for Windjammer (Web, Desktop, Mobile)"
 keywords = ["ui", "framework", "cross-platform", "wasm", "tauri"]
 categories = ["gui", "web-programming", "wasm"]
@@ -37,14 +43,14 @@ path = "src/bin/counter_wasm.rs"
 
 [dependencies]
 # Proc macro for #[component]
-windjammer-ui-macro = { path = "windjammer-ui-macro", version = "0.34.0" }
+windjammer-ui-macro = { path = "windjammer-ui-macro", version = "0.1.0" }
 
 # Core dependencies
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 urlencoding = "2.1"
 smallvec = "1.13"
-uuid = { version = "1.0", features = ["v4"] }
+uuid = { version = "1.0", features = ["v4", "js"] }
 
 # Async runtime
 tokio = { version = "1.35", features = ["full"], optional = true }
