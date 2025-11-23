@@ -1,7 +1,7 @@
 // Chat App Example - ChatGPT-style Interface
 // Demonstrates: ChatMessage, MessageList, ChatInput, TypingIndicator, CodeBlock
 
-use std::ui::*
+use windjammer_ui::*
 
 fn main() {
     println!("🤖 Starting Windjammer Chat App")
@@ -50,7 +50,7 @@ fn build_chat_history() -> string {
                 .render()
         )
         .message(
-            CodeBlock::new("use std::ui::*\n\nfn main() {\n    let button = Button::new(\"Click Me\")\n        .variant(ButtonVariant::Primary)\n        .render()\n    \n    println!(\"{}\", button)\n}")
+            CodeBlock::new("use windjammer_ui::*\n\nfn main() {\n    let button = Button::new(\"Click Me\")\n        .variant(ButtonVariant::Primary)\n        .render()\n    \n    println!(\"{}\", button)\n}")
                 .language("windjammer")
                 .show_copy_button(true)
                 .show_line_numbers(true)

@@ -1,7 +1,7 @@
 // Dashboard with Navigation Example
 // Demonstrates: Navbar, Sidebar, Grid, Card, Progress, Badge
 
-use std::ui::*
+use windjammer_ui::*
 
 fn main() {
     println!("📊 Starting Windjammer Dashboard")

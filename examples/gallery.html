@@ -1156,9 +1156,9 @@ fn main() {
                         <div style="border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden;">
                             <div style="display: flex; justify-content: space-between; padding: 8px 12px; background: var(--showcase-bg); border-bottom: 1px solid var(--border-color);">
                                 <span style="font-size: 12px; color: var(--text-secondary); font-weight: 600;">rust</span>
-                                <button onclick="navigator.clipboard.writeText('fn main() {\\n    println!(\"Hello!\");\\n}'); this.textContent='✓ Copied!'; setTimeout(() => this.textContent='📋 Copy', 2000)" style="background: none; border: none; color: #667eea; cursor: pointer; font-size: 12px;">📋 Copy</button>
+                                <button id="copy-code-btn" onclick="copyCodeBlock(this)" style="background: none; border: none; color: #667eea; cursor: pointer; font-size: 12px; font-family: inherit;">📋 Copy</button>
                             </div>
-                            <pre style="padding: 12px; margin: 0; background: var(--main-bg); color: var(--text-primary); font-family: 'Monaco', 'Menlo', monospace; font-size: 13px; line-height: 1.5;"><code>fn main() {
+                            <pre style="padding: 12px; margin: 0; background: var(--main-bg); color: var(--text-primary); font-family: 'Monaco', 'Menlo', monospace; font-size: 13px; line-height: 1.5;"><code id="code-to-copy">fn main() {
     println!("Hello!");
 }</code></pre>
                         </div>
@@ -1375,6 +1375,32 @@ fn main() {
             document.getElementById('tabpanel-content' + tabNum).style.display = 'block';
             document.getElementById('tabpanel-btn' + tabNum).style.background = '#667eea';
             document.getElementById('tabpanel-btn' + tabNum).style.color = 'white';
+        }
+        
+        // Code block copy functionality
+        function copyCodeBlock(button) {
+            const codeElement = document.getElementById('code-to-copy');
+            const code = codeElement.textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.textContent;
+                button.textContent = '✓ Copied!';
+                button.style.color = '#10b981';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.color = '#667eea';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                button.textContent = '✗ Failed';
+                button.style.color = '#ef4444';
+                
+                setTimeout(() => {
+                    button.textContent = '📋 Copy';
+                    button.style.color = '#667eea';
+                }, 2000);
+            });
         }
     </script>
 </body>
