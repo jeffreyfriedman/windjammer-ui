@@ -112,11 +112,11 @@ mod tests {
 
     #[test]
     fn test_target_from_str() {
-        assert_eq!(Target::from_str("desktop"), Some(Target::Desktop));
-        assert_eq!(Target::from_str("web"), Some(Target::Web));
-        assert_eq!(Target::from_str("ios"), Some(Target::IOS));
-        assert_eq!(Target::from_str("android"), Some(Target::Android));
-        assert_eq!(Target::from_str("invalid"), None);
+        assert_eq!(Target::parse("desktop"), Some(Target::Desktop));
+        assert_eq!(Target::parse("web"), Some(Target::Web));
+        assert_eq!(Target::parse("ios"), Some(Target::IOS));
+        assert_eq!(Target::parse("android"), Some(Target::Android));
+        assert_eq!(Target::parse("invalid"), None);
     }
 
     #[test]
