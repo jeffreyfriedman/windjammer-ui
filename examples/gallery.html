@@ -314,6 +314,10 @@
             align-items: center;
             gap: 10px;
         }
+        .wj-switch span {
+            color: var(--text-primary);
+            font-size: 14px;
+        }
         .wj-switch input[type="checkbox"] {
             width: 44px;
             height: 24px;
@@ -542,12 +546,18 @@
             <!-- 6. SLIDER -->
             <div class="component-section">
                 <h2 class="section-title">6. Slider Component</h2>
-                <p class="section-description">Range input with label support</p>
+                <p class="section-description">Range input with dynamic value display (try dragging!)</p>
                 <div class="showcase-item">
-                    <div class="showcase-label">Sliders</div>
+                    <div class="showcase-label">Interactive Sliders</div>
                     <div style="display: flex; flex-direction: column; gap: 16px;">
-                        <div><label style="font-size: 13px; color: var(--text-secondary);">Volume: 50%</label><br><input type='range' class='wj-slider' min='0' max='100' value='50'></div>
-                        <div><label style="font-size: 13px; color: var(--text-secondary);">Brightness: 75%</label><br><input type='range' class='wj-slider' min='0' max='100' value='75'></div>
+                        <div>
+                            <label style="font-size: 13px; color: var(--text-secondary);">Volume: <span id="volume-value">50</span>%</label><br>
+                            <input type='range' class='wj-slider' id="volume-slider" min='0' max='100' value='50'>
+                        </div>
+                        <div>
+                            <label style="font-size: 13px; color: var(--text-secondary);">Brightness: <span id="brightness-value">75</span>%</label><br>
+                            <input type='range' class='wj-slider' id="brightness-slider" min='0' max='100' value='75'>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -787,7 +797,7 @@
     </div>
     
     <script>
-        // Only JavaScript needed: Theme toggle and persistence
+        // Theme toggle and persistence
         function toggleTheme() {
             const html = document.documentElement;
             const currentTheme = html.getAttribute('data-theme');
@@ -800,12 +810,29 @@
         const savedTheme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
         
-        // Update color picker display (optional enhancement)
+        // Update color picker display
         const colorInput = document.querySelector('.wj-color-input');
         const colorDisplay = document.getElementById('color-display');
         if (colorInput && colorDisplay) {
             colorInput.addEventListener('input', (e) => {
                 colorDisplay.textContent = e.target.value;
+            });
+        }
+        
+        // Update slider values dynamically
+        const volumeSlider = document.getElementById('volume-slider');
+        const volumeValue = document.getElementById('volume-value');
+        if (volumeSlider && volumeValue) {
+            volumeSlider.addEventListener('input', (e) => {
+                volumeValue.textContent = e.target.value;
+            });
+        }
+        
+        const brightnessSlider = document.getElementById('brightness-slider');
+        const brightnessValue = document.getElementById('brightness-value');
+        if (brightnessSlider && brightnessValue) {
+            brightnessSlider.addEventListener('input', (e) => {
+                brightnessValue.textContent = e.target.value;
             });
         }
     </script>

@@ -1,0 +1,78 @@
+pub enum SkeletonVariant {
+    Text,
+    Circle,
+    Rectangle,
+}
+
+pub struct Skeleton {
+    variant: SkeletonVariant,
+    width: string,
+    height: string,
+    count: i32,
+}
+
+impl Skeleton {
+    pub fn new() -> Skeleton {
+        Skeleton {
+            variant: SkeletonVariant::Text,
+            width: "100%".to_string(),
+            height: "1em".to_string(),
+            count: 1,
+        }
+    }
+
+    pub fn variant(self, variant: SkeletonVariant) -> Skeleton {
+        self.variant = variant
+        self
+    }
+
+    pub fn width(self, width: string) -> Skeleton {
+        self.width = width
+        self
+    }
+
+    pub fn height(self, height: string) -> Skeleton {
+        self.height = height
+        self
+    }
+
+    pub fn count(self, count: i32) -> Skeleton {
+        self.count = count
+        self
+    }
+
+    pub fn render(self) -> string {
+        let variant_class = match self.variant {
+            SkeletonVariant::Text => "wj-skeleton-text",
+            SkeletonVariant::Circle => "wj-skeleton-circle",
+            SkeletonVariant::Rectangle => "wj-skeleton-rectangle",
+        }
+
+        let mut html = "<div class='wj-skeleton-group'>".to_string()
+
+        let mut i = 0
+        while i < self.count {
+            html = format!("{}<div class='wj-skeleton {}' style='width: {}; height: {};'></div>",
+                html, variant_class, self.width, self.height)
+            i = i + 1
+        }
+
+        format!("{}</div>", html)
+    }
+}
+
+fn main() {
+    let skeleton1 = Skeleton::new()
+        .variant(SkeletonVariant::Text)
+        .count(3)
+
+    println!("{}", skeleton1.render())
+
+    let skeleton2 = Skeleton::new()
+        .variant(SkeletonVariant::Circle)
+        .width("60px".to_string())
+        .height("60px".to_string())
+
+    println!("{}", skeleton2.render())
+}
+
