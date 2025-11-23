@@ -3,7 +3,7 @@
 **Pure Windjammer UI framework - Zero HTML/CSS/JavaScript required**
 
 [![License](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](LICENSE)
-[![Components](https://img.shields.io/badge/components-40-brightgreen.svg)](#component-library)
+[![Components](https://img.shields.io/badge/components-49-brightgreen.svg)](#component-library)
 [![Status](https://img.shields.io/badge/status-production%20ready-success.svg)](#status)
 
 ---
@@ -35,7 +35,8 @@ fn main() {
 | Feature | Description |
 |---------|-------------|
 | 🎯 **Pure Windjammer** | Write only `.wj` files - zero HTML/CSS/JS |
-| 📦 **40+ Components** | Complete UI library from buttons to trees |
+| 📦 **49 Components** | Complete UI library from buttons to chat interfaces |
+| 💬 **Chat Ready** | Built-in ChatGPT-style message components |
 | 🎨 **Beautiful Styling** | Production-ready designs out of the box |
 | 🌙 **Dark Mode** | Built-in theme support |
 | 🏗️ **Builder Pattern** | Fluent, chainable APIs |
@@ -47,7 +48,7 @@ fn main() {
 
 ## 🎨 Component Library
 
-**[→ View Live Interactive Gallery](examples/gallery.html)** | **40 Components, 100% Windjammer**
+**[→ View Live Interactive Gallery](examples/gallery.html)** | **49 Components, 100% Windjammer**
 
 ### 📝 Basic Components (7)
 
@@ -213,9 +214,64 @@ Avatar::new()
 
 ---
 
-### 🧭 Navigation Components (8)
+### 💬 Chat & Messaging Components (5) **NEW!**
 
 <table>
+<tr>
+<td><strong>ChatMessage</strong> - Message bubbles (user/assistant/system)</td>
+<td><strong>MessageList</strong> - Scrollable chat history</td>
+</tr>
+<tr>
+<td><strong>ChatInput</strong> - Multi-line input with send button</td>
+<td><strong>TypingIndicator</strong> - Animated typing dots</td>
+</tr>
+<tr>
+<td><strong>CodeBlock</strong> - Code display with copy button</td>
+<td></td>
+</tr>
+</table>
+
+```windjammer
+// Build a ChatGPT-style interface
+MessageList::new()
+    .message(
+        ChatMessage::new("Hello!")
+            .role(MessageRole::User)
+            .timestamp("2:30 PM")
+            .render()
+    )
+    .message(
+        ChatMessage::new("Hi! How can I help you?")
+            .role(MessageRole::Assistant)
+            .render()
+    )
+    .message(TypingIndicator::new().render())
+    .render()
+
+// Chat input with send button
+ChatInput::new()
+    .placeholder("Type your message...")
+    .multiline(true)
+    .rows(3)
+    .render()
+
+// Code block with copy
+CodeBlock::new("fn main() { println!(\"Hello!\"); }")
+    .language("rust")
+    .show_copy_button(true)
+    .render()
+```
+
+---
+
+### 🧭 Navigation Components (11)
+
+<table>
+<tr>
+<td><strong>Navbar</strong> - Top/bottom navigation bar **NEW!**</td>
+<td><strong>Sidebar</strong> - Collapsible side navigation **NEW!**</td>
+<td><strong>HamburgerMenu</strong> - Mobile drawer menu **NEW!**</td>
+</tr>
 <tr>
 <td><strong>Tabs</strong> - Tab navigation</td>
 <td><strong>TabPanel</strong> - Alternative tabs</td>
@@ -234,30 +290,44 @@ Avatar::new()
 </table>
 
 ```windjammer
+// Navbar with brand and items
+Navbar::new()
+    .brand("MyApp")
+    .item(NavbarItem::new("Home", "/"))
+    .item(NavbarItem::new("About", "/about"))
+    .sticky(true)
+    .render()
+
+// Collapsible sidebar
+Sidebar::new()
+    .item(SidebarItem::new("Dashboard").icon("📊").href("/"))
+    .item(SidebarItem::new("Settings").icon("⚙️").href("/settings"))
+    .width("250px")
+    .collapsed(false)
+    .render()
+
+// Hamburger menu
+HamburgerMenu::new()
+    .item(HamburgerMenuItem::new("Profile", "/profile"))
+    .item(HamburgerMenuItem::new("Logout", "/logout"))
+    .render()
+
 // Tabs
 Tabs::new()
     .tab(Tab::new("overview", "Overview").active(true))
     .tab(Tab::new("settings", "Settings"))
     .render()
 
-// Breadcrumb
-Breadcrumb::new()
-    .item(BreadcrumbItem::new("Home", "/"))
-    .item(BreadcrumbItem::new("Products", "/products"))
-    .item(BreadcrumbItem::new("Item", ""))
-    .render()
-
 // Pagination
 Pagination::new()
     .current(2)
     .total(10)
-    .on_page(|page| println!("Go to page {}", page))
     .render()
 ```
 
 ---
 
-### 🎯 Advanced Components (5)
+### 🎯 Advanced Components (6)
 
 <table>
 <tr>
@@ -268,7 +338,7 @@ Pagination::new()
 <tr>
 <td><strong>CodeEditor</strong> - Code input</td>
 <td><strong>AdvancedCodeEditor</strong> - Full editor</td>
-<td></td>
+<td><strong>ContextMenu</strong> - Right-click menu **NEW!**</td>
 </tr>
 </table>
 
@@ -291,6 +361,13 @@ Dialog::new()
 Accordion::new()
     .item(AccordionItem::new("Section 1", "<p>Content 1</p>"))
     .item(AccordionItem::new("Section 2", "<p>Content 2</p>"))
+    .render()
+
+// Context menu
+ContextMenu::new("my-element")
+    .item(ContextMenuItem::new("Copy").icon("📋"))
+    .item(ContextMenuItem::new("Paste").icon("📄"))
+    .item(ContextMenuItem::new("Delete").icon("🗑️"))
     .render()
 ```
 
@@ -525,18 +602,20 @@ Try it now to see:
 ## 📊 Component Coverage
 
 ```
-✅ 40 / 40 Components Implemented (100%)
+✅ 49 / 49 Components Implemented (100%)
 
 Basic:        ████████████████████ 7/7
 Layout:       ████████████████████ 8/8
 Forms:        ████████████████████ 7/7
 Data Display: ████████████████████ 5/5
-Navigation:   ████████████████████ 8/8
-Advanced:     ████████████████████ 5/5
+Navigation:   ████████████████████ 11/11
+Chat:         ████████████████████ 5/5 🆕
+Advanced:     ████████████████████ 6/6
 Tree:         ████████████████████ 3/3
 ```
 
 **Status: Production Ready! 🎉**
+**New:** Chat-ready with ChatGPT-style messaging components!
 
 ---
 
