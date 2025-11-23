@@ -353,6 +353,7 @@
         
         .wj-radio { display: flex; align-items: center; gap: 8px; margin: 8px 0; }
         .wj-radio input { width: 16px; height: 16px; }
+        .wj-radio span { color: var(--text-primary); font-size: 14px; }
         
         .wj-select {
             padding: 10px 14px;
@@ -470,9 +471,77 @@
         details[open] summary .arrow {
             transform: rotate(90deg);
         }
+        
+        /* Toast notifications */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .toast-notification {
+            padding: 16px 20px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 300px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .toast-success { background: #d1fae5; color: #065f46; border: 1px solid #bbf7d0; }
+        .toast-error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+        
+        /* Panel component */
+        .wj-panel {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .wj-panel-header {
+            padding: 12px 16px;
+            background: var(--showcase-bg);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .wj-panel-content {
+            padding: 16px;
+        }
+        
+        /* Dialog */
+        .demo-dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .demo-dialog.show {
+            display: flex;
+        }
+        .demo-dialog-content {
+            background: var(--main-bg);
+            padding: 24px;
+            border-radius: 12px;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
     </style>
 </head>
 <body>
+    <!-- Toast container -->
+    <div id="toast-container" class="toast-container"></div>
+    
     <div class="main-container">
         <div class="hero">
             <button class="theme-toggle" onclick="toggleTheme()">🌓 Toggle Dark Mode</button>
@@ -603,19 +672,55 @@
                 <p class="section-description">Container, Flex, Grid, Panel, Divider, Spacer</p>
                 <div class="showcase-grid">
                     <div class="showcase-item">
-                        <div class="showcase-label">Flex Layout (Row)</div>
-                        <div style="display: flex; gap: 12px;">
-                            <div style="padding: 16px; background: #667eea; color: white; border-radius: 4px;">Item 1</div>
-                            <div style="padding: 16px; background: #667eea; color: white; border-radius: 4px;">Item 2</div>
-                            <div style="padding: 16px; background: #667eea; color: white; border-radius: 4px;">Item 3</div>
+                        <div class="showcase-label">Container</div>
+                        <div style="max-width: 600px; margin: 0 auto; padding: 16px; background: var(--showcase-bg); border-radius: 8px;">
+                            <p style="color: var(--text-primary); font-size: 14px;">Centered container with max-width and padding</p>
                         </div>
                     </div>
                     <div class="showcase-item">
-                        <div class="showcase-label">Grid Layout (3 cols)</div>
+                        <div class="showcase-label">Flex (Row)</div>
+                        <div style="display: flex; gap: 12px;">
+                            <div style="padding: 16px; background: #667eea; color: white; border-radius: 4px; flex: 1;">Item 1</div>
+                            <div style="padding: 16px; background: #667eea; color: white; border-radius: 4px; flex: 1;">Item 2</div>
+                            <div style="padding: 16px; background: #667eea; color: white; border-radius: 4px; flex: 1;">Item 3</div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Flex (Column)</div>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <div style="padding: 12px; background: #10b981; color: white; border-radius: 4px;">Row 1</div>
+                            <div style="padding: 12px; background: #10b981; color: white; border-radius: 4px;">Row 2</div>
+                            <div style="padding: 12px; background: #10b981; color: white; border-radius: 4px;">Row 3</div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Grid (3 columns)</div>
                         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
-                            <div style="padding: 16px; background: #10b981; color: white; border-radius: 4px; text-align: center;">1</div>
-                            <div style="padding: 16px; background: #10b981; color: white; border-radius: 4px; text-align: center;">2</div>
-                            <div style="padding: 16px; background: #10b981; color: white; border-radius: 4px; text-align: center;">3</div>
+                            <div style="padding: 16px; background: #f59e0b; color: white; border-radius: 4px; text-align: center;">1</div>
+                            <div style="padding: 16px; background: #f59e0b; color: white; border-radius: 4px; text-align: center;">2</div>
+                            <div style="padding: 16px; background: #f59e0b; color: white; border-radius: 4px; text-align: center;">3</div>
+                            <div style="padding: 16px; background: #f59e0b; color: white; border-radius: 4px; text-align: center;">4</div>
+                            <div style="padding: 16px; background: #f59e0b; color: white; border-radius: 4px; text-align: center;">5</div>
+                            <div style="padding: 16px; background: #f59e0b; color: white; border-radius: 4px; text-align: center;">6</div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Panel</div>
+                        <div class="wj-panel">
+                            <div class="wj-panel-header">Panel Title</div>
+                            <div class="wj-panel-content">
+                                <p style="color: var(--text-primary); font-size: 14px;">Panel content goes here with proper styling.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Divider & Spacer</div>
+                        <div style="color: var(--text-primary);">
+                            <p style="font-size: 14px;">Section 1</p>
+                            <div style="height: 1px; background: var(--border-color); margin: 16px 0;"></div>
+                            <p style="font-size: 14px;">Section 2</p>
+                            <div style="height: 24px;"></div>
+                            <p style="font-size: 14px;">Section 3 (with 24px spacer above)</p>
                         </div>
                     </div>
                 </div>
@@ -691,7 +796,7 @@
                 <p class="section-description">Tabs, TabPanel, Toolbar, Tooltip</p>
                 <div class="showcase-grid">
                     <div class="showcase-item">
-                        <div class="showcase-label">Tabs Component (Pure CSS, no JS!)</div>
+                        <div class="showcase-label">Tabs (Pure CSS, click to switch!)</div>
                         <div class="tabs-container">
                             <!-- Hidden radio buttons control the tabs -->
                             <input type="radio" name="tabs" id="tab1" checked>
@@ -708,22 +813,48 @@
                             <!-- Tab panels -->
                             <div class="tab-panels">
                                 <div id="panel1" class="tab-panel">
-                                    <p style="color: var(--text-primary);"><strong>Overview Content</strong><br>This is the overview tab with general information.</p>
+                                    <p style="color: var(--text-primary);"><strong>Overview Content</strong><br>General information displayed here.</p>
                                 </div>
                                 <div id="panel2" class="tab-panel">
-                                    <p style="color: var(--text-primary);"><strong>Details Content</strong><br>Here are the detailed specifications and information.</p>
+                                    <p style="color: var(--text-primary);"><strong>Details Content</strong><br>Detailed specifications shown.</p>
                                 </div>
                                 <div id="panel3" class="tab-panel">
-                                    <p style="color: var(--text-primary);"><strong>Settings Content</strong><br>Configure your preferences here.</p>
+                                    <p style="color: var(--text-primary);"><strong>Settings Content</strong><br>Configuration options available.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="showcase-item">
-                        <div class="showcase-label">Tooltip Component (Hover!)</div>
-                        <div class='wj-tooltip-container'>
-                            <button class='wj-button wj-button-primary wj-button-sm'>Hover me</button>
-                            <span class='wj-tooltip-text'>This is a tooltip!</span>
+                        <div class="showcase-label">TabPanel (Alternative)</div>
+                        <div style="border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden;">
+                            <div style="display: flex; background: var(--showcase-bg);">
+                                <button style="padding: 12px 16px; border: none; background: #667eea; color: white; cursor: pointer; flex: 1;">Tab 1</button>
+                                <button style="padding: 12px 16px; border: none; background: transparent; color: var(--text-secondary); cursor: pointer; flex: 1;">Tab 2</button>
+                            </div>
+                            <div style="padding: 16px;">
+                                <p style="color: var(--text-primary); font-size: 14px;">Active tab content displayed here</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Toolbar</div>
+                        <div style="display: flex; gap: 8px; padding: 8px; background: var(--showcase-bg); border-radius: 8px;">
+                            <button class='wj-button wj-button-ghost wj-button-sm'>New</button>
+                            <button class='wj-button wj-button-ghost wj-button-sm'>Save</button>
+                            <button class='wj-button wj-button-ghost wj-button-sm'>Export</button>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Tooltip (Hover to see!)</div>
+                        <div style="display: flex; gap: 12px; align-items: center;">
+                            <div class='wj-tooltip-container'>
+                                <button class='wj-button wj-button-primary wj-button-sm'>Top Tooltip</button>
+                                <span class='wj-tooltip-text'>This tooltip appears on top!</span>
+                            </div>
+                            <div class='wj-tooltip-container'>
+                                <button class='wj-button wj-button-secondary wj-button-sm'>Another Tooltip</button>
+                                <span class='wj-tooltip-text'>Helpful information here!</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -735,16 +866,47 @@
                 <p class="section-description">Dialog, CodeEditor, AdvancedCodeEditor, ColorPicker</p>
                 <div class="showcase-grid">
                     <div class="showcase-item">
-                        <div class="showcase-label">Color Picker (Try it!)</div>
-                        <input type='color' value='#667eea' class='wj-color-input'>
-                        <span style="font-size: 13px; color: var(--text-secondary); margin-left: 12px;" id="color-display">#667eea</span>
+                        <div class="showcase-label">Dialog (Click to open!)</div>
+                        <button class='wj-button wj-button-primary wj-button-md' onclick="document.getElementById('demo-dialog').classList.add('show')">
+                            Open Dialog
+                        </button>
+                        <div id="demo-dialog" class="demo-dialog" onclick="if(event.target === this) this.classList.remove('show')">
+                            <div class="demo-dialog-content">
+                                <h3 style="margin-bottom: 12px; color: var(--text-primary);">Dialog Title</h3>
+                                <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 16px;">This is a modal dialog. Click outside to close or use the button below.</p>
+                                <button class='wj-button wj-button-secondary wj-button-sm' onclick="document.getElementById('demo-dialog').classList.remove('show')">Close</button>
+                            </div>
+                        </div>
                     </div>
                     <div class="showcase-item">
-                        <div class="showcase-label">Code Editor (Plain text, editable)</div>
+                        <div class="showcase-label">Code Editor (Editable)</div>
                         <textarea style="width: 100%; height: 100px; font-family: 'Monaco', 'Menlo', monospace; padding: 12px; border: 2px solid var(--border-color); border-radius: 8px; background: var(--main-bg); color: var(--text-primary); font-size: 13px; line-height: 1.5;">fn main() {
     println!("Hello!");
 }</textarea>
-                        <p style="font-size: 12px; color: var(--text-secondary); margin-top: 8px;">Note: Syntax highlighting requires external libraries</p>
+                        <p style="font-size: 11px; color: var(--text-secondary); margin-top: 6px;">Plain text editor (syntax highlighting requires external libs)</p>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Advanced Code Editor</div>
+                        <div style="border: 2px solid var(--border-color); border-radius: 8px; overflow: hidden;">
+                            <div style="display: flex; gap: 12px; padding: 8px; background: var(--showcase-bg); border-bottom: 1px solid var(--border-color);">
+                                <span style="font-size: 12px; color: var(--text-secondary);">Language: Rust</span>
+                                <span style="font-size: 12px; color: var(--text-secondary);">Theme: Dark</span>
+                            </div>
+                            <textarea style="width: 100%; height: 120px; font-family: 'Monaco', 'Menlo', monospace; padding: 12px; border: none; background: var(--main-bg); color: var(--text-primary); font-size: 13px; line-height: 1.5; resize: none;">use std::io;
+
+fn main() {
+    let mut input = String::new();
+    io::stdin().read_line(&mut input);
+}</textarea>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Color Picker (Try it!)</div>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <input type='color' value='#667eea' class='wj-color-input'>
+                            <span style="font-size: 14px; color: var(--text-primary);" id="color-display">#667eea</span>
+                        </div>
+                        <p style="font-size: 11px; color: var(--text-secondary); margin-top: 8px;">Select a color and see the hex value update</p>
                     </div>
                 </div>
             </div>
@@ -785,19 +947,12 @@
                 <p class="section-description">Toast, Accordion, Breadcrumb, Dropdown, Avatar, Skeleton, Pagination, Menu</p>
                 <div class="showcase-grid">
                     <div class="showcase-item">
-                        <div class="showcase-label">Toast Notifications</div>
-                        <div style="display: flex; flex-direction: column; gap: 8px; position: relative;">
-                            <div style="padding: 12px; background: #d1fae5; color: #065f46; border-radius: 8px; display: flex; align-items: center; gap: 8px;">
-                                <span>✓</span>
-                                <span style="flex: 1; font-size: 14px;">Success message!</span>
-                                <button style="background: none; border: none; cursor: pointer; font-size: 20px;">×</button>
-                            </div>
-                            <div style="padding: 12px; background: #fee2e2; color: #991b1b; border-radius: 8px; display: flex; align-items: center; gap: 8px;">
-                                <span>✗</span>
-                                <span style="flex: 1; font-size: 14px;">Error occurred!</span>
-                                <button style="background: none; border: none; cursor: pointer; font-size: 20px;">×</button>
-                            </div>
+                        <div class="showcase-label">Toast Notifications (Click to demo!)</div>
+                        <div style="display: flex; gap: 8px;">
+                            <button class='wj-button wj-button-success wj-button-sm' onclick="showToast('success')">Success Toast</button>
+                            <button class='wj-button wj-button-danger wj-button-sm' onclick="showToast('error')">Error Toast</button>
                         </div>
+                        <p style="font-size: 11px; color: var(--text-secondary); margin-top: 8px;">Click buttons to see toast notifications</p>
                     </div>
                     <div class="showcase-item">
                         <div class="showcase-label">Accordion</div>
@@ -835,14 +990,15 @@
                         </div>
                     </div>
                     <div class="showcase-item">
-                        <div class="showcase-label">Pagination</div>
-                        <nav style="display: flex; gap: 4px; justify-content: center;">
-                            <button style="padding: 8px 12px; border: 1px solid var(--border-color); background: var(--main-bg); color: var(--text-primary); border-radius: 4px; cursor: pointer;">«</button>
-                            <button style="padding: 8px 12px; border: 1px solid var(--border-color); background: var(--main-bg); color: var(--text-primary); border-radius: 4px; cursor: pointer;">1</button>
-                            <button style="padding: 8px 12px; border: 1px solid #667eea; background: #667eea; color: white; border-radius: 4px; cursor: pointer;">2</button>
-                            <button style="padding: 8px 12px; border: 1px solid var(--border-color); background: var(--main-bg); color: var(--text-primary); border-radius: 4px; cursor: pointer;">3</button>
-                            <button style="padding: 8px 12px; border: 1px solid var(--border-color); background: var(--main-bg); color: var(--text-primary); border-radius: 4px; cursor: pointer;">»</button>
+                        <div class="showcase-label">Pagination (Click to navigate!)</div>
+                        <nav style="display: flex; gap: 4px; justify-content: center; margin-bottom: 8px;">
+                            <button onclick="changePage(1)" style="padding: 8px 12px; border: 1px solid var(--border-color); background: var(--main-bg); color: var(--text-primary); border-radius: 4px; cursor: pointer;">«</button>
+                            <button onclick="changePage(1)" id="page1" style="padding: 8px 12px; border: 1px solid var(--border-color); background: var(--main-bg); color: var(--text-primary); border-radius: 4px; cursor: pointer;">1</button>
+                            <button onclick="changePage(2)" id="page2" style="padding: 8px 12px; border: 1px solid #667eea; background: #667eea; color: white; border-radius: 4px; cursor: pointer;">2</button>
+                            <button onclick="changePage(3)" id="page3" style="padding: 8px 12px; border: 1px solid var(--border-color); background: var(--main-bg); color: var(--text-primary); border-radius: 4px; cursor: pointer;">3</button>
+                            <button onclick="changePage(3)" style="padding: 8px 12px; border: 1px solid var(--border-color); background: var(--main-bg); color: var(--text-primary); border-radius: 4px; cursor: pointer;">»</button>
                         </nav>
+                        <p style="font-size: 11px; color: var(--text-secondary); text-align: center;">Page <span id="current-page">2</span> of 3</p>
                     </div>
                 </div>
             </div>
@@ -908,6 +1064,53 @@
             brightnessSlider.addEventListener('input', (e) => {
                 brightnessValue.textContent = e.target.value;
             });
+        }
+        
+        // Toast notifications
+        function showToast(type) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast-notification toast-${type}`;
+            
+            const icon = type === 'success' ? '✓' : '✗';
+            const message = type === 'success' ? 'Operation completed successfully!' : 'An error occurred!';
+            
+            toast.innerHTML = `
+                <span style="font-size: 18px;">${icon}</span>
+                <span style="flex: 1;">${message}</span>
+                <button style="background: none; border: none; cursor: pointer; font-size: 20px; opacity: 0.7;" onclick="this.parentElement.remove()">×</button>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Auto-remove after 3 seconds
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.style.animation = 'slideIn 0.3s ease reverse';
+                    setTimeout(() => toast.remove(), 300);
+                }
+            }, 3000);
+        }
+        
+        // Pagination
+        let currentPage = 2;
+        function changePage(page) {
+            currentPage = page;
+            document.getElementById('current-page').textContent = page;
+            
+            // Update button styles
+            for (let i = 1; i <= 3; i++) {
+                const btn = document.getElementById('page' + i);
+                if (i === page) {
+                    btn.style.background = '#667eea';
+                    btn.style.borderColor = '#667eea';
+                    btn.style.color = 'white';
+                } else {
+                    btn.style.background = 'var(--main-bg)';
+                    btn.style.borderColor = 'var(--border-color)';
+                    btn.style.color = 'var(--text-primary)';
+                }
+            }
         }
     </script>
 </body>
