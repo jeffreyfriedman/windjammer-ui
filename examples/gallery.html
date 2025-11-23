@@ -190,7 +190,7 @@
         .wj-text.lg { font-size: 20px; }
         .wj-text.xl { font-size: 28px; }
         .wj-text.bold { font-weight: 700; }
-
+        
         .wj-button {
             border: none;
             padding: 10px 20px;
@@ -355,6 +355,13 @@
             cursor: pointer;
         }
         
+        /* Pure CSS Tabs (no JavaScript!) */
+        .tabs-container {
+            position: relative;
+        }
+        .tabs-container input[type="radio"] {
+            display: none;
+        }
         .wj-tabs-header {
             display: flex;
             gap: 4px;
@@ -372,9 +379,29 @@
             border-bottom: 2px solid transparent;
             transition: all 0.2s;
         }
-        .wj-tab-active {
+        .wj-tab:hover {
+            color: var(--text-primary);
+        }
+        
+        /* Active tab styling based on checked radio button */
+        #tab1:checked ~ .wj-tabs-header label[for="tab1"],
+        #tab2:checked ~ .wj-tabs-header label[for="tab2"],
+        #tab3:checked ~ .wj-tabs-header label[for="tab3"] {
             color: #667eea;
             border-bottom-color: #667eea;
+        }
+        
+        /* Show/hide tab content based on checked radio button */
+        .tab-panel {
+            display: none;
+            padding: 16px;
+            background: var(--showcase-bg);
+            border-radius: 4px;
+        }
+        #tab1:checked ~ .tab-panels #panel1,
+        #tab2:checked ~ .tab-panels #panel2,
+        #tab3:checked ~ .tab-panels #panel3 {
+            display: block;
         }
         
         .wj-tooltip-container {
@@ -419,6 +446,21 @@
             border-radius: 8px;
             cursor: pointer;
         }
+        
+        /* Collapsible section arrow rotation */
+        details summary {
+            list-style: none;
+        }
+        details summary::-webkit-details-marker {
+            display: none;
+        }
+        details summary .arrow {
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+        details[open] summary .arrow {
+            transform: rotate(90deg);
+        }
     </style>
 </head>
 <body>
@@ -442,8 +484,8 @@
                         <span class='wj-text lg normal'>Large text</span>
                         <span class='wj-text xl bold'>Extra Large Bold</span>
                     </div>
-                </div>
-            </div>
+</div>
+</div>
 
             <!-- 3. BUTTON -->
             <div class="component-section">
@@ -453,19 +495,19 @@
                     <div class="showcase-item">
                         <div class="showcase-label">Variants</div>
                         <div class="demo-row">
-                            <button class='wj-button wj-button-primary wj-button-md'>Primary</button>
-                            <button class='wj-button wj-button-secondary wj-button-md'>Secondary</button>
-                            <button class='wj-button wj-button-success wj-button-md'>Success</button>
-                            <button class='wj-button wj-button-danger wj-button-md'>Danger</button>
-                            <button class='wj-button wj-button-ghost wj-button-md'>Ghost</button>
-                        </div>
+  <button class='wj-button wj-button-primary wj-button-md'>Primary</button>
+  <button class='wj-button wj-button-secondary wj-button-md'>Secondary</button>
+  <button class='wj-button wj-button-success wj-button-md'>Success</button>
+  <button class='wj-button wj-button-danger wj-button-md'>Danger</button>
+  <button class='wj-button wj-button-ghost wj-button-md'>Ghost</button>
+</div>
                     </div>
                     <div class="showcase-item">
                         <div class="showcase-label">Sizes & States</div>
                         <div class="demo-row">
-                            <button class='wj-button wj-button-primary wj-button-sm'>Small</button>
-                            <button class='wj-button wj-button-primary wj-button-md'>Medium</button>
-                            <button class='wj-button wj-button-primary wj-button-lg'>Large</button>
+  <button class='wj-button wj-button-primary wj-button-sm'>Small</button>
+  <button class='wj-button wj-button-primary wj-button-md'>Medium</button>
+  <button class='wj-button wj-button-primary wj-button-lg'>Large</button>
                             <button class='wj-button wj-button-primary wj-button-md' disabled>Disabled</button>
                         </div>
                     </div>
@@ -633,18 +675,36 @@
                 <p class="section-description">Tabs, TabPanel, Toolbar, Tooltip</p>
                 <div class="showcase-grid">
                     <div class="showcase-item">
-                        <div class="showcase-label">Tabs Component</div>
-                        <div class='wj-tabs-header'>
-                            <button class='wj-tab wj-tab-active'>Overview</button>
-                            <button class='wj-tab'>Details</button>
-                            <button class='wj-tab'>Settings</button>
-                        </div>
-                        <div style="padding: 16px; background: var(--showcase-bg); border-radius: 4px;">
-                            <p style="color: var(--text-primary);">Tab content goes here...</p>
+                        <div class="showcase-label">Tabs Component (Pure CSS, no JS!)</div>
+                        <div class="tabs-container">
+                            <!-- Hidden radio buttons control the tabs -->
+                            <input type="radio" name="tabs" id="tab1" checked>
+                            <input type="radio" name="tabs" id="tab2">
+                            <input type="radio" name="tabs" id="tab3">
+                            
+                            <!-- Tab headers -->
+                            <div class='wj-tabs-header'>
+                                <label for="tab1" class='wj-tab'>Overview</label>
+                                <label for="tab2" class='wj-tab'>Details</label>
+                                <label for="tab3" class='wj-tab'>Settings</label>
+                            </div>
+                            
+                            <!-- Tab panels -->
+                            <div class="tab-panels">
+                                <div id="panel1" class="tab-panel">
+                                    <p style="color: var(--text-primary);"><strong>Overview Content</strong><br>This is the overview tab with general information.</p>
+                                </div>
+                                <div id="panel2" class="tab-panel">
+                                    <p style="color: var(--text-primary);"><strong>Details Content</strong><br>Here are the detailed specifications and information.</p>
+                                </div>
+                                <div id="panel3" class="tab-panel">
+                                    <p style="color: var(--text-primary);"><strong>Settings Content</strong><br>Configure your preferences here.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="showcase-item">
-                        <div class="showcase-label">Tooltip Component</div>
+                        <div class="showcase-label">Tooltip Component (Hover!)</div>
                         <div class='wj-tooltip-container'>
                             <button class='wj-button wj-button-primary wj-button-sm'>Hover me</button>
                             <span class='wj-tooltip-text'>This is a tooltip!</span>
@@ -659,14 +719,16 @@
                 <p class="section-description">Dialog, CodeEditor, AdvancedCodeEditor, ColorPicker</p>
                 <div class="showcase-grid">
                     <div class="showcase-item">
-                        <div class="showcase-label">Color Picker</div>
+                        <div class="showcase-label">Color Picker (Try it!)</div>
                         <input type='color' value='#667eea' class='wj-color-input'>
+                        <span style="font-size: 13px; color: var(--text-secondary); margin-left: 12px;" id="color-display">#667eea</span>
                     </div>
                     <div class="showcase-item">
-                        <div class="showcase-label">Code Editor</div>
-                        <textarea style="width: 100%; height: 100px; font-family: monospace; padding: 12px; border: 2px solid var(--border-color); border-radius: 8px; background: var(--main-bg); color: var(--text-primary);">fn main() {
+                        <div class="showcase-label">Code Editor (Plain text, editable)</div>
+                        <textarea style="width: 100%; height: 100px; font-family: 'Monaco', 'Menlo', monospace; padding: 12px; border: 2px solid var(--border-color); border-radius: 8px; background: var(--main-bg); color: var(--text-primary); font-size: 13px; line-height: 1.5;">fn main() {
     println!("Hello!");
 }</textarea>
+                        <p style="font-size: 12px; color: var(--text-secondary); margin-top: 8px;">Note: Syntax highlighting requires external libraries</p>
                     </div>
                 </div>
             </div>
@@ -687,17 +749,20 @@
                         </div>
                     </div>
                     <div class="showcase-item">
-                        <div class="showcase-label">Collapsible Section</div>
+                        <div class="showcase-label">Collapsible Section (Click to expand!)</div>
                         <details style="color: var(--text-primary);">
-                            <summary style="cursor: pointer; font-weight: 600; padding: 8px;">▼ Advanced Options</summary>
+                            <summary style="cursor: pointer; font-weight: 600; padding: 8px;">
+                                <span class="arrow">▶</span> Advanced Options
+                            </summary>
                             <div style="padding: 12px; margin-top: 8px; background: var(--showcase-bg); border-radius: 4px;">
-                                <p style="font-size: 14px;">Hidden content here...</p>
+                                <p style="font-size: 14px;">Hidden content revealed! This section was collapsed.</p>
+                                <p style="font-size: 14px; margin-top: 8px;">You can put any content here.</p>
                             </div>
                         </details>
-                    </div>
-                </div>
-            </div>
-        </div>
+</div>
+</div>
+</div>
+</div>
         
         <footer>
             <h3>🚀 Built with Windjammer</h3>
@@ -708,20 +773,21 @@
                 <div class="stat">
                     <div class="stat-number">32</div>
                     <div class="stat-label">Components</div>
-                </div>
+</div>
                 <div class="stat">
                     <div class="stat-number">100%</div>
                     <div class="stat-label">Windjammer</div>
-                </div>
+</div>
                 <div class="stat">
                     <div class="stat-number">0</div>
                     <div class="stat-label">Errors</div>
-                </div>
-            </div>
-        </footer>
+</div>
+</div>
+    </footer>
     </div>
     
     <script>
+        // Only JavaScript needed: Theme toggle and persistence
         function toggleTheme() {
             const html = document.documentElement;
             const currentTheme = html.getAttribute('data-theme');
@@ -730,9 +796,18 @@
             localStorage.setItem('theme', newTheme);
         }
         
-        // Load saved theme
+        // Load saved theme preference
         const savedTheme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
+        
+        // Update color picker display (optional enhancement)
+        const colorInput = document.querySelector('.wj-color-input');
+        const colorDisplay = document.getElementById('color-display');
+        if (colorInput && colorDisplay) {
+            colorInput.addEventListener('input', (e) => {
+                colorDisplay.textContent = e.target.value;
+            });
+        }
     </script>
 </body>
 </html>
