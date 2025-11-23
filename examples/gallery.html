@@ -1173,12 +1173,12 @@ fn main() {
                 <div class="showcase-grid">
                     <div class="showcase-item">
                         <div class="showcase-label">Navbar (click links to navigate!)</div>
-                        <nav style="display: flex; align-items: center; gap: 24px; padding: 12px 24px; background: var(--showcase-bg); border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 8px;">
-                            <div style="font-weight: 700; font-size: 18px; color: #667eea; cursor: pointer;" onclick="navbarNavigate('brand')">MyApp</div>
-                            <div style="display: flex; gap: 16px; flex: 1;">
-                                <a href="#" class="navbar-link" data-page="home" onclick="event.preventDefault(); navbarNavigate('home'); return false;" style="color: var(--text-primary); text-decoration: none; font-size: 14px; padding: 6px 12px; border-radius: 4px; transition: all 0.2s; background: #667eea; color: white;" onmouseover="if(!this.classList.contains('active')) this.style.background='var(--border-color)'" onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">Home</a>
-                                <a href="#" class="navbar-link" data-page="about" onclick="event.preventDefault(); navbarNavigate('about'); return false;" style="color: var(--text-primary); text-decoration: none; font-size: 14px; padding: 6px 12px; border-radius: 4px; transition: all 0.2s;" onmouseover="this.style.background='var(--border-color)'" onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">About</a>
-                                <a href="#" class="navbar-link" data-page="contact" onclick="event.preventDefault(); navbarNavigate('contact'); return false;" style="color: var(--text-primary); text-decoration: none; font-size: 14px; padding: 6px 12px; border-radius: 4px; transition: all 0.2s;" onmouseover="this.style.background='var(--border-color)'" onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">Contact</a>
+                        <nav style="display: flex; align-items: center; gap: 16px; padding: 12px 20px; background: var(--showcase-bg); border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 8px; flex-wrap: wrap;">
+                            <div style="font-weight: 700; font-size: 18px; color: #667eea; cursor: pointer; white-space: nowrap;" onclick="navbarNavigate('brand')">MyApp</div>
+                            <div style="display: flex; gap: 12px; flex: 1; flex-wrap: wrap; min-width: 0;">
+                                <a href="#" class="navbar-link" data-page="home" onclick="event.preventDefault(); navbarNavigate('home'); return false;" style="color: white; text-decoration: none; font-size: 14px; padding: 6px 12px; border-radius: 4px; transition: all 0.2s; background: #667eea; white-space: nowrap;" onmouseover="if(!this.classList.contains('active')) this.style.background='var(--border-color)'" onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">Home</a>
+                                <a href="#" class="navbar-link" data-page="about" onclick="event.preventDefault(); navbarNavigate('about'); return false;" style="color: var(--text-primary); text-decoration: none; font-size: 14px; padding: 6px 12px; border-radius: 4px; transition: all 0.2s; white-space: nowrap;" onmouseover="this.style.background='var(--border-color)'" onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">About</a>
+                                <a href="#" class="navbar-link" data-page="contact" onclick="event.preventDefault(); navbarNavigate('contact'); return false;" style="color: var(--text-primary); text-decoration: none; font-size: 14px; padding: 6px 12px; border-radius: 4px; transition: all 0.2s; white-space: nowrap;" onmouseover="this.style.background='var(--border-color)'" onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">Contact</a>
                             </div>
                         </nav>
                         <div id="navbar-status" style="padding: 12px; background: var(--showcase-bg); border-radius: 6px; color: var(--text-primary); font-size: 13px; border: 1px solid var(--border-color);">
@@ -1235,7 +1235,7 @@ fn main() {
                     </div>
                     <div class="showcase-item">
                         <div class="showcase-label">Context Menu (right-click the box!)</div>
-                        <div id="context-target" oncontextmenu="return showContextMenuDemo(event);" style="padding: 50px 40px; background: var(--showcase-bg); border: 2px dashed var(--border-color); border-radius: 8px; text-align: center; color: var(--text-primary); cursor: context-menu; user-select: none; font-weight: 500;">
+                        <div id="context-target-demo" style="padding: 50px 40px; background: var(--showcase-bg); border: 2px dashed var(--border-color); border-radius: 8px; text-align: center; color: var(--text-primary); cursor: context-menu; user-select: none; font-weight: 500;">
                             Right-click here! 🖱️
                         </div>
                         <div id="context-menu-demo" style="position: fixed; display: none; background: var(--main-bg); border: 2px solid var(--border-color); border-radius: 8px; padding: 4px; min-width: 160px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); z-index: 1000;">
@@ -1514,26 +1514,48 @@ fn main() {
             }
         }
         
-        // Context menu
-        function showContextMenuDemo(event) {
-            event.preventDefault();
-            const menu = document.getElementById('context-menu-demo');
-            if (menu) {
-                menu.style.display = 'block';
-                menu.style.left = event.pageX + 'px';
-                menu.style.top = event.pageY + 'px';
+        // Context menu setup
+        (function setupContextMenu() {
+            const contextTarget = document.getElementById('context-target-demo');
+            const contextMenu = document.getElementById('context-menu-demo');
+            
+            if (contextTarget && contextMenu) {
+                // Show context menu on right-click
+                contextTarget.addEventListener('contextmenu', function(event) {
+                    event.preventDefault();
+                    
+                    // Position menu at cursor
+                    contextMenu.style.display = 'block';
+                    contextMenu.style.left = event.pageX + 'px';
+                    contextMenu.style.top = event.pageY + 'px';
+                    
+                    // Update status
+                    const status = document.getElementById('context-status');
+                    if (status) {
+                        status.textContent = '✓ Context menu opened! Click an action.';
+                        status.style.color = '#10b981';
+                    }
+                    
+                    return false;
+                });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (contextMenu && !contextMenu.contains(e.target) && e.target !== contextTarget) {
+                        contextMenu.style.display = 'none';
+                    }
+                });
             }
-            return false;
-        }
+        })();
         
         function contextMenuActionDemo(action) {
             const status = document.getElementById('context-status');
             const menu = document.getElementById('context-menu-demo');
             
             const actionMap = {
-                'copy': '📋 Copied to clipboard',
-                'paste': '📄 Pasted from clipboard',
-                'delete': '🗑️ Deleted item'
+                'copy': '📋 Copied to clipboard!',
+                'paste': '📄 Pasted from clipboard!',
+                'delete': '🗑️ Item deleted!'
             };
             
             if (status) {
@@ -1547,21 +1569,18 @@ fn main() {
             }
         }
         
-        // Close context menu when clicking outside
-        document.addEventListener('click', (e) => {
-            const menu = document.getElementById('context-menu-demo');
-            const target = document.getElementById('context-target');
-            if (menu && !menu.contains(e.target) && e.target !== target) {
-                menu.style.display = 'none';
-            }
-        });
-        
         // Close hamburger drawer when clicking outside
         document.addEventListener('click', (e) => {
             const drawer = document.getElementById('hamburger-drawer');
             const btn = document.getElementById('hamburger-btn');
             if (drawer && !drawer.contains(e.target) && e.target !== btn && !btn.contains(e.target)) {
                 drawer.classList.remove('show');
+                
+                const status = document.getElementById('hamburger-status');
+                if (status) {
+                    status.textContent = 'Menu closed. Click icon to reopen.';
+                    status.style.color = 'var(--text-secondary)';
+                }
             }
         });
     </script>
