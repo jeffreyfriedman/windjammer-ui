@@ -47,7 +47,7 @@ impl ChatInput {
         
         let input_html = if self.multiline {
             format!(
-                "<textarea class='wj-chat-input-field' placeholder='{}' rows='{}'{}}>{}</textarea>",
+                "<textarea class='wj-chat-input-field' placeholder='{}' rows='{}'{}>{}</textarea>",
                 self.placeholder,
                 self.rows,
                 disabled_attr,
@@ -55,7 +55,7 @@ impl ChatInput {
             )
         } else {
             format!(
-                "<input type='text' class='wj-chat-input-field' placeholder='{}' value='{}'{}}/>",
+                "<input type='text' class='wj-chat-input-field' placeholder='{}' value='{}'{}/>",
                 self.placeholder,
                 self.value,
                 disabled_attr

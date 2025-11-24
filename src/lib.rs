@@ -18,6 +18,16 @@
 //! use windjammer_ui::vdom::{VElement, VNode, VText};
 //! use windjammer_ui::reactivity::Signal;
 //!
+
+// Allow clippy warnings for generated code
+#![allow(clippy::new_without_default)]
+#![allow(clippy::len_zero)]
+#![allow(clippy::useless_conversion)]
+#![allow(clippy::comparison_to_empty)]
+#![allow(clippy::write_with_newline)]
+#![allow(clippy::to_string_in_format_args)]
+#![allow(clippy::collapsible_else_if)]
+#![allow(clippy::useless_format)]
 //! struct Counter {
 //!     count: Signal<i32>,
 //! }
