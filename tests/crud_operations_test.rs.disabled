@@ -112,8 +112,7 @@ fn test_list_item_with_actions() {
 #[test]
 fn test_search_filter_ui() {
     // Test search/filter pattern
-    let mut search_input = Input::new();
-    search_input.placeholder = "Search...".to_string();
+    let search_input = Input::new().placeholder("Search...".to_string());
 
     let search_bar = Flex::new()
         .direction(FlexDirection::Row)
@@ -185,11 +184,8 @@ fn test_confirmation_dialog_pattern() {
 #[test]
 fn test_detail_view_layout() {
     // Test detail view for viewing/editing a single item
-    let mut name_input = Input::new();
-    name_input.placeholder = "Name".to_string();
-
-    let mut desc_input = Input::new();
-    desc_input.placeholder = "Description".to_string();
+    let name_input = Input::new().placeholder("Name".to_string());
+    let desc_input = Input::new().placeholder("Description".to_string());
 
     let detail_view = Flex::new()
         .direction(FlexDirection::Column)

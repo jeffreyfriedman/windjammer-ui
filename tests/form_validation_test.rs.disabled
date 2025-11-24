@@ -8,8 +8,7 @@ use windjammer_ui::to_vnode::ToVNode;
 
 #[test]
 fn test_input_component() {
-    let mut input = Input::new();
-    input.placeholder = "Enter text".to_string();
+    let input = Input::new().placeholder("Enter text".to_string());
     let vnode = input.render();
 
     assert!(matches!(vnode, VNode::Element { .. }));
@@ -17,8 +16,7 @@ fn test_input_component() {
 
 #[test]
 fn test_input_with_value() {
-    let mut input = Input::new();
-    input.value = "test value".to_string();
+    let input = Input::new().value("test value".to_string());
     let vnode = input.render();
 
     match vnode {
@@ -80,11 +78,8 @@ fn test_alert_variants() {
 #[test]
 fn test_form_layout_structure() {
     // Test that form components can be composed
-    let mut name_input = Input::new();
-    name_input.placeholder = "Name".to_string();
-
-    let mut email_input = Input::new();
-    email_input.placeholder = "Email".to_string();
+    let name_input = Input::new().placeholder("Name".to_string());
+    let email_input = Input::new().placeholder("Email".to_string());
 
     let form = Flex::new()
         .direction(FlexDirection::Column)
@@ -131,8 +126,7 @@ fn test_required_field_pattern() {
 #[test]
 fn test_form_with_multiple_input_types() {
     // Test a form with various input types
-    let mut text_input = Input::new();
-    text_input.placeholder = "Text input".to_string();
+    let text_input = Input::new().placeholder("Text input".to_string());
 
     let components = vec![
         text_input.render(),
