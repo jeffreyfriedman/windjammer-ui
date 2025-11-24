@@ -44,7 +44,7 @@ jobs:
         shell: bash
         run: |
           echo "📦 Installing Windjammer CLI (wj)..."
-          cargo install windjammer --version 0.36.0
+          cargo install windjammer --version 0.34.0
           echo "✅ Windjammer CLI installed"
           wj --version
       
@@ -105,7 +105,7 @@ jobs:
       - name: Install Windjammer CLI
         run: |
           echo "📦 Installing Windjammer CLI (wj)..."
-          cargo install windjammer --version 0.36.0
+          cargo install windjammer --version 0.34.0
           echo "✅ Windjammer CLI installed"
       
       - name: Install tarpaulin
@@ -167,7 +167,7 @@ jobs:
       - name: Install Windjammer CLI
         run: |
           echo "📦 Installing Windjammer CLI (wj)..."
-          cargo install windjammer --version 0.36.0
+          cargo install windjammer --version 0.34.0
           echo "✅ Windjammer CLI installed"
       
       - name: Cache Cargo registry and build artifacts
