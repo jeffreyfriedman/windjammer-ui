@@ -15,15 +15,28 @@ fn main() {
     let project_root = PathBuf::from(&manifest_dir);
 
     // Paths
-    let wj_cli = project_root.join("../windjammer/target/release/wj");
     let src_dir = project_root.join("src/components_wj");
     let out_dir = project_root.join("src/components/generated");
 
-    // Check if wj CLI exists
-    if !wj_cli.exists() {
-        eprintln!("⚠️  Warning: wj CLI not found at {:?}", wj_cli);
+    // Try to find wj CLI - first check local build, then system PATH
+    let local_wj = project_root.join("../windjammer/target/release/wj");
+    let wj_cli = if local_wj.exists() {
+        local_wj.to_str().unwrap().to_string()
+    } else {
+        // Try to use wj from PATH (installed via cargo install)
+        "wj".to_string()
+    };
+
+    // Check if wj CLI is available
+    let wj_check = Command::new(&wj_cli)
+        .arg("--version")
+        .output();
+    
+    if wj_check.is_err() {
+        eprintln!("⚠️  Warning: wj CLI not found!");
         eprintln!("   Skipping .wj transpilation. To fix:");
-        eprintln!("   cd ../windjammer && cargo build --release");
+        eprintln!("   Option 1: cargo install windjammer");
+        eprintln!("   Option 2: cd ../windjammer && cargo build --release");
         return;
     }
 
