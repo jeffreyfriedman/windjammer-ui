@@ -70,4 +70,22 @@ fn main() {
     }
 
     println!("cargo:warning=✅ Successfully transpiled Windjammer components!");
+
+    // Format the generated Rust code
+    println!("cargo:warning=🎨 Formatting generated Rust code...");
+
+    // Find all .rs files in the output directory
+    if let Ok(entries) = std::fs::read_dir(&out_dir) {
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.extension().and_then(|s| s.to_str()) == Some("rs") {
+                let _ = Command::new("rustfmt")
+                    .arg("--edition")
+                    .arg("2021")
+                    .arg(&path)
+                    .status();
+            }
+        }
+        println!("cargo:warning=✅ Generated code formatted!");
+    }
 }
