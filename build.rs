@@ -28,10 +28,8 @@ fn main() {
     };
 
     // Check if wj CLI is available
-    let wj_check = Command::new(&wj_cli)
-        .arg("--version")
-        .output();
-    
+    let wj_check = Command::new(&wj_cli).arg("--version").output();
+
     if wj_check.is_err() {
         eprintln!("⚠️  Warning: wj CLI not found!");
         eprintln!("   Skipping .wj transpilation. To fix:");

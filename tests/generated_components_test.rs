@@ -7,7 +7,7 @@ use windjammer_ui::components::*;
 #[test]
 fn test_all_49_components_render() {
     // Test that all 49 components can be instantiated and rendered without panicking
-    
+
     // Core Components (14)
     let _text = Text::new("test".to_string()).render();
     let _button = Button::new("test".to_string()).render();
@@ -23,7 +23,7 @@ fn test_all_49_components_render() {
     let _spinner = Spinner::new().render();
     let _tooltip = Tooltip::new("test".to_string(), "test".to_string()).render();
     let _select = Select::new().render();
-    
+
     // Layout Components (9)
     let _container = Container::new().render();
     let _flex = Flex::new().render();
@@ -32,11 +32,15 @@ fn test_all_49_components_render() {
     let _divider = Divider::new().render();
     let _spacer = Spacer::new().render();
     let _tabs = Tabs::new()
-        .tab(Tab::new("tab1".to_string(), "Tab 1".to_string(), "Content 1".to_string()))
+        .tab(Tab::new(
+            "tab1".to_string(),
+            "Tab 1".to_string(),
+            "Content 1".to_string(),
+        ))
         .render();
     let _tabpanel = TabPanel::new().render();
     let _toolbar = Toolbar::new().render();
-    
+
     // Advanced Components (17)
     let _dialog = Dialog::new("title".to_string(), "content".to_string()).render();
     let _scrollarea = ScrollArea::new().render();
@@ -55,22 +59,21 @@ fn test_all_49_components_render() {
     let _skeleton = Skeleton::new().render();
     let _pagination = Pagination::new(1, 10).render();
     let _menu = Menu::new().render();
-    
+
     // Navigation Components (4)
     let _navbar = Navbar::new().render();
     let _sidebar = Sidebar::new().render();
     let _hamburger = HamburgerMenu::new().render();
     let _contextmenu = ContextMenu::new("target".to_string()).render();
-    
+
     // Chat/Messaging Components (5)
     let _chatmsg = ChatMessage::new("test".to_string()).render();
     let _msglist = MessageList::new().render();
     let _chatinput = ChatInput::new().render();
     let _typing = TypingIndicator::new().render();
     let _codeblock = CodeBlock::new("test".to_string()).render();
-    
-    // If we get here, all 49 components rendered successfully
-    assert!(true, "All 49 components rendered without panicking");
+
+    // If we get here, all 49 components rendered successfully (no panic = success)
 }
 
 #[test]
@@ -89,27 +92,19 @@ fn test_button_component() {
 
 #[test]
 fn test_input_component() {
-    let input = Input::new()
-        .placeholder("Enter text".to_string())
-        .render();
+    let input = Input::new().placeholder("Enter text".to_string()).render();
     assert!(input.contains("Enter text"));
 }
 
 #[test]
 fn test_checkbox_component() {
-    let checkbox = Checkbox::new("Accept".to_string())
-        .checked(true)
-        .render();
+    let checkbox = Checkbox::new("Accept".to_string()).checked(true).render();
     assert!(checkbox.contains("Accept"));
 }
 
 #[test]
 fn test_slider_component() {
-    let slider = Slider::new()
-        .min(0.0)
-        .max(100.0)
-        .value(50.0)
-        .render();
+    let slider = Slider::new().min(0.0).max(100.0).value(50.0).render();
     assert!(slider.contains("50"));
 }
 
@@ -129,9 +124,7 @@ fn test_alert_component() {
 
 #[test]
 fn test_card_component() {
-    let card = Card::new()
-        .child("Content".to_string())
-        .render();
+    let card = Card::new().child("Content".to_string()).render();
     assert!(card.contains("Content"));
 }
 
@@ -162,9 +155,7 @@ fn test_flex_component() {
 
 #[test]
 fn test_grid_component() {
-    let grid = Grid::new(2)
-        .child("Cell".to_string())
-        .render();
+    let grid = Grid::new(2).child("Cell".to_string()).render();
     assert!(grid.contains("Cell"));
 }
 
@@ -176,16 +167,18 @@ fn test_divider_component() {
 
 #[test]
 fn test_spacer_component() {
-    let spacer = Spacer::new()
-        .width("20px".to_string())
-        .render();
+    let spacer = Spacer::new().width("20px".to_string()).render();
     assert!(spacer.contains("20px"));
 }
 
 #[test]
 fn test_tabs_component() {
     let tabs = Tabs::new()
-        .tab(Tab::new("tab1".to_string(), "Tab 1".to_string(), "Content 1".to_string()))
+        .tab(Tab::new(
+            "tab1".to_string(),
+            "Tab 1".to_string(),
+            "Content 1".to_string(),
+        ))
         .render();
     assert!(tabs.contains("Tab 1"));
 }
@@ -216,9 +209,7 @@ fn test_chat_message_component() {
 
 #[test]
 fn test_navbar_component() {
-    let navbar = Navbar::new()
-        .brand("App".to_string())
-        .render();
+    let navbar = Navbar::new().brand("App".to_string()).render();
     assert!(navbar.contains("App"));
 }
 
@@ -230,7 +221,7 @@ fn test_builder_pattern_chaining() {
         .size(ButtonSize::Large)
         .disabled(false)
         .render();
-    
+
     assert!(button.contains("Test"));
 }
 
