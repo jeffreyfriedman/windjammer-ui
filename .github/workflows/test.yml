@@ -43,8 +43,13 @@ jobs:
       - name: Install Windjammer CLI
         shell: bash
         run: |
-          echo "📦 Installing Windjammer CLI (wj)..."
-          cargo install windjammer --version 0.36.1
+          echo "📦 Installing Windjammer CLI (wj) from main branch..."
+          # Clone windjammer repo and build from source to get latest fixes
+          git clone https://github.com/jeffreyfriedman/windjammer.git /tmp/windjammer
+          cd /tmp/windjammer
+          cargo build --release
+          # Install to cargo bin directory
+          cp target/release/wj ~/.cargo/bin/
           echo "✅ Windjammer CLI installed"
           wj --version
       
@@ -104,9 +109,15 @@ jobs:
       
       - name: Install Windjammer CLI
         run: |
-          echo "📦 Installing Windjammer CLI (wj)..."
-          cargo install windjammer --version 0.36.1
+          echo "📦 Installing Windjammer CLI (wj) from main branch..."
+          # Clone windjammer repo and build from source to get latest fixes
+          git clone https://github.com/jeffreyfriedman/windjammer.git /tmp/windjammer
+          cd /tmp/windjammer
+          cargo build --release
+          # Install to cargo bin directory
+          cp target/release/wj ~/.cargo/bin/
           echo "✅ Windjammer CLI installed"
+          wj --version
       
       - name: Install tarpaulin
         run: cargo install cargo-tarpaulin
@@ -166,9 +177,15 @@ jobs:
       
       - name: Install Windjammer CLI
         run: |
-          echo "📦 Installing Windjammer CLI (wj)..."
-          cargo install windjammer --version 0.36.1
+          echo "📦 Installing Windjammer CLI (wj) from main branch..."
+          # Clone windjammer repo and build from source to get latest fixes
+          git clone https://github.com/jeffreyfriedman/windjammer.git /tmp/windjammer
+          cd /tmp/windjammer
+          cargo build --release
+          # Install to cargo bin directory
+          cp target/release/wj ~/.cargo/bin/
           echo "✅ Windjammer CLI installed"
+          wj --version
       
       - name: Cache Cargo registry and build artifacts
         uses: actions/cache@v4
