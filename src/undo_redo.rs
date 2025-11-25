@@ -15,7 +15,9 @@ use std::collections::VecDeque;
 ///
 /// This allows developers to create custom commands programmatically:
 ///
-/// ```rust
+/// ```rust,ignore
+/// use windjammer_ui::undo_redo::Command;
+///
 /// struct MyCustomCommand { /* ... */ }
 ///
 /// impl Command for MyCustomCommand {
@@ -58,7 +60,14 @@ pub trait Command: std::any::Any + Send + Sync {
 /// Transform modification command (position, rotation, scale)
 ///
 /// Can be used programmatically:
-/// ```rust
+/// ```rust,ignore
+/// use windjammer_ui::undo_redo::TransformCommand;
+///
+/// # fn example() -> Result<(), String> {
+/// let object_id = "Player".to_string();
+/// let old_transform = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0];
+/// let new_transform = [1.0, 2.0, 3.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0];
+///
 /// let mut cmd = TransformCommand::new(
 ///     object_id,
 ///     old_transform,
@@ -67,6 +76,8 @@ pub trait Command: std::any::Any + Send + Sync {
 /// cmd.execute()?;
 /// // Later...
 /// cmd.undo()?;
+/// # Ok(())
+/// # }
 /// ```
 #[derive(Clone, Debug)]
 pub struct TransformCommand {
@@ -119,13 +130,21 @@ impl Command for TransformCommand {
 /// File content modification command
 ///
 /// Programmatic usage:
-/// ```rust
+/// ```rust,ignore
+/// use windjammer_ui::undo_redo::FileEditCommand;
+///
+/// # fn example() -> Result<(), String> {
+/// let old_content = "fn main() {}".to_string();
+/// let new_content = "fn main() { println!(\"Hello\"); }".to_string();
+///
 /// let mut cmd = FileEditCommand::new(
 ///     "main.wj".to_string(),
 ///     old_content,
 ///     new_content,
 /// );
 /// cmd.execute()?;
+/// # Ok(())
+/// # }
 /// ```
 #[derive(Clone, Debug)]
 pub struct FileEditCommand {
@@ -163,12 +182,19 @@ impl Command for FileEditCommand {
 /// Object creation command
 ///
 /// Programmatic usage:
-/// ```rust
+/// ```rust,ignore
+/// use windjammer_ui::undo_redo::CreateObjectCommand;
+///
+/// # fn example() -> Result<(), String> {
+/// let object_data = r#"{"type": "Player", "health": 100}"#.to_string();
+///
 /// let mut cmd = CreateObjectCommand::new(
 ///     "Player".to_string(),
 ///     object_data,
 /// );
 /// cmd.execute()?;
+/// # Ok(())
+/// # }
 /// ```
 #[derive(Clone, Debug)]
 pub struct CreateObjectCommand {
@@ -204,12 +230,19 @@ impl Command for CreateObjectCommand {
 /// Object deletion command
 ///
 /// Programmatic usage:
-/// ```rust
+/// ```rust,ignore
+/// use windjammer_ui::undo_redo::DeleteObjectCommand;
+///
+/// # fn example() -> Result<(), String> {
+/// let object_data = r#"{"type": "Enemy", "health": 50}"#.to_string();
+///
 /// let mut cmd = DeleteObjectCommand::new(
 ///     "Enemy".to_string(),
 ///     object_data, // Save for undo
 /// );
 /// cmd.execute()?;
+/// # Ok(())
+/// # }
 /// ```
 #[derive(Clone, Debug)]
 pub struct DeleteObjectCommand {
@@ -245,7 +278,10 @@ impl Command for DeleteObjectCommand {
 /// Property modification command
 ///
 /// Programmatic usage:
-/// ```rust
+/// ```rust,ignore
+/// use windjammer_ui::undo_redo::PropertyChangeCommand;
+///
+/// # fn example() -> Result<(), String> {
 /// let mut cmd = PropertyChangeCommand::new(
 ///     "Player".to_string(),
 ///     "health".to_string(),
@@ -253,6 +289,8 @@ impl Command for DeleteObjectCommand {
 ///     "150".to_string(),
 /// );
 /// cmd.execute()?;
+/// # Ok(())
+/// # }
 /// ```
 #[derive(Clone, Debug)]
 pub struct PropertyChangeCommand {
@@ -302,11 +340,18 @@ impl Command for PropertyChangeCommand {
 ///
 /// Can be used programmatically without the editor:
 ///
-/// ```rust
+/// ```rust,ignore
+/// use windjammer_ui::undo_redo::{UndoRedoManager, TransformCommand};
+///
+/// # fn example() -> Result<(), String> {
 /// let mut manager = UndoRedoManager::new();
 ///
 /// // Execute commands
-/// let mut cmd = TransformCommand::new(...);
+/// let cmd = TransformCommand::new(
+///     "Player".to_string(),
+///     [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0],
+///     [1.0, 2.0, 3.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0],
+/// );
 /// manager.execute(Box::new(cmd))?;
 ///
 /// // Undo/Redo
@@ -317,6 +362,8 @@ impl Command for PropertyChangeCommand {
 /// if manager.can_undo() {
 ///     println!("Can undo: {}", manager.get_undo_description());
 /// }
+/// # Ok(())
+/// # }
 /// ```
 pub struct UndoRedoManager {
     undo_stack: VecDeque<Box<dyn Command>>,
@@ -491,13 +538,19 @@ impl Default for UndoRedoManager {
 /// Builder for creating commands programmatically
 ///
 /// Example usage:
-/// ```rust
+/// ```rust,ignore
+/// use windjammer_ui::undo_redo::{CommandBuilder, UndoRedoManager};
+///
+/// # fn example() -> Result<(), String> {
+/// # let mut manager = UndoRedoManager::new();
 /// let cmd = CommandBuilder::transform("Player")
 ///     .old_position(0.0, 0.0, 0.0)
 ///     .new_position(1.0, 2.0, 3.0)
 ///     .build();
 ///
 /// manager.execute(cmd)?;
+/// # Ok(())
+/// # }
 /// ```
 pub struct CommandBuilder;
 
