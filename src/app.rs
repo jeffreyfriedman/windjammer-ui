@@ -9,9 +9,13 @@
 use crate::simple_vnode::VNode;
 
 #[cfg(target_arch = "wasm32")]
+use std::cell::RefCell;
+#[cfg(target_arch = "wasm32")]
+use std::rc::Rc;
+#[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
 #[cfg(target_arch = "wasm32")]
-use web_sys::{window, Document, Element};
+use web_sys::{window, Element};
 
 #[cfg(target_arch = "wasm32")]
 thread_local! {

@@ -129,3 +129,36 @@ mod tests {
         assert!(output.contains("Component: Counter"));
     }
 }
+
+/// Render a VNode to an HTML string (for WASM/web rendering)
+#[cfg(target_arch = "wasm32")]
+pub fn render_to_html(vnode: &crate::simple_vnode::VNode) -> String {
+    use crate::simple_vnode::{VAttr, VNode};
+
+    match vnode {
+        VNode::Element {
+            tag,
+            attrs,
+            children,
+        } => {
+            let mut html = format!("<{}", tag);
+            for (key, value) in attrs {
+                match value {
+                    VAttr::Static(v) | VAttr::Dynamic(v) => {
+                        html.push_str(&format!(" {}=\"{}\"", key, v));
+                    }
+                    VAttr::Event(_) => {
+                        // Skip event handlers in HTML rendering
+                    }
+                }
+            }
+            html.push('>');
+            for child in children {
+                html.push_str(&render_to_html(child));
+            }
+            html.push_str(&format!("</{}>", tag));
+            html
+        }
+        VNode::Text(text) => text.clone(),
+    }
+}
