@@ -24,6 +24,11 @@ impl Grid {
         self
     }
 
+    pub fn children(mut self, children: Vec<VNode>) -> Self {
+        self.children = children;
+        self
+    }
+
     pub fn render(&self) -> VNode {
         let style = format!(
             "display: grid; grid-template-columns: repeat({}, 1fr); gap: 16px;",

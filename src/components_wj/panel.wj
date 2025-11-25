@@ -1,0 +1,75 @@
+pub struct Panel {
+    title: string,
+    children: Vec<string>,
+    collapsible: bool,
+    collapsed: bool,
+    padding: string,
+}
+
+impl Panel {
+    pub fn new(title: string) -> Panel {
+        Panel {
+            title,
+            children: Vec::new(),
+            collapsible: false,
+            collapsed: false,
+            padding: "16px".to_string(),
+        }
+    }
+
+    pub fn child(self, child: string) -> Panel {
+        self.children.push(child)
+        self
+    }
+
+    pub fn collapsible(self, collapsible: bool) -> Panel {
+        self.collapsible = collapsible
+        self
+    }
+
+    pub fn collapsed(self, collapsed: bool) -> Panel {
+        self.collapsed = collapsed
+        self
+    }
+
+    pub fn padding(self, padding: string) -> Panel {
+        self.padding = padding
+        self
+    }
+
+    pub fn render(self) -> string {
+        let header_class = if self.collapsible { "wj-panel-header-collapsible" } else { "wj-panel-header" }
+        let icon = if self.collapsible {
+            if self.collapsed { "▶" } else { "▼" }
+        } else {
+            ""
+        }
+
+        let content_style = if self.collapsed {
+            "display: none;"
+        } else {
+            "display: block;"
+        }
+
+        let children_html = self.children.join("\n")
+
+        format!("<div class='wj-panel'>
+  <div class='{}'>
+    <span>{}</span>
+    <h3>{}</h3>
+  </div>
+  <div class='wj-panel-content' style='{}padding: {};'>
+    {}
+  </div>
+</div>", header_class, icon, self.title, content_style, self.padding, children_html)
+    }
+}
+
+fn main() {
+    let panel = Panel::new("Settings".to_string())
+        .child("<p>Panel content goes here</p>".to_string())
+        .collapsible(true)
+
+    println!("{}", panel.render())
+}
+

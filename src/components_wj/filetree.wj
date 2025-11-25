@@ -1,0 +1,75 @@
+pub struct FileNode {
+    name: string,
+    is_directory: bool,
+    children: Vec<FileNode>,
+    expanded: bool,
+}
+
+impl FileNode {
+    pub fn new(name: string, is_directory: bool) -> FileNode {
+        FileNode {
+            name,
+            is_directory,
+            children: Vec::new(),
+            expanded: false,
+        }
+    }
+
+    pub fn child(self, node: FileNode) -> FileNode {
+        self.children.push(node)
+        self
+    }
+
+    pub fn expanded(self, expanded: bool) -> FileNode {
+        self.expanded = expanded
+        self
+    }
+
+    pub fn render(self, depth: i32) -> string {
+        let indent = "  ".repeat(depth as usize)
+        let icon = if self.is_directory {
+            if self.expanded { "📂" } else { "📁" }
+        } else {
+            "📄"
+        }
+
+        let mut html = format!("{}{} {}\n", indent, icon, self.name)
+
+        if self.is_directory && self.expanded {
+            let mut i = 0
+            while i < self.children.len() {
+                let child = &self.children[i]
+                html = format!("{}{}", html, child.render(depth + 1))
+                i = i + 1
+            }
+        }
+
+        html
+    }
+}
+
+pub struct FileTree {
+    root: FileNode,
+}
+
+impl FileTree {
+    pub fn new(root: FileNode) -> FileTree {
+        FileTree { root }
+    }
+
+    pub fn render(self) -> string {
+        format!("<div class='wj-file-tree'>\n{}</div>", self.root.render(0))
+    }
+}
+
+fn main() {
+    let tree = FileTree::new(
+        FileNode::new("src".to_string(), true)
+            .expanded(true)
+            .child(FileNode::new("main.rs".to_string(), false))
+            .child(FileNode::new("lib.rs".to_string(), false))
+    )
+
+    println!("{}", tree.render())
+}
+

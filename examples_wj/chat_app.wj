@@ -1,0 +1,75 @@
+// Chat App Example - ChatGPT-style Interface
+// Demonstrates: ChatMessage, MessageList, ChatInput, TypingIndicator, CodeBlock
+
+use windjammer_ui::*
+
+fn main() {
+    println!("🤖 Starting Windjammer Chat App")
+    
+    // Build chat interface
+    let ui = Container::new()
+        .max_width("800px")
+        .child(
+            Card::new()
+                .title("Windjammer Chat Assistant")
+                .child(build_chat_history())
+                .child(build_chat_input())
+                .render()
+        )
+        .render()
+    
+    println!("{}", ui)
+}
+
+fn build_chat_history() -> string {
+    MessageList::new()
+        .height("500px")
+        .message(
+            ChatMessage::new("What is Windjammer?")
+                .role(MessageRole::User)
+                .timestamp("2:30 PM")
+                .render()
+        )
+        .message(
+            ChatMessage::new("Windjammer is a modern systems programming language that combines the power of Rust with significantly reduced complexity. It features automatic memory management inference, simplified syntax, and compiles directly to Rust!")
+                .role(MessageRole::Assistant)
+                .avatar("/ai-avatar.png")
+                .timestamp("2:30 PM")
+                .render()
+        )
+        .message(
+            ChatMessage::new("Can you show me a code example?")
+                .role(MessageRole::User)
+                .timestamp("2:31 PM")
+                .render()
+        )
+        .message(
+            ChatMessage::new("Of course! Here's a simple example:")
+                .role(MessageRole::Assistant)
+                .timestamp("2:31 PM")
+                .render()
+        )
+        .message(
+            CodeBlock::new("use windjammer_ui::*\n\nfn main() {\n    let button = Button::new(\"Click Me\")\n        .variant(ButtonVariant::Primary)\n        .render()\n    \n    println!(\"{}\", button)\n}")
+                .language("windjammer")
+                .show_copy_button(true)
+                .show_line_numbers(true)
+                .render()
+        )
+        .message(
+            TypingIndicator::new()
+                .label("AI is thinking...")
+                .render()
+        )
+        .auto_scroll(true)
+        .render()
+}
+
+fn build_chat_input() -> string {
+    ChatInput::new()
+        .placeholder("Ask me anything about Windjammer...")
+        .multiline(true)
+        .rows(3)
+        .render()
+}
+

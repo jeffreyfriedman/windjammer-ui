@@ -1,0 +1,77 @@
+pub enum AvatarSize {
+    Small,
+    Medium,
+    Large,
+    XLarge,
+}
+
+pub struct Avatar {
+    src: string,
+    alt: string,
+    fallback: string,
+    size: AvatarSize,
+    rounded: bool,
+}
+
+impl Avatar {
+    pub fn new(src: string, alt: string) -> Avatar {
+        Avatar {
+            src,
+            alt,
+            fallback: "".to_string(),
+            size: AvatarSize::Medium,
+            rounded: true,
+        }
+    }
+
+    pub fn fallback(self, fallback: string) -> Avatar {
+        self.fallback = fallback
+        self
+    }
+
+    pub fn size(self, size: AvatarSize) -> Avatar {
+        self.size = size
+        self
+    }
+
+    pub fn rounded(self, rounded: bool) -> Avatar {
+        self.rounded = rounded
+        self
+    }
+
+    pub fn render(self) -> string {
+        let size_class = match self.size {
+            AvatarSize::Small => "wj-avatar-sm",
+            AvatarSize::Medium => "wj-avatar-md",
+            AvatarSize::Large => "wj-avatar-lg",
+            AvatarSize::XLarge => "wj-avatar-xl",
+        }
+
+        let shape_class = if self.rounded {
+            "wj-avatar-rounded"
+        } else {
+            "wj-avatar-square"
+        }
+
+        if self.src != "" {
+            format!("<img src='{}' alt='{}' class='wj-avatar {} {}'>", self.src, self.alt, size_class, shape_class)
+        } else if self.fallback != "" {
+            format!("<div class='wj-avatar wj-avatar-fallback {} {}'>{}</div>", size_class, shape_class, self.fallback)
+        } else {
+            format!("<div class='wj-avatar wj-avatar-default {} {}'>?</div>", size_class, shape_class)
+        }
+    }
+}
+
+fn main() {
+    let avatar1 = Avatar::new("https://example.com/avatar.jpg".to_string(), "User".to_string())
+        .size(AvatarSize::Large)
+
+    println!("{}", avatar1.render())
+
+    let avatar2 = Avatar::new("".to_string(), "John Doe".to_string())
+        .fallback("JD".to_string())
+
+    println!("{}", avatar2.render())
+}
+

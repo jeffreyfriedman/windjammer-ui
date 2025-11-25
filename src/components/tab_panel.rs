@@ -16,6 +16,12 @@ pub struct Tab {
     pub on_close: Option<Rc<RefCell<dyn FnMut()>>>,
 }
 
+impl Default for TabPanel {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl TabPanel {
     pub fn new() -> Self {
         Self {

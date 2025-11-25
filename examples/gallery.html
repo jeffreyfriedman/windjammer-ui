@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windjammer UI - 49 Components Gallery</title>
+    <style>
+        :root[data-theme="light"] {
+            --bg-gradient-start: #667eea;
+            --bg-gradient-end: #764ba2;
+            --main-bg: #ffffff;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+            --showcase-bg: #f9fafb;
+            --hero-text: #ffffff;
+        }
+        
+        :root[data-theme="dark"] {
+            --bg-gradient-start: #1a1a2e;
+            --bg-gradient-end: #16213e;
+            --main-bg: #0f172a;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --showcase-bg: #1e293b;
+            --hero-text: #f1f5f9;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            min-height: 100vh;
+            padding: 24px;
+            transition: background 0.3s ease;
+        }
+        
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--main-bg);
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            transition: background 0.3s ease;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            color: var(--hero-text);
+            padding: 48px 32px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .theme-toggle {
+            position: absolute;
+            top: 24px;
+            right: 32px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .content {
+            padding: 48px 32px;
+        }
+        
+        .component-section {
+            margin-bottom: 56px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .section-title {
+            font-size: 28px;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        
+        .section-description {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+        
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+        
+        .showcase-item {
+            padding: 24px;
+            background: var(--showcase-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+        
+        .showcase-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .demo-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 48px 32px;
+            background: var(--showcase-bg);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        footer h3 {
+            font-size: 24px;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+        
+        footer p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin: 8px 0;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 32px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+        
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* Component Styles */
+        .wj-text { color: var(--text-primary); }
+        .wj-text.sm { font-size: 14px; }
+        .wj-text.md { font-size: 16px; }
+        .wj-text.lg { font-size: 20px; }
+        .wj-text.xl { font-size: 28px; }
+        .wj-text.bold { font-weight: 700; }
+        
+        .wj-button {
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .wj-button:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.15); }
+        .wj-button-primary { background: #667eea; color: white; }
+        .wj-button-secondary { background: #6b7280; color: white; }
+        .wj-button-success { background: #10b981; color: white; }
+        .wj-button-danger { background: #ef4444; color: white; }
+        .wj-button-ghost { background: transparent; color: #667eea; border: 2px solid #667eea; }
+        .wj-button-sm { padding: 6px 14px; font-size: 13px; }
+        .wj-button-md { padding: 10px 20px; font-size: 14px; }
+        .wj-button-lg { padding: 14px 28px; font-size: 16px; }
+        .wj-button[disabled] { opacity: 0.5; cursor: not-allowed; }
+
+        .wj-badge {
+            display: inline-flex;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .wj-badge-default { background: #f3f4f6; color: #374151; }
+        .wj-badge-primary { background: #dbeafe; color: #1e40af; }
+        .wj-badge-success { background: #d1fae5; color: #065f46; }
+        .wj-badge-warning { background: #fef3c7; color: #92400e; }
+        .wj-badge-danger { background: #fee2e2; color: #991b1b; }
+        .wj-badge-info { background: #e0e7ff; color: #3730a3; }
+        
+        .wj-input {
+            padding: 10px 14px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            background: var(--main-bg);
+            color: var(--text-primary);
+            transition: all 0.2s;
+        }
+        
+        .wj-checkbox { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+        .wj-checkbox input { width: 18px; height: 18px; cursor: pointer; }
+        .wj-checkbox span { color: var(--text-primary); font-size: 14px; }
+        
+        .wj-slider {
+            width: 200px;
+            height: 6px;
+            -webkit-appearance: none;
+            background: var(--border-color);
+            border-radius: 3px;
+            outline: none;
+        }
+        .wj-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #667eea;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .wj-alert {
+            padding: 16px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            margin: 8px 0;
+        }
+        .wj-alert-error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+        .wj-alert-warning { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+        .wj-alert-info { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+        .wj-alert-success { background: #f0fdf4; color: #065f46; border: 1px solid #bbf7d0; }
+        
+        .wj-card {
+            background: var(--showcase-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .wj-progress-container {
+            background: var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            height: 24px;
+        }
+        .wj-progress-bar {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 12px;
+        }
+        .wj-progress-default { background: #667eea; }
+        .wj-progress-success { background: #10b981; }
+        
+        .wj-spinner {
+            border: 3px solid var(--border-color);
+            border-top-color: #667eea;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        .wj-switch {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .wj-switch span {
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+        .wj-switch input[type="checkbox"] {
+            width: 44px;
+            height: 24px;
+            -webkit-appearance: none;
+            background: var(--border-color);
+            border-radius: 12px;
+            position: relative;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .wj-switch input[type="checkbox"]:checked {
+            background: #667eea;
+        }
+        .wj-switch input[type="checkbox"]::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            top: 2px;
+            left: 2px;
+            transition: 0.3s;
+        }
+        .wj-switch input[type="checkbox"]:checked::before {
+            left: 22px;
+        }
+        
+        .wj-radio { display: flex; align-items: center; gap: 8px; margin: 8px 0; }
+        .wj-radio input { width: 16px; height: 16px; }
+        .wj-radio span { color: var(--text-primary); font-size: 14px; }
+        
+        .wj-select {
+            padding: 10px 14px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            background: var(--main-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+        
+        /* Pure CSS Tabs (no JavaScript!) */
+        .tabs-container {
+            position: relative;
+        }
+        .tabs-container input[type="radio"] {
+            display: none;
+        }
+        .wj-tabs-header {
+            display: flex;
+            gap: 4px;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 16px;
+        }
+        .wj-tab {
+            padding: 12px 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .wj-tab:hover {
+            color: var(--text-primary);
+        }
+        
+        /* Active tab styling based on checked radio button */
+        #tab1:checked ~ .wj-tabs-header label[for="tab1"],
+        #tab2:checked ~ .wj-tabs-header label[for="tab2"],
+        #tab3:checked ~ .wj-tabs-header label[for="tab3"] {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+        
+        /* Show/hide tab content based on checked radio button */
+        .tab-panel {
+            display: none;
+            padding: 16px;
+            background: var(--showcase-bg);
+            border-radius: 4px;
+        }
+        #tab1:checked ~ .tab-panels #panel1,
+        #tab2:checked ~ .tab-panels #panel2,
+        #tab3:checked ~ .tab-panels #panel3 {
+            display: block;
+        }
+        
+        .wj-tooltip-container {
+            position: relative;
+            display: inline-block;
+        }
+        .wj-tooltip-text {
+            visibility: hidden;
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 8px 12px;
+            border-radius: 6px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            font-size: 13px;
+        }
+        .wj-tooltip-container:hover .wj-tooltip-text {
+            visibility: visible;
+        }
+        
+        .wj-dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .wj-color-input {
+            width: 60px;
+            height: 40px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        /* Collapsible section arrow rotation */
+        details summary {
+            list-style: none;
+        }
+        details summary::-webkit-details-marker {
+            display: none;
+        }
+        details summary .arrow {
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+        details[open] summary .arrow {
+            transform: rotate(90deg);
+        }
+        
+        /* Toast notifications */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .toast-notification {
+            padding: 16px 20px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 300px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .toast-success { background: #d1fae5; color: #065f46; border: 1px solid #bbf7d0; }
+        .toast-error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+        
+        /* Panel component */
+        .wj-panel {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .wj-panel-header {
+            padding: 12px 16px;
+            background: var(--showcase-bg);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .wj-panel-content {
+            padding: 16px;
+        }
+        
+        /* Dialog */
+        .demo-dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .demo-dialog.show {
+            display: flex;
+        }
+        .demo-dialog-content {
+            background: var(--main-bg);
+            padding: 24px;
+            border-radius: 12px;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        /* Accordion styling */
+        .wj-accordion {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .wj-accordion-item {
+            border-bottom: 1px solid var(--border-color);
+        }
+        .wj-accordion-item:last-child {
+            border-bottom: none;
+        }
+        .wj-accordion-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            cursor: pointer;
+            background: var(--showcase-bg);
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: all 0.2s ease;
+            list-style: none;
+            user-select: none;
+        }
+        .wj-accordion-header::-webkit-details-marker {
+            display: none;
+        }
+        .wj-accordion-header:hover {
+            background: var(--border-color);
+        }
+        .wj-accordion-icon {
+            display: inline-block;
+            transition: transform 0.2s ease;
+            color: #667eea;
+            font-size: 12px;
+        }
+        .wj-accordion-item[open] .wj-accordion-icon {
+            transform: rotate(90deg);
+        }
+        .wj-accordion-content {
+            padding: 16px 16px 16px 44px;
+            color: var(--text-primary);
+            font-size: 14px;
+            line-height: 1.6;
+            background: var(--main-bg);
+            animation: accordionSlideDown 0.2s ease;
+        }
+        @keyframes accordionSlideDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .wj-accordion-content p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Toast container -->
+    <div id="toast-container" class="toast-container"></div>
+    
+    <div class="main-container">
+        <div class="hero">
+            <button class="theme-toggle" onclick="toggleTheme()">🌓 Toggle Dark Mode</button>
+            <h1>🎨 Windjammer UI Gallery</h1>
+            <p>All 49 components built in pure Windjammer and transpiled to Rust!</p>
+            <p style="font-size: 14px; margin-top: 8px; opacity: 0.9;">Featuring Chat, Navbar, Sidebar, Toast, Accordion, CodeBlock & more! 🆕</p>
+        </div>
+        
+        <div class="content">
+            <!-- 1. TEXT -->
+            <div class="component-section">
+                <h2 class="section-title">1-2. Text & Typography</h2>
+                <p class="section-description">Text component with 4 sizes and 2 weights</p>
+                <div class="showcase-item">
+                    <div class="showcase-label">All Text Variants</div>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <span class='wj-text sm normal'>Small text</span>
+                        <span class='wj-text md normal'>Medium text</span>
+                        <span class='wj-text lg normal'>Large text</span>
+                        <span class='wj-text xl bold'>Extra Large Bold</span>
+                    </div>
+</div>
+</div>
+
+            <!-- 3. BUTTON -->
+            <div class="component-section">
+                <h2 class="section-title">3. Button Component</h2>
+                <p class="section-description">5 variants × 3 sizes = 15 combinations</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Variants</div>
+                        <div class="demo-row">
+  <button class='wj-button wj-button-primary wj-button-md'>Primary</button>
+  <button class='wj-button wj-button-secondary wj-button-md'>Secondary</button>
+  <button class='wj-button wj-button-success wj-button-md'>Success</button>
+  <button class='wj-button wj-button-danger wj-button-md'>Danger</button>
+  <button class='wj-button wj-button-ghost wj-button-md'>Ghost</button>
+</div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Sizes & States</div>
+                        <div class="demo-row">
+  <button class='wj-button wj-button-primary wj-button-sm'>Small</button>
+  <button class='wj-button wj-button-primary wj-button-md'>Medium</button>
+  <button class='wj-button wj-button-primary wj-button-lg'>Large</button>
+                            <button class='wj-button wj-button-primary wj-button-md' disabled>Disabled</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. INPUT -->
+            <div class="component-section">
+                <h2 class="section-title">4. Input Component</h2>
+                <p class="section-description">Text input with placeholder support</p>
+                <div class="showcase-item">
+                    <div class="showcase-label">Text Inputs</div>
+                    <div style="display: flex; flex-direction: column; gap: 12px; max-width: 400px;">
+                        <input class='wj-input' value='' placeholder='Enter your name'>
+                        <input class='wj-input' value='John Doe' placeholder='Username'>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. CHECKBOX -->
+            <div class="component-section">
+                <h2 class="section-title">5. Checkbox Component</h2>
+                <p class="section-description">Checkbox with 3 size options</p>
+                <div class="showcase-item">
+                    <div class="showcase-label">Checkbox Variants</div>
+                    <label class='wj-checkbox'><input type='checkbox' checked><span>Checked</span></label>
+                    <label class='wj-checkbox'><input type='checkbox'><span>Unchecked</span></label>
+                    <label class='wj-checkbox'><input type='checkbox' disabled><span>Disabled</span></label>
+                </div>
+            </div>
+
+            <!-- 6. SLIDER -->
+            <div class="component-section">
+                <h2 class="section-title">6. Slider Component</h2>
+                <p class="section-description">Range input with dynamic value display (try dragging!)</p>
+                <div class="showcase-item">
+                    <div class="showcase-label">Interactive Sliders</div>
+                    <div style="display: flex; flex-direction: column; gap: 16px;">
+                        <div>
+                            <label style="font-size: 13px; color: var(--text-secondary);">Volume: <span id="volume-value">50</span>%</label><br>
+                            <input type='range' class='wj-slider' id="volume-slider" min='0' max='100' value='50'>
+                        </div>
+                        <div>
+                            <label style="font-size: 13px; color: var(--text-secondary);">Brightness: <span id="brightness-value">75</span>%</label><br>
+                            <input type='range' class='wj-slider' id="brightness-slider" min='0' max='100' value='75'>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. BADGE -->
+            <div class="component-section">
+                <h2 class="section-title">7. Badge Component</h2>
+                <p class="section-description">6 variants × 3 sizes = 18 combinations</p>
+                <div class="showcase-item">
+                    <div class="showcase-label">All Badge Variants</div>
+                    <div class="demo-row">
+                        <span class='wj-badge wj-badge-default'>Default</span>
+                        <span class='wj-badge wj-badge-primary'>Primary</span>
+                        <span class='wj-badge wj-badge-success'>Success</span>
+                        <span class='wj-badge wj-badge-warning'>Warning</span>
+                        <span class='wj-badge wj-badge-danger'>Danger</span>
+                        <span class='wj-badge wj-badge-info'>Info</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8-11. ALERTS -->
+            <div class="component-section">
+                <h2 class="section-title">8. Alert Component</h2>
+                <p class="section-description">4 types with icons</p>
+                <div class="showcase-item">
+                    <div class='wj-alert wj-alert-error'>❌ Error: Something went wrong!</div>
+                    <div class='wj-alert wj-alert-warning'>⚠️ Warning: Please review your input</div>
+                    <div class='wj-alert wj-alert-info'>ℹ️ Info: Auto-saved your changes</div>
+                    <div class='wj-alert wj-alert-success'>✅ Success: Operation completed!</div>
+                </div>
+            </div>
+
+            <!-- 9-14. LAYOUT (Container, Flex, Grid, Panel, Divider, Spacer) -->
+            <div class="component-section">
+                <h2 class="section-title">9-14. Layout Components</h2>
+                <p class="section-description">Container, Flex, Grid, Panel, Divider, Spacer</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Container</div>
+                        <div style="max-width: 600px; margin: 0 auto; padding: 16px; background: var(--showcase-bg); border-radius: 8px;">
+                            <p style="color: var(--text-primary); font-size: 14px;">Centered container with max-width and padding</p>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Flex (Row)</div>
+                        <div style="display: flex; gap: 12px;">
+                            <div style="padding: 16px; background: #667eea; color: white; border-radius: 4px; flex: 1;">Item 1</div>
+                            <div style="padding: 16px; background: #667eea; color: white; border-radius: 4px; flex: 1;">Item 2</div>
+                            <div style="padding: 16px; background: #667eea; color: white; border-radius: 4px; flex: 1;">Item 3</div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Flex (Column)</div>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <div style="padding: 12px; background: #10b981; color: white; border-radius: 4px;">Row 1</div>
+                            <div style="padding: 12px; background: #10b981; color: white; border-radius: 4px;">Row 2</div>
+                            <div style="padding: 12px; background: #10b981; color: white; border-radius: 4px;">Row 3</div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Grid (3 columns)</div>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                            <div style="padding: 16px; background: #f59e0b; color: white; border-radius: 4px; text-align: center;">1</div>
+                            <div style="padding: 16px; background: #f59e0b; color: white; border-radius: 4px; text-align: center;">2</div>
+                            <div style="padding: 16px; background: #f59e0b; color: white; border-radius: 4px; text-align: center;">3</div>
+                            <div style="padding: 16px; background: #f59e0b; color: white; border-radius: 4px; text-align: center;">4</div>
+                            <div style="padding: 16px; background: #f59e0b; color: white; border-radius: 4px; text-align: center;">5</div>
+                            <div style="padding: 16px; background: #f59e0b; color: white; border-radius: 4px; text-align: center;">6</div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Panel</div>
+                        <div class="wj-panel">
+                            <div class="wj-panel-header">Panel Title</div>
+                            <div class="wj-panel-content">
+                                <p style="color: var(--text-primary); font-size: 14px;">Panel content goes here with proper styling.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Divider & Spacer</div>
+                        <div style="color: var(--text-primary);">
+                            <p style="font-size: 14px; margin-bottom: 8px;">Section 1</p>
+                            <div style="height: 2px; background: var(--border-color); margin: 12px 0;"></div>
+                            <p style="font-size: 14px; margin: 8px 0;">Section 2</p>
+                            <div style="height: 2px; background: #667eea; margin: 12px 0;"></div>
+                            <p style="font-size: 14px; margin-top: 8px;">Section 3 (colored divider above)</p>
+                            <div style="height: 24px; background: rgba(102, 126, 234, 0.1); margin: 12px 0; border-radius: 4px;"></div>
+                            <p style="font-size: 14px;">Section 4 (spacer above)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 15-18. CARD, PROGRESS, SPINNER -->
+            <div class="component-section">
+                <h2 class="section-title">15-18. Data Display</h2>
+                <p class="section-description">Card, Progress, Spinner</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Card Component</div>
+                        <div class='wj-card'>
+                            <h3 style="margin-bottom: 8px; color: var(--text-primary);">Card Title</h3>
+                            <p style="color: var(--text-secondary); font-size: 14px;">This is a card with content.</p>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Progress Bars</div>
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <div class='wj-progress-container'>
+                                <div class='wj-progress-bar wj-progress-default' style='width: 45%;'>45%</div>
+                            </div>
+                            <div class='wj-progress-container'>
+                                <div class='wj-progress-bar wj-progress-success' style='width: 75%;'>75%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Spinner Component</div>
+                        <div class='wj-spinner'></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 19-21. FORMS (Switch, Radio, Select) -->
+            <div class="component-section">
+                <h2 class="section-title">19-21. Form Components</h2>
+                <p class="section-description">Switch, Radio, Select</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Switch Toggle</div>
+                        <label class='wj-switch'>
+                            <input type='checkbox' checked>
+                            <span>Enable notifications</span>
+                        </label>
+                        <label class='wj-switch'>
+                            <input type='checkbox'>
+                            <span>Dark mode</span>
+                        </label>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Radio Group</div>
+                        <label class='wj-radio'><input type='radio' name='theme' checked><span>Light</span></label>
+                        <label class='wj-radio'><input type='radio' name='theme'><span>Dark</span></label>
+                        <label class='wj-radio'><input type='radio' name='theme'><span>Auto</span></label>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Select Dropdown</div>
+                        <select class='wj-select'>
+                            <option>United States</option>
+                            <option>United Kingdom</option>
+                            <option>Canada</option>
+                            <option>Australia</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 22-25. NAVIGATION (Tabs, TabPanel, Toolbar, Tooltip) -->
+            <div class="component-section">
+                <h2 class="section-title">22-25. Navigation Components</h2>
+                <p class="section-description">Tabs, TabPanel, Toolbar, Tooltip</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Tabs (Pure CSS, click to switch!)</div>
+                        <div class="tabs-container">
+                            <!-- Hidden radio buttons control the tabs -->
+                            <input type="radio" name="tabs" id="tab1" checked>
+                            <input type="radio" name="tabs" id="tab2">
+                            <input type="radio" name="tabs" id="tab3">
+                            
+                            <!-- Tab headers -->
+                            <div class='wj-tabs-header'>
+                                <label for="tab1" class='wj-tab'>Overview</label>
+                                <label for="tab2" class='wj-tab'>Details</label>
+                                <label for="tab3" class='wj-tab'>Settings</label>
+                            </div>
+                            
+                            <!-- Tab panels -->
+                            <div class="tab-panels">
+                                <div id="panel1" class="tab-panel">
+                                    <p style="color: var(--text-primary);"><strong>Overview Content</strong><br>General information displayed here.</p>
+                                </div>
+                                <div id="panel2" class="tab-panel">
+                                    <p style="color: var(--text-primary);"><strong>Details Content</strong><br>Detailed specifications shown.</p>
+                                </div>
+                                <div id="panel3" class="tab-panel">
+                                    <p style="color: var(--text-primary);"><strong>Settings Content</strong><br>Configuration options available.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">TabPanel (Click tabs!)</div>
+                        <div style="border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden;">
+                            <div style="display: flex; background: var(--showcase-bg);">
+                                <button id="tabpanel-btn1" onclick="switchTabPanel(1)" style="padding: 12px 16px; border: none; background: #667eea; color: white; cursor: pointer; flex: 1; transition: all 0.2s;">Tab 1</button>
+                                <button id="tabpanel-btn2" onclick="switchTabPanel(2)" style="padding: 12px 16px; border: none; background: transparent; color: var(--text-secondary); cursor: pointer; flex: 1; transition: all 0.2s;">Tab 2</button>
+                            </div>
+                            <div id="tabpanel-content1" style="padding: 16px;">
+                                <p style="color: var(--text-primary); font-size: 14px;"><strong>Tab 1 Content</strong><br>This is the first tab's content area.</p>
+                            </div>
+                            <div id="tabpanel-content2" style="padding: 16px; display: none;">
+                                <p style="color: var(--text-primary); font-size: 14px;"><strong>Tab 2 Content</strong><br>This is the second tab's content area.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Toolbar</div>
+                        <div style="display: flex; gap: 8px; padding: 8px; background: var(--showcase-bg); border-radius: 8px;">
+                            <button class='wj-button wj-button-ghost wj-button-sm'>New</button>
+                            <button class='wj-button wj-button-ghost wj-button-sm'>Save</button>
+                            <button class='wj-button wj-button-ghost wj-button-sm'>Export</button>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Tooltip (Hover to see!)</div>
+                        <div style="display: flex; gap: 12px; align-items: center;">
+                            <div class='wj-tooltip-container'>
+                                <button class='wj-button wj-button-primary wj-button-sm'>Top Tooltip</button>
+                                <span class='wj-tooltip-text'>This tooltip appears on top!</span>
+                            </div>
+                            <div class='wj-tooltip-container'>
+                                <button class='wj-button wj-button-secondary wj-button-sm'>Another Tooltip</button>
+                                <span class='wj-tooltip-text'>Helpful information here!</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 26-29. ADVANCED (Dialog, CodeEditor, AdvancedCodeEditor, ColorPicker) -->
+            <div class="component-section">
+                <h2 class="section-title">26-29. Advanced Components</h2>
+                <p class="section-description">Dialog, CodeEditor, AdvancedCodeEditor, ColorPicker</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Dialog (Click to open!)</div>
+                        <button class='wj-button wj-button-primary wj-button-md' onclick="document.getElementById('demo-dialog').classList.add('show')">
+                            Open Dialog
+                        </button>
+                        <div id="demo-dialog" class="demo-dialog" onclick="if(event.target === this) this.classList.remove('show')">
+                            <div class="demo-dialog-content">
+                                <h3 style="margin-bottom: 12px; color: var(--text-primary);">Dialog Title</h3>
+                                <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 16px;">This is a modal dialog. Click outside to close or use the button below.</p>
+                                <button class='wj-button wj-button-secondary wj-button-sm' onclick="document.getElementById('demo-dialog').classList.remove('show')">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Code Editor (Editable)</div>
+                        <textarea style="width: 100%; height: 100px; font-family: 'Monaco', 'Menlo', monospace; padding: 12px; border: 2px solid var(--border-color); border-radius: 8px; background: var(--main-bg); color: var(--text-primary); font-size: 13px; line-height: 1.5;">fn main() {
+    println!("Hello!");
+}</textarea>
+                        <p style="font-size: 11px; color: var(--text-secondary); margin-top: 6px;">Plain text editor (syntax highlighting requires external libs)</p>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Advanced Code Editor</div>
+                        <div style="border: 2px solid var(--border-color); border-radius: 8px; overflow: hidden;">
+                            <div style="display: flex; gap: 12px; padding: 8px; background: var(--showcase-bg); border-bottom: 1px solid var(--border-color);">
+                                <span style="font-size: 12px; color: var(--text-secondary);">Language: Rust</span>
+                                <span style="font-size: 12px; color: var(--text-secondary);">Theme: Dark</span>
+                            </div>
+                            <textarea style="width: 100%; height: 120px; font-family: 'Monaco', 'Menlo', monospace; padding: 12px; border: none; background: var(--main-bg); color: var(--text-primary); font-size: 13px; line-height: 1.5; resize: none;">use std::io;
+
+fn main() {
+    let mut input = String::new();
+    io::stdin().read_line(&mut input);
+}</textarea>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Color Picker (Try it!)</div>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <input type='color' value='#667eea' class='wj-color-input'>
+                            <span style="font-size: 14px; color: var(--text-primary);" id="color-display">#667eea</span>
+                        </div>
+                        <p style="font-size: 11px; color: var(--text-secondary); margin-top: 8px;">Select a color and see the hex value update</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 30-32. TREE (FileTree, TreeView, CollapsibleSection) -->
+            <div class="component-section">
+                <h2 class="section-title">30-32. Tree Components</h2>
+                <p class="section-description">FileTree, TreeView, CollapsibleSection</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">File Tree</div>
+                        <div style="font-family: monospace; font-size: 13px; color: var(--text-primary); background: var(--showcase-bg); padding: 12px; border-radius: 8px;">
+                            <div style="padding: 4px 0;">📂 <strong>src/</strong></div>
+                            <div style="margin-left: 20px; padding: 4px 0;">📄 main.rs</div>
+                            <div style="margin-left: 20px; padding: 4px 0;">📄 lib.rs</div>
+                            <div style="margin-left: 20px; padding: 4px 0;">📂 <strong>components/</strong></div>
+                            <div style="margin-left: 40px; padding: 4px 0;">📄 button.wj</div>
+                            <div style="margin-left: 40px; padding: 4px 0;">📄 card.wj</div>
+                            <div style="margin-left: 40px; padding: 4px 0;">📄 toast.wj</div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Tree View</div>
+                        <div style="font-size: 14px; color: var(--text-primary); background: var(--showcase-bg); padding: 12px; border-radius: 8px;">
+                            <div style="padding: 6px 0; cursor: pointer;">▼ <strong>Root Node</strong></div>
+                            <div style="margin-left: 20px; padding: 6px 0; cursor: pointer;">▶ Child Node 1</div>
+                            <div style="margin-left: 20px; padding: 6px 0; cursor: pointer;">▼ Child Node 2</div>
+                            <div style="margin-left: 40px; padding: 6px 0;">• Leaf 2.1</div>
+                            <div style="margin-left: 40px; padding: 6px 0;">• Leaf 2.2</div>
+                            <div style="margin-left: 20px; padding: 6px 0; cursor: pointer;">▶ Child Node 3</div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Collapsible Section (Click!)</div>
+                        <details style="color: var(--text-primary);">
+                            <summary style="cursor: pointer; font-weight: 600; padding: 8px;">
+                                <span class="arrow">▶</span> Advanced Options
+                            </summary>
+                            <div style="padding: 12px; margin-top: 8px; background: var(--showcase-bg); border-radius: 4px;">
+                                <p style="font-size: 14px;">Hidden content revealed! This section was collapsed.</p>
+                                <p style="font-size: 14px; margin-top: 8px;">You can put any content here.</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 33-40. NEW! Popular Components -->
+            <div class="component-section" style="border-bottom: none;">
+                <h2 class="section-title">🆕 33-40. Popular Components (NEW!)</h2>
+                <p class="section-description">Toast, Accordion, Breadcrumb, Dropdown, Avatar, Skeleton, Pagination, Menu</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Toast Notifications (Click to demo!)</div>
+                        <div style="display: flex; gap: 8px;">
+                            <button class='wj-button wj-button-success wj-button-sm' onclick="showToast('success')">Success Toast</button>
+                            <button class='wj-button wj-button-danger wj-button-sm' onclick="showToast('error')">Error Toast</button>
+                        </div>
+                        <p style="font-size: 11px; color: var(--text-secondary); margin-top: 8px;">Click buttons to see toast notifications</p>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Accordion (Click to expand!)</div>
+                        <div class="wj-accordion">
+                            <details class="wj-accordion-item">
+                                <summary class="wj-accordion-header">
+                                    <span class="wj-accordion-icon">▶</span>
+                                    <span>Getting Started</span>
+                                </summary>
+                                <div class="wj-accordion-content">
+                                    <p>Welcome to Windjammer UI! This accordion has beautiful styling with smooth animations.</p>
+                                </div>
+                            </details>
+                            <details class="wj-accordion-item">
+                                <summary class="wj-accordion-header">
+                                    <span class="wj-accordion-icon">▶</span>
+                                    <span>Features & Benefits</span>
+                                </summary>
+                                <div class="wj-accordion-content">
+                                    <p>Rich content support with proper spacing and typography.</p>
+                                </div>
+                            </details>
+                            <details class="wj-accordion-item" open>
+                                <summary class="wj-accordion-header">
+                                    <span class="wj-accordion-icon">▶</span>
+                                    <span>Advanced Usage (Open)</span>
+                                </summary>
+                                <div class="wj-accordion-content">
+                                    <p>This section is open by default. Click the header to close it!</p>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Breadcrumb Navigation</div>
+                        <nav style="font-size: 14px; color: var(--text-secondary);">
+                            <a href="#" style="color: #667eea;">Home</a> / 
+                            <a href="#" style="color: #667eea;">Products</a> / 
+                            <span style="color: var(--text-primary);">Item</span>
+                        </nav>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Avatar Components</div>
+                        <div style="display: flex; gap: 12px; align-items: center;">
+                            <div style="width: 40px; height: 40px; border-radius: 50%; background: #667eea; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600;">JD</div>
+                            <div style="width: 48px; height: 48px; border-radius: 50%; background: #10b981; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 20px;">AB</div>
+                            <div style="width: 56px; height: 56px; border-radius: 50%; background: #ef4444; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 24px;">CD</div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Skeleton Loaders</div>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <div style="height: 16px; background: linear-gradient(90deg, var(--border-color) 25%, var(--showcase-bg) 50%, var(--border-color) 75%); border-radius: 4px; animation: shimmer 2s infinite;"></div>
+                            <div style="height: 16px; background: linear-gradient(90deg, var(--border-color) 25%, var(--showcase-bg) 50%, var(--border-color) 75%); border-radius: 4px; width: 80%; animation: shimmer 2s infinite;"></div>
+                            <div style="height: 16px; background: linear-gradient(90deg, var(--border-color) 25%, var(--showcase-bg) 50%, var(--border-color) 75%); border-radius: 4px; width: 60%; animation: shimmer 2s infinite;"></div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Pagination (Click to navigate!)</div>
+                        <nav style="display: flex; gap: 4px; justify-content: center; margin-bottom: 8px;">
+                            <button onclick="changePage(1)" style="padding: 8px 12px; border: 1px solid var(--border-color); background: var(--main-bg); color: var(--text-primary); border-radius: 4px; cursor: pointer;">«</button>
+                            <button onclick="changePage(1)" id="page1" style="padding: 8px 12px; border: 1px solid var(--border-color); background: var(--main-bg); color: var(--text-primary); border-radius: 4px; cursor: pointer;">1</button>
+                            <button onclick="changePage(2)" id="page2" style="padding: 8px 12px; border: 1px solid #667eea; background: #667eea; color: white; border-radius: 4px; cursor: pointer;">2</button>
+                            <button onclick="changePage(3)" id="page3" style="padding: 8px 12px; border: 1px solid var(--border-color); background: var(--main-bg); color: var(--text-primary); border-radius: 4px; cursor: pointer;">3</button>
+                            <button onclick="changePage(3)" style="padding: 8px 12px; border: 1px solid var(--border-color); background: var(--main-bg); color: var(--text-primary); border-radius: 4px; cursor: pointer;">»</button>
+                        </nav>
+                        <p style="font-size: 11px; color: var(--text-secondary); text-align: center;">Page <span id="current-page">2</span> of 3</p>
+                    </div>
+                </div>
+            </div>
+            <!-- 41-45. CHAT & MESSAGING -->
+            <div class="component-section">
+                <h2 class="section-title">41-45. Chat & Messaging Components 🆕</h2>
+                <p class="section-description">ChatMessage, MessageList, ChatInput, TypingIndicator, CodeBlock</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Chat Messages</div>
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <!-- User message -->
+                            <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                                <div style="display: flex; flex-direction: column; align-items: flex-end;">
+                                    <div style="padding: 12px 16px; background: #667eea; color: white; border-radius: 16px 16px 4px 16px; max-width: 300px;">
+                                        <p style="margin: 0; font-size: 14px;">What is Windjammer?</p>
+                                    </div>
+                                    <span style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">2:30 PM</span>
+                                </div>
+                                <div style="width: 32px; height: 32px; border-radius: 50%; background: #667eea; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px;">👤</div>
+                            </div>
+                            <!-- Assistant message -->
+                            <div style="display: flex; gap: 12px;">
+                                <div style="width: 32px; height: 32px; border-radius: 50%; background: #10b981; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px;">🤖</div>
+                                <div style="display: flex; flex-direction: column;">
+                                    <div style="padding: 12px 16px; background: var(--showcase-bg); color: var(--text-primary); border-radius: 16px 16px 16px 4px; max-width: 300px; border: 1px solid var(--border-color);">
+                                        <p style="margin: 0; font-size: 14px;">Windjammer is a systems programming language that compiles to Rust!</p>
+                                    </div>
+                                    <span style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">2:30 PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Chat Input (with send button)</div>
+                        <div style="display: flex; gap: 8px; padding: 12px; background: var(--showcase-bg); border-radius: 12px; border: 2px solid var(--border-color);">
+                            <textarea placeholder="Type a message..." style="flex: 1; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--main-bg); color: var(--text-primary); resize: none; font-family: inherit; font-size: 14px;" rows="2"></textarea>
+                            <button style="padding: 8px 16px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 20px;">➤</button>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Typing Indicator</div>
+                        <div style="display: flex; align-items: center; gap: 12px; padding: 16px; background: var(--showcase-bg); border-radius: 8px;">
+                            <div style="display: flex; gap: 4px;">
+                                <span style="width: 8px; height: 8px; background: var(--text-secondary); border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both; animation-delay: -0.32s;"></span>
+                                <span style="width: 8px; height: 8px; background: var(--text-secondary); border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both; animation-delay: -0.16s;"></span>
+                                <span style="width: 8px; height: 8px; background: var(--text-secondary); border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both;"></span>
+                            </div>
+                            <span style="color: var(--text-secondary); font-size: 13px;">AI is typing...</span>
+                        </div>
+                        <style>
+                            @keyframes bounce {
+                                0%, 80%, 100% { transform: scale(0); }
+                                40% { transform: scale(1); }
+                            }
+                        </style>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Code Block (with copy button)</div>
+                        <div style="border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden;">
+                            <div style="display: flex; justify-content: space-between; padding: 8px 12px; background: var(--showcase-bg); border-bottom: 1px solid var(--border-color);">
+                                <span style="font-size: 12px; color: var(--text-secondary); font-weight: 600;">rust</span>
+                                <button id="copy-code-btn" onclick="copyCodeBlock(this)" style="background: none; border: none; color: #667eea; cursor: pointer; font-size: 12px; font-family: inherit;">📋 Copy</button>
+                            </div>
+                            <pre style="padding: 12px; margin: 0; background: var(--main-bg); color: var(--text-primary); font-family: 'Monaco', 'Menlo', monospace; font-size: 13px; line-height: 1.5;"><code id="code-to-copy">fn main() {
+    println!("Hello!");
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 46-49. ADDITIONAL NAVIGATION -->
+            <div class="component-section">
+                <h2 class="section-title">46-49. Additional Navigation 🆕</h2>
+                <p class="section-description">Navbar, Sidebar, HamburgerMenu, ContextMenu</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Navbar (click links to navigate!)</div>
+                        <nav style="display: flex; align-items: center; gap: 16px; padding: 12px 20px; background: var(--showcase-bg); border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 8px; flex-wrap: wrap;">
+                            <div style="font-weight: 700; font-size: 18px; color: #667eea; cursor: pointer; white-space: nowrap;" onclick="navbarNavigate('brand')">MyApp</div>
+                            <div style="display: flex; gap: 12px; flex: 1; flex-wrap: wrap; min-width: 0;">
+                                <a href="#" class="navbar-link" data-page="home" onclick="event.preventDefault(); navbarNavigate('home'); return false;" style="color: white; text-decoration: none; font-size: 14px; padding: 6px 12px; border-radius: 4px; transition: all 0.2s; background: #667eea; white-space: nowrap;" onmouseover="if(!this.classList.contains('active')) this.style.background='var(--border-color)'" onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">Home</a>
+                                <a href="#" class="navbar-link" data-page="about" onclick="event.preventDefault(); navbarNavigate('about'); return false;" style="color: var(--text-primary); text-decoration: none; font-size: 14px; padding: 6px 12px; border-radius: 4px; transition: all 0.2s; white-space: nowrap;" onmouseover="this.style.background='var(--border-color)'" onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">About</a>
+                                <a href="#" class="navbar-link" data-page="contact" onclick="event.preventDefault(); navbarNavigate('contact'); return false;" style="color: var(--text-primary); text-decoration: none; font-size: 14px; padding: 6px 12px; border-radius: 4px; transition: all 0.2s; white-space: nowrap;" onmouseover="this.style.background='var(--border-color)'" onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">Contact</a>
+                            </div>
+                        </nav>
+                        <div id="navbar-status" style="padding: 12px; background: var(--showcase-bg); border-radius: 6px; color: var(--text-primary); font-size: 13px; border: 1px solid var(--border-color);">
+                            📍 Current page: <strong style="color: #667eea;">Home</strong>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Sidebar (click items to navigate!)</div>
+                        <div style="display: flex; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; height: 200px;">
+                            <aside id="demo-sidebar" style="width: 200px; background: var(--showcase-bg); padding: 12px; display: flex; flex-direction: column; gap: 8px;">
+                                <div class="sidebar-item" data-page="dashboard" onclick="switchSidebarPage('dashboard', this)" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 6px; background: #667eea; color: white; cursor: pointer; transition: background 0.2s;">
+                                    <span>📊</span>
+                                    <span style="font-size: 14px;">Dashboard</span>
+                                </div>
+                                <div class="sidebar-item" data-page="projects" onclick="switchSidebarPage('projects', this)" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 6px; cursor: pointer; color: var(--text-primary); transition: background 0.2s;" onmouseover="if(this.style.background!='rgb(102, 126, 234)') this.style.background='var(--border-color)'" onmouseout="if(this.style.background!='rgb(102, 126, 234)') this.style.background='transparent'">
+                                    <span>📁</span>
+                                    <span style="font-size: 14px;">Projects</span>
+                                </div>
+                                <div class="sidebar-item" data-page="settings" onclick="switchSidebarPage('settings', this)" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 6px; cursor: pointer; color: var(--text-primary); transition: background 0.2s;" onmouseover="if(this.style.background!='rgb(102, 126, 234)') this.style.background='var(--border-color)'" onmouseout="if(this.style.background!='rgb(102, 126, 234)') this.style.background='transparent'">
+                                    <span>⚙️</span>
+                                    <span style="font-size: 14px;">Settings</span>
+                                </div>
+                            </aside>
+                            <div style="flex: 1; padding: 16px; background: var(--main-bg); color: var(--text-primary);">
+                                <p id="sidebar-content" style="font-size: 14px;">📊 Dashboard - Main content area</p>
+                            </div>
+                        </div>
+                        <p style="font-size: 11px; color: var(--text-secondary); margin-top: 8px;">Click sidebar items to see content update</p>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Hamburger Menu (click icon!)</div>
+                        <div style="position: relative;">
+                            <button id="hamburger-btn" onclick="toggleHamburgerMenu()" style="width: 48px; height: 48px; background: var(--showcase-bg); border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; transition: all 0.2s;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='var(--showcase-bg)'">
+                                <span style="width: 22px; height: 2px; background: var(--text-primary); transition: all 0.3s;"></span>
+                                <span style="width: 22px; height: 2px; background: var(--text-primary); transition: all 0.3s;"></span>
+                                <span style="width: 22px; height: 2px; background: var(--text-primary); transition: all 0.3s;"></span>
+                            </button>
+                            <div id="hamburger-drawer" style="position: absolute; top: 56px; left: 0; width: 200px; background: var(--showcase-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; display: none; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                                <a href="#" onclick="event.preventDefault(); hamburgerAction('profile'); return false;" style="display: block; padding: 10px 12px; color: var(--text-primary); text-decoration: none; border-radius: 4px; transition: background 0.2s; font-size: 14px;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='transparent'">👤 Profile</a>
+                                <a href="#" onclick="event.preventDefault(); hamburgerAction('settings'); return false;" style="display: block; padding: 10px 12px; color: var(--text-primary); text-decoration: none; border-radius: 4px; transition: background 0.2s; font-size: 14px;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='transparent'">⚙️ Settings</a>
+                                <a href="#" onclick="event.preventDefault(); hamburgerAction('logout'); return false;" style="display: block; padding: 10px 12px; color: var(--text-primary); text-decoration: none; border-radius: 4px; transition: background 0.2s; font-size: 14px;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='transparent'">🚪 Logout</a>
+                            </div>
+                            <style>
+                                #hamburger-drawer.show { display: block !important; animation: slideDown 0.2s ease; }
+                                @keyframes slideDown {
+                                    from { opacity: 0; transform: translateY(-10px); }
+                                    to { opacity: 1; transform: translateY(0); }
+                                }
+                            </style>
+                        </div>
+                        <div id="hamburger-status" style="padding: 12px; background: var(--showcase-bg); border-radius: 6px; color: var(--text-secondary); font-size: 13px; border: 1px solid var(--border-color); margin-top: 8px;">
+                            Click the hamburger icon to toggle menu
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Context Menu (right-click the box!)</div>
+                        <div id="context-target-demo" style="padding: 50px 40px; background: var(--showcase-bg); border: 2px dashed var(--border-color); border-radius: 8px; text-align: center; color: var(--text-primary); cursor: context-menu; user-select: none; font-weight: 500;">
+                            Right-click here! 🖱️
+                        </div>
+                        <div id="context-menu-demo" style="position: fixed; display: none; background: var(--main-bg); border: 2px solid var(--border-color); border-radius: 8px; padding: 4px; min-width: 160px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); z-index: 1000;">
+                            <button onclick="contextMenuActionDemo('copy')" style="display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; background: none; border: none; cursor: pointer; border-radius: 4px; color: var(--text-primary); font-size: 14px; text-align: left; transition: background 0.15s;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='transparent'">
+                                <span>📋</span> <span>Copy</span>
+                            </button>
+                            <button onclick="contextMenuActionDemo('paste')" style="display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; background: none; border: none; cursor: pointer; border-radius: 4px; color: var(--text-primary); font-size: 14px; text-align: left; transition: background 0.15s;" onmouseover="this.style.background='var(--border-color)'" onmouseout="this.style.background='transparent'">
+                                <span>📄</span> <span>Paste</span>
+                            </button>
+                            <div style="height: 1px; background: var(--border-color); margin: 4px 0;"></div>
+                            <button onclick="contextMenuActionDemo('delete')" style="display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; background: none; border: none; cursor: pointer; border-radius: 4px; color: #ef4444; font-size: 14px; text-align: left; transition: background 0.15s;" onmouseover="this.style.background='rgba(239, 68, 68, 0.1)'" onmouseout="this.style.background='transparent'">
+                                <span>🗑️</span> <span>Delete</span>
+                            </button>
+                        </div>
+                        <div id="context-status" style="padding: 12px; background: var(--showcase-bg); border-radius: 6px; color: var(--text-secondary); font-size: 13px; border: 1px solid var(--border-color); margin-top: 8px;">
+                            Right-click the box above to see the context menu
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <h3>🚀 Built with Windjammer</h3>
+            <p>All 49 components compiled from pure <code>.wj</code> source files to Rust.</p>
+            <p>100% type-safe, zero runtime errors, native performance!</p>
+            
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">49</div>
+                    <div class="stat-label">Components</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Windjammer</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Errors</div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        // Theme toggle and persistence
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+        
+        // Load saved theme preference
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        
+        // Update color picker display
+        const colorInput = document.querySelector('.wj-color-input');
+        const colorDisplay = document.getElementById('color-display');
+        if (colorInput && colorDisplay) {
+            colorInput.addEventListener('input', (e) => {
+                colorDisplay.textContent = e.target.value;
+            });
+        }
+        
+        // Update slider values dynamically
+        const volumeSlider = document.getElementById('volume-slider');
+        const volumeValue = document.getElementById('volume-value');
+        if (volumeSlider && volumeValue) {
+            volumeSlider.addEventListener('input', (e) => {
+                volumeValue.textContent = e.target.value;
+            });
+        }
+        
+        const brightnessSlider = document.getElementById('brightness-slider');
+        const brightnessValue = document.getElementById('brightness-value');
+        if (brightnessSlider && brightnessValue) {
+            brightnessSlider.addEventListener('input', (e) => {
+                brightnessValue.textContent = e.target.value;
+            });
+        }
+        
+        // Toast notifications
+        function showToast(type) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast-notification toast-${type}`;
+            
+            const icon = type === 'success' ? '✓' : '✗';
+            const message = type === 'success' ? 'Operation completed successfully!' : 'An error occurred!';
+            
+            toast.innerHTML = `
+                <span style="font-size: 18px;">${icon}</span>
+                <span style="flex: 1;">${message}</span>
+                <button style="background: none; border: none; cursor: pointer; font-size: 20px; opacity: 0.7;" onclick="this.parentElement.remove()">×</button>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Auto-remove after 3 seconds
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.style.animation = 'slideIn 0.3s ease reverse';
+                    setTimeout(() => toast.remove(), 300);
+                }
+            }, 3000);
+        }
+        
+        // Pagination
+        let currentPage = 2;
+        function changePage(page) {
+            currentPage = page;
+            document.getElementById('current-page').textContent = page;
+            
+            // Update button styles
+            for (let i = 1; i <= 3; i++) {
+                const btn = document.getElementById('page' + i);
+                if (i === page) {
+                    btn.style.background = '#667eea';
+                    btn.style.borderColor = '#667eea';
+                    btn.style.color = 'white';
+                } else {
+                    btn.style.background = 'var(--main-bg)';
+                    btn.style.borderColor = 'var(--border-color)';
+                    btn.style.color = 'var(--text-primary)';
+                }
+            }
+        }
+        
+        // TabPanel switching
+        function switchTabPanel(tabNum) {
+            // Hide all content
+            document.getElementById('tabpanel-content1').style.display = 'none';
+            document.getElementById('tabpanel-content2').style.display = 'none';
+            
+            // Reset all button styles
+            document.getElementById('tabpanel-btn1').style.background = 'transparent';
+            document.getElementById('tabpanel-btn1').style.color = 'var(--text-secondary)';
+            document.getElementById('tabpanel-btn2').style.background = 'transparent';
+            document.getElementById('tabpanel-btn2').style.color = 'var(--text-secondary)';
+            
+            // Show selected content and highlight button
+            document.getElementById('tabpanel-content' + tabNum).style.display = 'block';
+            document.getElementById('tabpanel-btn' + tabNum).style.background = '#667eea';
+            document.getElementById('tabpanel-btn' + tabNum).style.color = 'white';
+        }
+        
+        // Code block copy functionality
+        function copyCodeBlock(button) {
+            const codeElement = document.getElementById('code-to-copy');
+            const code = codeElement.textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.textContent;
+                button.textContent = '✓ Copied!';
+                button.style.color = '#10b981';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.color = '#667eea';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                button.textContent = '✗ Failed';
+                button.style.color = '#ef4444';
+                
+                setTimeout(() => {
+                    button.textContent = '📋 Copy';
+                    button.style.color = '#667eea';
+                }, 2000);
+            });
+        }
+        
+        // Navbar navigation
+        function navbarNavigate(page) {
+            const statusElement = document.getElementById('navbar-status');
+            const pageNames = {
+                'brand': 'Home (Brand)',
+                'home': 'Home',
+                'about': 'About',
+                'contact': 'Contact'
+            };
+            
+            const pageName = pageNames[page] || page;
+            if (statusElement) {
+                statusElement.innerHTML = `📍 Current page: <strong style="color: #667eea;">${pageName}</strong>`;
+            }
+            
+            // Update active state
+            const links = document.querySelectorAll('.navbar-link');
+            links.forEach(link => {
+                if (link.dataset.page === page) {
+                    link.style.background = '#667eea';
+                    link.style.color = 'white';
+                    link.classList.add('active');
+                } else {
+                    link.style.background = 'transparent';
+                    link.style.color = 'var(--text-primary)';
+                    link.classList.remove('active');
+                }
+            });
+        }
+        
+        // Sidebar page switching
+        function switchSidebarPage(page, element) {
+            // Update content
+            const contentMap = {
+                'dashboard': '📊 Dashboard - Main content area',
+                'projects': '📁 Projects - Your project list appears here',
+                'settings': '⚙️ Settings - Configuration options'
+            };
+            
+            const contentElement = document.getElementById('sidebar-content');
+            if (contentElement) {
+                contentElement.textContent = contentMap[page] || 'Content area';
+            }
+            
+            // Update active state
+            const sidebar = document.getElementById('demo-sidebar');
+            if (sidebar) {
+                const items = sidebar.querySelectorAll('.sidebar-item');
+                items.forEach(item => {
+                    if (item === element) {
+                        item.style.background = '#667eea';
+                        item.style.color = 'white';
+                    } else {
+                        item.style.background = 'transparent';
+                        item.style.color = 'var(--text-primary)';
+                    }
+                });
+            }
+        }
+        
+        // Hamburger menu toggle
+        function toggleHamburgerMenu() {
+            const drawer = document.getElementById('hamburger-drawer');
+            const status = document.getElementById('hamburger-status');
+            
+            if (drawer) {
+                const isShowing = drawer.classList.contains('show');
+                drawer.classList.toggle('show');
+                
+                if (status) {
+                    if (isShowing) {
+                        status.textContent = 'Menu closed. Click to reopen.';
+                        status.style.color = 'var(--text-secondary)';
+                    } else {
+                        status.textContent = '✓ Menu opened! Click an item or click outside to close.';
+                        status.style.color = '#10b981';
+                    }
+                }
+            }
+        }
+        
+        // Hamburger menu action
+        function hamburgerAction(action) {
+            const status = document.getElementById('hamburger-status');
+            const drawer = document.getElementById('hamburger-drawer');
+            
+            const actionMap = {
+                'profile': '👤 Navigated to Profile',
+                'settings': '⚙️ Navigated to Settings',
+                'logout': '🚪 Logged out'
+            };
+            
+            if (status) {
+                status.textContent = actionMap[action] || 'Action performed';
+                status.style.color = '#667eea';
+            }
+            
+            // Close drawer
+            if (drawer) {
+                drawer.classList.remove('show');
+            }
+        }
+        
+        // Context menu setup
+        (function setupContextMenu() {
+            const contextTarget = document.getElementById('context-target-demo');
+            const contextMenu = document.getElementById('context-menu-demo');
+            
+            if (contextTarget && contextMenu) {
+                // Show context menu on right-click
+                contextTarget.addEventListener('contextmenu', function(event) {
+                    event.preventDefault();
+                    
+                    // Position menu at cursor
+                    contextMenu.style.display = 'block';
+                    contextMenu.style.left = event.pageX + 'px';
+                    contextMenu.style.top = event.pageY + 'px';
+                    
+                    // Update status
+                    const status = document.getElementById('context-status');
+                    if (status) {
+                        status.textContent = '✓ Context menu opened! Click an action.';
+                        status.style.color = '#10b981';
+                    }
+                    
+                    return false;
+                });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (contextMenu && !contextMenu.contains(e.target) && e.target !== contextTarget) {
+                        contextMenu.style.display = 'none';
+                    }
+                });
+            }
+        })();
+        
+        function contextMenuActionDemo(action) {
+            const status = document.getElementById('context-status');
+            const menu = document.getElementById('context-menu-demo');
+            
+            const actionMap = {
+                'copy': '📋 Copied to clipboard!',
+                'paste': '📄 Pasted from clipboard!',
+                'delete': '🗑️ Item deleted!'
+            };
+            
+            if (status) {
+                status.textContent = actionMap[action] || 'Action performed';
+                status.style.color = '#667eea';
+            }
+            
+            // Close menu
+            if (menu) {
+                menu.style.display = 'none';
+            }
+        }
+        
+        // Close hamburger drawer when clicking outside
+        document.addEventListener('click', (e) => {
+            const drawer = document.getElementById('hamburger-drawer');
+            const btn = document.getElementById('hamburger-btn');
+            if (drawer && !drawer.contains(e.target) && e.target !== btn && !btn.contains(e.target)) {
+                drawer.classList.remove('show');
+                
+                const status = document.getElementById('hamburger-status');
+                if (status) {
+                    status.textContent = 'Menu closed. Click icon to reopen.';
+                    status.style.color = 'var(--text-secondary)';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

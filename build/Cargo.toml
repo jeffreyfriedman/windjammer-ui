@@ -8,10 +8,8 @@ edition = "2021"
 
 [dependencies]
 smallvec = "1.13"
+windjammer_ui = "*"
 serde = { version = "1.0", features = ["derive"] }
-windjammer-runtime = { path = "./crates/windjammer-runtime" }
-windjammer-ui = { path = "./crates/windjammer-ui" }
-windjammer-ui-macro = { path = "./crates/windjammer-ui-macro" }
 
 [[bin]]
 name = "todo_app"
@@ -30,8 +28,20 @@ name = "serve_demo"
 path = "serve_demo.rs"
 
 [[bin]]
+name = "text"
+path = "text.rs"
+
+[[bin]]
 name = "dashboard"
 path = "dashboard.rs"
+
+[[bin]]
+name = "container"
+path = "container.rs"
+
+[[bin]]
+name = "button"
+path = "button.rs"
 
 [profile.release]
 opt-level = 3

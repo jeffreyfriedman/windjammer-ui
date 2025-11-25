@@ -1,0 +1,52 @@
+pub struct Dialog {
+    title: string,
+    content: string,
+    open: bool,
+    width: string,
+}
+
+impl Dialog {
+    pub fn new(title: string, content: string) -> Dialog {
+        Dialog {
+            title,
+            content,
+            open: false,
+            width: "500px".to_string(),
+        }
+    }
+
+    pub fn open(self, open: bool) -> Dialog {
+        self.open = open
+        self
+    }
+
+    pub fn width(self, width: string) -> Dialog {
+        self.width = width
+        self
+    }
+
+    pub fn render(self) -> string {
+        let display_style = if self.open { "display: flex;" } else { "display: none;" }
+
+        format!("<div class='wj-dialog-overlay' style='{}'>
+  <div class='wj-dialog' style='max-width: {}; width: 90%;'>
+    <div class='wj-dialog-header'>
+      <h2>{}</h2>
+      <button class='wj-dialog-close'>×</button>
+    </div>
+    <div class='wj-dialog-content'>
+      {}
+    </div>
+  </div>
+</div>", display_style, self.width, self.title, self.content)
+    }
+}
+
+fn main() {
+    let dialog = Dialog::new("Confirm Action".to_string(), "<p>Are you sure you want to proceed?</p>".to_string())
+        .open(true)
+        .width("400px".to_string())
+
+    println!("{}", dialog.render())
+}
+

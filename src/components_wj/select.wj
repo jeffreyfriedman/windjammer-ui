@@ -1,0 +1,93 @@
+pub struct SelectOption {
+    value: string,
+    label: string,
+    disabled: bool,
+}
+
+impl SelectOption {
+    pub fn new(value: string, label: string) -> SelectOption {
+        SelectOption {
+            value,
+            label,
+            disabled: false,
+        }
+    }
+
+    pub fn disabled(self, disabled: bool) -> SelectOption {
+        self.disabled = disabled
+        self
+    }
+}
+
+pub struct Select {
+    options: Vec<SelectOption>,
+    selected: string,
+    placeholder: string,
+    disabled: bool,
+}
+
+impl Select {
+    pub fn new() -> Select {
+        Select {
+            options: Vec::new(),
+            selected: "".to_string(),
+            placeholder: "Select an option".to_string(),
+            disabled: false,
+        }
+    }
+
+    pub fn option(self, option: SelectOption) -> Select {
+        self.options.push(option)
+        self
+    }
+
+    pub fn selected(self, value: string) -> Select {
+        self.selected = value
+        self
+    }
+
+    pub fn placeholder(self, placeholder: string) -> Select {
+        self.placeholder = placeholder
+        self
+    }
+
+    pub fn disabled(self, disabled: bool) -> Select {
+        self.disabled = disabled
+        self
+    }
+
+    pub fn render(self) -> string {
+        let disabled_attr = if self.disabled { " disabled" } else { "" }
+
+        let mut options_html = if self.placeholder != "" {
+            format!("<option value=''>{}</option>", self.placeholder)
+        } else {
+            "".to_string()
+        }
+
+        let mut i = 0
+        while i < self.options.len() {
+            let opt = &self.options[i]
+            let selected_attr = if opt.value == self.selected { " selected" } else { "" }
+            let disabled_opt_attr = if opt.disabled { " disabled" } else { "" }
+
+            options_html = format!("{}<option value='{}'{}{}>{}</option>",
+                options_html, opt.value, selected_attr, disabled_opt_attr, opt.label)
+
+            i = i + 1
+        }
+
+        format!("<select class='wj-select'{}>{}</select>", disabled_attr, options_html)
+    }
+}
+
+fn main() {
+    let select1 = Select::new()
+        .option(SelectOption::new("us".to_string(), "United States".to_string()))
+        .option(SelectOption::new("uk".to_string(), "United Kingdom".to_string()))
+        .option(SelectOption::new("ca".to_string(), "Canada".to_string()))
+        .selected("us".to_string())
+
+    println!("{}", select1.render())
+}
+

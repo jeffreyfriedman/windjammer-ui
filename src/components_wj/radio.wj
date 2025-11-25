@@ -1,0 +1,75 @@
+pub struct RadioOption {
+    value: string,
+    label: string,
+    disabled: bool,
+}
+
+impl RadioOption {
+    pub fn new(value: string, label: string) -> RadioOption {
+        RadioOption {
+            value,
+            label,
+            disabled: false,
+        }
+    }
+
+    pub fn disabled(self, disabled: bool) -> RadioOption {
+        self.disabled = disabled
+        self
+    }
+}
+
+pub struct RadioGroup {
+    name: string,
+    options: Vec<RadioOption>,
+    selected: string,
+}
+
+impl RadioGroup {
+    pub fn new(name: string) -> RadioGroup {
+        RadioGroup {
+            name,
+            options: Vec::new(),
+            selected: "".to_string(),
+        }
+    }
+
+    pub fn option(self, option: RadioOption) -> RadioGroup {
+        self.options.push(option)
+        self
+    }
+
+    pub fn selected(self, value: string) -> RadioGroup {
+        self.selected = value
+        self
+    }
+
+    pub fn render(self) -> string {
+        let mut html = format!("<div class='wj-radio-group' data-name='{}'>", self.name)
+
+        let mut i = 0
+        while i < self.options.len() {
+            let opt = &self.options[i]
+            let checked_attr = if opt.value == self.selected { " checked" } else { "" }
+            let disabled_attr = if opt.disabled { " disabled" } else { "" }
+
+            html = format!("{}<label class='wj-radio'><input type='radio' name='{}' value='{}'{}{}><span>{}</span></label>",
+                html, self.name, opt.value, checked_attr, disabled_attr, opt.label)
+
+            i = i + 1
+        }
+
+        format!("{}</div>", html)
+    }
+}
+
+fn main() {
+    let radio = RadioGroup::new("theme".to_string())
+        .option(RadioOption::new("light".to_string(), "Light Theme".to_string()))
+        .option(RadioOption::new("dark".to_string(), "Dark Theme".to_string()))
+        .option(RadioOption::new("auto".to_string(), "Auto Theme".to_string()))
+        .selected("dark".to_string())
+
+    println!("{}", radio.render())
+}
+

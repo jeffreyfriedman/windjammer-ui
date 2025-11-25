@@ -1,10 +1,10 @@
 //! Spacer Component
-//! 
+//!
 //! A flexible spacing component that can be used to add fixed or flexible space
 //! between UI elements. Follows the 8px grid system from the design system.
 
-use crate::to_vnode::ToVNode;
 use crate::simple_vnode::{VAttr, VNode};
+use crate::to_vnode::ToVNode;
 
 /// Spacer for adding space between elements
 pub struct Spacer {
@@ -21,7 +21,7 @@ impl Spacer {
             flex: false,
         }
     }
-    
+
     /// Create a horizontal spacer with fixed width
     pub fn horizontal(width: impl Into<String>) -> Self {
         Self {
@@ -30,7 +30,7 @@ impl Spacer {
             flex: false,
         }
     }
-    
+
     /// Create a vertical spacer with fixed height
     pub fn vertical(height: impl Into<String>) -> Self {
         Self {
@@ -39,7 +39,7 @@ impl Spacer {
             flex: false,
         }
     }
-    
+
     /// Create a flexible spacer that fills available space
     pub fn flexible() -> Self {
         Self {
@@ -48,32 +48,32 @@ impl Spacer {
             flex: true,
         }
     }
-    
+
     pub fn width(mut self, width: impl Into<String>) -> Self {
         self.width = Some(width.into());
         self
     }
-    
+
     pub fn height(mut self, height: impl Into<String>) -> Self {
         self.height = Some(height.into());
         self
     }
-    
+
     pub fn render(&self) -> VNode {
         let mut style = String::new();
-        
+
         if self.flex {
             style.push_str("flex: 1; ");
         }
-        
+
         if let Some(ref w) = self.width {
             style.push_str(&format!("width: {}; ", w));
         }
-        
+
         if let Some(ref h) = self.height {
             style.push_str(&format!("height: {}; ", h));
         }
-        
+
         VNode::Element {
             tag: "div".to_string(),
             attrs: vec![
@@ -103,32 +103,32 @@ impl Spacer {
     pub fn xxs() -> Self {
         Self::vertical("4px")
     }
-    
+
     /// Extra small spacing (8px)
     pub fn xs() -> Self {
         Self::vertical("8px")
     }
-    
+
     /// Small spacing (12px)
     pub fn sm() -> Self {
         Self::vertical("12px")
     }
-    
+
     /// Medium spacing (16px)
     pub fn md() -> Self {
         Self::vertical("16px")
     }
-    
+
     /// Large spacing (24px)
     pub fn lg() -> Self {
         Self::vertical("24px")
     }
-    
+
     /// Extra large spacing (32px)
     pub fn xl() -> Self {
         Self::vertical("32px")
     }
-    
+
     /// Extra extra large spacing (48px)
     pub fn xxl() -> Self {
         Self::vertical("48px")
@@ -138,7 +138,7 @@ impl Spacer {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_spacer_new() {
         let spacer = Spacer::new();
@@ -146,27 +146,27 @@ mod tests {
         assert!(spacer.height.is_none());
         assert!(!spacer.flex);
     }
-    
+
     #[test]
     fn test_spacer_horizontal() {
         let spacer = Spacer::horizontal("16px");
         assert_eq!(spacer.width, Some("16px".to_string()));
         assert!(spacer.height.is_none());
     }
-    
+
     #[test]
     fn test_spacer_vertical() {
         let spacer = Spacer::vertical("16px");
         assert!(spacer.width.is_none());
         assert_eq!(spacer.height, Some("16px".to_string()));
     }
-    
+
     #[test]
     fn test_spacer_flexible() {
         let spacer = Spacer::flexible();
         assert!(spacer.flex);
     }
-    
+
     #[test]
     fn test_spacer_grid_sizes() {
         assert_eq!(Spacer::xxs().height, Some("4px".to_string()));
@@ -177,14 +177,18 @@ mod tests {
         assert_eq!(Spacer::xl().height, Some("32px".to_string()));
         assert_eq!(Spacer::xxl().height, Some("48px".to_string()));
     }
-    
+
     #[test]
     fn test_spacer_render() {
         let spacer = Spacer::vertical("16px");
         let vnode = spacer.render();
-        
+
         match vnode {
-            VNode::Element { tag, attrs, children } => {
+            VNode::Element {
+                tag,
+                attrs,
+                children,
+            } => {
                 assert_eq!(tag, "div");
                 assert!(children.is_empty());
                 assert!(attrs.iter().any(|(key, attr)| {
@@ -195,4 +199,3 @@ mod tests {
         }
     }
 }
-

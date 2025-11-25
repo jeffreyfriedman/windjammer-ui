@@ -1,0 +1,71 @@
+pub struct DropdownItem {
+    label: string,
+    value: string,
+    disabled: bool,
+}
+
+impl DropdownItem {
+    pub fn new(label: string, value: string) -> DropdownItem {
+        DropdownItem {
+            label,
+            value,
+            disabled: false,
+        }
+    }
+
+    pub fn disabled(self, disabled: bool) -> DropdownItem {
+        self.disabled = disabled
+        self
+    }
+}
+
+pub struct Dropdown {
+    label: string,
+    items: Vec<DropdownItem>,
+}
+
+impl Dropdown {
+    pub fn new(label: string) -> Dropdown {
+        Dropdown {
+            label,
+            items: Vec::new(),
+        }
+    }
+
+    pub fn item(self, item: DropdownItem) -> Dropdown {
+        self.items.push(item)
+        self
+    }
+
+    pub fn render(self) -> string {
+        let mut items_html = "".to_string()
+
+        let mut i = 0
+        while i < self.items.len() {
+            let item = &self.items[i]
+            let disabled_class = if item.disabled { " wj-dropdown-item-disabled" } else { "" }
+
+            items_html = format!("{}<a class='wj-dropdown-item{}' data-value='{}'>{}</a>",
+                items_html, disabled_class, item.value, item.label)
+
+            i = i + 1
+        }
+
+        format!("<div class='wj-dropdown'>
+  <button class='wj-dropdown-toggle'>{} ▼</button>
+  <div class='wj-dropdown-menu'>
+    {}
+  </div>
+</div>", self.label, items_html)
+    }
+}
+
+fn main() {
+    let dropdown = Dropdown::new("Actions".to_string())
+        .item(DropdownItem::new("Edit".to_string(), "edit".to_string()))
+        .item(DropdownItem::new("Delete".to_string(), "delete".to_string()))
+        .item(DropdownItem::new("Archive".to_string(), "archive".to_string()).disabled(true))
+
+    println!("{}", dropdown.render())
+}
+

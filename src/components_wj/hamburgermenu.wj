@@ -1,0 +1,63 @@
+pub struct HamburgerMenuItem {
+    label: string,
+    href: string,
+}
+
+impl HamburgerMenuItem {
+    pub fn new(label: string, href: string) -> HamburgerMenuItem {
+        HamburgerMenuItem {
+            label: label,
+            href: href,
+        }
+    }
+}
+
+pub struct HamburgerMenu {
+    items: Vec<HamburgerMenuItem>,
+    open: bool,
+}
+
+impl HamburgerMenu {
+    pub fn new() -> HamburgerMenu {
+        HamburgerMenu {
+            items: Vec::new(),
+            open: false,
+        }
+    }
+    
+    pub fn item(self, item: HamburgerMenuItem) -> HamburgerMenu {
+        self.items.push(item)
+        self
+    }
+    
+    pub fn open(self, open: bool) -> HamburgerMenu {
+        self.open = open
+        self
+    }
+    
+    pub fn render(self) -> string {
+        let mut items_html = Vec::new()
+        
+        for item in self.items {
+            items_html.push(format!("<a href='{}' class='wj-hamburger-item'>{}</a>", item.href, item.label))
+        }
+        
+        let open_class = if self.open { " wj-hamburger-open" } else { "" }
+        
+        format!(
+            "<div class='wj-hamburger-menu{}'>
+                <button class='wj-hamburger-button' onclick='this.parentElement.classList.toggle(\"wj-hamburger-open\")'>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class='wj-hamburger-drawer'>
+                    {}
+                </div>
+            </div>",
+            open_class,
+            items_html.join("")
+        )
+    }
+}
+

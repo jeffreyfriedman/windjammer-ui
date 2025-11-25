@@ -1,7 +1,7 @@
 // Todo App Example - Task Management
 // Demonstrates: Lists, CRUD operations, state management, filtering
 
-use std::ui::*
+use windjammer_ui::*
 use std::collections::*
 
 @derive(Clone)

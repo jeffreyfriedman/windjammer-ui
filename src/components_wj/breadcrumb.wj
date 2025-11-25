@@ -1,0 +1,66 @@
+pub struct BreadcrumbItem {
+    label: string,
+    href: string,
+}
+
+impl BreadcrumbItem {
+    pub fn new(label: string, href: string) -> BreadcrumbItem {
+        BreadcrumbItem { label, href }
+    }
+}
+
+pub struct Breadcrumb {
+    items: Vec<BreadcrumbItem>,
+    separator: string,
+}
+
+impl Breadcrumb {
+    pub fn new() -> Breadcrumb {
+        Breadcrumb {
+            items: Vec::new(),
+            separator: "/".to_string(),
+        }
+    }
+
+    pub fn item(self, item: BreadcrumbItem) -> Breadcrumb {
+        self.items.push(item)
+        self
+    }
+
+    pub fn separator(self, separator: string) -> Breadcrumb {
+        self.separator = separator
+        self
+    }
+
+    pub fn render(self) -> string {
+        let mut html = "<nav class='wj-breadcrumb'><ol>".to_string()
+
+        let mut i = 0
+        while i < self.items.len() {
+            let item = &self.items[i]
+            let is_last = i == self.items.len() - 1
+
+            if is_last {
+                html = format!("{}<li class='wj-breadcrumb-item active'>{}</li>", html, item.label)
+            } else {
+                html = format!("{}<li class='wj-breadcrumb-item'><a href='{}'>{}</a><span class='wj-breadcrumb-separator'>{}</span></li>",
+                    html, item.href, item.label, self.separator)
+            }
+
+            i = i + 1
+        }
+
+        format!("{}</ol></nav>", html)
+    }
+}
+
+fn main() {
+    let breadcrumb = Breadcrumb::new()
+        .item(BreadcrumbItem::new("Home".to_string(), "/".to_string()))
+        .item(BreadcrumbItem::new("Products".to_string(), "/products".to_string()))
+        .item(BreadcrumbItem::new("Category".to_string(), "/products/category".to_string()))
+        .item(BreadcrumbItem::new("Item".to_string(), "/products/category/item".to_string()))
+
+    println!("{}", breadcrumb.render())
+}
+

@@ -1,0 +1,74 @@
+pub struct AdvancedCodeEditor {
+    code: string,
+    language: string,
+    theme: string,
+    line_numbers: bool,
+    minimap: bool,
+    autocomplete: bool,
+}
+
+impl AdvancedCodeEditor {
+    pub fn new(code: string) -> AdvancedCodeEditor {
+        AdvancedCodeEditor {
+            code,
+            language: "rust".to_string(),
+            theme: "monokai".to_string(),
+            line_numbers: true,
+            minimap: true,
+            autocomplete: true,
+        }
+    }
+
+    pub fn language(self, language: string) -> AdvancedCodeEditor {
+        self.language = language
+        self
+    }
+
+    pub fn theme(self, theme: string) -> AdvancedCodeEditor {
+        self.theme = theme
+        self
+    }
+
+    pub fn line_numbers(self, show: bool) -> AdvancedCodeEditor {
+        self.line_numbers = show
+        self
+    }
+
+    pub fn minimap(self, show: bool) -> AdvancedCodeEditor {
+        self.minimap = show
+        self
+    }
+
+    pub fn autocomplete(self, enable: bool) -> AdvancedCodeEditor {
+        self.autocomplete = enable
+        self
+    }
+
+    pub fn render(self) -> string {
+        let features_class = if self.minimap { " wj-editor-with-minimap" } else { "" }
+        let line_class = if self.line_numbers { " wj-editor-with-lines" } else { "" }
+
+        format!("<div class='wj-advanced-editor wj-editor-{} wj-editor-theme-{}{}{}'>
+  <div class='wj-editor-toolbar'>
+    <span>Language: {}</span>
+    <span>Theme: {}</span>
+  </div>
+  <div class='wj-editor-main'>
+    <textarea class='wj-editor-textarea'>
+{}</textarea>
+    {}
+  </div>
+</div>", self.language, self.theme, features_class, line_class, self.language, self.theme, self.code,
+    if self.minimap { "<div class='wj-editor-minimap'></div>" } else { "" })
+    }
+}
+
+fn main() {
+    let editor = AdvancedCodeEditor::new("fn main() {\n    println!(\"Hello, Windjammer!\");\n}".to_string())
+        .language("rust".to_string())
+        .theme("monokai".to_string())
+        .minimap(true)
+
+    println!("{}", editor.render())
+}
+
