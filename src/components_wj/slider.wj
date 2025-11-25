@@ -1,0 +1,74 @@
+// Slider component - Pure Windjammer implementation
+
+pub struct Slider {
+    min: float,
+    max: float,
+    step: float,
+    value: float,
+    disabled: bool,
+    label: string,
+}
+
+impl Slider {
+    pub fn new() -> Slider {
+        Slider {
+            min: 0.0,
+            max: 100.0,
+            step: 1.0,
+            value: 50.0,
+            disabled: false,
+            label: "".to_string(),
+        }
+    }
+    
+    pub fn min(self, min: float) -> Slider {
+        self.min = min
+        self
+    }
+    
+    pub fn max(self, max: float) -> Slider {
+        self.max = max
+        self
+    }
+    
+    pub fn step(self, step: float) -> Slider {
+        self.step = step
+        self
+    }
+    
+    pub fn value(self, value: float) -> Slider {
+        self.value = value
+        self
+    }
+    
+    pub fn disabled(self, disabled: bool) -> Slider {
+        self.disabled = disabled
+        self
+    }
+    
+    pub fn label(self, label: string) -> Slider {
+        self.label = label
+        self
+    }
+    
+    pub fn render(self) -> string {
+        let disabled_attr = if self.disabled { " disabled" } else { "" }
+        let label_html = if self.label != "" {
+            "<label>".to_string() + self.label + "</label>"
+        } else {
+            "".to_string()
+        }
+        
+        format!("{}<input type='range' class='wj-slider' min='{}' max='{}' step='{}' value='{}'{}>",
+                label_html, self.min, self.max, self.step, self.value, disabled_attr)
+    }
+}
+
+fn main() {
+    let slider1 = Slider::new().min(0.0).max(100.0).value(75.0)
+    let slider2 = Slider::new().min(0.0).max(10.0).step(0.5).value(5.5).label("Volume".to_string())
+    
+    println!("{}", slider1.render())
+    println!("{}", slider2.render())
+}
+

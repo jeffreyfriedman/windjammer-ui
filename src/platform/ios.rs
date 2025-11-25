@@ -3,9 +3,9 @@
 // This module will provide iOS-specific rendering for Windjammer UI components
 
 #[cfg(target_os = "ios")]
-use crate::vdom::VNode;
-#[cfg(target_os = "ios")]
 use crate::component::Component;
+#[cfg(target_os = "ios")]
+use crate::vdom::VNode;
 
 #[cfg(target_os = "ios")]
 pub struct IOSRenderer {
@@ -17,7 +17,7 @@ impl IOSRenderer {
     pub fn new() -> Self {
         Self {}
     }
-    
+
     pub fn render(&mut self, vnode: &VNode) {
         // TODO: Convert VNode to UIKit views
         match vnode {
@@ -42,11 +42,11 @@ impl super::Renderer for IOSRenderer {
     fn render(&mut self, vnode: &VNode) {
         self.render(vnode);
     }
-    
+
     fn handle_event(&mut self, event: super::Event) {
         // TODO: Handle iOS events
     }
-    
+
     fn update(&mut self) {
         // TODO: Update iOS views
     }
@@ -61,11 +61,14 @@ pub extern "C" fn windjammer_ui_create_renderer() -> *mut IOSRenderer {
 
 #[cfg(target_os = "ios")]
 #[no_mangle]
-pub extern "C" fn windjammer_ui_render(renderer: *mut IOSRenderer, component: *const dyn Component) {
+pub extern "C" fn windjammer_ui_render(
+    renderer: *mut IOSRenderer,
+    component: *const dyn Component,
+) {
     if renderer.is_null() || component.is_null() {
         return;
     }
-    
+
     unsafe {
         let renderer = &mut *renderer;
         let component = &*component;
@@ -91,4 +94,3 @@ mod tests {
         // iOS-specific tests will go here
     }
 }
-

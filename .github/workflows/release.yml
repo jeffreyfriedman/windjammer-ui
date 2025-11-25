@@ -66,13 +66,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
+      - name: Install Linux system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libglib2.0-dev
+      
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
       
       - name: Run tests before publish
         run: cargo test --all-features
       
-      - name: Publish to crates.io
+      - name: Publish windjammer-ui-macro first
+        run: cargo publish --token ${{ secrets.CARGO_TOKEN }} -p windjammer-ui-macro
+        continue-on-error: true  # May already be published
+      
+      - name: Wait for crates.io to index
+        run: sleep 30
+      
+      - name: Publish windjammer-ui
         run: cargo publish --token ${{ secrets.CARGO_TOKEN }}
         continue-on-error: false
 

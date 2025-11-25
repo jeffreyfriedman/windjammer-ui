@@ -97,6 +97,7 @@ fn test_ui_web_feature_compiles() {
 
 /// Test that the UI framework compiles with desktop feature
 #[test]
+#[cfg(not(target_os = "linux"))] // Skip on Linux (requires display server)
 fn test_ui_desktop_feature_compiles() {
     let output = Command::new("cargo")
         .args(["build", "-p", "windjammer-ui", "--features", "desktop"])

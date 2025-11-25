@@ -1,0 +1,75 @@
+pub struct AccordionItem {
+    title: string,
+    content: string,
+    open: bool,
+}
+
+impl AccordionItem {
+    pub fn new(title: string, content: string) -> AccordionItem {
+        AccordionItem {
+            title,
+            content,
+            open: false,
+        }
+    }
+
+    pub fn open(self, open: bool) -> AccordionItem {
+        self.open = open
+        self
+    }
+}
+
+pub struct Accordion {
+    items: Vec<AccordionItem>,
+    allow_multiple: bool,
+}
+
+impl Accordion {
+    pub fn new() -> Accordion {
+        Accordion {
+            items: Vec::new(),
+            allow_multiple: false,
+        }
+    }
+
+    pub fn item(self, item: AccordionItem) -> Accordion {
+        self.items.push(item)
+        self
+    }
+
+    pub fn allow_multiple(self, allow: bool) -> Accordion {
+        self.allow_multiple = allow
+        self
+    }
+
+    pub fn render(self) -> string {
+        let mut html = "<div class='wj-accordion'>".to_string()
+
+        let mut i = 0
+        while i < self.items.len() {
+            let item = &self.items[i]
+            let open_attr = if item.open { " open" } else { "" }
+
+            html = format!("{}<details class='wj-accordion-item'{}>
+  <summary class='wj-accordion-title'>{}</summary>
+  <div class='wj-accordion-content'>
+    {}
+  </div>
+</details>", html, open_attr, item.title, item.content)
+
+            i = i + 1
+        }
+
+        format!("{}</div>", html)
+    }
+}
+
+fn main() {
+    let accordion = Accordion::new()
+        .item(AccordionItem::new("Section 1".to_string(), "<p>Content for section 1</p>".to_string()).open(true))
+        .item(AccordionItem::new("Section 2".to_string(), "<p>Content for section 2</p>".to_string()))
+        .item(AccordionItem::new("Section 3".to_string(), "<p>Content for section 3</p>".to_string()))
+
+    println!("{}", accordion.render())
+}
+

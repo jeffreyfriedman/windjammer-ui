@@ -1,0 +1,39 @@
+// Input component - Pure Windjammer implementation
+
+pub struct Input {
+    value: string,
+    placeholder: string,
+}
+
+impl Input {
+    pub fn new() -> Input {
+        Input {
+            value: "".to_string(),
+            placeholder: "".to_string(),
+        }
+    }
+    
+    pub fn value(self, value: string) -> Input {
+        self.value = value
+        self
+    }
+    
+    pub fn placeholder(self, placeholder: string) -> Input {
+        self.placeholder = placeholder
+        self
+    }
+    
+    pub fn render(self) -> string {
+        format!("<input class='wj-input' value='{}' placeholder='{}'/>", 
+                self.value, self.placeholder)
+    }
+}
+
+fn main() {
+    let input = Input::new()
+        .value("Hello".to_string())
+        .placeholder("Enter text...".to_string())
+    
+    println!("{}", input.render())
+}
+

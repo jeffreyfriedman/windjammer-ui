@@ -1,7 +1,7 @@
 // Counter Example - Simple Interactive Counter
 // Demonstrates: Signal-based state, event handlers, reactive updates
 
-use std::ui::*
+use windjammer_ui::*
 
 @export
 fn start() {

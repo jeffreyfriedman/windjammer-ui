@@ -1,0 +1,46 @@
+pub struct ColorPicker {
+    value: string,
+    label: string,
+}
+
+impl ColorPicker {
+    pub fn new() -> ColorPicker {
+        ColorPicker {
+            value: "#000000".to_string(),
+            label: "".to_string(),
+        }
+    }
+
+    pub fn value(self, value: string) -> ColorPicker {
+        self.value = value
+        self
+    }
+
+    pub fn label(self, label: string) -> ColorPicker {
+        self.label = label
+        self
+    }
+
+    pub fn render(self) -> string {
+        let label_html = if self.label != "" {
+            format!("<label>{}</label>", self.label)
+        } else {
+            "".to_string()
+        }
+
+        format!("<div class='wj-color-picker'>
+  {}
+  <input type='color' value='{}' class='wj-color-input'>
+  <span class='wj-color-value'>{}</span>
+</div>", label_html, self.value, self.value)
+    }
+}
+
+fn main() {
+    let picker = ColorPicker::new()
+        .value("#667eea".to_string())
+        .label("Theme Color".to_string())
+
+    println!("{}", picker.render())
+}
+

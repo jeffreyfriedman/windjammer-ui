@@ -1,0 +1,85 @@
+pub enum ProgressVariant {
+    Default,
+    Success,
+    Warning,
+    Danger,
+}
+
+pub struct Progress {
+    value: float,
+    max: float,
+    variant: ProgressVariant,
+    show_label: bool,
+}
+
+impl Progress {
+    pub fn new(value: float) -> Progress {
+        Progress {
+            value,
+            max: 100.0,
+            variant: ProgressVariant::Default,
+            show_label: true,
+        }
+    }
+
+    pub fn max(self, max: float) -> Progress {
+        self.max = max
+        self
+    }
+
+    pub fn variant(self, variant: ProgressVariant) -> Progress {
+        self.variant = variant
+        self
+    }
+
+    pub fn show_label(self, show: bool) -> Progress {
+        self.show_label = show
+        self
+    }
+
+    pub fn render(self) -> string {
+        let percentage = (self.value / self.max * 100.0).clamp(0.0, 100.0)
+
+        let variant_class = match self.variant {
+            ProgressVariant::Default => "wj-progress-default",
+            ProgressVariant::Success => "wj-progress-success",
+            ProgressVariant::Warning => "wj-progress-warning",
+            ProgressVariant::Danger => "wj-progress-danger",
+        }
+
+        let color = match self.variant {
+            ProgressVariant::Default => "#3498db",
+            ProgressVariant::Success => "#2ecc71",
+            ProgressVariant::Warning => "#f39c12",
+            ProgressVariant::Danger => "#e74c3c",
+        }
+
+        let label_html = if self.show_label {
+            format!("{:.0}%", percentage)
+        } else {
+            "".to_string()
+        }
+
+        format!("<div class='wj-progress-container' style='width: 100%; background-color: #e0e0e0; border-radius: 4px; overflow: hidden;'>
+  <div class='wj-progress-bar {}' style='width: {}%; height: 24px; background-color: {}; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; transition: width 0.3s ease;'>
+    {}
+  </div>
+</div>", variant_class, percentage, color, label_html)
+    }
+}
+
+fn main() {
+    let progress1 = Progress::new(75.0)
+    println!("{}", progress1.render())
+
+    let progress2 = Progress::new(50.0)
+        .variant(ProgressVariant::Success)
+        .show_label(false)
+    println!("{}", progress2.render())
+
+    let progress3 = Progress::new(30.0)
+        .max(50.0)
+        .variant(ProgressVariant::Warning)
+    println!("{}", progress3.render())
+}
+

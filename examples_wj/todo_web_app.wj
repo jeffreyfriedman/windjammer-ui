@@ -1,0 +1,353 @@
+// Todo Web App - Complete Single-Page Application
+// Written in pure Windjammer using windjammer-ui components
+// 
+// To test: wj build examples_wj/todo_web_app.wj -o build_todo_app && cd build_todo_app && cargo run > ../todo_app.html
+// Then open: open ../todo_app.html
+
+use windjammer_ui::*
+
+fn main() {
+    let html = build_complete_html_page()
+    println!("{}", html)
+}
+
+fn build_complete_html_page() -> string {
+    format!(
+        "<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Windjammer Todo App</title>
+    <style>
+        {}
+    </style>
+</head>
+<body>
+    {}
+    <script>
+        {}
+    </script>
+</body>
+</html>",
+        get_styles(),
+        build_app_ui(),
+        get_javascript()
+    )
+}
+
+fn build_app_ui() -> string {
+    Container::new()
+        .child(build_header())
+        .child(build_main_content())
+        .child(build_footer())
+        .render()
+}
+
+fn build_header() -> string {
+    Navbar::new()
+        .brand("📝 Windjammer Todo")
+        .item(NavbarItem::new("Home", "#"))
+        .item(NavbarItem::new("About", "#about"))
+        .sticky(true)
+        .render()
+}
+
+fn build_main_content() -> string {
+    Container::new()
+        .max_width("800px")
+        .child(build_welcome_section())
+        .child(build_todo_form())
+        .child(build_todo_list())
+        .child(build_stats_section())
+        .render()
+}
+
+fn build_welcome_section() -> string {
+    Card::new()
+        .title("Welcome to Windjammer Todo!")
+        .child(
+            Flex::new()
+                .direction(FlexDirection::Column)
+                .gap("12px")
+                .child(
+                    Text::new("This is a complete web application written in pure Windjammer!")
+                        .render()
+                )
+                .child(
+                    Alert::info("Add todos below and watch them appear in the list. All components are from windjammer-ui.")
+                        .render()
+                )
+                .render()
+        )
+        .padding("24px")
+        .render()
+}
+
+fn build_todo_form() -> string {
+    Card::new()
+        .title("Add New Todo")
+        .child(
+            Flex::new()
+                .direction(FlexDirection::Column)
+                .gap("16px")
+                .child(
+                    "<div style='display: flex; gap: 12px; align-items: flex-start;'>
+                        <input id='todo-input' type='text' placeholder='Enter a todo...' 
+                               style='flex: 1; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 14px;'
+                               onkeypress='if(event.key===\"Enter\") addTodo()'>
+                        <button onclick='addTodo()' class='wj-button wj-button-primary wj-button-md'>Add Todo</button>
+                    </div>"
+                )
+                .child(
+                    "<div style='display: flex; gap: 8px; flex-wrap: wrap;'>
+                        <button onclick='addSampleTodos()' class='wj-button wj-button-ghost wj-button-sm'>Add Sample Todos</button>
+                        <button onclick='clearCompleted()' class='wj-button wj-button-danger wj-button-sm'>Clear Completed</button>
+                        <button onclick='clearAll()' class='wj-button wj-button-secondary wj-button-sm'>Clear All</button>
+                    </div>"
+                )
+                .render()
+        )
+        .padding("20px")
+        .render()
+}
+
+fn build_todo_list() -> string {
+    Card::new()
+        .title("Your Todos")
+        .child("<div id='todo-list' style='min-height: 200px;'></div>")
+        .child("<div id='empty-state' style='text-align: center; padding: 40px; color: #9ca3af;'>No todos yet. Add one above!</div>")
+        .padding("20px")
+        .render()
+}
+
+fn build_stats_section() -> string {
+    Grid::new()
+        .columns(3)
+        .gap("16px")
+        .child(
+            Card::new()
+                .child(
+                    Flex::new()
+                        .direction(FlexDirection::Column)
+                        .gap("8px")
+                        .child(
+                            Text::new("Total")
+                                .size(TextSize::Small)
+                                .render()
+                        )
+                        .child(
+                            "<div id='stat-total' style='font-size: 32px; font-weight: 700; color: #667eea;'>0</div>"
+                        )
+                        .render()
+                )
+                .padding("16px")
+                .render()
+        )
+        .child(
+            Card::new()
+                .child(
+                    Flex::new()
+                        .direction(FlexDirection::Column)
+                        .gap("8px")
+                        .child(
+                            Text::new("Active")
+                                .size(TextSize::Small)
+                                .render()
+                        )
+                        .child(
+                            "<div id='stat-active' style='font-size: 32px; font-weight: 700; color: #10b981;'>0</div>"
+                        )
+                        .render()
+                )
+                .padding("16px")
+                .render()
+        )
+        .child(
+            Card::new()
+                .child(
+                    Flex::new()
+                        .direction(FlexDirection::Column)
+                        .gap("8px")
+                        .child(
+                            Text::new("Completed")
+                                .size(TextSize::Small)
+                                .render()
+                        )
+                        .child(
+                            "<div id='stat-completed' style='font-size: 32px; font-weight: 700; color: #f59e0b;'>0</div>"
+                        )
+                        .render()
+                )
+                .padding("16px")
+                .render()
+        )
+        .render()
+}
+
+fn build_footer() -> string {
+    format!(
+        "<footer style='text-align: center; padding: 32px; color: #6b7280; font-size: 14px;'>
+            <p>Built with ❤️ using <strong>Windjammer</strong></p>
+            <p style='margin-top: 8px;'>All components from <code>windjammer-ui</code> • 100% type-safe • Zero runtime errors</p>
+        </footer>"
+    )
+}
+
+fn get_styles() -> string {
+    "* { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f9fafb; }
+    
+    /* Windjammer UI Button Styles */
+    .wj-button { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.2s; }
+    .wj-button-primary { background: #667eea; color: white; }
+    .wj-button-primary:hover { background: #5568d3; transform: translateY(-1px); }
+    .wj-button-secondary { background: #e5e7eb; color: #374151; }
+    .wj-button-secondary:hover { background: #d1d5db; }
+    .wj-button-danger { background: #ef4444; color: white; }
+    .wj-button-danger:hover { background: #dc2626; }
+    .wj-button-ghost { background: transparent; color: #667eea; border: 1px solid #667eea; }
+    .wj-button-ghost:hover { background: #667eea; color: white; }
+    .wj-button-sm { padding: 6px 12px; font-size: 13px; }
+    .wj-button-md { padding: 10px 20px; font-size: 14px; }
+    
+    /* Todo Item Styles */
+    .todo-item { display: flex; align-items: center; gap: 12px; padding: 16px; background: white; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 8px; transition: all 0.2s; }
+    .todo-item:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .todo-item.completed { opacity: 0.6; }
+    .todo-item.completed .todo-text { text-decoration: line-through; color: #9ca3af; }
+    .todo-text { flex: 1; font-size: 15px; color: #374151; }
+    .todo-checkbox { width: 20px; height: 20px; cursor: pointer; }
+    .todo-delete { padding: 6px 12px; background: #fee2e2; color: #dc2626; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; }
+    .todo-delete:hover { background: #fecaca; }
+    
+    #empty-state { display: none; }
+    #empty-state.show { display: block; }"
+}
+
+fn get_javascript() -> string {
+    "// Todo App State
+    let todos = [];
+    let nextId = 1;
+    
+    // Load todos from localStorage
+    function loadTodos() {
+        const saved = localStorage.getItem('windjammer-todos');
+        if (saved) {
+            todos = JSON.parse(saved);
+            nextId = Math.max(...todos.map(t => t.id), 0) + 1;
+            renderTodos();
+        }
+    }
+    
+    // Save todos to localStorage
+    function saveTodos() {
+        localStorage.setItem('windjammer-todos', JSON.stringify(todos));
+    }
+    
+    // Add a new todo
+    function addTodo() {
+        const input = document.getElementById('todo-input');
+        const text = input.value.trim();
+        
+        if (text) {
+            todos.push({ id: nextId++, text: text, completed: false });
+            input.value = '';
+            saveTodos();
+            renderTodos();
+        }
+    }
+    
+    // Toggle todo completion
+    function toggleTodo(id) {
+        const todo = todos.find(t => t.id === id);
+        if (todo) {
+            todo.completed = !todo.completed;
+            saveTodos();
+            renderTodos();
+        }
+    }
+    
+    // Delete a todo
+    function deleteTodo(id) {
+        todos = todos.filter(t => t.id !== id);
+        saveTodos();
+        renderTodos();
+    }
+    
+    // Clear completed todos
+    function clearCompleted() {
+        todos = todos.filter(t => !t.completed);
+        saveTodos();
+        renderTodos();
+    }
+    
+    // Clear all todos
+    function clearAll() {
+        if (confirm('Are you sure you want to delete all todos?')) {
+            todos = [];
+            saveTodos();
+            renderTodos();
+        }
+    }
+    
+    // Add sample todos
+    function addSampleTodos() {
+        todos.push(
+            { id: nextId++, text: 'Learn Windjammer basics', completed: true },
+            { id: nextId++, text: 'Build a web app with windjammer-ui', completed: false },
+            { id: nextId++, text: 'Deploy to production', completed: false }
+        );
+        saveTodos();
+        renderTodos();
+    }
+    
+    // Render all todos
+    function renderTodos() {
+        const listEl = document.getElementById('todo-list');
+        const emptyEl = document.getElementById('empty-state');
+        
+        if (todos.length === 0) {
+            listEl.innerHTML = '';
+            emptyEl.classList.add('show');
+        } else {
+            emptyEl.classList.remove('show');
+            listEl.innerHTML = todos.map(todo => `
+                <div class='todo-item ${todo.completed ? 'completed' : ''}'>
+                    <input type='checkbox' class='todo-checkbox' 
+                           ${todo.completed ? 'checked' : ''} 
+                           onchange='toggleTodo(${todo.id})'>
+                    <span class='todo-text'>${escapeHtml(todo.text)}</span>
+                    <button class='todo-delete' onclick='deleteTodo(${todo.id})'>Delete</button>
+                </div>
+            `).join('');
+        }
+        
+        updateStats();
+    }
+    
+    // Update statistics
+    function updateStats() {
+        const total = todos.length;
+        const completed = todos.filter(t => t.completed).length;
+        const active = total - completed;
+        
+        document.getElementById('stat-total').textContent = total;
+        document.getElementById('stat-active').textContent = active;
+        document.getElementById('stat-completed').textContent = completed;
+    }
+    
+    // Escape HTML to prevent XSS
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+    
+    // Initialize on page load
+    window.onload = function() {
+        loadTodos();
+        document.getElementById('todo-input').focus();
+    };"
+}
+

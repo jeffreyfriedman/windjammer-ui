@@ -1,0 +1,83 @@
+pub struct Card {
+    title: string,
+    children: Vec<string>,
+    padding: string,
+    background_color: string,
+    border_color: string,
+}
+
+impl Card {
+    pub fn new() -> Card {
+        Card {
+            title: "".to_string(),
+            children: Vec::new(),
+            padding: "16px".to_string(),
+            background_color: "#fff".to_string(),
+            border_color: "#e0e0e0".to_string(),
+        }
+    }
+
+    pub fn title(self, title: string) -> Card {
+        self.title = title
+        self
+    }
+
+    pub fn child(self, child: string) -> Card {
+        self.children.push(child)
+        self
+    }
+
+    pub fn children(self, children: Vec<string>) -> Card {
+        self.children = children
+        self
+    }
+
+    pub fn padding(self, padding: string) -> Card {
+        self.padding = padding
+        self
+    }
+
+    pub fn background_color(self, color: string) -> Card {
+        self.background_color = color
+        self
+    }
+
+    pub fn border_color(self, color: string) -> Card {
+        self.border_color = color
+        self
+    }
+
+    pub fn render(self) -> string {
+        let style = format!("padding: {}; background-color: {}; border: 1px solid {}; border-radius: 8px;", self.padding, self.background_color, self.border_color)
+
+        let title_html = if self.title != "" {
+            format!("<div class='wj-card-title' style='font-weight: bold; margin-bottom: 12px; font-size: 1.25rem;'>{}</div>", self.title)
+        } else {
+            "".to_string()
+        }
+
+        let children_html = self.children.join("
+")
+
+        format!("<div class='wj-card' style='{}'>
+{}{}
+</div>", style, title_html, children_html)
+    }
+}
+
+fn main() {
+    let card1 = Card::new()
+        .title("My Card".to_string())
+        .child("<p>Card content goes here.</p>".to_string())
+
+    println!("{}", card1.render())
+
+    let card2 = Card::new()
+        .padding("24px".to_string())
+        .background_color("#f9f9f9".to_string())
+        .border_color("#3498db".to_string())
+        .children(vec!["<h3>Title</h3>".to_string(), "<p>Body text</p>".to_string()])
+
+    println!("{}", card2.render())
+}
+
