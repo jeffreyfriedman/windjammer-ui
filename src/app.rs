@@ -9,9 +9,13 @@
 use crate::simple_vnode::VNode;
 
 #[cfg(target_arch = "wasm32")]
+use std::cell::RefCell;
+#[cfg(target_arch = "wasm32")]
+use std::rc::Rc;
+#[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
 #[cfg(target_arch = "wasm32")]
-use web_sys::{window, Document, Element};
+use web_sys::{window, Element};
 
 #[cfg(target_arch = "wasm32")]
 thread_local! {
@@ -45,7 +49,7 @@ impl App {
             render_fn: None,
         }
     }
-    
+
     /// Create a new application with a render function (reactive)
     pub fn new_reactive<F>(title: impl Into<String>, render_fn: F) -> Self
     where
@@ -64,7 +68,7 @@ impl App {
     pub fn run(self) {
         use crate::simple_renderer;
         use wasm_bindgen::JsCast;
-        
+
         // Get the root element from the DOM
         let window = web_sys::window().expect("No window found");
         let document = window.document().expect("No document found");
@@ -73,17 +77,17 @@ impl App {
             .expect("No #app element found in HTML")
             .dyn_into::<web_sys::HtmlElement>()
             .expect("Root is not an HTMLElement");
-        
+
         // Render the initial UI
         let render_fn = self.render_fn;
         let mut current_vnode = self.root;
-        
+
         // Simple initial render
         let html = simple_renderer::render_to_html(&current_vnode);
         root_el.set_inner_html(&html);
-        
+
         web_sys::console::log_1(&format!("✅ {} mounted", self.title).into());
-        
+
         // TODO: Add reactive re-rendering support for WASM
         // For now, just renders the initial state
     }
@@ -92,39 +96,35 @@ impl App {
     #[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
     pub fn run(self) {
         use crate::desktop_renderer::DesktopRenderer;
-        
+
         let title = self.title;
         let render_fn = self.render_fn;
         let mut current_vnode = self.root;
-        
+
         let options = eframe::NativeOptions {
             viewport: eframe::egui::ViewportBuilder::default()
                 .with_inner_size([800.0, 600.0])
                 .with_title(title.clone()),
             ..Default::default()
         };
-        
-        let _ = eframe::run_simple_native(
-            &title,
-            options,
-            move |ctx, _frame| {
-                // Set up repaint callback for reactive updates
-                let ctx_clone = ctx.clone();
-                crate::desktop_app_context::set_repaint_callback(move || {
-                    ctx_clone.request_repaint();
-                });
-                
-                // Re-generate VNode if we have a render function (reactive mode)
-                if let Some(ref render) = render_fn {
-                    current_vnode = render();
-                }
-                
-                // Render the UI
-                let mut renderer = DesktopRenderer::new();
-                renderer.render(ctx, &current_vnode);
-            },
-        );
-        
+
+        let _ = eframe::run_simple_native(&title, options, move |ctx, _frame| {
+            // Set up repaint callback for reactive updates
+            let ctx_clone = ctx.clone();
+            crate::desktop_app_context::set_repaint_callback(move || {
+                ctx_clone.request_repaint();
+            });
+
+            // Re-generate VNode if we have a render function (reactive mode)
+            if let Some(ref render) = render_fn {
+                current_vnode = render();
+            }
+
+            // Render the UI
+            let mut renderer = DesktopRenderer::new();
+            renderer.render(ctx, &current_vnode);
+        });
+
         // Cleanup
         crate::desktop_app_context::clear_repaint_callback();
     }

@@ -1,0 +1,68 @@
+pub enum ScrollDirection {
+    Vertical,
+    Horizontal,
+    Both,
+}
+
+pub struct ScrollArea {
+    children: Vec<string>,
+    direction: ScrollDirection,
+    height: string,
+    width: string,
+}
+
+impl ScrollArea {
+    pub fn new() -> ScrollArea {
+        ScrollArea {
+            children: Vec::new(),
+            direction: ScrollDirection::Vertical,
+            height: "300px".to_string(),
+            width: "100%".to_string(),
+        }
+    }
+
+    pub fn child(self, child: string) -> ScrollArea {
+        self.children.push(child)
+        self
+    }
+
+    pub fn direction(self, direction: ScrollDirection) -> ScrollArea {
+        self.direction = direction
+        self
+    }
+
+    pub fn height(self, height: string) -> ScrollArea {
+        self.height = height
+        self
+    }
+
+    pub fn width(self, width: string) -> ScrollArea {
+        self.width = width
+        self
+    }
+
+    pub fn render(self) -> string {
+        let overflow_style = match self.direction {
+            ScrollDirection::Vertical => "overflow-y: auto; overflow-x: hidden;",
+            ScrollDirection::Horizontal => "overflow-x: auto; overflow-y: hidden;",
+            ScrollDirection::Both => "overflow: auto;",
+        }
+
+        let children_html = self.children.join("\n")
+
+        format!("<div class='wj-scroll-area' style='height: {}; width: {}; {}'>
+  {}
+</div>", self.height, self.width, overflow_style, children_html)
+    }
+}
+
+fn main() {
+    let scroll = ScrollArea::new()
+        .height("200px".to_string())
+        .child("<p>Line 1</p>".to_string())
+        .child("<p>Line 2</p>".to_string())
+        .child("<p>Line 3</p>".to_string())
+
+    println!("{}", scroll.render())
+}
+

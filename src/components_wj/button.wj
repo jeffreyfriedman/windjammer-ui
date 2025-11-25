@@ -1,0 +1,97 @@
+// Button component - Pure Windjammer implementation
+// NO `mut` keyword needed - compiler infers everything!
+
+pub enum ButtonVariant {
+    Primary,
+    Secondary,
+    Success,
+    Danger,
+    Ghost,
+}
+
+pub enum ButtonSize {
+    Small,
+    Medium,
+    Large,
+}
+
+pub struct Button {
+    label: string,
+    variant: ButtonVariant,
+    size: ButtonSize,
+    disabled: bool,
+}
+
+impl Button {
+    // Constructor - returns new Button
+    pub fn new(label: string) -> Button {
+        Button {
+            label: label,
+            variant: ButtonVariant::Primary,
+            size: ButtonSize::Medium,
+            disabled: false,
+        }
+    }
+    
+    // Builder pattern: consumes self, modifies, returns self
+    // Compiler infers: mut self (owned, mutable)
+    pub fn variant(self, variant: ButtonVariant) -> Button {
+        self.variant = variant
+        self
+    }
+    
+    // Builder pattern: consumes self, modifies, returns self  
+    // Compiler infers: mut self (owned, mutable)
+    pub fn size(self, size: ButtonSize) -> Button {
+        self.size = size
+        self
+    }
+    
+    // Builder pattern: consumes self, modifies, returns self  
+    // Compiler infers: mut self (owned, mutable)
+    pub fn disabled(self, disabled: bool) -> Button {
+        self.disabled = disabled
+        self
+    }
+    
+    // TODO: Once external type bindings work, this will return VNode
+    // For now, return a string representation for testing
+    pub fn render(self) -> string {
+        // Build variant class
+        let variant_class = match self.variant {
+            ButtonVariant::Primary => "wj-button-primary",
+            ButtonVariant::Secondary => "wj-button-secondary",
+            ButtonVariant::Success => "wj-button-success",
+            ButtonVariant::Danger => "wj-button-danger",
+            ButtonVariant::Ghost => "wj-button-ghost",
+        }
+        
+        // Build size class
+        let size_class = match self.size {
+            ButtonSize::Small => "wj-button-sm",
+            ButtonSize::Medium => "wj-button-md",
+            ButtonSize::Large => "wj-button-lg",
+        }
+        
+        // Build disabled attr
+        let disabled_attr = if self.disabled { " disabled='true'" } else { "" }
+        
+        format!("<button class='wj-button {} {}'{}>{}</button>", 
+                variant_class, size_class, disabled_attr, self.label)
+    }
+}
+
+// Test the Button component
+fn main() {
+    let button1 = Button::new("Click Me")
+        .variant(ButtonVariant::Primary)
+        .size(ButtonSize::Large)
+    
+    let button2 = Button::new("Cancel")
+        .variant(ButtonVariant::Danger)
+        .disabled(true)
+    
+    println!("Button 1: {}", button1.render())
+    println!("Button 2: {}", button2.render())
+}
+

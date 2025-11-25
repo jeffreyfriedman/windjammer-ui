@@ -1,0 +1,74 @@
+// Text component - Pure Windjammer implementation
+// NO `mut` keyword needed - compiler infers everything!
+
+pub enum TextSize {
+    Small,
+    Medium,
+    Large,
+    XLarge,
+}
+
+pub enum TextWeight {
+    Normal,
+    Bold,
+}
+
+pub struct Text {
+    content: string,
+    size: TextSize,
+    weight: TextWeight,
+}
+
+impl Text {
+    // Constructor - returns new Text
+    pub fn new(content: string) -> Text {
+        Text {
+            content: content,
+            size: TextSize::Medium,
+            weight: TextWeight::Normal,
+        }
+    }
+    
+    // Builder pattern: consumes self, modifies, returns self
+    // Compiler infers: mut self (owned, mutable)
+    pub fn size(self, size: TextSize) -> Text {
+        self.size = size
+        self
+    }
+    
+    // Builder pattern: consumes self, modifies, returns self  
+    // Compiler infers: mut self (owned, mutable)
+    pub fn bold(self) -> Text {
+        self.weight = TextWeight::Bold
+        self
+    }
+    
+    // TODO: Once external type bindings work, this will return VNode
+    // For now, return a string representation for testing
+    pub fn render(self) -> string {
+        let size_class = match self.size {
+            TextSize::Small => "sm",
+            TextSize::Medium => "md",
+            TextSize::Large => "lg",
+            TextSize::XLarge => "xl",
+        }
+        
+        let weight_class = match self.weight {
+            TextWeight::Normal => "normal",
+            TextWeight::Bold => "bold",
+        }
+        
+        format!("<span class='wj-text {} {}'>{}</span>", size_class, weight_class, self.content)
+    }
+}
+
+// Test the Text component
+fn main() {
+    let text = Text::new("Hello, Windjammer!")
+        .size(TextSize::Large)
+        .bold()
+    
+    let html = text.render()
+    println!("{}", html)
+}
+

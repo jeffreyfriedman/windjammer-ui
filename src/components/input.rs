@@ -1,12 +1,11 @@
 //! Input component
+use crate::event_handler::StringEventHandler;
 use crate::simple_vnode::{VAttr, VNode};
-use std::cell::RefCell;
-use std::rc::Rc;
 
 pub struct Input {
     pub value: String,
     pub placeholder: String,
-    pub on_change: Option<Rc<RefCell<dyn FnMut(String)>>>,
+    pub on_change: Option<StringEventHandler>,
 }
 
 impl Input {
@@ -17,21 +16,23 @@ impl Input {
             on_change: None,
         }
     }
-    
+
     /// Set the input value
     pub fn value(mut self, value: impl Into<String>) -> Self {
         self.value = value.into();
         self
     }
-    
+
     /// Set the placeholder text
     pub fn placeholder(mut self, placeholder: impl Into<String>) -> Self {
         self.placeholder = placeholder.into();
         self
     }
-    
+
     /// Set the change handler
     pub fn on_change<F: FnMut(String) + 'static>(mut self, handler: F) -> Self {
+        use std::cell::RefCell;
+        use std::rc::Rc;
         self.on_change = Some(Rc::new(RefCell::new(handler)));
         self
     }
@@ -45,12 +46,12 @@ impl Input {
                 VAttr::Static(self.placeholder.clone()),
             ),
         ];
-        
+
         // Note: Event handling with parameters (on_change with String) needs
         // to be implemented at the renderer level. For now, we just render
         // the input without the event handler. The desktop renderer can
         // connect this using egui's TextEdit widget directly.
-        
+
         VNode::Element {
             tag: "input".to_string(),
             attrs,

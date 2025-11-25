@@ -1,0 +1,91 @@
+pub struct MenuItem {
+    label: string,
+    icon: string,
+    href: string,
+    disabled: bool,
+}
+
+impl MenuItem {
+    pub fn new(label: string, href: string) -> MenuItem {
+        MenuItem {
+            label,
+            icon: "".to_string(),
+            href,
+            disabled: false,
+        }
+    }
+
+    pub fn icon(self, icon: string) -> MenuItem {
+        self.icon = icon
+        self
+    }
+
+    pub fn disabled(self, disabled: bool) -> MenuItem {
+        self.disabled = disabled
+        self
+    }
+}
+
+pub struct Menu {
+    items: Vec<MenuItem>,
+    is_open: bool,
+}
+
+impl Menu {
+    pub fn new() -> Menu {
+        Menu {
+            items: Vec::new(),
+            is_open: false,
+        }
+    }
+
+    pub fn item(self, item: MenuItem) -> Menu {
+        self.items.push(item)
+        self
+    }
+
+    pub fn is_open(self, open: bool) -> Menu {
+        self.is_open = open
+        self
+    }
+
+    pub fn render(self) -> string {
+        let display_style = if self.is_open { "display: block;" } else { "display: none;" }
+
+        let mut items_html = "".to_string()
+
+        let mut i = 0
+        while i < self.items.len() {
+            let item = &self.items[i]
+            let disabled_class = if item.disabled { " wj-menu-item-disabled" } else { "" }
+            let icon_html = if item.icon != "" {
+                format!("<span class='wj-menu-icon'>{}</span>", item.icon)
+            } else {
+                "".to_string()
+            }
+
+            items_html = format!("{}<a href='{}' class='wj-menu-item{}'>{}{}</a>",
+                items_html, item.href, disabled_class, icon_html, item.label)
+
+            i = i + 1
+        }
+
+        format!("<nav class='wj-menu' style='{}'>
+  <div class='wj-menu-content'>
+    {}
+  </div>
+</nav>", display_style, items_html)
+    }
+}
+
+fn main() {
+    let menu = Menu::new()
+        .item(MenuItem::new("Dashboard".to_string(), "/dashboard".to_string()).icon("🏠".to_string()))
+        .item(MenuItem::new("Profile".to_string(), "/profile".to_string()).icon("👤".to_string()))
+        .item(MenuItem::new("Settings".to_string(), "/settings".to_string()).icon("⚙️".to_string()))
+        .item(MenuItem::new("Logout".to_string(), "/logout".to_string()).icon("🚪".to_string()))
+        .is_open(true)
+
+    println!("{}", menu.render())
+}
+

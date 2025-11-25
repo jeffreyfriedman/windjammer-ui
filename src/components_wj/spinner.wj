@@ -1,0 +1,57 @@
+// Spinner Component - Loading indicator
+
+pub enum SpinnerSize {
+    Small,
+    Medium,
+    Large,
+}
+
+pub struct Spinner {
+    size: SpinnerSize,
+    label: string,
+}
+
+impl Spinner {
+    pub fn new() -> Spinner {
+        Spinner {
+            size: SpinnerSize::Medium,
+            label: "".to_string(),
+        }
+    }
+
+    pub fn size(self, size: SpinnerSize) -> Spinner {
+        self.size = size
+        self
+    }
+
+    pub fn label(self, label: string) -> Spinner {
+        self.label = label
+        self
+    }
+
+    pub fn render(self) -> string {
+        let size_class = match self.size {
+            SpinnerSize::Small => "wj-spinner-sm",
+            SpinnerSize::Medium => "wj-spinner-md",
+            SpinnerSize::Large => "wj-spinner-lg",
+        }
+
+        let spinner_html = format!("<div class='wj-spinner {}'></div>", size_class)
+
+        if self.label != "" {
+            format!("<div class='wj-spinner-container'>{}<span class='wj-spinner-label'>{}</span></div>", 
+                spinner_html, self.label)
+        } else {
+            spinner_html
+        }
+    }
+}
+
+fn main() {
+    let spinner1 = Spinner::new()
+    println!("Default: {}", spinner1.render())
+
+    let spinner2 = Spinner::new().size(SpinnerSize::Large).label("Loading...".to_string())
+    println!("With label: {}", spinner2.render())
+}
+

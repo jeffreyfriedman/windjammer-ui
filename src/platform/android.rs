@@ -3,9 +3,9 @@
 // This module will provide Android-specific rendering for Windjammer UI components
 
 #[cfg(target_os = "android")]
-use crate::vdom::VNode;
-#[cfg(target_os = "android")]
 use crate::component::Component;
+#[cfg(target_os = "android")]
+use crate::vdom::VNode;
 
 #[cfg(target_os = "android")]
 pub struct AndroidRenderer {
@@ -17,7 +17,7 @@ impl AndroidRenderer {
     pub fn new() -> Self {
         Self {}
     }
-    
+
     pub fn render(&mut self, vnode: &VNode) {
         // TODO: Convert VNode to Jetpack Compose components
         match vnode {
@@ -42,11 +42,11 @@ impl super::Renderer for AndroidRenderer {
     fn render(&mut self, vnode: &VNode) {
         self.render(vnode);
     }
-    
+
     fn handle_event(&mut self, event: super::Event) {
         // TODO: Handle Android events
     }
-    
+
     fn update(&mut self) {
         // TODO: Update Android views
     }
@@ -68,7 +68,7 @@ pub extern "C" fn Java_com_windjammer_ui_Renderer_render(
     if renderer.is_null() || component.is_null() {
         return;
     }
-    
+
     unsafe {
         let renderer = &mut *renderer;
         let component = &*component;
@@ -94,4 +94,3 @@ mod tests {
         // Android-specific tests will go here
     }
 }
-

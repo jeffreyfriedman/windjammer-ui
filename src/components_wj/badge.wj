@@ -1,0 +1,75 @@
+// Badge Component - Display labels, tags, and status indicators
+
+pub enum BadgeVariant {
+    Default,
+    Primary,
+    Success,
+    Warning,
+    Danger,
+    Error,
+    Info,
+}
+
+pub enum BadgeSize {
+    Small,
+    Medium,
+    Large,
+}
+
+pub struct Badge {
+    text: string,
+    variant: BadgeVariant,
+    size: BadgeSize,
+}
+
+impl Badge {
+    pub fn new(text: string) -> Badge {
+        Badge {
+            text: text,
+            variant: BadgeVariant::Default,
+            size: BadgeSize::Medium,
+        }
+    }
+
+    pub fn variant(self, variant: BadgeVariant) -> Badge {
+        self.variant = variant
+        self
+    }
+
+    pub fn size(self, size: BadgeSize) -> Badge {
+        self.size = size
+        self
+    }
+
+    pub fn render(self) -> string {
+        let variant_class = match self.variant {
+            BadgeVariant::Default => "wj-badge-default",
+            BadgeVariant::Primary => "wj-badge-primary",
+            BadgeVariant::Success => "wj-badge-success",
+            BadgeVariant::Warning => "wj-badge-warning",
+            BadgeVariant::Danger => "wj-badge-danger",
+            BadgeVariant::Error => "wj-badge-danger",
+            BadgeVariant::Info => "wj-badge-info",
+        }
+
+        let size_class = match self.size {
+            BadgeSize::Small => "wj-badge-sm",
+            BadgeSize::Medium => "wj-badge-md",
+            BadgeSize::Large => "wj-badge-lg",
+        }
+
+        format!("<span class='wj-badge {} {}'>{}</span>", variant_class, size_class, self.text)
+    }
+}
+
+fn main() {
+    let badge1 = Badge::new("New".to_string()).variant(BadgeVariant::Primary)
+    println!("Badge 1: {}", badge1.render())
+
+    let badge2 = Badge::new("Error".to_string()).variant(BadgeVariant::Error).size(BadgeSize::Large)
+    println!("Badge 2: {}", badge2.render())
+    
+    let badge3 = Badge::new("Success".to_string()).variant(BadgeVariant::Success)
+    println!("Badge 3: {}", badge3.render())
+}
+

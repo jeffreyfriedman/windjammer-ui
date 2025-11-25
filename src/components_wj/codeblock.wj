@@ -1,0 +1,67 @@
+pub struct CodeBlock {
+    code: string,
+    language: string,
+    show_line_numbers: bool,
+    show_copy_button: bool,
+}
+
+impl CodeBlock {
+    pub fn new(code: string) -> CodeBlock {
+        CodeBlock {
+            code: code,
+            language: String::from(""),
+            show_line_numbers: false,
+            show_copy_button: true,
+        }
+    }
+    
+    pub fn language(self, language: string) -> CodeBlock {
+        self.language = language
+        self
+    }
+    
+    pub fn show_line_numbers(self, show: bool) -> CodeBlock {
+        self.show_line_numbers = show
+        self
+    }
+    
+    pub fn show_copy_button(self, show: bool) -> CodeBlock {
+        self.show_copy_button = show
+        self
+    }
+    
+    pub fn render(self) -> string {
+        let language_label = if self.language.len() > 0 {
+            format!("<div class='wj-codeblock-language'>{}</div>", self.language)
+        } else {
+            String::from("")
+        }
+        
+        let copy_button = if self.show_copy_button {
+            format!(
+                "<button class='wj-codeblock-copy' onclick='navigator.clipboard.writeText(this.parentElement.querySelector(\"code\").textContent); this.textContent=\"✓ Copied!\"; setTimeout(() => this.textContent=\"📋 Copy\", 2000)'>
+                    📋 Copy
+                </button>"
+            )
+        } else {
+            String::from("")
+        }
+        
+        let line_number_class = if self.show_line_numbers { " wj-codeblock-numbered" } else { "" }
+        
+        format!(
+            "<div class='wj-codeblock{}'>
+                <div class='wj-codeblock-header'>
+                    {}
+                    {}
+                </div>
+                <pre class='wj-codeblock-pre'><code class='wj-codeblock-code'>{}</code></pre>
+            </div>",
+            line_number_class,
+            language_label,
+            copy_button,
+            self.code
+        )
+    }
+}
+

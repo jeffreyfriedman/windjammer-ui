@@ -1,5 +1,6 @@
 //! Select (dropdown) component
 
+use crate::event_handler::StringEventHandler;
 use crate::simple_vnode::{VAttr, VNode};
 use crate::to_vnode::ToVNode;
 use std::cell::RefCell;
@@ -33,7 +34,7 @@ pub struct Select {
     pub options: Vec<SelectOption>,
     pub value: Option<String>,
     pub disabled: bool,
-    pub on_change: Option<Rc<RefCell<dyn FnMut(String)>>>,
+    pub on_change: Option<StringEventHandler>,
 }
 
 impl Select {
@@ -124,7 +125,8 @@ impl Select {
                 VAttr::Static(
                     "background: #3C3C3C; color: #D4D4D4; border: 1px solid #3E3E3E; \
                      border-radius: 4px; padding: 8px 12px; font-size: 14px; height: 32px; \
-                     cursor: pointer; outline: none; transition: border-color 100ms ease-out;".to_string()
+                     cursor: pointer; outline: none; transition: border-color 100ms ease-out;"
+                        .to_string(),
                 ),
             ),
         ];

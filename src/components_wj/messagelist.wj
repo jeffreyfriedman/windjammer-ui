@@ -1,0 +1,48 @@
+pub struct MessageList {
+    messages: Vec<String>,
+    height: string,
+    auto_scroll: bool,
+}
+
+impl MessageList {
+    pub fn new() -> MessageList {
+        MessageList {
+            messages: Vec::new(),
+            height: String::from("600px"),
+            auto_scroll: true,
+        }
+    }
+    
+    pub fn message(self, message: string) -> MessageList {
+        self.messages.push(message)
+        self
+    }
+    
+    pub fn height(self, height: string) -> MessageList {
+        self.height = height
+        self
+    }
+    
+    pub fn auto_scroll(self, auto_scroll: bool) -> MessageList {
+        self.auto_scroll = auto_scroll
+        self
+    }
+    
+    pub fn render(self) -> string {
+        let scroll_script = if self.auto_scroll {
+            "onload='this.scrollTop = this.scrollHeight'"
+        } else {
+            ""
+        }
+        
+        format!(
+            "<div class='wj-message-list' style='height: {}' {}>
+                {}
+            </div>",
+            self.height,
+            scroll_script,
+            self.messages.join("")
+        )
+    }
+}
+

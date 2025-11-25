@@ -1,0 +1,49 @@
+pub enum TooltipPosition {
+    Top,
+    Bottom,
+    Left,
+    Right,
+}
+
+pub struct Tooltip {
+    text: string,
+    position: TooltipPosition,
+    child: string,
+}
+
+impl Tooltip {
+    pub fn new(text: string, child: string) -> Tooltip {
+        Tooltip {
+            text,
+            position: TooltipPosition::Top,
+            child,
+        }
+    }
+
+    pub fn position(self, position: TooltipPosition) -> Tooltip {
+        self.position = position
+        self
+    }
+
+    pub fn render(self) -> string {
+        let position_class = match self.position {
+            TooltipPosition::Top => "wj-tooltip-top",
+            TooltipPosition::Bottom => "wj-tooltip-bottom",
+            TooltipPosition::Left => "wj-tooltip-left",
+            TooltipPosition::Right => "wj-tooltip-right",
+        }
+
+        format!("<div class='wj-tooltip-container {}'>{}<span class='wj-tooltip-text'>{}</span></div>",
+            position_class, self.child, self.text)
+    }
+}
+
+fn main() {
+    let tooltip1 = Tooltip::new("This is a helpful tooltip".to_string(), "<button>Hover me</button>".to_string())
+    println!("{}", tooltip1.render())
+
+    let tooltip2 = Tooltip::new("Bottom tooltip".to_string(), "<span>Info</span>".to_string())
+        .position(TooltipPosition::Bottom)
+    println!("{}", tooltip2.render())
+}
+

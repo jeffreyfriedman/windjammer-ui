@@ -1,0 +1,94 @@
+pub struct TabPanelTab {
+    id: string,
+    title: string,
+    content: string,
+}
+
+impl TabPanelTab {
+    pub fn new(id: string, title: string, content: string) -> TabPanelTab {
+        TabPanelTab {
+            id,
+            title,
+            content,
+        }
+    }
+}
+
+pub struct TabPanel {
+    tabs: Vec<TabPanelTab>,
+    active: string,
+    orientation: string,
+}
+
+impl TabPanel {
+    pub fn new() -> TabPanel {
+        TabPanel {
+            tabs: Vec::new(),
+            active: "".to_string(),
+            orientation: "horizontal".to_string(),
+        }
+    }
+
+    pub fn tab(self, tab: TabPanelTab) -> TabPanel {
+        self.tabs.push(tab)
+        self
+    }
+
+    pub fn active(self, id: string) -> TabPanel {
+        self.active = id
+        self
+    }
+
+    pub fn orientation(self, orientation: string) -> TabPanel {
+        self.orientation = orientation
+        self
+    }
+
+    pub fn render(self) -> string {
+        let flex_direction = if self.orientation == "vertical" { "row" } else { "column" }
+
+        let mut tabs_html = format!("<div class='wj-tab-panel-tabs wj-tab-panel-{}'>\n", self.orientation)
+
+        let mut i = 0
+        while i < self.tabs.len() {
+            let tab = &self.tabs[i]
+            let active_class = if tab.id == self.active { " wj-tab-active" } else { "" }
+
+            tabs_html = format!("{}  <button class='wj-tab-panel-tab{}' data-id='{}'>{}</button>\n",
+                tabs_html, active_class, tab.id, tab.title)
+
+            i = i + 1
+        }
+
+        tabs_html = format!("{}</div>\n", tabs_html)
+
+        let mut content_html = "<div class='wj-tab-panel-content'>\n".to_string()
+
+        let mut j = 0
+        while j < self.tabs.len() {
+            let tab = &self.tabs[j]
+            let display = if tab.id == self.active { "block" } else { "none" }
+
+            content_html = format!("{}  <div class='wj-tab-panel-pane' data-id='{}' style='display: {};'>\n    {}\n  </div>\n",
+                content_html, tab.id, display, tab.content)
+
+            j = j + 1
+        }
+
+        content_html = format!("{}</div>", content_html)
+
+        format!("<div class='wj-tab-panel' style='display: flex; flex-direction: {};'>\n{}{}\n</div>",
+            flex_direction, tabs_html, content_html)
+    }
+}
+
+fn main() {
+    let panel = TabPanel::new()
+        .tab(TabPanelTab::new("overview".to_string(), "Overview".to_string(), "<h2>Overview Content</h2>".to_string()))
+        .tab(TabPanelTab::new("details".to_string(), "Details".to_string(), "<h2>Details Content</h2>".to_string()))
+        .tab(TabPanelTab::new("settings".to_string(), "Settings".to_string(), "<h2>Settings Content</h2>".to_string()))
+        .active("overview".to_string())
+
+    println!("{}", panel.render())
+}
+
