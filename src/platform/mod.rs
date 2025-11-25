@@ -30,8 +30,8 @@ pub enum Target {
 }
 
 impl Target {
-    /// Get target from string
-    pub fn from_str(s: &str) -> Option<Self> {
+    /// Parse target from string (case-insensitive)
+    pub fn parse(s: &str) -> Option<Self> {
         match s.to_lowercase().as_str() {
             "desktop" => Some(Target::Desktop),
             "web" | "wasm" => Some(Target::Web),
@@ -40,12 +40,12 @@ impl Target {
             _ => None,
         }
     }
-    
+
     /// Check if target is mobile
     pub fn is_mobile(&self) -> bool {
         matches!(self, Target::IOS | Target::Android)
     }
-    
+
     /// Get target name
     pub fn name(&self) -> &'static str {
         match self {
@@ -61,10 +61,10 @@ impl Target {
 pub trait Renderer {
     /// Render a virtual DOM node
     fn render(&mut self, vnode: &crate::vdom::VNode);
-    
+
     /// Handle an event
     fn handle_event(&mut self, event: Event);
-    
+
     /// Update the UI (call after state changes)
     fn update(&mut self);
 }
@@ -86,7 +86,10 @@ pub enum Event {
 #[derive(Debug, Clone)]
 pub enum GestureEvent {
     /// Swipe gesture
-    Swipe { direction: SwipeDirection, velocity: f32 },
+    Swipe {
+        direction: SwipeDirection,
+        velocity: f32,
+    },
     /// Pinch gesture (zoom)
     Pinch { scale: f32 },
     /// Long press
@@ -109,11 +112,11 @@ mod tests {
 
     #[test]
     fn test_target_from_str() {
-        assert_eq!(Target::from_str("desktop"), Some(Target::Desktop));
-        assert_eq!(Target::from_str("web"), Some(Target::Web));
-        assert_eq!(Target::from_str("ios"), Some(Target::IOS));
-        assert_eq!(Target::from_str("android"), Some(Target::Android));
-        assert_eq!(Target::from_str("invalid"), None);
+        assert_eq!(Target::parse("desktop"), Some(Target::Desktop));
+        assert_eq!(Target::parse("web"), Some(Target::Web));
+        assert_eq!(Target::parse("ios"), Some(Target::IOS));
+        assert_eq!(Target::parse("android"), Some(Target::Android));
+        assert_eq!(Target::parse("invalid"), None);
     }
 
     #[test]

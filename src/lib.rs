@@ -18,6 +18,16 @@
 //! use windjammer_ui::vdom::{VElement, VNode, VText};
 //! use windjammer_ui::reactivity::Signal;
 //!
+
+// Allow clippy warnings for generated code
+#![allow(clippy::new_without_default)]
+#![allow(clippy::len_zero)]
+#![allow(clippy::useless_conversion)]
+#![allow(clippy::comparison_to_empty)]
+#![allow(clippy::write_with_newline)]
+#![allow(clippy::to_string_in_format_args)]
+#![allow(clippy::collapsible_else_if)]
+#![allow(clippy::useless_format)]
 //! struct Counter {
 //!     count: Signal<i32>,
 //! }
@@ -46,13 +56,12 @@ pub mod app_docking;
 pub mod app_reactive;
 #[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
 pub mod app_reactive_eframe;
+pub mod event_handler;
 #[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
 // pub mod scene_gizmos; // TODO: Implement scene gizmos module
 pub mod undo_redo; // Available on all platforms
 
-// Old app_reactive with manual winit+wgpu (deprecated, keeping for reference)
-#[cfg(all(not(target_arch = "wasm32"), not(feature = "desktop")))]
-mod app_reactive_old;
+// Component trait (used by renderer, runtime, ssr)
 pub mod component;
 pub mod component_runtime;
 pub mod components; // Component library
@@ -61,9 +70,9 @@ pub mod platform;
 pub mod reactivity;
 
 #[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
-pub mod desktop_renderer;
-#[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
 pub mod desktop_app_context;
+#[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
+pub mod desktop_renderer;
 pub mod reactivity_optimized;
 pub mod renderer;
 pub mod routing;
@@ -88,9 +97,9 @@ pub mod prelude {
     pub use crate::component::{Component, ComponentProps};
     pub use crate::component_runtime;
     pub use crate::events::{Event, EventHandler};
-    pub use crate::platform::{Target, Event as PlatformEvent, GestureEvent, SwipeDirection};
+    pub use crate::platform::{Event as PlatformEvent, GestureEvent, SwipeDirection, Target};
     pub use crate::reactivity::{Computed, Effect, Signal};
-    pub use crate::renderer::{WebRenderer};
+    pub use crate::renderer::WebRenderer;
     pub use crate::routing::{Route, Router};
     pub use crate::simple_vnode::{VAttr, VNode};
     pub use crate::to_vnode::ToVNode;
@@ -107,17 +116,12 @@ pub mod prelude {
 
     // Re-export the component macro
     pub use crate::component;
-    
+
     // Re-export common components
     pub use crate::components::{
-        Button, ButtonVariant, ButtonSize,
-        Text, TextSize,
-        Container,
-        Flex, FlexDirection,
-        Input,
-        Alert, AlertVariant,
+        Alert, AlertVariant, Button, ButtonSize, ButtonVariant, Container, Flex, FlexDirection,
+        Input, Text, TextSize, TextWeight,
     };
-    pub use crate::components::text::TextWeight;
 }
 
 /// Mount a component to the DOM (WASM only)

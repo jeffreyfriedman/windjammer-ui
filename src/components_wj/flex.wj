@@ -1,0 +1,110 @@
+// Flex layout component - Pure Windjammer implementation
+// NO `mut` keyword needed - compiler infers everything!
+// Tests Vec<String> with direction enum!
+
+pub enum FlexDirection {
+    Row,
+    Column,
+}
+
+pub struct Flex {
+    children: Vec<string>,
+    direction: FlexDirection,
+    gap: string,
+    padding: string,
+    background_color: string,
+}
+
+impl Flex {
+    // Constructor - returns new Flex
+    pub fn new() -> Flex {
+        Flex {
+            children: Vec::new(),
+            direction: FlexDirection::Row,
+            gap: "8px".to_string(),
+            padding: "".to_string(),
+            background_color: "".to_string(),
+        }
+    }
+    
+    // Set flex direction
+    pub fn direction(self, direction: FlexDirection) -> Flex {
+        self.direction = direction
+        self
+    }
+    
+    // Add a single child (tests Vec::push)
+    pub fn child(self, child: string) -> Flex {
+        self.children.push(child)
+        self
+    }
+    
+    // Set multiple children (tests Vec assignment)
+    pub fn children(self, children: Vec<string>) -> Flex {
+        self.children = children
+        self
+    }
+    
+    // Set gap between children
+    pub fn gap(self, gap: string) -> Flex {
+        self.gap = gap
+        self
+    }
+    
+    // Set padding
+    pub fn padding(self, padding: string) -> Flex {
+        self.padding = padding
+        self
+    }
+    
+    // Set background color
+    pub fn background_color(self, color: string) -> Flex {
+        self.background_color = color
+        self
+    }
+    
+    // TODO: Once external type bindings work, this will return VNode
+    // For now, return a string representation for testing
+    pub fn render(self) -> string {
+        let direction_str = match self.direction {
+            FlexDirection::Row => "row",
+            FlexDirection::Column => "column",
+        }
+        
+        let mut style = "display: flex; flex-direction: ".to_string() + direction_str + "; gap: " + self.gap + ";"
+        
+        if self.padding != "" {
+            style = style + " padding: " + self.padding + ";"
+        }
+        
+        if self.background_color != "" {
+            style = style + " background-color: " + self.background_color + ";"
+        }
+        
+        // Join children with newlines
+        let children_html = self.children.join("\n  ")
+        
+        format!("<div class='wj-flex' style='{}'>\n  {}\n</div>", style, children_html)
+    }
+}
+
+// Test the Flex component
+fn main() {
+    let flex_row = Flex::new()
+        .direction(FlexDirection::Row)
+        .gap("16px".to_string())
+        .child("<button>First</button>".to_string())
+        .child("<button>Second</button>".to_string())
+        .child("<button>Third</button>".to_string())
+    
+    let flex_col = Flex::new()
+        .direction(FlexDirection::Column)
+        .gap("12px".to_string())
+        .padding("20px".to_string())
+        .background_color("#f5f5f5".to_string())
+        .children(vec!["<h2>Title</h2>".to_string(), "<p>Paragraph 1</p>".to_string(), "<p>Paragraph 2</p>".to_string()])
+    
+    println!("Flex Row:\n{}", flex_row.render())
+    println!("\nFlex Column:\n{}", flex_col.render())
+}
+

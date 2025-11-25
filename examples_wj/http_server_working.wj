@@ -1,0 +1,145 @@
+// Working HTTP Server Example
+// This demonstrates a simple HTTP server serving Windjammer UI components
+// 
+// To run: 
+// 1. wj build examples_wj/http_server_working.wj -o build_server
+// 2. cd build_server && cargo run
+// 3. Visit http://localhost:3000 in your browser
+
+use std::http::{Server, ServerRequest, ServerResponse}
+
+fn main() {
+    println!("Starting Windjammer Web Server...")
+    
+    let server = Server::new("127.0.0.1", 3000)
+    
+    match server.serve(handle_request) {
+        Ok(_) => println!("Server stopped"),
+        Err(e) => println!("Server error: {}", e),
+    }
+}
+
+fn handle_request(req: ServerRequest) -> ServerResponse {
+    match req.path.as_str() {
+        "/" => serve_home(),
+        "/api/status" => serve_api_status(),
+        _ => serve_not_found(),
+    }
+}
+
+fn serve_home() -> ServerResponse {
+    let html = String::from("<!DOCTYPE html>
+<html>
+<head>
+    <title>Windjammer Server</title>
+    <style>
+        body {
+            font-family: -apple-system, system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin: 0 0 16px 0;
+        }
+        p {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+        .badge {
+            display: inline-block;
+            background: #10b981;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 16px;
+        }
+        .links {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #e5e7eb;
+        }
+        a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class='card'>
+        <h1>🎉 Windjammer HTTP Server</h1>
+        <p>This web page is being served by a <strong>pure Windjammer</strong> HTTP server!</p>
+        <p>The server was written in <code>.wj</code> files, compiled to Rust, and is now serving HTTP requests.</p>
+        <span class='badge'>✅ Server Running</span>
+        <div class='links'>
+            <p><a href='/api/status'>Check API Status</a></p>
+        </div>
+    </div>
+</body>
+</html>")
+    
+    ServerResponse::html(html)
+}
+
+fn serve_api_status() -> ServerResponse {
+    let json = String::from("{\"status\": \"ok\", \"message\": \"Server is running!\", \"version\": \"1.0.0\"}")
+    ServerResponse::json(json)
+}
+
+fn serve_not_found() -> ServerResponse {
+    let html = String::from("<!DOCTYPE html>
+<html>
+<head>
+    <title>404 - Not Found</title>
+    <style>
+        body {
+            font-family: -apple-system, system-ui, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: #f3f4f6;
+            margin: 0;
+        }
+        .error {
+            text-align: center;
+            color: #6b7280;
+        }
+        h1 {
+            font-size: 72px;
+            margin: 0;
+            color: #ef4444;
+        }
+    </style>
+</head>
+<body>
+    <div class='error'>
+        <h1>404</h1>
+        <p>Page not found</p>
+        <a href='/'>Go home</a>
+    </div>
+</body>
+</html>")
+    
+    ServerResponse::new(404, html)
+        .header("Content-Type", "text/html")
+}
+

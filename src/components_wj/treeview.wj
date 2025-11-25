@@ -1,0 +1,92 @@
+pub struct TreeItem {
+    label: string,
+    children: Vec<TreeItem>,
+    expanded: bool,
+}
+
+impl TreeItem {
+    pub fn new(label: string) -> TreeItem {
+        TreeItem {
+            label,
+            children: Vec::new(),
+            expanded: false,
+        }
+    }
+
+    pub fn child(self, item: TreeItem) -> TreeItem {
+        self.children.push(item)
+        self
+    }
+
+    pub fn expanded(self, expanded: bool) -> TreeItem {
+        self.expanded = expanded
+        self
+    }
+
+    pub fn render(self, depth: i32) -> string {
+        let indent_px = depth * 20
+        let icon = if self.children.len() > 0 {
+            if self.expanded { "▼" } else { "▶" }
+        } else {
+            "•"
+        }
+
+        let mut html = format!("<div class='wj-tree-item' style='padding-left: {}px;'>
+  <span class='wj-tree-icon'>{}</span>
+  <span>{}</span>
+</div>\n", indent_px, icon, self.label)
+
+        if self.expanded {
+            let mut i = 0
+            while i < self.children.len() {
+                let child = &self.children[i]
+                html = format!("{}{}", html, child.render(depth + 1))
+                i = i + 1
+            }
+        }
+
+        html
+    }
+}
+
+pub struct TreeView {
+    items: Vec<TreeItem>,
+}
+
+impl TreeView {
+    pub fn new() -> TreeView {
+        TreeView {
+            items: Vec::new(),
+        }
+    }
+
+    pub fn item(self, item: TreeItem) -> TreeView {
+        self.items.push(item)
+        self
+    }
+
+    pub fn render(self) -> string {
+        let mut html = "<div class='wj-tree-view'>\n".to_string()
+
+        let mut i = 0
+        while i < self.items.len() {
+            let item = &self.items[i]
+            html = format!("{}{}", html, item.render(0))
+            i = i + 1
+        }
+
+        format!("{}</div>", html)
+    }
+}
+
+fn main() {
+    let tree = TreeView::new()
+        .item(TreeItem::new("Root 1".to_string())
+            .expanded(true)
+            .child(TreeItem::new("Child 1.1".to_string()))
+            .child(TreeItem::new("Child 1.2".to_string())))
+        .item(TreeItem::new("Root 2".to_string()))
+
+    println!("{}", tree.render())
+}
+

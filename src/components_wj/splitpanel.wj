@@ -1,0 +1,57 @@
+pub enum SplitDirection {
+    Horizontal,
+    Vertical,
+}
+
+pub struct SplitPanel {
+    left: string,
+    right: string,
+    direction: SplitDirection,
+    initial_size: i32,
+}
+
+impl SplitPanel {
+    pub fn new(left: string, right: string) -> SplitPanel {
+        SplitPanel {
+            left,
+            right,
+            direction: SplitDirection::Vertical,
+            initial_size: 50,
+        }
+    }
+
+    pub fn direction(self, direction: SplitDirection) -> SplitPanel {
+        self.direction = direction
+        self
+    }
+
+    pub fn initial_size(self, size: i32) -> SplitPanel {
+        self.initial_size = size
+        self
+    }
+
+    pub fn render(self) -> string {
+        let flex_direction = match self.direction {
+            SplitDirection::Horizontal => "column",
+            SplitDirection::Vertical => "row",
+        }
+
+        format!("<div class='wj-split-panel' style='display: flex; flex-direction: {}; height: 100%;'>
+  <div class='wj-split-pane' style='flex: {}%;'>
+    {}
+  </div>
+  <div class='wj-split-divider'></div>
+  <div class='wj-split-pane' style='flex: {}%;'>
+    {}
+  </div>
+</div>", flex_direction, self.initial_size, self.left, 100 - self.initial_size, self.right)
+    }
+}
+
+fn main() {
+    let split = SplitPanel::new("<p>Left pane</p>".to_string(), "<p>Right pane</p>".to_string())
+        .initial_size(40)
+
+    println!("{}", split.render())
+}
+

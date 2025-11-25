@@ -1,0 +1,108 @@
+pub enum SidebarPosition {
+    Left,
+    Right,
+}
+
+pub struct SidebarItem {
+    label: string,
+    icon: string,
+    href: string,
+}
+
+impl SidebarItem {
+    pub fn new(label: string) -> SidebarItem {
+        SidebarItem {
+            label: label,
+            icon: String::from(""),
+            href: String::from("#"),
+        }
+    }
+    
+    pub fn icon(self, icon: string) -> SidebarItem {
+        self.icon = icon
+        self
+    }
+    
+    pub fn href(self, href: string) -> SidebarItem {
+        self.href = href
+        self
+    }
+}
+
+pub struct Sidebar {
+    items: Vec<SidebarItem>,
+    position: SidebarPosition,
+    width: string,
+    collapsed: bool,
+}
+
+impl Sidebar {
+    pub fn new() -> Sidebar {
+        Sidebar {
+            items: Vec::new(),
+            position: SidebarPosition::Left,
+            width: String::from("250px"),
+            collapsed: false,
+        }
+    }
+    
+    pub fn item(self, item: SidebarItem) -> Sidebar {
+        self.items.push(item)
+        self
+    }
+    
+    pub fn position(self, pos: SidebarPosition) -> Sidebar {
+        self.position = pos
+        self
+    }
+    
+    pub fn width(self, width: string) -> Sidebar {
+        self.width = width
+        self
+    }
+    
+    pub fn collapsed(self, collapsed: bool) -> Sidebar {
+        self.collapsed = collapsed
+        self
+    }
+    
+    pub fn render(self) -> string {
+        let mut items_html = Vec::new()
+        
+        for item in self.items {
+            let icon_html = if item.icon.len() > 0 {
+                format!("<span class='wj-sidebar-icon'>{}</span>", item.icon)
+            } else {
+                String::from("")
+            }
+            
+            items_html.push(format!(
+                "<a href='{}' class='wj-sidebar-item'>{}<span class='wj-sidebar-label'>{}</span></a>",
+                item.href,
+                icon_html,
+                item.label
+            ))
+        }
+        
+        let position_class = match self.position {
+            SidebarPosition::Left => "wj-sidebar-left",
+            SidebarPosition::Right => "wj-sidebar-right",
+        }
+        
+        let collapsed_class = if self.collapsed { " wj-sidebar-collapsed" } else { "" }
+        
+        format!(
+            "<aside class='wj-sidebar {} {}' style='width: {}'>
+                <div class='wj-sidebar-toggle' onclick='this.parentElement.classList.toggle(\"wj-sidebar-collapsed\")'>
+                    <span class='wj-sidebar-toggle-icon'>☰</span>
+                </div>
+                <nav class='wj-sidebar-nav'>{}</nav>
+            </aside>",
+            position_class,
+            collapsed_class,
+            self.width,
+            items_html.join("")
+        )
+    }
+}
+

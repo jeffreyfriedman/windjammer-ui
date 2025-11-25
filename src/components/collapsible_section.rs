@@ -1,12 +1,12 @@
 //! Collapsible Section Component
-//! 
+//!
 //! A section with a header that can be expanded or collapsed to show/hide content.
 //! Follows the Windjammer UI design system for professional, modern appearance.
 
-use crate::to_vnode::ToVNode;
 use crate::simple_vnode::{VAttr, VNode};
-use std::rc::Rc;
+use crate::to_vnode::ToVNode;
 use std::cell::RefCell;
+use std::rc::Rc;
 
 /// Collapsible section with expand/collapse functionality
 pub struct CollapsibleSection {
@@ -25,46 +25,46 @@ impl CollapsibleSection {
             on_toggle: None,
         }
     }
-    
+
     pub fn title(mut self, title: impl Into<String>) -> Self {
         self.title = title.into();
         self
     }
-    
+
     pub fn expanded(mut self, expanded: bool) -> Self {
         self.expanded = expanded;
         self
     }
-    
+
     pub fn child(mut self, child: VNode) -> Self {
         self.children.push(child);
         self
     }
-    
+
     pub fn children(mut self, children: Vec<VNode>) -> Self {
         self.children = children;
         self
     }
-    
+
     pub fn on_toggle<F: FnMut() + 'static>(mut self, handler: F) -> Self {
         self.on_toggle = Some(Rc::new(RefCell::new(handler)));
         self
     }
-    
+
     pub fn render(&self) -> VNode {
         // Container for the entire collapsible section
         let mut section_children = Vec::new();
-        
+
         // Header (clickable to toggle)
         let header = self.render_header();
         section_children.push(header);
-        
+
         // Content (only if expanded)
         if self.expanded {
             let content = self.render_content();
             section_children.push(content);
         }
-        
+
         VNode::Element {
             tag: "div".to_string(),
             attrs: vec![
@@ -82,7 +82,7 @@ impl CollapsibleSection {
             children: section_children,
         }
     }
-    
+
     fn render_header(&self) -> VNode {
         // Arrow indicator (rotates when expanded)
         let arrow = VNode::Element {
@@ -102,7 +102,7 @@ impl CollapsibleSection {
             ],
             children: vec![VNode::Text("▶".to_string())],
         };
-        
+
         // Title text
         let title_text = VNode::Element {
             tag: "span".to_string(),
@@ -118,7 +118,7 @@ impl CollapsibleSection {
             ],
             children: vec![VNode::Text(self.title.clone())],
         };
-        
+
         // Header container (clickable)
         VNode::Element {
             tag: "div".to_string(),
@@ -135,7 +135,7 @@ impl CollapsibleSection {
             children: vec![arrow, title_text],
         }
     }
-    
+
     fn render_content(&self) -> VNode {
         VNode::Element {
             tag: "div".to_string(),
@@ -146,7 +146,10 @@ impl CollapsibleSection {
                 ),
                 (
                     "style".to_string(),
-                    VAttr::Static("padding: 12px; background: #2D2D2D; border-top: 1px solid #3E3E3E;".to_string()),
+                    VAttr::Static(
+                        "padding: 12px; background: #2D2D2D; border-top: 1px solid #3E3E3E;"
+                            .to_string(),
+                    ),
                 ),
             ],
             children: self.children.clone(),
@@ -163,7 +166,7 @@ impl ToVNode for CollapsibleSection {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_collapsible_section_new() {
         let section = CollapsibleSection::new("Test Section");
@@ -171,14 +174,13 @@ mod tests {
         assert!(section.expanded);
         assert!(section.children.is_empty());
     }
-    
+
     #[test]
     fn test_collapsible_section_expanded() {
-        let section = CollapsibleSection::new("Test")
-            .expanded(false);
+        let section = CollapsibleSection::new("Test").expanded(false);
         assert!(!section.expanded);
     }
-    
+
     #[test]
     fn test_collapsible_section_children() {
         let section = CollapsibleSection::new("Test")
@@ -186,13 +188,13 @@ mod tests {
             .child(VNode::Text("Child 2".to_string()));
         assert_eq!(section.children.len(), 2);
     }
-    
+
     #[test]
     fn test_collapsible_section_render_expanded() {
         let section = CollapsibleSection::new("Test")
             .expanded(true)
             .child(VNode::Text("Content".to_string()));
-        
+
         let vnode = section.render();
         match vnode {
             VNode::Element { children, .. } => {
@@ -202,13 +204,13 @@ mod tests {
             _ => panic!("Expected element node"),
         }
     }
-    
+
     #[test]
     fn test_collapsible_section_render_collapsed() {
         let section = CollapsibleSection::new("Test")
             .expanded(false)
             .child(VNode::Text("Content".to_string()));
-        
+
         let vnode = section.render();
         match vnode {
             VNode::Element { children, .. } => {
@@ -219,4 +221,3 @@ mod tests {
         }
     }
 }
-

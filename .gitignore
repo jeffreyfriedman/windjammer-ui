@@ -1,15 +1,14 @@
-# Rust
-/target/
+# Rust/Cargo
+target/
+Cargo.lock
 **/*.rs.bk
 *.pdb
-Cargo.lock
 
-# Build artifacts
-/build/
-/build_*/
-/output/
-/test_output/
-/test_output_*/
+# Generated Windjammer code - DO NOT COMMIT!
+# These are generated at build time from .wj source files
+src/components/generated/
+build_components/
+build/
 
 # IDE
 .vscode/
@@ -17,25 +16,12 @@ Cargo.lock
 *.swp
 *.swo
 *~
-
-# OS
 .DS_Store
-Thumbs.db
+
+# Test outputs
+*.log
+.wasm-pack-cache/
 
 # Temporary files
 *.tmp
-*.bak
-*.log
-
-# Example build outputs
-examples/*/pkg/
-examples/*/target/
-examples/*/build/
-examples/*/build_output/
-examples/*/src/
-examples_wj/build_*/
-build_counter/
-
-# Temp markdown files
-*.md.tmp
-
+tmp/

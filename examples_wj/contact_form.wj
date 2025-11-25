@@ -1,7 +1,7 @@
 // Contact Form Example - Form Validation
 // Demonstrates: Form inputs, validation, error handling, submission
 
-use std::ui::*
+use windjammer_ui::*
 
 @export
 fn start() {

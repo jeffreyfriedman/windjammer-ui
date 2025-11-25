@@ -1,5 +1,6 @@
 //! Slider (range input) component
 
+use crate::event_handler::F64EventHandler;
 use crate::simple_vnode::{VAttr, VNode};
 use crate::to_vnode::ToVNode;
 use std::cell::RefCell;
@@ -13,7 +14,7 @@ pub struct Slider {
     pub value: f64,
     pub disabled: bool,
     pub label: Option<String>,
-    pub on_change: Option<Rc<RefCell<dyn FnMut(f64)>>>,
+    pub on_change: Option<F64EventHandler>,
 }
 
 impl Slider {

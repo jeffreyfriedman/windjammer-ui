@@ -1,3 +1,4 @@
+use crate::event_handler::StringEventHandler;
 use crate::prelude::ToVNode;
 use crate::simple_vnode::{VAttr, VNode};
 use std::cell::RefCell;
@@ -9,7 +10,7 @@ pub struct AdvancedCodeEditor {
     language: String,
     line_numbers: bool,
     read_only: bool,
-    on_change: Option<Rc<RefCell<dyn FnMut(String)>>>,
+    on_change: Option<StringEventHandler>,
 }
 
 impl AdvancedCodeEditor {

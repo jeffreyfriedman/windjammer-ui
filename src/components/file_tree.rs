@@ -34,7 +34,7 @@ impl FileNode {
 pub struct FileTree {
     pub root: FileNode,
     pub selected_path: Signal<Option<String>>,
-    pub on_select: Option<Rc<RefCell<dyn FnMut(String)>>>,
+    pub on_select: Option<crate::event_handler::StringEventHandler>,
 }
 
 impl FileTree {

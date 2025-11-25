@@ -1,0 +1,58 @@
+pub struct Grid {
+    children: Vec<string>,
+    columns: i32,
+    gap: string,
+    padding: string,
+}
+
+impl Grid {
+    pub fn new(columns: i32) -> Grid {
+        Grid {
+            children: Vec::new(),
+            columns,
+            gap: "16px".to_string(),
+            padding: "0".to_string(),
+        }
+    }
+
+    pub fn child(self, child: string) -> Grid {
+        self.children.push(child)
+        self
+    }
+
+    pub fn children(self, children: Vec<string>) -> Grid {
+        self.children = children
+        self
+    }
+
+    pub fn gap(self, gap: string) -> Grid {
+        self.gap = gap
+        self
+    }
+
+    pub fn padding(self, padding: string) -> Grid {
+        self.padding = padding
+        self
+    }
+
+    pub fn render(self) -> string {
+        let style = format!("display: grid; grid-template-columns: repeat({}, 1fr); gap: {}; padding: {};",
+            self.columns, self.gap, self.padding)
+
+        let children_html = self.children.join("\n")
+
+        format!("<div class='wj-grid' style='{}'>\n{}\n</div>", style, children_html)
+    }
+}
+
+fn main() {
+    let grid = Grid::new(3)
+        .gap("20px".to_string())
+        .child("<div style='padding:20px; background:#e3f2fd;'>Item 1</div>".to_string())
+        .child("<div style='padding:20px; background:#e3f2fd;'>Item 2</div>".to_string())
+        .child("<div style='padding:20px; background:#e3f2fd;'>Item 3</div>".to_string())
+        .child("<div style='padding:20px; background:#e3f2fd;'>Item 4</div>".to_string())
+
+    println!("{}", grid.render())
+}
+

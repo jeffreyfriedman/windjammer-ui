@@ -1,5 +1,6 @@
 //! Checkbox component
 
+use crate::event_handler::BoolEventHandler;
 use crate::simple_vnode::{VAttr, VNode};
 use crate::to_vnode::ToVNode;
 use std::cell::RefCell;
@@ -18,7 +19,7 @@ pub struct Checkbox {
     pub checked: bool,
     pub disabled: bool,
     pub size: CheckboxSize,
-    pub on_change: Option<Rc<RefCell<dyn FnMut(bool)>>>,
+    pub on_change: Option<BoolEventHandler>,
 }
 
 impl Checkbox {

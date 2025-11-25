@@ -1,5 +1,6 @@
 //! Code Editor component for Windjammer Editor
 
+use crate::event_handler::StringEventHandler;
 use crate::prelude::*;
 use crate::simple_vnode::{VAttr, VNode};
 use std::cell::RefCell;
@@ -11,7 +12,7 @@ pub struct CodeEditor {
     pub theme: String,
     pub read_only: bool,
     pub line_numbers: bool,
-    pub on_change: Option<Rc<RefCell<dyn FnMut(String)>>>,
+    pub on_change: Option<StringEventHandler>,
 }
 
 impl CodeEditor {

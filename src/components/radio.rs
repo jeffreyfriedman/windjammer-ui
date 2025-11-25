@@ -1,5 +1,6 @@
 //! Radio button and Radio Group components
 
+use crate::event_handler::StringEventHandler;
 use crate::simple_vnode::{VAttr, VNode};
 use crate::to_vnode::ToVNode;
 use std::cell::RefCell;
@@ -33,7 +34,7 @@ pub struct RadioGroup {
     pub options: Vec<RadioOption>,
     pub selected: Option<String>,
     pub disabled: bool,
-    pub on_change: Option<Rc<RefCell<dyn FnMut(String)>>>,
+    pub on_change: Option<StringEventHandler>,
 }
 
 impl RadioGroup {

@@ -1,0 +1,76 @@
+// Alert Component - Display messages and notifications
+
+pub enum AlertVariant {
+    Error,
+    Warning,
+    Info,
+    Success,
+}
+
+pub struct Alert {
+    message: string,
+    variant: AlertVariant,
+}
+
+impl Alert {
+    pub fn error(message: string) -> Alert {
+        Alert {
+            message: message,
+            variant: AlertVariant::Error,
+        }
+    }
+
+    pub fn warning(message: string) -> Alert {
+        Alert {
+            message: message,
+            variant: AlertVariant::Warning,
+        }
+    }
+
+    pub fn info(message: string) -> Alert {
+        Alert {
+            message: message,
+            variant: AlertVariant::Info,
+        }
+    }
+
+    pub fn success(message: string) -> Alert {
+        Alert {
+            message: message,
+            variant: AlertVariant::Success,
+        }
+    }
+
+    pub fn render(self) -> string {
+        let variant_class = match self.variant {
+            AlertVariant::Error => "wj-alert-error",
+            AlertVariant::Warning => "wj-alert-warning",
+            AlertVariant::Info => "wj-alert-info",
+            AlertVariant::Success => "wj-alert-success",
+        }
+
+        let icon = match self.variant {
+            AlertVariant::Error => "❌",
+            AlertVariant::Warning => "⚠️",
+            AlertVariant::Info => "ℹ️",
+            AlertVariant::Success => "✅",
+        }
+
+        format!("<div class='wj-alert {}'>{} {}</div>", variant_class, icon, self.message)
+    }
+}
+
+fn main() {
+    let alert1 = Alert::error("Something went wrong!".to_string())
+    println!("Error: {}", alert1.render())
+
+    let alert2 = Alert::success("Operation completed successfully".to_string())
+    println!("Success: {}", alert2.render())
+
+    let alert3 = Alert::warning("Please review your input".to_string())
+    println!("Warning: {}", alert3.render())
+
+    let alert4 = Alert::info("Did you know...".to_string())
+    println!("Info: {}", alert4.render())
+}
+

@@ -1,0 +1,87 @@
+pub struct ContextMenuItem {
+    label: string,
+    icon: string,
+    action: string,
+    disabled: bool,
+}
+
+impl ContextMenuItem {
+    pub fn new(label: string) -> ContextMenuItem {
+        ContextMenuItem {
+            label: label,
+            icon: String::from(""),
+            action: String::from(""),
+            disabled: false,
+        }
+    }
+    
+    pub fn icon(self, icon: string) -> ContextMenuItem {
+        self.icon = icon
+        self
+    }
+    
+    pub fn action(self, action: string) -> ContextMenuItem {
+        self.action = action
+        self
+    }
+    
+    pub fn disabled(self, disabled: bool) -> ContextMenuItem {
+        self.disabled = disabled
+        self
+    }
+}
+
+pub struct ContextMenu {
+    items: Vec<ContextMenuItem>,
+    trigger_id: string,
+}
+
+impl ContextMenu {
+    pub fn new(trigger_id: string) -> ContextMenu {
+        ContextMenu {
+            items: Vec::new(),
+            trigger_id: trigger_id,
+        }
+    }
+    
+    pub fn item(self, item: ContextMenuItem) -> ContextMenu {
+        self.items.push(item)
+        self
+    }
+    
+    pub fn render(self) -> string {
+        let mut items_html = Vec::new()
+        
+        for item in self.items {
+            let icon_html = if item.icon.len() > 0 {
+                format!("<span class='wj-context-icon'>{}</span>", item.icon)
+            } else {
+                String::from("")
+            }
+            
+            let disabled_class = if item.disabled { " wj-context-item-disabled" } else { "" }
+            let disabled_attr = if item.disabled { " disabled" } else { "" }
+            
+            items_html.push(format!(
+                "<button class='wj-context-item{}' onclick='{}'{}>
+                    {}
+                    <span>{}</span>
+                </button>",
+                disabled_class,
+                item.action,
+                disabled_attr,
+                icon_html,
+                item.label
+            ))
+        }
+        
+        format!(
+            "<div class='wj-context-menu' id='context-{}' style='display: none'>
+                {}
+            </div>",
+            self.trigger_id,
+            items_html.join("")
+        )
+    }
+}
+

@@ -9,6 +9,7 @@ pub enum ProgressVariant {
     Success,
     Warning,
     Danger,
+    Circular,
 }
 
 #[derive(Clone)]
@@ -45,7 +46,7 @@ impl Progress {
     }
 
     pub fn render(&self) -> VNode {
-        let percentage = (self.value / self.max * 100.0).min(100.0).max(0.0);
+        let percentage = (self.value / self.max * 100.0).clamp(0.0, 100.0);
 
         let mut bar_classes = vec!["wj-progress-bar".to_string()];
         bar_classes.push(
@@ -54,6 +55,7 @@ impl Progress {
                 ProgressVariant::Success => "wj-progress-success",
                 ProgressVariant::Warning => "wj-progress-warning",
                 ProgressVariant::Danger => "wj-progress-danger",
+                ProgressVariant::Circular => "wj-progress-circular",
             }
             .to_string(),
         );

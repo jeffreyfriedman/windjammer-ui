@@ -1,0 +1,262 @@
+//! CRUD Operations Tests
+//!
+//! Test Create, Read, Update, Delete patterns common in applications
+
+use windjammer_ui::components::*;
+use windjammer_ui::simple_vnode::VNode;
+use windjammer_ui::to_vnode::ToVNode;
+
+#[derive(Clone, Debug, PartialEq)]
+#[allow(dead_code)] // Used in tests for data structure examples
+struct TodoItem {
+    id: i32,
+    text: String,
+    completed: bool,
+}
+
+#[test]
+fn test_list_view_rendering() {
+    // Test rendering a list of items
+    let items = [
+        "Item 1".to_string(),
+        "Item 2".to_string(),
+        "Item 3".to_string(),
+    ];
+
+    let list = Flex::new()
+        .direction(FlexDirection::Column)
+        .children(
+            items
+                .iter()
+                .map(|item| Text::new(item.clone()).render())
+                .collect(),
+        )
+        .render();
+
+    match list {
+        VNode::Element { children, .. } => {
+            assert_eq!(children.len(), 3);
+        }
+        _ => panic!("Expected element node"),
+    }
+}
+
+#[test]
+fn test_create_button() {
+    let create_btn = Button::new("+ Add New")
+        .variant(ButtonVariant::Primary)
+        .render();
+
+    assert!(matches!(create_btn, VNode::Element { .. }));
+}
+
+#[test]
+fn test_delete_button() {
+    let delete_btn = Button::new("Delete")
+        .variant(ButtonVariant::Danger)
+        .render();
+
+    assert!(matches!(delete_btn, VNode::Element { .. }));
+}
+
+#[test]
+fn test_edit_button() {
+    let edit_btn = Button::new("Edit")
+        .variant(ButtonVariant::Secondary)
+        .render();
+
+    assert!(matches!(edit_btn, VNode::Element { .. }));
+}
+
+#[test]
+fn test_empty_state_display() {
+    // Test empty state when no items
+    let empty_state = Flex::new()
+        .direction(FlexDirection::Column)
+        .children(vec![
+            Text::new("No items found").render(),
+            Button::new("Create First Item")
+                .variant(ButtonVariant::Primary)
+                .render(),
+        ])
+        .render();
+
+    match empty_state {
+        VNode::Element { children, .. } => {
+            assert_eq!(children.len(), 2);
+        }
+        _ => panic!("Expected element node"),
+    }
+}
+
+#[test]
+fn test_list_item_with_actions() {
+    // Test a list item with edit/delete actions
+    let list_item = Flex::new()
+        .direction(FlexDirection::Row)
+        .children(vec![
+            Text::new("Item Name").render(),
+            Button::new("Edit").variant(ButtonVariant::Ghost).render(),
+            Button::new("Delete").variant(ButtonVariant::Ghost).render(),
+        ])
+        .render();
+
+    match list_item {
+        VNode::Element { children, .. } => {
+            assert_eq!(children.len(), 3);
+        }
+        _ => panic!("Expected element node"),
+    }
+}
+
+#[test]
+fn test_search_filter_ui() {
+    // Test search/filter pattern
+    let search_input = Input::new().placeholder("Search...".to_string());
+
+    let search_bar = Flex::new()
+        .direction(FlexDirection::Row)
+        .children(vec![
+            search_input.render(),
+            Button::new("Search")
+                .variant(ButtonVariant::Primary)
+                .render(),
+        ])
+        .render();
+
+    match search_bar {
+        VNode::Element { children, .. } => {
+            assert_eq!(children.len(), 2);
+        }
+        _ => panic!("Expected element node"),
+    }
+}
+
+#[test]
+fn test_pagination_controls() {
+    // Test pagination UI
+    let pagination = Flex::new()
+        .direction(FlexDirection::Row)
+        .children(vec![
+            Button::new("Previous")
+                .variant(ButtonVariant::Secondary)
+                .render(),
+            Text::new("Page 1 of 5").render(),
+            Button::new("Next")
+                .variant(ButtonVariant::Secondary)
+                .render(),
+        ])
+        .render();
+
+    match pagination {
+        VNode::Element { children, .. } => {
+            assert_eq!(children.len(), 3);
+        }
+        _ => panic!("Expected element node"),
+    }
+}
+
+#[test]
+fn test_confirmation_dialog_pattern() {
+    // Test confirmation dialog for delete (simplified without Dialog component)
+    let dialog_content = Flex::new()
+        .direction(FlexDirection::Column)
+        .children(vec![
+            Text::new("Confirm Delete").render(),
+            Text::new("Are you sure you want to delete this item?").render(),
+            Flex::new()
+                .direction(FlexDirection::Row)
+                .children(vec![
+                    Button::new("Cancel")
+                        .variant(ButtonVariant::Secondary)
+                        .render(),
+                    Button::new("Delete")
+                        .variant(ButtonVariant::Danger)
+                        .render(),
+                ])
+                .render(),
+        ])
+        .render();
+
+    assert!(matches!(dialog_content, VNode::Element { .. }));
+}
+
+#[test]
+fn test_detail_view_layout() {
+    // Test detail view for viewing/editing a single item
+    let name_input = Input::new().placeholder("Name".to_string());
+    let desc_input = Input::new().placeholder("Description".to_string());
+
+    let detail_view = Flex::new()
+        .direction(FlexDirection::Column)
+        .children(vec![
+            Text::new("Item Details").render(),
+            name_input.render(),
+            desc_input.render(),
+            Flex::new()
+                .direction(FlexDirection::Row)
+                .children(vec![
+                    Button::new("Save").variant(ButtonVariant::Primary).render(),
+                    Button::new("Cancel")
+                        .variant(ButtonVariant::Secondary)
+                        .render(),
+                ])
+                .render(),
+        ])
+        .render();
+
+    match detail_view {
+        VNode::Element { children, .. } => {
+            assert_eq!(children.len(), 4);
+        }
+        _ => panic!("Expected element node"),
+    }
+}
+
+#[test]
+fn test_loading_state_indicator() {
+    // Test loading spinner while fetching data (without Spinner component)
+    let loading = Flex::new()
+        .direction(FlexDirection::Column)
+        .children(vec![
+            Text::new("⏳").render(), // Loading icon
+            Text::new("Loading...").render(),
+        ])
+        .render();
+
+    match loading {
+        VNode::Element { children, .. } => {
+            assert_eq!(children.len(), 2);
+        }
+        _ => panic!("Expected element node"),
+    }
+}
+
+#[test]
+fn test_success_message_after_operation() {
+    // Test success alert after create/update/delete
+    let success = Alert::success("Item successfully created!").render();
+
+    assert!(matches!(success, VNode::Element { .. }));
+}
+
+#[test]
+fn test_bulk_actions_ui() {
+    // Test bulk selection and actions
+    let bulk_actions = Flex::new()
+        .direction(FlexDirection::Row)
+        .children(vec![
+            Checkbox::new("Select All").to_vnode(),
+            Button::new("Delete Selected")
+                .variant(ButtonVariant::Danger)
+                .render(),
+        ])
+        .render();
+
+    match bulk_actions {
+        VNode::Element { children, .. } => {
+            assert_eq!(children.len(), 2);
+        }
+        _ => panic!("Expected element node"),
+    }
+}

@@ -1,7 +1,7 @@
 // Dashboard Example - Business Metrics
 // Demonstrates: Cards, grids, statistics display, data visualization
 
-use std::ui::*
+use windjammer_ui::*
 
 @export
 fn start() {
