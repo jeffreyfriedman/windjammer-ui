@@ -43,14 +43,14 @@ jobs:
       - name: Install Windjammer CLI
         shell: bash
         run: |
-          echo "📦 Installing Windjammer CLI (wj) from main branch..."
-          # Clone windjammer repo and build from source to get latest fixes
-          git clone https://github.com/jeffreyfriedman/windjammer.git /tmp/windjammer
+          echo "📦 Installing Windjammer CLI (wj) from fix branch..."
+          # Clone windjammer repo and build from fix branch to get static method fix
+          git clone --branch fix/static-method-self-parameter https://github.com/jeffreyfriedman/windjammer.git /tmp/windjammer
           cd /tmp/windjammer
           cargo build --release
           # Install to cargo bin directory
           cp target/release/wj ~/.cargo/bin/
-          echo "✅ Windjammer CLI installed"
+          echo "✅ Windjammer CLI installed (from fix/static-method-self-parameter branch)"
           wj --version
       
       - name: Generate Cargo.lock if missing
@@ -109,14 +109,14 @@ jobs:
       
       - name: Install Windjammer CLI
         run: |
-          echo "📦 Installing Windjammer CLI (wj) from main branch..."
-          # Clone windjammer repo and build from source to get latest fixes
-          git clone https://github.com/jeffreyfriedman/windjammer.git /tmp/windjammer
+          echo "📦 Installing Windjammer CLI (wj) from fix branch..."
+          # Clone windjammer repo and build from fix branch to get static method fix
+          git clone --branch fix/static-method-self-parameter https://github.com/jeffreyfriedman/windjammer.git /tmp/windjammer
           cd /tmp/windjammer
           cargo build --release
           # Install to cargo bin directory
           cp target/release/wj ~/.cargo/bin/
-          echo "✅ Windjammer CLI installed"
+          echo "✅ Windjammer CLI installed (from fix/static-method-self-parameter branch)"
           wj --version
       
       - name: Install tarpaulin
@@ -177,14 +177,14 @@ jobs:
       
       - name: Install Windjammer CLI
         run: |
-          echo "📦 Installing Windjammer CLI (wj) from main branch..."
-          # Clone windjammer repo and build from source to get latest fixes
-          git clone https://github.com/jeffreyfriedman/windjammer.git /tmp/windjammer
+          echo "📦 Installing Windjammer CLI (wj) from fix branch..."
+          # Clone windjammer repo and build from fix branch to get static method fix
+          git clone --branch fix/static-method-self-parameter https://github.com/jeffreyfriedman/windjammer.git /tmp/windjammer
           cd /tmp/windjammer
           cargo build --release
           # Install to cargo bin directory
           cp target/release/wj ~/.cargo/bin/
-          echo "✅ Windjammer CLI installed"
+          echo "✅ Windjammer CLI installed (from fix/static-method-self-parameter branch)"
           wj --version
       
       - name: Cache Cargo registry and build artifacts
