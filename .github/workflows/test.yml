@@ -107,7 +107,7 @@ jobs:
         run: cargo build --release --verbose
       
       - name: Build with desktop feature
-        if: matrix.rust == 'stable' && runner.os != 'Windows'
+        if: matrix.rust == 'stable' && runner.os == 'macOS'
         run: cargo build --release --features desktop
       
       - name: Build for WASM target
@@ -137,7 +137,9 @@ jobs:
         run: cargo install cargo-tarpaulin
       
       - name: Generate coverage
-        run: cargo tarpaulin --verbose --all-features --workspace --timeout 120 --out xml
+        run: |
+          # Skip desktop feature on Linux (requires display server)
+          cargo tarpaulin --verbose --features "web,wasm-bindgen" --workspace --timeout 120 --out xml
       
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
