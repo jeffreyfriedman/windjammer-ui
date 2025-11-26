@@ -691,6 +691,34 @@ at your option.
 
 ---
 
+## 🐛 Known Limitations
+
+While Windjammer UI is production-ready, there are some platform-specific considerations:
+
+### Platform Support
+- **Desktop on Linux CI**: Requires display server (X11/Wayland). CI tests web features only on Linux.
+- **iOS Features on Windows**: macOS-specific dependencies (cocoa, core-foundation) are not available on Windows.
+- **Cross-compilation**: Some features may require platform-specific system libraries.
+
+### Technical Limitations
+- **Event Handlers in HTML**: Event handlers are not serializable to HTML strings (by design). Use the DOM rendering methods for interactive components.
+- **WASM Binary Size**: Desktop features significantly increase WASM binary size. Use `features = ["web"]` for web-only builds.
+
+### Recommended Feature Configurations
+
+```toml
+# Web/WASM only (smallest bundle)
+windjammer-ui = { version = "0.1.1", features = ["web"] }
+
+# Desktop only (native windowing)
+windjammer-ui = { version = "0.1.1", features = ["desktop"] }
+
+# All platforms (largest bundle)
+windjammer-ui = { version = "0.1.1", features = ["all-platforms"] }
+```
+
+---
+
 <div align="center">
 
 **Built with ❤️ in pure Windjammer**
