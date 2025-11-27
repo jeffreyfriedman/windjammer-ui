@@ -1,5 +1,7 @@
 // Stepper Component - Multi-step progress indicator
 
+use super::traits::Renderable
+
 pub struct StepperStep {
     label: string,
     description: string,
@@ -49,7 +51,10 @@ impl Stepper {
         self
     }
 
-    pub fn render(self) -> string {
+}
+
+impl Renderable for Stepper {
+fn render(self) -> string {
         let mut html = String::new();
 
         html.push_str("<div style='display: flex; align-items: center; justify-content: space-between; padding: 24px 0;'>");
@@ -133,4 +138,3 @@ impl Stepper {
         html
     }
 }
-

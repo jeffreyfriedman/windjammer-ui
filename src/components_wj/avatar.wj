@@ -1,3 +1,14 @@
+// Avatar - User profile image component
+
+pub struct Avatar {
+    src: string,
+    alt: string,
+    size: AvatarSize,
+    shape: AvatarShape,
+    fallback: string,
+    class: string,
+}
+
 pub enum AvatarSize {
     Small,
     Medium,
@@ -5,73 +16,104 @@ pub enum AvatarSize {
     XLarge,
 }
 
-pub struct Avatar {
-    src: string,
-    alt: string,
-    fallback: string,
-    size: AvatarSize,
-    rounded: bool,
+pub enum AvatarShape {
+    Circle,
+    Square,
+    Rounded,
 }
 
 impl Avatar {
-    pub fn new(src: string, alt: string) -> Avatar {
+    pub fn new(src: string) -> Avatar {
         Avatar {
             src,
-            alt,
-            fallback: "".to_string(),
+            alt: "Avatar".to_string(),
             size: AvatarSize::Medium,
-            rounded: true,
+            shape: AvatarShape::Circle,
+            fallback: String::new(),
+            class: String::new(),
         }
     }
-
-    pub fn fallback(self, fallback: string) -> Avatar {
-        self.fallback = fallback
+    
+    pub fn alt(alt: string) -> Avatar {
+        self.alt = alt
         self
     }
-
-    pub fn size(self, size: AvatarSize) -> Avatar {
+    
+    pub fn size(size: AvatarSize) -> Avatar {
         self.size = size
         self
     }
-
-    pub fn rounded(self, rounded: bool) -> Avatar {
-        self.rounded = rounded
+    
+    pub fn shape(shape: AvatarShape) -> Avatar {
+        self.shape = shape
         self
     }
-
-    pub fn render(self) -> string {
-        let size_class = match self.size {
-            AvatarSize::Small => "wj-avatar-sm",
-            AvatarSize::Medium => "wj-avatar-md",
-            AvatarSize::Large => "wj-avatar-lg",
-            AvatarSize::XLarge => "wj-avatar-xl",
+    
+    pub fn fallback(fallback: string) -> Avatar {
+        self.fallback = fallback
+        self
+    }
+    
+    pub fn class(class: string) -> Avatar {
+        self.class = class
+        self
+    }
+    
+    pub fn render() -> string {
+        let size_px = match self.size {
+            AvatarSize::Small => "32px",
+            AvatarSize::Medium => "48px",
+            AvatarSize::Large => "64px",
+            AvatarSize::XLarge => "96px",
         }
-
-        let shape_class = if self.rounded {
-            "wj-avatar-rounded"
+        
+        let border_radius = match self.shape {
+            AvatarShape::Circle => "50%",
+            AvatarShape::Square => "0",
+            AvatarShape::Rounded => "8px",
+        }
+        
+        let mut html = String::new()
+        
+        if self.src.is_empty() && !self.fallback.is_empty() {
+            // Render fallback (initials or icon)
+            html.push_str("<div class=\"wj-avatar wj-avatar-fallback ")
+            html.push_str(self.class.as_str())
+            html.push_str("\" style=\"width: ")
+            html.push_str(size_px)
+            html.push_str("; height: ")
+            html.push_str(size_px)
+            html.push_str("; border-radius: ")
+            html.push_str(border_radius)
+            html.push_str("; background-color: #3b82f6; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: ")
+            
+            let font_size = match self.size {
+                AvatarSize::Small => "12px",
+                AvatarSize::Medium => "16px",
+                AvatarSize::Large => "20px",
+                AvatarSize::XLarge => "28px",
+            }
+            html.push_str(font_size)
+            html.push_str(";\">")
+            html.push_str(self.fallback.as_str())
+            html.push_str("</div>")
         } else {
-            "wj-avatar-square"
+            // Render image
+            html.push_str("<img class=\"wj-avatar ")
+            html.push_str(self.class.as_str())
+            html.push_str("\" src=\"")
+            html.push_str(self.src.as_str())
+            html.push_str("\" alt=\"")
+            html.push_str(self.alt.as_str())
+            html.push_str("\" style=\"width: ")
+            html.push_str(size_px)
+            html.push_str("; height: ")
+            html.push_str(size_px)
+            html.push_str("; border-radius: ")
+            html.push_str(border_radius)
+            html.push_str("; object-fit: cover;\">")
         }
-
-        if self.src != "" {
-            format!("<img src='{}' alt='{}' class='wj-avatar {} {}'>", self.src, self.alt, size_class, shape_class)
-        } else if self.fallback != "" {
-            format!("<div class='wj-avatar wj-avatar-fallback {} {}'>{}</div>", size_class, shape_class, self.fallback)
-        } else {
-            format!("<div class='wj-avatar wj-avatar-default {} {}'>?</div>", size_class, shape_class)
-        }
+        
+        html
     }
 }
-
-fn main() {
-    let avatar1 = Avatar::new("https://example.com/avatar.jpg".to_string(), "User".to_string())
-        .size(AvatarSize::Large)
-
-    println!("{}", avatar1.render())
-
-    let avatar2 = Avatar::new("".to_string(), "John Doe".to_string())
-        .fallback("JD".to_string())
-
-    println!("{}", avatar2.render())
-}
-

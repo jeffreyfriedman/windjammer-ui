@@ -1,3 +1,5 @@
+
+use super::traits::Renderable
 pub struct AdvancedCodeEditor {
     code: string,
     language: string,
@@ -44,7 +46,11 @@ impl AdvancedCodeEditor {
         self
     }
 
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for AdvancedCodeEditor {
+pub fn render(self) -> string {
         let features_class = if self.minimap { " wj-editor-with-minimap" } else { "" }
         let line_class = if self.line_numbers { " wj-editor-with-lines" } else { "" }
 
@@ -71,4 +77,5 @@ fn main() {
 
     println!("{}", editor.render())
 }
+
 

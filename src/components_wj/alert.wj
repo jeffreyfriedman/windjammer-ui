@@ -1,5 +1,7 @@
 // Alert Component - Display messages and notifications
 
+
+use super::traits::Renderable
 pub enum AlertVariant {
     Error,
     Warning,
@@ -41,7 +43,11 @@ impl Alert {
         }
     }
 
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for Alert {
+pub fn render(self) -> string {
         let variant_class = match self.variant {
             AlertVariant::Error => "wj-alert-error",
             AlertVariant::Warning => "wj-alert-warning",

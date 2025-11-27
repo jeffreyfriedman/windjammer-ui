@@ -1,5 +1,7 @@
 // Slider component - Pure Windjammer implementation
 
+
+use super::traits::Renderable
 pub struct Slider {
     min: float,
     max: float,
@@ -51,7 +53,11 @@ impl Slider {
         self
     }
     
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for Slider {
+pub fn render(self) -> string {
         let disabled_attr = if self.disabled { " disabled" } else { "" }
         let label_html = if self.label != "" {
             "<label>".to_string() + self.label + "</label>"

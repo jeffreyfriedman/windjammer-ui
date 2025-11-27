@@ -1,0 +1,71 @@
+// Type-Safe API Demo - Windjammer UI v0.3.0
+// Showcases the new Renderable trait and no-stuttering builder pattern
+
+use windjammer_ui.components.generated.{
+    Renderable, Button, ButtonVariant, ButtonSize,
+    Input, Div, Text, H1, H2, P, Span,
+    Card, Alert, AlertVariant, Badge, BadgeVariant
+}
+
+fn main() {
+    // ✨ No-Stuttering Builder Pattern!
+    // Notice: No .render() calls needed for child components
+    
+    let page = Div::new()
+        .child(H1::new().child(Text::new("Windjammer UI v0.3.0")))
+        .child(P::new().child(Text::new("Type-safe, trait-based component API")))
+        
+        // Card with buttons
+        .child(Card::new()
+            .child(H2::new().child(Text::new("Buttons")))
+            .child(Div::new()
+                .child(Button::new("Primary")
+                    .variant(ButtonVariant::Primary)
+                    .size(ButtonSize::Medium))
+                .child(Button::new("Success")
+                    .variant(ButtonVariant::Success))
+                .child(Button::new("Danger")
+                    .variant(ButtonVariant::Danger))
+                .child(Button::new("Disabled")
+                    .disabled(true))))
+        
+        // Card with alerts
+        .child(Card::new()
+            .child(H2::new().child(Text::new("Alerts")))
+            .child(Alert::new("This is a success message!")
+                .variant(AlertVariant::Success))
+            .child(Alert::new("Warning: Check your input")
+                .variant(AlertVariant::Warning))
+            .child(Alert::new("Error: Something went wrong")
+                .variant(AlertVariant::Error)))
+        
+        // Card with form
+        .child(Card::new()
+            .child(H2::new().child(Text::new("Form")))
+            .child(Input::new()
+                .placeholder("Enter your name..."))
+            .child(Input::new()
+                .placeholder("Enter your email...")
+                .value("user@example.com")))
+        
+        // Card with badges
+        .child(Card::new()
+            .child(H2::new().child(Text::new("Badges")))
+            .child(Div::new()
+                .child(Badge::new("New")
+                    .variant(BadgeVariant::Primary))
+                .child(Badge::new("Beta")
+                    .variant(BadgeVariant::Warning))
+                .child(Badge::new("v0.3.0")
+                    .variant(BadgeVariant::Success))))
+    
+    // Only the root component needs .render()
+    println!("{}", page.render())
+    
+    // 🎉 Clean, composable, type-safe!
+    // The compiler ensures:
+    // - All components implement Renderable
+    // - Type safety throughout the tree
+    // - No runtime errors from invalid nesting
+}
+

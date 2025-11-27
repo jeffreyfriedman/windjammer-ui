@@ -1,5 +1,7 @@
 // Divider Component - Visual separator between sections
 
+
+use super::traits::Renderable
 pub enum DividerOrientation {
     Horizontal,
     Vertical,
@@ -50,7 +52,11 @@ impl Divider {
         self
     }
 
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for Divider {
+pub fn render(self) -> string {
         let orientation_class = match self.orientation {
             DividerOrientation::Horizontal => "wj-divider-horizontal",
             DividerOrientation::Vertical => "wj-divider-vertical",

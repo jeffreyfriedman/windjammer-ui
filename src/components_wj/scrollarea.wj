@@ -1,3 +1,5 @@
+
+use super::traits::Renderable
 pub enum ScrollDirection {
     Vertical,
     Horizontal,
@@ -41,7 +43,11 @@ impl ScrollArea {
         self
     }
 
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for ScrollArea {
+pub fn render(self) -> string {
         let overflow_style = match self.direction {
             ScrollDirection::Vertical => "overflow-y: auto; overflow-x: hidden;",
             ScrollDirection::Horizontal => "overflow-x: auto; overflow-y: hidden;",
@@ -65,4 +71,5 @@ fn main() {
 
     println!("{}", scroll.render())
 }
+
 

@@ -1,3 +1,5 @@
+
+use super::traits::Renderable
 pub struct CodeEditor {
     code: string,
     language: string,
@@ -37,7 +39,11 @@ impl CodeEditor {
         self
     }
 
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for CodeEditor {
+pub fn render(self) -> string {
         let readonly_attr = if self.readonly { " readonly" } else { "" }
         let line_numbers_class = if self.line_numbers { " wj-editor-with-lines" } else { "" }
 
@@ -55,4 +61,5 @@ fn main() {
 
     println!("{}", editor.render())
 }
+
 
