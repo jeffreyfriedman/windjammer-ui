@@ -15,7 +15,7 @@ fn transpile_example(path: &str) -> Result<(), String> {
         .args(["build", path, "--no-run-cargo"])
         .output()
         .map_err(|e| format!("Failed to run wj: {}", e))?;
-    
+
     if !output.status.success() {
         return Err(format!(
             "Transpilation failed:\nstdout: {}\nstderr: {}",
@@ -23,44 +23,56 @@ fn transpile_example(path: &str) -> Result<(), String> {
             String::from_utf8_lossy(&output.stderr)
         ));
     }
-    
+
     Ok(())
 }
 
 #[test]
 fn test_counter_example_compiles() {
     let counter_path = Path::new("examples_wj/counter.wj");
-    assert!(counter_path.exists(), "Counter example doesn't exist at {:?}", counter_path);
-    
-    transpile_example("examples_wj/counter.wj")
-        .expect("Counter example failed to transpile");
+    assert!(
+        counter_path.exists(),
+        "Counter example doesn't exist at {:?}",
+        counter_path
+    );
+
+    transpile_example("examples_wj/counter.wj").expect("Counter example failed to transpile");
 }
 
 #[test]
 fn test_todo_app_example_compiles() {
     let todo_path = Path::new("examples_wj/todo_app.wj");
-    assert!(todo_path.exists(), "Todo app example doesn't exist at {:?}", todo_path);
-    
-    transpile_example("examples_wj/todo_app.wj")
-        .expect("Todo app failed to transpile");
+    assert!(
+        todo_path.exists(),
+        "Todo app example doesn't exist at {:?}",
+        todo_path
+    );
+
+    transpile_example("examples_wj/todo_app.wj").expect("Todo app failed to transpile");
 }
 
 #[test]
 fn test_contact_form_example_compiles() {
     let form_path = Path::new("examples_wj/contact_form.wj");
-    assert!(form_path.exists(), "Contact form example doesn't exist at {:?}", form_path);
-    
-    transpile_example("examples_wj/contact_form.wj")
-        .expect("Contact form failed to transpile");
+    assert!(
+        form_path.exists(),
+        "Contact form example doesn't exist at {:?}",
+        form_path
+    );
+
+    transpile_example("examples_wj/contact_form.wj").expect("Contact form failed to transpile");
 }
 
 #[test]
 fn test_dashboard_example_compiles() {
     let dashboard_path = Path::new("examples_wj/dashboard.wj");
-    assert!(dashboard_path.exists(), "Dashboard example doesn't exist at {:?}", dashboard_path);
-    
-    transpile_example("examples_wj/dashboard.wj")
-        .expect("Dashboard failed to transpile");
+    assert!(
+        dashboard_path.exists(),
+        "Dashboard example doesn't exist at {:?}",
+        dashboard_path
+    );
+
+    transpile_example("examples_wj/dashboard.wj").expect("Dashboard failed to transpile");
 }
 
 #[test]
