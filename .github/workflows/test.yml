@@ -106,7 +106,7 @@ jobs:
         if: matrix.rust == 'stable' && matrix.os == 'ubuntu-latest'
         run: |
           rustup target add wasm32-unknown-unknown
-          cargo build --target wasm32-unknown-unknown --features wasm
+          cargo build --target wasm32-unknown-unknown --features web
 
   coverage:
     name: Code Coverage
