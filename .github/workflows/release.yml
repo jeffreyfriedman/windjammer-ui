@@ -74,6 +74,9 @@ jobs:
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
       
+      - name: Install Windjammer CLI
+        run: cargo install windjammer --locked
+      
       - name: Run tests before publish
         run: cargo test --all-features
       

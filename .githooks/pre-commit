@@ -33,6 +33,16 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+echo "📦 Running cargo publish --dry-run..."
+# Only test macro crate since main crate depends on it
+# (and dry-run doesn't actually publish, so dependency check would fail)
+(cd windjammer-ui-macro && cargo publish --dry-run --allow-dirty)
+if [ $? -ne 0 ]; then
+    echo "❌ Macro crate publish dry-run failed. Please fix the issues."
+    exit 1
+fi
+echo "✅ Macro crate is ready to publish!"
+
 echo "✅ All pre-commit checks passed!"
 exit 0
 

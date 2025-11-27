@@ -3,8 +3,9 @@
 **Pure Windjammer UI framework - Zero HTML/CSS/JavaScript required**
 
 [![License](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](LICENSE)
-[![Components](https://img.shields.io/badge/components-49-brightgreen.svg)](#component-library)
+[![Components](https://img.shields.io/badge/components-55-brightgreen.svg)](#component-library)
 [![Status](https://img.shields.io/badge/status-production%20ready-success.svg)](#status)
+[![Windjammer](https://img.shields.io/badge/windjammer-0.37.2+-blue.svg)](https://crates.io/crates/windjammer)
 
 ---
 
@@ -35,7 +36,7 @@ fn main() {
 | Feature | Description |
 |---------|-------------|
 | 🎯 **Pure Windjammer** | Write only `.wj` files - zero HTML/CSS/JS |
-| 📦 **49 Components** | Complete UI library from buttons to chat interfaces |
+| 📦 **55 Components** | Complete UI library from buttons to chat interfaces |
 | 💬 **Chat Ready** | Built-in ChatGPT-style message components |
 | 🎨 **Beautiful Styling** | Production-ready designs out of the box |
 | 🌙 **Dark Mode** | Built-in theme support |
@@ -412,7 +413,7 @@ use windjammer_ui::*
 
 fn main() {
     let mut count = 0
-    
+
     let ui = Container::new()
         .child(
             Text::new(format!("Count: {}", count))
