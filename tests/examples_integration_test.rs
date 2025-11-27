@@ -6,6 +6,7 @@ use std::path::Path;
 use std::process::Command;
 
 #[test]
+#[ignore = "Requires windjammer-ui to be published to crates.io"]
 fn test_counter_example_compiles() {
     let counter_path = Path::new("examples_wj/counter.wj");
 
@@ -28,6 +29,7 @@ fn test_counter_example_compiles() {
 }
 
 #[test]
+#[ignore = "Requires windjammer-ui to be published to crates.io"]
 fn test_todo_app_example_compiles() {
     let todo_path = Path::new("examples_wj/todo_app.wj");
 
@@ -49,6 +51,7 @@ fn test_todo_app_example_compiles() {
 }
 
 #[test]
+#[ignore = "Requires windjammer-ui to be published to crates.io"]
 fn test_contact_form_example_compiles() {
     let form_path = Path::new("examples_wj/contact_form.wj");
 
@@ -70,6 +73,7 @@ fn test_contact_form_example_compiles() {
 }
 
 #[test]
+#[ignore = "Requires windjammer-ui to be published to crates.io"]
 fn test_dashboard_example_compiles() {
     let dashboard_path = Path::new("examples_wj/dashboard.wj");
 

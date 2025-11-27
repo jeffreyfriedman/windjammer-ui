@@ -34,9 +34,17 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "📦 Running cargo publish --dry-run..."
-cargo publish --dry-run
+# Publish macro crate first (dry-run)
+(cd windjammer-ui-macro && cargo publish --dry-run --allow-dirty)
 if [ $? -ne 0 ]; then
-    echo "❌ Publish dry-run failed. Please fix the issues."
+    echo "❌ Macro crate publish dry-run failed. Please fix the issues."
+    exit 1
+fi
+
+# Then publish main crate (dry-run)
+cargo publish --dry-run --allow-dirty
+if [ $? -ne 0 ]; then
+    echo "❌ Main crate publish dry-run failed. Please fix the issues."
     exit 1
 fi
 
