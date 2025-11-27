@@ -1,0 +1,131 @@
+// Form Component - Wrapper for form elements with validation support
+
+pub struct Form {
+    id: string,
+    action: string,
+    method: string,
+    children: Vec<string>,
+    on_submit: string,
+}
+
+impl Form {
+    pub fn new(id: string) -> Form {
+        Form {
+            id: id,
+            action: "#".to_string(),
+            method: "POST".to_string(),
+            children: Vec::new(),
+            on_submit: "return false;".to_string(),
+        }
+    }
+
+    pub fn action(self, action: string) -> Form {
+        self.action = action;
+        self
+    }
+
+    pub fn method(self, method: string) -> Form {
+        self.method = method;
+        self
+    }
+
+    pub fn on_submit(self, handler: string) -> Form {
+        self.on_submit = handler;
+        self
+    }
+
+    pub fn child(self, child: string) -> Form {
+        self.children.push(child);
+        self
+    }
+
+    pub fn render(self) -> string {
+        let mut html = String::new();
+        html.push_str("<form id='");
+        html.push_str(&self.id);
+        html.push_str("' action='");
+        html.push_str(&self.action);
+        html.push_str("' method='");
+        html.push_str(&self.method);
+        html.push_str("' onsubmit='");
+        html.push_str(&self.on_submit);
+        html.push_str("'>");
+
+        for child in self.children {
+            html.push_str(child);
+        }
+
+        html.push_str("</form>");
+        html
+    }
+}
+
+// FormField - Wrapper for form inputs with labels and validation
+pub struct FormField {
+    label: string,
+    input: string,
+    error: string,
+    required: bool,
+    help_text: string,
+}
+
+impl FormField {
+    pub fn new(label: string, input: string) -> FormField {
+        FormField {
+            label: label,
+            input: input,
+            error: String::new(),
+            required: false,
+            help_text: String::new(),
+        }
+    }
+
+    pub fn required(self, required: bool) -> FormField {
+        self.required = required;
+        self
+    }
+
+    pub fn error(self, error: string) -> FormField {
+        self.error = error;
+        self
+    }
+
+    pub fn help_text(self, text: string) -> FormField {
+        self.help_text = text;
+        self
+    }
+
+    pub fn render(self) -> string {
+        let mut html = String::new();
+        html.push_str("<div style='margin-bottom: 16px;'>");
+
+        // Label
+        html.push_str("<label style='display: block; margin-bottom: 4px; font-weight: 500; color: #333;'>");
+        html.push_str(&self.label);
+        if self.required {
+            html.push_str(" <span style='color: #e53e3e;'>*</span>");
+        }
+        html.push_str("</label>");
+
+        // Input
+        html.push_str(&self.input);
+
+        // Help text
+        if self.help_text.len() > 0 {
+            html.push_str("<div style='margin-top: 4px; font-size: 12px; color: #718096;'>");
+            html.push_str(&self.help_text);
+            html.push_str("</div>");
+        }
+
+        // Error message
+        if self.error.len() > 0 {
+            html.push_str("<div style='margin-top: 4px; font-size: 12px; color: #e53e3e;'>");
+            html.push_str(&self.error);
+            html.push_str("</div>");
+        }
+
+        html.push_str("</div>");
+        html
+    }
+}
+
