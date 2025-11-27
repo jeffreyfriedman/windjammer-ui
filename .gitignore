@@ -9,6 +9,9 @@ Cargo.lock
 src/components/generated/
 build_components/
 build_*/
+build/*.rs
+build/*.rs.map
+build/Cargo.toml
 
 # IDE
 .vscode/
