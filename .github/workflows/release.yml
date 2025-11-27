@@ -91,13 +91,17 @@ jobs:
         run: cargo test --features web
       
       - name: Publish windjammer-ui-macro first
-        run: cargo publish --token ${{ secrets.CARGO_TOKEN }} -p windjammer-ui-macro
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_TOKEN }}
+        run: cargo publish -p windjammer-ui-macro
         continue-on-error: true  # May already be published
       
       - name: Wait for crates.io to index
         run: sleep 30
       
       - name: Publish windjammer-ui
-        run: cargo publish --token ${{ secrets.CARGO_TOKEN }}
-        continue-on-error: false
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_TOKEN }}
+        run: cargo publish
+        continue-on-error: true  # Don't fail if already published
 
