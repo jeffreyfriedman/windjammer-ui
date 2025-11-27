@@ -62,6 +62,8 @@ jobs:
     name: Publish to crates.io
     needs: [validate-version, create-release]
     runs-on: ubuntu-latest
+    environment:
+      name: crates-io
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -89,6 +91,15 @@ jobs:
       
       - name: Run tests before publish
         run: cargo test --features web
+      
+      - name: Verify CARGO_TOKEN is set
+        run: |
+          if [ -z "${{ secrets.CARGO_TOKEN }}" ]; then
+            echo "❌ ERROR: CARGO_TOKEN secret is not set"
+            echo "Please add CARGO_TOKEN to repository secrets"
+            exit 1
+          fi
+          echo "✅ CARGO_TOKEN is set"
       
       - name: Publish windjammer-ui-macro first
         run: cargo publish --token ${{ secrets.CARGO_TOKEN }} -p windjammer-ui-macro
