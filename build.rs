@@ -62,6 +62,7 @@ fn main() {
         .arg("rust")
         .arg("--library") // Auto-strip main() functions
         .arg("--module-file") // Auto-generate mod.rs
+        .arg("--no-cargo") // Skip cargo build (we'll do it ourselves)
         .status()
         .expect("Failed to execute wj build");
 
@@ -71,7 +72,7 @@ fn main() {
 
     println!("cargo:warning=✅ Successfully transpiled Windjammer components!");
 
-    // Format the generated Rust code
+    // Format the generated Rust code and add clippy allow directives
     println!("cargo:warning=🎨 Formatting generated Rust code...");
 
     // Find all .rs files in the output directory
@@ -79,6 +80,13 @@ fn main() {
         for entry in entries.flatten() {
             let path = entry.path();
             if path.extension().and_then(|s| s.to_str()) == Some("rs") {
+                // Add #![allow(clippy::all)] to the top of each generated file
+                if let Ok(content) = std::fs::read_to_string(&path) {
+                    let new_content = format!("#![allow(clippy::all)]\n{}", content);
+                    let _ = std::fs::write(&path, new_content);
+                }
+
+                // Format the file
                 let _ = Command::new("rustfmt")
                     .arg("--edition")
                     .arg("2021")
