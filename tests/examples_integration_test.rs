@@ -1,97 +1,82 @@
 //! Automated Integration Tests for Windjammer UI Examples
 //!
 //! This replaces manual QA with automated testing.
+//! Note: These tests only verify transpilation succeeds, not full cargo build,
+//! since examples depend on windjammer-ui which may not be published yet.
 
 use std::path::Path;
 use std::process::Command;
 
+/// Helper to run wj build with --no-run-cargo if available (v0.37.2+)
+fn transpile_example(path: &str) -> Result<(), String> {
+    // Try with --no-run-cargo first (v0.37.2+)
+    let output = Command::new("wj")
+        .args(["build", path, "--no-run-cargo"])
+        .output()
+        .map_err(|e| format!("Failed to run wj: {}", e))?;
+    
+    // If flag doesn't exist, try without it (older versions)
+    if !output.status.success() && String::from_utf8_lossy(&output.stderr).contains("unexpected argument") {
+        let output = Command::new("wj")
+            .args(["build", path])
+            .output()
+            .map_err(|e| format!("Failed to run wj: {}", e))?;
+        
+        if !output.status.success() {
+            return Err(format!(
+                "Transpilation failed:\nstdout: {}\nstderr: {}",
+                String::from_utf8_lossy(&output.stdout),
+                String::from_utf8_lossy(&output.stderr)
+            ));
+        }
+        return Ok(());
+    }
+    
+    if !output.status.success() {
+        return Err(format!(
+            "Transpilation failed:\nstdout: {}\nstderr: {}",
+            String::from_utf8_lossy(&output.stdout),
+            String::from_utf8_lossy(&output.stderr)
+        ));
+    }
+    
+    Ok(())
+}
+
 #[test]
-#[ignore = "Requires windjammer-ui to be published to crates.io"]
 fn test_counter_example_compiles() {
     let counter_path = Path::new("examples_wj/counter.wj");
-
-    if !counter_path.exists() {
-        panic!("Counter example doesn't exist at {:?}", counter_path);
-    }
-
-    // Test that it compiles with the Windjammer compiler
-    let output = Command::new("wj")
-        .args(["build", "examples_wj/counter.wj"])
-        .output()
-        .expect("Failed to run wj compiler");
-
-    assert!(
-        output.status.success(),
-        "Counter example failed to compile:\nstdout: {}\nstderr: {}",
-        String::from_utf8_lossy(&output.stdout),
-        String::from_utf8_lossy(&output.stderr)
-    );
+    assert!(counter_path.exists(), "Counter example doesn't exist at {:?}", counter_path);
+    
+    transpile_example("examples_wj/counter.wj")
+        .expect("Counter example failed to transpile");
 }
 
 #[test]
-#[ignore = "Requires windjammer-ui to be published to crates.io"]
 fn test_todo_app_example_compiles() {
     let todo_path = Path::new("examples_wj/todo_app.wj");
-
-    if !todo_path.exists() {
-        panic!("Todo app example doesn't exist at {:?}", todo_path);
-    }
-
-    let output = Command::new("wj")
-        .args(["build", "examples_wj/todo_app.wj"])
-        .output()
-        .expect("Failed to run wj compiler");
-
-    assert!(
-        output.status.success(),
-        "Todo app failed to compile:\nstdout: {}\nstderr: {}",
-        String::from_utf8_lossy(&output.stdout),
-        String::from_utf8_lossy(&output.stderr)
-    );
+    assert!(todo_path.exists(), "Todo app example doesn't exist at {:?}", todo_path);
+    
+    transpile_example("examples_wj/todo_app.wj")
+        .expect("Todo app failed to transpile");
 }
 
 #[test]
-#[ignore = "Requires windjammer-ui to be published to crates.io"]
 fn test_contact_form_example_compiles() {
     let form_path = Path::new("examples_wj/contact_form.wj");
-
-    if !form_path.exists() {
-        panic!("Contact form example doesn't exist at {:?}", form_path);
-    }
-
-    let output = Command::new("wj")
-        .args(["build", "examples_wj/contact_form.wj"])
-        .output()
-        .expect("Failed to run wj compiler");
-
-    assert!(
-        output.status.success(),
-        "Contact form failed to compile:\nstdout: {}\nstderr: {}",
-        String::from_utf8_lossy(&output.stdout),
-        String::from_utf8_lossy(&output.stderr)
-    );
+    assert!(form_path.exists(), "Contact form example doesn't exist at {:?}", form_path);
+    
+    transpile_example("examples_wj/contact_form.wj")
+        .expect("Contact form failed to transpile");
 }
 
 #[test]
-#[ignore = "Requires windjammer-ui to be published to crates.io"]
 fn test_dashboard_example_compiles() {
     let dashboard_path = Path::new("examples_wj/dashboard.wj");
-
-    if !dashboard_path.exists() {
-        panic!("Dashboard example doesn't exist at {:?}", dashboard_path);
-    }
-
-    let output = Command::new("wj")
-        .args(["build", "examples_wj/dashboard.wj"])
-        .output()
-        .expect("Failed to run wj compiler");
-
-    assert!(
-        output.status.success(),
-        "Dashboard failed to compile:\nstdout: {}\nstderr: {}",
-        String::from_utf8_lossy(&output.stdout),
-        String::from_utf8_lossy(&output.stderr)
-    );
+    assert!(dashboard_path.exists(), "Dashboard example doesn't exist at {:?}", dashboard_path);
+    
+    transpile_example("examples_wj/dashboard.wj")
+        .expect("Dashboard failed to transpile");
 }
 
 #[test]

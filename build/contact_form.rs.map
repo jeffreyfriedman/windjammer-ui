@@ -1,0 +1,13 @@
+{
+  "mappings": [
+    {
+      "rust_file": "./build/contact_form.rs",
+      "rust_line": 1,
+      "rust_column": 0,
+      "wj_file": "examples_wj/contact_form.wj",
+      "wj_line": 106,
+      "wj_column": 1
+    }
+  ],
+  "version": 1
+}
