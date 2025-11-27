@@ -1,3 +1,5 @@
+
+use super::traits::Renderable
 pub enum SplitDirection {
     Horizontal,
     Vertical,
@@ -30,7 +32,11 @@ impl SplitPanel {
         self
     }
 
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for SplitPanel {
+pub fn render(self) -> string {
         let flex_direction = match self.direction {
             SplitDirection::Horizontal => "column",
             SplitDirection::Vertical => "row",
@@ -54,4 +60,5 @@ fn main() {
 
     println!("{}", split.render())
 }
+
 

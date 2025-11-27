@@ -1,0 +1,50 @@
+// Center - Centers content both horizontally and vertically
+
+pub struct Center {
+    child: string,
+    width: string,
+    height: string,
+    class: string,
+}
+
+impl Center {
+    pub fn new(child: string) -> Center {
+        Center {
+            child,
+            width: "100%".to_string(),
+            height: "100%".to_string(),
+            class: String::new(),
+        }
+    }
+    
+    pub fn width(width: string) -> Center {
+        self.width = width
+        self
+    }
+    
+    pub fn height(height: string) -> Center {
+        self.height = height
+        self
+    }
+    
+    pub fn class(class: string) -> Center {
+        self.class = class
+        self
+    }
+    
+    pub fn render() -> string {
+        let mut html = String::new()
+        html.push_str("<div class=\"wj-center ")
+        html.push_str(self.class.as_str())
+        html.push_str("\" style=\"display: flex; align-items: center; justify-content: center; width: ")
+        html.push_str(self.width.as_str())
+        html.push_str("; height: ")
+        html.push_str(self.height.as_str())
+        html.push_str(";\">")
+        html.push_str(self.child.as_str())
+        html.push_str("</div>")
+        html
+    }
+}
+
+

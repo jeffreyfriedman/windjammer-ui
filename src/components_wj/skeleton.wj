@@ -1,14 +1,16 @@
-pub enum SkeletonVariant {
-    Text,
-    Circle,
-    Rectangle,
-}
+// Skeleton - Loading placeholder component
 
 pub struct Skeleton {
     variant: SkeletonVariant,
     width: string,
     height: string,
-    count: i32,
+    class: string,
+}
+
+pub enum SkeletonVariant {
+    Text,
+    Circle,
+    Rectangle,
 }
 
 impl Skeleton {
@@ -16,63 +18,52 @@ impl Skeleton {
         Skeleton {
             variant: SkeletonVariant::Text,
             width: "100%".to_string(),
-            height: "1em".to_string(),
-            count: 1,
+            height: "20px".to_string(),
+            class: String::new(),
         }
     }
-
-    pub fn variant(self, variant: SkeletonVariant) -> Skeleton {
+    
+    pub fn variant(variant: SkeletonVariant) -> Skeleton {
         self.variant = variant
         self
     }
-
-    pub fn width(self, width: string) -> Skeleton {
+    
+    pub fn width(width: string) -> Skeleton {
         self.width = width
         self
     }
-
-    pub fn height(self, height: string) -> Skeleton {
+    
+    pub fn height(height: string) -> Skeleton {
         self.height = height
         self
     }
-
-    pub fn count(self, count: i32) -> Skeleton {
-        self.count = count
+    
+    pub fn class(class: string) -> Skeleton {
+        self.class = class
         self
     }
-
-    pub fn render(self) -> string {
-        let variant_class = match self.variant {
-            SkeletonVariant::Text => "wj-skeleton-text",
-            SkeletonVariant::Circle => "wj-skeleton-circle",
-            SkeletonVariant::Rectangle => "wj-skeleton-rectangle",
+    
+    pub fn render() -> string {
+        let border_radius = match self.variant {
+            SkeletonVariant::Text => "4px",
+            SkeletonVariant::Circle => "50%",
+            SkeletonVariant::Rectangle => "8px",
         }
-
-        let mut html = "<div class='wj-skeleton-group'>".to_string()
-
-        let mut i = 0
-        while i < self.count {
-            html = format!("{}<div class='wj-skeleton {}' style='width: {}; height: {};'></div>",
-                html, variant_class, self.width, self.height)
-            i = i + 1
-        }
-
-        format!("{}</div>", html)
+        
+        let mut html = String::new()
+        html.push_str("<div class=\"wj-skeleton ")
+        html.push_str(self.class.as_str())
+        html.push_str("\" style=\"width: ")
+        html.push_str(self.width.as_str())
+        html.push_str("; height: ")
+        html.push_str(self.height.as_str())
+        html.push_str("; border-radius: ")
+        html.push_str(border_radius)
+        html.push_str("; background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: skeleton-loading 1.5s ease-in-out infinite;\"></div>")
+        
+        // Add animation keyframes (only once per page)
+        html.push_str("<style>@keyframes skeleton-loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }</style>")
+        
+        html
     }
 }
-
-fn main() {
-    let skeleton1 = Skeleton::new()
-        .variant(SkeletonVariant::Text)
-        .count(3)
-
-    println!("{}", skeleton1.render())
-
-    let skeleton2 = Skeleton::new()
-        .variant(SkeletonVariant::Circle)
-        .width("60px".to_string())
-        .height("60px".to_string())
-
-    println!("{}", skeleton2.render())
-}
-

@@ -1,5 +1,7 @@
 // Spinner Component - Loading indicator
 
+
+use super::traits::Renderable
 pub enum SpinnerSize {
     Small,
     Medium,
@@ -29,7 +31,11 @@ impl Spinner {
         self
     }
 
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for Spinner {
+pub fn render(self) -> string {
         let size_class = match self.size {
             SpinnerSize::Small => "wj-spinner-sm",
             SpinnerSize::Medium => "wj-spinner-md",

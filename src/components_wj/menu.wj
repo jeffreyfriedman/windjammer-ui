@@ -1,91 +1,125 @@
+// Menu and MenuItem - Dropdown menu components
+
+pub struct Menu {
+    items: Vec<string>,
+    trigger: string,
+    class: string,
+}
+
+impl Menu {
+    pub fn new(trigger: string) -> Menu {
+        Menu {
+            items: Vec::new(),
+            trigger,
+            class: String::new(),
+        }
+    }
+    
+    pub fn item(item: string) -> Menu {
+        self.items.push(item)
+        self
+    }
+    
+    pub fn class(class: string) -> Menu {
+        self.class = class
+        self
+    }
+    
+    pub fn render() -> string {
+        let mut html = String::new()
+        html.push_str("<div class=\"wj-menu ")
+        html.push_str(self.class.as_str())
+        html.push_str("\" style=\"position: relative; display: inline-block;\">")
+        
+        // Trigger button
+        html.push_str(self.trigger.as_str())
+        
+        // Menu items
+        html.push_str("<div class=\"wj-menu-items\" style=\"position: absolute; top: 100%; left: 0; margin-top: 4px; background: white; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); min-width: 200px; z-index: 1000; display: none;\">")
+        
+        for item in self.items.iter() {
+            html.push_str(item.as_str())
+        }
+        
+        html.push_str("</div>")
+        html.push_str("</div>")
+        
+        // Add hover behavior
+        html.push_str("<style>.wj-menu:hover .wj-menu-items { display: block; }</style>")
+        
+        html
+    }
+}
+
 pub struct MenuItem {
     label: string,
     icon: string,
     href: string,
     disabled: bool,
+    class: string,
 }
 
 impl MenuItem {
-    pub fn new(label: string, href: string) -> MenuItem {
+    pub fn new(label: string) -> MenuItem {
         MenuItem {
             label,
-            icon: "".to_string(),
-            href,
+            icon: String::new(),
+            href: "#".to_string(),
             disabled: false,
+            class: String::new(),
         }
     }
-
-    pub fn icon(self, icon: string) -> MenuItem {
+    
+    pub fn icon(icon: string) -> MenuItem {
         self.icon = icon
         self
     }
-
-    pub fn disabled(self, disabled: bool) -> MenuItem {
+    
+    pub fn href(href: string) -> MenuItem {
+        self.href = href
+        self
+    }
+    
+    pub fn disabled(disabled: bool) -> MenuItem {
         self.disabled = disabled
         self
     }
-}
-
-pub struct Menu {
-    items: Vec<MenuItem>,
-    is_open: bool,
-}
-
-impl Menu {
-    pub fn new() -> Menu {
-        Menu {
-            items: Vec::new(),
-            is_open: false,
-        }
-    }
-
-    pub fn item(self, item: MenuItem) -> Menu {
-        self.items.push(item)
+    
+    pub fn class(class: string) -> MenuItem {
+        self.class = class
         self
     }
-
-    pub fn is_open(self, open: bool) -> Menu {
-        self.is_open = open
-        self
-    }
-
-    pub fn render(self) -> string {
-        let display_style = if self.is_open { "display: block;" } else { "display: none;" }
-
-        let mut items_html = "".to_string()
-
-        let mut i = 0
-        while i < self.items.len() {
-            let item = &self.items[i]
-            let disabled_class = if item.disabled { " wj-menu-item-disabled" } else { "" }
-            let icon_html = if item.icon != "" {
-                format!("<span class='wj-menu-icon'>{}</span>", item.icon)
-            } else {
-                "".to_string()
-            }
-
-            items_html = format!("{}<a href='{}' class='wj-menu-item{}'>{}{}</a>",
-                items_html, item.href, disabled_class, icon_html, item.label)
-
-            i = i + 1
+    
+    pub fn render() -> string {
+        let disabled_style = if self.disabled {
+            " opacity: 0.5; cursor: not-allowed;"
+        } else {
+            " cursor: pointer;"
         }
-
-        format!("<nav class='wj-menu' style='{}'>
-  <div class='wj-menu-content'>
-    {}
-  </div>
-</nav>", display_style, items_html)
+        
+        let mut html = String::new()
+        html.push_str("<a href=\"")
+        html.push_str(self.href.as_str())
+        html.push_str("\" class=\"wj-menu-item ")
+        html.push_str(self.class.as_str())
+        html.push_str("\" style=\"display: flex; align-items: center; gap: 8px; padding: 10px 16px; color: #374151; text-decoration: none;")
+        html.push_str(disabled_style)
+        html.push_str(" transition: background-color 0.2s;\">")
+        
+        if !self.icon.is_empty() {
+            html.push_str("<span>")
+            html.push_str(self.icon.as_str())
+            html.push_str("</span>")
+        }
+        
+        html.push_str("<span>")
+        html.push_str(self.label.as_str())
+        html.push_str("</span>")
+        html.push_str("</a>")
+        
+        // Add hover effect
+        html.push_str("<style>.wj-menu-item:hover:not([style*='cursor: not-allowed']) { background-color: #f3f4f6; }</style>")
+        
+        html
     }
 }
-
-fn main() {
-    let menu = Menu::new()
-        .item(MenuItem::new("Dashboard".to_string(), "/dashboard".to_string()).icon("🏠".to_string()))
-        .item(MenuItem::new("Profile".to_string(), "/profile".to_string()).icon("👤".to_string()))
-        .item(MenuItem::new("Settings".to_string(), "/settings".to_string()).icon("⚙️".to_string()))
-        .item(MenuItem::new("Logout".to_string(), "/logout".to_string()).icon("🚪".to_string()))
-        .is_open(true)
-
-    println!("{}", menu.render())
-}
-

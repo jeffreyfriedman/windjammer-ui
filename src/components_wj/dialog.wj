@@ -1,3 +1,5 @@
+
+use super::traits::Renderable
 pub struct Dialog {
     title: string,
     content: string,
@@ -25,7 +27,11 @@ impl Dialog {
         self
     }
 
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for Dialog {
+pub fn render(self) -> string {
         let display_style = if self.open { "display: flex;" } else { "display: none;" }
 
         format!("<div class='wj-dialog-overlay' style='{}'>
@@ -49,4 +55,5 @@ fn main() {
 
     println!("{}", dialog.render())
 }
+
 

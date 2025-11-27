@@ -1,5 +1,7 @@
 // Table Component - Data table with sorting and styling
 
+use super::traits::Renderable
+
 pub struct TableColumn {
     header: string,
     width: string,
@@ -80,7 +82,10 @@ impl Table {
         self
     }
 
-    pub fn render(self) -> string {
+}
+
+impl Renderable for Table {
+fn render(self) -> string {
         let mut html = String::new();
 
         let border_style = if self.bordered {
@@ -157,4 +162,3 @@ impl Table {
         html
     }
 }
-

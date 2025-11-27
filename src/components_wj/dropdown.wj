@@ -1,3 +1,5 @@
+use super::traits::Renderable
+
 pub struct DropdownItem {
     label: string,
     value: string,
@@ -37,7 +39,10 @@ impl Dropdown {
         self
     }
 
-    pub fn render(self) -> string {
+}
+
+impl Renderable for Dropdown {
+fn render(self) -> string {
         let mut items_html = "".to_string()
 
         let mut i = 0
@@ -68,4 +73,5 @@ fn main() {
 
     println!("{}", dropdown.render())
 }
+
 

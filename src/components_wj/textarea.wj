@@ -1,0 +1,117 @@
+// Textarea - Multi-line text input component
+
+pub struct Textarea {
+    value: string,
+    placeholder: string,
+    rows: i32,
+    disabled: bool,
+    readonly: bool,
+    max_length: i32,
+    resize: TextareaResize,
+    class: string,
+}
+
+pub enum TextareaResize {
+    None,
+    Vertical,
+    Horizontal,
+    Both,
+}
+
+impl Textarea {
+    pub fn new() -> Textarea {
+        Textarea {
+            value: String::new(),
+            placeholder: String::new(),
+            rows: 4,
+            disabled: false,
+            readonly: false,
+            max_length: 0,
+            resize: TextareaResize::Vertical,
+            class: String::new(),
+        }
+    }
+    
+    pub fn value(value: string) -> Textarea {
+        self.value = value
+        self
+    }
+    
+    pub fn placeholder(placeholder: string) -> Textarea {
+        self.placeholder = placeholder
+        self
+    }
+    
+    pub fn rows(rows: i32) -> Textarea {
+        self.rows = rows
+        self
+    }
+    
+    pub fn disabled(disabled: bool) -> Textarea {
+        self.disabled = disabled
+        self
+    }
+    
+    pub fn readonly(readonly: bool) -> Textarea {
+        self.readonly = readonly
+        self
+    }
+    
+    pub fn max_length(max_length: i32) -> Textarea {
+        self.max_length = max_length
+        self
+    }
+    
+    pub fn resize(resize: TextareaResize) -> Textarea {
+        self.resize = resize
+        self
+    }
+    
+    pub fn class(class: string) -> Textarea {
+        self.class = class
+        self
+    }
+    
+    pub fn render() -> string {
+        let resize_style = match self.resize {
+            TextareaResize::None => "resize: none;",
+            TextareaResize::Vertical => "resize: vertical;",
+            TextareaResize::Horizontal => "resize: horizontal;",
+            TextareaResize::Both => "resize: both;",
+        }
+        
+        let disabled_attr = if self.disabled { " disabled" } else { "" }
+        let readonly_attr = if self.readonly { " readonly" } else { "" }
+        
+        let mut html = String::new()
+        html.push_str("<textarea class=\"wj-textarea ")
+        html.push_str(self.class.as_str())
+        html.push_str("\" rows=\"")
+        html.push_str(self.rows.to_string().as_str())
+        html.push('"')
+        
+        if !self.placeholder.is_empty() {
+            html.push_str(" placeholder=\"")
+            html.push_str(self.placeholder.as_str())
+            html.push('"')
+        }
+        
+        if self.max_length > 0 {
+            html.push_str(" maxlength=\"")
+            html.push_str(self.max_length.to_string().as_str())
+            html.push('"')
+        }
+        
+        html.push_str(disabled_attr)
+        html.push_str(readonly_attr)
+        
+        html.push_str(" style=\"")
+        html.push_str(resize_style)
+        html.push_str(" padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; font-family: inherit; width: 100%; box-sizing: border-box;\">")
+        html.push_str(self.value.as_str())
+        html.push_str("</textarea>")
+        html
+    }
+}
+
+

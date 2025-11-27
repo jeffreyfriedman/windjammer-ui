@@ -2,6 +2,7 @@
 //!
 //! Verify all 49 components generated from pure Windjammer can be instantiated and rendered
 
+use windjammer_ui::components::generated::Renderable;
 use windjammer_ui::components::*;
 
 #[test]
@@ -55,10 +56,10 @@ fn test_all_49_components_render() {
     let _accordion = Accordion::new().render();
     let _breadcrumb = Breadcrumb::new().render();
     let _dropdown = Dropdown::new("test".to_string()).render();
-    let _avatar = Avatar::new("img.jpg".to_string(), "alt".to_string()).render();
+    let _avatar = Avatar::new("img.jpg".to_string()).render();
     let _skeleton = Skeleton::new().render();
     let _pagination = Pagination::new(1, 10).render();
-    let _menu = Menu::new().render();
+    let _menu = Menu::new("Menu".to_string()).render();
 
     // Navigation Components (4)
     let _navbar = Navbar::new().render();

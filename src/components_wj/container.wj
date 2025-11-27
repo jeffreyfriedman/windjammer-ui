@@ -2,6 +2,8 @@
 // NO `mut` keyword needed - compiler infers everything!
 // Tests Vec support for children!
 
+
+use super::traits::Renderable
 pub struct Container {
     children: Vec<string>,
     max_width: string,
@@ -57,7 +59,12 @@ impl Container {
     
     // TODO: Once external type bindings work, this will return VNode
     // For now, return a string representation for testing
-    pub fn render(self) -> string {
+
+}
+
+// Test the Container component with Vec<string> children!
+impl Renderable for Container {
+pub fn render(self) -> string {
         let mut style = "margin: 0 auto; ".to_string()
         
         if self.max_width != "" {
@@ -83,7 +90,6 @@ impl Container {
     }
 }
 
-// Test the Container component with Vec<string> children!
 fn main() {
     let container1 = Container::new()
         .max_width("800px".to_string())
