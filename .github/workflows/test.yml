@@ -75,21 +75,21 @@ jobs:
         if: matrix.rust == 'stable' && matrix.os == 'ubuntu-latest'
         run: cargo fmt --all -- --check
       
-      - name: Run clippy (Linux)
-        if: matrix.rust == 'stable' && runner.os == 'Linux'
-        run: cargo clippy --all-targets --features web -- -D warnings
-      
-      - name: Run clippy (macOS/Windows)
-        if: matrix.rust == 'stable' && runner.os != 'Linux'
+      - name: Run clippy (macOS)
+        if: matrix.rust == 'stable' && runner.os == 'macOS'
         run: cargo clippy --all-targets --all-features -- -D warnings
       
-      - name: Run tests (Linux)
-        if: runner.os == 'Linux'
-        run: cargo test --verbose --features web
+      - name: Run clippy (Linux/Windows)
+        if: matrix.rust == 'stable' && runner.os != 'macOS'
+        run: cargo clippy --all-targets --features web -- -D warnings
       
-      - name: Run tests (macOS/Windows)
-        if: runner.os != 'Linux'
+      - name: Run tests (macOS)
+        if: runner.os == 'macOS'
         run: cargo test --verbose --all-features
+      
+      - name: Run tests (Linux/Windows)
+        if: runner.os != 'macOS'
+        run: cargo test --verbose --features web
       
       - name: Build release
         if: matrix.rust == 'stable'
