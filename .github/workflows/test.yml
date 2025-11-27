@@ -19,10 +19,10 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
         rust: [stable]
-        include:
-          # Test with beta on Ubuntu only
-          - os: ubuntu-latest
-            rust: beta
+        # Beta testing disabled due to winit platform support issues on Linux
+        # include:
+        #   - os: ubuntu-latest
+        #     rust: beta
     
     steps:
       - name: Checkout code
