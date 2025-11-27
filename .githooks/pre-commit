@@ -20,7 +20,7 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "🔎 Running cargo clippy..."
-cargo clippy --all-targets --all-features -- -D warnings -A noop-method-call
+cargo clippy --all-targets --all-features -- -D warnings
 if [ $? -ne 0 ]; then
     echo "❌ Clippy found issues. Please fix them."
     exit 1
@@ -30,6 +30,13 @@ echo "🧪 Running cargo test..."
 cargo test --all-features
 if [ $? -ne 0 ]; then
     echo "❌ Tests failed. Please fix them."
+    exit 1
+fi
+
+echo "📦 Running cargo publish --dry-run..."
+cargo publish --dry-run
+if [ $? -ne 0 ]; then
+    echo "❌ Publish dry-run failed. Please fix the issues."
     exit 1
 fi
 
