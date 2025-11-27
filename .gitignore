@@ -8,7 +8,7 @@ Cargo.lock
 # These are generated at build time from .wj source files
 src/components/generated/
 build_components/
-build/
+build_*/
 
 # IDE
 .vscode/
@@ -26,4 +26,3 @@ build/
 *.tmp
 tmp/
 .pr-comments/
-target/
