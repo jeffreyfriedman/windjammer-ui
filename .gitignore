@@ -29,3 +29,13 @@ build/Cargo.toml
 *.tmp
 tmp/
 .pr-comments/
+
+# Keep root directory clean - no test/example files in root
+/*.wj
+/*.html
+/*_test.*
+/*_demo.*
+/*_example.*
+/serve_*
+/simple_*
+/test_*
