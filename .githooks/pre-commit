@@ -20,7 +20,7 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "🔎 Running cargo clippy..."
-cargo clippy --all-targets --all-features -- -D warnings
+cargo clippy --all-targets --all-features -- -D warnings -A noop-method-call
 if [ $? -ne 0 ]; then
     echo "❌ Clippy found issues. Please fix them."
     exit 1

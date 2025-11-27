@@ -1,0 +1,147 @@
+// Stack Component - Simplified layout for vertical/horizontal stacking
+// Replaces the need for Flex in most cases
+
+pub enum StackDirection {
+    Vertical,
+    Horizontal,
+}
+
+pub enum StackAlign {
+    Start,
+    Center,
+    End,
+    Stretch,
+}
+
+pub enum StackJustify {
+    Start,
+    Center,
+    End,
+    SpaceBetween,
+    SpaceAround,
+    SpaceEvenly,
+}
+
+pub struct Stack {
+    direction: StackDirection,
+    gap: string,
+    align: StackAlign,
+    justify: StackJustify,
+    children: Vec<string>,
+    padding: string,
+    width: string,
+    height: string,
+}
+
+impl Stack {
+    pub fn new() -> Stack {
+        Stack {
+            direction: StackDirection::Vertical,
+            gap: "8px".to_string(),
+            align: StackAlign::Stretch,
+            justify: StackJustify::Start,
+            children: Vec::new(),
+            padding: "0".to_string(),
+            width: "auto".to_string(),
+            height: "auto".to_string(),
+        }
+    }
+
+    pub fn vertical() -> Stack {
+        Stack::new()
+    }
+
+    pub fn horizontal() -> Stack {
+        let mut stack = Stack::new();
+        stack.direction = StackDirection::Horizontal;
+        stack
+    }
+
+    pub fn direction(self, dir: StackDirection) -> Stack {
+        self.direction = dir;
+        self
+    }
+
+    pub fn gap(self, gap: string) -> Stack {
+        self.gap = gap;
+        self
+    }
+
+    pub fn align(self, align: StackAlign) -> Stack {
+        self.align = align;
+        self
+    }
+
+    pub fn justify(self, justify: StackJustify) -> Stack {
+        self.justify = justify;
+        self
+    }
+
+    pub fn padding(self, padding: string) -> Stack {
+        self.padding = padding;
+        self
+    }
+
+    pub fn width(self, width: string) -> Stack {
+        self.width = width;
+        self
+    }
+
+    pub fn height(self, height: string) -> Stack {
+        self.height = height;
+        self
+    }
+
+    pub fn child(self, child: string) -> Stack {
+        self.children.push(child);
+        self
+    }
+
+    pub fn render(self) -> string {
+        let flex_direction = match self.direction {
+            StackDirection::Vertical => "column",
+            StackDirection::Horizontal => "row",
+        };
+
+        let align_items = match self.align {
+            StackAlign::Start => "flex-start",
+            StackAlign::Center => "center",
+            StackAlign::End => "flex-end",
+            StackAlign::Stretch => "stretch",
+        };
+
+        let justify_content = match self.justify {
+            StackJustify::Start => "flex-start",
+            StackJustify::Center => "center",
+            StackJustify::End => "flex-end",
+            StackJustify::SpaceBetween => "space-between",
+            StackJustify::SpaceAround => "space-around",
+            StackJustify::SpaceEvenly => "space-evenly",
+        };
+
+        let mut html = String::new();
+        html.push_str("<div style='display: flex; flex-direction: ");
+        html.push_str(flex_direction);
+        html.push_str("; gap: ");
+        html.push_str(&self.gap);
+        html.push_str("; align-items: ");
+        html.push_str(align_items);
+        html.push_str("; justify-content: ");
+        html.push_str(justify_content);
+        html.push_str("; padding: ");
+        html.push_str(&self.padding);
+        html.push_str("; width: ");
+        html.push_str(&self.width);
+        html.push_str("; height: ");
+        html.push_str(&self.height);
+        html.push_str(";'>");
+
+        for child in self.children {
+            html.push_str(child);
+        }
+
+        html.push_str("</div>");
+        html
+    }
+}
+

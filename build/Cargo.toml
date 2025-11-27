@@ -45,3 +45,12 @@ path = "button.rs"
 
 [profile.release]
 opt-level = 3
+"
+path = "container.rs"
+
+[[bin]]
+name = "button"
+path = "button.rs"
+
+[profile.release]
+opt-level = 3
