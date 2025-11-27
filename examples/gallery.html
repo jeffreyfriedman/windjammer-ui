@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Windjammer UI - 49 Components Gallery</title>
+    <title>Windjammer UI - 55 Components Gallery</title>
     <style>
         :root[data-theme="light"] {
             --bg-gradient-start: #667eea;
@@ -1256,16 +1256,129 @@ fn main() {
                     </div>
                 </div>
             </div>
+            
+            <div class="component-section">
+                <h2 class="section-title">50-55. Advanced UI Components 🆕</h2>
+                <p class="section-description">Modal, Rating, Stack, Stepper, Table, Timeline</p>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <div class="showcase-label">Modal (click button to open!)</div>
+                        <button onclick="openModal('demo-modal-1')" style="padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 600; transition: all 0.2s;" onmouseover="this.style.background='#5568d3'" onmouseout="this.style.background='#667eea'">
+                            Open Modal
+                        </button>
+                        <div id="demo-modal-1" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;" onclick="if(event.target.id==='demo-modal-1') closeModal('demo-modal-1')">
+                            <div style="background: var(--main-bg); padding: 32px; border-radius: 12px; max-width: 500px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.3);" onclick="event.stopPropagation()">
+                                <h3 style="color: var(--text-primary); margin-bottom: 16px; font-size: 20px;">Modal Title</h3>
+                                <p style="color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6;">This is a modal dialog. Click outside or press the close button to dismiss it.</p>
+                                <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                                    <button onclick="closeModal('demo-modal-1')" style="padding: 10px 20px; background: var(--border-color); color: var(--text-primary); border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 600; transition: all 0.2s;" onmouseover="this.style.background='var(--text-secondary)'" onmouseout="this.style.background='var(--border-color)'">
+                                        Cancel
+                                    </button>
+                                    <button onclick="closeModal('demo-modal-1')" style="padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 600; transition: all 0.2s;" onmouseover="this.style.background='#5568d3'" onmouseout="this.style.background='#667eea'">
+                                        Confirm
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Rating (5 stars)</div>
+                        <div style="display: flex; gap: 4px; font-size: 24px; color: #fbbf24;">
+                            ★★★★☆
+                        </div>
+                        <p style="font-size: 12px; color: var(--text-secondary); margin-top: 8px;">4 out of 5 stars</p>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Stack (vertical layout)</div>
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <div style="padding: 12px; background: #667eea; color: white; border-radius: 6px; text-align: center; font-size: 14px;">Item 1</div>
+                            <div style="padding: 12px; background: #667eea; color: white; border-radius: 6px; text-align: center; font-size: 14px;">Item 2</div>
+                            <div style="padding: 12px; background: #667eea; color: white; border-radius: 6px; text-align: center; font-size: 14px;">Item 3</div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Stepper (3 steps)</div>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 32px; height: 32px; border-radius: 50%; background: #10b981; color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600;">✓</div>
+                                <span style="font-size: 13px; color: var(--text-primary); font-weight: 500;">Step 1</span>
+                            </div>
+                            <div style="flex: 1; height: 2px; background: #10b981;"></div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 32px; height: 32px; border-radius: 50%; background: #667eea; color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600;">2</div>
+                                <span style="font-size: 13px; color: var(--text-primary); font-weight: 500;">Step 2</span>
+                            </div>
+                            <div style="flex: 1; height: 2px; background: var(--border-color);"></div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--border-color); color: var(--text-secondary); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600;">3</div>
+                                <span style="font-size: 13px; color: var(--text-secondary); font-weight: 500;">Step 3</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Table (3 columns × 3 rows)</div>
+                        <div style="overflow-x: auto;">
+                            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                                <thead>
+                                    <tr style="background: var(--showcase-bg); border-bottom: 2px solid var(--border-color);">
+                                        <th style="padding: 10px; text-align: left; color: var(--text-primary); font-weight: 600;">Name</th>
+                                        <th style="padding: 10px; text-align: left; color: var(--text-primary); font-weight: 600;">Role</th>
+                                        <th style="padding: 10px; text-align: left; color: var(--text-primary); font-weight: 600;">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px; color: var(--text-primary);">Alice</td>
+                                        <td style="padding: 10px; color: var(--text-secondary);">Developer</td>
+                                        <td style="padding: 10px;"><span style="padding: 4px 8px; background: #10b981; color: white; border-radius: 4px; font-size: 11px; font-weight: 600;">Active</span></td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px; color: var(--text-primary);">Bob</td>
+                                        <td style="padding: 10px; color: var(--text-secondary);">Designer</td>
+                                        <td style="padding: 10px;"><span style="padding: 4px 8px; background: #10b981; color: white; border-radius: 4px; font-size: 11px; font-weight: 600;">Active</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 10px; color: var(--text-primary);">Charlie</td>
+                                        <td style="padding: 10px; color: var(--text-secondary);">Manager</td>
+                                        <td style="padding: 10px;"><span style="padding: 4px 8px; background: var(--text-secondary); color: white; border-radius: 4px; font-size: 11px; font-weight: 600;">Away</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="showcase-item">
+                        <div class="showcase-label">Timeline (3 events)</div>
+                        <div style="position: relative; padding-left: 24px;">
+                            <div style="position: absolute; left: 6px; top: 0; bottom: 0; width: 2px; background: var(--border-color);"></div>
+                            <div style="margin-bottom: 20px; position: relative;">
+                                <div style="position: absolute; left: -21px; top: 2px; width: 12px; height: 12px; border-radius: 50%; background: #667eea; border: 2px solid var(--main-bg);"></div>
+                                <div style="font-size: 13px; color: var(--text-primary); font-weight: 600; margin-bottom: 4px;">Project Started</div>
+                                <div style="font-size: 12px; color: var(--text-secondary);">January 1, 2024</div>
+                            </div>
+                            <div style="margin-bottom: 20px; position: relative;">
+                                <div style="position: absolute; left: -21px; top: 2px; width: 12px; height: 12px; border-radius: 50%; background: #10b981; border: 2px solid var(--main-bg);"></div>
+                                <div style="font-size: 13px; color: var(--text-primary); font-weight: 600; margin-bottom: 4px;">First Milestone</div>
+                                <div style="font-size: 12px; color: var(--text-secondary);">February 15, 2024</div>
+                            </div>
+                            <div style="position: relative;">
+                                <div style="position: absolute; left: -21px; top: 2px; width: 12px; height: 12px; border-radius: 50%; background: var(--border-color); border: 2px solid var(--main-bg);"></div>
+                                <div style="font-size: 13px; color: var(--text-primary); font-weight: 600; margin-bottom: 4px;">Launch Date</div>
+                                <div style="font-size: 12px; color: var(--text-secondary);">March 30, 2024</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <footer>
             <h3>🚀 Built with Windjammer</h3>
-            <p>All 49 components compiled from pure <code>.wj</code> source files to Rust.</p>
+            <p>All 55 components compiled from pure <code>.wj</code> source files to Rust.</p>
             <p>100% type-safe, zero runtime errors, native performance!</p>
             
             <div class="stats">
                 <div class="stat">
-                    <div class="stat-number">49</div>
+                    <div class="stat-number">55</div>
                     <div class="stat-label">Components</div>
                 </div>
                 <div class="stat">
@@ -1511,6 +1624,21 @@ fn main() {
             // Close drawer
             if (drawer) {
                 drawer.classList.remove('show');
+            }
+        }
+        
+        // Modal functions
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.style.display = 'flex';
+            }
+        }
+        
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.style.display = 'none';
             }
         }
         
