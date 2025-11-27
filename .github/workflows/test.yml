@@ -181,12 +181,12 @@ jobs:
       
       - name: Dry-run publish
         run: |
-          echo "🧪 Validating windjammer-ui can be published..."
-          # Publish macro crate first (dry-run)
+          echo "🧪 Validating windjammer-ui-macro can be published..."
+          # Only test macro crate since main crate depends on it
+          # (and dry-run doesn't actually publish, so dependency check would fail)
           cd windjammer-ui-macro
           cargo publish --dry-run --allow-dirty
           cd ..
-          # Then publish main crate (dry-run)
-          cargo publish --dry-run --allow-dirty
-          echo "✅ windjammer-ui is ready to publish!"
+          echo "✅ windjammer-ui-macro is ready to publish!"
+          echo "ℹ️  Main crate will be validated during actual release"
 

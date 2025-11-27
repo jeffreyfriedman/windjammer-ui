@@ -7,30 +7,14 @@
 use std::path::Path;
 use std::process::Command;
 
-/// Helper to run wj build with --no-run-cargo if available (v0.37.2+)
+/// Helper to run wj build with --no-run-cargo (required for v0.37.2+)
 fn transpile_example(path: &str) -> Result<(), String> {
-    // Try with --no-run-cargo first (v0.37.2+)
+    // Always use --no-run-cargo to skip cargo build
+    // (Examples depend on windjammer-ui which may not be published yet)
     let output = Command::new("wj")
         .args(["build", path, "--no-run-cargo"])
         .output()
         .map_err(|e| format!("Failed to run wj: {}", e))?;
-    
-    // If flag doesn't exist, try without it (older versions)
-    if !output.status.success() && String::from_utf8_lossy(&output.stderr).contains("unexpected argument") {
-        let output = Command::new("wj")
-            .args(["build", path])
-            .output()
-            .map_err(|e| format!("Failed to run wj: {}", e))?;
-        
-        if !output.status.success() {
-            return Err(format!(
-                "Transpilation failed:\nstdout: {}\nstderr: {}",
-                String::from_utf8_lossy(&output.stdout),
-                String::from_utf8_lossy(&output.stderr)
-            ));
-        }
-        return Ok(());
-    }
     
     if !output.status.success() {
         return Err(format!(
