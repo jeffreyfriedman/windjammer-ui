@@ -1,3 +1,5 @@
+
+use super::traits::Renderable
 pub struct Panel {
     title: string,
     children: Vec<string>,
@@ -37,7 +39,11 @@ impl Panel {
         self
     }
 
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for Panel {
+pub fn render(self) -> string {
         let header_class = if self.collapsible { "wj-panel-header-collapsible" } else { "wj-panel-header" }
         let icon = if self.collapsible {
             if self.collapsed { "▶" } else { "▼" }
@@ -72,4 +78,5 @@ fn main() {
 
     println!("{}", panel.render())
 }
+
 

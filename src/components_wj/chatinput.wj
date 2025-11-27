@@ -1,3 +1,5 @@
+
+use super::traits::Renderable
 pub struct ChatInput {
     placeholder: string,
     value: string,
@@ -42,7 +44,11 @@ impl ChatInput {
         self
     }
     
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for ChatInput {
+pub fn render(self) -> string {
         let disabled_attr = if self.disabled { " disabled" } else { "" }
         
         let input_html = if self.multiline {
@@ -74,4 +80,3 @@ impl ChatInput {
         )
     }
 }
-

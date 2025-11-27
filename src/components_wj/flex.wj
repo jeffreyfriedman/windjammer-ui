@@ -2,6 +2,8 @@
 // NO `mut` keyword needed - compiler infers everything!
 // Tests Vec<String> with direction enum!
 
+
+use super::traits::Renderable
 pub enum FlexDirection {
     Row,
     Column,
@@ -65,7 +67,12 @@ impl Flex {
     
     // TODO: Once external type bindings work, this will return VNode
     // For now, return a string representation for testing
-    pub fn render(self) -> string {
+
+}
+
+// Test the Flex component
+impl Renderable for Flex {
+pub fn render(self) -> string {
         let direction_str = match self.direction {
             FlexDirection::Row => "row",
             FlexDirection::Column => "column",
@@ -88,7 +95,6 @@ impl Flex {
     }
 }
 
-// Test the Flex component
 fn main() {
     let flex_row = Flex::new()
         .direction(FlexDirection::Row)

@@ -1,0 +1,81 @@
+// Scroll - Scrollable container with customizable overflow behavior
+
+pub struct Scroll {
+    children: Vec<string>,
+    direction: ScrollDir,
+    height: string,
+    width: string,
+    class: string,
+}
+
+pub enum ScrollDir {
+    Vertical,
+    Horizontal,
+    Both,
+    None,
+}
+
+impl Scroll {
+    pub fn new() -> Scroll {
+        Scroll {
+            children: Vec::new(),
+            direction: ScrollDir::Vertical,
+            height: "400px".to_string(),
+            width: "100%".to_string(),
+            class: String::new(),
+        }
+    }
+    
+    pub fn child(child: string) -> Scroll {
+        self.children.push(child)
+        self
+    }
+    
+    pub fn direction(direction: ScrollDir) -> Scroll {
+        self.direction = direction
+        self
+    }
+    
+    pub fn height(height: string) -> Scroll {
+        self.height = height
+        self
+    }
+    
+    pub fn width(width: string) -> Scroll {
+        self.width = width
+        self
+    }
+    
+    pub fn class(class: string) -> Scroll {
+        self.class = class
+        self
+    }
+    
+    pub fn render() -> string {
+        let overflow = match self.direction {
+            ScrollDir::Vertical => "overflow-x: hidden; overflow-y: auto",
+            ScrollDir::Horizontal => "overflow-x: auto; overflow-y: hidden",
+            ScrollDir::Both => "overflow: auto",
+            ScrollDir::None => "overflow: hidden",
+        }
+        
+        let mut html = String::new()
+        html.push_str("<div class=\"wj-scroll ")
+        html.push_str(self.class.as_str())
+        html.push_str("\" style=\"")
+        html.push_str(overflow)
+        html.push_str("; height: ")
+        html.push_str(self.height.as_str())
+        html.push_str("; width: ")
+        html.push_str(self.width.as_str())
+        html.push_str(";\">")
+        
+        for child in self.children.iter() {
+            html.push_str(child.as_str())
+        }
+        
+        html.push_str("</div>")
+        html
+    }
+}
+

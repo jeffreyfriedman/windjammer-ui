@@ -1,6 +1,8 @@
 // Button component - Pure Windjammer implementation
 // NO `mut` keyword needed - compiler infers everything!
 
+use super::traits::Renderable
+
 pub enum ButtonVariant {
     Primary,
     Secondary,
@@ -53,10 +55,10 @@ impl Button {
         self.disabled = disabled
         self
     }
-    
-    // TODO: Once external type bindings work, this will return VNode
-    // For now, return a string representation for testing
-    pub fn render(self) -> string {
+}
+
+impl Renderable for Button {
+    fn render(self) -> string {
         // Build variant class
         let variant_class = match self.variant {
             ButtonVariant::Primary => "wj-button-primary",

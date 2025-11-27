@@ -1,5 +1,7 @@
 // Input component - Pure Windjammer implementation
 
+use super::traits::Renderable
+
 pub struct Input {
     value: string,
     placeholder: string,
@@ -22,8 +24,10 @@ impl Input {
         self.placeholder = placeholder
         self
     }
-    
-    pub fn render(self) -> string {
+}
+
+impl Renderable for Input {
+    fn render(self) -> string {
         format!("<input class='wj-input' value='{}' placeholder='{}'/>", 
                 self.value, self.placeholder)
     }

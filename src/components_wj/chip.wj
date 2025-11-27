@@ -1,5 +1,7 @@
 // Chip Component - Tag/pill for labels, filters, and selections
 
+
+use super::traits::Renderable
 pub enum ChipVariant {
     Default,
     Primary,
@@ -54,7 +56,11 @@ impl Chip {
         self
     }
 
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for Chip {
+pub fn render(self) -> string {
         let bg_color = match self.variant {
             ChipVariant::Default => "#e2e8f0",
             ChipVariant::Primary => "#3b82f6",
@@ -130,4 +136,3 @@ impl Chip {
         html
     }
 }
-

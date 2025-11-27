@@ -1,3 +1,5 @@
+use super::traits::Renderable
+
 pub struct FileNode {
     name: string,
     is_directory: bool,
@@ -56,8 +58,10 @@ impl FileTree {
     pub fn new(root: FileNode) -> FileTree {
         FileTree { root }
     }
+}
 
-    pub fn render(self) -> string {
+impl Renderable for FileTree {
+    fn render(self) -> string {
         format!("<div class='wj-file-tree'>\n{}</div>", self.root.render(0))
     }
 }
@@ -72,4 +76,5 @@ fn main() {
 
     println!("{}", tree.render())
 }
+
 
