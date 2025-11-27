@@ -1,3 +1,5 @@
+use super::traits::Renderable
+
 pub struct TabPanelTab {
     id: string,
     title: string,
@@ -44,7 +46,10 @@ impl TabPanel {
         self
     }
 
-    pub fn render(self) -> string {
+}
+
+impl Renderable for TabPanel {
+fn render(self) -> string {
         let flex_direction = if self.orientation == "vertical" { "row" } else { "column" }
 
         let mut tabs_html = format!("<div class='wj-tab-panel-tabs wj-tab-panel-{}'>\n", self.orientation)

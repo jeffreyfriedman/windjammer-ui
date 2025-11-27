@@ -1,3 +1,5 @@
+
+use super::traits::Renderable
 pub enum ToastVariant {
     Success,
     Error,
@@ -53,7 +55,11 @@ impl Toast {
         self
     }
 
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for Toast {
+pub fn render(self) -> string {
         let variant_class = match self.variant {
             ToastVariant::Success => "wj-toast-success",
             ToastVariant::Error => "wj-toast-error",

@@ -1,3 +1,5 @@
+use super::traits::Renderable
+
 pub struct AccordionItem {
     title: string,
     content: string,
@@ -42,7 +44,10 @@ impl Accordion {
         self
     }
 
-    pub fn render(self) -> string {
+}
+
+impl Renderable for Accordion {
+fn render(self) -> string {
         let mut html = "<div class='wj-accordion'>".to_string()
 
         let mut i = 0

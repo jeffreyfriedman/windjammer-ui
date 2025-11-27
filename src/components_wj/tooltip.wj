@@ -1,3 +1,5 @@
+
+use super::traits::Renderable
 pub enum TooltipPosition {
     Top,
     Bottom,
@@ -25,7 +27,11 @@ impl Tooltip {
         self
     }
 
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for Tooltip {
+pub fn render(self) -> string {
         let position_class = match self.position {
             TooltipPosition::Top => "wj-tooltip-top",
             TooltipPosition::Bottom => "wj-tooltip-bottom",

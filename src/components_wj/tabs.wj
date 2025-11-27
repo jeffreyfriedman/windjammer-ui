@@ -1,3 +1,5 @@
+use super::traits::Renderable
+
 pub struct Tab {
     id: string,
     label: string,
@@ -44,7 +46,10 @@ impl Tabs {
         self
     }
 
-    pub fn render(self) -> string {
+}
+
+impl Renderable for Tabs {
+fn render(self) -> string {
         let mut tabs_html = "<div class='wj-tabs-header'>".to_string()
 
         let mut i = 0

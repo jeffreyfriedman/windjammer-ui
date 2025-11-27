@@ -1,3 +1,5 @@
+
+use super::traits::Renderable
 pub struct CodeBlock {
     code: string,
     language: string,
@@ -30,7 +32,11 @@ impl CodeBlock {
         self
     }
     
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for CodeBlock {
+pub fn render(self) -> string {
         let language_label = if self.language.len() > 0 {
             format!("<div class='wj-codeblock-language'>{}</div>", self.language)
         } else {
@@ -64,5 +70,3 @@ impl CodeBlock {
         )
     }
 }
-
-

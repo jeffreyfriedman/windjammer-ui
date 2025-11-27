@@ -1,3 +1,5 @@
+use super::traits::Renderable
+
 pub enum SidebarPosition {
     Left,
     Right,
@@ -66,7 +68,10 @@ impl Sidebar {
         self
     }
     
-    pub fn render(self) -> string {
+}
+
+impl Renderable for Sidebar {
+fn render(self) -> string {
         let mut items_html = Vec::new()
         
         for item in self.items {
@@ -105,5 +110,3 @@ impl Sidebar {
         )
     }
 }
-
-

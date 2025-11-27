@@ -1,3 +1,5 @@
+use super::traits::Renderable
+
 pub struct ContextMenuItem {
     label: string,
     icon: string,
@@ -49,7 +51,10 @@ impl ContextMenu {
         self
     }
     
-    pub fn render(self) -> string {
+}
+
+impl Renderable for ContextMenu {
+fn render(self) -> string {
         let mut items_html = Vec::new()
         
         for item in self.items {
@@ -84,5 +89,3 @@ impl ContextMenu {
         )
     }
 }
-
-

@@ -1,5 +1,7 @@
 // Spacer Component - Flexible spacing between elements
 
+
+use super::traits::Renderable
 pub struct Spacer {
     width: string,
     height: string,
@@ -49,23 +51,7 @@ impl Spacer {
         self
     }
 
-    pub fn render(self) -> string {
-        let mut style = "".to_string()
 
-        if self.flex {
-            style = "flex: 1; ".to_string()
-        }
-
-        if self.width != "" {
-            style = format!("{}width: {}; ", style, self.width)
-        }
-
-        if self.height != "" {
-            style = format!("{}height: {}; ", style, self.height)
-        }
-
-        format!("<div class='wj-spacer' style='{}'></div>", style)
-    }
 
     // Grid system helpers (8px multiples)
     pub fn xxs() -> Spacer {
@@ -94,6 +80,26 @@ impl Spacer {
 
     pub fn xxl() -> Spacer {
         Spacer::vertical("48px".to_string())
+    }
+}
+
+impl Renderable for Spacer {
+pub fn render(self) -> string {
+        let mut style = "".to_string()
+
+        if self.flex {
+            style = "flex: 1; ".to_string()
+        }
+
+        if self.width != "" {
+            style = format!("{}width: {}; ", style, self.width)
+        }
+
+        if self.height != "" {
+            style = format!("{}height: {}; ", style, self.height)
+        }
+
+        format!("<div class='wj-spacer' style='{}'></div>", style)
     }
 }
 

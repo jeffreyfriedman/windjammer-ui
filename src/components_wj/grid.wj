@@ -1,3 +1,5 @@
+
+use super::traits::Renderable
 pub struct Grid {
     children: Vec<string>,
     columns: i32,
@@ -35,7 +37,11 @@ impl Grid {
         self
     }
 
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for Grid {
+pub fn render(self) -> string {
         let style = format!("display: grid; grid-template-columns: repeat({}, 1fr); gap: {}; padding: {};",
             self.columns, self.gap, self.padding)
 

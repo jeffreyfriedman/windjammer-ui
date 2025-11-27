@@ -1,3 +1,5 @@
+
+use super::traits::Renderable
 pub struct Pagination {
     current_page: i32,
     total_pages: i32,
@@ -25,7 +27,11 @@ impl Pagination {
         self
     }
 
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for Pagination {
+pub fn render(self) -> string {
         let mut html = "<nav class='wj-pagination'><ul>".to_string()
 
         if self.show_first_last {

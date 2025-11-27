@@ -1,3 +1,5 @@
+
+use super::traits::Renderable
 pub struct CollapsibleSection {
     title: string,
     content: string,
@@ -18,7 +20,11 @@ impl CollapsibleSection {
         self
     }
 
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for CollapsibleSection {
+pub fn render(self) -> string {
         let icon = if self.open { "▼" } else { "▶" }
         let content_style = if self.open { "display: block;" } else { "display: none;" }
 

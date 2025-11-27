@@ -1,3 +1,5 @@
+
+use super::traits::Renderable
 pub struct Toolbar {
     items: Vec<string>,
     position: string,
@@ -21,7 +23,11 @@ impl Toolbar {
         self
     }
 
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for Toolbar {
+pub fn render(self) -> string {
         let items_html = self.items.join("\n")
 
         format!("<div class='wj-toolbar wj-toolbar-{}'>

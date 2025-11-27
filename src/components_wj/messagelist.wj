@@ -1,3 +1,5 @@
+
+use super::traits::Renderable
 pub struct MessageList {
     messages: Vec<String>,
     height: string,
@@ -28,7 +30,11 @@ impl MessageList {
         self
     }
     
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for MessageList {
+pub fn render(self) -> string {
         let scroll_script = if self.auto_scroll {
             "onload='this.scrollTop = this.scrollHeight'"
         } else {
@@ -45,5 +51,3 @@ impl MessageList {
         )
     }
 }
-
-

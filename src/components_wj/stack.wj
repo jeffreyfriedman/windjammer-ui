@@ -1,6 +1,8 @@
 // Stack Component - Simplified layout for vertical/horizontal stacking
 // Replaces the need for Flex in most cases
 
+
+use super::traits::Renderable
 pub enum StackDirection {
     Vertical,
     Horizontal,
@@ -97,7 +99,11 @@ impl Stack {
         self
     }
 
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for Stack {
+pub fn render(self) -> string {
         let flex_direction = match self.direction {
             StackDirection::Vertical => "column",
             StackDirection::Horizontal => "row",
@@ -144,4 +150,3 @@ impl Stack {
         html
     }
 }
-
