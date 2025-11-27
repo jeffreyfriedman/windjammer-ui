@@ -1,5 +1,7 @@
 // Badge Component - Display labels, tags, and status indicators
 
+
+use super::traits::Renderable
 pub enum BadgeVariant {
     Default,
     Primary,
@@ -41,7 +43,11 @@ impl Badge {
         self
     }
 
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for Badge {
+pub fn render(self) -> string {
         let variant_class = match self.variant {
             BadgeVariant::Default => "wj-badge-default",
             BadgeVariant::Primary => "wj-badge-primary",

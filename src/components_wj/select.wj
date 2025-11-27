@@ -1,93 +1,112 @@
-pub struct SelectOption {
-    value: string,
-    label: string,
-    disabled: bool,
-}
-
-impl SelectOption {
-    pub fn new(value: string, label: string) -> SelectOption {
-        SelectOption {
-            value,
-            label,
-            disabled: false,
-        }
-    }
-
-    pub fn disabled(self, disabled: bool) -> SelectOption {
-        self.disabled = disabled
-        self
-    }
-}
+// Select - Dropdown selection component
 
 pub struct Select {
     options: Vec<SelectOption>,
     selected: string,
     placeholder: string,
     disabled: bool,
+    size: SelectSize,
+    class: string,
+}
+
+pub struct SelectOption {
+    value: string,
+    label: string,
+}
+
+pub enum SelectSize {
+    Small,
+    Medium,
+    Large,
 }
 
 impl Select {
     pub fn new() -> Select {
         Select {
             options: Vec::new(),
-            selected: "".to_string(),
+            selected: String::new(),
             placeholder: "Select an option".to_string(),
             disabled: false,
+            size: SelectSize::Medium,
+            class: String::new(),
         }
     }
-
-    pub fn option(self, option: SelectOption) -> Select {
-        self.options.push(option)
+    
+    pub fn option(value: string, label: string) -> Select {
+        self.options.push(SelectOption { value, label })
         self
     }
-
-    pub fn selected(self, value: string) -> Select {
-        self.selected = value
+    
+    pub fn selected(selected: string) -> Select {
+        self.selected = selected
         self
     }
-
-    pub fn placeholder(self, placeholder: string) -> Select {
+    
+    pub fn placeholder(placeholder: string) -> Select {
         self.placeholder = placeholder
         self
     }
-
-    pub fn disabled(self, disabled: bool) -> Select {
+    
+    pub fn disabled(disabled: bool) -> Select {
         self.disabled = disabled
         self
     }
-
-    pub fn render(self) -> string {
+    
+    pub fn size(size: SelectSize) -> Select {
+        self.size = size
+        self
+    }
+    
+    pub fn class(class: string) -> Select {
+        self.class = class
+        self
+    }
+    
+    pub fn render() -> string {
+        let size_style = match self.size {
+            SelectSize::Small => "padding: 4px 8px; font-size: 12px;",
+            SelectSize::Medium => "padding: 8px 12px; font-size: 14px;",
+            SelectSize::Large => "padding: 12px 16px; font-size: 16px;",
+        }
+        
         let disabled_attr = if self.disabled { " disabled" } else { "" }
-
-        let mut options_html = if self.placeholder != "" {
-            format!("<option value=''>{}</option>", self.placeholder)
-        } else {
-            "".to_string()
+        
+        let mut html = String::new()
+        html.push_str("<select class=\"wj-select ")
+        html.push_str(self.class.as_str())
+        html.push_str("\" style=\"")
+        html.push_str(size_style)
+        html.push_str(" border: 1px solid #d1d5db; border-radius: 6px; background: white; cursor: pointer;\"")
+        html.push_str(disabled_attr)
+        html.push('>')
+        
+        // Placeholder option
+        if !self.placeholder.is_empty() {
+            html.push_str("<option value=\"\" disabled")
+            if self.selected.is_empty() {
+                html.push_str(" selected")
+            }
+            html.push_str(">")
+            html.push_str(self.placeholder.as_str())
+            html.push_str("</option>")
         }
-
-        let mut i = 0
-        while i < self.options.len() {
-            let opt = &self.options[i]
-            let selected_attr = if opt.value == self.selected { " selected" } else { "" }
-            let disabled_opt_attr = if opt.disabled { " disabled" } else { "" }
-
-            options_html = format!("{}<option value='{}'{}{}>{}</option>",
-                options_html, opt.value, selected_attr, disabled_opt_attr, opt.label)
-
-            i = i + 1
+        
+        // Options
+        for opt in self.options.iter() {
+            html.push_str("<option value=\"")
+            html.push_str(opt.value.as_str())
+            html.push('"')
+            
+            if opt.value == self.selected {
+                html.push_str(" selected")
+            }
+            
+            html.push('>')
+            html.push_str(opt.label.as_str())
+            html.push_str("</option>")
         }
-
-        format!("<select class='wj-select'{}>{}</select>", disabled_attr, options_html)
+        
+        html.push_str("</select>")
+        html
     }
 }
-
-fn main() {
-    let select1 = Select::new()
-        .option(SelectOption::new("us".to_string(), "United States".to_string()))
-        .option(SelectOption::new("uk".to_string(), "United Kingdom".to_string()))
-        .option(SelectOption::new("ca".to_string(), "Canada".to_string()))
-        .selected("us".to_string())
-
-    println!("{}", select1.render())
-}
-

@@ -1,5 +1,7 @@
 // Form Component - Wrapper for form elements with validation support
 
+
+use super::traits::Renderable
 pub struct Form {
     id: string,
     action: string,
@@ -39,25 +41,7 @@ impl Form {
         self
     }
 
-    pub fn render(self) -> string {
-        let mut html = String::new();
-        html.push_str("<form id='");
-        html.push_str(&self.id);
-        html.push_str("' action='");
-        html.push_str(&self.action);
-        html.push_str("' method='");
-        html.push_str(&self.method);
-        html.push_str("' onsubmit='");
-        html.push_str(&self.on_submit);
-        html.push_str("'>");
 
-        for child in self.children {
-            html.push_str(child);
-        }
-
-        html.push_str("</form>");
-        html
-    }
 }
 
 // FormField - Wrapper for form inputs with labels and validation
@@ -129,3 +113,24 @@ impl FormField {
     }
 }
 
+impl Renderable for Form {
+pub fn render(self) -> string {
+        let mut html = String::new();
+        html.push_str("<form id='");
+        html.push_str(&self.id);
+        html.push_str("' action='");
+        html.push_str(&self.action);
+        html.push_str("' method='");
+        html.push_str(&self.method);
+        html.push_str("' onsubmit='");
+        html.push_str(&self.on_submit);
+        html.push_str("'>");
+
+        for child in self.children {
+            html.push_str(child);
+        }
+
+        html.push_str("</form>");
+        html
+    }
+}

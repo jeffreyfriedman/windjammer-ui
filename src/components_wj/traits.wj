@@ -1,0 +1,27 @@
+// Core traits for windjammer-ui components
+// These traits enable type-safe, generic component composition
+
+/// Trait for components that can be rendered to HTML strings
+/// 
+/// This trait enables generic `.child()` methods that accept any renderable component,
+/// eliminating the need for stuttering `.render()` calls throughout the component tree.
+/// 
+/// # Example
+/// ```windjammer
+/// Div::new()
+///     .child(Text::new("Hello"))  // No .render() needed!
+///     .child(P::new()
+///         .child(Text::new("World")))  // No .render() needed!
+///     .render()  // Only at the end
+/// ```
+pub trait Renderable {
+    /// Render this component to an HTML string
+    /// 
+    /// This method consumes self to enable move semantics for owned components.
+    fn render(self) -> string
+}
+
+// Note: Additional traits like HasChildren, HasText, and HasStyle
+// will be added once Windjammer supports generic parameters in trait methods.
+// For now, we use the Renderable trait with generic impl methods.
+

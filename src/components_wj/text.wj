@@ -1,6 +1,8 @@
 // Text component - Pure Windjammer implementation
 // NO `mut` keyword needed - compiler infers everything!
 
+use super::traits::Renderable
+
 pub enum TextSize {
     Small,
     Medium,
@@ -43,9 +45,13 @@ impl Text {
         self
     }
     
+}
+
+// Implement Renderable trait for Text
+impl Renderable for Text {
     // TODO: Once external type bindings work, this will return VNode
     // For now, return a string representation for testing
-    pub fn render(self) -> string {
+    fn render(self) -> string {
         let size_class = match self.size {
             TextSize::Small => "sm",
             TextSize::Medium => "md",

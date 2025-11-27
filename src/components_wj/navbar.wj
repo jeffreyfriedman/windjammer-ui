@@ -1,3 +1,5 @@
+use super::traits::Renderable
+
 pub enum NavbarPosition {
     Top,
     Bottom,
@@ -54,7 +56,10 @@ impl Navbar {
         self
     }
     
-    pub fn render(self) -> string {
+}
+
+impl Renderable for Navbar {
+fn render(self) -> string {
         let mut items_html = Vec::new()
         
         for item in self.items {
@@ -83,4 +88,3 @@ impl Navbar {
         )
     }
 }
-

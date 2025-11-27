@@ -1,3 +1,5 @@
+use super::traits::Renderable
+
 pub struct TreeItem {
     label: string,
     children: Vec<TreeItem>,
@@ -64,8 +66,10 @@ impl TreeView {
         self.items.push(item)
         self
     }
+}
 
-    pub fn render(self) -> string {
+impl Renderable for TreeView {
+    fn render(self) -> string {
         let mut html = "<div class='wj-tree-view'>\n".to_string()
 
         let mut i = 0
@@ -89,4 +93,5 @@ fn main() {
 
     println!("{}", tree.render())
 }
+
 

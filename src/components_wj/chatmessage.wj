@@ -1,3 +1,5 @@
+
+use super::traits::Renderable
 pub enum MessageRole {
     User,
     Assistant,
@@ -36,7 +38,11 @@ impl ChatMessage {
         self
     }
     
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for ChatMessage {
+pub fn render(self) -> string {
         let role_class = match self.role {
             MessageRole::User => "wj-message-user",
             MessageRole::Assistant => "wj-message-assistant",
@@ -75,4 +81,3 @@ impl ChatMessage {
         )
     }
 }
-

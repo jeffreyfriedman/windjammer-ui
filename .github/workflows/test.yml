@@ -66,7 +66,7 @@ jobs:
             librsvg2-dev
       
       - name: Install Windjammer CLI
-        run: cargo install windjammer --locked
+        run: cargo install windjammer --version ^0.38.3 --locked
       
       - name: Build
         run: cargo build --verbose

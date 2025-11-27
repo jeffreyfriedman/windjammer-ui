@@ -1,3 +1,5 @@
+
+use super::traits::Renderable
 pub struct TypingIndicator {
     label: string,
 }
@@ -14,7 +16,11 @@ impl TypingIndicator {
         self
     }
     
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for TypingIndicator {
+pub fn render(self) -> string {
         format!(
             "<div class='wj-typing-indicator'>
                 <div class='wj-typing-dots'>
@@ -28,4 +34,3 @@ impl TypingIndicator {
         )
     }
 }
-

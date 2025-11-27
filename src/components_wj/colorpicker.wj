@@ -1,3 +1,5 @@
+
+use super::traits::Renderable
 pub struct ColorPicker {
     value: string,
     label: string,
@@ -21,7 +23,11 @@ impl ColorPicker {
         self
     }
 
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for ColorPicker {
+pub fn render(self) -> string {
         let label_html = if self.label != "" {
             format!("<label>{}</label>", self.label)
         } else {
@@ -43,4 +49,5 @@ fn main() {
 
     println!("{}", picker.render())
 }
+
 

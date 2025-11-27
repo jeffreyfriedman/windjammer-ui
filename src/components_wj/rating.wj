@@ -1,5 +1,7 @@
 // Rating Component - Star rating display and input
 
+
+use super::traits::Renderable
 pub enum RatingSize {
     Small,
     Medium,
@@ -45,7 +47,11 @@ impl Rating {
         self
     }
 
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for Rating {
+pub fn render(self) -> string {
         let star_size = match self.size {
             RatingSize::Small => "16px",
             RatingSize::Medium => "24px",
@@ -95,4 +101,3 @@ impl Rating {
         html
     }
 }
-

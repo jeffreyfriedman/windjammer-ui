@@ -1,3 +1,5 @@
+
+use super::traits::Renderable
 pub enum ProgressVariant {
     Default,
     Success,
@@ -37,7 +39,11 @@ impl Progress {
         self
     }
 
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for Progress {
+pub fn render(self) -> string {
         let percentage = (self.value / self.max * 100.0).clamp(0.0, 100.0)
 
         let variant_class = match self.variant {

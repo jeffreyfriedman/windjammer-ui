@@ -190,3 +190,4 @@ fn build_activity_section() -> string {
         .render()
 }
 
+

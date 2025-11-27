@@ -1,5 +1,7 @@
 // Modal Component - Overlay dialog with backdrop
 
+
+use super::traits::Renderable
 pub enum ModalSize {
     Small,
     Medium,
@@ -55,7 +57,11 @@ impl Modal {
         self
     }
 
-    pub fn render(self) -> string {
+
+}
+
+impl Renderable for Modal {
+pub fn render(self) -> string {
         let width = match self.size {
             ModalSize::Small => "400px",
             ModalSize::Medium => "600px",
@@ -124,4 +130,3 @@ impl Modal {
         html
     }
 }
-
