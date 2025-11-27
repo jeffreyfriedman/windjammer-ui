@@ -2,6 +2,7 @@
 //!
 //! Verify all 49 components generated from pure Windjammer can be instantiated and rendered
 
+use windjammer_ui::components::generated::Renderable;
 use windjammer_ui::components::*;
 
 #[test]

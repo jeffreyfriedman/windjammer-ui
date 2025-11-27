@@ -255,3 +255,4 @@ fn get_base_styles() -> string {
     .wj-button-ghost { background: transparent; color: #667eea; border: 1px solid #667eea; }"
 }
 
+

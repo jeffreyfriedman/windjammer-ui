@@ -41,3 +41,4 @@ fn main() {
     println!("{}", collapsible.render())
 }
 
+

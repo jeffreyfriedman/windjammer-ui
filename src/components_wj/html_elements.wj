@@ -1,5 +1,7 @@
 // HTML Elements - Type-safe HTML element builders
 
+use super::traits::Renderable
+
 pub struct Div {
     children: Vec<string>,
     class: string,
@@ -17,8 +19,8 @@ impl Div {
         }
     }
     
-    pub fn child(child: string) -> Div {
-        self.children.push(child)
+    pub fn child<T: Renderable>(component: T) -> Div {
+        self.children.push(component.render())
         self
     }
     
@@ -90,8 +92,8 @@ impl Span {
         }
     }
     
-    pub fn child(child: string) -> Span {
-        self.children.push(child)
+    pub fn child<T: Renderable>(component: T) -> Span {
+        self.children.push(component.render())
         self
     }
     
@@ -110,7 +112,11 @@ impl Span {
         self
     }
     
-    pub fn render() -> string {
+}
+
+// Implement Renderable for Span
+impl Renderable for Span {
+    fn render(self) -> string {
         let mut html = String::new()
         html.push_str("<span")
         
@@ -152,8 +158,8 @@ impl P {
         }
     }
     
-    pub fn child(child: string) -> P {
-        self.children.push(child)
+    pub fn child<T: Renderable>(component: T) -> P {
+        self.children.push(component.render())
         self
     }
     
@@ -172,7 +178,11 @@ impl P {
         self
     }
     
-    pub fn render() -> string {
+}
+
+// Implement Renderable for P
+impl Renderable for P {
+    fn render(self) -> string {
         let mut html = String::new()
         html.push_str("<p")
         
@@ -224,7 +234,11 @@ impl H1 {
         self
     }
     
-    pub fn render() -> string {
+}
+
+// Implement Renderable for H1
+impl Renderable for H1 {
+    fn render(self) -> string {
         let mut html = String::new()
         html.push_str("<h1")
         
@@ -272,7 +286,11 @@ impl H2 {
         self
     }
     
-    pub fn render() -> string {
+}
+
+// Implement Renderable for H2
+impl Renderable for H2 {
+    fn render(self) -> string {
         let mut html = String::new()
         html.push_str("<h2")
         
@@ -320,7 +338,11 @@ impl H3 {
         self
     }
     
-    pub fn render() -> string {
+}
+
+// Implement Renderable for H3
+impl Renderable for H3 {
+    fn render(self) -> string {
         let mut html = String::new()
         html.push_str("<h3")
         
@@ -342,4 +364,3 @@ impl H3 {
         html
     }
 }
-
