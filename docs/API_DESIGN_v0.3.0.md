@@ -278,8 +278,40 @@ Container::new()
 6. **Zero Raw Strings**: No HTML/CSS syntax errors
 7. **Better DX**: More pleasant developer experience
 
+## Known Limitations
+
+### Stuttering `.render()` Calls (Planned for v0.4.0)
+
+**Current API (v0.3.0):**
+```windjammer
+Div::new()
+    .child(P::new()
+        .child(Text::new("Hello").render())  // ❌ Stuttering
+        .render())  // ❌ Stuttering
+    .render()
+```
+
+**Desired API (v0.4.0):**
+```windjammer
+Div::new()
+    .child(P::new()
+        .child(Text::new("Hello")))  // ✅ No stuttering
+    .render()  // ✅ Only at the end
+```
+
+**Solution:** Make `.child()` generic to accept both raw components and `Component`:
+```windjammer
+pub fn child<T: Into<Component>>(mut self, child: T) -> Self {
+    self.children.push(child.into());
+    self
+}
+```
+
+This requires implementing `Into<Component>` for all component types. Planned for v0.4.0.
+
 ## Future Enhancements
 
+- **v0.4.0**: Remove stuttering `.render()` calls with generic `.child()`
 - CSS classes builder (similar to Tailwind)
 - Animation/transition builders
 - Responsive design helpers
