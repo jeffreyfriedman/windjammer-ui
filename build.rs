@@ -27,15 +27,51 @@ fn main() {
         "wj".to_string()
     };
 
-    // Check if wj CLI is available
+    // Check if wj CLI is available and version
     let wj_check = Command::new(&wj_cli).arg("--version").output();
 
     if wj_check.is_err() {
         eprintln!("⚠️  Warning: wj CLI not found!");
         eprintln!("   Skipping .wj transpilation. To fix:");
-        eprintln!("   Option 1: cargo install windjammer");
+        eprintln!("   Option 1: cargo install windjammer --version ^0.38.3");
         eprintln!("   Option 2: cd ../windjammer && cargo build --release");
+        eprintln!();
+        eprintln!("   Note: windjammer-ui v0.3.0 requires Windjammer v0.38.3+");
+        eprintln!("   (for trait implementation visibility fixes)");
         return;
+    }
+
+    // Parse version and check minimum requirement
+    if let Ok(output) = wj_check {
+        let version_str = String::from_utf8_lossy(&output.stdout);
+        if let Some(version_line) = version_str.lines().next() {
+            // Extract version number (format: "windjammer 0.38.3")
+            if let Some(version) = version_line.split_whitespace().nth(1) {
+                let parts: Vec<&str> = version.split('.').collect();
+                if parts.len() >= 2 {
+                    if let (Ok(major), Ok(minor)) =
+                        (parts[0].parse::<u32>(), parts[1].parse::<u32>())
+                    {
+                        let patch = parts
+                            .get(2)
+                            .and_then(|p| p.parse::<u32>().ok())
+                            .unwrap_or(0);
+
+                        // Require v0.38.3+
+                        if major == 0 && (minor < 38 || (minor == 38 && patch < 3)) {
+                            eprintln!("⚠️  Warning: Windjammer version {} is too old!", version);
+                            eprintln!("   windjammer-ui v0.3.0 requires Windjammer v0.38.3+");
+                            eprintln!(
+                                "   Please upgrade: cargo install windjammer --version ^0.38.3"
+                            );
+                            eprintln!();
+                            eprintln!("   Skipping .wj transpilation to avoid compilation errors.");
+                            return;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     // Check if source directory exists
