@@ -77,10 +77,22 @@ jobs:
       
       - name: Run clippy
         if: matrix.rust == 'stable'
-        run: cargo clippy --all-targets --all-features -- -D warnings
+        run: |
+          if [ "$RUNNER_OS" == "Linux" ]; then
+            # On Linux, test web features only (desktop has platform conflicts)
+            cargo clippy --all-targets --features web -- -D warnings
+          else
+            cargo clippy --all-targets --all-features -- -D warnings
+          fi
       
       - name: Run tests
-        run: cargo test --verbose --all-features
+        run: |
+          if [ "$RUNNER_OS" == "Linux" ]; then
+            # On Linux, test web features only (desktop has platform conflicts)
+            cargo test --verbose --features web
+          else
+            cargo test --verbose --all-features
+          fi
       
       - name: Build release
         if: matrix.rust == 'stable'
