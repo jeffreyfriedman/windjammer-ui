@@ -1,76 +1,116 @@
+// Switch - Toggle switch component (modern alternative to checkbox)
+
+pub struct Switch {
+    checked: bool,
+    disabled: bool,
+    size: SwitchSize,
+    label: string,
+    class: string,
+}
+
 pub enum SwitchSize {
     Small,
     Medium,
     Large,
 }
 
-pub struct Switch {
-    label: string,
-    checked: bool,
-    disabled: bool,
-    size: SwitchSize,
-}
-
 impl Switch {
     pub fn new() -> Switch {
         Switch {
-            label: "".to_string(),
             checked: false,
             disabled: false,
             size: SwitchSize::Medium,
+            label: String::new(),
+            class: String::new(),
         }
     }
-
-    pub fn label(self, label: string) -> Switch {
-        self.label = label
-        self
-    }
-
-    pub fn checked(self, checked: bool) -> Switch {
+    
+    pub fn checked(checked: bool) -> Switch {
         self.checked = checked
         self
     }
-
-    pub fn disabled(self, disabled: bool) -> Switch {
+    
+    pub fn disabled(disabled: bool) -> Switch {
         self.disabled = disabled
         self
     }
-
-    pub fn size(self, size: SwitchSize) -> Switch {
+    
+    pub fn size(size: SwitchSize) -> Switch {
         self.size = size
         self
     }
-
-    pub fn render(self) -> string {
-        let size_class = match self.size {
-            SwitchSize::Small => "wj-switch-sm",
-            SwitchSize::Medium => "wj-switch-md",
-            SwitchSize::Large => "wj-switch-lg",
+    
+    pub fn label(label: string) -> Switch {
+        self.label = label
+        self
+    }
+    
+    pub fn class(class: string) -> Switch {
+        self.class = class
+        self
+    }
+    
+    pub fn render() -> string {
+        let (width, height, thumb_size) = match self.size {
+            SwitchSize::Small => ("32px", "18px", "14px"),
+            SwitchSize::Medium => ("44px", "24px", "20px"),
+            SwitchSize::Large => ("56px", "32px", "28px"),
         }
-
-        let checked_class = if self.checked { " wj-switch-checked" } else { "" }
+        
+        let bg_color = if self.checked { "#3b82f6" } else { "#d1d5db" }
+        let thumb_pos = if self.checked { 
+            match self.size {
+                SwitchSize::Small => "16px",
+                SwitchSize::Medium => "22px",
+                SwitchSize::Large => "26px",
+            }
+        } else { "2px" }
+        
+        let disabled_style = if self.disabled { " opacity: 0.5; cursor: not-allowed;" } else { " cursor: pointer;" }
         let disabled_attr = if self.disabled { " disabled" } else { "" }
-        let checked_attr = if self.checked { " checked" } else { "" }
-
-        let label_html = if self.label != "" {
-            format!("<span class='wj-switch-label'>{}</span>", self.label)
-        } else {
-            "".to_string()
+        
+        let mut html = String::new()
+        html.push_str("<label class=\"wj-switch ")
+        html.push_str(self.class.as_str())
+        html.push_str("\" style=\"display: inline-flex; align-items: center; gap: 8px;")
+        html.push_str(disabled_style)
+        html.push_str("\">")
+        
+        // Hidden checkbox for accessibility
+        html.push_str("<input type=\"checkbox\"")
+        if self.checked {
+            html.push_str(" checked")
         }
-
-        format!("<label class='wj-switch {}{}'><input type='checkbox'{}{}/><span class='wj-switch-slider'></span>{}</label>",
-            size_class, checked_class, checked_attr, disabled_attr, label_html)
+        html.push_str(disabled_attr)
+        html.push_str(" style=\"position: absolute; opacity: 0; width: 0; height: 0;\">")
+        
+        // Switch track
+        html.push_str("<span style=\"position: relative; display: inline-block; width: ")
+        html.push_str(width)
+        html.push_str("; height: ")
+        html.push_str(height)
+        html.push_str("; background-color: ")
+        html.push_str(bg_color)
+        html.push_str("; border-radius: 999px; transition: background-color 0.2s;\">")
+        
+        // Switch thumb
+        html.push_str("<span style=\"position: absolute; top: 2px; left: ")
+        html.push_str(thumb_pos)
+        html.push_str("; width: ")
+        html.push_str(thumb_size)
+        html.push_str("; height: ")
+        html.push_str(thumb_size)
+        html.push_str("; background-color: white; border-radius: 50%; transition: left 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.2);\"></span>")
+        html.push_str("</span>")
+        
+        // Label text
+        if !self.label.is_empty() {
+            html.push_str("<span style=\"font-size: 14px;\">")
+            html.push_str(self.label.as_str())
+            html.push_str("</span>")
+        }
+        
+        html.push_str("</label>")
+        html
     }
 }
-
-fn main() {
-    let switch1 = Switch::new().label("Enable notifications".to_string()).checked(true)
-    println!("{}", switch1.render())
-
-    let switch2 = Switch::new().label("Dark mode".to_string()).size(SwitchSize::Large)
-    println!("{}", switch2.render())
-
-    let switch3 = Switch::new().label("Disabled option".to_string()).disabled(true)
-    println!("{}", switch3.render())
-}
-

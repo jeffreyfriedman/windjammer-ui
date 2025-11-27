@@ -80,9 +80,12 @@ fn main() {
         for entry in entries.flatten() {
             let path = entry.path();
             if path.extension().and_then(|s| s.to_str()) == Some("rs") {
-                // Add #![allow(clippy::all)] to the top of each generated file
+                // Add allow directives to the top of each generated file
                 if let Ok(content) = std::fs::read_to_string(&path) {
-                    let new_content = format!("#![allow(clippy::all)]\n{}", content);
+                    let new_content = format!(
+                        "#![allow(clippy::all)]\n#![allow(noop_method_call)]\n{}",
+                        content
+                    );
                     let _ = std::fs::write(&path, new_content);
                 }
 

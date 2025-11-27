@@ -1,0 +1,345 @@
+// HTML Elements - Type-safe HTML element builders
+
+pub struct Div {
+    children: Vec<string>,
+    class: string,
+    style: string,
+    id: string,
+}
+
+impl Div {
+    pub fn new() -> Div {
+        Div {
+            children: Vec::new(),
+            class: String::new(),
+            style: String::new(),
+            id: String::new(),
+        }
+    }
+    
+    pub fn child(child: string) -> Div {
+        self.children.push(child)
+        self
+    }
+    
+    pub fn text(text: string) -> Div {
+        self.children.push(text)
+        self
+    }
+    
+    pub fn class(class: string) -> Div {
+        self.class = class
+        self
+    }
+    
+    pub fn style(style: string) -> Div {
+        self.style = style
+        self
+    }
+    
+    pub fn id(id: string) -> Div {
+        self.id = id
+        self
+    }
+    
+    pub fn render() -> string {
+        let mut html = String::new()
+        html.push_str("<div")
+        
+        if !self.id.is_empty() {
+            html.push_str(" id=\"")
+            html.push_str(self.id.as_str())
+            html.push('"')
+        }
+        
+        if !self.class.is_empty() {
+            html.push_str(" class=\"")
+            html.push_str(self.class.as_str())
+            html.push('"')
+        }
+        
+        if !self.style.is_empty() {
+            html.push_str(" style=\"")
+            html.push_str(self.style.as_str())
+            html.push('"')
+        }
+        
+        html.push('>')
+        
+        for child in self.children.iter() {
+            html.push_str(child.as_str())
+        }
+        
+        html.push_str("</div>")
+        html
+    }
+}
+
+pub struct Span {
+    children: Vec<string>,
+    class: string,
+    style: string,
+}
+
+impl Span {
+    pub fn new() -> Span {
+        Span {
+            children: Vec::new(),
+            class: String::new(),
+            style: String::new(),
+        }
+    }
+    
+    pub fn child(child: string) -> Span {
+        self.children.push(child)
+        self
+    }
+    
+    pub fn text(text: string) -> Span {
+        self.children.push(text)
+        self
+    }
+    
+    pub fn class(class: string) -> Span {
+        self.class = class
+        self
+    }
+    
+    pub fn style(style: string) -> Span {
+        self.style = style
+        self
+    }
+    
+    pub fn render() -> string {
+        let mut html = String::new()
+        html.push_str("<span")
+        
+        if !self.class.is_empty() {
+            html.push_str(" class=\"")
+            html.push_str(self.class.as_str())
+            html.push('"')
+        }
+        
+        if !self.style.is_empty() {
+            html.push_str(" style=\"")
+            html.push_str(self.style.as_str())
+            html.push('"')
+        }
+        
+        html.push('>')
+        
+        for child in self.children.iter() {
+            html.push_str(child.as_str())
+        }
+        
+        html.push_str("</span>")
+        html
+    }
+}
+
+pub struct P {
+    children: Vec<string>,
+    class: string,
+    style: string,
+}
+
+impl P {
+    pub fn new() -> P {
+        P {
+            children: Vec::new(),
+            class: String::new(),
+            style: String::new(),
+        }
+    }
+    
+    pub fn child(child: string) -> P {
+        self.children.push(child)
+        self
+    }
+    
+    pub fn text(text: string) -> P {
+        self.children.push(text)
+        self
+    }
+    
+    pub fn class(class: string) -> P {
+        self.class = class
+        self
+    }
+    
+    pub fn style(style: string) -> P {
+        self.style = style
+        self
+    }
+    
+    pub fn render() -> string {
+        let mut html = String::new()
+        html.push_str("<p")
+        
+        if !self.class.is_empty() {
+            html.push_str(" class=\"")
+            html.push_str(self.class.as_str())
+            html.push('"')
+        }
+        
+        if !self.style.is_empty() {
+            html.push_str(" style=\"")
+            html.push_str(self.style.as_str())
+            html.push('"')
+        }
+        
+        html.push('>')
+        
+        for child in self.children.iter() {
+            html.push_str(child.as_str())
+        }
+        
+        html.push_str("</p>")
+        html
+    }
+}
+
+pub struct H1 {
+    text: string,
+    class: string,
+    style: string,
+}
+
+impl H1 {
+    pub fn new(text: string) -> H1 {
+        H1 {
+            text,
+            class: String::new(),
+            style: String::new(),
+        }
+    }
+    
+    pub fn class(class: string) -> H1 {
+        self.class = class
+        self
+    }
+    
+    pub fn style(style: string) -> H1 {
+        self.style = style
+        self
+    }
+    
+    pub fn render() -> string {
+        let mut html = String::new()
+        html.push_str("<h1")
+        
+        if !self.class.is_empty() {
+            html.push_str(" class=\"")
+            html.push_str(self.class.as_str())
+            html.push('"')
+        }
+        
+        if !self.style.is_empty() {
+            html.push_str(" style=\"")
+            html.push_str(self.style.as_str())
+            html.push('"')
+        }
+        
+        html.push('>')
+        html.push_str(self.text.as_str())
+        html.push_str("</h1>")
+        html
+    }
+}
+
+pub struct H2 {
+    text: string,
+    class: string,
+    style: string,
+}
+
+impl H2 {
+    pub fn new(text: string) -> H2 {
+        H2 {
+            text,
+            class: String::new(),
+            style: String::new(),
+        }
+    }
+    
+    pub fn class(class: string) -> H2 {
+        self.class = class
+        self
+    }
+    
+    pub fn style(style: string) -> H2 {
+        self.style = style
+        self
+    }
+    
+    pub fn render() -> string {
+        let mut html = String::new()
+        html.push_str("<h2")
+        
+        if !self.class.is_empty() {
+            html.push_str(" class=\"")
+            html.push_str(self.class.as_str())
+            html.push('"')
+        }
+        
+        if !self.style.is_empty() {
+            html.push_str(" style=\"")
+            html.push_str(self.style.as_str())
+            html.push('"')
+        }
+        
+        html.push('>')
+        html.push_str(self.text.as_str())
+        html.push_str("</h2>")
+        html
+    }
+}
+
+pub struct H3 {
+    text: string,
+    class: string,
+    style: string,
+}
+
+impl H3 {
+    pub fn new(text: string) -> H3 {
+        H3 {
+            text,
+            class: String::new(),
+            style: String::new(),
+        }
+    }
+    
+    pub fn class(class: string) -> H3 {
+        self.class = class
+        self
+    }
+    
+    pub fn style(style: string) -> H3 {
+        self.style = style
+        self
+    }
+    
+    pub fn render() -> string {
+        let mut html = String::new()
+        html.push_str("<h3")
+        
+        if !self.class.is_empty() {
+            html.push_str(" class=\"")
+            html.push_str(self.class.as_str())
+            html.push('"')
+        }
+        
+        if !self.style.is_empty() {
+            html.push_str(" style=\"")
+            html.push_str(self.style.as_str())
+            html.push('"')
+        }
+        
+        html.push('>')
+        html.push_str(self.text.as_str())
+        html.push_str("</h3>")
+        html
+    }
+}
+
