@@ -4,6 +4,12 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (e.g., 0.2.2)'
+        required: true
+        type: string
 
 env:
   CARGO_TERM_COLOR: always
@@ -90,27 +96,14 @@ jobs:
       - name: Run tests before publish
         run: cargo test --features web
       
-      - name: Check if CARGO_TOKEN is available
-        run: |
-          if [ -z "${{ secrets.CARGO_TOKEN }}" ]; then
-            echo "❌ ERROR: CARGO_TOKEN secret is not set or is empty"
-            echo "Please add CARGO_TOKEN to repository secrets at:"
-            echo "https://github.com/${{ github.repository }}/settings/secrets/actions"
-            exit 1
-          else
-            echo "✅ CARGO_TOKEN secret is available (length: ${#CARGO_TOKEN})"
-          fi
-        env:
-          CARGO_TOKEN: ${{ secrets.CARGO_TOKEN }}
-      
       - name: Publish windjammer-ui-macro first
-        run: cargo publish --token ${{ secrets.CARGO_TOKEN }} -p windjammer-ui-macro
+        run: cargo publish --token ${{ secrets.CARGO_REGISTRY_TOKEN }} -p windjammer-ui-macro
         continue-on-error: true  # May already be published
       
       - name: Wait for crates.io to index
         run: sleep 30
       
       - name: Publish windjammer-ui
-        run: cargo publish --token ${{ secrets.CARGO_TOKEN }}
+        run: cargo publish --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
         continue-on-error: true  # Don't fail if already published
 
