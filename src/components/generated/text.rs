@@ -18,6 +18,7 @@ pub struct Text {
     content: String,
     size: TextSize,
     weight: TextWeight,
+    color: String,
 }
 
 impl Text {
@@ -27,6 +28,7 @@ impl Text {
             content,
             size: TextSize::Medium,
             weight: TextWeight::Normal,
+            color: "".to_string(),
         }
     }
     #[inline]
@@ -37,6 +39,11 @@ impl Text {
     #[inline]
     pub fn bold(mut self) -> Text {
         self.weight = TextWeight::Bold;
+        self
+    }
+    #[inline]
+    pub fn color(mut self, color: String) -> Text {
+        self.color = color;
         self
     }
 }
@@ -54,9 +61,16 @@ impl Renderable for Text {
             TextWeight::Normal => "normal",
             TextWeight::Bold => "bold",
         };
+        let style = {
+            if self.color != "" {
+                format!(" style='color: {};'", self.color)
+            } else {
+                "".to_string()
+            }
+        };
         format!(
-            "<span class='wj-text {} {}'>{}</span>",
-            size_class, weight_class, self.content
+            "<span class='wj-text {} {}'{}>{}</span>",
+            size_class, weight_class, style, self.content
         )
     }
 }
