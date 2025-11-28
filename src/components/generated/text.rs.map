@@ -1,0 +1,13 @@
+{
+  "mappings": [
+    {
+      "rust_file": "/Users/jeffreyfriedman/src/wj/windjammer-ui/src/components/generated/text.rs",
+      "rust_line": 1,
+      "rust_column": 0,
+      "wj_file": "/Users/jeffreyfriedman/src/wj/windjammer-ui/src/components_wj/text.wj",
+      "wj_line": 78,
+      "wj_column": 1
+    }
+  ],
+  "version": 1
+}
