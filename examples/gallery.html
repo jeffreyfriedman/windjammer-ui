@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Windjammer UI v0.3 - Component Gallery</title>
+    <title>Windjammer UI - Interactive Component Gallery</title>
+    <link rel="stylesheet" href="../styles/components.css">
     <style>
         * {
             margin: 0;
@@ -12,73 +13,77 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #333;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f0f0f;
+            color: #e0e0e0;
             line-height: 1.6;
-            min-height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        
+        html {
+            scroll-behavior: smooth;
         }
 
         .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 80px 24px;
             text-align: center;
-            padding: 80px 24px 60px;
             color: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
 
         .hero h1 {
             font-size: 56px;
             font-weight: 800;
             margin-bottom: 16px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
         .hero p {
             font-size: 24px;
             opacity: 0.95;
-            margin-bottom: 12px;
+            margin-bottom: 32px;
         }
 
-        .hero .stats {
+        .stats {
             display: flex;
             justify-content: center;
-            gap: 32px;
-            margin-top: 32px;
+            gap: 48px;
             flex-wrap: wrap;
         }
 
         .stat {
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(10px);
-            padding: 20px 32px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.2);
+            text-align: center;
         }
 
         .stat-number {
-            font-size: 42px;
+            font-size: 48px;
             font-weight: 700;
             display: block;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
         .stat-label {
             font-size: 14px;
             opacity: 0.9;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 24px 80px;
+            padding: 60px 24px;
         }
 
         .section {
-            background: white;
+            background: #1a1a1a;
             border-radius: 16px;
             padding: 40px;
-            margin-bottom: 32px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+            margin-bottom: 40px;
+            border: 1px solid #2a2a2a;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
         }
 
         .section-header {
@@ -87,7 +92,7 @@
             gap: 16px;
             margin-bottom: 32px;
             padding-bottom: 20px;
-            border-bottom: 2px solid #f0f0f0;
+            border-bottom: 2px solid #2a2a2a;
         }
 
         .section-icon {
@@ -98,102 +103,802 @@
             font-size: 32px;
             color: #667eea;
             font-weight: 700;
+            margin: 0;
         }
 
-        .section p {
-            color: #666;
+        .section-desc {
+            color: #888;
             font-size: 16px;
+            margin: 0;
         }
 
         .component-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
         }
 
-        .component-card {
-            border: 2px solid #e8e8e8;
+        .component-demo {
+            background: #0f0f0f;
+            border: 1px solid #2a2a2a;
             border-radius: 12px;
             padding: 24px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            background: #fafafa;
-            position: relative;
-            overflow: hidden;
+            transition: all 0.3s;
         }
 
-        .component-card::before {
-            content: '';
+        .component-demo:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.2);
+        }
+
+        .component-demo h3 {
+            font-size: 20px;
+            margin-bottom: 16px;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .component-demo p {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 20px;
+        }
+
+        .demo-content {
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Button styles */
+        .wj-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .wj-button-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .wj-button-primary:hover {
+            background: #5568d3;
+        }
+
+        .wj-button-secondary {
+            background: #4a5568;
+            color: white;
+        }
+
+        .wj-button-secondary:hover {
+            background: #3a4556;
+        }
+
+        .wj-button-danger {
+            background: #f56565;
+            color: white;
+        }
+
+        .wj-button-danger:hover {
+            background: #e53e3e;
+        }
+
+        .wj-button-small {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .wj-button-medium {
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+
+        .wj-button-large {
+            padding: 14px 28px;
+            font-size: 16px;
+        }
+
+        .wj-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Input styles */
+        .wj-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            background: #0f0f0f;
+            color: #e0e0e0;
+            font-size: 14px;
+        }
+
+        .wj-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .wj-textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            background: #0f0f0f;
+            color: #e0e0e0;
+            font-size: 14px;
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .wj-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Checkbox & Radio */
+        .wj-checkbox, .wj-radio {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 8px 0;
+        }
+
+        .wj-checkbox input, .wj-radio input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        /* Select */
+        .wj-select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            background: #0f0f0f;
+            color: #e0e0e0;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .wj-select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* Switch */
+        .wj-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .wj-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .wj-switch-slider {
             position: absolute;
+            cursor: pointer;
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
+            bottom: 0;
+            background-color: #2a2a2a;
+            transition: .3s;
+            border-radius: 26px;
+        }
+
+        .wj-switch-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        .wj-switch input:checked + .wj-switch-slider {
+            background-color: #667eea;
+        }
+
+        .wj-switch input:checked + .wj-switch-slider:before {
+            transform: translateX(24px);
+        }
+
+        /* Slider */
+        .wj-slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #2a2a2a;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .wj-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+        }
+
+        .wj-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+        }
+
+        /* Progress */
+        .wj-progress {
+            width: 100%;
+            height: 8px;
+            background: #2a2a2a;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .wj-progress-bar {
+            height: 100%;
             background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            transform: scaleX(0);
-            transition: transform 0.3s;
+            transition: width 0.3s;
         }
 
-        .component-card:hover {
-            border-color: #667eea;
-            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
-            transform: translateY(-4px);
-            background: white;
-        }
-
-        .component-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .component-name {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #333;
-        }
-
-        .component-desc {
-            font-size: 14px;
-            color: #666;
-            line-height: 1.5;
-        }
-
-        .status-badge {
+        /* Badge */
+        .wj-badge {
             display: inline-block;
             padding: 4px 12px;
             border-radius: 12px;
             font-size: 12px;
             font-weight: 600;
-            margin-top: 12px;
-            background: #10b981;
+        }
+
+        .wj-badge-primary {
+            background: #667eea;
             color: white;
         }
 
-        .footer {
-            text-align: center;
-            padding: 60px 24px;
+        .wj-badge-success {
+            background: #48bb78;
             color: white;
         }
 
-        .footer a {
+        .wj-badge-warning {
+            background: #ed8936;
             color: white;
-            text-decoration: none;
+        }
+
+        .wj-badge-danger {
+            background: #f56565;
+            color: white;
+        }
+
+        /* Alert */
+        .wj-alert {
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+
+        .wj-alert-info {
+            background: rgba(66, 153, 225, 0.1);
+            border-color: #4299e1;
+            color: #90cdf4;
+        }
+
+        .wj-alert-success {
+            background: rgba(72, 187, 120, 0.1);
+            border-color: #48bb78;
+            color: #9ae6b4;
+        }
+
+        .wj-alert-warning {
+            background: rgba(237, 137, 54, 0.1);
+            border-color: #ed8936;
+            color: #fbd38d;
+        }
+
+        .wj-alert-error {
+            background: rgba(245, 101, 101, 0.1);
+            border-color: #f56565;
+            color: #fc8181;
+        }
+
+        /* Card */
+        .wj-card {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .wj-card-header {
+            font-size: 18px;
             font-weight: 600;
-            border-bottom: 2px solid rgba(255,255,255,0.3);
-            transition: border-color 0.3s;
+            margin-bottom: 12px;
+            color: #fff;
         }
 
-        .footer a:hover {
-            border-bottom-color: white;
-        }
-
-        .badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.2);
-            padding: 6px 16px;
-            border-radius: 20px;
+        .wj-card-body {
+            color: #888;
             font-size: 14px;
-            margin: 8px 4px;
-            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        /* Spinner */
+        .wj-spinner {
+            border: 3px solid #2a2a2a;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Tabs */
+        .wj-tabs {
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid #2a2a2a;
+            margin-bottom: 20px;
+        }
+
+        .wj-tab {
+            padding: 12px 24px;
+            background: transparent;
+            border: none;
+            color: #888;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .wj-tab:hover {
+            color: #e0e0e0;
+        }
+
+        .wj-tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .wj-tab-content {
+            display: none;
+        }
+
+        .wj-tab-content.active {
+            display: block;
+        }
+
+        /* Tooltip */
+        .wj-tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .wj-tooltip .wj-tooltip-text {
+            visibility: hidden;
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+            text-align: center;
+            padding: 8px 12px;
+            border-radius: 6px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .wj-tooltip:hover .wj-tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Avatar */
+        .wj-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .wj-avatar-small {
+            width: 32px;
+            height: 32px;
+            font-size: 14px;
+        }
+
+        .wj-avatar-large {
+            width: 64px;
+            height: 64px;
+            font-size: 24px;
+        }
+
+        /* Breadcrumb */
+        .wj-breadcrumb {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .wj-breadcrumb-item {
+            color: #888;
+        }
+
+        .wj-breadcrumb-item.active {
+            color: #667eea;
+        }
+
+        .wj-breadcrumb-separator {
+            color: #444;
+        }
+
+        /* Pagination */
+        .wj-pagination {
+            display: flex;
+            gap: 8px;
+        }
+
+        .wj-page-btn {
+            padding: 8px 12px;
+            border: 1px solid #2a2a2a;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .wj-page-btn:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .wj-page-btn.active {
+            background: #667eea;
+            border-color: #667eea;
+            color: white;
+        }
+
+        /* Accordion */
+        .wj-accordion-item {
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+
+        .wj-accordion-header {
+            padding: 16px;
+            background: #1a1a1a;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .wj-accordion-header:hover {
+            background: #222;
+        }
+
+        .wj-accordion-content {
+            padding: 16px;
+            display: none;
+            background: #0f0f0f;
+        }
+
+        .wj-accordion-content.active {
+            display: block;
+        }
+
+        /* Table */
+        .wj-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .wj-table th,
+        .wj-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .wj-table th {
+            background: #1a1a1a;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .wj-table tr:hover {
+            background: #1a1a1a;
+        }
+
+        /* Skeleton */
+        .wj-skeleton {
+            background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s ease-in-out infinite;
+            border-radius: 4px;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .wj-skeleton-text {
+            height: 16px;
+            margin-bottom: 8px;
+        }
+
+        .wj-skeleton-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+        }
+
+        /* Toast */
+        .wj-toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+            display: none;
+            min-width: 300px;
+        }
+
+        .wj-toast.show {
+            display: block;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Modal */
+        .wj-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        .wj-modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wj-modal-content {
+            background: #1a1a1a;
+            padding: 32px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid #2a2a2a;
+        }
+
+        .wj-modal-header {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .wj-modal-body {
+            margin-bottom: 24px;
+            color: #888;
+        }
+
+        .wj-modal-footer {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        /* Chip */
+        .wj-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: #2a2a2a;
+            border-radius: 16px;
+            font-size: 14px;
+        }
+
+        .wj-chip-close {
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .wj-chip-close:hover {
+            opacity: 1;
+        }
+
+        /* Rating */
+        .wj-rating {
+            display: flex;
+            gap: 4px;
+        }
+
+        .wj-star {
+            font-size: 24px;
+            cursor: pointer;
+            color: #2a2a2a;
+            transition: color 0.2s;
+        }
+
+        .wj-star.filled {
+            color: #fbbf24;
+        }
+
+        /* Timeline */
+        .wj-timeline {
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .wj-timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #2a2a2a;
+        }
+
+        .wj-timeline-item {
+            position: relative;
+            padding-bottom: 24px;
+        }
+
+        .wj-timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #667eea;
+            border: 2px solid #0f0f0f;
+        }
+
+        .wj-timeline-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .wj-timeline-desc {
+            color: #888;
+            font-size: 14px;
+        }
+
+        /* Stepper */
+        .wj-stepper {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .wj-step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .wj-step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #2a2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .wj-step.active .wj-step-number {
+            background: #667eea;
+        }
+
+        .wj-step.completed .wj-step-number {
+            background: #48bb78;
+        }
+
+        .wj-step-line {
+            width: 40px;
+            height: 2px;
+            background: #2a2a2a;
+        }
+
+        /* Utility classes */
+        .flex {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .flex-col {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-4 {
+            margin-top: 16px;
+        }
+
+        .counter-display {
+            font-size: 48px;
+            font-weight: 700;
+            text-align: center;
+            color: #667eea;
+            margin: 24px 0;
         }
 
         @media (max-width: 768px) {
@@ -201,16 +906,8 @@
                 font-size: 36px;
             }
             
-            .hero p {
-                font-size: 18px;
-            }
-
             .component-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .section {
-                padding: 24px;
             }
         }
     </style>
@@ -218,12 +915,11 @@
 <body>
     <div class="hero">
         <h1>🎨 Windjammer UI</h1>
-        <p>Type-Safe, Reactive, Cross-Platform UI Framework</p>
-        <div class="badges">
-            <span class="badge">v0.3.0</span>
-            <span class="badge">70+ Components</span>
-            <span class="badge">Type-Safe</span>
-            <span class="badge">Reactive</span>
+        <p>Interactive Component Gallery</p>
+        <div style="max-width: 800px; margin: 24px auto; padding: 16px 24px; background: rgba(0,0,0,0.3); border-radius: 12px; font-size: 14px;">
+            <strong>📝 Note:</strong> This gallery shows visual demos of components using HTML/CSS. 
+            The actual <strong>Windjammer components</strong> are fully customizable through a type-safe builder API.
+            See <a href="type_safe_demo.wj" style="color: #90cdf4; text-decoration: underline;">type_safe_demo.wj</a> for real Windjammer code examples.
         </div>
         <div class="stats">
             <div class="stat">
@@ -242,138 +938,181 @@
     </div>
 
     <div class="container">
-        <!-- Core Components -->
+        <!-- Interactive Counter Demo -->
         <div class="section">
             <div class="section-header">
                 <span class="section-icon">🎯</span>
                 <div>
-                    <h2>Core Components</h2>
-                    <p>Essential building blocks for any application</p>
+                    <h2>Interactive Counter</h2>
+                    <p class="section-desc">Try clicking the buttons!</p>
                 </div>
             </div>
-            <div class="component-grid">
-                <div class="component-card">
-                    <div class="component-name">Button</div>
-                    <div class="component-desc">Clickable buttons with variants, sizes, and events</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">Text</div>
-                    <div class="component-desc">Typography with sizes, colors, and styles</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">Input</div>
-                    <div class="component-desc">Text input fields with validation</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">Textarea</div>
-                    <div class="component-desc">Multi-line text input areas</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">Label</div>
-                    <div class="component-desc">Form labels for inputs</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">Checkbox</div>
-                    <div class="component-desc">Boolean selection controls</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">Radio</div>
-                    <div class="component-desc">Single selection from multiple options</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">Select</div>
-                    <div class="component-desc">Dropdown selection menus</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">Switch</div>
-                    <div class="component-desc">Toggle switches for on/off states</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">Slider</div>
-                    <div class="component-desc">Range input sliders</div>
-                    <span class="status-badge">✓ Complete</span>
+            <div class="text-center">
+                <div class="counter-display" id="counter">0</div>
+                <div class="flex" style="justify-content: center;">
+                    <button class="wj-button wj-button-secondary wj-button-large" onclick="decrement()">−</button>
+                    <button class="wj-button wj-button-danger wj-button-medium" onclick="reset()">Reset</button>
+                    <button class="wj-button wj-button-primary wj-button-large" onclick="increment()">+</button>
                 </div>
             </div>
         </div>
 
-        <!-- Layout Components -->
+        <!-- Buttons -->
         <div class="section">
             <div class="section-header">
-                <span class="section-icon">📐</span>
+                <span class="section-icon">🔘</span>
                 <div>
-                    <h2>Layout Components</h2>
-                    <p>Flexible layouts for organizing content</p>
+                    <h2>Buttons</h2>
+                    <p class="section-desc">Various button styles and sizes</p>
                 </div>
             </div>
             <div class="component-grid">
-                <div class="component-card">
-                    <div class="component-name">Container</div>
-                    <div class="component-desc">Basic content containers</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div class="component-demo">
+                    <h3>Primary Buttons</h3>
+                    <p>Main call-to-action buttons</p>
+                    <div class="demo-content flex">
+                        <button class="wj-button wj-button-primary wj-button-small">Small</button>
+                        <button class="wj-button wj-button-primary wj-button-medium">Medium</button>
+                        <button class="wj-button wj-button-primary wj-button-large">Large</button>
+                    </div>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">Flex</div>
-                    <div class="component-desc">Flexbox layout containers</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div class="component-demo">
+                    <h3>Secondary Buttons</h3>
+                    <p>Alternative actions</p>
+                    <div class="demo-content flex">
+                        <button class="wj-button wj-button-secondary wj-button-small">Small</button>
+                        <button class="wj-button wj-button-secondary wj-button-medium">Medium</button>
+                        <button class="wj-button wj-button-secondary wj-button-large">Large</button>
+                    </div>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">Grid</div>
-                    <div class="component-desc">CSS Grid layout containers</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div class="component-demo">
+                    <h3>Danger Buttons</h3>
+                    <p>Destructive actions</p>
+                    <div class="demo-content flex">
+                        <button class="wj-button wj-button-danger wj-button-small">Delete</button>
+                        <button class="wj-button wj-button-danger wj-button-medium">Remove</button>
+                        <button class="wj-button wj-button-danger wj-button-large">Destroy</button>
+                    </div>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">Center</div>
-                    <div class="component-desc">Centered content containers</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div class="component-demo">
+                    <h3>Disabled State</h3>
+                    <p>Non-interactive buttons</p>
+                    <div class="demo-content flex">
+                        <button class="wj-button wj-button-primary wj-button-medium" disabled>Disabled</button>
+                        <button class="wj-button wj-button-secondary wj-button-medium" disabled>Disabled</button>
+                    </div>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">Stack</div>
-                    <div class="component-desc">Vertical/horizontal stacks</div>
-                    <span class="status-badge">✓ Complete</span>
+            </div>
+        </div>
+
+        <!-- Form Inputs -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📝</span>
+                <div>
+                    <h2>Form Inputs</h2>
+                    <p class="section-desc">Text inputs, textareas, and form controls</p>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">Row</div>
-                    <div class="component-desc">Horizontal layout rows</div>
-                    <span class="status-badge">✓ Complete</span>
+            </div>
+            <div class="component-grid">
+                <div class="component-demo">
+                    <h3>Text Input</h3>
+                    <p>Single-line text input</p>
+                    <div class="demo-content">
+                        <input type="text" class="wj-input" placeholder="Enter your name...">
+                        <input type="email" class="wj-input" placeholder="Email address...">
+                        <input type="password" class="wj-input" placeholder="Password...">
+                    </div>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">Column</div>
-                    <div class="component-desc">Vertical layout columns</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div class="component-demo">
+                    <h3>Textarea</h3>
+                    <p>Multi-line text input</p>
+                    <div class="demo-content">
+                        <textarea class="wj-textarea" placeholder="Enter your message..."></textarea>
+                    </div>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">Panel</div>
-                    <div class="component-desc">Containers with titles and borders</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div class="component-demo">
+                    <h3>Select Dropdown</h3>
+                    <p>Choose from options</p>
+                    <div class="demo-content">
+                        <select class="wj-select">
+                            <option>Choose an option...</option>
+                            <option>Option 1</option>
+                            <option>Option 2</option>
+                            <option>Option 3</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">Divider</div>
-                    <div class="component-desc">Visual content dividers</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div class="component-demo">
+                    <h3>Checkbox & Radio</h3>
+                    <p>Selection controls</p>
+                    <div class="demo-content">
+                        <label class="wj-checkbox">
+                            <input type="checkbox" checked>
+                            <span>Accept terms</span>
+                        </label>
+                        <label class="wj-checkbox">
+                            <input type="checkbox">
+                            <span>Subscribe to newsletter</span>
+                        </label>
+                        <label class="wj-radio">
+                            <input type="radio" name="plan" checked>
+                            <span>Free Plan</span>
+                        </label>
+                        <label class="wj-radio">
+                            <input type="radio" name="plan">
+                            <span>Pro Plan</span>
+                        </label>
+                    </div>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">Spacer</div>
-                    <div class="component-desc">Flexible spacing elements</div>
-                    <span class="status-badge">✓ Complete</span>
+            </div>
+        </div>
+
+        <!-- Switch & Slider -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎚️</span>
+                <div>
+                    <h2>Switch & Slider</h2>
+                    <p class="section-desc">Toggle and range controls</p>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">ScrollArea</div>
-                    <div class="component-desc">Custom scrollable areas</div>
-                    <span class="status-badge">✓ Complete</span>
+            </div>
+            <div class="component-grid">
+                <div class="component-demo">
+                    <h3>Switch</h3>
+                    <p>Toggle on/off states</p>
+                    <div class="demo-content flex-col">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <label class="wj-switch">
+                                <input type="checkbox" checked>
+                                <span class="wj-switch-slider"></span>
+                            </label>
+                            <span>Enable notifications</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <label class="wj-switch">
+                                <input type="checkbox">
+                                <span class="wj-switch-slider"></span>
+                            </label>
+                            <span>Dark mode</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">Scroll</div>
-                    <div class="component-desc">Scrollable containers</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div class="component-demo">
+                    <h3>Slider</h3>
+                    <p>Range input control</p>
+                    <div class="demo-content flex-col">
+                        <div>
+                            <label>Volume: <span id="volume-value">50</span>%</label>
+                            <input type="range" class="wj-slider" min="0" max="100" value="50" 
+                                   oninput="document.getElementById('volume-value').textContent = this.value">
+                        </div>
+                        <div>
+                            <label>Brightness: <span id="brightness-value">75</span>%</label>
+                            <input type="range" class="wj-slider" min="0" max="100" value="75"
+                                   oninput="document.getElementById('brightness-value').textContent = this.value">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -384,366 +1123,576 @@
                 <span class="section-icon">💬</span>
                 <div>
                     <h2>Feedback Components</h2>
-                    <p>User feedback and status indicators</p>
+                    <p class="section-desc">Alerts, badges, progress, and loading states</p>
                 </div>
             </div>
             <div class="component-grid">
-                <div class="component-card">
-                    <div class="component-name">Alert</div>
-                    <div class="component-desc">Info, warning, and error messages</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div class="component-demo">
+                    <h3>Alerts</h3>
+                    <p>Contextual feedback messages</p>
+                    <div class="demo-content flex-col">
+                        <div class="wj-alert wj-alert-info">ℹ️ Information message</div>
+                        <div class="wj-alert wj-alert-success">✓ Success message</div>
+                        <div class="wj-alert wj-alert-warning">⚠️ Warning message</div>
+                        <div class="wj-alert wj-alert-error">✕ Error message</div>
+                    </div>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">Toast</div>
-                    <div class="component-desc">Temporary notification messages</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div class="component-demo">
+                    <h3>Badges</h3>
+                    <p>Status indicators</p>
+                    <div class="demo-content flex">
+                        <span class="wj-badge wj-badge-primary">Primary</span>
+                        <span class="wj-badge wj-badge-success">Success</span>
+                        <span class="wj-badge wj-badge-warning">Warning</span>
+                        <span class="wj-badge wj-badge-danger">Danger</span>
+                    </div>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">Progress</div>
-                    <div class="component-desc">Progress bars and indicators</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div class="component-demo">
+                    <h3>Progress Bar</h3>
+                    <p>Task completion indicator</p>
+                    <div class="demo-content flex-col">
+                        <div class="wj-progress">
+                            <div class="wj-progress-bar" style="width: 25%"></div>
+                        </div>
+                        <div class="wj-progress">
+                            <div class="wj-progress-bar" style="width: 50%"></div>
+                        </div>
+                        <div class="wj-progress">
+                            <div class="wj-progress-bar" style="width: 75%"></div>
+                        </div>
+                        <div class="wj-progress">
+                            <div class="wj-progress-bar" style="width: 100%"></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">Spinner</div>
-                    <div class="component-desc">Loading spinners</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">Loading</div>
-                    <div class="component-desc">Loading state indicators</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">Badge</div>
-                    <div class="component-desc">Status and count badges</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">Skeleton</div>
-                    <div class="component-desc">Loading placeholder skeletons</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">Tooltip</div>
-                    <div class="component-desc">Hover information tooltips</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">Popover</div>
-                    <div class="component-desc">Floating content popovers</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">TypingIndicator</div>
-                    <div class="component-desc">Chat typing status indicators</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div class="component-demo">
+                    <h3>Spinner</h3>
+                    <p>Loading indicator</p>
+                    <div class="demo-content" style="align-items: center;">
+                        <div class="wj-spinner"></div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Dialog Components -->
+        <!-- Cards & Avatars -->
         <div class="section">
             <div class="section-header">
-                <span class="section-icon">🪟</span>
+                <span class="section-icon">🎴</span>
                 <div>
-                    <h2>Dialog Components</h2>
-                    <p>Modals, drawers, and overlays</p>
+                    <h2>Cards & Avatars</h2>
+                    <p class="section-desc">Content containers and user images</p>
                 </div>
             </div>
             <div class="component-grid">
-                <div class="component-card">
-                    <div class="component-name">Dialog</div>
-                    <div class="component-desc">Modal dialog windows</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div class="component-demo">
+                    <h3>Card</h3>
+                    <p>Content container</p>
+                    <div class="demo-content">
+                        <div class="wj-card">
+                            <div class="wj-card-header">Card Title</div>
+                            <div class="wj-card-body">
+                                This is the card content. Cards are great for grouping related information.
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">Modal</div>
-                    <div class="component-desc">Modal overlay containers</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div class="component-demo">
+                    <h3>Avatar</h3>
+                    <p>User profile images</p>
+                    <div class="demo-content flex">
+                        <div class="wj-avatar wj-avatar-small">JD</div>
+                        <div class="wj-avatar">JD</div>
+                        <div class="wj-avatar wj-avatar-large">JD</div>
+                    </div>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">Drawer</div>
-                    <div class="component-desc">Side panel drawers</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div class="component-demo">
+                    <h3>Chips</h3>
+                    <p>Removable tags</p>
+                    <div class="demo-content flex">
+                        <div class="wj-chip">
+                            <span>React</span>
+                            <span class="wj-chip-close">✕</span>
+                        </div>
+                        <div class="wj-chip">
+                            <span>Vue</span>
+                            <span class="wj-chip-close">✕</span>
+                        </div>
+                        <div class="wj-chip">
+                            <span>Svelte</span>
+                            <span class="wj-chip-close">✕</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">Collapsible</div>
-                    <div class="component-desc">Collapsible content sections</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div class="component-demo">
+                    <h3>Skeleton</h3>
+                    <p>Loading placeholders</p>
+                    <div class="demo-content flex-col">
+                        <div class="wj-skeleton wj-skeleton-text"></div>
+                        <div class="wj-skeleton wj-skeleton-text" style="width: 80%"></div>
+                        <div class="wj-skeleton wj-skeleton-text" style="width: 60%"></div>
+                        <div class="wj-skeleton wj-skeleton-avatar"></div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Navigation Components -->
+        <!-- Navigation -->
         <div class="section">
             <div class="section-header">
                 <span class="section-icon">🧭</span>
                 <div>
-                    <h2>Navigation Components</h2>
-                    <p>Menus, tabs, and navigation elements</p>
+                    <h2>Navigation</h2>
+                    <p class="section-desc">Tabs, breadcrumbs, and pagination</p>
                 </div>
             </div>
             <div class="component-grid">
-                <div class="component-card">
-                    <div class="component-name">Navbar</div>
-                    <div class="component-desc">Top navigation bars</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div class="component-demo">
+                    <h3>Tabs</h3>
+                    <p>Tabbed interface</p>
+                    <div class="demo-content">
+                        <div class="wj-tabs">
+                            <button class="wj-tab active" onclick="switchTab(0)">Tab 1</button>
+                            <button class="wj-tab" onclick="switchTab(1)">Tab 2</button>
+                            <button class="wj-tab" onclick="switchTab(2)">Tab 3</button>
+                        </div>
+                        <div class="wj-tab-content active" id="tab-0">Content for Tab 1</div>
+                        <div class="wj-tab-content" id="tab-1">Content for Tab 2</div>
+                        <div class="wj-tab-content" id="tab-2">Content for Tab 3</div>
+                    </div>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">Sidebar</div>
-                    <div class="component-desc">Application sidebars</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div class="component-demo">
+                    <h3>Breadcrumb</h3>
+                    <p>Navigation trail</p>
+                    <div class="demo-content">
+                        <div class="wj-breadcrumb">
+                            <span class="wj-breadcrumb-item">Home</span>
+                            <span class="wj-breadcrumb-separator">/</span>
+                            <span class="wj-breadcrumb-item">Products</span>
+                            <span class="wj-breadcrumb-separator">/</span>
+                            <span class="wj-breadcrumb-item active">Details</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">Tabs</div>
-                    <div class="component-desc">Tabbed interfaces</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div class="component-demo">
+                    <h3>Pagination</h3>
+                    <p>Page navigation</p>
+                    <div class="demo-content">
+                        <div class="wj-pagination">
+                            <button class="wj-page-btn">←</button>
+                            <button class="wj-page-btn active">1</button>
+                            <button class="wj-page-btn">2</button>
+                            <button class="wj-page-btn">3</button>
+                            <button class="wj-page-btn">→</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">TabPanel</div>
-                    <div class="component-desc">Tab content panels</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">Menu</div>
-                    <div class="component-desc">Application menus</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">ContextMenu</div>
-                    <div class="component-desc">Right-click context menus</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">Dropdown</div>
-                    <div class="component-desc">Dropdown menus</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">HamburgerMenu</div>
-                    <div class="component-desc">Mobile hamburger menus</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">Breadcrumb</div>
-                    <div class="component-desc">Navigation breadcrumb trails</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">Pagination</div>
-                    <div class="component-desc">Page navigation controls</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div class="component-demo">
+                    <h3>Tooltip</h3>
+                    <p>Hover for information</p>
+                    <div class="demo-content">
+                        <div class="wj-tooltip">
+                            <button class="wj-button wj-button-primary wj-button-medium">Hover me</button>
+                            <span class="wj-tooltip-text">This is a tooltip!</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Data Display Components -->
+        <!-- Advanced Components -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">⚡</span>
+                <div>
+                    <h2>Advanced Components</h2>
+                    <p class="section-desc">Accordion, table, timeline, and more</p>
+                </div>
+            </div>
+            <div class="component-grid">
+                <div class="component-demo">
+                    <h3>Accordion</h3>
+                    <p>Collapsible sections</p>
+                    <div class="demo-content">
+                        <div class="wj-accordion-item">
+                            <div class="wj-accordion-header" onclick="toggleAccordion(0)">
+                                <span>Section 1</span>
+                                <span id="accordion-icon-0">▼</span>
+                            </div>
+                            <div class="wj-accordion-content" id="accordion-0">
+                                Content for section 1
+                            </div>
+                        </div>
+                        <div class="wj-accordion-item">
+                            <div class="wj-accordion-header" onclick="toggleAccordion(1)">
+                                <span>Section 2</span>
+                                <span id="accordion-icon-1">▼</span>
+                            </div>
+                            <div class="wj-accordion-content" id="accordion-1">
+                                Content for section 2
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="component-demo">
+                    <h3>Rating</h3>
+                    <p>Star rating display</p>
+                    <div class="demo-content">
+                        <div class="wj-rating" id="rating">
+                            <span class="wj-star filled" onclick="setRating(1)">★</span>
+                            <span class="wj-star filled" onclick="setRating(2)">★</span>
+                            <span class="wj-star filled" onclick="setRating(3)">★</span>
+                            <span class="wj-star" onclick="setRating(4)">★</span>
+                            <span class="wj-star" onclick="setRating(5)">★</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="component-demo">
+                    <h3>Timeline</h3>
+                    <p>Event timeline</p>
+                    <div class="demo-content">
+                        <div class="wj-timeline">
+                            <div class="wj-timeline-item">
+                                <div class="wj-timeline-title">Event 1</div>
+                                <div class="wj-timeline-desc">First event description</div>
+                            </div>
+                            <div class="wj-timeline-item">
+                                <div class="wj-timeline-title">Event 2</div>
+                                <div class="wj-timeline-desc">Second event description</div>
+                            </div>
+                            <div class="wj-timeline-item">
+                                <div class="wj-timeline-title">Event 3</div>
+                                <div class="wj-timeline-desc">Third event description</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="component-demo">
+                    <h3>Stepper</h3>
+                    <p>Step-by-step progress</p>
+                    <div class="demo-content">
+                        <div class="wj-stepper">
+                            <div class="wj-step completed">
+                                <div class="wj-step-number">1</div>
+                                <span>Step 1</span>
+                            </div>
+                            <div class="wj-step-line"></div>
+                            <div class="wj-step active">
+                                <div class="wj-step-number">2</div>
+                                <span>Step 2</span>
+                            </div>
+                            <div class="wj-step-line"></div>
+                            <div class="wj-step">
+                                <div class="wj-step-number">3</div>
+                                <span>Step 3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table -->
         <div class="section">
             <div class="section-header">
                 <span class="section-icon">📊</span>
                 <div>
-                    <h2>Data Display Components</h2>
-                    <p>Tables, cards, and data visualization</p>
+                    <h2>Data Table</h2>
+                    <p class="section-desc">Tabular data display</p>
                 </div>
             </div>
-            <div class="component-grid">
-                <div class="component-card">
-                    <div class="component-name">Card</div>
-                    <div class="component-desc">Content cards with headers</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">Table</div>
-                    <div class="component-desc">Data tables</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">List</div>
-                    <div class="component-desc">Lists with items</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">Accordion</div>
-                    <div class="component-desc">Collapsible accordion sections</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">Timeline</div>
-                    <div class="component-desc">Event timelines</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">Stepper</div>
-                    <div class="component-desc">Step-by-step indicators</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">Rating</div>
-                    <div class="component-desc">Star rating displays</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">Avatar</div>
-                    <div class="component-desc">User avatar images</div>
-                    <span class="status-badge">✓ Complete</span>
+            <div class="component-demo">
+                <h3>Table</h3>
+                <p>Display structured data</p>
+                <div class="demo-content">
+                    <table class="wj-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>John Doe</td>
+                                <td>john@example.com</td>
+                                <td>Developer</td>
+                                <td><span class="wj-badge wj-badge-success">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>jane@example.com</td>
+                                <td>Designer</td>
+                                <td><span class="wj-badge wj-badge-success">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td>Bob Johnson</td>
+                                <td>bob@example.com</td>
+                                <td>Manager</td>
+                                <td><span class="wj-badge wj-badge-warning">Away</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
 
-        <!-- Tree & Hierarchy Components -->
+        <!-- Interactive Demos -->
         <div class="section">
             <div class="section-header">
-                <span class="section-icon">🌳</span>
+                <span class="section-icon">🎮</span>
                 <div>
-                    <h2>Tree & Hierarchy Components</h2>
-                    <p>File trees, tree views, and hierarchical data</p>
+                    <h2>Interactive Demos</h2>
+                    <p class="section-desc">Try these interactive components</p>
                 </div>
             </div>
             <div class="component-grid">
-                <div class="component-card">
-                    <div class="component-name">FileTree</div>
-                    <div class="component-desc">Hierarchical file navigation</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div class="component-demo">
+                    <h3>Toast Notification</h3>
+                    <p>Click to show notification</p>
+                    <div class="demo-content">
+                        <button class="wj-button wj-button-primary wj-button-medium" onclick="showToast()">
+                            Show Toast
+                        </button>
+                    </div>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">TreeView</div>
-                    <div class="component-desc">Generic tree structures</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">SplitPanel</div>
-                    <div class="component-desc">Resizable split panels</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div class="component-demo">
+                    <h3>Modal Dialog</h3>
+                    <p>Click to open modal</p>
+                    <div class="demo-content">
+                        <button class="wj-button wj-button-primary wj-button-medium" onclick="showModal()">
+                            Open Modal
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Form Components -->
+        <!-- Customization Examples -->
         <div class="section">
             <div class="section-header">
-                <span class="section-icon">📝</span>
+                <span class="section-icon">⚙️</span>
                 <div>
-                    <h2>Form Components</h2>
-                    <p>Form containers and specialized inputs</p>
+                    <h2>Customization Examples</h2>
+                    <p class="section-desc">All components are fully customizable via Windjammer's type-safe API</p>
                 </div>
             </div>
-            <div class="component-grid">
-                <div class="component-card">
-                    <div class="component-name">Form</div>
-                    <div class="component-desc">Form containers with validation</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">ColorPicker</div>
-                    <div class="component-desc">Color selection inputs</div>
-                    <span class="status-badge">✓ Complete</span>
+            <div style="background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 12px; padding: 24px;">
+                <h3 style="margin-bottom: 16px; color: #fff;">Toast Component (Windjammer API)</h3>
+                <pre style="background: #0f0f0f; padding: 20px; border-radius: 8px; overflow-x: auto; color: #e0e0e0; font-size: 14px; line-height: 1.6;"><code>// Fully customizable toast with stacking, colors, duration, position
+Toast::new("Operation successful!")
+    .variant(ToastVariant::Success)
+    .duration(3000)
+    .position(ToastPosition::TopRight)
+    .closable(true)
+    .on_close(move || handle_close())
+
+// Multiple toasts stack automatically
+Toast::new("First notification").variant(ToastVariant::Info).show()
+Toast::new("Second notification").variant(ToastVariant::Warning).show()
+Toast::new("Third notification").variant(ToastVariant::Error).show()</code></pre>
+
+                <h3 style="margin: 32px 0 16px; color: #fff;">Button Component (Windjammer API)</h3>
+                <pre style="background: #0f0f0f; padding: 20px; border-radius: 8px; overflow-x: auto; color: #e0e0e0; font-size: 14px; line-height: 1.6;"><code>// Customize variant, size, icon, loading state, disabled, etc.
+Button::new("Save Changes")
+    .variant(ButtonVariant::Primary)
+    .size(ButtonSize::Large)
+    .icon("💾")
+    .loading(is_saving.get())
+    .disabled(form_invalid.get())
+    .on_click(move || save_data())</code></pre>
+
+                <h3 style="margin: 32px 0 16px; color: #fff;">Modal Component (Windjammer API)</h3>
+                <pre style="background: #0f0f0f; padding: 20px; border-radius: 8px; overflow-x: auto; color: #e0e0e0; font-size: 14px; line-height: 1.6;"><code>// Customize size, backdrop, animations, close behavior
+Modal::new()
+    .title("Confirm Action")
+    .size(ModalSize::Medium)
+    .backdrop_closable(true)
+    .show_close_button(true)
+    .open(modal_open.get())
+    .on_close(move || modal_open.set(false))
+    .child(
+        Div::new()
+            .child(Text::new("Are you sure?"))
+            .child(
+                Flex::new()
+                    .gap(12)
+                    .child(Button::new("Cancel").on_click(move || cancel()))
+                    .child(Button::new("Confirm").variant(ButtonVariant::Danger).on_click(move || confirm()))
+            )
+    )</code></pre>
+
+                <h3 style="margin: 32px 0 16px; color: #fff;">All Components Support</h3>
+                <ul style="color: #888; line-height: 2;">
+                    <li>✓ <strong>Builder Pattern</strong> - Fluent, chainable API</li>
+                    <li>✓ <strong>Type Safety</strong> - Compile-time validation</li>
+                    <li>✓ <strong>Variants</strong> - Multiple styles (primary, secondary, danger, etc.)</li>
+                    <li>✓ <strong>Sizes</strong> - Small, medium, large</li>
+                    <li>✓ <strong>States</strong> - Loading, disabled, active, hover</li>
+                    <li>✓ <strong>Events</strong> - onClick, onChange, onClose, etc.</li>
+                    <li>✓ <strong>Reactivity</strong> - Automatic updates with Signal&lt;T&gt;</li>
+                    <li>✓ <strong>Composition</strong> - Nest components via Renderable trait</li>
+                    <li>✓ <strong>Theming</strong> - Custom colors, spacing, borders</li>
+                    <li>✓ <strong>Animations</strong> - Transitions and effects</li>
+                </ul>
+
+                <div style="margin-top: 24px; padding: 16px; background: rgba(102, 126, 234, 0.1); border-left: 4px solid #667eea; border-radius: 8px;">
+                    <strong style="color: #667eea;">💡 Pro Tip:</strong> 
+                    <span style="color: #888;">
+                        Check out <code style="background: #0f0f0f; padding: 2px 6px; border-radius: 4px;">examples/type_safe_demo.wj</code> 
+                        and the component source files in <code style="background: #0f0f0f; padding: 2px 6px; border-radius: 4px;">src/components_wj/</code> 
+                        to see all customization options!
+                    </span>
                 </div>
             </div>
         </div>
 
-        <!-- Editor Components -->
+        <!-- Component Count -->
         <div class="section">
             <div class="section-header">
-                <span class="section-icon">💻</span>
+                <span class="section-icon">📦</span>
                 <div>
-                    <h2>Editor Components</h2>
-                    <p>Code editing and display</p>
+                    <h2>All 70+ Components</h2>
+                    <p class="section-desc">Complete component library</p>
                 </div>
             </div>
-            <div class="component-grid">
-                <div class="component-card">
-                    <div class="component-name">CodeEditor</div>
-                    <div class="component-desc">Basic code editing</div>
-                    <span class="status-badge">✓ Complete</span>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                <div style="padding: 12px; background: #1a1a1a; border-radius: 8px; border: 1px solid #2a2a2a;">
+                    <strong>Core (10)</strong><br>
+                    <small style="color: #888;">Button, Text, Input, Textarea, Label, Checkbox, Radio, Select, Switch, Slider</small>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">AdvancedCodeEditor</div>
-                    <div class="component-desc">Advanced code editing with features</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div style="padding: 12px; background: #1a1a1a; border-radius: 8px; border: 1px solid #2a2a2a;">
+                    <strong>Layout (12)</strong><br>
+                    <small style="color: #888;">Container, Flex, Grid, Center, Stack, Row, Column, Panel, Divider, Spacer, ScrollArea, Scroll</small>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">CodeBlock</div>
-                    <div class="component-desc">Syntax-highlighted code display</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div style="padding: 12px; background: #1a1a1a; border-radius: 8px; border: 1px solid #2a2a2a;">
+                    <strong>Feedback (10)</strong><br>
+                    <small style="color: #888;">Alert, Toast, Progress, Spinner, Loading, Badge, Skeleton, Tooltip, Popover, TypingIndicator</small>
                 </div>
-            </div>
-        </div>
-
-        <!-- Chat Components -->
-        <div class="section">
-            <div class="section-header">
-                <span class="section-icon">💭</span>
-                <div>
-                    <h2>Chat Components</h2>
-                    <p>Chat and messaging interfaces</p>
+                <div style="padding: 12px; background: #1a1a1a; border-radius: 8px; border: 1px solid #2a2a2a;">
+                    <strong>Dialog (4)</strong><br>
+                    <small style="color: #888;">Dialog, Modal, Drawer, Collapsible</small>
                 </div>
-            </div>
-            <div class="component-grid">
-                <div class="component-card">
-                    <div class="component-name">ChatMessage</div>
-                    <div class="component-desc">Individual chat messages</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div style="padding: 12px; background: #1a1a1a; border-radius: 8px; border: 1px solid #2a2a2a;">
+                    <strong>Navigation (10)</strong><br>
+                    <small style="color: #888;">Navbar, Sidebar, Tabs, TabPanel, Menu, ContextMenu, Dropdown, HamburgerMenu, Breadcrumb, Pagination</small>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">ChatInput</div>
-                    <div class="component-desc">Chat message input fields</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div style="padding: 12px; background: #1a1a1a; border-radius: 8px; border: 1px solid #2a2a2a;">
+                    <strong>Data Display (8)</strong><br>
+                    <small style="color: #888;">Card, Table, List, Accordion, Timeline, Stepper, Rating, Avatar</small>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">MessageList</div>
-                    <div class="component-desc">Scrollable message lists</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div style="padding: 12px; background: #1a1a1a; border-radius: 8px; border: 1px solid #2a2a2a;">
+                    <strong>Tree & Hierarchy (3)</strong><br>
+                    <small style="color: #888;">FileTree, TreeView, SplitPanel</small>
                 </div>
-            </div>
-        </div>
-
-        <!-- Utility Components -->
-        <div class="section">
-            <div class="section-header">
-                <span class="section-icon">🔧</span>
-                <div>
-                    <h2>Utility Components</h2>
-                    <p>Helper components and primitives</p>
+                <div style="padding: 12px; background: #1a1a1a; border-radius: 8px; border: 1px solid #2a2a2a;">
+                    <strong>Form (2)</strong><br>
+                    <small style="color: #888;">Form, ColorPicker</small>
                 </div>
-            </div>
-            <div class="component-grid">
-                <div class="component-card">
-                    <div class="component-name">Toolbar</div>
-                    <div class="component-desc">Button toolbars</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div style="padding: 12px; background: #1a1a1a; border-radius: 8px; border: 1px solid #2a2a2a;">
+                    <strong>Editor (3)</strong><br>
+                    <small style="color: #888;">CodeEditor, AdvancedCodeEditor, CodeBlock</small>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">Chip</div>
-                    <div class="component-desc">Removable tag chips</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div style="padding: 12px; background: #1a1a1a; border-radius: 8px; border: 1px solid #2a2a2a;">
+                    <strong>Chat (3)</strong><br>
+                    <small style="color: #888;">ChatMessage, ChatInput, MessageList</small>
                 </div>
-                <div class="component-card">
-                    <div class="component-name">Style</div>
-                    <div class="component-desc">Inline styling utilities</div>
-                    <span class="status-badge">✓ Complete</span>
-                </div>
-                <div class="component-card">
-                    <div class="component-name">HtmlElements</div>
-                    <div class="component-desc">HTML primitives (Div, Span, P, H1-H3)</div>
-                    <span class="status-badge">✓ Complete</span>
+                <div style="padding: 12px; background: #1a1a1a; border-radius: 8px; border: 1px solid #2a2a2a;">
+                    <strong>Utility (5)</strong><br>
+                    <small style="color: #888;">Toolbar, Chip, Style, HtmlElements, Traits</small>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="footer">
-        <h2 style="margin-bottom: 16px;">Ready to Build?</h2>
-        <p style="margin-bottom: 24px; opacity: 0.9;">
-            Add Windjammer UI to your project and start building beautiful, type-safe UIs!
-        </p>
-        <p>
-            <a href="https://github.com/jeffreyfriedman/windjammer-ui" target="_blank">View on GitHub</a> •
-            <a href="https://docs.rs/windjammer-ui" target="_blank">Documentation</a> •
-            <a href="https://crates.io/crates/windjammer-ui" target="_blank">crates.io</a>
-        </p>
-        <p style="margin-top: 32px; opacity: 0.7; font-size: 14px;">
-            Built with ❤️ using Windjammer
-        </p>
+    <!-- Toast -->
+    <div class="wj-toast" id="toast">
+        <strong>Success!</strong><br>
+        This is a toast notification.
     </div>
+
+    <!-- Modal -->
+    <div class="wj-modal" id="modal">
+        <div class="wj-modal-content">
+            <div class="wj-modal-header">Modal Dialog</div>
+            <div class="wj-modal-body">
+                This is a modal dialog. You can put any content here.
+            </div>
+            <div class="wj-modal-footer">
+                <button class="wj-button wj-button-secondary wj-button-medium" onclick="hideModal()">Cancel</button>
+                <button class="wj-button wj-button-primary wj-button-medium" onclick="hideModal()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Counter
+        let count = 0;
+        function increment() {
+            count++;
+            document.getElementById('counter').textContent = count;
+        }
+        function decrement() {
+            count--;
+            document.getElementById('counter').textContent = count;
+        }
+        function reset() {
+            count = 0;
+            document.getElementById('counter').textContent = count;
+        }
+
+        // Tabs
+        function switchTab(index) {
+            document.querySelectorAll('.wj-tab').forEach((tab, i) => {
+                tab.classList.toggle('active', i === index);
+            });
+            document.querySelectorAll('.wj-tab-content').forEach((content, i) => {
+                content.classList.toggle('active', i === index);
+            });
+        }
+
+        // Accordion
+        function toggleAccordion(index) {
+            const content = document.getElementById(`accordion-${index}`);
+            const icon = document.getElementById(`accordion-icon-${index}`);
+            content.classList.toggle('active');
+            icon.textContent = content.classList.contains('active') ? '▲' : '▼';
+        }
+
+        // Rating
+        function setRating(rating) {
+            const stars = document.querySelectorAll('.wj-star');
+            stars.forEach((star, index) => {
+                star.classList.toggle('filled', index < rating);
+            });
+        }
+
+        // Toast
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Modal
+        function showModal() {
+            document.getElementById('modal').classList.add('show');
+        }
+        function hideModal() {
+            document.getElementById('modal').classList.remove('show');
+        }
+
+        // Close modal on outside click
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideModal();
+            }
+        });
+    </script>
 </body>
 </html>
+
