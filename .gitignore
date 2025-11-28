@@ -4,9 +4,9 @@ Cargo.lock
 **/*.rs.bk
 *.pdb
 
-# Generated Windjammer code - DO NOT COMMIT!
-# These are generated at build time from .wj source files
-src/components/generated/
+# Generated Windjammer code
+# Note: src/components/generated/ is now committed to support cargo publish
+# (Cargo doesn't allow build.rs to modify source directory during packaging)
 build_components/
 build_*/
 build/*.rs

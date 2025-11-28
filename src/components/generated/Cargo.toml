@@ -1,0 +1,299 @@
+[package]
+name = "windjammer-app"
+version = "0.1.0"
+edition = "2021"
+
+# Prevent this from being treated as part of parent workspace
+[workspace]
+
+[dependencies]
+smallvec = "1.13"
+super = "*"
+serde = { version = "1.0", features = ["derive"] }
+
+[[bin]]
+name = "navbar"
+path = "navbar.rs"
+
+[[bin]]
+name = "messagelist"
+path = "messagelist.rs"
+
+[[bin]]
+name = "switch"
+path = "switch.rs"
+
+[[bin]]
+name = "avatar"
+path = "avatar.rs"
+
+[[bin]]
+name = "tooltip"
+path = "tooltip.rs"
+
+[[bin]]
+name = "badge"
+path = "badge.rs"
+
+[[bin]]
+name = "collapsible"
+path = "collapsible.rs"
+
+[[bin]]
+name = "rating"
+path = "rating.rs"
+
+[[bin]]
+name = "chip"
+path = "chip.rs"
+
+[[bin]]
+name = "spacer"
+path = "spacer.rs"
+
+[[bin]]
+name = "skeleton"
+path = "skeleton.rs"
+
+[[bin]]
+name = "center"
+path = "center.rs"
+
+[[bin]]
+name = "scroll"
+path = "scroll.rs"
+
+[[bin]]
+name = "divider"
+path = "divider.rs"
+
+[[bin]]
+name = "list"
+path = "list.rs"
+
+[[bin]]
+name = "treeview"
+path = "treeview.rs"
+
+[[bin]]
+name = "html_elements"
+path = "html_elements.rs"
+
+[[bin]]
+name = "timeline"
+path = "timeline.rs"
+
+[[bin]]
+name = "drawer"
+path = "drawer.rs"
+
+[[bin]]
+name = "hamburgermenu"
+path = "hamburgermenu.rs"
+
+[[bin]]
+name = "dialog"
+path = "dialog.rs"
+
+[[bin]]
+name = "tabs"
+path = "tabs.rs"
+
+[[bin]]
+name = "typingindicator"
+path = "typingindicator.rs"
+
+[[bin]]
+name = "colorpicker"
+path = "colorpicker.rs"
+
+[[bin]]
+name = "style"
+path = "style.rs"
+
+[[bin]]
+name = "filetree"
+path = "filetree.rs"
+
+[[bin]]
+name = "sidebar"
+path = "sidebar.rs"
+
+[[bin]]
+name = "stepper"
+path = "stepper.rs"
+
+[[bin]]
+name = "loading"
+path = "loading.rs"
+
+[[bin]]
+name = "textarea"
+path = "textarea.rs"
+
+[[bin]]
+name = "breadcrumb"
+path = "breadcrumb.rs"
+
+[[bin]]
+name = "splitpanel"
+path = "splitpanel.rs"
+
+[[bin]]
+name = "grid"
+path = "grid.rs"
+
+[[bin]]
+name = "tabpanel"
+path = "tabpanel.rs"
+
+[[bin]]
+name = "scrollarea"
+path = "scrollarea.rs"
+
+[[bin]]
+name = "mod"
+path = "mod.rs"
+
+[[bin]]
+name = "alert"
+path = "alert.rs"
+
+[[bin]]
+name = "contextmenu"
+path = "contextmenu.rs"
+
+[[bin]]
+name = "column"
+path = "column.rs"
+
+[[bin]]
+name = "checkbox"
+path = "checkbox.rs"
+
+[[bin]]
+name = "popover"
+path = "popover.rs"
+
+[[bin]]
+name = "progress"
+path = "progress.rs"
+
+[[bin]]
+name = "pagination"
+path = "pagination.rs"
+
+[[bin]]
+name = "select"
+path = "select.rs"
+
+[[bin]]
+name = "table"
+path = "table.rs"
+
+[[bin]]
+name = "flex"
+path = "flex.rs"
+
+[[bin]]
+name = "dropdown"
+path = "dropdown.rs"
+
+[[bin]]
+name = "spinner"
+path = "spinner.rs"
+
+[[bin]]
+name = "panel"
+path = "panel.rs"
+
+[[bin]]
+name = "row"
+path = "row.rs"
+
+[[bin]]
+name = "chatinput"
+path = "chatinput.rs"
+
+[[bin]]
+name = "text"
+path = "text.rs"
+
+[[bin]]
+name = "label"
+path = "label.rs"
+
+[[bin]]
+name = "input"
+path = "input.rs"
+
+[[bin]]
+name = "stack"
+path = "stack.rs"
+
+[[bin]]
+name = "accordion"
+path = "accordion.rs"
+
+[[bin]]
+name = "radio"
+path = "radio.rs"
+
+[[bin]]
+name = "traits"
+path = "traits.rs"
+
+[[bin]]
+name = "modal"
+path = "modal.rs"
+
+[[bin]]
+name = "codeblock"
+path = "codeblock.rs"
+
+[[bin]]
+name = "chatmessage"
+path = "chatmessage.rs"
+
+[[bin]]
+name = "toast"
+path = "toast.rs"
+
+[[bin]]
+name = "slider"
+path = "slider.rs"
+
+[[bin]]
+name = "menu"
+path = "menu.rs"
+
+[[bin]]
+name = "card"
+path = "card.rs"
+
+[[bin]]
+name = "advancedcodeeditor"
+path = "advancedcodeeditor.rs"
+
+[[bin]]
+name = "container"
+path = "container.rs"
+
+[[bin]]
+name = "codeeditor"
+path = "codeeditor.rs"
+
+[[bin]]
+name = "toolbar"
+path = "toolbar.rs"
+
+[[bin]]
+name = "form"
+path = "form.rs"
+
+[[bin]]
+name = "button"
+path = "button.rs"
+
+[profile.release]
+opt-level = 3

@@ -1,0 +1,101 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+use super::traits::Renderable;
+
+pub struct ContextMenuItem {
+    label: String,
+    icon: String,
+    action: String,
+    disabled: bool,
+}
+
+impl ContextMenuItem {
+    #[inline]
+    pub fn new(label: String) -> ContextMenuItem {
+        ContextMenuItem {
+            label,
+            icon: String::from("".to_string()),
+            action: String::from("".to_string()),
+            disabled: false,
+        }
+    }
+    #[inline]
+    pub fn icon(mut self, icon: String) -> ContextMenuItem {
+        self.icon = icon;
+        self
+    }
+    #[inline]
+    pub fn action(mut self, action: String) -> ContextMenuItem {
+        self.action = action;
+        self
+    }
+    #[inline]
+    pub fn disabled(mut self, disabled: bool) -> ContextMenuItem {
+        self.disabled = disabled;
+        self
+    }
+}
+
+pub struct ContextMenu {
+    items: Vec<ContextMenuItem>,
+    trigger_id: String,
+}
+
+impl ContextMenu {
+    #[inline]
+    pub fn new(trigger_id: String) -> ContextMenu {
+        ContextMenu {
+            items: Vec::new(),
+            trigger_id,
+        }
+    }
+    #[inline]
+    pub fn item(mut self, item: ContextMenuItem) -> ContextMenu {
+        self.items.push(item);
+        self
+    }
+}
+
+impl Renderable for ContextMenu {
+    #[inline]
+    fn render(self) -> String {
+        let mut items_html = Vec::new();
+        for item in &self.items {
+            let icon_html = {
+                if item.icon.len() > 0 {
+                    format!("<span class='wj-context-icon'>{}</span>", item.icon)
+                } else {
+                    String::from("".to_string())
+                }
+            };
+            let disabled_class = {
+                if item.disabled {
+                    " wj-context-item-disabled"
+                } else {
+                    ""
+                }
+            };
+            let disabled_attr = {
+                if item.disabled {
+                    " disabled"
+                } else {
+                    ""
+                }
+            };
+            items_html.push(format!(
+                "<button class='wj-context-item{}' onclick='{}'{}>
+                    {}
+                    <span>{}</span>
+                </button>",
+                disabled_class, item.action, disabled_attr, icon_html, item.label
+            ));
+        }
+        format!(
+            "<div class='wj-context-menu' id='context-{}' style='display: none'>
+                {}
+            </div>",
+            self.trigger_id,
+            items_html.join("")
+        )
+    }
+}
