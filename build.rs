@@ -18,6 +18,16 @@ fn main() {
     let src_dir = project_root.join("src/components_wj");
     let out_dir = project_root.join("src/components/generated");
 
+    // If we're in a cargo package/publish context and generated files already exist, skip generation
+    // This prevents "Source directory was modified by build.rs" errors during cargo publish
+    if env::var("CARGO_PRIMARY_PACKAGE").is_ok() && out_dir.exists() {
+        let mod_file = out_dir.join("mod.rs");
+        if mod_file.exists() {
+            // Generated files exist, we're good to go
+            return;
+        }
+    }
+
     // Try to find wj CLI - first check local build, then system PATH
     let local_wj = project_root.join("../windjammer/target/release/wj");
     let wj_cli = if local_wj.exists() {
