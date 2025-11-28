@@ -8,6 +8,7 @@ pub struct Scroll {
     class: String,
 }
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum ScrollDir {
     Vertical,
     Horizontal,

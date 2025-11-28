@@ -4,6 +4,7 @@ use std::fmt::Write;
 
 use super::traits::Renderable;
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum SpinnerSize {
     Small,
     Medium,

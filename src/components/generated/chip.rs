@@ -2,6 +2,7 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum ChipVariant {
     Default,
     Primary,
@@ -11,6 +12,7 @@ pub enum ChipVariant {
     Info,
 }
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum ChipSize {
     Small,
     Medium,

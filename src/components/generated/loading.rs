@@ -7,6 +7,7 @@ pub struct Loading {
     class: String,
 }
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum LoadingSize {
     Small,
     Medium,

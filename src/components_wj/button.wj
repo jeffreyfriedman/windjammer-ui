@@ -8,6 +8,7 @@ pub enum ButtonVariant {
     Secondary,
     Success,
     Danger,
+    Warning,
     Ghost,
 }
 
@@ -65,6 +66,7 @@ impl Renderable for Button {
             ButtonVariant::Secondary => "wj-button-secondary",
             ButtonVariant::Success => "wj-button-success",
             ButtonVariant::Danger => "wj-button-danger",
+            ButtonVariant::Warning => "wj-button-warning",
             ButtonVariant::Ghost => "wj-button-ghost",
         }
         

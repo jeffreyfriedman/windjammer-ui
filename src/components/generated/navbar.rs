@@ -2,6 +2,7 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum NavbarPosition {
     Top,
     Bottom,

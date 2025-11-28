@@ -8,6 +8,7 @@ pub struct Switch {
     class: String,
 }
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum SwitchSize {
     Small,
     Medium,

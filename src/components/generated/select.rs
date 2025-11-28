@@ -14,6 +14,7 @@ pub struct SelectOption {
     label: String,
 }
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum SelectSize {
     Small,
     Medium,

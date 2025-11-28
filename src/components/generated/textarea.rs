@@ -11,6 +11,7 @@ pub struct Textarea {
     class: String,
 }
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum TextareaResize {
     None,
     Vertical,

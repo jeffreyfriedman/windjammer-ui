@@ -9,6 +9,7 @@ pub struct Avatar {
     class: String,
 }
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum AvatarSize {
     Small,
     Medium,
@@ -16,6 +17,7 @@ pub enum AvatarSize {
     XLarge,
 }
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum AvatarShape {
     Circle,
     Square,

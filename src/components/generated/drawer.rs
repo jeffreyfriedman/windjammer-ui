@@ -8,6 +8,7 @@ pub struct Drawer {
     class: String,
 }
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum DrawerPosition {
     Left,
     Right,

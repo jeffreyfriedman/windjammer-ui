@@ -7,6 +7,7 @@ pub struct Skeleton {
     class: String,
 }
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum SkeletonVariant {
     Text,
     Circle,

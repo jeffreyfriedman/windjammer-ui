@@ -7,6 +7,7 @@ pub struct Popover {
     class: String,
 }
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum PopoverPosition {
     Top,
     Bottom,

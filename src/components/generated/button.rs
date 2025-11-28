@@ -2,14 +2,17 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum ButtonVariant {
     Primary,
     Secondary,
     Success,
     Danger,
+    Warning,
     Ghost,
 }
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum ButtonSize {
     Small,
     Medium,
@@ -58,6 +61,7 @@ impl Renderable for Button {
             ButtonVariant::Secondary => "wj-button-secondary",
             ButtonVariant::Success => "wj-button-success",
             ButtonVariant::Danger => "wj-button-danger",
+            ButtonVariant::Warning => "wj-button-warning",
             ButtonVariant::Ghost => "wj-button-ghost",
         };
         let size_class = match self.size {

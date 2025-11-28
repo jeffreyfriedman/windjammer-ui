@@ -2,6 +2,7 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum ToastVariant {
     Success,
     Error,
@@ -9,6 +10,7 @@ pub enum ToastVariant {
     Info,
 }
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum ToastPosition {
     TopRight,
     TopLeft,

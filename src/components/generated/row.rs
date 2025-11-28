@@ -9,6 +9,7 @@ pub struct Row {
     class: String,
 }
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum RowAlign {
     Start,
     Center,
@@ -16,6 +17,7 @@ pub enum RowAlign {
     Stretch,
 }
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum RowJustify {
     Start,
     Center,

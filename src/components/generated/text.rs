@@ -2,6 +2,7 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum TextSize {
     Small,
     Medium,
@@ -9,6 +10,7 @@ pub enum TextSize {
     XLarge,
 }
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum TextWeight {
     Normal,
     Bold,

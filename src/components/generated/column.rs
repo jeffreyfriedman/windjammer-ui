@@ -8,6 +8,7 @@ pub struct Column {
     class: String,
 }
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum ColumnAlign {
     Start,
     Center,
@@ -15,6 +16,7 @@ pub enum ColumnAlign {
     Stretch,
 }
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum ColumnJustify {
     Start,
     Center,

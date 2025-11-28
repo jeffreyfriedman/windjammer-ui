@@ -2,11 +2,13 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum StackDirection {
     Vertical,
     Horizontal,
 }
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum StackAlign {
     Start,
     Center,
@@ -14,6 +16,7 @@ pub enum StackAlign {
     Stretch,
 }
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum StackJustify {
     Start,
     Center,

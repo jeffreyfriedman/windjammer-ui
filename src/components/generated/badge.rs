@@ -2,6 +2,7 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum BadgeVariant {
     Default,
     Primary,
@@ -12,6 +13,7 @@ pub enum BadgeVariant {
     Info,
 }
 
+#[derive(Clone, Debug, PartialEq)]
 pub enum BadgeSize {
     Small,
     Medium,
