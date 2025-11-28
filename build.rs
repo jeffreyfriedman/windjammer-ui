@@ -18,14 +18,20 @@ fn main() {
     let src_dir = project_root.join("src/components_wj");
     let out_dir = project_root.join("src/components/generated");
 
-    // If we're in a cargo package/publish context and generated files already exist, skip generation
+    // Check if we're in a cargo package/publish verification context
+    // During verification, Cargo extracts the package to target/package/crate-name-version/
+    let is_package_verification = manifest_dir.contains("/target/package/");
+
+    // If we're in package verification and generated files already exist, skip generation
     // This prevents "Source directory was modified by build.rs" errors during cargo publish
-    if env::var("CARGO_PRIMARY_PACKAGE").is_ok() && out_dir.exists() {
+    if is_package_verification {
         let mod_file = out_dir.join("mod.rs");
         if mod_file.exists() {
-            // Generated files exist, we're good to go
+            println!("cargo:warning=📦 Skipping generation (package verification, files exist)");
             return;
         }
+        // If files don't exist in package verification, we have a problem
+        // but let generation proceed - it will fail with a clear error
     }
 
     // Try to find wj CLI - first check local build, then system PATH
@@ -117,6 +123,13 @@ fn main() {
     }
 
     println!("cargo:warning=✅ Successfully transpiled Windjammer components!");
+
+    // Remove the generated Cargo.toml to prevent cargo from treating it as a separate package
+    let cargo_toml = out_dir.join("Cargo.toml");
+    if cargo_toml.exists() {
+        let _ = std::fs::remove_file(&cargo_toml);
+        println!("cargo:warning=🗑️  Removed generated Cargo.toml (not needed for library)");
+    }
 
     // Format the generated Rust code and add clippy allow directives
     println!("cargo:warning=🎨 Formatting generated Rust code...");
