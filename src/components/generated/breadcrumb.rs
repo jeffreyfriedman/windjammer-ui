@@ -1,5 +1,7 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 pub struct Breadcrumb {
     items: Vec<BreadcrumbItem>,
     separator: String,
