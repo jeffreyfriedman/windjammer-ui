@@ -47,6 +47,11 @@ impl Flex {
         self
     }
     #[inline]
+    pub fn gap_px(mut self, gap: i32) -> Flex {
+        self.gap = format!("{}px", gap);
+        self
+    }
+    #[inline]
     pub fn padding(mut self, padding: String) -> Flex {
         self.padding = padding;
         self

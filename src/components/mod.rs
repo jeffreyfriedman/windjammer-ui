@@ -48,6 +48,9 @@ pub mod generated;
 // ===========================================================================
 // RE-EXPORTS - ALL Windjammer Components (32 total!)
 // ===========================================================================
+// Re-export Renderable trait for convenience
+pub use generated::Renderable;
+
 pub use generated::{
     // Advanced Components
     Accordion,
