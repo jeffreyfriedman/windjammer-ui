@@ -32,13 +32,20 @@ jobs:
       - name: Verify version matches Cargo.toml
         run: |
           TAG_VERSION="${{ steps.get_version.outputs.version }}"
-          CARGO_VERSION=$(grep '^version = ' Cargo.toml | head -1 | sed 's/.*version = "\(.*\)"/\1/')
+          # Extract version from [workspace.package] section
+          CARGO_VERSION=$(grep '^\[workspace.package\]' -A 10 Cargo.toml | grep '^version = ' | head -1 | sed 's/.*version = "\(.*\)"/\1/')
           
           echo "Tag version: $TAG_VERSION"
           echo "Cargo.toml version: $CARGO_VERSION"
           
           if [ "$TAG_VERSION" != "$CARGO_VERSION" ]; then
             echo "❌ ERROR: Tag version ($TAG_VERSION) doesn't match Cargo.toml version ($CARGO_VERSION)"
+            echo ""
+            echo "Please update the version in Cargo.toml [workspace.package] section:"
+            echo "  version = \"$TAG_VERSION\""
+            echo ""
+            echo "Also update the windjammer-ui-macro dependency version:"
+            echo "  windjammer-ui-macro = { path = \"windjammer-ui-macro\", version = \"$TAG_VERSION\" }"
             exit 1
           fi
           

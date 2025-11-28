@@ -11,6 +11,62 @@ env:
   RUST_BACKTRACE: 1
 
 jobs:
+  version-check:
+    name: Version Consistency Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Need full history to compare with main
+      
+      - name: Check version consistency
+        run: |
+          echo "🔍 Checking version consistency..."
+          
+          # Extract workspace version
+          CARGO_VERSION=$(grep '^\[workspace.package\]' -A 10 Cargo.toml | grep '^version = ' | head -1 | sed 's/.*version = "\(.*\)"/\1/')
+          echo "Workspace version: $CARGO_VERSION"
+          
+          # Check windjammer-ui-macro dependency version
+          MACRO_DEP=$(grep 'windjammer-ui-macro.*version.*=' Cargo.toml | head -1 | sed 's/.*version = "\([^"]*\)".*/\1/')
+          echo "Macro dependency version: $MACRO_DEP"
+          
+          if [ "$CARGO_VERSION" != "$MACRO_DEP" ]; then
+            echo "❌ ERROR: Version mismatch!"
+            echo "Workspace version: $CARGO_VERSION"
+            echo "Macro dependency: $MACRO_DEP"
+            echo ""
+            echo "Please update Cargo.toml:"
+            echo "  windjammer-ui-macro = { path = \"windjammer-ui-macro\", version = \"$CARGO_VERSION\" }"
+            exit 1
+          fi
+          
+          echo "✅ Version consistency check passed"
+      
+      - name: Check version increment (on PRs)
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "🔍 Checking version increment..."
+          
+          CARGO_VERSION=$(grep '^\[workspace.package\]' -A 10 Cargo.toml | grep '^version = ' | head -1 | sed 's/.*version = "\(.*\)"/\1/')
+          MAIN_VERSION=$(git show origin/main:Cargo.toml | grep '^\[workspace.package\]' -A 10 | grep '^version = ' | head -1 | sed 's/.*version = "\(.*\)"/\1/')
+          
+          echo "Current version: $CARGO_VERSION"
+          echo "Main version: $MAIN_VERSION"
+          
+          if [ "$CARGO_VERSION" = "$MAIN_VERSION" ]; then
+            echo "❌ ERROR: Version not incremented!"
+            echo ""
+            echo "Please bump the version in Cargo.toml [workspace.package]"
+            echo "Examples:"
+            echo "  - Patch: $MAIN_VERSION → $(echo $MAIN_VERSION | awk -F. '{print $1"."$2"."$3+1}')"
+            echo "  - Minor: $MAIN_VERSION → $(echo $MAIN_VERSION | awk -F. '{print $1"."$2+1".0"}')"
+            exit 1
+          fi
+          
+          echo "✅ Version incremented: $MAIN_VERSION → $CARGO_VERSION"
+
   test:
     name: Test on ${{ matrix.os }} with Rust ${{ matrix.rust }}
     runs-on: ${{ matrix.os }}
