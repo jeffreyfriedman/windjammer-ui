@@ -1,9 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct Form {
     id: String,
     action: String,
@@ -45,6 +44,7 @@ impl Form {
     }
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct FormField {
     label: String,
     input: String,
@@ -91,12 +91,12 @@ impl FormField {
         }
         html.push_str("</label>");
         html.push_str(&self.input);
-        if self.help_text.len() > 0 {
+        if (self.help_text.len() as i32) > 0 {
             html.push_str("<div style='margin-top: 4px; font-size: 12px; color: #718096;'>");
             html.push_str(&self.help_text);
             html.push_str("</div>")
         }
-        if self.error.len() > 0 {
+        if (self.error.len() as i32) > 0 {
             html.push_str("<div style='margin-top: 4px; font-size: 12px; color: #e53e3e;'>");
             html.push_str(&self.error);
             html.push_str("</div>")
@@ -119,7 +119,7 @@ impl Renderable for Form {
         html.push_str(&self.on_submit);
         html.push_str("'>");
         for child in &self.children {
-            html.push_str(child);
+            html.push_str(&child);
         }
         html.push_str("</form>");
         html

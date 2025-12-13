@@ -1,10 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 use super::traits::Renderable;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum ToastVariant {
     Success,
     Error,
@@ -12,7 +10,7 @@ pub enum ToastVariant {
     Info,
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum ToastPosition {
     TopRight,
     TopLeft,
@@ -22,6 +20,7 @@ pub enum ToastPosition {
     BottomCenter,
 }
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct Toast {
     message: String,
     variant: ToastVariant,
@@ -88,9 +87,9 @@ impl Renderable for Toast {
         };
         let close_button = {
             if self.show_close {
-                "<button class='wj-toast-close'>×</button>"
+                "<button class='wj-toast-close'>×</button>".to_string()
             } else {
-                ""
+                "".to_string()
             }
         };
         format!(

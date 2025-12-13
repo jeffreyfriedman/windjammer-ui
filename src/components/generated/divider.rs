@@ -1,15 +1,15 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
+
 use super::traits::Renderable;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum DividerOrientation {
     Horizontal,
     Vertical,
 }
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct Divider {
     orientation: DividerOrientation,
     color: String,

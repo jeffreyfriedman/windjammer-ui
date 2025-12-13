@@ -1,11 +1,11 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
+
 use std::fmt::Write;
 
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, Default)]
 pub struct TreeItem {
     label: String,
     children: Vec<TreeItem>,
@@ -35,14 +35,14 @@ impl TreeItem {
     pub fn render(&self, depth: i32) -> String {
         let indent_px = depth * 20;
         let icon = {
-            if self.children.len() > 0 {
+            if (self.children.len() as i32) > 0 {
                 if self.expanded {
-                    "▼"
+                    "▼".to_string()
                 } else {
-                    "▶"
+                    "▶".to_string()
                 }
             } else {
-                "•"
+                "•".to_string()
             }
         };
         let mut html = {
@@ -61,8 +61,8 @@ impl TreeItem {
         };
         if self.expanded {
             let mut i = 0;
-            while i < self.children.len() {
-                let child = &self.children[i];
+            while i < (self.children.len() as i32) {
+                let child = &self.children[i as usize];
                 html = format!("{}{}", html, child.render(depth + 1));
                 i += 1;
             }
@@ -71,6 +71,7 @@ impl TreeItem {
     }
 }
 
+#[derive(Debug, Clone, Default)]
 pub struct TreeView {
     items: Vec<TreeItem>,
 }
@@ -94,8 +95,8 @@ impl Renderable for TreeView {
 "
         .to_string();
         let mut i = 0;
-        while i < self.items.len() {
-            let item = &self.items[i];
+        while i < (self.items.len() as i32) {
+            let item = &self.items[i as usize];
             html = format!("{}{}", html, item.render(0));
             i += 1;
         }

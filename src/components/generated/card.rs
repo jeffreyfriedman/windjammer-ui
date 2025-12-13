@@ -1,11 +1,10 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 use std::fmt::Write;
 
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct Card {
     title: String,
     children: Vec<String>,

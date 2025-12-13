@@ -1,9 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
+
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct Div {
     children: Vec<String>,
     class: String,
@@ -51,28 +51,29 @@ impl Div {
         html.push_str("<div");
         if !self.id.is_empty() {
             html.push_str(" id=\"");
-            html.push_str(self.id.as_str());
+            html.push_str(&self.id.as_str());
             html.push('"')
         }
         if !self.class.is_empty() {
             html.push_str(" class=\"");
-            html.push_str(self.class.as_str());
+            html.push_str(&self.class.as_str());
             html.push('"')
         }
         if !self.style.is_empty() {
             html.push_str(" style=\"");
-            html.push_str(self.style.as_str());
+            html.push_str(&self.style.as_str());
             html.push('"')
         }
         html.push('>');
-        for child in self.children.iter() {
-            html.push_str(child.as_str());
+        for child in &self.children {
+            html.push_str(&child.as_str());
         }
         html.push_str("</div>");
         html
     }
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct Span {
     children: Vec<String>,
     class: String,
@@ -116,23 +117,24 @@ impl Renderable for Span {
         html.push_str("<span");
         if !self.class.is_empty() {
             html.push_str(" class=\"");
-            html.push_str(self.class.as_str());
+            html.push_str(&self.class.as_str());
             html.push('"')
         }
         if !self.style.is_empty() {
             html.push_str(" style=\"");
-            html.push_str(self.style.as_str());
+            html.push_str(&self.style.as_str());
             html.push('"')
         }
         html.push('>');
-        for child in self.children.iter() {
-            html.push_str(child.as_str());
+        for child in &self.children {
+            html.push_str(&child.as_str());
         }
         html.push_str("</span>");
         html
     }
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct P {
     children: Vec<String>,
     class: String,
@@ -176,23 +178,24 @@ impl Renderable for P {
         html.push_str("<p");
         if !self.class.is_empty() {
             html.push_str(" class=\"");
-            html.push_str(self.class.as_str());
+            html.push_str(&self.class.as_str());
             html.push('"')
         }
         if !self.style.is_empty() {
             html.push_str(" style=\"");
-            html.push_str(self.style.as_str());
+            html.push_str(&self.style.as_str());
             html.push('"')
         }
         html.push('>');
-        for child in self.children.iter() {
-            html.push_str(child.as_str());
+        for child in &self.children {
+            html.push_str(&child.as_str());
         }
         html.push_str("</p>");
         html
     }
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct H1 {
     text: String,
     class: String,
@@ -226,21 +229,22 @@ impl Renderable for H1 {
         html.push_str("<h1");
         if !self.class.is_empty() {
             html.push_str(" class=\"");
-            html.push_str(self.class.as_str());
+            html.push_str(&self.class.as_str());
             html.push('"')
         }
         if !self.style.is_empty() {
             html.push_str(" style=\"");
-            html.push_str(self.style.as_str());
+            html.push_str(&self.style.as_str());
             html.push('"')
         }
         html.push('>');
-        html.push_str(self.text.as_str());
+        html.push_str(&self.text.as_str());
         html.push_str("</h1>");
         html
     }
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct H2 {
     text: String,
     class: String,
@@ -274,21 +278,22 @@ impl Renderable for H2 {
         html.push_str("<h2");
         if !self.class.is_empty() {
             html.push_str(" class=\"");
-            html.push_str(self.class.as_str());
+            html.push_str(&self.class.as_str());
             html.push('"')
         }
         if !self.style.is_empty() {
             html.push_str(" style=\"");
-            html.push_str(self.style.as_str());
+            html.push_str(&self.style.as_str());
             html.push('"')
         }
         html.push('>');
-        html.push_str(self.text.as_str());
+        html.push_str(&self.text.as_str());
         html.push_str("</h2>");
         html
     }
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct H3 {
     text: String,
     class: String,
@@ -322,16 +327,16 @@ impl Renderable for H3 {
         html.push_str("<h3");
         if !self.class.is_empty() {
             html.push_str(" class=\"");
-            html.push_str(self.class.as_str());
+            html.push_str(&self.class.as_str());
             html.push('"')
         }
         if !self.style.is_empty() {
             html.push_str(" style=\"");
-            html.push_str(self.style.as_str());
+            html.push_str(&self.style.as_str());
             html.push('"')
         }
         html.push('>');
-        html.push_str(self.text.as_str());
+        html.push_str(&self.text.as_str());
         html.push_str("</h3>");
         html
     }

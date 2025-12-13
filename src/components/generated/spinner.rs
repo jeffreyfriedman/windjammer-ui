@@ -1,18 +1,17 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 use std::fmt::Write;
 
 use super::traits::Renderable;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum SpinnerSize {
     Small,
     Medium,
     Large,
 }
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct Spinner {
     size: SpinnerSize,
     label: String,

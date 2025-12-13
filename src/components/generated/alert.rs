@@ -1,10 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 use super::traits::Renderable;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum AlertVariant {
     Error,
     Warning,
@@ -12,6 +10,7 @@ pub enum AlertVariant {
     Success,
 }
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct Alert {
     message: String,
     variant: AlertVariant,

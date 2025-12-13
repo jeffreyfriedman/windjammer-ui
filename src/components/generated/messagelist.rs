@@ -1,7 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, Default)]
 pub struct MessageList {
     messages: Vec<String>,
     height: String,
@@ -39,9 +41,9 @@ impl Renderable for MessageList {
     fn render(self) -> String {
         let scroll_script = {
             if self.auto_scroll {
-                "onload='this.scrollTop = this.scrollHeight'"
+                "onload='this.scrollTop = this.scrollHeight'".to_string()
             } else {
-                ""
+                "".to_string()
             }
         };
         format!(

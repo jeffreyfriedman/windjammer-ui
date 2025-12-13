@@ -1,9 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, PartialEq, Default)]
 pub struct Slider {
     min: f64,
     max: f64,
@@ -62,9 +61,9 @@ impl Renderable for Slider {
     fn render(self) -> String {
         let disabled_attr = {
             if self.disabled {
-                " disabled"
+                " disabled".to_string()
             } else {
-                ""
+                "".to_string()
             }
         };
         let label_html = {

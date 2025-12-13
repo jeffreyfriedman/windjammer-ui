@@ -1,9 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct Toolbar {
     items: Vec<String>,
     position: String,

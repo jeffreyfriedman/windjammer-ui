@@ -1,7 +1,7 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
+
+#[derive(Debug, Clone, PartialEq)]
 pub struct Textarea {
     value: String,
     placeholder: String,
@@ -13,7 +13,7 @@ pub struct Textarea {
     class: String,
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum TextareaResize {
     None,
     Vertical,
@@ -84,40 +84,40 @@ impl Textarea {
         };
         let disabled_attr = {
             if self.disabled {
-                " disabled"
+                " disabled".to_string()
             } else {
-                ""
+                "".to_string()
             }
         };
         let readonly_attr = {
             if self.readonly {
-                " readonly"
+                " readonly".to_string()
             } else {
-                ""
+                "".to_string()
             }
         };
         let mut html = String::new();
         html.push_str("<textarea class=\"wj-textarea ");
-        html.push_str(self.class.as_str());
+        html.push_str(&self.class.as_str());
         html.push_str("\" rows=\"");
-        html.push_str(self.rows.to_string().as_str());
+        html.push_str(&self.rows.to_string().as_str());
         html.push('"');
         if !self.placeholder.is_empty() {
             html.push_str(" placeholder=\"");
-            html.push_str(self.placeholder.as_str());
+            html.push_str(&self.placeholder.as_str());
             html.push('"')
         }
         if self.max_length > 0 {
             html.push_str(" maxlength=\"");
-            html.push_str(self.max_length.to_string().as_str());
+            html.push_str(&self.max_length.to_string().as_str());
             html.push('"')
         }
-        html.push_str(disabled_attr);
-        html.push_str(readonly_attr);
+        html.push_str(&disabled_attr);
+        html.push_str(&readonly_attr);
         html.push_str(" style=\"");
-        html.push_str(resize_style);
+        html.push_str(&resize_style);
         html.push_str(" padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; font-family: inherit; width: 100%; box-sizing: border-box;\">");
-        html.push_str(self.value.as_str());
+        html.push_str(&self.value.as_str());
         html.push_str("</textarea>");
         html
     }

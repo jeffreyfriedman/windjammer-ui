@@ -1,14 +1,16 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+
 use super::traits::Renderable;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum RatingSize {
     Small,
     Medium,
     Large,
 }
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct Rating {
     value: f32,
     max: i32,
@@ -66,24 +68,24 @@ impl Renderable for Rating {
             let half_filled = i as f32 - 0.5 <= self.value && i as f32 > self.value;
             let star_color = {
                 if filled || half_filled {
-                    &self.color
+                    self.color.as_str()
                 } else {
                     "#e2e8f0"
                 }
             };
             let cursor = {
                 if self.readonly {
-                    "default"
+                    "default".to_string()
                 } else {
-                    "pointer"
+                    "pointer".to_string()
                 }
             };
             html.push_str("<span style='font-size: ");
-            html.push_str(star_size);
+            html.push_str(&star_size);
             html.push_str("; color: ");
-            html.push_str(star_color);
+            html.push_str(&star_color);
             html.push_str("; cursor: ");
-            html.push_str(cursor);
+            html.push_str(&cursor);
             html.push_str(";'>");
             if half_filled {
                 html.push('⯨')

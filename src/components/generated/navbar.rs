@@ -1,13 +1,15 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+
 use super::traits::Renderable;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum NavbarPosition {
     Top,
     Bottom,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct NavbarItem {
     label: String,
     href: String,
@@ -20,6 +22,7 @@ impl NavbarItem {
     }
 }
 
+#[derive(Debug, Clone)]
 pub struct Navbar {
     brand: String,
     items: Vec<NavbarItem>,
@@ -66,7 +69,8 @@ impl Renderable for Navbar {
         for item in &self.items {
             items_html.push(format!(
                 "<a href='{}' class='wj-navbar-item'>{}</a>",
-                item.href, item.label
+                item.href.clone(),
+                item.label.clone()
             ));
         }
         let position_class = match self.position {
@@ -75,13 +79,13 @@ impl Renderable for Navbar {
         };
         let sticky_class = {
             if self.sticky {
-                " wj-navbar-sticky"
+                " wj-navbar-sticky".to_string()
             } else {
-                ""
+                "".to_string()
             }
         };
         let brand_html = {
-            if self.brand.len() > 0 {
+            if (self.brand.len() as i32) > 0 {
                 format!("<div class='wj-navbar-brand'>{}</div>", self.brand)
             } else {
                 String::from("".to_string())

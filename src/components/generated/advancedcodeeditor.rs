@@ -1,9 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct AdvancedCodeEditor {
     code: String,
     language: String,
@@ -57,16 +56,16 @@ impl Renderable for AdvancedCodeEditor {
     fn render(self) -> String {
         let features_class = {
             if self.minimap {
-                " wj-editor-with-minimap"
+                " wj-editor-with-minimap".to_string()
             } else {
-                ""
+                "".to_string()
             }
         };
         let line_class = {
             if self.line_numbers {
-                " wj-editor-with-lines"
+                " wj-editor-with-lines".to_string()
             } else {
-                ""
+                "".to_string()
             }
         };
         format!(
@@ -90,9 +89,9 @@ impl Renderable for AdvancedCodeEditor {
             self.code,
             {
                 if self.minimap {
-                    "<div class='wj-editor-minimap'></div>"
+                    "<div class='wj-editor-minimap'></div>".to_string()
                 } else {
-                    ""
+                    "".to_string()
                 }
             }
         )

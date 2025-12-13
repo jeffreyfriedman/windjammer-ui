@@ -1,16 +1,15 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 use super::traits::Renderable;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum MessageRole {
     User,
     Assistant,
     System,
 }
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct ChatMessage {
     role: MessageRole,
     content: String,
@@ -54,7 +53,7 @@ impl Renderable for ChatMessage {
             MessageRole::System => "wj-message-system",
         };
         let avatar_html = {
-            if self.avatar.len() > 0 {
+            if (self.avatar.len() as i32) > 0 {
                 format!(
                     "<div class='wj-message-avatar'><img src='{}' alt='avatar'/></div>",
                     self.avatar
@@ -69,7 +68,7 @@ impl Renderable for ChatMessage {
             }
         };
         let timestamp_html = {
-            if self.timestamp.len() > 0 {
+            if (self.timestamp.len() as i32) > 0 {
                 format!("<div class='wj-message-timestamp'>{}</div>", self.timestamp)
             } else {
                 String::from("".to_string())

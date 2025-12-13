@@ -1,9 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
+
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct HamburgerMenuItem {
     label: String,
     href: String,
@@ -16,6 +16,7 @@ impl HamburgerMenuItem {
     }
 }
 
+#[derive(Debug, Clone, Default)]
 pub struct HamburgerMenu {
     items: Vec<HamburgerMenuItem>,
     open: bool,
@@ -48,14 +49,15 @@ impl Renderable for HamburgerMenu {
         for item in &self.items {
             items_html.push(format!(
                 "<a href='{}' class='wj-hamburger-item'>{}</a>",
-                item.href, item.label
+                item.href.clone(),
+                item.label.clone()
             ));
         }
         let open_class = {
             if self.open {
-                " wj-hamburger-open"
+                " wj-hamburger-open".to_string()
             } else {
-                ""
+                "".to_string()
             }
         };
         format!("<div class='wj-hamburger-menu{}'>

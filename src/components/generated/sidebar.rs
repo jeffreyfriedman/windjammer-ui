@@ -1,15 +1,15 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
+
 use super::traits::Renderable;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum SidebarPosition {
     Left,
     Right,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct SidebarItem {
     label: String,
     icon: String,
@@ -37,6 +37,7 @@ impl SidebarItem {
     }
 }
 
+#[derive(Debug, Clone)]
 pub struct Sidebar {
     items: Vec<SidebarItem>,
     position: SidebarPosition,
@@ -82,13 +83,13 @@ impl Renderable for Sidebar {
         let mut items_html = Vec::new();
         for item in &self.items {
             let icon_html = {
-                if item.icon.len() > 0 {
-                    format!("<span class='wj-sidebar-icon'>{}</span>", item.icon)
+                if item.icon.clone().len() > 0 {
+                    format!("<span class='wj-sidebar-icon'>{}</span>", item.icon.clone())
                 } else {
                     String::from("".to_string())
                 }
             };
-            items_html.push(format!("<a href='{}' class='wj-sidebar-item'>{}<span class='wj-sidebar-label'>{}</span></a>", item.href, icon_html, item.label));
+            items_html.push(format!("<a href='{}' class='wj-sidebar-item'>{}<span class='wj-sidebar-label'>{}</span></a>", item.href.clone(), icon_html, item.label.clone()));
         }
         let position_class = match self.position {
             SidebarPosition::Left => "wj-sidebar-left",
@@ -96,9 +97,9 @@ impl Renderable for Sidebar {
         };
         let collapsed_class = {
             if self.collapsed {
-                " wj-sidebar-collapsed"
+                " wj-sidebar-collapsed".to_string()
             } else {
-                ""
+                "".to_string()
             }
         };
         format!("<aside class='wj-sidebar {} {}' style='width: {}'>

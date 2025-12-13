@@ -1,0 +1,13 @@
+{
+  "mappings": [
+    {
+      "rust_file": "/Users/jeffreyfriedman/src/wj/windjammer-ui/src/components/generated/node_graph.rs",
+      "rust_line": 1,
+      "rust_column": 0,
+      "wj_file": "/Users/jeffreyfriedman/src/wj/windjammer-ui/src/components_wj/node_graph.wj",
+      "wj_line": 322,
+      "wj_column": 1
+    }
+  ],
+  "version": 1
+}

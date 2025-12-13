@@ -1,9 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct CodeBlock {
     code: String,
     language: String,
@@ -42,7 +41,7 @@ impl Renderable for CodeBlock {
     #[inline]
     fn render(self) -> String {
         let language_label = {
-            if self.language.len() > 0 {
+            if (self.language.len() as i32) > 0 {
                 format!("<div class='wj-codeblock-language'>{}</div>", self.language)
             } else {
                 String::from("".to_string())
@@ -59,9 +58,9 @@ impl Renderable for CodeBlock {
         };
         let line_number_class = {
             if self.show_line_numbers {
-                " wj-codeblock-numbered"
+                " wj-codeblock-numbered".to_string()
             } else {
-                ""
+                "".to_string()
             }
         };
         format!(

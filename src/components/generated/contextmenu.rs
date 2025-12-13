@@ -1,9 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct ContextMenuItem {
     label: String,
     icon: String,
@@ -38,6 +37,7 @@ impl ContextMenuItem {
     }
 }
 
+#[derive(Debug, Clone, Default)]
 pub struct ContextMenu {
     items: Vec<ContextMenuItem>,
     trigger_id: String,
@@ -64,24 +64,24 @@ impl Renderable for ContextMenu {
         let mut items_html = Vec::new();
         for item in &self.items {
             let icon_html = {
-                if item.icon.len() > 0 {
-                    format!("<span class='wj-context-icon'>{}</span>", item.icon)
+                if item.icon.clone().len() > 0 {
+                    format!("<span class='wj-context-icon'>{}</span>", item.icon.clone())
                 } else {
                     String::from("".to_string())
                 }
             };
             let disabled_class = {
-                if item.disabled {
-                    " wj-context-item-disabled"
+                if item.disabled.clone() {
+                    " wj-context-item-disabled".to_string()
                 } else {
-                    ""
+                    "".to_string()
                 }
             };
             let disabled_attr = {
-                if item.disabled {
-                    " disabled"
+                if item.disabled.clone() {
+                    " disabled".to_string()
                 } else {
-                    ""
+                    "".to_string()
                 }
             };
             items_html.push(format!(
@@ -89,7 +89,11 @@ impl Renderable for ContextMenu {
                     {}
                     <span>{}</span>
                 </button>",
-                disabled_class, item.action, disabled_attr, icon_html, item.label
+                disabled_class,
+                item.action.clone(),
+                disabled_attr,
+                icon_html,
+                item.label.clone()
             ));
         }
         format!(

@@ -1,11 +1,12 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
+
+#[derive(Debug, Clone, Default)]
 pub struct Style {
     properties: Vec<StyleProperty>,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct StyleProperty {
     name: String,
     value: String,
@@ -265,9 +266,9 @@ impl Style {
             if i > 0 {
                 result.push_str("; ")
             }
-            result.push_str(prop.name.as_str());
+            result.push_str(&prop.name.as_str());
             result.push_str(": ");
-            result.push_str(prop.value.as_str());
+            result.push_str(&prop.value.as_str());
         }
         result
     }

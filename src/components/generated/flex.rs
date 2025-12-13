@@ -1,15 +1,14 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 use super::traits::Renderable;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum FlexDirection {
     Row,
     Column,
 }
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct Flex {
     children: Vec<String>,
     direction: FlexDirection,

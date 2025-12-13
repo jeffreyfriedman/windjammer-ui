@@ -1,9 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct AccordionItem {
     title: String,
     content: String,
@@ -26,6 +25,7 @@ impl AccordionItem {
     }
 }
 
+#[derive(Debug, Clone, Default)]
 pub struct Accordion {
     items: Vec<AccordionItem>,
     allow_multiple: bool,
@@ -56,13 +56,13 @@ impl Renderable for Accordion {
     fn render(self) -> String {
         let mut html = "<div class='wj-accordion'>".to_string();
         let mut i = 0;
-        while i < self.items.len() {
-            let item = &self.items[i];
+        while i < (self.items.len() as i32) {
+            let item = &self.items[i as usize];
             let open_attr = {
                 if item.open {
-                    " open"
+                    " open".to_string()
                 } else {
-                    ""
+                    "".to_string()
                 }
             };
             html = format!(

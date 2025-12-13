@@ -1,7 +1,6 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct Label {
     text: String,
     for_id: String,
@@ -37,15 +36,15 @@ impl Label {
     pub fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<label class=\"wj-label ");
-        html.push_str(self.class.as_str());
+        html.push_str(&self.class.as_str());
         html.push_str("\" style=\"font-weight: 500; font-size: 14px; color: #374151; display: block; margin-bottom: 4px;\"");
         if !self.for_id.is_empty() {
             html.push_str(" for=\"");
-            html.push_str(self.for_id.as_str());
+            html.push_str(&self.for_id.as_str());
             html.push('"')
         }
         html.push('>');
-        html.push_str(self.text.as_str());
+        html.push_str(&self.text.as_str());
         if self.required {
             html.push_str("<span style=\"color: #ef4444; margin-left: 4px;\">*</span>")
         }

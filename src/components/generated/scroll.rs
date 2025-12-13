@@ -1,7 +1,7 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
+
+#[derive(Debug, Clone, PartialEq)]
 pub struct Scroll {
     children: Vec<String>,
     direction: ScrollDir,
@@ -10,7 +10,7 @@ pub struct Scroll {
     class: String,
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum ScrollDir {
     Vertical,
     Horizontal,
@@ -63,16 +63,16 @@ impl Scroll {
         };
         let mut html = String::new();
         html.push_str("<div class=\"wj-scroll ");
-        html.push_str(self.class.as_str());
+        html.push_str(&self.class.as_str());
         html.push_str("\" style=\"");
-        html.push_str(overflow);
+        html.push_str(&overflow);
         html.push_str("; height: ");
-        html.push_str(self.height.as_str());
+        html.push_str(&self.height.as_str());
         html.push_str("; width: ");
-        html.push_str(self.width.as_str());
+        html.push_str(&self.width.as_str());
         html.push_str(";\">");
-        for child in self.children.iter() {
-            html.push_str(child.as_str());
+        for child in &self.children {
+            html.push_str(&child.as_str());
         }
         html.push_str("</div>");
         html

@@ -1,16 +1,14 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 use super::traits::Renderable;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum StackDirection {
     Vertical,
     Horizontal,
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum StackAlign {
     Start,
     Center,
@@ -18,7 +16,7 @@ pub enum StackAlign {
     Stretch,
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum StackJustify {
     Start,
     Center,
@@ -28,6 +26,7 @@ pub enum StackJustify {
     SpaceEvenly,
 }
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct Stack {
     direction: StackDirection,
     gap: String,
@@ -127,13 +126,13 @@ impl Renderable for Stack {
         };
         let mut html = String::new();
         html.push_str("<div style='display: flex; flex-direction: ");
-        html.push_str(flex_direction);
+        html.push_str(&flex_direction);
         html.push_str("; gap: ");
         html.push_str(&self.gap);
         html.push_str("; align-items: ");
-        html.push_str(align_items);
+        html.push_str(&align_items);
         html.push_str("; justify-content: ");
-        html.push_str(justify_content);
+        html.push_str(&justify_content);
         html.push_str("; padding: ");
         html.push_str(&self.padding);
         html.push_str("; width: ");
@@ -142,7 +141,7 @@ impl Renderable for Stack {
         html.push_str(&self.height);
         html.push_str(";'>");
         for child in &self.children {
-            html.push_str(child);
+            html.push_str(&child);
         }
         html.push_str("</div>");
         html

@@ -1,7 +1,6 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
+#[derive(Debug, Clone)]
 pub struct Select {
     options: Vec<SelectOption>,
     selected: String,
@@ -11,12 +10,13 @@ pub struct Select {
     class: String,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct SelectOption {
     value: String,
     label: String,
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum SelectSize {
     Small,
     Medium,
@@ -73,20 +73,20 @@ impl Select {
         };
         let disabled_attr = {
             if self.disabled {
-                " disabled"
+                " disabled".to_string()
             } else {
-                ""
+                "".to_string()
             }
         };
         let mut html = String::new();
         html.push_str("<select class=\"wj-select ");
-        html.push_str(self.class.as_str());
+        html.push_str(&self.class.as_str());
         html.push_str("\" style=\"");
-        html.push_str(size_style);
+        html.push_str(&size_style);
         html.push_str(
             " border: 1px solid #d1d5db; border-radius: 6px; background: white; cursor: pointer;\"",
         );
-        html.push_str(disabled_attr);
+        html.push_str(&disabled_attr);
         html.push('>');
         if !self.placeholder.is_empty() {
             html.push_str("<option value=\"\" disabled");
@@ -94,18 +94,18 @@ impl Select {
                 html.push_str(" selected")
             }
             html.push_str(">");
-            html.push_str(self.placeholder.as_str());
+            html.push_str(&self.placeholder.as_str());
             html.push_str("</option>")
         }
-        for opt in self.options.iter() {
+        for opt in &self.options {
             html.push_str("<option value=\"");
-            html.push_str(opt.value.as_str());
+            html.push_str(&opt.value.clone().as_str());
             html.push('"');
-            if opt.value == self.selected {
+            if opt.value.clone() == self.selected {
                 html.push_str(" selected")
             }
             html.push('>');
-            html.push_str(opt.label.as_str());
+            html.push_str(&opt.label.clone().as_str());
             html.push_str("</option>");
         }
         html.push_str("</select>");

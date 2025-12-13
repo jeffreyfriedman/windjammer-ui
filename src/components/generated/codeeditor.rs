@@ -1,9 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct CodeEditor {
     code: String,
     language: String,
@@ -50,16 +49,16 @@ impl Renderable for CodeEditor {
     fn render(self) -> String {
         let readonly_attr = {
             if self.readonly {
-                " readonly"
+                " readonly".to_string()
             } else {
-                ""
+                "".to_string()
             }
         };
         let line_numbers_class = {
             if self.line_numbers {
-                " wj-editor-with-lines"
+                " wj-editor-with-lines".to_string()
             } else {
-                ""
+                "".to_string()
             }
         };
         format!(

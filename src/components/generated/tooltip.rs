@@ -1,8 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+
 use super::traits::Renderable;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum TooltipPosition {
     Top,
     Bottom,
@@ -10,6 +11,7 @@ pub enum TooltipPosition {
     Right,
 }
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct Tooltip {
     text: String,
     position: TooltipPosition,

@@ -1,9 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct Panel {
     title: String,
     children: Vec<String>,
@@ -50,27 +49,27 @@ impl Renderable for Panel {
     fn render(self) -> String {
         let header_class = {
             if self.collapsible {
-                "wj-panel-header-collapsible"
+                "wj-panel-header-collapsible".to_string()
             } else {
-                "wj-panel-header"
+                "wj-panel-header".to_string()
             }
         };
         let icon = {
             if self.collapsible {
                 if self.collapsed {
-                    "▶"
+                    "▶".to_string()
                 } else {
-                    "▼"
+                    "▼".to_string()
                 }
             } else {
-                ""
+                "".to_string()
             }
         };
         let content_style = {
             if self.collapsed {
-                "display: none;"
+                "display: none;".to_string()
             } else {
-                "display: block;"
+                "display: block;".to_string()
             }
         };
         let children_html = self.children.join(

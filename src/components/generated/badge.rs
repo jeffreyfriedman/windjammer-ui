@@ -2,7 +2,7 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum BadgeVariant {
     Default,
     Primary,
@@ -13,13 +13,14 @@ pub enum BadgeVariant {
     Info,
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum BadgeSize {
     Small,
     Medium,
     Large,
 }
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct Badge {
     text: String,
     variant: BadgeVariant,

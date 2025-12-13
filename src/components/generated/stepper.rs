@@ -1,9 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
+
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct StepperStep {
     label: String,
     description: String,
@@ -31,6 +31,7 @@ impl StepperStep {
     }
 }
 
+#[derive(Debug, Clone)]
 pub struct Stepper {
     steps: Vec<StepperStep>,
     current_step: i32,
@@ -69,28 +70,28 @@ impl Renderable for Stepper {
             html.push_str("<div style='display: flex; flex-direction: column; align-items: center; flex: 1;'>");
             let bg_color = {
                 if is_completed {
-                    "#10b981"
+                    "#10b981".to_string()
                 } else {
                     if is_current {
-                        "#3b82f6"
+                        "#3b82f6".to_string()
                     } else {
-                        "#e2e8f0"
+                        "#e2e8f0".to_string()
                     }
                 }
             };
             let text_color = {
                 if is_completed || is_current {
-                    "white"
+                    "white".to_string()
                 } else {
-                    "#718096"
+                    "#718096".to_string()
                 }
             };
             html.push_str(
                 "<div style='width: 40px; height: 40px; border-radius: 50%; background: ",
             );
-            html.push_str(bg_color);
+            html.push_str(&bg_color);
             html.push_str("; color: ");
-            html.push_str(text_color);
+            html.push_str(&text_color);
             html.push_str("; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 16px; margin-bottom: 8px;'>");
             if is_completed {
                 html.push('✓')
@@ -108,7 +109,7 @@ impl Renderable for Stepper {
             html.push_str("; margin-bottom: 4px;'>");
             html.push_str(&step.label);
             html.push_str("</div>");
-            if step.description.len() > 0 {
+            if (step.description.len() as i32) > 0 {
                 html.push_str("<div style='font-size: 12px; color: #a0aec0;'>");
                 html.push_str(&step.description);
                 html.push_str("</div>")
@@ -118,13 +119,13 @@ impl Renderable for Stepper {
             if step_index < total_steps - 1 {
                 let line_color = {
                     if is_completed {
-                        "#10b981"
+                        "#10b981".to_string()
                     } else {
-                        "#e2e8f0"
+                        "#e2e8f0".to_string()
                     }
                 };
                 html.push_str("<div style='flex: 1; height: 2px; background: ");
-                html.push_str(line_color);
+                html.push_str(&line_color);
                 html.push_str("; margin: 0 8px; margin-bottom: 48px;'></div>")
             }
         }
