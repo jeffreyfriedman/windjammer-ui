@@ -1,9 +1,15 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 //! Cross-platform event system
+
+// pub mod dispatcher; // FIXME: dispatcher.rs doesn't exist
 
 use std::fmt;
 use std::sync::{Arc, Mutex};
+
+// pub use dispatcher::ComponentEventDispatcher; // FIXME: dispatcher.rs doesn't exist
 
 /// Cross-platform event types
 #[derive(Debug, Clone, PartialEq)]

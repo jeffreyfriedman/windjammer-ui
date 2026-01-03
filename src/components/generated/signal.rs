@@ -208,7 +208,7 @@ impl Effect {
     {
         static NEXT_ID: AtomicUsize = AtomicUsize::new(0);
         let id = NEXT_ID.fetch_add(1, Ordering::Relaxed);
-        let f: Rc<dyn Fn()> = Rc::new(f);
+        let f = Rc::new(f);
 
         // Register effect
         EFFECT_REGISTRY.with(|registry| {
@@ -218,7 +218,8 @@ impl Effect {
         });
 
         // Run effect once to establish dependencies
-        Self::run_effect(id, &f as &Rc<dyn Fn()>);
+        let f_trait: Rc<dyn Fn()> = f.clone();
+        Self::run_effect(id, &f_trait);
 
         id
     }

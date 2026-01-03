@@ -1,5 +1,7 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 //! Component runtime - manages lifecycle, state, and re-rendering
 //!
 //! Design Philosophy:

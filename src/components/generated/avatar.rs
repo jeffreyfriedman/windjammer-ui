@@ -1,5 +1,7 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[derive(Debug, Clone, PartialEq)]
 pub struct Avatar {
     pub src: String,

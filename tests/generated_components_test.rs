@@ -3,6 +3,7 @@
 //! Verify all 49 components generated from pure Windjammer can be instantiated and rendered
 
 use windjammer_ui::components::generated::Renderable;
+use windjammer_ui::components::generated::{avatar, colorpicker, dialog};
 use windjammer_ui::components::*;
 
 #[test]
@@ -43,12 +44,12 @@ fn test_all_49_components_render() {
     let _toolbar = Toolbar::new().render();
 
     // Advanced Components (17)
-    let _dialog = Dialog::new("title".to_string(), "content".to_string()).render();
+    let _dialog = dialog::Dialog::new("title".to_string(), "content".to_string()).render();
     let _scrollarea = ScrollArea::new().render();
     let _collapsible = CollapsibleSection::new("title".to_string(), "content".to_string()).render();
     let _codeeditor = CodeEditor::new("code".to_string()).render();
     let _advcodeeditor = AdvancedCodeEditor::new("code".to_string()).render();
-    let _colorpicker = ColorPicker::new().render();
+    let _colorpicker = colorpicker::ColorPicker::new().render();
     let _filetree = FileTree::new(FileNode::new("root".to_string(), true)).render();
     let _treeview = TreeView::new().render();
     let _splitpanel = SplitPanel::new("left".to_string(), "right".to_string()).render();
@@ -56,7 +57,7 @@ fn test_all_49_components_render() {
     let _accordion = Accordion::new().render();
     let _breadcrumb = Breadcrumb::new().render();
     let _dropdown = Dropdown::new("test".to_string()).render();
-    let _avatar = Avatar::new("img.jpg".to_string()).render();
+    let _avatar = avatar::Avatar::new("img.jpg".to_string()).render();
     let _skeleton = Skeleton::new().render();
     let _pagination = Pagination::new(1, 10).render();
     let _menu = Menu::new("Menu".to_string()).render();
@@ -186,7 +187,7 @@ fn test_tabs_component() {
 
 #[test]
 fn test_dialog_component() {
-    let dialog = Dialog::new("Title".to_string(), "Content".to_string())
+    let dialog = dialog::Dialog::new("Title".to_string(), "Content".to_string())
         .open(true)
         .render();
     assert!(dialog.contains("Title"));

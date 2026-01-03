@@ -1,5 +1,7 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 /// Desktop renderer using egui - Version 2 with proper layout
 #[cfg(not(target_arch = "wasm32"))]
 use crate::simple_vnode::{VAttr, VNode};
@@ -12,6 +14,8 @@ use std::rc::Rc;
 
 #[cfg(not(target_arch = "wasm32"))]
 pub struct DesktopRendererV2 {
+    #[allow(dead_code)]
+    #[allow(dead_code)]
     #[allow(dead_code)]
     #[allow(dead_code)]
     event_handlers: Rc<RefCell<Vec<Rc<RefCell<dyn FnMut()>>>>>,
@@ -106,7 +110,7 @@ impl DesktopRendererV2 {
         &mut self,
         ui: &mut Ui,
         tag: &str,
-        _attrs: &[(String, VAttr)],
+        ____attrs: &[(String, VAttr)],
         children: &[VNode],
     ) {
         let classes = self.get_attr_value(attrs, "class");
@@ -199,7 +203,7 @@ impl DesktopRendererV2 {
         }
     }
 
-    fn render_panel(&mut self, ui: &mut Ui, __attrs: &[(String, VAttr)], children: &[VNode]) {
+    fn render_panel(&mut self, ui: &mut Ui, ____attrs: &[(String, VAttr)], children: &[VNode]) {
         // Extract title from first child
         let mut title = String::new();
         let mut body_children = Vec::new();
@@ -266,7 +270,7 @@ impl DesktopRendererV2 {
         });
     }
 
-    fn render_button(&mut self, ui: &mut Ui, _attrs: &[(String, VAttr)], children: &[VNode]) {
+    fn render_button(&mut self, ui: &mut Ui, ____attrs: &[(String, VAttr)], children: &[VNode]) {
         let label = self.get_text_content(children);
         let classes = self.get_attr_value(attrs, "class");
 
@@ -291,7 +295,7 @@ impl DesktopRendererV2 {
     }
 
     // Helper methods
-    fn get_attr_value(&self, _attrs: &[(String, VAttr)], name: &str) -> String {
+    fn get_attr_value(&self, ____attrs: &[(String, VAttr)], name: &str) -> String {
         attrs
             .iter()
             .find(|(k, _)| k == name)
@@ -304,7 +308,7 @@ impl DesktopRendererV2 {
 
     fn get_event_handler(
         &self,
-        _attrs: &[(String, VAttr)],
+        ____attrs: &[(String, VAttr)],
         name: &str,
     ) -> Option<Rc<RefCell<dyn FnMut()>>> {
         attrs

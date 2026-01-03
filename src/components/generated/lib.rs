@@ -2,28 +2,13 @@
 #![allow(noop_method_call)]
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-// Auto-generated mod.rs by Windjammer CLI
-// This file declares all generated Windjammer modules
+// Auto-generated lib.rs by Windjammer
+// This file declares all modules in your Windjammer project
 
+// Auto-discovered modules
 pub mod accordion;
 pub mod advancedcodeeditor;
 pub mod alert;
-#[cfg(feature = "desktop")]
-pub mod app;
-#[cfg(feature = "desktop")]
-pub mod app_docking;
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-pub mod app_reactive;
-#[cfg(feature = "desktop")]
-pub mod app_reactive_eframe;
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
 pub mod avatar;
 pub mod badge;
 pub mod breadcrumb;
@@ -39,32 +24,13 @@ pub mod codeeditor;
 pub mod collapsible;
 pub mod colorpicker;
 pub mod column;
-pub mod component;
-pub mod component_runtime;
 pub mod container;
 pub mod contextmenu;
 pub mod curve_editor;
-#[cfg(feature = "desktop")]
-pub mod desktop_app_context;
-#[cfg(feature = "desktop")]
-pub mod desktop_renderer;
-#[cfg(feature = "desktop")]
-pub mod desktop_renderer_v2;
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
 pub mod dialog;
 pub mod divider;
 pub mod drawer;
 pub mod dropdown;
-pub mod event_handler;
-pub mod events;
 pub mod filetree;
 pub mod flex;
 pub mod form;
@@ -87,27 +53,17 @@ pub mod progress;
 pub mod propertyeditor;
 pub mod radio;
 pub mod rating;
-pub mod reactivity;
-pub mod reactivity_optimized;
-pub mod reactivity_tests;
-pub mod renderer;
-pub mod routing;
 pub mod row;
-pub mod runtime;
 pub mod scroll;
 pub mod scrollarea;
 pub mod section;
 pub mod select;
 pub mod sidebar;
-pub mod signal;
-pub mod simple_renderer;
-pub mod simple_vnode;
 pub mod skeleton;
 pub mod slider;
 pub mod spacer;
 pub mod spinner;
 pub mod splitpanel;
-pub mod ssr;
 pub mod stack;
 pub mod stepper;
 pub mod style;
@@ -119,39 +75,49 @@ pub mod text;
 pub mod textarea;
 pub mod theme;
 pub mod timeline;
-pub mod to_vnode;
 pub mod toast;
 pub mod toolbar;
 pub mod tooltip;
 pub mod traits;
 pub mod treeview;
 pub mod typingindicator;
-pub mod undo_redo;
-pub mod vdom;
 pub mod vnode;
-pub mod vnode_ffi;
-pub mod wasm_events;
 
-// Re-export all public items
+// Hand-written Rust modules (FFI/interop)
+pub mod app_reactive_eframe;
+pub mod component_runtime;
+pub mod runtime;
+pub mod to_vnode;
+pub mod reactivity_optimized;
+pub mod events;
+pub mod renderer;
+pub mod app_docking;
+pub mod simple_renderer;
+pub mod vnode_ffi;
+pub mod desktop_app_context;
+pub mod signal;
+pub mod event_handler;
+pub mod platform;
+pub mod undo_redo;
+pub mod simple_vnode;
+pub mod ssr;
+pub mod desktop_renderer_v2;
+pub mod components;
+pub mod examples_wasm;
+pub mod reactivity;
+pub mod app_reactive;
+pub mod component;
+pub mod wasm_events;
+pub mod desktop_renderer;
+pub mod routing;
+pub mod vdom;
+pub mod app;
+pub mod reactivity_tests;
+
+// Auto-generated re-exports
 pub use accordion::*;
 pub use advancedcodeeditor::*;
 pub use alert::*;
-#[cfg(feature = "desktop")]
-pub use app::*;
-#[cfg(feature = "desktop")]
-pub use app_docking::*;
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-pub use app_reactive::*;
-#[cfg(feature = "desktop")]
-pub use app_reactive_eframe::*;
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
 pub use avatar::*;
 pub use badge::*;
 pub use breadcrumb::*;
@@ -167,32 +133,13 @@ pub use codeeditor::*;
 pub use collapsible::*;
 pub use colorpicker::*;
 pub use column::*;
-pub use component::*;
-pub use component_runtime::*;
 pub use container::*;
 pub use contextmenu::*;
 pub use curve_editor::*;
-#[cfg(feature = "desktop")]
-pub use desktop_app_context::*;
-#[cfg(feature = "desktop")]
-pub use desktop_renderer::*;
-#[cfg(feature = "desktop")]
-pub use desktop_renderer_v2::*;
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
-#[cfg(feature = "desktop")]
 pub use dialog::*;
 pub use divider::*;
 pub use drawer::*;
 pub use dropdown::*;
-// pub use event_handler::*; // Removed: causes ambiguous re-exports
-pub use events::*;
 pub use filetree::*;
 pub use flex::*;
 pub use form::*;
@@ -215,27 +162,17 @@ pub use progress::*;
 pub use propertyeditor::*;
 pub use radio::*;
 pub use rating::*;
-// pub use reactivity::*; // Removed: causes ambiguous re-exports
-pub use reactivity_optimized::*;
-// pub use reactivity_tests::*; // Removed: unused and test-only
-pub use renderer::*;
-pub use routing::*;
 pub use row::*;
-pub use runtime::*;
 pub use scroll::*;
 pub use scrollarea::*;
 pub use section::*;
 pub use select::*;
 pub use sidebar::*;
-// pub use signal::*; // Removed: causes ambiguous re-exports
-pub use simple_renderer::*;
-// pub use simple_vnode::*; // Removed: causes ambiguous re-exports
 pub use skeleton::*;
 pub use slider::*;
 pub use spacer::*;
 pub use spinner::*;
 pub use splitpanel::*;
-pub use ssr::*;
 pub use stack::*;
 pub use stepper::*;
 pub use style::*;
@@ -247,15 +184,10 @@ pub use text::*;
 pub use textarea::*;
 pub use theme::*;
 pub use timeline::*;
-pub use to_vnode::*;
 pub use toast::*;
 pub use toolbar::*;
 pub use tooltip::*;
 pub use traits::*;
 pub use treeview::*;
 pub use typingindicator::*;
-pub use undo_redo::*;
-pub use vdom::*;
-// pub use vnode::*; // Removed: causes ambiguous re-exports
-pub use vnode_ffi::*;
-pub use wasm_events::*;
+pub use vnode::*;

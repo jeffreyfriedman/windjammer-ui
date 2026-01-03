@@ -1,5 +1,7 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 //! Fine-grained reactivity system for Windjammer UI
 //!
 //! This module provides automatic dependency tracking and fine-grained updates.

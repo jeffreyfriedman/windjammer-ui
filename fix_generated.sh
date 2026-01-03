@@ -37,6 +37,9 @@ pub use $module::*;" "$MOD_RS" > "$MOD_RS.tmp" && mv "$MOD_RS.tmp" "$MOD_RS"
     fi
 done
 
+# Remove examples_wasm module declarations (broken/incomplete module)
+grep -v "^pub mod examples_wasm;" "$MOD_RS" | grep -v "^pub use examples_wasm::\*;" > "$MOD_RS.tmp" && mv "$MOD_RS.tmp" "$MOD_RS"
+
 # Remove ambiguous/unused re-exports (clippy warnings)
 sed 's|^pub use reactivity::\*;$|// pub use reactivity::*; // Removed: causes ambiguous re-exports|' "$MOD_RS" | \
 sed 's|^pub use reactivity_tests::\*;$|// pub use reactivity_tests::*; // Removed: unused and test-only|' | \
@@ -60,7 +63,7 @@ SIGNAL_RS="$GENERATED_DIR/signal.rs"
 # Add 'static lifetime bound to Computed<T> Debug impl (E0310)
 sed 's|impl<T: Clone + std::fmt::Debug> std::fmt::Debug for Computed<T>|impl<T: Clone + std::fmt::Debug + '\''static> std::fmt::Debug for Computed<T>|' "$SIGNAL_RS" | \
 # Cast Rc<F> to Rc<dyn Fn()> in Effect::new (E0308)
-sed 's|Self::run_effect(id, &f);|Self::run_effect(id, \&f as \&Rc<dyn Fn()>);|' | \
+sed 's|Self::run_effect(id, &f);|let f_trait: Rc<dyn Fn()> = f.clone();\n        Self::run_effect(id, \&f_trait);|' | \
 # Change doc comment to regular comment to avoid `unused doc comment` warning
 sed 's|^/// Global reactive context|// Global reactive context|' \
 > "$SIGNAL_RS.tmp" && mv "$SIGNAL_RS.tmp" "$SIGNAL_RS"
