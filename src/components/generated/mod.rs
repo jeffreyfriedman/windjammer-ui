@@ -143,8 +143,8 @@ pub use contextmenu::*;
 pub use curve_editor::*;
 #[cfg(feature = "desktop")]
 pub use desktop_app_context::*;
-#[cfg(feature = "desktop")]
-pub use desktop_renderer::*;
+// #[cfg(feature = "desktop")]
+// pub use desktop_renderer::*; // Removed: causes ambiguous re-exports with renderer::*
 #[cfg(feature = "desktop")]
 pub use desktop_renderer_v2::*;
 pub use dialog::*;

@@ -66,5 +66,17 @@ if ! grep -q "#\[allow(dead_code)\]" src/components/generated/signal.rs; then
 ' src/components/generated/signal.rs
 fi
 
+# Fix 10: Desktop-specific clippy fixes
+# Remove desktop_renderer::* to avoid ambiguous re-exports with renderer::*
+sed -i '' 's/^pub use desktop_renderer::\*;$/\/\/ pub use desktop_renderer::*; \/\/ Removed: causes ambiguous re-exports with renderer::*/' src/components/generated/mod.rs
+
+# Fix unused variable and field in desktop_renderer_v2.rs
+sed -i '' 's/fn render_panel(&mut self, ui: &mut Ui, attrs:/fn render_panel(\&mut self, ui: \&mut Ui, _attrs:/' src/components/generated/desktop_renderer_v2.rs
+if grep -q "pub struct DesktopRendererV2" src/components/generated/desktop_renderer_v2.rs; then
+    if ! grep -q "event_handlers.*#\[allow(dead_code)\]" src/components/generated/desktop_renderer_v2.rs; then
+        sed -i '' '/pub struct DesktopRendererV2 {$/,/event_handlers:/ s/event_handlers:/#[allow(dead_code)]\n    event_handlers:/' src/components/generated/desktop_renderer_v2.rs
+    fi
+fi
+
 echo "✅ Fixes applied successfully!"
 

@@ -12,6 +12,7 @@ use std::rc::Rc;
 
 #[cfg(not(target_arch = "wasm32"))]
 pub struct DesktopRendererV2 {
+    #[allow(dead_code)]
     event_handlers: Rc<RefCell<Vec<Rc<RefCell<dyn FnMut()>>>>>,
 }
 
@@ -197,7 +198,7 @@ impl DesktopRendererV2 {
         }
     }
 
-    fn render_panel(&mut self, ui: &mut Ui, attrs: &[(String, VAttr)], children: &[VNode]) {
+    fn render_panel(&mut self, ui: &mut Ui, _attrs: &[(String, VAttr)], children: &[VNode]) {
         // Extract title from first child
         let mut title = String::new();
         let mut body_children = Vec::new();
