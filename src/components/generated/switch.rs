@@ -1,13 +1,15 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Switch {
-    checked: bool,
-    disabled: bool,
-    size: SwitchSize,
-    label: String,
-    class: String,
+    pub checked: bool,
+    pub disabled: bool,
+    pub size: SwitchSize,
+    pub label: String,
+    pub class: String,
 }
 
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum SwitchSize {
     Small,
     Medium,
@@ -50,6 +52,7 @@ impl Switch {
         self.class = class;
         self
     }
+    #[inline]
     pub fn render(&self) -> String {
         let (width, height, thumb_size) = match self.size {
             SwitchSize::Small => ("32px", "18px", "14px"),
@@ -58,66 +61,66 @@ impl Switch {
         };
         let bg_color = {
             if self.checked {
-                "#3b82f6"
+                "#3b82f6".to_string()
             } else {
-                "#d1d5db"
+                "#d1d5db".to_string()
             }
         };
         let thumb_pos = {
             if self.checked {
                 match self.size {
-                    SwitchSize::Small => "16px",
-                    SwitchSize::Medium => "22px",
-                    SwitchSize::Large => "26px",
+                    SwitchSize::Small => "16px".to_string(),
+                    SwitchSize::Medium => "22px".to_string(),
+                    SwitchSize::Large => "26px".to_string(),
                 }
             } else {
-                "2px"
+                "2px".to_string()
             }
         };
         let disabled_style = {
             if self.disabled {
-                " opacity: 0.5; cursor: not-allowed;"
+                " opacity: 0.5; cursor: not-allowed;".to_string()
             } else {
-                " cursor: pointer;"
+                " cursor: pointer;".to_string()
             }
         };
         let disabled_attr = {
             if self.disabled {
-                " disabled"
+                " disabled".to_string()
             } else {
-                ""
+                "".to_string()
             }
         };
         let mut html = String::new();
         html.push_str("<label class=\"wj-switch ");
-        html.push_str(self.class.as_str());
+        html.push_str(&self.class.as_str());
         html.push_str("\" style=\"display: inline-flex; align-items: center; gap: 8px;");
-        html.push_str(disabled_style);
+        html.push_str(&disabled_style);
         html.push_str("\">");
         html.push_str("<input type=\"checkbox\"");
         if self.checked {
             html.push_str(" checked")
         }
-        html.push_str(disabled_attr);
+        html.push_str(&disabled_attr);
         html.push_str(" style=\"position: absolute; opacity: 0; width: 0; height: 0;\">");
         html.push_str("<span style=\"position: relative; display: inline-block; width: ");
-        html.push_str(width);
+        html.push_str(&width);
         html.push_str("; height: ");
-        html.push_str(height);
+        html.push_str(&height);
         html.push_str("; background-color: ");
-        html.push_str(bg_color);
+        html.push_str(&bg_color);
         html.push_str("; border-radius: 999px; transition: background-color 0.2s;\">");
         html.push_str("<span style=\"position: absolute; top: 2px; left: ");
-        html.push_str(thumb_pos);
+        html.push_str(&thumb_pos);
         html.push_str("; width: ");
-        html.push_str(thumb_size);
+        html.push_str(&thumb_size);
         html.push_str("; height: ");
-        html.push_str(thumb_size);
+        html.push_str(&thumb_size);
         html.push_str("; background-color: white; border-radius: 50%; transition: left 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.2);\"></span>");
         html.push_str("</span>");
         if !self.label.is_empty() {
             html.push_str("<span style=\"font-size: 14px;\">");
-            html.push_str(self.label.as_str());
+            html.push_str(&self.label.as_str());
             html.push_str("</span>")
         }
         html.push_str("</label>");

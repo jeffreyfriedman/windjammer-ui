@@ -5,6 +5,7 @@ use super::traits::Renderable
 pub struct Input {
     value: string,
     placeholder: string,
+    input_type: string,
 }
 
 impl Input {
@@ -12,6 +13,7 @@ impl Input {
         Input {
             value: "".to_string(),
             placeholder: "".to_string(),
+            input_type: "text".to_string(),
         }
     }
     
@@ -24,12 +26,17 @@ impl Input {
         self.placeholder = placeholder
         self
     }
+    
+    pub fn input_type(self, input_type: string) -> Input {
+        self.input_type = input_type
+        self
+    }
 }
 
 impl Renderable for Input {
     fn render(self) -> string {
-        format!("<input class='wj-input' value='{}' placeholder='{}'/>", 
-                self.value, self.placeholder)
+        format!("<input class='wj-input' type='{}' value='{}' placeholder='{}'/>", 
+                self.input_type, self.value, self.placeholder)
     }
 }
 

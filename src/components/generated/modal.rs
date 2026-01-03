@@ -2,6 +2,7 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum ModalSize {
     Small,
     Medium,
@@ -9,14 +10,15 @@ pub enum ModalSize {
     FullScreen,
 }
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct Modal {
-    id: String,
-    title: String,
-    content: String,
-    footer: String,
-    size: ModalSize,
-    closeable: bool,
-    visible: bool,
+    pub id: String,
+    pub title: String,
+    pub content: String,
+    pub footer: String,
+    pub size: ModalSize,
+    pub closeable: bool,
+    pub visible: bool,
 }
 
 impl Modal {
@@ -60,36 +62,37 @@ impl Modal {
 }
 
 impl Renderable for Modal {
+    #[inline]
     fn render(self) -> String {
         let width = match self.size {
-            ModalSize::Small => "400px",
-            ModalSize::Medium => "600px",
-            ModalSize::Large => "800px",
-            ModalSize::FullScreen => "100vw",
+            ModalSize::Small => "400px".to_string(),
+            ModalSize::Medium => "600px".to_string(),
+            ModalSize::Large => "800px".to_string(),
+            ModalSize::FullScreen => "100vw".to_string(),
         };
         let height = match self.size {
-            ModalSize::FullScreen => "100vh",
-            _ => "auto",
+            ModalSize::FullScreen => "100vh".to_string(),
+            _ => "auto".to_string(),
         };
         let display = {
             if self.visible {
-                "flex"
+                "flex".to_string()
             } else {
-                "none"
+                "none".to_string()
             }
         };
         let mut html = String::new();
         html.push_str("<div id='");
         html.push_str(&self.id);
         html.push_str("-backdrop' style='position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); display: ");
-        html.push_str(display);
+        html.push_str(&display);
         html.push_str("; align-items: center; justify-content: center; z-index: 1000;'>");
         html.push_str("<div id='");
         html.push_str(&self.id);
         html.push_str("' style='background: white; border-radius: 8px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); max-width: ");
-        html.push_str(width);
+        html.push_str(&width);
         html.push_str("; width: 100%; max-height: ");
-        html.push_str(height);
+        html.push_str(&height);
         html.push_str("; display: flex; flex-direction: column; margin: 16px;'>");
         html.push_str("<div style='padding: 16px 24px; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between;'>");
         html.push_str("<h2 style='margin: 0; font-size: 18px; font-weight: 600; color: #1a202c;'>");
@@ -104,7 +107,7 @@ impl Renderable for Modal {
         html.push_str("<div style='padding: 24px; flex: 1; overflow-y: auto;'>");
         html.push_str(&self.content);
         html.push_str("</div>");
-        if self.footer.len() > 0 {
+        if self.footer.len() > (0 as usize) {
             html.push_str("<div style='padding: 16px 24px; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 8px;'>");
             html.push_str(&self.footer);
             html.push_str("</div>")

@@ -2,15 +2,17 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum SidebarPosition {
     Left,
     Right,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct SidebarItem {
-    label: String,
-    icon: String,
-    href: String,
+    pub label: String,
+    pub icon: String,
+    pub href: String,
 }
 
 impl SidebarItem {
@@ -18,8 +20,8 @@ impl SidebarItem {
     pub fn new(label: String) -> SidebarItem {
         SidebarItem {
             label,
-            icon: String::from("".to_string()),
-            href: String::from("#".to_string()),
+            icon: String::from(""),
+            href: String::from("#"),
         }
     }
     #[inline]
@@ -34,11 +36,12 @@ impl SidebarItem {
     }
 }
 
+#[derive(Debug, Clone)]
 pub struct Sidebar {
-    items: Vec<SidebarItem>,
-    position: SidebarPosition,
-    width: String,
-    collapsed: bool,
+    pub items: Vec<SidebarItem>,
+    pub position: SidebarPosition,
+    pub width: String,
+    pub collapsed: bool,
 }
 
 impl Sidebar {
@@ -47,7 +50,7 @@ impl Sidebar {
         Sidebar {
             items: Vec::new(),
             position: SidebarPosition::Left,
-            width: String::from("250px".to_string()),
+            width: String::from("250px"),
             collapsed: false,
         }
     }
@@ -79,23 +82,23 @@ impl Renderable for Sidebar {
         let mut items_html = Vec::new();
         for item in &self.items {
             let icon_html = {
-                if item.icon.len() > 0 {
-                    format!("<span class='wj-sidebar-icon'>{}</span>", item.icon)
+                if item.icon.clone().len() > 0 {
+                    format!("<span class='wj-sidebar-icon'>{}</span>", item.icon.clone())
                 } else {
-                    String::from("".to_string())
+                    String::from("")
                 }
             };
-            items_html.push(format!("<a href='{}' class='wj-sidebar-item'>{}<span class='wj-sidebar-label'>{}</span></a>", item.href, icon_html, item.label));
+            items_html.push(format!("<a href='{}' class='wj-sidebar-item'>{}<span class='wj-sidebar-label'>{}</span></a>", item.href.clone(), icon_html, item.label.clone()));
         }
         let position_class = match self.position {
-            SidebarPosition::Left => "wj-sidebar-left",
-            SidebarPosition::Right => "wj-sidebar-right",
+            SidebarPosition::Left => "wj-sidebar-left".to_string(),
+            SidebarPosition::Right => "wj-sidebar-right".to_string(),
         };
         let collapsed_class = {
             if self.collapsed {
-                " wj-sidebar-collapsed"
+                " wj-sidebar-collapsed".to_string()
             } else {
-                ""
+                "".to_string()
             }
         };
         format!("<aside class='wj-sidebar {} {}' style='width: {}'>

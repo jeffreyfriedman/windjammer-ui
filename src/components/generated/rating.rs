@@ -2,18 +2,20 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum RatingSize {
     Small,
     Medium,
     Large,
 }
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct Rating {
-    value: f32,
-    max: i32,
-    size: RatingSize,
-    readonly: bool,
-    color: String,
+    pub value: f32,
+    pub max: i32,
+    pub size: RatingSize,
+    pub readonly: bool,
+    pub color: String,
 }
 
 impl Rating {
@@ -53,9 +55,9 @@ impl Renderable for Rating {
     #[inline]
     fn render(self) -> String {
         let star_size = match self.size {
-            RatingSize::Small => "16px",
-            RatingSize::Medium => "24px",
-            RatingSize::Large => "32px",
+            RatingSize::Small => "16px".to_string(),
+            RatingSize::Medium => "24px".to_string(),
+            RatingSize::Large => "32px".to_string(),
         };
         let mut html = String::new();
         html.push_str("<div style='display: inline-flex; gap: 4px;'>");
@@ -65,24 +67,24 @@ impl Renderable for Rating {
             let half_filled = i as f32 - 0.5 <= self.value && i as f32 > self.value;
             let star_color = {
                 if filled || half_filled {
-                    &self.color
+                    self.color.as_str()
                 } else {
                     "#e2e8f0"
                 }
             };
             let cursor = {
                 if self.readonly {
-                    "default"
+                    "default".to_string()
                 } else {
-                    "pointer"
+                    "pointer".to_string()
                 }
             };
             html.push_str("<span style='font-size: ");
-            html.push_str(star_size);
+            html.push_str(&star_size);
             html.push_str("; color: ");
-            html.push_str(star_color);
+            html.push_str(&star_color);
             html.push_str("; cursor: ");
-            html.push_str(cursor);
+            html.push_str(&cursor);
             html.push_str(";'>");
             if half_filled {
                 html.push('⯨')

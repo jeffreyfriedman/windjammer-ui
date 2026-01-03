@@ -90,7 +90,7 @@ impl Drawer {
         html.push_str(transform)
         html.push_str(" background: white; box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); z-index: 1000; transition: transform 0.3s ease; overflow-y: auto; padding: 24px;\">")
         
-        for child in self.children.iter() {
+        for child in self.children {
             html.push_str(child.as_str())
         }
         

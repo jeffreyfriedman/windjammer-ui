@@ -2,12 +2,13 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct Container {
-    children: Vec<String>,
-    max_width: String,
-    max_height: String,
-    padding: String,
-    background_color: String,
+    pub children: Vec<String>,
+    pub max_width: String,
+    pub max_height: String,
+    pub padding: String,
+    pub background_color: String,
 }
 
 impl Container {
@@ -54,6 +55,7 @@ impl Container {
 }
 
 impl Renderable for Container {
+    #[inline]
     fn render(self) -> String {
         let mut style = "margin: 0 auto; ".to_string();
         if self.max_width != "" {

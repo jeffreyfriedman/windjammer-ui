@@ -2,11 +2,12 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct Tab {
-    id: String,
-    label: String,
-    content: String,
-    disabled: bool,
+    pub id: String,
+    pub label: String,
+    pub content: String,
+    pub disabled: bool,
 }
 
 impl Tab {
@@ -26,9 +27,10 @@ impl Tab {
     }
 }
 
+#[derive(Debug, Clone, Default)]
 pub struct Tabs {
-    tabs: Vec<Tab>,
-    active: String,
+    pub tabs: Vec<Tab>,
+    pub active: String,
 }
 
 impl Tabs {
@@ -52,23 +54,24 @@ impl Tabs {
 }
 
 impl Renderable for Tabs {
+    #[inline]
     fn render(self) -> String {
         let mut tabs_html = "<div class='wj-tabs-header'>".to_string();
         let mut i = 0;
-        while i < self.tabs.len() {
-            let tab = &self.tabs[i];
+        while i < (self.tabs.len() as i64) {
+            let tab = &self.tabs[i as usize];
             let active_class = {
                 if tab.id == self.active {
-                    " wj-tab-active"
+                    " wj-tab-active".to_string()
                 } else {
-                    ""
+                    "".to_string()
                 }
             };
             let disabled_class = {
                 if tab.disabled {
-                    " wj-tab-disabled"
+                    " wj-tab-disabled".to_string()
                 } else {
-                    ""
+                    "".to_string()
                 }
             };
             tabs_html = format!(
@@ -80,13 +83,13 @@ impl Renderable for Tabs {
         tabs_html = format!("{}</div>", tabs_html);
         let mut content_html = "<div class='wj-tabs-content'>".to_string();
         let mut j = 0;
-        while j < self.tabs.len() {
-            let tab = &self.tabs[j];
+        while j < (self.tabs.len() as i64) {
+            let tab = &self.tabs[j as usize];
             let display_style = {
                 if tab.id == self.active {
-                    "display: block;"
+                    "display: block;".to_string()
                 } else {
-                    "display: none;"
+                    "display: none;".to_string()
                 }
             };
             content_html = format!(

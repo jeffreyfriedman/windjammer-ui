@@ -2,6 +2,7 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum ProgressVariant {
     Default,
     Success,
@@ -9,11 +10,12 @@ pub enum ProgressVariant {
     Danger,
 }
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct Progress {
-    value: f64,
-    max: f64,
-    variant: ProgressVariant,
-    show_label: bool,
+    pub value: f64,
+    pub max: f64,
+    pub variant: ProgressVariant,
+    pub show_label: bool,
 }
 
 impl Progress {
@@ -48,16 +50,16 @@ impl Renderable for Progress {
     fn render(self) -> String {
         let percentage = (self.value / self.max * 100.0).clamp(0.0, 100.0);
         let variant_class = match self.variant {
-            ProgressVariant::Default => "wj-progress-default",
-            ProgressVariant::Success => "wj-progress-success",
-            ProgressVariant::Warning => "wj-progress-warning",
-            ProgressVariant::Danger => "wj-progress-danger",
+            ProgressVariant::Default => "wj-progress-default".to_string(),
+            ProgressVariant::Success => "wj-progress-success".to_string(),
+            ProgressVariant::Warning => "wj-progress-warning".to_string(),
+            ProgressVariant::Danger => "wj-progress-danger".to_string(),
         };
         let color = match self.variant {
-            ProgressVariant::Default => "#3498db",
-            ProgressVariant::Success => "#2ecc71",
-            ProgressVariant::Warning => "#f39c12",
-            ProgressVariant::Danger => "#e74c3c",
+            ProgressVariant::Default => "#3498db".to_string(),
+            ProgressVariant::Success => "#2ecc71".to_string(),
+            ProgressVariant::Warning => "#f39c12".to_string(),
+            ProgressVariant::Danger => "#e74c3c".to_string(),
         };
         let label_html = {
             if self.show_label {

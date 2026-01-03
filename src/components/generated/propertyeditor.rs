@@ -1,0 +1,468 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+use super::traits::Renderable;
+
+#[derive(Clone, Debug, PartialEq)]
+pub enum PropertyType {
+    Number { min: f32, max: f32, step: f32 },
+    Integer { min: i32, max: i32 },
+    Boolean,
+    Text,
+    Color,
+    Dropdown { options: Vec<String> },
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct Property {
+    pub name: String,
+    pub value: String,
+    pub property_type: PropertyType,
+    pub unit: String,
+    pub tooltip: String,
+    pub on_change: String,
+}
+
+impl Property {
+    #[inline]
+    pub fn number(name: String, value: f32, min: f32, max: f32) -> Property {
+        Property {
+            name,
+            value: format!("{:.3}", value),
+            property_type: PropertyType::Number {
+                min,
+                max,
+                step: 0.1,
+            },
+            unit: "".to_string(),
+            tooltip: "".to_string(),
+            on_change: "".to_string(),
+        }
+    }
+    #[inline]
+    pub fn integer(name: String, value: i32, min: i32, max: i32) -> Property {
+        Property {
+            name,
+            value: format!("{}", value),
+            property_type: PropertyType::Integer { min, max },
+            unit: "".to_string(),
+            tooltip: "".to_string(),
+            on_change: "".to_string(),
+        }
+    }
+    #[inline]
+    pub fn boolean(name: String, value: bool) -> Property {
+        Property {
+            name,
+            value: {
+                if value {
+                    "true".to_string()
+                } else {
+                    "false".to_string()
+                }
+            },
+            property_type: PropertyType::Boolean,
+            unit: "".to_string(),
+            tooltip: "".to_string(),
+            on_change: "".to_string(),
+        }
+    }
+    #[inline]
+    pub fn text(name: String, value: String) -> Property {
+        Property {
+            name,
+            value,
+            property_type: PropertyType::Text,
+            unit: "".to_string(),
+            tooltip: "".to_string(),
+            on_change: "".to_string(),
+        }
+    }
+    #[inline]
+    pub fn color(name: String, value: String) -> Property {
+        Property {
+            name,
+            value,
+            property_type: PropertyType::Color,
+            unit: "".to_string(),
+            tooltip: "".to_string(),
+            on_change: "".to_string(),
+        }
+    }
+    #[inline]
+    pub fn unit(mut self, unit: String) -> Property {
+        self.unit = unit;
+        self
+    }
+    #[inline]
+    pub fn tooltip(mut self, tooltip: String) -> Property {
+        self.tooltip = tooltip;
+        self
+    }
+    #[inline]
+    pub fn on_change(mut self, handler: String) -> Property {
+        self.on_change = handler;
+        self
+    }
+}
+
+impl Renderable for Property {
+    #[inline]
+    fn render(self) -> String {
+        let tooltip_attr = {
+            if self.tooltip != "" {
+                format!(" title='{}'", self.tooltip)
+            } else {
+                "".to_string()
+            }
+        };
+        let unit_html = {
+            if self.unit != "" {
+                format!("<span class='prop-unit'>{}</span>", self.unit)
+            } else {
+                "".to_string()
+            }
+        };
+        let input_html = match self.property_type.clone() {
+            PropertyType::Number {
+                min: mn,
+                max: mx,
+                step: st,
+            } => {
+                format!(
+                    "
+                    <div class='prop-number'>
+                        <input type='number' class='prop-input' 
+                               value='{}' min='{}' max='{}' step='{}'
+                               onchange='{}(this.value)'/>
+                        {}
+                    </div>
+                ",
+                    self.value, mn, mx, st, self.on_change, unit_html
+                )
+            }
+            PropertyType::Integer { min: mn, max: mx } => {
+                format!(
+                    "
+                    <div class='prop-number'>
+                        <input type='number' class='prop-input' 
+                               value='{}' min='{}' max='{}' step='1'
+                               onchange='{}(this.value)'/>
+                        {}
+                    </div>
+                ",
+                    self.value, mn, mx, self.on_change, unit_html
+                )
+            }
+            PropertyType::Boolean => {
+                let checked = {
+                    if self.value == "true" {
+                        "checked".to_string()
+                    } else {
+                        "".to_string()
+                    }
+                };
+                format!(
+                    "
+                    <label class='prop-toggle'>
+                        <input type='checkbox' {} onchange='{}(this.checked)'/>
+                        <span class='toggle-slider'></span>
+                    </label>
+                ",
+                    checked, self.on_change
+                )
+            }
+            PropertyType::Text => {
+                format!(
+                    "
+                    <input type='text' class='prop-input prop-text' 
+                           value='{}' onchange='{}(this.value)'/>
+                ",
+                    self.value, self.on_change
+                )
+            }
+            PropertyType::Color => {
+                format!(
+                    "
+                    <div class='prop-color'>
+                        <input type='color' class='color-swatch' 
+                               value='{}' onchange='{}(this.value)'/>
+                        <input type='text' class='color-hex' 
+                               value='{}' onchange='{}(this.value)'/>
+                    </div>
+                ",
+                    self.value, self.on_change, self.value, self.on_change
+                )
+            }
+            PropertyType::Dropdown { options: opts } => {
+                let mut options_html = "".to_string();
+                for o in opts {
+                    let selected = {
+                        if o.as_str() == self.value.as_str() {
+                            "selected".to_string()
+                        } else {
+                            "".to_string()
+                        }
+                    };
+                    options_html +=
+                        format!("<option value='{}' {}>{}</option>", o, selected, o).as_str();
+                }
+                format!(
+                    "
+                    <select class='prop-select' onchange='{}(this.value)'>
+                        {}
+                    </select>
+                ",
+                    self.on_change, options_html
+                )
+            }
+        };
+        format!(
+            "
+            <div class='prop-row'{}>
+                <label class='prop-label'>{}</label>
+                <div class='prop-value'>
+                    {}
+                </div>
+            </div>
+        ",
+            tooltip_attr, self.name, input_html
+        )
+    }
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct Vec3Editor {
+    pub label: String,
+    pub x: f32,
+    pub y: f32,
+    pub z: f32,
+    pub on_change: String,
+}
+
+impl Vec3Editor {
+    #[inline]
+    pub fn new(label: String, x: f32, y: f32, z: f32) -> Vec3Editor {
+        Vec3Editor {
+            label,
+            x,
+            y,
+            z,
+            on_change: "".to_string(),
+        }
+    }
+    #[inline]
+    pub fn on_change(mut self, handler: String) -> Vec3Editor {
+        self.on_change = handler;
+        self
+    }
+}
+
+impl Renderable for Vec3Editor {
+    #[inline]
+    fn render(self) -> String {
+        format!(
+            "
+            <div class='vec3-editor'>
+                <label class='prop-label'>{}</label>
+                <div class='vec3-inputs'>
+                    <div class='vec3-axis'>
+                        <span class='axis-label x'>X</span>
+                        <input type='number' step='0.1' value='{:.3}' 
+                               onchange='{}(\"x\", this.value)'/>
+                    </div>
+                    <div class='vec3-axis'>
+                        <span class='axis-label y'>Y</span>
+                        <input type='number' step='0.1' value='{:.3}' 
+                               onchange='{}(\"y\", this.value)'/>
+                    </div>
+                    <div class='vec3-axis'>
+                        <span class='axis-label z'>Z</span>
+                        <input type='number' step='0.1' value='{:.3}' 
+                               onchange='{}(\"z\", this.value)'/>
+                    </div>
+                </div>
+            </div>
+        ",
+            self.label, self.x, self.on_change, self.y, self.on_change, self.z, self.on_change
+        )
+    }
+}
+
+#[inline]
+pub fn property_editor_styles() -> String {
+    "
+    .prop-row {
+        display: flex;
+        align-items: center;
+        padding: 6px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    
+    .prop-row:hover {
+        background: rgba(255,255,255,0.02);
+    }
+    
+    .prop-label {
+        width: 100px;
+        font-size: 12px;
+        color: #999;
+        flex-shrink: 0;
+    }
+    
+    .prop-value {
+        flex: 1;
+    }
+    
+    .prop-input {
+        width: 100%;
+        padding: 6px 10px;
+        border: 1px solid #333;
+        border-radius: 4px;
+        background: #1a1a2e;
+        color: #e0e0e0;
+        font-size: 12px;
+    }
+    
+    .prop-input:focus {
+        border-color: #e94560;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(233, 69, 96, 0.2);
+    }
+    
+    .prop-number {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+    
+    .prop-unit {
+        font-size: 11px;
+        color: #666;
+    }
+    
+    /* Toggle switch */
+    .prop-toggle {
+        position: relative;
+        display: inline-block;
+        width: 44px;
+        height: 24px;
+    }
+    
+    .prop-toggle input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    
+    .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #333;
+        transition: 0.3s;
+        border-radius: 24px;
+    }
+    
+    .toggle-slider:before {
+        position: absolute;
+        content: '';
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: 0.3s;
+        border-radius: 50%;
+    }
+    
+    .prop-toggle input:checked + .toggle-slider {
+        background-color: #e94560;
+    }
+    
+    .prop-toggle input:checked + .toggle-slider:before {
+        transform: translateX(20px);
+    }
+    
+    /* Color editor */
+    .prop-color {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+    }
+    
+    .color-swatch {
+        width: 32px;
+        height: 32px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    
+    .color-hex {
+        width: 80px;
+        padding: 6px 8px;
+        border: 1px solid #333;
+        border-radius: 4px;
+        background: #1a1a2e;
+        color: #e0e0e0;
+        font-family: monospace;
+        font-size: 12px;
+    }
+    
+    /* Vec3 editor */
+    .vec3-editor {
+        display: flex;
+        align-items: center;
+        padding: 6px 0;
+    }
+    
+    .vec3-inputs {
+        display: flex;
+        gap: 4px;
+        flex: 1;
+    }
+    
+    .vec3-axis {
+        display: flex;
+        align-items: center;
+        flex: 1;
+    }
+    
+    .vec3-axis input {
+        width: 100%;
+        padding: 6px 8px;
+        border: 1px solid #333;
+        border-radius: 0 4px 4px 0;
+        background: #1a1a2e;
+        color: #e0e0e0;
+        font-size: 12px;
+    }
+    
+    .axis-label {
+        padding: 6px 8px;
+        font-size: 11px;
+        font-weight: 600;
+        border-radius: 4px 0 0 4px;
+    }
+    
+    .axis-label.x { background: #e94560; color: white; }
+    .axis-label.y { background: #4ade80; color: #1a1a2e; }
+    .axis-label.z { background: #60a5fa; color: white; }
+    
+    /* Select dropdown */
+    .prop-select {
+        width: 100%;
+        padding: 6px 10px;
+        border: 1px solid #333;
+        border-radius: 4px;
+        background: #1a1a2e;
+        color: #e0e0e0;
+        font-size: 12px;
+        cursor: pointer;
+    }
+    "
+    .to_string()
+}

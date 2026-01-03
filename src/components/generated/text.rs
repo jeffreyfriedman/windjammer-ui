@@ -2,6 +2,7 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum TextSize {
     Small,
     Medium,
@@ -9,15 +10,18 @@ pub enum TextSize {
     XLarge,
 }
 
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum TextWeight {
     Normal,
     Bold,
 }
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct Text {
-    content: String,
-    size: TextSize,
-    weight: TextWeight,
+    pub content: String,
+    pub size: TextSize,
+    pub weight: TextWeight,
+    pub color: String,
 }
 
 impl Text {
@@ -27,6 +31,7 @@ impl Text {
             content,
             size: TextSize::Medium,
             weight: TextWeight::Normal,
+            color: "".to_string(),
         }
     }
     #[inline]
@@ -39,24 +44,36 @@ impl Text {
         self.weight = TextWeight::Bold;
         self
     }
+    #[inline]
+    pub fn color(mut self, color: String) -> Text {
+        self.color = color;
+        self
+    }
 }
 
 impl Renderable for Text {
     #[inline]
     fn render(self) -> String {
         let size_class = match self.size {
-            TextSize::Small => "sm",
-            TextSize::Medium => "md",
-            TextSize::Large => "lg",
-            TextSize::XLarge => "xl",
+            TextSize::Small => "sm".to_string(),
+            TextSize::Medium => "md".to_string(),
+            TextSize::Large => "lg".to_string(),
+            TextSize::XLarge => "xl".to_string(),
         };
         let weight_class = match self.weight {
-            TextWeight::Normal => "normal",
-            TextWeight::Bold => "bold",
+            TextWeight::Normal => "normal".to_string(),
+            TextWeight::Bold => "bold".to_string(),
+        };
+        let style = {
+            if self.color != "" {
+                format!(" style='color: {};'", self.color)
+            } else {
+                "".to_string()
+            }
         };
         format!(
-            "<span class='wj-text {} {}'>{}</span>",
-            size_class, weight_class, self.content
+            "<span class='wj-text {} {}'{}>{}</span>",
+            size_class, weight_class, style, self.content
         )
     }
 }

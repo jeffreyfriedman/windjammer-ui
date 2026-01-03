@@ -2,17 +2,19 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum ScrollDirection {
     Vertical,
     Horizontal,
     Both,
 }
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct ScrollArea {
-    children: Vec<String>,
-    direction: ScrollDirection,
-    height: String,
-    width: String,
+    pub children: Vec<String>,
+    pub direction: ScrollDirection,
+    pub height: String,
+    pub width: String,
 }
 
 impl ScrollArea {
@@ -51,9 +53,9 @@ impl Renderable for ScrollArea {
     #[inline]
     fn render(self) -> String {
         let overflow_style = match self.direction {
-            ScrollDirection::Vertical => "overflow-y: auto; overflow-x: hidden;",
-            ScrollDirection::Horizontal => "overflow-x: auto; overflow-y: hidden;",
-            ScrollDirection::Both => "overflow: auto;",
+            ScrollDirection::Vertical => "overflow-y: auto; overflow-x: hidden;".to_string(),
+            ScrollDirection::Horizontal => "overflow-x: auto; overflow-y: hidden;".to_string(),
+            ScrollDirection::Both => "overflow: auto;".to_string(),
         };
         let children_html = self.children.join(
             "

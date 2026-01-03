@@ -1,9 +1,10 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct List {
-    items: Vec<String>,
-    ordered: bool,
-    class: String,
+    pub items: Vec<String>,
+    pub ordered: bool,
+    pub class: String,
 }
 
 impl List {
@@ -30,35 +31,37 @@ impl List {
         self.class = class;
         self
     }
+    #[inline]
     pub fn render(&self) -> String {
         let tag = {
             if self.ordered {
-                "ol"
+                "ol".to_string()
             } else {
-                "ul"
+                "ul".to_string()
             }
         };
         let mut html = String::new();
         html.push('<');
-        html.push_str(tag.clone());
+        html.push_str(&tag.clone());
         html.push_str(" class=\"wj-list ");
-        html.push_str(self.class.as_str());
+        html.push_str(&self.class.as_str());
         html.push_str("\" style=\"list-style-position: inside; padding-left: 0;\">");
-        for item in self.items.iter() {
+        for item in &self.items {
             html.push_str("<li style=\"padding: 8px 0;\">");
-            html.push_str(item.as_str());
+            html.push_str(&item.as_str());
             html.push_str("</li>");
         }
         html.push_str("</");
-        html.push_str(tag);
+        html.push_str(&tag);
         html.push('>');
         html
     }
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct ListItem {
-    content: String,
-    class: String,
+    pub content: String,
+    pub class: String,
 }
 
 impl ListItem {
@@ -78,9 +81,9 @@ impl ListItem {
     pub fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<li class=\"wj-list-item ");
-        html.push_str(self.class.as_str());
+        html.push_str(&self.class.as_str());
         html.push_str("\" style=\"padding: 8px 0;\">");
-        html.push_str(self.content.as_str());
+        html.push_str(&self.content.as_str());
         html.push_str("</li>");
         html
     }
