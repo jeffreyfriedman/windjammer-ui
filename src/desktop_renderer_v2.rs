@@ -173,7 +173,7 @@ impl DesktopRendererV2 {
         }
     }
 
-    fn render_panel(&mut self, ui: &mut Ui, attrs: &[(String, VAttr)], children: &[VNode]) {
+    fn render_panel(&mut self, ui: &mut Ui, _attrs: &[(String, VAttr)], children: &[VNode]) {
         // Extract title from first child
         let mut title = String::new();
         let mut body_children = Vec::new();
