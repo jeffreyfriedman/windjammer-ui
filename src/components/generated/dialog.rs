@@ -2,11 +2,12 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct Dialog {
-    title: String,
-    content: String,
-    open: bool,
-    width: String,
+    pub title: String,
+    pub content: String,
+    pub open: bool,
+    pub width: String,
 }
 
 impl Dialog {
@@ -36,9 +37,9 @@ impl Renderable for Dialog {
     fn render(self) -> String {
         let display_style = {
             if self.open {
-                "display: flex;"
+                "display: flex;".to_string()
             } else {
-                "display: none;"
+                "display: none;".to_string()
             }
         };
         format!(

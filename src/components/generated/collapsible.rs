@@ -2,10 +2,11 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct CollapsibleSection {
-    title: String,
-    content: String,
-    open: bool,
+    pub title: String,
+    pub content: String,
+    pub open: bool,
 }
 
 impl CollapsibleSection {
@@ -29,16 +30,16 @@ impl Renderable for CollapsibleSection {
     fn render(self) -> String {
         let icon = {
             if self.open {
-                "▼"
+                "▼".to_string()
             } else {
-                "▶"
+                "▶".to_string()
             }
         };
         let content_style = {
             if self.open {
-                "display: block;"
+                "display: block;".to_string()
             } else {
-                "display: none;"
+                "display: none;".to_string()
             }
         };
         format!(

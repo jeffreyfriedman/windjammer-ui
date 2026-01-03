@@ -4,15 +4,17 @@ use std::fmt::Write;
 
 use super::traits::Renderable;
 
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum SpinnerSize {
     Small,
     Medium,
     Large,
 }
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct Spinner {
-    size: SpinnerSize,
-    label: String,
+    pub size: SpinnerSize,
+    pub label: String,
 }
 
 impl Spinner {
@@ -39,9 +41,9 @@ impl Renderable for Spinner {
     #[inline]
     fn render(self) -> String {
         let size_class = match self.size {
-            SpinnerSize::Small => "wj-spinner-sm",
-            SpinnerSize::Medium => "wj-spinner-md",
-            SpinnerSize::Large => "wj-spinner-lg",
+            SpinnerSize::Small => "wj-spinner-sm".to_string(),
+            SpinnerSize::Medium => "wj-spinner-md".to_string(),
+            SpinnerSize::Large => "wj-spinner-lg".to_string(),
         };
         let spinner_html = {
             let mut __s = String::with_capacity(64);

@@ -2,9 +2,11 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct Input {
-    value: String,
-    placeholder: String,
+    pub value: String,
+    pub placeholder: String,
+    pub input_type: String,
 }
 
 impl Input {
@@ -13,6 +15,7 @@ impl Input {
         Input {
             value: "".to_string(),
             placeholder: "".to_string(),
+            input_type: "text".to_string(),
         }
     }
     #[inline]
@@ -25,14 +28,19 @@ impl Input {
         self.placeholder = placeholder;
         self
     }
+    #[inline]
+    pub fn input_type(mut self, input_type: String) -> Input {
+        self.input_type = input_type;
+        self
+    }
 }
 
 impl Renderable for Input {
     #[inline]
     fn render(self) -> String {
         format!(
-            "<input class='wj-input' value='{}' placeholder='{}'/>",
-            self.value, self.placeholder
+            "<input class='wj-input' type='{}' value='{}' placeholder='{}'/>",
+            self.input_type, self.value, self.placeholder
         )
     }
 }

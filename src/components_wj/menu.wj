@@ -37,7 +37,7 @@ impl Menu {
         // Menu items
         html.push_str("<div class=\"wj-menu-items\" style=\"position: absolute; top: 100%; left: 0; margin-top: 4px; background: white; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); min-width: 200px; z-index: 1000; display: none;\">")
         
-        for item in self.items.iter() {
+        for item in self.items {
             html.push_str(item.as_str())
         }
         

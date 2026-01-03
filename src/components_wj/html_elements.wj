@@ -68,7 +68,7 @@ impl Div {
         
         html.push('>')
         
-        for child in self.children.iter() {
+        for child in self.children {
             html.push_str(child.as_str())
         }
         
@@ -134,7 +134,7 @@ impl Renderable for Span {
         
         html.push('>')
         
-        for child in self.children.iter() {
+        for child in self.children {
             html.push_str(child.as_str())
         }
         
@@ -200,7 +200,7 @@ impl Renderable for P {
         
         html.push('>')
         
-        for child in self.children.iter() {
+        for child in self.children {
             html.push_str(child.as_str())
         }
         

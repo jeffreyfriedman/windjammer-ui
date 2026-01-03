@@ -1,13 +1,14 @@
 {
   "mappings": [
     {
-      "rust_file": "/Users/jeffreyfriedman/src/wj/windjammer-ui/src/components/generated/colorpicker.rs",
+      "rust_file": "src/components/generated/colorpicker.rs",
       "rust_line": 1,
       "rust_column": 0,
-      "wj_file": "/Users/jeffreyfriedman/src/wj/windjammer-ui/src/components_wj/colorpicker.wj",
-      "wj_line": 50,
+      "wj_file": "src/components_wj/colorpicker.wj",
+      "wj_line": 37,
       "wj_column": 1
     }
   ],
-  "version": 1
+  "version": 1,
+  "workspace_root": "/Users/jeffreyfriedman/src/wj/windjammer-ui"
 }

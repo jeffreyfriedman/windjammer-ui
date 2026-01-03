@@ -82,6 +82,7 @@ pub mod simple_vnode;
 pub mod ssr;
 pub mod to_vnode;
 pub mod vdom;
+pub mod vnode_ffi; // FFI for Windjammer components to construct VNodes
 #[cfg(target_arch = "wasm32")]
 pub mod wasm_events;
 
@@ -103,6 +104,7 @@ pub mod prelude {
     pub use crate::routing::{Route, Router};
     pub use crate::simple_vnode::{VAttr, VNode};
     pub use crate::to_vnode::ToVNode;
+    pub use crate::vnode_ffi; // VNode FFI for cross-platform components
 
     pub use crate::vdom::{VElement, VText};
 

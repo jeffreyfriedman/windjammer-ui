@@ -2,9 +2,10 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct TableColumn {
-    header: String,
-    width: String,
+    pub header: String,
+    pub width: String,
 }
 
 impl TableColumn {
@@ -22,8 +23,9 @@ impl TableColumn {
     }
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct TableRow {
-    cells: Vec<String>,
+    pub cells: Vec<String>,
 }
 
 impl TableRow {
@@ -38,12 +40,13 @@ impl TableRow {
     }
 }
 
+#[derive(Debug, Clone, Default)]
 pub struct Table {
-    columns: Vec<TableColumn>,
-    rows: Vec<TableRow>,
-    striped: bool,
-    bordered: bool,
-    hoverable: bool,
+    pub columns: Vec<TableColumn>,
+    pub rows: Vec<TableRow>,
+    pub striped: bool,
+    pub bordered: bool,
+    pub hoverable: bool,
 }
 
 impl Table {
@@ -85,17 +88,18 @@ impl Table {
 }
 
 impl Renderable for Table {
+    #[inline]
     fn render(self) -> String {
         let mut html = String::new();
         let border_style = {
             if self.bordered {
-                "border: 1px solid #e2e8f0; border-collapse: collapse;"
+                "border: 1px solid #e2e8f0; border-collapse: collapse;".to_string()
             } else {
-                "border-collapse: collapse;"
+                "border-collapse: collapse;".to_string()
             }
         };
         html.push_str("<table style='width: 100%; ");
-        html.push_str(border_style);
+        html.push_str(&border_style);
         html.push_str("'>");
         html.push_str("<thead style='background: #f7fafc; border-bottom: 2px solid #e2e8f0;'>");
         html.push_str("<tr>");
@@ -106,7 +110,7 @@ impl Renderable for Table {
                 html.push_str("; border: 1px solid #e2e8f0;")
             }
             html.push_str("'>");
-            html.push_str(&col.header);
+            html.push_str(&col.header.clone());
             html.push_str("</th>");
         }
         html.push_str("</tr>");
@@ -115,23 +119,23 @@ impl Renderable for Table {
         for (row_index, row) in self.rows.iter().enumerate() {
             let bg_color = {
                 if self.striped && row_index % 2 == 1 {
-                    "background: #f7fafc;"
+                    "background: #f7fafc;".to_string()
                 } else {
-                    "background: white;"
+                    "background: white;".to_string()
                 }
             };
             let hover_style = {
                 if self.hoverable {
-                    " onmouseover='this.style.background=\"#edf2f7\"' onmouseout='this.style.background=\""
+                    " onmouseover='this.style.background=\"#edf2f7\"' onmouseout='this.style.background=\"".to_string()
                 } else {
-                    ""
+                    "".to_string()
                 }
             };
             html.push_str("<tr style='");
-            html.push_str(bg_color);
+            html.push_str(&bg_color);
             html.push('\'');
             if self.hoverable {
-                html.push_str(hover_style);
+                html.push_str(&hover_style);
                 if self.striped && row_index % 2 == 1 {
                     html.push_str("#f7fafc")
                 } else {
@@ -146,7 +150,7 @@ impl Renderable for Table {
                     html.push_str(" border: 1px solid #e2e8f0;")
                 }
                 html.push_str("'>");
-                html.push_str(cell);
+                html.push_str(&cell);
                 html.push_str("</td>");
             }
             html.push_str("</tr>");

@@ -2,17 +2,19 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum FlexDirection {
     Row,
     Column,
 }
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct Flex {
-    children: Vec<String>,
-    direction: FlexDirection,
-    gap: String,
-    padding: String,
-    background_color: String,
+    pub children: Vec<String>,
+    pub direction: FlexDirection,
+    pub gap: String,
+    pub padding: String,
+    pub background_color: String,
 }
 
 impl Flex {
@@ -47,6 +49,11 @@ impl Flex {
         self
     }
     #[inline]
+    pub fn gap_px(mut self, gap: i32) -> Flex {
+        self.gap = format!("{}px", gap);
+        self
+    }
+    #[inline]
     pub fn padding(mut self, padding: String) -> Flex {
         self.padding = padding;
         self
@@ -59,10 +66,11 @@ impl Flex {
 }
 
 impl Renderable for Flex {
+    #[inline]
     fn render(self) -> String {
         let direction_str = match self.direction {
-            FlexDirection::Row => "row",
-            FlexDirection::Column => "column",
+            FlexDirection::Row => "row".to_string(),
+            FlexDirection::Column => "column".to_string(),
         };
         let mut style = format!(
             "{}{}{}{}{}",

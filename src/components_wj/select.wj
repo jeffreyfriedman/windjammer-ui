@@ -92,7 +92,7 @@ impl Select {
         }
         
         // Options
-        for opt in self.options.iter() {
+        for opt in self.options {
             html.push_str("<option value=\"")
             html.push_str(opt.value.as_str())
             html.push('"')

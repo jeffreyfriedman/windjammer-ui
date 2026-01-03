@@ -2,12 +2,13 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct Form {
-    id: String,
-    action: String,
-    method: String,
-    children: Vec<String>,
-    on_submit: String,
+    pub id: String,
+    pub action: String,
+    pub method: String,
+    pub children: Vec<String>,
+    pub on_submit: String,
 }
 
 impl Form {
@@ -43,12 +44,13 @@ impl Form {
     }
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct FormField {
-    label: String,
-    input: String,
-    error: String,
-    required: bool,
-    help_text: String,
+    pub label: String,
+    pub input: String,
+    pub error: String,
+    pub required: bool,
+    pub help_text: String,
 }
 
 impl FormField {
@@ -77,6 +79,7 @@ impl FormField {
         self.help_text = text;
         self
     }
+    #[inline]
     pub fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<div style='margin-bottom: 16px;'>");
@@ -89,12 +92,12 @@ impl FormField {
         }
         html.push_str("</label>");
         html.push_str(&self.input);
-        if self.help_text.len() > 0 {
+        if self.help_text.len() > (0 as usize) {
             html.push_str("<div style='margin-top: 4px; font-size: 12px; color: #718096;'>");
             html.push_str(&self.help_text);
             html.push_str("</div>")
         }
-        if self.error.len() > 0 {
+        if self.error.len() > (0 as usize) {
             html.push_str("<div style='margin-top: 4px; font-size: 12px; color: #e53e3e;'>");
             html.push_str(&self.error);
             html.push_str("</div>")
@@ -105,6 +108,7 @@ impl FormField {
 }
 
 impl Renderable for Form {
+    #[inline]
     fn render(self) -> String {
         let mut html = String::new();
         html.push_str("<form id='");
@@ -117,7 +121,7 @@ impl Renderable for Form {
         html.push_str(&self.on_submit);
         html.push_str("'>");
         for child in &self.children {
-            html.push_str(child);
+            html.push_str(&child);
         }
         html.push_str("</form>");
         html

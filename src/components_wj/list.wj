@@ -40,7 +40,7 @@ impl List {
         html.push_str(self.class.as_str())
         html.push_str("\" style=\"list-style-position: inside; padding-left: 0;\">")
         
-        for item in self.items.iter() {
+        for item in self.items {
             html.push_str("<li style=\"padding: 8px 0;\">")
             html.push_str(item.as_str())
             html.push_str("</li>")
