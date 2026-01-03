@@ -47,7 +47,7 @@ impl ReactiveApp {
     }
 
     #[cfg(target_arch = "wasm32")]
-    pub fn run(self) {
+    pub fn run(mut self) {
         // WASM implementation remains the same
         use wasm_bindgen::JsCast;
         use web_sys::{window, HtmlElement};
@@ -111,7 +111,7 @@ impl ReactiveApp {
     }
 
     #[cfg(not(target_arch = "wasm32"))]
-    pub fn run(self) {
+    pub fn run(mut self) {
         #[cfg(feature = "desktop")]
         {
             match self.run_native_eframe() {
