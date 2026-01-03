@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
@@ -56,7 +58,7 @@ impl Stepper {
 
 impl Renderable for Stepper {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<div style='display: flex; align-items: center; justify-content: space-between; padding: 24px 0;'>");
         let total_steps = self.steps.len() as i32;
@@ -106,7 +108,7 @@ impl Renderable for Stepper {
             html.push_str("; margin-bottom: 4px;'>");
             html.push_str(&step.label);
             html.push_str("</div>");
-            if step.description.len() > 0_usize {
+            if step.description.len() > (0 as usize) {
                 html.push_str("<div style='font-size: 12px; color: #a0aec0;'>");
                 html.push_str(&step.description);
                 html.push_str("</div>")

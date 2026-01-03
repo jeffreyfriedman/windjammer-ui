@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
@@ -56,11 +58,11 @@ impl Timeline {
 
 impl Renderable for Timeline {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<div style='position: relative; padding-left: 32px;'>");
         html.push_str("<div style='position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: #e2e8f0;'></div>");
-        for event in self.events.iter() {
+        for (_event_index, event) in self.events.iter().enumerate() {
             html.push_str("<div style='position: relative; padding-bottom: 32px;'>");
             html.push_str("<div style='position: absolute; left: -24px; width: 16px; height: 16px; border-radius: 50%; background: ");
             html.push_str(&event.color);
@@ -74,7 +76,7 @@ impl Renderable for Timeline {
             html.push_str("<div style='font-weight: 600; font-size: 16px; color: #1a202c; margin-bottom: 8px;'>");
             html.push_str(&event.title);
             html.push_str("</div>");
-            if event.description.len() > 0_usize {
+            if event.description.len() > (0 as usize) {
                 html.push_str("<div style='font-size: 14px; color: #4a5568;'>");
                 html.push_str(&event.description);
                 html.push_str("</div>")

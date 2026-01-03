@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -65,7 +67,7 @@ impl Flex {
 
 impl Renderable for Flex {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let direction_str = match self.direction {
             FlexDirection::Row => "row".to_string(),
             FlexDirection::Column => "column".to_string(),

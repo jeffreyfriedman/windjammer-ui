@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[derive(Debug, Clone)]
 pub struct Select {
     pub options: Vec<SelectOption>,
@@ -79,7 +81,7 @@ impl Select {
         };
         let mut html = String::new();
         html.push_str("<select class=\"wj-select ");
-        html.push_str(self.class.as_str());
+        html.push_str(&self.class.as_str());
         html.push_str("\" style=\"");
         html.push_str(&size_style);
         html.push_str(
@@ -92,19 +94,19 @@ impl Select {
             if self.selected.is_empty() {
                 html.push_str(" selected")
             }
-            html.push('>');
-            html.push_str(self.placeholder.as_str());
+            html.push_str(">");
+            html.push_str(&self.placeholder.as_str());
             html.push_str("</option>")
         }
         for opt in &self.options {
             html.push_str("<option value=\"");
-            html.push_str(opt.value.clone().as_str());
+            html.push_str(&opt.value.clone().as_str());
             html.push('"');
             if opt.value.clone() == self.selected {
                 html.push_str(" selected")
             }
             html.push('>');
-            html.push_str(opt.label.clone().as_str());
+            html.push_str(&opt.label.clone().as_str());
             html.push_str("</option>");
         }
         html.push_str("</select>");

@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -47,7 +49,7 @@ impl Alert {
 
 impl Renderable for Alert {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let variant_class = match self.variant {
             AlertVariant::Error => "wj-alert-error".to_string(),
             AlertVariant::Warning => "wj-alert-warning".to_string(),

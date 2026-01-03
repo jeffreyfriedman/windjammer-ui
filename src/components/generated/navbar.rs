@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -61,7 +63,7 @@ impl Navbar {
 
 impl Renderable for Navbar {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut items_html = Vec::new();
         for item in &self.items {
             items_html.push(format!(
@@ -82,7 +84,7 @@ impl Renderable for Navbar {
             }
         };
         let brand_html = {
-            if self.brand.len() > 0_usize {
+            if self.brand.len() > (0 as usize) {
                 format!("<div class='wj-navbar-brand'>{}</div>", self.brand)
             } else {
                 String::from("")

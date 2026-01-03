@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 //! Simple UI renderer for basic elements
 //! This provides a minimal but functional UI rendering system
 

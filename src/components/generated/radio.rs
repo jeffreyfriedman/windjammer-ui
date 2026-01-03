@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use std::fmt::Write;
 
 use super::traits::Renderable;
@@ -55,7 +57,7 @@ impl RadioGroup {
 
 impl Renderable for RadioGroup {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut html = {
             let mut __s = String::with_capacity(64);
             write!(

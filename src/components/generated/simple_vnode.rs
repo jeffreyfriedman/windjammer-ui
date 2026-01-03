@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 //! Simple VNode implementation for generated component code
 //!
 //! This is a minimal virtual DOM implementation specifically for compiled components.

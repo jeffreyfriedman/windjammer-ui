@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
@@ -44,7 +46,7 @@ impl Panel {
 
 impl Renderable for Panel {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let header_class = {
             if self.collapsible {
                 "wj-panel-header-collapsible".to_string()

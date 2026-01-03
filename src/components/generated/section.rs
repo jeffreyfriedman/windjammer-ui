@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
@@ -59,7 +61,7 @@ impl Section {
 
 impl Renderable for Section {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let collapse_icon = {
             if self.collapsed {
                 "▶".to_string()
@@ -155,7 +157,7 @@ impl SectionGroup {
 
 impl Renderable for SectionGroup {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut sections_html = "".to_string();
         for s in &self.sections {
             sections_html = format!(

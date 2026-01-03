@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -44,7 +46,7 @@ impl Checkbox {
 
 impl Renderable for Checkbox {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let size_class = match self.size {
             CheckboxSize::Small => "sm".to_string(),
             CheckboxSize::Medium => "md".to_string(),

@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use std::fmt::Write;
 
 use super::traits::Renderable;
@@ -37,7 +39,7 @@ impl Spinner {
 
 impl Renderable for Spinner {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let size_class = match self.size {
             SpinnerSize::Small => "wj-spinner-sm".to_string(),
             SpinnerSize::Medium => "wj-spinner-md".to_string(),

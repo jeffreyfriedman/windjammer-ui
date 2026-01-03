@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
@@ -44,7 +46,7 @@ impl CodeEditor {
 
 impl Renderable for CodeEditor {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let readonly_attr = {
             if self.readonly {
                 " readonly".to_string()

@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, Default)]
@@ -35,7 +37,7 @@ impl MessageList {
 
 impl Renderable for MessageList {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let scroll_script = {
             if self.auto_scroll {
                 "onload='this.scrollTop = this.scrollHeight'".to_string()

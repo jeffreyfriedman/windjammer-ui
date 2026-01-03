@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[derive(Debug, Clone, Default)]
 pub struct Style {
     pub properties: Vec<StyleProperty>,
@@ -257,15 +259,15 @@ impl Style {
         self
     }
     #[inline]
-    pub fn to_css(&self) -> String {
+    pub fn to_string(&self) -> String {
         let mut result = String::new();
         for (i, prop) in self.properties.iter().enumerate() {
             if i > 0 {
                 result.push_str("; ")
             }
-            result.push_str(prop.name.as_str());
+            result.push_str(&prop.name.as_str());
             result.push_str(": ");
-            result.push_str(prop.value.as_str());
+            result.push_str(&prop.value.as_str());
         }
         result
     }

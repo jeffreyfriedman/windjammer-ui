@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
@@ -58,7 +60,7 @@ impl ContextMenu {
 
 impl Renderable for ContextMenu {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut items_html = Vec::new();
         for item in &self.items {
             let icon_html = {
@@ -69,14 +71,14 @@ impl Renderable for ContextMenu {
                 }
             };
             let disabled_class = {
-                if item.disabled {
+                if item.disabled.clone() {
                     " wj-context-item-disabled".to_string()
                 } else {
                     "".to_string()
                 }
             };
             let disabled_attr = {
-                if item.disabled {
+                if item.disabled.clone() {
                     " disabled".to_string()
                 } else {
                     "".to_string()

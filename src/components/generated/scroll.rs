@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[derive(Debug, Clone, PartialEq)]
 pub struct Scroll {
     pub children: Vec<String>,
@@ -61,16 +63,16 @@ impl Scroll {
         };
         let mut html = String::new();
         html.push_str("<div class=\"wj-scroll ");
-        html.push_str(self.class.as_str());
+        html.push_str(&self.class.as_str());
         html.push_str("\" style=\"");
         html.push_str(&overflow);
         html.push_str("; height: ");
-        html.push_str(self.height.as_str());
+        html.push_str(&self.height.as_str());
         html.push_str("; width: ");
-        html.push_str(self.width.as_str());
+        html.push_str(&self.width.as_str());
         html.push_str(";\">");
         for child in &self.children {
-            html.push_str(child.as_str());
+            html.push_str(&child.as_str());
         }
         html.push_str("</div>");
         html

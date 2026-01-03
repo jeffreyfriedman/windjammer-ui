@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -48,7 +50,7 @@ impl Badge {
 
 impl Renderable for Badge {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let variant_class = match self.variant {
             BadgeVariant::Default => "wj-badge-default".to_string(),
             BadgeVariant::Primary => "wj-badge-primary".to_string(),

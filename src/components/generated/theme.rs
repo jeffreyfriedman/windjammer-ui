@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
@@ -147,7 +149,6 @@ pub struct EditorTheme {
 
 impl EditorTheme {
     #[inline]
-    #[allow(clippy::should_implement_trait)]
     pub fn default() -> EditorTheme {
         EditorTheme {
             name: "Windjammer Dark".to_string(),
@@ -199,7 +200,7 @@ impl EditorTheme {
 
 impl Renderable for EditorTheme {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let css = format!(
             "{}{}{}{}{}{}{}{}{}{}{}",
             ":root { 
@@ -238,13 +239,12 @@ pub struct ThemeSwitcher {
 impl ThemeSwitcher {
     #[inline]
     pub fn new() -> ThemeSwitcher {
-        let themes = vec![
-            "dark".to_string(),
-            "light".to_string(),
-            "monokai".to_string(),
-            "nord".to_string(),
-            "high-contrast".to_string(),
-        ];
+        let mut themes = Vec::new();
+        themes.push("dark".to_string());
+        themes.push("light".to_string());
+        themes.push("monokai".to_string());
+        themes.push("nord".to_string());
+        themes.push("high-contrast".to_string());
         ThemeSwitcher {
             current_theme: "dark".to_string(),
             themes,
@@ -260,7 +260,7 @@ impl ThemeSwitcher {
 
 impl Renderable for ThemeSwitcher {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut options = "".to_string();
         for t in &self.themes {
             let selected = {

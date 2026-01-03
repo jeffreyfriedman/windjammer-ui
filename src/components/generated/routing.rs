@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 //! File-based routing system for all platforms
 
 use std::collections::HashMap;

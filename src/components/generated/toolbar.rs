@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
@@ -28,7 +30,7 @@ impl Toolbar {
 
 impl Renderable for Toolbar {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let items_html = self.items.join(
             "
 ",

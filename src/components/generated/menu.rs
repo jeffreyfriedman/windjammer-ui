@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct Menu {
     pub items: Vec<String>,
@@ -28,12 +30,12 @@ impl Menu {
     pub fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<div class=\"wj-menu ");
-        html.push_str(self.class.as_str());
+        html.push_str(&self.class.as_str());
         html.push_str("\" style=\"position: relative; display: inline-block;\">");
-        html.push_str(self.trigger.as_str());
+        html.push_str(&self.trigger.as_str());
         html.push_str("<div class=\"wj-menu-items\" style=\"position: absolute; top: 100%; left: 0; margin-top: 4px; background: white; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); min-width: 200px; z-index: 1000; display: none;\">");
         for item in &self.items {
-            html.push_str(item.as_str());
+            html.push_str(&item.as_str());
         }
         html.push_str("</div>");
         html.push_str("</div>");
@@ -93,19 +95,19 @@ impl MenuItem {
         };
         let mut html = String::new();
         html.push_str("<a href=\"");
-        html.push_str(self.href.as_str());
+        html.push_str(&self.href.as_str());
         html.push_str("\" class=\"wj-menu-item ");
-        html.push_str(self.class.as_str());
+        html.push_str(&self.class.as_str());
         html.push_str("\" style=\"display: flex; align-items: center; gap: 8px; padding: 10px 16px; color: #374151; text-decoration: none;");
         html.push_str(&disabled_style);
         html.push_str(" transition: background-color 0.2s;\">");
         if !self.icon.is_empty() {
             html.push_str("<span>");
-            html.push_str(self.icon.as_str());
+            html.push_str(&self.icon.as_str());
             html.push_str("</span>")
         }
         html.push_str("<span>");
-        html.push_str(self.label.as_str());
+        html.push_str(&self.label.as_str());
         html.push_str("</span>");
         html.push_str("</a>");
         html.push_str("<style>.wj-menu-item:hover:not([style*='cursor: not-allowed']) { background-color: #f3f4f6; }</style>");

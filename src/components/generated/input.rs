@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
@@ -35,7 +37,7 @@ impl Input {
 
 impl Renderable for Input {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         format!(
             "<input class='wj-input' type='{}' value='{}' placeholder='{}'/>",
             self.input_type, self.value, self.placeholder

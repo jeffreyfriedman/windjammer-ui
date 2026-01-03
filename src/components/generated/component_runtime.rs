@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 //! Component runtime for direct DOM manipulation
 //!
 //! This module provides the runtime support for compiled Windjammer UI components.

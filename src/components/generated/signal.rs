@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 //! Fine-grained reactive signals for Windjammer UI
 //!
 //! This module provides the core reactive primitives for the UI framework:
@@ -194,13 +196,11 @@ impl<T: Clone + std::fmt::Debug + 'static> std::fmt::Debug for Computed<T> {
 
 /// Effect - a side effect that runs when its dependencies change
 pub struct Effect {
-    #[allow(dead_code)]
     id: EffectId,
 }
 
 impl Effect {
     /// Create a new effect
-    #[allow(clippy::new_ret_no_self)]
     pub fn new<F>(f: F) -> EffectId
     where
         F: Fn() + 'static,

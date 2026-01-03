@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[derive(Debug, Clone, PartialEq)]
 pub struct Loading {
     pub text: String,
@@ -60,7 +62,7 @@ impl Loading {
             html.push_str("<div class=\"wj-loading-overlay\" style=\"position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; z-index: 9999;\">")
         }
         html.push_str("<div class=\"wj-loading ");
-        html.push_str(self.class.as_str());
+        html.push_str(&self.class.as_str());
         html.push_str(
             "\" style=\"display: flex; flex-direction: column; align-items: center; gap: 12px;\">",
         );
@@ -79,7 +81,7 @@ impl Loading {
                 html.push_str("#6b7280")
             }
             html.push_str("; font-size: 14px;\">");
-            html.push_str(self.text.as_str());
+            html.push_str(&self.text.as_str());
             html.push_str("</span>")
         }
         html.push_str("</div>");

@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 //! Type aliases for event handlers
 
 use std::cell::RefCell;

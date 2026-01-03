@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use std::fmt::Write;
 
 use super::traits::Renderable;
@@ -81,7 +83,7 @@ impl FileTree {
 
 impl Renderable for FileTree {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         format!(
             "<div class='wj-file-tree'>
 {}</div>",

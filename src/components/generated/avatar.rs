@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[derive(Debug, Clone, PartialEq)]
 pub struct Avatar {
     pub src: String,
@@ -76,7 +78,7 @@ impl Avatar {
         let mut html = String::new();
         if self.src.is_empty() && !self.fallback.is_empty() {
             html.push_str("<div class=\"wj-avatar wj-avatar-fallback ");
-            html.push_str(self.class.as_str());
+            html.push_str(&self.class.as_str());
             html.push_str("\" style=\"width: ");
             html.push_str(&size_px);
             html.push_str("; height: ");
@@ -92,15 +94,15 @@ impl Avatar {
             };
             html.push_str(&font_size);
             html.push_str(";\">");
-            html.push_str(self.fallback.as_str());
+            html.push_str(&self.fallback.as_str());
             html.push_str("</div>")
         } else {
             html.push_str("<img class=\"wj-avatar ");
-            html.push_str(self.class.as_str());
+            html.push_str(&self.class.as_str());
             html.push_str("\" src=\"");
-            html.push_str(self.src.as_str());
+            html.push_str(&self.src.as_str());
             html.push_str("\" alt=\"");
-            html.push_str(self.alt.as_str());
+            html.push_str(&self.alt.as_str());
             html.push_str("\" style=\"width: ");
             html.push_str(&size_px);
             html.push_str("; height: ");

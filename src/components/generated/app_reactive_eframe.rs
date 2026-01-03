@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 /// Reactive application runtime using eframe
 /// This is a simpler, more robust implementation than the manual winit+wgpu+egui approach
 use crate::simple_vnode::VNode;
@@ -109,7 +111,7 @@ impl ReactiveApp {
     }
 
     #[cfg(not(target_arch = "wasm32"))]
-    pub fn run(mut self) {
+    pub fn run(self) {
         #[cfg(feature = "desktop")]
         {
             match self.run_native_eframe() {

@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
@@ -41,7 +43,7 @@ impl HamburgerMenu {
 
 impl Renderable for HamburgerMenu {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut items_html = Vec::new();
         for item in &self.items {
             items_html.push(format!(

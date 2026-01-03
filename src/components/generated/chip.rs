@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -61,7 +63,7 @@ impl Chip {
 
 impl Renderable for Chip {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let bg_color = match self.variant {
             ChipVariant::Default => "#e2e8f0".to_string(),
             ChipVariant::Primary => "#3b82f6".to_string(),
@@ -110,7 +112,7 @@ impl Renderable for Chip {
         html.push_str("; border: 1px solid ");
         html.push_str(&border_color);
         html.push_str(";'>");
-        if self.icon.len() > 0_usize {
+        if self.icon.len() > (0 as usize) {
             html.push_str("<span>");
             html.push_str(&self.icon);
             html.push_str("</span>")

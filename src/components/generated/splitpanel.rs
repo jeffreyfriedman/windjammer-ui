@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -38,7 +40,7 @@ impl SplitPanel {
 
 impl Renderable for SplitPanel {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let flex_direction = match self.direction {
             SplitDirection::Horizontal => "column".to_string(),
             SplitDirection::Vertical => "row".to_string(),

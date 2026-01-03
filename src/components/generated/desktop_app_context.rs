@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 //! Desktop app context for reactive re-rendering
 //!
 //! This module provides a way for Signals to trigger UI re-renders in desktop apps

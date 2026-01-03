@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -49,7 +51,7 @@ impl ChatInput {
 
 impl Renderable for ChatInput {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let disabled_attr = {
             if self.disabled {
                 " disabled".to_string()

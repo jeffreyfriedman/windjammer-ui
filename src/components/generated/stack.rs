@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -104,7 +106,7 @@ impl Stack {
 
 impl Renderable for Stack {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let flex_direction = match self.direction {
             StackDirection::Vertical => "column".to_string(),
             StackDirection::Horizontal => "row".to_string(),
@@ -140,7 +142,7 @@ impl Renderable for Stack {
         html.push_str(&self.height);
         html.push_str(";'>");
         for child in &self.children {
-            html.push_str(child);
+            html.push_str(&child);
         }
         html.push_str("</div>");
         html

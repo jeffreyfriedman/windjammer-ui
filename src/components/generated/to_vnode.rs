@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 //! ToVNode trait for converting components to VNode
 //!
 //! This trait allows any UI component to be converted to a VNode,

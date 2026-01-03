@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -44,14 +46,14 @@ impl ChatMessage {
 
 impl Renderable for ChatMessage {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let role_class = match self.role {
             MessageRole::User => "wj-message-user".to_string(),
             MessageRole::Assistant => "wj-message-assistant".to_string(),
             MessageRole::System => "wj-message-system".to_string(),
         };
         let avatar_html = {
-            if self.avatar.len() > 0_usize {
+            if self.avatar.len() > (0 as usize) {
                 format!(
                     "<div class='wj-message-avatar'><img src='{}' alt='avatar'/></div>",
                     self.avatar
@@ -66,7 +68,7 @@ impl Renderable for ChatMessage {
             }
         };
         let timestamp_html = {
-            if self.timestamp.len() > 0_usize {
+            if self.timestamp.len() > (0 as usize) {
                 format!("<div class='wj-message-timestamp'>{}</div>", self.timestamp)
             } else {
                 String::from("")

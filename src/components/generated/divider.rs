@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -56,7 +58,7 @@ impl Divider {
 
 impl Renderable for Divider {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let orientation_class = match self.orientation {
             DividerOrientation::Horizontal => "wj-divider-horizontal".to_string(),
             DividerOrientation::Vertical => "wj-divider-vertical".to_string(),

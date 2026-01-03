@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use std::fmt::Write;
 
 use super::traits::Renderable;
@@ -32,7 +34,7 @@ impl TreeItem {
     pub fn render(&self, depth: i32) -> String {
         let indent_px = depth * 20;
         let icon = {
-            if self.children.len() > 0_usize {
+            if self.children.len() > (0 as usize) {
                 if self.expanded {
                     "▼".to_string()
                 } else {
@@ -87,7 +89,7 @@ impl TreeView {
 
 impl Renderable for TreeView {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut html = "<div class='wj-tree-view'>
 "
         .to_string();

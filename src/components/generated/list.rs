@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct List {
     pub items: Vec<String>,
@@ -42,11 +44,11 @@ impl List {
         html.push('<');
         html.push_str(&tag.clone());
         html.push_str(" class=\"wj-list ");
-        html.push_str(self.class.as_str());
+        html.push_str(&self.class.as_str());
         html.push_str("\" style=\"list-style-position: inside; padding-left: 0;\">");
         for item in &self.items {
             html.push_str("<li style=\"padding: 8px 0;\">");
-            html.push_str(item.as_str());
+            html.push_str(&item.as_str());
             html.push_str("</li>");
         }
         html.push_str("</");
@@ -79,9 +81,9 @@ impl ListItem {
     pub fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<li class=\"wj-list-item ");
-        html.push_str(self.class.as_str());
+        html.push_str(&self.class.as_str());
         html.push_str("\" style=\"padding: 8px 0;\">");
-        html.push_str(self.content.as_str());
+        html.push_str(&self.content.as_str());
         html.push_str("</li>");
         html
     }

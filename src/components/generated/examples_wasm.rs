@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 //! WASM examples entry point
 //!
 //! This module exports example functions that can be called from JavaScript

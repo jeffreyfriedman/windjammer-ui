@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -161,7 +163,7 @@ impl GraphNode {
 
 impl Renderable for GraphNode {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let header_color = self.get_category_color();
         let mut inputs_html = "".to_string();
         for pin in &self.inputs {
@@ -324,7 +326,7 @@ impl NodeGraph {
 
 impl Renderable for NodeGraph {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut nodes_html = "".to_string();
         for n in &self.nodes {
             nodes_html = format!(

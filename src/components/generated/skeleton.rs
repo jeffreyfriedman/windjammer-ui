@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[derive(Debug, Clone, PartialEq)]
 pub struct Skeleton {
     pub variant: SkeletonVariant,
@@ -52,11 +54,11 @@ impl Skeleton {
         };
         let mut html = String::new();
         html.push_str("<div class=\"wj-skeleton ");
-        html.push_str(self.class.as_str());
+        html.push_str(&self.class.as_str());
         html.push_str("\" style=\"width: ");
-        html.push_str(self.width.as_str());
+        html.push_str(&self.width.as_str());
         html.push_str("; height: ");
-        html.push_str(self.height.as_str());
+        html.push_str(&self.height.as_str());
         html.push_str("; border-radius: ");
         html.push_str(&border_radius);
         html.push_str("; background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: skeleton-loading 1.5s ease-in-out infinite;\"></div>");

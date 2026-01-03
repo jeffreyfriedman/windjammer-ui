@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use crate::vnode_ffi;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

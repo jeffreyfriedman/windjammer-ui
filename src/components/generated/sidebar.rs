@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -76,7 +78,7 @@ impl Sidebar {
 
 impl Renderable for Sidebar {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut items_html = Vec::new();
         for item in &self.items {
             let icon_html = {

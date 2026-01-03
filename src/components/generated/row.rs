@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[derive(Debug, Clone, PartialEq)]
 pub struct Row {
     pub children: Vec<String>,
@@ -93,9 +95,9 @@ impl Row {
         };
         let mut html = String::new();
         html.push_str("<div class=\"wj-row ");
-        html.push_str(self.class.as_str());
+        html.push_str(&self.class.as_str());
         html.push_str("\" style=\"display: flex; flex-direction: row; gap: ");
-        html.push_str(self.gap.as_str());
+        html.push_str(&self.gap.as_str());
         html.push_str("; align-items: ");
         html.push_str(&align_str);
         html.push_str("; justify-content: ");
@@ -104,7 +106,7 @@ impl Row {
         html.push_str(&wrap_str);
         html.push_str(";\">");
         for child in &self.children {
-            html.push_str(child.as_str());
+            html.push_str(&child.as_str());
         }
         html.push_str("</div>");
         html

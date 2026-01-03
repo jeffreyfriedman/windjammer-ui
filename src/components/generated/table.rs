@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
@@ -87,7 +89,7 @@ impl Table {
 
 impl Renderable for Table {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut html = String::new();
         let border_style = {
             if self.bordered {
@@ -148,7 +150,7 @@ impl Renderable for Table {
                     html.push_str(" border: 1px solid #e2e8f0;")
                 }
                 html.push_str("'>");
-                html.push_str(cell);
+                html.push_str(&cell);
                 html.push_str("</td>");
             }
             html.push_str("</tr>");

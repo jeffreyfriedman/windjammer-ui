@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Default)]
@@ -56,7 +58,7 @@ impl Slider {
 
 impl Renderable for Slider {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let disabled_attr = {
             if self.disabled {
                 " disabled".to_string()

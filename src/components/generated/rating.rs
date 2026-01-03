@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -51,7 +53,7 @@ impl Rating {
 
 impl Renderable for Rating {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let star_size = match self.size {
             RatingSize::Small => "16px".to_string(),
             RatingSize::Medium => "24px".to_string(),
@@ -80,7 +82,7 @@ impl Renderable for Rating {
             html.push_str("<span style='font-size: ");
             html.push_str(&star_size);
             html.push_str("; color: ");
-            html.push_str(star_color);
+            html.push_str(&star_color);
             html.push_str("; cursor: ");
             html.push_str(&cursor);
             html.push_str(";'>");

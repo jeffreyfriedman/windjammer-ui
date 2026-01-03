@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -51,7 +53,9 @@ pub struct CurveEditor {
 impl CurveEditor {
     #[inline]
     pub fn new() -> CurveEditor {
-        let points = vec![CurvePoint::new(0.0, 0.0), CurvePoint::new(1.0, 1.0)];
+        let mut points = Vec::new();
+        points.push(CurvePoint::new(0.0, 0.0));
+        points.push(CurvePoint::new(1.0, 1.0));
         CurveEditor {
             width: 300,
             height: 200,
@@ -131,33 +135,39 @@ impl CurveEditor {
 
 impl Renderable for CurveEditor {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut path_d = "".to_string();
         let range = self.max_value - self.min_value;
         for i in 0..self.points.len() {
             let p = self.points.get(i);
-            if let Some(point) = p {
-                let x = point.time * self.width as f32;
-                let y = self.height as f32
-                    - (point.value - self.min_value) / range * self.height as f32;
-                if i == 0 {
-                    path_d = format!("M {} {}", x, y);
-                } else {
-                    path_d = format!("{} L {} {}", path_d, x, y);
+            match p {
+                Some(point) => {
+                    let x = point.time * self.width as f32;
+                    let y = self.height as f32
+                        - (point.value - self.min_value) / range * self.height as f32;
+                    if i == 0 {
+                        path_d = format!("M {} {}", x, y);
+                    } else {
+                        path_d = format!("{} L {} {}", path_d, x, y);
+                    }
                 }
+                None => {}
             }
         }
         let mut points_html = "".to_string();
         for i in 0..self.points.len() {
             let p = self.points.get(i);
-            if let Some(point) = p {
-                let x = point.time * self.width as f32;
-                let y = self.height as f32
-                    - (point.value - self.min_value) / range * self.height as f32;
-                points_html = format!(
-                    "{}<circle cx='{}' cy='{}' r='6' class='curve-point' data-index='{}'/>",
-                    points_html, x, y, i
-                );
+            match p {
+                Some(point) => {
+                    let x = point.time * self.width as f32;
+                    let y = self.height as f32
+                        - (point.value - self.min_value) / range * self.height as f32;
+                    points_html = format!(
+                        "{}<circle cx='{}' cy='{}' r='6' class='curve-point' data-index='{}'/>",
+                        points_html, x, y, i
+                    );
+                }
+                None => {}
             }
         }
         let grid_html = {
@@ -244,10 +254,9 @@ pub struct GradientEditor {
 impl GradientEditor {
     #[inline]
     pub fn new() -> GradientEditor {
-        let stops = vec![
-            GradientStop::new(0.0, "#000000".to_string()),
-            GradientStop::new(1.0, "#ffffff".to_string()),
-        ];
+        let mut stops = Vec::new();
+        stops.push(GradientStop::new(0.0, "#000000".to_string()));
+        stops.push(GradientStop::new(1.0, "#ffffff".to_string()));
         GradientEditor {
             width: 300,
             height: 40,
@@ -269,35 +278,41 @@ impl GradientEditor {
 
 impl Renderable for GradientEditor {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut gradient_stops = "".to_string();
         for i in 0..self.stops.len() {
             let s = self.stops.get(i);
-            if let Some(stop) = s {
-                if i > 0 {
-                    gradient_stops += ", ";
+            match s {
+                Some(stop) => {
+                    if i > 0 {
+                        gradient_stops += ", ";
+                    }
+                    gradient_stops = format!(
+                        "{}{}{}{}",
+                        gradient_stops,
+                        stop.color.as_str(),
+                        " ",
+                        format!("{}%", (stop.position * 100.0) as i32).as_str()
+                    );
                 }
-                gradient_stops = format!(
-                    "{}{}{}{}",
-                    gradient_stops,
-                    stop.color.as_str(),
-                    " ",
-                    format!("{}%", (stop.position * 100.0) as i32).as_str()
-                );
+                None => {}
             }
         }
         let mut markers_html = "".to_string();
         for i in 0..self.stops.len() {
             let s = self.stops.get(i);
-            if let Some(stop) = s {
-                let left = (stop.position * 100.0) as i32;
-                markers_html = format!(
-                    "{}
-                    <div class='gradient-stop' style='left: {}%; background: {};' 
-                         data-index='{}'></div>
-                ",
-                    markers_html, left, stop.color, i
-                );
+            match s {
+                Some(stop) => {
+                    let left = (stop.position * 100.0) as i32;
+                    markers_html = format!(
+                        "{}
+                        <div class='gradient-stop' style='left: {}%; background: {};' 
+                             data-index='{}'></div>
+                    ",
+                        markers_html, left, stop.color, i
+                    );
+                }
+                None => {}
             }
         }
         format!(

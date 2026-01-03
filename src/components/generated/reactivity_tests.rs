@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 //! Tests for the reactivity system
 
 #[cfg(test)]

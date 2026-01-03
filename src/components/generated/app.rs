@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 //! App runtime for mounting and running Windjammer UI applications
 //!
 //! This module provides the `App` struct and runtime system for:

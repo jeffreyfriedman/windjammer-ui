@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 //! VNode FFI - Functions for constructing VNodes from Windjammer code
 //!
 //! This module provides a stable FFI interface that Windjammer components can use

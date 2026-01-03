@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use std::fmt::Write;
 
 use super::traits::Renderable;
@@ -56,7 +58,7 @@ impl Card {
 
 impl Renderable for Card {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let style = {
             let mut __s = String::with_capacity(64);
             write!(

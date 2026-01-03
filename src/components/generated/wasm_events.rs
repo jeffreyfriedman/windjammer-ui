@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 //! WASM event handling system
 //!
 //! This module provides a way to attach event handlers to DOM elements
@@ -9,11 +11,9 @@ use std::rc::Rc;
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 
-type EventHandlerMap = Rc<RefCell<HashMap<String, Vec<Closure<dyn FnMut(web_sys::Event)>>>>>;
-
 /// Event handler registry for managing closures
 pub struct EventRegistry {
-    handlers: EventHandlerMap,
+    handlers: Rc<RefCell<HashMap<String, Vec<Closure<dyn FnMut(web_sys::Event)>>>>>,
 }
 
 impl EventRegistry {
@@ -46,7 +46,7 @@ impl EventRegistry {
         self.handlers
             .borrow_mut()
             .entry(key)
-            .or_default()
+            .or_insert_with(Vec::new)
             .push(closure);
 
         Ok(())
@@ -74,7 +74,7 @@ use std::cell::OnceCell;
 
 thread_local! {
     /// Global event registry (thread-local for WASM single-threaded environment)
-    static GLOBAL_REGISTRY: OnceCell<EventRegistry> = const { OnceCell::new() };
+    static GLOBAL_REGISTRY: OnceCell<EventRegistry> = OnceCell::new();
 }
 
 /// Get the global event registry

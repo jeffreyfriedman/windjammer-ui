@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -32,7 +34,7 @@ impl Pagination {
 
 impl Renderable for Pagination {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut html = "<nav class='wj-pagination'><ul>".to_string();
         if self.show_first_last {
             html = format!(
