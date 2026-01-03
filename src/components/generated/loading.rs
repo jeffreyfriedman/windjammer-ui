@@ -1,7 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[derive(Debug, Clone, PartialEq)]
 pub struct Loading {
     pub text: String,
@@ -18,37 +14,32 @@ pub enum LoadingSize {
 }
 
 impl Loading {
-    #[inline]
-    pub fn new() -> Loading {
-        Loading {
-            text: String::new(),
-            size: LoadingSize::Medium,
-            overlay: false,
-            class: String::new(),
-        }
-    }
-    #[inline]
-    pub fn text(mut self, text: String) -> Loading {
+#[inline]
+pub fn new() -> Loading {
+        Loading { text: String::new(), size: LoadingSize::Medium, overlay: false, class: String::new() }
+}
+#[inline]
+pub fn text(mut self, text: String) -> Loading {
         self.text = text;
         self
-    }
-    #[inline]
-    pub fn size(mut self, size: LoadingSize) -> Loading {
+}
+#[inline]
+pub fn size(mut self, size: LoadingSize) -> Loading {
         self.size = size;
         self
-    }
-    #[inline]
-    pub fn overlay(mut self, overlay: bool) -> Loading {
+}
+#[inline]
+pub fn overlay(mut self, overlay: bool) -> Loading {
         self.overlay = overlay;
         self
-    }
-    #[inline]
-    pub fn class(mut self, class: String) -> Loading {
+}
+#[inline]
+pub fn class(mut self, class: String) -> Loading {
         self.class = class;
         self
-    }
-    #[inline]
-    pub fn render(&self) -> String {
+}
+#[inline]
+pub fn render(&self) -> String {
         let spinner_size = match self.size {
             LoadingSize::Small => "24px".to_string(),
             LoadingSize::Medium => "40px".to_string(),
@@ -65,9 +56,7 @@ impl Loading {
         }
         html.push_str("<div class=\"wj-loading ");
         html.push_str(&self.class.as_str());
-        html.push_str(
-            "\" style=\"display: flex; flex-direction: column; align-items: center; gap: 12px;\">",
-        );
+        html.push_str("\" style=\"display: flex; flex-direction: column; align-items: center; gap: 12px;\">");
         html.push_str("<div style=\"width: ");
         html.push_str(&spinner_size);
         html.push_str("; height: ");
@@ -92,5 +81,6 @@ impl Loading {
         }
         html.push_str("<style>@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>");
         html
-    }
 }
+}
+

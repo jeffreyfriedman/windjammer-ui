@@ -1,7 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -31,41 +27,35 @@ pub struct Chip {
 }
 
 impl Chip {
-    #[inline]
-    pub fn new(label: String) -> Chip {
-        Chip {
-            label,
-            variant: ChipVariant::Default,
-            size: ChipSize::Medium,
-            removable: false,
-            icon: String::new(),
-        }
-    }
-    #[inline]
-    pub fn variant(mut self, variant: ChipVariant) -> Chip {
+#[inline]
+pub fn new(label: String) -> Chip {
+        Chip { label, variant: ChipVariant::Default, size: ChipSize::Medium, removable: false, icon: String::new() }
+}
+#[inline]
+pub fn variant(mut self, variant: ChipVariant) -> Chip {
         self.variant = variant;
         self
-    }
-    #[inline]
-    pub fn size(mut self, size: ChipSize) -> Chip {
+}
+#[inline]
+pub fn size(mut self, size: ChipSize) -> Chip {
         self.size = size;
         self
-    }
-    #[inline]
-    pub fn removable(mut self, removable: bool) -> Chip {
+}
+#[inline]
+pub fn removable(mut self, removable: bool) -> Chip {
         self.removable = removable;
         self
-    }
-    #[inline]
-    pub fn icon(mut self, icon: String) -> Chip {
+}
+#[inline]
+pub fn icon(mut self, icon: String) -> Chip {
         self.icon = icon;
         self
-    }
+}
 }
 
 impl Renderable for Chip {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(self) -> String {
         let bg_color = match self.variant {
             ChipVariant::Default => "#e2e8f0".to_string(),
             ChipVariant::Primary => "#3b82f6".to_string(),
@@ -101,9 +91,7 @@ impl Renderable for Chip {
             ChipSize::Large => "16px".to_string(),
         };
         let mut html = String::new();
-        html.push_str(
-            "<span style='display: inline-flex; align-items: center; gap: 6px; padding: ",
-        );
+        html.push_str("<span style='display: inline-flex; align-items: center; gap: 6px; padding: ");
         html.push_str(&padding);
         html.push_str("; font-size: ");
         html.push_str(&font_size);
@@ -129,5 +117,6 @@ impl Renderable for Chip {
         }
         html.push_str("</span>");
         html
-    }
 }
+}
+

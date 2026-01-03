@@ -1,7 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 //! Component model and traits
 
 use crate::vdom::VNode;

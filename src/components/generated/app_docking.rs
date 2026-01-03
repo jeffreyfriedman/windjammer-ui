@@ -1,7 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 /// Docking-enabled reactive application using egui_dock
 #[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
 use crate::simple_vnode::VNode;

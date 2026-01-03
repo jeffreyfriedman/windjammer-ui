@@ -1,7 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct Label {
     pub text: String,
@@ -11,32 +7,27 @@ pub struct Label {
 }
 
 impl Label {
-    #[inline]
-    pub fn new(text: String) -> Label {
-        Label {
-            text,
-            for_id: String::new(),
-            required: false,
-            class: String::new(),
-        }
-    }
-    #[inline]
-    pub fn for_id(mut self, for_id: String) -> Label {
+#[inline]
+pub fn new(text: String) -> Label {
+        Label { text, for_id: String::new(), required: false, class: String::new() }
+}
+#[inline]
+pub fn for_id(mut self, for_id: String) -> Label {
         self.for_id = for_id;
         self
-    }
-    #[inline]
-    pub fn required(mut self, required: bool) -> Label {
+}
+#[inline]
+pub fn required(mut self, required: bool) -> Label {
         self.required = required;
         self
-    }
-    #[inline]
-    pub fn class(mut self, class: String) -> Label {
+}
+#[inline]
+pub fn class(mut self, class: String) -> Label {
         self.class = class;
         self
-    }
-    #[inline]
-    pub fn render(&self) -> String {
+}
+#[inline]
+pub fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<label class=\"wj-label ");
         html.push_str(&self.class.as_str());
@@ -53,5 +44,6 @@ impl Label {
         }
         html.push_str("</label>");
         html
-    }
 }
+}
+

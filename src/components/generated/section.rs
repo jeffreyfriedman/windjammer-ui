@@ -1,7 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
@@ -16,54 +12,46 @@ pub struct Section {
 }
 
 impl Section {
-    #[inline]
-    pub fn new(title: String) -> Section {
-        Section {
-            icon: "".to_string(),
-            title,
-            children: Vec::new(),
-            collapsed: false,
-            accent_color: "".to_string(),
-            removable: false,
-            on_remove: "".to_string(),
-        }
-    }
-    #[inline]
-    pub fn icon(mut self, icon: String) -> Section {
+#[inline]
+pub fn new(title: String) -> Section {
+        Section { icon: "".to_string(), title, children: Vec::new(), collapsed: false, accent_color: "".to_string(), removable: false, on_remove: "".to_string() }
+}
+#[inline]
+pub fn icon(mut self, icon: String) -> Section {
         self.icon = icon;
         self
-    }
-    #[inline]
-    pub fn child(mut self, child: String) -> Section {
+}
+#[inline]
+pub fn child(mut self, child: String) -> Section {
         self.children.push(child);
         self
-    }
-    #[inline]
-    pub fn children(mut self, children: Vec<String>) -> Section {
+}
+#[inline]
+pub fn children(mut self, children: Vec<String>) -> Section {
         self.children = children;
         self
-    }
-    #[inline]
-    pub fn collapsed(mut self, collapsed: bool) -> Section {
+}
+#[inline]
+pub fn collapsed(mut self, collapsed: bool) -> Section {
         self.collapsed = collapsed;
         self
-    }
-    #[inline]
-    pub fn accent(mut self, color: String) -> Section {
+}
+#[inline]
+pub fn accent(mut self, color: String) -> Section {
         self.accent_color = color;
         self
-    }
-    #[inline]
-    pub fn removable(mut self, on_remove: String) -> Section {
+}
+#[inline]
+pub fn removable(mut self, on_remove: String) -> Section {
         self.removable = true;
         self.on_remove = on_remove;
         self
-    }
+}
 }
 
 impl Renderable for Section {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(self) -> String {
         let collapse_icon = {
             if self.collapsed {
                 "▶".to_string()
@@ -94,20 +82,14 @@ impl Renderable for Section {
         };
         let remove_btn = {
             if self.removable {
-                format!(
-                    "<button class='section-remove' onclick='{}'>×</button>",
-                    self.on_remove
-                )
+                format!("<button class='section-remove' onclick='{}'>×</button>", self.on_remove)
             } else {
                 "".to_string()
             }
         };
-        let children_html = self.children.join(
-            "
-",
-        );
-        format!(
-            "
+        let children_html = self.children.join("
+");
+        format!("
             <div class='wj-section'{}>
                 <div class='section-header'>
                     <span class='collapse-arrow'>{}</span>
@@ -119,16 +101,8 @@ impl Renderable for Section {
                     {}
                 </div>
             </div>
-        ",
-            accent_style,
-            collapse_icon,
-            icon_html,
-            self.title,
-            remove_btn,
-            content_class,
-            children_html
-        )
-    }
+        ", accent_style, collapse_icon, icon_html, self.title, remove_btn, content_class, children_html)
+}
 }
 
 #[derive(Debug, Clone, PartialEq, Default)]
@@ -138,37 +112,29 @@ pub struct SectionGroup {
 }
 
 impl SectionGroup {
-    #[inline]
-    pub fn new() -> SectionGroup {
-        SectionGroup {
-            sections: Vec::new(),
-            accordion: false,
-        }
-    }
-    #[inline]
-    pub fn section(mut self, section: Section) -> SectionGroup {
+#[inline]
+pub fn new() -> SectionGroup {
+        SectionGroup { sections: Vec::new(), accordion: false }
+}
+#[inline]
+pub fn section(mut self, section: Section) -> SectionGroup {
         self.sections.push(section);
         self
-    }
-    #[inline]
-    pub fn accordion(mut self, accordion: bool) -> SectionGroup {
+}
+#[inline]
+pub fn accordion(mut self, accordion: bool) -> SectionGroup {
         self.accordion = accordion;
         self
-    }
+}
 }
 
 impl Renderable for SectionGroup {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(self) -> String {
         let mut sections_html = "".to_string();
         for s in &self.sections {
-            sections_html = format!(
-                "{}{}{}",
-                sections_html,
-                s.clone().render().as_str(),
-                "
-"
-            );
+            sections_html = format!("{}{}{}", sections_html, s.clone().render().as_str(), "
+");
         }
         let class = {
             if self.accordion {
@@ -178,7 +144,7 @@ impl Renderable for SectionGroup {
             }
         };
         format!("<div class='{}'>{}</div>", class, sections_html)
-    }
+}
 }
 
 #[inline]
@@ -280,6 +246,6 @@ pub fn section_styles() -> String {
     .section-group.accordion .wj-section:last-child {
         border-radius: 0 0 8px 8px;
     }
-    "
-    .to_string()
+    ".to_string()
 }
+

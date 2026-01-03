@@ -1,7 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -18,24 +14,20 @@ pub struct SidebarItem {
 }
 
 impl SidebarItem {
-    #[inline]
-    pub fn new(label: String) -> SidebarItem {
-        SidebarItem {
-            label,
-            icon: String::from(""),
-            href: String::from("#"),
-        }
-    }
-    #[inline]
-    pub fn icon(mut self, icon: String) -> SidebarItem {
+#[inline]
+pub fn new(label: String) -> SidebarItem {
+        SidebarItem { label, icon: String::from(""), href: String::from("#") }
+}
+#[inline]
+pub fn icon(mut self, icon: String) -> SidebarItem {
         self.icon = icon;
         self
-    }
-    #[inline]
-    pub fn href(mut self, href: String) -> SidebarItem {
+}
+#[inline]
+pub fn href(mut self, href: String) -> SidebarItem {
         self.href = href;
         self
-    }
+}
 }
 
 #[derive(Debug, Clone)]
@@ -47,40 +39,35 @@ pub struct Sidebar {
 }
 
 impl Sidebar {
-    #[inline]
-    pub fn new() -> Sidebar {
-        Sidebar {
-            items: Vec::new(),
-            position: SidebarPosition::Left,
-            width: String::from("250px"),
-            collapsed: false,
-        }
-    }
-    #[inline]
-    pub fn item(mut self, item: SidebarItem) -> Sidebar {
+#[inline]
+pub fn new() -> Sidebar {
+        Sidebar { items: Vec::new(), position: SidebarPosition::Left, width: String::from("250px"), collapsed: false }
+}
+#[inline]
+pub fn item(mut self, item: SidebarItem) -> Sidebar {
         self.items.push(item);
         self
-    }
-    #[inline]
-    pub fn position(mut self, pos: SidebarPosition) -> Sidebar {
+}
+#[inline]
+pub fn position(mut self, pos: SidebarPosition) -> Sidebar {
         self.position = pos;
         self
-    }
-    #[inline]
-    pub fn width(mut self, width: String) -> Sidebar {
+}
+#[inline]
+pub fn width(mut self, width: String) -> Sidebar {
         self.width = width;
         self
-    }
-    #[inline]
-    pub fn collapsed(mut self, collapsed: bool) -> Sidebar {
+}
+#[inline]
+pub fn collapsed(mut self, collapsed: bool) -> Sidebar {
         self.collapsed = collapsed;
         self
-    }
+}
 }
 
 impl Renderable for Sidebar {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(self) -> String {
         let mut items_html = Vec::new();
         for item in &self.items {
             let icon_html = {
@@ -109,5 +96,6 @@ impl Renderable for Sidebar {
                 </div>
                 <nav class='wj-sidebar-nav'>{}</nav>
             </aside>", position_class, collapsed_class, self.width, items_html.join(""))
-    }
 }
+}
+

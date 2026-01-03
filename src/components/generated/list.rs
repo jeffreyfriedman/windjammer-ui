@@ -1,7 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct List {
     pub items: Vec<String>,
@@ -10,31 +6,27 @@ pub struct List {
 }
 
 impl List {
-    #[inline]
-    pub fn new() -> List {
-        List {
-            items: Vec::new(),
-            ordered: false,
-            class: String::new(),
-        }
-    }
-    #[inline]
-    pub fn item(mut self, item: String) -> List {
+#[inline]
+pub fn new() -> List {
+        List { items: Vec::new(), ordered: false, class: String::new() }
+}
+#[inline]
+pub fn item(mut self, item: String) -> List {
         self.items.push(item);
         self
-    }
-    #[inline]
-    pub fn ordered(mut self, ordered: bool) -> List {
+}
+#[inline]
+pub fn ordered(mut self, ordered: bool) -> List {
         self.ordered = ordered;
         self
-    }
-    #[inline]
-    pub fn class(mut self, class: String) -> List {
+}
+#[inline]
+pub fn class(mut self, class: String) -> List {
         self.class = class;
         self
-    }
-    #[inline]
-    pub fn render(&self) -> String {
+}
+#[inline]
+pub fn render(&self) -> String {
         let tag = {
             if self.ordered {
                 "ol".to_string()
@@ -57,7 +49,7 @@ impl List {
         html.push_str(&tag);
         html.push('>');
         html
-    }
+}
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
@@ -67,20 +59,17 @@ pub struct ListItem {
 }
 
 impl ListItem {
-    #[inline]
-    pub fn new(content: String) -> ListItem {
-        ListItem {
-            content,
-            class: String::new(),
-        }
-    }
-    #[inline]
-    pub fn class(mut self, class: String) -> ListItem {
+#[inline]
+pub fn new(content: String) -> ListItem {
+        ListItem { content, class: String::new() }
+}
+#[inline]
+pub fn class(mut self, class: String) -> ListItem {
         self.class = class;
         self
-    }
-    #[inline]
-    pub fn render(&self) -> String {
+}
+#[inline]
+pub fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<li class=\"wj-list-item ");
         html.push_str(&self.class.as_str());
@@ -88,5 +77,6 @@ impl ListItem {
         html.push_str(&self.content.as_str());
         html.push_str("</li>");
         html
-    }
 }
+}
+

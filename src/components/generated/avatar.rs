@@ -1,7 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[derive(Debug, Clone, PartialEq)]
 pub struct Avatar {
     pub src: String,
@@ -28,44 +24,37 @@ pub enum AvatarShape {
 }
 
 impl Avatar {
-    #[inline]
-    pub fn new(src: String) -> Avatar {
-        Avatar {
-            src,
-            alt: "Avatar".to_string(),
-            size: AvatarSize::Medium,
-            shape: AvatarShape::Circle,
-            fallback: String::new(),
-            class: String::new(),
-        }
-    }
-    #[inline]
-    pub fn alt(mut self, alt: String) -> Avatar {
+#[inline]
+pub fn new(src: String) -> Avatar {
+        Avatar { src, alt: "Avatar".to_string(), size: AvatarSize::Medium, shape: AvatarShape::Circle, fallback: String::new(), class: String::new() }
+}
+#[inline]
+pub fn alt(mut self, alt: String) -> Avatar {
         self.alt = alt;
         self
-    }
-    #[inline]
-    pub fn size(mut self, size: AvatarSize) -> Avatar {
+}
+#[inline]
+pub fn size(mut self, size: AvatarSize) -> Avatar {
         self.size = size;
         self
-    }
-    #[inline]
-    pub fn shape(mut self, shape: AvatarShape) -> Avatar {
+}
+#[inline]
+pub fn shape(mut self, shape: AvatarShape) -> Avatar {
         self.shape = shape;
         self
-    }
-    #[inline]
-    pub fn fallback(mut self, fallback: String) -> Avatar {
+}
+#[inline]
+pub fn fallback(mut self, fallback: String) -> Avatar {
         self.fallback = fallback;
         self
-    }
-    #[inline]
-    pub fn class(mut self, class: String) -> Avatar {
+}
+#[inline]
+pub fn class(mut self, class: String) -> Avatar {
         self.class = class;
         self
-    }
-    #[inline]
-    pub fn render(&self) -> String {
+}
+#[inline]
+pub fn render(&self) -> String {
         let size_px = match self.size {
             AvatarSize::Small => "32px".to_string(),
             AvatarSize::Medium => "48px".to_string(),
@@ -114,5 +103,6 @@ impl Avatar {
             html.push_str("; object-fit: cover;\">")
         }
         html
-    }
 }
+}
+

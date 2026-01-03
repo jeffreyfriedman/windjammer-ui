@@ -1,7 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 /// Reactive application runtime using eframe
 /// This is a simpler, more robust implementation than the manual winit+wgpu+egui approach
 use crate::simple_vnode::VNode;

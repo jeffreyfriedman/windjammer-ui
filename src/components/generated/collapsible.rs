@@ -1,7 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
@@ -12,24 +8,20 @@ pub struct CollapsibleSection {
 }
 
 impl CollapsibleSection {
-    #[inline]
-    pub fn new(title: String, content: String) -> CollapsibleSection {
-        CollapsibleSection {
-            title,
-            content,
-            open: false,
-        }
-    }
-    #[inline]
-    pub fn open(mut self, open: bool) -> CollapsibleSection {
+#[inline]
+pub fn new(title: String, content: String) -> CollapsibleSection {
+        CollapsibleSection { title, content, open: false }
+}
+#[inline]
+pub fn open(mut self, open: bool) -> CollapsibleSection {
         self.open = open;
         self
-    }
+}
 }
 
 impl Renderable for CollapsibleSection {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(self) -> String {
         let icon = {
             if self.open {
                 "▼".to_string()
@@ -44,8 +36,7 @@ impl Renderable for CollapsibleSection {
                 "display: none;".to_string()
             }
         };
-        format!(
-            "<div class='wj-collapsible'>
+        format!("<div class='wj-collapsible'>
   <div class='wj-collapsible-header'>
     <span class='wj-collapsible-icon'>{}</span>
     <span>{}</span>
@@ -53,8 +44,7 @@ impl Renderable for CollapsibleSection {
   <div class='wj-collapsible-content' style='{}'>
     {}
   </div>
-</div>",
-            icon, self.title, content_style, self.content
-        )
-    }
+</div>", icon, self.title, content_style, self.content)
 }
+}
+

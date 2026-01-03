@@ -1,7 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[derive(Debug, Clone, PartialEq)]
 pub struct Row {
     pub children: Vec<String>,
@@ -31,49 +27,42 @@ pub enum RowJustify {
 }
 
 impl Row {
-    #[inline]
-    pub fn new() -> Row {
-        Row {
-            children: Vec::new(),
-            gap: "8px".to_string(),
-            align: RowAlign::Start,
-            justify: RowJustify::Start,
-            wrap: false,
-            class: String::new(),
-        }
-    }
-    #[inline]
-    pub fn child(mut self, child: String) -> Row {
+#[inline]
+pub fn new() -> Row {
+        Row { children: Vec::new(), gap: "8px".to_string(), align: RowAlign::Start, justify: RowJustify::Start, wrap: false, class: String::new() }
+}
+#[inline]
+pub fn child(mut self, child: String) -> Row {
         self.children.push(child);
         self
-    }
-    #[inline]
-    pub fn gap(mut self, gap: String) -> Row {
+}
+#[inline]
+pub fn gap(mut self, gap: String) -> Row {
         self.gap = gap;
         self
-    }
-    #[inline]
-    pub fn align(mut self, align: RowAlign) -> Row {
+}
+#[inline]
+pub fn align(mut self, align: RowAlign) -> Row {
         self.align = align;
         self
-    }
-    #[inline]
-    pub fn justify(mut self, justify: RowJustify) -> Row {
+}
+#[inline]
+pub fn justify(mut self, justify: RowJustify) -> Row {
         self.justify = justify;
         self
-    }
-    #[inline]
-    pub fn wrap(mut self, wrap: bool) -> Row {
+}
+#[inline]
+pub fn wrap(mut self, wrap: bool) -> Row {
         self.wrap = wrap;
         self
-    }
-    #[inline]
-    pub fn class(mut self, class: String) -> Row {
+}
+#[inline]
+pub fn class(mut self, class: String) -> Row {
         self.class = class;
         self
-    }
-    #[inline]
-    pub fn render(&self) -> String {
+}
+#[inline]
+pub fn render(&self) -> String {
         let align_str = match self.align {
             RowAlign::Start => "flex-start".to_string(),
             RowAlign::Center => "center".to_string(),
@@ -112,5 +101,6 @@ impl Row {
         }
         html.push_str("</div>");
         html
-    }
 }
+}
+

@@ -1,12 +1,10 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 //! Fine-grained reactive signals for Windjammer UI
-//!
+//! 
 //! This module provides the core reactive primitives for the UI framework:
 //! - `Signal<T>`: Reactive value that notifies subscribers on change
 //! - `Computed<T>`: Derived value that auto-updates when dependencies change
 //! - `Effect`: Side effect that runs when dependencies change
-//!
+//! 
 //! Inspired by Solid.js, Vue 3, and Leptos.
 
 use std::cell::RefCell;
@@ -196,7 +194,6 @@ impl<T: Clone + std::fmt::Debug + 'static> std::fmt::Debug for Computed<T> {
 
 /// Effect - a side effect that runs when its dependencies change
 pub struct Effect {
-    #[allow(dead_code)]
     id: EffectId,
 }
 
@@ -212,14 +209,13 @@ impl Effect {
 
         // Register effect
         EFFECT_REGISTRY.with(|registry| {
-            registry
-                .borrow_mut()
-                .insert(id, EffectHandle { f: f.clone() });
+            registry.borrow_mut().insert(id, EffectHandle { f: f.clone() });
         });
 
         // Run effect once to establish dependencies
-        let f_trait: Rc<dyn Fn()> = f.clone();
-        Self::run_effect(id, &f_trait);
+        // Coerce Rc<F> to Rc<dyn Fn()>
+        let f_dyn: Rc<dyn Fn()> = f.clone();
+        Self::run_effect(id, &f_dyn);
 
         id
     }
@@ -397,3 +393,5 @@ mod tests {
         assert_eq!(*effect_count.borrow(), 1); // Should not re-run
     }
 }
+
+

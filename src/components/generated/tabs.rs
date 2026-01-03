@@ -1,7 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
@@ -13,20 +9,15 @@ pub struct Tab {
 }
 
 impl Tab {
-    #[inline]
-    pub fn new(id: String, label: String, content: String) -> Tab {
-        Tab {
-            id,
-            label,
-            content,
-            disabled: false,
-        }
-    }
-    #[inline]
-    pub fn disabled(mut self, disabled: bool) -> Tab {
+#[inline]
+pub fn new(id: String, label: String, content: String) -> Tab {
+        Tab { id, label, content, disabled: false }
+}
+#[inline]
+pub fn disabled(mut self, disabled: bool) -> Tab {
         self.disabled = disabled;
         self
-    }
+}
 }
 
 #[derive(Debug, Clone, Default)]
@@ -36,28 +27,25 @@ pub struct Tabs {
 }
 
 impl Tabs {
-    #[inline]
-    pub fn new() -> Tabs {
-        Tabs {
-            tabs: Vec::new(),
-            active: "".to_string(),
-        }
-    }
-    #[inline]
-    pub fn tab(mut self, tab: Tab) -> Tabs {
+#[inline]
+pub fn new() -> Tabs {
+        Tabs { tabs: Vec::new(), active: "".to_string() }
+}
+#[inline]
+pub fn tab(mut self, tab: Tab) -> Tabs {
         self.tabs.push(tab);
         self
-    }
-    #[inline]
-    pub fn active(mut self, id: String) -> Tabs {
+}
+#[inline]
+pub fn active(mut self, id: String) -> Tabs {
         self.active = id;
         self
-    }
+}
 }
 
 impl Renderable for Tabs {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(self) -> String {
         let mut tabs_html = "<div class='wj-tabs-header'>".to_string();
         let mut i = 0;
         while i < (self.tabs.len() as i64) {
@@ -76,10 +64,7 @@ impl Renderable for Tabs {
                     "".to_string()
                 }
             };
-            tabs_html = format!(
-                "{}<button class='wj-tab{}{}' data-tab-id='{}'>{}</button>",
-                tabs_html, active_class, disabled_class, tab.id, tab.label
-            );
+            tabs_html = format!("{}<button class='wj-tab{}{}' data-tab-id='{}'>{}</button>", tabs_html, active_class, disabled_class, tab.id, tab.label);
             i += 1;
         }
         tabs_html = format!("{}</div>", tabs_html);
@@ -94,13 +79,11 @@ impl Renderable for Tabs {
                     "display: none;".to_string()
                 }
             };
-            content_html = format!(
-                "{}<div class='wj-tab-panel' data-tab-id='{}' style='{}'>{}</div>",
-                content_html, tab.id, display_style, tab.content
-            );
+            content_html = format!("{}<div class='wj-tab-panel' data-tab-id='{}' style='{}'>{}</div>", content_html, tab.id, display_style, tab.content);
             j += 1;
         }
         content_html = format!("{}</div>", content_html);
         format!("<div class='wj-tabs'>{}{}</div>", tabs_html, content_html)
-    }
 }
+}
+

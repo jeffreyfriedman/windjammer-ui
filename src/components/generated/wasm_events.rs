@@ -1,7 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 //! WASM event handling system
 //!
 //! This module provides a way to attach event handlers to DOM elements

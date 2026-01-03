@@ -1,7 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
@@ -14,31 +10,25 @@ pub struct TimelineEvent {
 }
 
 impl TimelineEvent {
-    #[inline]
-    pub fn new(title: String, timestamp: String) -> TimelineEvent {
-        TimelineEvent {
-            title,
-            description: String::new(),
-            timestamp,
-            icon: "●".to_string(),
-            color: "#3b82f6".to_string(),
-        }
-    }
-    #[inline]
-    pub fn description(mut self, desc: String) -> TimelineEvent {
+#[inline]
+pub fn new(title: String, timestamp: String) -> TimelineEvent {
+        TimelineEvent { title, description: String::new(), timestamp, icon: "●".to_string(), color: "#3b82f6".to_string() }
+}
+#[inline]
+pub fn description(mut self, desc: String) -> TimelineEvent {
         self.description = desc;
         self
-    }
-    #[inline]
-    pub fn icon(mut self, icon: String) -> TimelineEvent {
+}
+#[inline]
+pub fn icon(mut self, icon: String) -> TimelineEvent {
         self.icon = icon;
         self
-    }
-    #[inline]
-    pub fn color(mut self, color: String) -> TimelineEvent {
+}
+#[inline]
+pub fn color(mut self, color: String) -> TimelineEvent {
         self.color = color;
         self
-    }
+}
 }
 
 #[derive(Debug, Clone, Default)]
@@ -47,20 +37,20 @@ pub struct Timeline {
 }
 
 impl Timeline {
-    #[inline]
-    pub fn new() -> Timeline {
+#[inline]
+pub fn new() -> Timeline {
         Timeline { events: Vec::new() }
-    }
-    #[inline]
-    pub fn event(mut self, event: TimelineEvent) -> Timeline {
+}
+#[inline]
+pub fn event(mut self, event: TimelineEvent) -> Timeline {
         self.events.push(event);
         self
-    }
+}
 }
 
 impl Renderable for Timeline {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(self) -> String {
         let mut html = String::new();
         html.push_str("<div style='position: relative; padding-left: 32px;'>");
         html.push_str("<div style='position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: #e2e8f0;'></div>");
@@ -88,5 +78,6 @@ impl Renderable for Timeline {
         }
         html.push_str("</div>");
         html
-    }
 }
+}
+

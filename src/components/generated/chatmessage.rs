@@ -1,7 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -20,35 +16,30 @@ pub struct ChatMessage {
 }
 
 impl ChatMessage {
-    #[inline]
-    pub fn new(content: String) -> ChatMessage {
-        ChatMessage {
-            role: MessageRole::User,
-            content,
-            avatar: String::from(""),
-            timestamp: String::from(""),
-        }
-    }
-    #[inline]
-    pub fn role(mut self, role: MessageRole) -> ChatMessage {
+#[inline]
+pub fn new(content: String) -> ChatMessage {
+        ChatMessage { role: MessageRole::User, content, avatar: String::from(""), timestamp: String::from("") }
+}
+#[inline]
+pub fn role(mut self, role: MessageRole) -> ChatMessage {
         self.role = role;
         self
-    }
-    #[inline]
-    pub fn avatar(mut self, avatar: String) -> ChatMessage {
+}
+#[inline]
+pub fn avatar(mut self, avatar: String) -> ChatMessage {
         self.avatar = avatar;
         self
-    }
-    #[inline]
-    pub fn timestamp(mut self, timestamp: String) -> ChatMessage {
+}
+#[inline]
+pub fn timestamp(mut self, timestamp: String) -> ChatMessage {
         self.timestamp = timestamp;
         self
-    }
+}
 }
 
 impl Renderable for ChatMessage {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(self) -> String {
         let role_class = match self.role {
             MessageRole::User => "wj-message-user".to_string(),
             MessageRole::Assistant => "wj-message-assistant".to_string(),
@@ -56,10 +47,7 @@ impl Renderable for ChatMessage {
         };
         let avatar_html = {
             if self.avatar.len() > (0 as usize) {
-                format!(
-                    "<div class='wj-message-avatar'><img src='{}' alt='avatar'/></div>",
-                    self.avatar
-                )
+                format!("<div class='wj-message-avatar'><img src='{}' alt='avatar'/></div>", self.avatar)
             } else {
                 let default_icon = match self.role {
                     MessageRole::User => "👤".to_string(),
@@ -76,15 +64,13 @@ impl Renderable for ChatMessage {
                 String::from("")
             }
         };
-        format!(
-            "<div class='wj-chat-message {}'>
+        format!("<div class='wj-chat-message {}'>
                 {}
                 <div class='wj-message-content-wrapper'>
                     <div class='wj-message-content'>{}</div>
                     {}
                 </div>
-            </div>",
-            role_class, avatar_html, self.content, timestamp_html
-        )
-    }
+            </div>", role_class, avatar_html, self.content, timestamp_html)
 }
+}
+

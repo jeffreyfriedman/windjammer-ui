@@ -1,7 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 use std::fmt::Write;
 
 use super::traits::Renderable;
@@ -15,27 +11,22 @@ pub struct FileNode {
 }
 
 impl FileNode {
-    #[inline]
-    pub fn new(name: String, is_directory: bool) -> FileNode {
-        FileNode {
-            name,
-            is_directory,
-            children: Vec::new(),
-            expanded: false,
-        }
-    }
-    #[inline]
-    pub fn child(mut self, node: FileNode) -> FileNode {
+#[inline]
+pub fn new(name: String, is_directory: bool) -> FileNode {
+        FileNode { name, is_directory, children: Vec::new(), expanded: false }
+}
+#[inline]
+pub fn child(mut self, node: FileNode) -> FileNode {
         self.children.push(node);
         self
-    }
-    #[inline]
-    pub fn expanded(mut self, expanded: bool) -> FileNode {
+}
+#[inline]
+pub fn expanded(mut self, expanded: bool) -> FileNode {
         self.expanded = expanded;
         self
-    }
-    #[inline]
-    pub fn render(&self, depth: i32) -> String {
+}
+#[inline]
+pub fn render(&self, depth: i32) -> String {
         let indent = "  ".repeat(depth as usize);
         let icon = {
             if self.is_directory {
@@ -50,13 +41,8 @@ impl FileNode {
         };
         let mut html = {
             let mut __s = String::with_capacity(64);
-            write!(
-                &mut __s,
-                "{}{} {}
-",
-                indent, icon, self.name
-            )
-            .unwrap();
+            write!(&mut __s, "{}{} {}
+", indent, icon, self.name).unwrap();
             __s
         };
         if self.is_directory && self.expanded {
@@ -68,7 +54,7 @@ impl FileNode {
             }
         }
         html
-    }
+}
 }
 
 #[derive(Debug, Clone)]
@@ -77,19 +63,17 @@ pub struct FileTree {
 }
 
 impl FileTree {
-    #[inline]
-    pub fn new(root: FileNode) -> FileTree {
+#[inline]
+pub fn new(root: FileNode) -> FileTree {
         FileTree { root }
-    }
+}
 }
 
 impl Renderable for FileTree {
-    #[inline]
-    fn render(self) -> String {
-        format!(
-            "<div class='wj-file-tree'>
-{}</div>",
-            self.root.render(0)
-        )
-    }
+#[inline]
+fn render(self) -> String {
+        format!("<div class='wj-file-tree'>
+{}</div>", self.root.render(0))
 }
+}
+

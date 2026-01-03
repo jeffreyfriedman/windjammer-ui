@@ -1,7 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 /// Desktop renderer using egui + wgpu
 /// Converts VNode tree to egui UI
 #[cfg(not(target_arch = "wasm32"))]
