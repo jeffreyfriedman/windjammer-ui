@@ -16,7 +16,7 @@ fn transpile_example(path: &str) -> Result<(), String> {
         eprintln!("Skipping test: wj CLI not available (set by SKIP_WJ_REGEN or not installed)");
         return Ok(());
     }
-    
+
     // Always use --no-cargo to skip cargo build
     // (Examples depend on windjammer-ui which may not be published yet)
     let output = Command::new("wj")
