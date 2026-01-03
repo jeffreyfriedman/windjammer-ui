@@ -2,14 +2,16 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum NavbarPosition {
     Top,
     Bottom,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct NavbarItem {
-    label: String,
-    href: String,
+    pub label: String,
+    pub href: String,
 }
 
 impl NavbarItem {
@@ -19,18 +21,19 @@ impl NavbarItem {
     }
 }
 
+#[derive(Debug, Clone)]
 pub struct Navbar {
-    brand: String,
-    items: Vec<NavbarItem>,
-    position: NavbarPosition,
-    sticky: bool,
+    pub brand: String,
+    pub items: Vec<NavbarItem>,
+    pub position: NavbarPosition,
+    pub sticky: bool,
 }
 
 impl Navbar {
     #[inline]
     pub fn new() -> Navbar {
         Navbar {
-            brand: String::from("".to_string()),
+            brand: String::from(""),
             items: Vec::new(),
             position: NavbarPosition::Top,
             sticky: false,
@@ -65,25 +68,26 @@ impl Renderable for Navbar {
         for item in &self.items {
             items_html.push(format!(
                 "<a href='{}' class='wj-navbar-item'>{}</a>",
-                item.href, item.label
+                item.href.clone(),
+                item.label.clone()
             ));
         }
         let position_class = match self.position {
-            NavbarPosition::Top => "wj-navbar-top",
-            NavbarPosition::Bottom => "wj-navbar-bottom",
+            NavbarPosition::Top => "wj-navbar-top".to_string(),
+            NavbarPosition::Bottom => "wj-navbar-bottom".to_string(),
         };
         let sticky_class = {
             if self.sticky {
-                " wj-navbar-sticky"
+                " wj-navbar-sticky".to_string()
             } else {
-                ""
+                "".to_string()
             }
         };
         let brand_html = {
-            if self.brand.len() > 0 {
+            if self.brand.len() > (0 as usize) {
                 format!("<div class='wj-navbar-brand'>{}</div>", self.brand)
             } else {
-                String::from("".to_string())
+                String::from("")
             }
         };
         format!(

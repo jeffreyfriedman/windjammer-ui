@@ -2,6 +2,7 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum TooltipPosition {
     Top,
     Bottom,
@@ -9,10 +10,11 @@ pub enum TooltipPosition {
     Right,
 }
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct Tooltip {
-    text: String,
-    position: TooltipPosition,
-    child: String,
+    pub text: String,
+    pub position: TooltipPosition,
+    pub child: String,
 }
 
 impl Tooltip {
@@ -35,10 +37,10 @@ impl Renderable for Tooltip {
     #[inline]
     fn render(self) -> String {
         let position_class = match self.position {
-            TooltipPosition::Top => "wj-tooltip-top",
-            TooltipPosition::Bottom => "wj-tooltip-bottom",
-            TooltipPosition::Left => "wj-tooltip-left",
-            TooltipPosition::Right => "wj-tooltip-right",
+            TooltipPosition::Top => "wj-tooltip-top".to_string(),
+            TooltipPosition::Bottom => "wj-tooltip-bottom".to_string(),
+            TooltipPosition::Left => "wj-tooltip-left".to_string(),
+            TooltipPosition::Right => "wj-tooltip-right".to_string(),
         };
         format!(
             "<div class='wj-tooltip-container {}'>{}<span class='wj-tooltip-text'>{}</span></div>",

@@ -9,6 +9,7 @@ on:
 env:
   CARGO_TERM_COLOR: always
   RUST_BACKTRACE: 1
+  SKIP_WJ_REGEN: 1  # Skip regeneration in CI - generated code is committed
 
 jobs:
   version-check:
@@ -121,8 +122,9 @@ jobs:
             libayatana-appindicator3-dev \
             librsvg2-dev
       
-      - name: Install Windjammer CLI
-        run: cargo install windjammer --version ^0.38.3 --locked
+      # Windjammer CLI not needed - generated code is committed
+      # - name: Install Windjammer CLI
+      #   run: cargo install windjammer --version ^0.39.1 --locked
       
       - name: Build
         run: cargo build --verbose
@@ -204,8 +206,9 @@ jobs:
           pkg-config --modversion gtk+-3.0
           echo "=== All libraries found! ==="
       
-      - name: Install Windjammer CLI
-        run: cargo install windjammer --locked
+      # Windjammer CLI not needed - generated code is committed
+      # - name: Install Windjammer CLI
+      #   run: cargo install windjammer --version ^0.39.1 --locked
       
       - name: Install tarpaulin
         run: cargo install cargo-tarpaulin
@@ -266,8 +269,9 @@ jobs:
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
       
-      - name: Install Windjammer CLI
-        run: cargo install windjammer --locked
+      # Windjammer CLI not needed - generated code is committed
+      # - name: Install Windjammer CLI
+      #   run: cargo install windjammer --version ^0.39.1 --locked
       
       - name: Cache Cargo registry and build artifacts
         uses: actions/cache@v4

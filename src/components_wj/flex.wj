@@ -47,9 +47,15 @@ impl Flex {
         self
     }
     
-    // Set gap between children
+    // Set gap between children (string version)
     pub fn gap(self, gap: string) -> Flex {
         self.gap = gap
+        self
+    }
+    
+    // Set gap between children (integer version for convenience)
+    pub fn gap_px(self, gap: i32) -> Flex {
+        self.gap = format!("{}px", gap)
         self
     }
     

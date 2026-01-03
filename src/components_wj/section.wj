@@ -1,0 +1,244 @@
+// Section - Collapsible panel section for editor inspectors
+// Modern game editor style with icons, animations, and nesting support
+
+use super::traits::Renderable
+
+// Section header with icon
+@auto
+pub struct Section {
+    pub icon: string,
+    pub title: string,
+    pub children: Vec<string>,
+    pub collapsed: bool,
+    pub accent_color: string,
+    pub removable: bool,
+    pub on_remove: string,
+}
+
+impl Section {
+    pub fn new(title: string) -> Section {
+        Section {
+            icon: "".to_string(),
+            title,
+            children: Vec::new(),
+            collapsed: false,
+            accent_color: "".to_string(),
+            removable: false,
+            on_remove: "".to_string(),
+        }
+    }
+    
+    pub fn icon(self, icon: string) -> Section {
+        self.icon = icon
+        self
+    }
+    
+    pub fn child(self, child: string) -> Section {
+        self.children.push(child)
+        self
+    }
+    
+    pub fn children(self, children: Vec<string>) -> Section {
+        self.children = children
+        self
+    }
+    
+    pub fn collapsed(self, collapsed: bool) -> Section {
+        self.collapsed = collapsed
+        self
+    }
+    
+    pub fn accent(self, color: string) -> Section {
+        self.accent_color = color
+        self
+    }
+    
+    pub fn removable(self, on_remove: string) -> Section {
+        self.removable = true
+        self.on_remove = on_remove
+        self
+    }
+}
+
+impl Renderable for Section {
+    pub fn render(self) -> string {
+        let collapse_icon = if self.collapsed { "▶" } else { "▼" }
+        let content_class = if self.collapsed { "section-content collapsed" } else { "section-content" }
+        
+        let icon_html = if self.icon != "" {
+            format!("<span class='section-icon'>{}</span>", self.icon)
+        } else {
+            "".to_string()
+        }
+        
+        let accent_style = if self.accent_color != "" {
+            format!(" style='border-left: 3px solid {}'", self.accent_color)
+        } else {
+            "".to_string()
+        }
+        
+        let remove_btn = if self.removable {
+            format!("<button class='section-remove' onclick='{}'>×</button>", self.on_remove)
+        } else {
+            "".to_string()
+        }
+        
+        let children_html = self.children.join("\n")
+        
+        format!("
+            <div class='wj-section'{}>
+                <div class='section-header'>
+                    <span class='collapse-arrow'>{}</span>
+                    {}
+                    <span class='section-title'>{}</span>
+                    {}
+                </div>
+                <div class='{}'>
+                    {}
+                </div>
+            </div>
+        ", accent_style, collapse_icon, icon_html, self.title, remove_btn, content_class, children_html)
+    }
+}
+
+// Section Group - Container for multiple sections
+@auto
+pub struct SectionGroup {
+    pub sections: Vec<Section>,
+    pub accordion: bool,
+}
+
+impl SectionGroup {
+    pub fn new() -> SectionGroup {
+        SectionGroup {
+            sections: Vec::new(),
+            accordion: false,
+        }
+    }
+    
+    pub fn section(self, section: Section) -> SectionGroup {
+        self.sections.push(section)
+        self
+    }
+    
+    pub fn accordion(self, accordion: bool) -> SectionGroup {
+        self.accordion = accordion
+        self
+    }
+}
+
+impl Renderable for SectionGroup {
+    pub fn render(self) -> string {
+        let mut sections_html = "".to_string()
+        for s in self.sections {
+            sections_html = sections_html + s.clone().render().as_str() + "\n"
+        }
+        
+        let class = if self.accordion { "section-group accordion" } else { "section-group" }
+        
+        format!("<div class='{}'>{}</div>", class, sections_html)
+    }
+}
+
+// CSS styles
+pub fn section_styles() -> string {
+    "
+    .wj-section {
+        background: #16213e;
+        border-radius: 8px;
+        margin-bottom: 8px;
+        overflow: hidden;
+        border-left: 3px solid transparent;
+    }
+    
+    .section-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 16px;
+        cursor: pointer;
+        user-select: none;
+        transition: background 0.15s;
+    }
+    
+    .section-header:hover {
+        background: rgba(255,255,255,0.05);
+    }
+    
+    .collapse-arrow {
+        font-size: 10px;
+        color: #666;
+        width: 12px;
+        transition: transform 0.2s;
+    }
+    
+    .section-icon {
+        font-size: 16px;
+    }
+    
+    .section-title {
+        flex: 1;
+        font-weight: 500;
+        font-size: 13px;
+        color: #e0e0e0;
+    }
+    
+    .section-remove {
+        width: 20px;
+        height: 20px;
+        border: none;
+        background: transparent;
+        color: #666;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .section-remove:hover {
+        background: #e94560;
+        color: white;
+    }
+    
+    .section-content {
+        padding: 0 16px 16px 16px;
+        animation: section-expand 0.2s ease-out;
+    }
+    
+    .section-content.collapsed {
+        display: none;
+    }
+    
+    @keyframes section-expand {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .section-group {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .section-group.accordion .wj-section:not(:first-child) {
+        margin-top: -1px;
+        border-radius: 0;
+    }
+    
+    .section-group.accordion .wj-section:first-child {
+        border-radius: 8px 8px 0 0;
+    }
+    
+    .section-group.accordion .wj-section:last-child {
+        border-radius: 0 0 8px 8px;
+    }
+    ".to_string()
+}
+

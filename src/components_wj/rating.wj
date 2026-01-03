@@ -67,7 +67,7 @@ pub fn render(self) -> string {
             let half_filled = i as f32 - 0.5 <= self.value && i as f32 > self.value;
 
             let star_color = if filled || half_filled {
-                &self.color
+                self.color.as_str()
             } else {
                 "#e2e8f0"
             };

@@ -2,13 +2,14 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, PartialEq, Default)]
 pub struct Slider {
-    min: f64,
-    max: f64,
-    step: f64,
-    value: f64,
-    disabled: bool,
-    label: String,
+    pub min: f64,
+    pub max: f64,
+    pub step: f64,
+    pub value: f64,
+    pub disabled: bool,
+    pub label: String,
 }
 
 impl Slider {
@@ -60,9 +61,9 @@ impl Renderable for Slider {
     fn render(self) -> String {
         let disabled_attr = {
             if self.disabled {
-                " disabled"
+                " disabled".to_string()
             } else {
-                ""
+                "".to_string()
             }
         };
         let label_html = {

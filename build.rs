@@ -7,6 +7,12 @@ use std::path::PathBuf;
 use std::process::Command;
 
 fn main() {
+    // Allow skipping regeneration for manual fixes (temporary development mode)
+    if env::var("SKIP_WJ_REGEN").is_ok() {
+        println!("cargo:warning=⏭️  Skipping .wj regeneration (SKIP_WJ_REGEN set)");
+        return;
+    }
+
     // Tell Cargo to rerun this build script if .wj files change
     println!("cargo:rerun-if-changed=src/components_wj");
 

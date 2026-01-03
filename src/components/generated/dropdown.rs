@@ -2,10 +2,11 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct DropdownItem {
-    label: String,
-    value: String,
-    disabled: bool,
+    pub label: String,
+    pub value: String,
+    pub disabled: bool,
 }
 
 impl DropdownItem {
@@ -24,9 +25,10 @@ impl DropdownItem {
     }
 }
 
+#[derive(Debug, Clone, Default)]
 pub struct Dropdown {
-    label: String,
-    items: Vec<DropdownItem>,
+    pub label: String,
+    pub items: Vec<DropdownItem>,
 }
 
 impl Dropdown {
@@ -49,13 +51,13 @@ impl Renderable for Dropdown {
     fn render(self) -> String {
         let mut items_html = "".to_string();
         let mut i = 0;
-        while i < self.items.len() {
-            let item = &self.items[i];
+        while i < (self.items.len() as i64) {
+            let item = &self.items[i as usize];
             let disabled_class = {
                 if item.disabled {
-                    " wj-dropdown-item-disabled"
+                    " wj-dropdown-item-disabled".to_string()
                 } else {
-                    ""
+                    "".to_string()
                 }
             };
             items_html = format!(
