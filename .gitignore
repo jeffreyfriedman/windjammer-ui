@@ -13,6 +13,11 @@ build/*.rs
 build/*.rs.map
 build/Cargo.toml
 
+# Exclude nested directories created by disabled lib.rs
+src/components/generated/components/
+src/components/generated/platform/
+src/components/generated/lib/
+
 # IDE
 .vscode/
 .idea/
