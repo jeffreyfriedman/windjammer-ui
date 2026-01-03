@@ -1,12 +1,11 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-
 #[derive(Debug, Clone, PartialEq)]
 pub struct Skeleton {
-    variant: SkeletonVariant,
-    width: String,
-    height: String,
-    class: String,
+    pub variant: SkeletonVariant,
+    pub width: String,
+    pub height: String,
+    pub class: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -46,11 +45,12 @@ impl Skeleton {
         self.class = class;
         self
     }
+    #[inline]
     pub fn render(&self) -> String {
         let border_radius = match self.variant {
-            SkeletonVariant::Text => "4px",
-            SkeletonVariant::Circle => "50%",
-            SkeletonVariant::Rectangle => "8px",
+            SkeletonVariant::Text => "4px".to_string(),
+            SkeletonVariant::Circle => "50%".to_string(),
+            SkeletonVariant::Rectangle => "8px".to_string(),
         };
         let mut html = String::new();
         html.push_str("<div class=\"wj-skeleton ");

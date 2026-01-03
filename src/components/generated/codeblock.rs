@@ -4,10 +4,10 @@ use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct CodeBlock {
-    code: String,
-    language: String,
-    show_line_numbers: bool,
-    show_copy_button: bool,
+    pub code: String,
+    pub language: String,
+    pub show_line_numbers: bool,
+    pub show_copy_button: bool,
 }
 
 impl CodeBlock {
@@ -15,7 +15,7 @@ impl CodeBlock {
     pub fn new(code: String) -> CodeBlock {
         CodeBlock {
             code,
-            language: String::from("".to_string()),
+            language: String::from(""),
             show_line_numbers: false,
             show_copy_button: true,
         }
@@ -41,10 +41,10 @@ impl Renderable for CodeBlock {
     #[inline]
     fn render(self) -> String {
         let language_label = {
-            if (self.language.len() as i32) > 0 {
+            if self.language.len() > (0 as usize) {
                 format!("<div class='wj-codeblock-language'>{}</div>", self.language)
             } else {
-                String::from("".to_string())
+                String::from("")
             }
         };
         let copy_button = {
@@ -53,7 +53,7 @@ impl Renderable for CodeBlock {
                     📋 Copy
                 </button>")
             } else {
-                String::from("".to_string())
+                String::from("")
             }
         };
         let line_number_class = {

@@ -4,12 +4,12 @@ use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct AdvancedCodeEditor {
-    code: String,
-    language: String,
-    theme: String,
-    line_numbers: bool,
-    minimap: bool,
-    autocomplete: bool,
+    pub code: String,
+    pub language: String,
+    pub theme: String,
+    pub line_numbers: bool,
+    pub minimap: bool,
+    pub autocomplete: bool,
 }
 
 impl AdvancedCodeEditor {

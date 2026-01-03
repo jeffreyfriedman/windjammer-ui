@@ -1,13 +1,12 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-
 #[derive(Debug, Clone, PartialEq)]
 pub struct Switch {
-    checked: bool,
-    disabled: bool,
-    size: SwitchSize,
-    label: String,
-    class: String,
+    pub checked: bool,
+    pub disabled: bool,
+    pub size: SwitchSize,
+    pub label: String,
+    pub class: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -53,6 +52,7 @@ impl Switch {
         self.class = class;
         self
     }
+    #[inline]
     pub fn render(&self) -> String {
         let (width, height, thumb_size) = match self.size {
             SwitchSize::Small => ("32px", "18px", "14px"),

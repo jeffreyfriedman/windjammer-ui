@@ -1,6 +1,5 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -12,11 +11,11 @@ pub enum RatingSize {
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Rating {
-    value: f32,
-    max: i32,
-    size: RatingSize,
-    readonly: bool,
-    color: String,
+    pub value: f32,
+    pub max: i32,
+    pub size: RatingSize,
+    pub readonly: bool,
+    pub color: String,
 }
 
 impl Rating {
@@ -56,9 +55,9 @@ impl Renderable for Rating {
     #[inline]
     fn render(self) -> String {
         let star_size = match self.size {
-            RatingSize::Small => "16px",
-            RatingSize::Medium => "24px",
-            RatingSize::Large => "32px",
+            RatingSize::Small => "16px".to_string(),
+            RatingSize::Medium => "24px".to_string(),
+            RatingSize::Large => "32px".to_string(),
         };
         let mut html = String::new();
         html.push_str("<div style='display: inline-flex; gap: 4px;'>");

@@ -18,10 +18,10 @@ pub enum TextWeight {
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Text {
-    content: String,
-    size: TextSize,
-    weight: TextWeight,
-    color: String,
+    pub content: String,
+    pub size: TextSize,
+    pub weight: TextWeight,
+    pub color: String,
 }
 
 impl Text {
@@ -55,14 +55,14 @@ impl Renderable for Text {
     #[inline]
     fn render(self) -> String {
         let size_class = match self.size {
-            TextSize::Small => "sm",
-            TextSize::Medium => "md",
-            TextSize::Large => "lg",
-            TextSize::XLarge => "xl",
+            TextSize::Small => "sm".to_string(),
+            TextSize::Medium => "md".to_string(),
+            TextSize::Large => "lg".to_string(),
+            TextSize::XLarge => "xl".to_string(),
         };
         let weight_class = match self.weight {
-            TextWeight::Normal => "normal",
-            TextWeight::Bold => "bold",
+            TextWeight::Normal => "normal".to_string(),
+            TextWeight::Bold => "bold".to_string(),
         };
         let style = {
             if self.color != "" {

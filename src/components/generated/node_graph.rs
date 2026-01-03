@@ -61,7 +61,7 @@ impl NodePin {
         self
     }
     #[inline]
-    fn get_color(&self) -> String {
+    pub fn get_color(&self) -> String {
         match self.pin_type {
             PinType::Flow => "#ffffff".to_string(),
             PinType::Bool => "#e94560".to_string(),
@@ -146,7 +146,7 @@ impl GraphNode {
         self
     }
     #[inline]
-    fn get_category_color(&self) -> String {
+    pub fn get_category_color(&self) -> String {
         match self.category {
             NodeCategory::Math => "#4ade80".to_string(),
             NodeCategory::Logic => "#e94560".to_string(),
@@ -162,14 +162,15 @@ impl GraphNode {
 }
 
 impl Renderable for GraphNode {
+    #[inline]
     fn render(self) -> String {
         let header_color = self.get_category_color();
         let mut inputs_html = "".to_string();
         for pin in &self.inputs {
             let color = pin.get_color();
             let connected_class = match pin.connected_to.clone() {
-                Some(_) => "connected",
-                None => "",
+                Some(_) => "connected".to_string(),
+                None => "".to_string(),
             };
             inputs_html += format!(
                 "
@@ -189,8 +190,8 @@ impl Renderable for GraphNode {
         for pin in &self.outputs {
             let color = pin.get_color();
             let connected_class = match pin.connected_to.clone() {
-                Some(_) => "connected",
-                None => "",
+                Some(_) => "connected".to_string(),
+                None => "".to_string(),
             };
             outputs_html += format!(
                 "
@@ -324,6 +325,7 @@ impl NodeGraph {
 }
 
 impl Renderable for NodeGraph {
+    #[inline]
     fn render(self) -> String {
         let mut nodes_html = "".to_string();
         for n in &self.nodes {

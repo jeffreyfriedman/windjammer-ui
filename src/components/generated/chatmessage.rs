@@ -11,10 +11,10 @@ pub enum MessageRole {
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct ChatMessage {
-    role: MessageRole,
-    content: String,
-    avatar: String,
-    timestamp: String,
+    pub role: MessageRole,
+    pub content: String,
+    pub avatar: String,
+    pub timestamp: String,
 }
 
 impl ChatMessage {
@@ -23,8 +23,8 @@ impl ChatMessage {
         ChatMessage {
             role: MessageRole::User,
             content,
-            avatar: String::from("".to_string()),
-            timestamp: String::from("".to_string()),
+            avatar: String::from(""),
+            timestamp: String::from(""),
         }
     }
     #[inline]
@@ -48,30 +48,30 @@ impl Renderable for ChatMessage {
     #[inline]
     fn render(self) -> String {
         let role_class = match self.role {
-            MessageRole::User => "wj-message-user",
-            MessageRole::Assistant => "wj-message-assistant",
-            MessageRole::System => "wj-message-system",
+            MessageRole::User => "wj-message-user".to_string(),
+            MessageRole::Assistant => "wj-message-assistant".to_string(),
+            MessageRole::System => "wj-message-system".to_string(),
         };
         let avatar_html = {
-            if (self.avatar.len() as i32) > 0 {
+            if self.avatar.len() > (0 as usize) {
                 format!(
                     "<div class='wj-message-avatar'><img src='{}' alt='avatar'/></div>",
                     self.avatar
                 )
             } else {
                 let default_icon = match self.role {
-                    MessageRole::User => "👤",
-                    MessageRole::Assistant => "🤖",
-                    MessageRole::System => "⚙️",
+                    MessageRole::User => "👤".to_string(),
+                    MessageRole::Assistant => "🤖".to_string(),
+                    MessageRole::System => "⚙️".to_string(),
                 };
                 format!("<div class='wj-message-avatar'>{}</div>", default_icon)
             }
         };
         let timestamp_html = {
-            if (self.timestamp.len() as i32) > 0 {
+            if self.timestamp.len() > (0 as usize) {
                 format!("<div class='wj-message-timestamp'>{}</div>", self.timestamp)
             } else {
-                String::from("".to_string())
+                String::from("")
             }
         };
         format!(

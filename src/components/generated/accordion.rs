@@ -4,9 +4,9 @@ use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct AccordionItem {
-    title: String,
-    content: String,
-    open: bool,
+    pub title: String,
+    pub content: String,
+    pub open: bool,
 }
 
 impl AccordionItem {
@@ -27,8 +27,8 @@ impl AccordionItem {
 
 #[derive(Debug, Clone, Default)]
 pub struct Accordion {
-    items: Vec<AccordionItem>,
-    allow_multiple: bool,
+    pub items: Vec<AccordionItem>,
+    pub allow_multiple: bool,
 }
 
 impl Accordion {
@@ -56,7 +56,7 @@ impl Renderable for Accordion {
     fn render(self) -> String {
         let mut html = "<div class='wj-accordion'>".to_string();
         let mut i = 0;
-        while i < (self.items.len() as i32) {
+        while i < (self.items.len() as i64) {
             let item = &self.items[i as usize];
             let open_attr = {
                 if item.open {

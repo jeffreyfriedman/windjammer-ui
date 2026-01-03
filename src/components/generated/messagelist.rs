@@ -1,13 +1,12 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, Default)]
 pub struct MessageList {
-    messages: Vec<String>,
-    height: String,
-    auto_scroll: bool,
+    pub messages: Vec<String>,
+    pub height: String,
+    pub auto_scroll: bool,
 }
 
 impl MessageList {
@@ -15,7 +14,7 @@ impl MessageList {
     pub fn new() -> MessageList {
         MessageList {
             messages: Vec::new(),
-            height: String::from("600px".to_string()),
+            height: String::from("600px"),
             auto_scroll: true,
         }
     }

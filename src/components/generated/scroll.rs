@@ -1,13 +1,12 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-
 #[derive(Debug, Clone, PartialEq)]
 pub struct Scroll {
-    children: Vec<String>,
-    direction: ScrollDir,
-    height: String,
-    width: String,
-    class: String,
+    pub children: Vec<String>,
+    pub direction: ScrollDir,
+    pub height: String,
+    pub width: String,
+    pub class: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -54,12 +53,13 @@ impl Scroll {
         self.class = class;
         self
     }
+    #[inline]
     pub fn render(&self) -> String {
         let overflow = match self.direction {
-            ScrollDir::Vertical => "overflow-x: hidden; overflow-y: auto",
-            ScrollDir::Horizontal => "overflow-x: auto; overflow-y: hidden",
-            ScrollDir::Both => "overflow: auto",
-            ScrollDir::None => "overflow: hidden",
+            ScrollDir::Vertical => "overflow-x: hidden; overflow-y: auto".to_string(),
+            ScrollDir::Horizontal => "overflow-x: auto; overflow-y: hidden".to_string(),
+            ScrollDir::Both => "overflow: auto".to_string(),
+            ScrollDir::None => "overflow: hidden".to_string(),
         };
         let mut html = String::new();
         html.push_str("<div class=\"wj-scroll ");

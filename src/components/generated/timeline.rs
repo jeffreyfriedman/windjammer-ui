@@ -1,15 +1,14 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct TimelineEvent {
-    title: String,
-    description: String,
-    timestamp: String,
-    icon: String,
-    color: String,
+    pub title: String,
+    pub description: String,
+    pub timestamp: String,
+    pub icon: String,
+    pub color: String,
 }
 
 impl TimelineEvent {
@@ -42,7 +41,7 @@ impl TimelineEvent {
 
 #[derive(Debug, Clone, Default)]
 pub struct Timeline {
-    events: Vec<TimelineEvent>,
+    pub events: Vec<TimelineEvent>,
 }
 
 impl Timeline {
@@ -77,7 +76,7 @@ impl Renderable for Timeline {
             html.push_str("<div style='font-weight: 600; font-size: 16px; color: #1a202c; margin-bottom: 8px;'>");
             html.push_str(&event.title);
             html.push_str("</div>");
-            if (event.description.len() as i32) > 0 {
+            if event.description.len() > (0 as usize) {
                 html.push_str("<div style='font-size: 14px; color: #4a5568;'>");
                 html.push_str(&event.description);
                 html.push_str("</div>")

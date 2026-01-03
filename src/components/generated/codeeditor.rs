@@ -4,11 +4,11 @@ use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct CodeEditor {
-    code: String,
-    language: String,
-    theme: String,
-    line_numbers: bool,
-    readonly: bool,
+    pub code: String,
+    pub language: String,
+    pub theme: String,
+    pub line_numbers: bool,
+    pub readonly: bool,
 }
 
 impl CodeEditor {

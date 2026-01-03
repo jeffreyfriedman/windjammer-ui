@@ -4,10 +4,10 @@ use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct ContextMenuItem {
-    label: String,
-    icon: String,
-    action: String,
-    disabled: bool,
+    pub label: String,
+    pub icon: String,
+    pub action: String,
+    pub disabled: bool,
 }
 
 impl ContextMenuItem {
@@ -15,8 +15,8 @@ impl ContextMenuItem {
     pub fn new(label: String) -> ContextMenuItem {
         ContextMenuItem {
             label,
-            icon: String::from("".to_string()),
-            action: String::from("".to_string()),
+            icon: String::from(""),
+            action: String::from(""),
             disabled: false,
         }
     }
@@ -39,8 +39,8 @@ impl ContextMenuItem {
 
 #[derive(Debug, Clone, Default)]
 pub struct ContextMenu {
-    items: Vec<ContextMenuItem>,
-    trigger_id: String,
+    pub items: Vec<ContextMenuItem>,
+    pub trigger_id: String,
 }
 
 impl ContextMenu {
@@ -67,7 +67,7 @@ impl Renderable for ContextMenu {
                 if item.icon.clone().len() > 0 {
                     format!("<span class='wj-context-icon'>{}</span>", item.icon.clone())
                 } else {
-                    String::from("".to_string())
+                    String::from("")
                 }
             };
             let disabled_class = {

@@ -6,9 +6,9 @@ use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct RadioOption {
-    value: String,
-    label: String,
-    disabled: bool,
+    pub value: String,
+    pub label: String,
+    pub disabled: bool,
 }
 
 impl RadioOption {
@@ -29,9 +29,9 @@ impl RadioOption {
 
 #[derive(Debug, Clone, Default)]
 pub struct RadioGroup {
-    name: String,
-    options: Vec<RadioOption>,
-    selected: String,
+    pub name: String,
+    pub options: Vec<RadioOption>,
+    pub selected: String,
 }
 
 impl RadioGroup {
@@ -69,7 +69,7 @@ impl Renderable for RadioGroup {
             __s
         };
         let mut i = 0;
-        while i < (self.options.len() as i32) {
+        while i < (self.options.len() as i64) {
             let opt = &self.options[i as usize];
             let checked_attr = {
                 if opt.value == self.selected {

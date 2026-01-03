@@ -1,13 +1,12 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-
 #[derive(Debug, Clone, PartialEq)]
 pub struct Drawer {
-    children: Vec<String>,
-    position: DrawerPosition,
-    width: String,
-    open: bool,
-    class: String,
+    pub children: Vec<String>,
+    pub position: DrawerPosition,
+    pub width: String,
+    pub open: bool,
+    pub class: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -54,6 +53,7 @@ impl Drawer {
         self.class = class;
         self
     }
+    #[inline]
     pub fn render(&self) -> String {
         let (position_style, size_prop) = match self.position {
             DrawerPosition::Left => (

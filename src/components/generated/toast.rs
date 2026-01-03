@@ -22,11 +22,11 @@ pub enum ToastPosition {
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Toast {
-    message: String,
-    variant: ToastVariant,
-    position: ToastPosition,
-    duration: i32,
-    show_close: bool,
+    pub message: String,
+    pub variant: ToastVariant,
+    pub position: ToastPosition,
+    pub duration: i32,
+    pub show_close: bool,
 }
 
 impl Toast {
@@ -66,24 +66,24 @@ impl Renderable for Toast {
     #[inline]
     fn render(self) -> String {
         let variant_class = match self.variant {
-            ToastVariant::Success => "wj-toast-success",
-            ToastVariant::Error => "wj-toast-error",
-            ToastVariant::Warning => "wj-toast-warning",
-            ToastVariant::Info => "wj-toast-info",
+            ToastVariant::Success => "wj-toast-success".to_string(),
+            ToastVariant::Error => "wj-toast-error".to_string(),
+            ToastVariant::Warning => "wj-toast-warning".to_string(),
+            ToastVariant::Info => "wj-toast-info".to_string(),
         };
         let position_class = match self.position {
-            ToastPosition::TopRight => "wj-toast-top-right",
-            ToastPosition::TopLeft => "wj-toast-top-left",
-            ToastPosition::BottomRight => "wj-toast-bottom-right",
-            ToastPosition::BottomLeft => "wj-toast-bottom-left",
-            ToastPosition::TopCenter => "wj-toast-top-center",
-            ToastPosition::BottomCenter => "wj-toast-bottom-center",
+            ToastPosition::TopRight => "wj-toast-top-right".to_string(),
+            ToastPosition::TopLeft => "wj-toast-top-left".to_string(),
+            ToastPosition::BottomRight => "wj-toast-bottom-right".to_string(),
+            ToastPosition::BottomLeft => "wj-toast-bottom-left".to_string(),
+            ToastPosition::TopCenter => "wj-toast-top-center".to_string(),
+            ToastPosition::BottomCenter => "wj-toast-bottom-center".to_string(),
         };
         let icon = match self.variant {
-            ToastVariant::Success => "✓",
-            ToastVariant::Error => "✗",
-            ToastVariant::Warning => "⚠",
-            ToastVariant::Info => "ℹ",
+            ToastVariant::Success => "✓".to_string(),
+            ToastVariant::Error => "✗".to_string(),
+            ToastVariant::Warning => "⚠".to_string(),
+            ToastVariant::Info => "ℹ".to_string(),
         };
         let close_button = {
             if self.show_close {

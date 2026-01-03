@@ -12,8 +12,8 @@ pub enum AlertVariant {
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Alert {
-    message: String,
-    variant: AlertVariant,
+    pub message: String,
+    pub variant: AlertVariant,
 }
 
 impl Alert {
@@ -51,16 +51,16 @@ impl Renderable for Alert {
     #[inline]
     fn render(self) -> String {
         let variant_class = match self.variant {
-            AlertVariant::Error => "wj-alert-error",
-            AlertVariant::Warning => "wj-alert-warning",
-            AlertVariant::Info => "wj-alert-info",
-            AlertVariant::Success => "wj-alert-success",
+            AlertVariant::Error => "wj-alert-error".to_string(),
+            AlertVariant::Warning => "wj-alert-warning".to_string(),
+            AlertVariant::Info => "wj-alert-info".to_string(),
+            AlertVariant::Success => "wj-alert-success".to_string(),
         };
         let icon = match self.variant {
-            AlertVariant::Error => "❌",
-            AlertVariant::Warning => "⚠️",
-            AlertVariant::Info => "ℹ️",
-            AlertVariant::Success => "✅",
+            AlertVariant::Error => "❌".to_string(),
+            AlertVariant::Warning => "⚠️".to_string(),
+            AlertVariant::Info => "ℹ️".to_string(),
+            AlertVariant::Success => "✅".to_string(),
         };
         format!(
             "<div class='wj-alert {}'>{} {}</div>",

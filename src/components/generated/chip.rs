@@ -1,6 +1,5 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -22,11 +21,11 @@ pub enum ChipSize {
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Chip {
-    label: String,
-    variant: ChipVariant,
-    size: ChipSize,
-    removable: bool,
-    icon: String,
+    pub label: String,
+    pub variant: ChipVariant,
+    pub size: ChipSize,
+    pub removable: bool,
+    pub icon: String,
 }
 
 impl Chip {
@@ -63,40 +62,41 @@ impl Chip {
 }
 
 impl Renderable for Chip {
+    #[inline]
     fn render(self) -> String {
         let bg_color = match self.variant {
-            ChipVariant::Default => "#e2e8f0",
-            ChipVariant::Primary => "#3b82f6",
-            ChipVariant::Success => "#10b981",
-            ChipVariant::Warning => "#f59e0b",
-            ChipVariant::Danger => "#ef4444",
-            ChipVariant::Info => "#06b6d4",
+            ChipVariant::Default => "#e2e8f0".to_string(),
+            ChipVariant::Primary => "#3b82f6".to_string(),
+            ChipVariant::Success => "#10b981".to_string(),
+            ChipVariant::Warning => "#f59e0b".to_string(),
+            ChipVariant::Danger => "#ef4444".to_string(),
+            ChipVariant::Info => "#06b6d4".to_string(),
         };
         let text_color = match self.variant {
-            ChipVariant::Default => "#2d3748",
-            ChipVariant::Primary => "white",
-            ChipVariant::Success => "white",
-            ChipVariant::Warning => "white",
-            ChipVariant::Danger => "white",
-            ChipVariant::Info => "white",
+            ChipVariant::Default => "#2d3748".to_string(),
+            ChipVariant::Primary => "white".to_string(),
+            ChipVariant::Success => "white".to_string(),
+            ChipVariant::Warning => "white".to_string(),
+            ChipVariant::Danger => "white".to_string(),
+            ChipVariant::Info => "white".to_string(),
         };
         let border_color = match self.variant {
-            ChipVariant::Default => "#cbd5e0",
-            ChipVariant::Primary => "#2563eb",
-            ChipVariant::Success => "#059669",
-            ChipVariant::Warning => "#d97706",
-            ChipVariant::Danger => "#dc2626",
-            ChipVariant::Info => "#0891b2",
+            ChipVariant::Default => "#cbd5e0".to_string(),
+            ChipVariant::Primary => "#2563eb".to_string(),
+            ChipVariant::Success => "#059669".to_string(),
+            ChipVariant::Warning => "#d97706".to_string(),
+            ChipVariant::Danger => "#dc2626".to_string(),
+            ChipVariant::Info => "#0891b2".to_string(),
         };
         let padding = match self.size {
-            ChipSize::Small => "4px 8px",
-            ChipSize::Medium => "6px 12px",
-            ChipSize::Large => "8px 16px",
+            ChipSize::Small => "4px 8px".to_string(),
+            ChipSize::Medium => "6px 12px".to_string(),
+            ChipSize::Large => "8px 16px".to_string(),
         };
         let font_size = match self.size {
-            ChipSize::Small => "12px",
-            ChipSize::Medium => "14px",
-            ChipSize::Large => "16px",
+            ChipSize::Small => "12px".to_string(),
+            ChipSize::Medium => "14px".to_string(),
+            ChipSize::Large => "16px".to_string(),
         };
         let mut html = String::new();
         html.push_str(
@@ -112,7 +112,7 @@ impl Renderable for Chip {
         html.push_str("; border: 1px solid ");
         html.push_str(&border_color);
         html.push_str(";'>");
-        if (self.icon.len() as i32) > 0 {
+        if self.icon.len() > (0 as usize) {
             html.push_str("<span>");
             html.push_str(&self.icon);
             html.push_str("</span>")

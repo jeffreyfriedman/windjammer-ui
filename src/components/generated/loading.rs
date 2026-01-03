@@ -1,12 +1,11 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-
 #[derive(Debug, Clone, PartialEq)]
 pub struct Loading {
-    text: String,
-    size: LoadingSize,
-    overlay: bool,
-    class: String,
+    pub text: String,
+    pub size: LoadingSize,
+    pub overlay: bool,
+    pub class: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -46,16 +45,17 @@ impl Loading {
         self.class = class;
         self
     }
+    #[inline]
     pub fn render(&self) -> String {
         let spinner_size = match self.size {
-            LoadingSize::Small => "24px",
-            LoadingSize::Medium => "40px",
-            LoadingSize::Large => "64px",
+            LoadingSize::Small => "24px".to_string(),
+            LoadingSize::Medium => "40px".to_string(),
+            LoadingSize::Large => "64px".to_string(),
         };
         let border_width = match self.size {
-            LoadingSize::Small => "2px",
-            LoadingSize::Medium => "3px",
-            LoadingSize::Large => "4px",
+            LoadingSize::Small => "2px".to_string(),
+            LoadingSize::Medium => "3px".to_string(),
+            LoadingSize::Large => "4px".to_string(),
         };
         let mut html = String::new();
         if self.overlay {

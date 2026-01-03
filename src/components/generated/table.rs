@@ -4,8 +4,8 @@ use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct TableColumn {
-    header: String,
-    width: String,
+    pub header: String,
+    pub width: String,
 }
 
 impl TableColumn {
@@ -25,7 +25,7 @@ impl TableColumn {
 
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct TableRow {
-    cells: Vec<String>,
+    pub cells: Vec<String>,
 }
 
 impl TableRow {
@@ -42,11 +42,11 @@ impl TableRow {
 
 #[derive(Debug, Clone, Default)]
 pub struct Table {
-    columns: Vec<TableColumn>,
-    rows: Vec<TableRow>,
-    striped: bool,
-    bordered: bool,
-    hoverable: bool,
+    pub columns: Vec<TableColumn>,
+    pub rows: Vec<TableRow>,
+    pub striped: bool,
+    pub bordered: bool,
+    pub hoverable: bool,
 }
 
 impl Table {
@@ -88,6 +88,7 @@ impl Table {
 }
 
 impl Renderable for Table {
+    #[inline]
     fn render(self) -> String {
         let mut html = String::new();
         let border_style = {

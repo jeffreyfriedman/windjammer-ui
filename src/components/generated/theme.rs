@@ -1,6 +1,5 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
@@ -239,13 +238,13 @@ pub struct ThemeSwitcher {
 
 impl ThemeSwitcher {
     #[inline]
-    pub fn new(&mut self) -> ThemeSwitcher {
+    pub fn new() -> ThemeSwitcher {
         let mut themes = Vec::new();
-        self.themes.push("dark".to_string());
-        self.themes.push("light".to_string());
-        self.themes.push("monokai".to_string());
-        self.themes.push("nord".to_string());
-        self.themes.push("high-contrast".to_string());
+        themes.push("dark".to_string());
+        themes.push("light".to_string());
+        themes.push("monokai".to_string());
+        themes.push("nord".to_string());
+        themes.push("high-contrast".to_string());
         ThemeSwitcher {
             current_theme: "dark".to_string(),
             themes,

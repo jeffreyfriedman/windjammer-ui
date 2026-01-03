@@ -1,6 +1,5 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq)]
@@ -204,8 +203,8 @@ impl Renderable for Property {
                             "".to_string()
                         }
                     };
-                    options_html = options_html
-                        + format!("<option value='{}' {}>{}</option>", o, selected, o).as_str();
+                    options_html +=
+                        format!("<option value='{}' {}>{}</option>", o, selected, o).as_str();
                 }
                 format!(
                     "

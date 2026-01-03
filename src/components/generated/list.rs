@@ -1,11 +1,10 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct List {
-    items: Vec<String>,
-    ordered: bool,
-    class: String,
+    pub items: Vec<String>,
+    pub ordered: bool,
+    pub class: String,
 }
 
 impl List {
@@ -32,6 +31,7 @@ impl List {
         self.class = class;
         self
     }
+    #[inline]
     pub fn render(&self) -> String {
         let tag = {
             if self.ordered {
@@ -60,8 +60,8 @@ impl List {
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct ListItem {
-    content: String,
-    class: String,
+    pub content: String,
+    pub class: String,
 }
 
 impl ListItem {

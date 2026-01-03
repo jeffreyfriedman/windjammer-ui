@@ -4,11 +4,11 @@ use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct Panel {
-    title: String,
-    children: Vec<String>,
-    collapsible: bool,
-    collapsed: bool,
-    padding: String,
+    pub title: String,
+    pub children: Vec<String>,
+    pub collapsible: bool,
+    pub collapsed: bool,
+    pub padding: String,
 }
 
 impl Panel {

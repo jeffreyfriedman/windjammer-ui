@@ -2,18 +2,18 @@
 #![allow(noop_method_call)]
 #[derive(Debug, Clone)]
 pub struct Select {
-    options: Vec<SelectOption>,
-    selected: String,
-    placeholder: String,
-    disabled: bool,
-    size: SelectSize,
-    class: String,
+    pub options: Vec<SelectOption>,
+    pub selected: String,
+    pub placeholder: String,
+    pub disabled: bool,
+    pub size: SelectSize,
+    pub class: String,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct SelectOption {
-    value: String,
-    label: String,
+    pub value: String,
+    pub label: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -65,11 +65,12 @@ impl Select {
         self.class = class;
         self
     }
+    #[inline]
     pub fn render(&self) -> String {
         let size_style = match self.size {
-            SelectSize::Small => "padding: 4px 8px; font-size: 12px;",
-            SelectSize::Medium => "padding: 8px 12px; font-size: 14px;",
-            SelectSize::Large => "padding: 12px 16px; font-size: 16px;",
+            SelectSize::Small => "padding: 4px 8px; font-size: 12px;".to_string(),
+            SelectSize::Medium => "padding: 8px 12px; font-size: 14px;".to_string(),
+            SelectSize::Large => "padding: 12px 16px; font-size: 16px;".to_string(),
         };
         let disabled_attr = {
             if self.disabled {

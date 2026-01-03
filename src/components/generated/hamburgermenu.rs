@@ -1,12 +1,11 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct HamburgerMenuItem {
-    label: String,
-    href: String,
+    pub label: String,
+    pub href: String,
 }
 
 impl HamburgerMenuItem {
@@ -18,8 +17,8 @@ impl HamburgerMenuItem {
 
 #[derive(Debug, Clone, Default)]
 pub struct HamburgerMenu {
-    items: Vec<HamburgerMenuItem>,
-    open: bool,
+    pub items: Vec<HamburgerMenuItem>,
+    pub open: bool,
 }
 
 impl HamburgerMenu {

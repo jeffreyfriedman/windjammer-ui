@@ -1,16 +1,15 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-
 use std::fmt::Write;
 
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, Default)]
 pub struct FileNode {
-    name: String,
-    is_directory: bool,
-    children: Vec<FileNode>,
-    expanded: bool,
+    pub name: String,
+    pub is_directory: bool,
+    pub children: Vec<FileNode>,
+    pub expanded: bool,
 }
 
 impl FileNode {
@@ -60,7 +59,7 @@ impl FileNode {
         };
         if self.is_directory && self.expanded {
             let mut i = 0;
-            while i < (self.children.len() as i32) {
+            while i < (self.children.len() as i64) {
                 let child = &self.children[i as usize];
                 html = format!("{}{}", html, child.render(depth + 1));
                 i += 1;
@@ -72,7 +71,7 @@ impl FileNode {
 
 #[derive(Debug, Clone)]
 pub struct FileTree {
-    root: FileNode,
+    pub root: FileNode,
 }
 
 impl FileTree {

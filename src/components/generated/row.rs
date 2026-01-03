@@ -2,12 +2,12 @@
 #![allow(noop_method_call)]
 #[derive(Debug, Clone, PartialEq)]
 pub struct Row {
-    children: Vec<String>,
-    gap: String,
-    align: RowAlign,
-    justify: RowJustify,
-    wrap: bool,
-    class: String,
+    pub children: Vec<String>,
+    pub gap: String,
+    pub align: RowAlign,
+    pub justify: RowJustify,
+    pub wrap: bool,
+    pub class: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -70,20 +70,21 @@ impl Row {
         self.class = class;
         self
     }
+    #[inline]
     pub fn render(&self) -> String {
         let align_str = match self.align {
-            RowAlign::Start => "flex-start",
-            RowAlign::Center => "center",
-            RowAlign::End => "flex-end",
-            RowAlign::Stretch => "stretch",
+            RowAlign::Start => "flex-start".to_string(),
+            RowAlign::Center => "center".to_string(),
+            RowAlign::End => "flex-end".to_string(),
+            RowAlign::Stretch => "stretch".to_string(),
         };
         let justify_str = match self.justify {
-            RowJustify::Start => "flex-start",
-            RowJustify::Center => "center",
-            RowJustify::End => "flex-end",
-            RowJustify::SpaceBetween => "space-between",
-            RowJustify::SpaceAround => "space-around",
-            RowJustify::SpaceEvenly => "space-evenly",
+            RowJustify::Start => "flex-start".to_string(),
+            RowJustify::Center => "center".to_string(),
+            RowJustify::End => "flex-end".to_string(),
+            RowJustify::SpaceBetween => "space-between".to_string(),
+            RowJustify::SpaceAround => "space-around".to_string(),
+            RowJustify::SpaceEvenly => "space-evenly".to_string(),
         };
         let wrap_str = {
             if self.wrap {

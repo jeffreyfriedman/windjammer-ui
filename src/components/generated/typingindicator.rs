@@ -1,18 +1,17 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct TypingIndicator {
-    label: String,
+    pub label: String,
 }
 
 impl TypingIndicator {
     #[inline]
     pub fn new() -> TypingIndicator {
         TypingIndicator {
-            label: String::from("AI is typing".to_string()),
+            label: String::from("AI is typing"),
         }
     }
     #[inline]

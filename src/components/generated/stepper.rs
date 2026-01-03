@@ -1,13 +1,12 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct StepperStep {
-    label: String,
-    description: String,
-    completed: bool,
+    pub label: String,
+    pub description: String,
+    pub completed: bool,
 }
 
 impl StepperStep {
@@ -33,8 +32,8 @@ impl StepperStep {
 
 #[derive(Debug, Clone)]
 pub struct Stepper {
-    steps: Vec<StepperStep>,
-    current_step: i32,
+    pub steps: Vec<StepperStep>,
+    pub current_step: i32,
 }
 
 impl Stepper {
@@ -109,7 +108,7 @@ impl Renderable for Stepper {
             html.push_str("; margin-bottom: 4px;'>");
             html.push_str(&step.label);
             html.push_str("</div>");
-            if (step.description.len() as i32) > 0 {
+            if step.description.len() > (0 as usize) {
                 html.push_str("<div style='font-size: 12px; color: #a0aec0;'>");
                 html.push_str(&step.description);
                 html.push_str("</div>")

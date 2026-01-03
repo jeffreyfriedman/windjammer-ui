@@ -4,12 +4,12 @@ use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Default)]
 pub struct Slider {
-    min: f64,
-    max: f64,
-    step: f64,
-    value: f64,
-    disabled: bool,
-    label: String,
+    pub min: f64,
+    pub max: f64,
+    pub step: f64,
+    pub value: f64,
+    pub disabled: bool,
+    pub label: String,
 }
 
 impl Slider {

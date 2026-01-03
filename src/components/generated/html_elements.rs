@@ -1,14 +1,13 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct Div {
-    children: Vec<String>,
-    class: String,
-    style: String,
-    id: String,
+    pub children: Vec<String>,
+    pub class: String,
+    pub style: String,
+    pub id: String,
 }
 
 impl Div {
@@ -46,6 +45,7 @@ impl Div {
         self.id = id;
         self
     }
+    #[inline]
     pub fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<div");
@@ -75,9 +75,9 @@ impl Div {
 
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct Span {
-    children: Vec<String>,
-    class: String,
-    style: String,
+    pub children: Vec<String>,
+    pub class: String,
+    pub style: String,
 }
 
 impl Span {
@@ -112,6 +112,7 @@ impl Span {
 }
 
 impl Renderable for Span {
+    #[inline]
     fn render(self) -> String {
         let mut html = String::new();
         html.push_str("<span");
@@ -136,9 +137,9 @@ impl Renderable for Span {
 
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct P {
-    children: Vec<String>,
-    class: String,
-    style: String,
+    pub children: Vec<String>,
+    pub class: String,
+    pub style: String,
 }
 
 impl P {
@@ -173,6 +174,7 @@ impl P {
 }
 
 impl Renderable for P {
+    #[inline]
     fn render(self) -> String {
         let mut html = String::new();
         html.push_str("<p");
@@ -197,9 +199,9 @@ impl Renderable for P {
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct H1 {
-    text: String,
-    class: String,
-    style: String,
+    pub text: String,
+    pub class: String,
+    pub style: String,
 }
 
 impl H1 {
@@ -224,6 +226,7 @@ impl H1 {
 }
 
 impl Renderable for H1 {
+    #[inline]
     fn render(self) -> String {
         let mut html = String::new();
         html.push_str("<h1");
@@ -246,9 +249,9 @@ impl Renderable for H1 {
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct H2 {
-    text: String,
-    class: String,
-    style: String,
+    pub text: String,
+    pub class: String,
+    pub style: String,
 }
 
 impl H2 {
@@ -273,6 +276,7 @@ impl H2 {
 }
 
 impl Renderable for H2 {
+    #[inline]
     fn render(self) -> String {
         let mut html = String::new();
         html.push_str("<h2");
@@ -295,9 +299,9 @@ impl Renderable for H2 {
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct H3 {
-    text: String,
-    class: String,
-    style: String,
+    pub text: String,
+    pub class: String,
+    pub style: String,
 }
 
 impl H3 {
@@ -322,6 +326,7 @@ impl H3 {
 }
 
 impl Renderable for H3 {
+    #[inline]
     fn render(self) -> String {
         let mut html = String::new();
         html.push_str("<h3");

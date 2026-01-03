@@ -4,19 +4,19 @@ use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct ChatInput {
-    placeholder: String,
-    value: String,
-    disabled: bool,
-    multiline: bool,
-    rows: i32,
+    pub placeholder: String,
+    pub value: String,
+    pub disabled: bool,
+    pub multiline: bool,
+    pub rows: i32,
 }
 
 impl ChatInput {
     #[inline]
     pub fn new() -> ChatInput {
         ChatInput {
-            placeholder: String::from("Type a message...".to_string()),
-            value: String::from("".to_string()),
+            placeholder: String::from("Type a message..."),
+            value: String::from(""),
             disabled: false,
             multiline: true,
             rows: 3,

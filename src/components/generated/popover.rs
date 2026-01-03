@@ -2,10 +2,10 @@
 #![allow(noop_method_call)]
 #[derive(Debug, Clone, PartialEq)]
 pub struct Popover {
-    trigger: String,
-    content: String,
-    position: PopoverPosition,
-    class: String,
+    pub trigger: String,
+    pub content: String,
+    pub position: PopoverPosition,
+    pub class: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -36,19 +36,21 @@ impl Popover {
         self.class = class;
         self
     }
+    #[inline]
     pub fn render(&self) -> String {
         let position_style = match self.position {
             PopoverPosition::Top => {
                 "bottom: 100%; left: 50%; transform: translateX(-50%); margin-bottom: 8px;"
+                    .to_string()
             }
             PopoverPosition::Bottom => {
-                "top: 100%; left: 50%; transform: translateX(-50%); margin-top: 8px;"
+                "top: 100%; left: 50%; transform: translateX(-50%); margin-top: 8px;".to_string()
             }
             PopoverPosition::Left => {
-                "right: 100%; top: 50%; transform: translateY(-50%); margin-right: 8px;"
+                "right: 100%; top: 50%; transform: translateY(-50%); margin-right: 8px;".to_string()
             }
             PopoverPosition::Right => {
-                "left: 100%; top: 50%; transform: translateY(-50%); margin-left: 8px;"
+                "left: 100%; top: 50%; transform: translateY(-50%); margin-left: 8px;".to_string()
             }
         };
         let mut html = String::new();

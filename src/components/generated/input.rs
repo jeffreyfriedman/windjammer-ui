@@ -4,9 +4,9 @@ use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct Input {
-    value: String,
-    placeholder: String,
-    input_type: String,
+    pub value: String,
+    pub placeholder: String,
+    pub input_type: String,
 }
 
 impl Input {

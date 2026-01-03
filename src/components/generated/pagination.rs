@@ -4,10 +4,10 @@ use super::traits::Renderable;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Pagination {
-    current_page: i32,
-    total_pages: i32,
-    show_first_last: bool,
-    show_prev_next: bool,
+    pub current_page: i32,
+    pub total_pages: i32,
+    pub show_first_last: bool,
+    pub show_prev_next: bool,
 }
 
 impl Pagination {
@@ -33,6 +33,7 @@ impl Pagination {
 }
 
 impl Renderable for Pagination {
+    #[inline]
     fn render(self) -> String {
         let mut html = "<nav class='wj-pagination'><ul>".to_string();
         if self.show_first_last {

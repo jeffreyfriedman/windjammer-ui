@@ -2,12 +2,12 @@
 #![allow(noop_method_call)]
 #[derive(Debug, Clone, PartialEq)]
 pub struct Avatar {
-    src: String,
-    alt: String,
-    size: AvatarSize,
-    shape: AvatarShape,
-    fallback: String,
-    class: String,
+    pub src: String,
+    pub alt: String,
+    pub size: AvatarSize,
+    pub shape: AvatarShape,
+    pub fallback: String,
+    pub class: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -65,15 +65,15 @@ impl Avatar {
     #[inline]
     pub fn render(&self) -> String {
         let size_px = match self.size {
-            AvatarSize::Small => "32px",
-            AvatarSize::Medium => "48px",
-            AvatarSize::Large => "64px",
-            AvatarSize::XLarge => "96px",
+            AvatarSize::Small => "32px".to_string(),
+            AvatarSize::Medium => "48px".to_string(),
+            AvatarSize::Large => "64px".to_string(),
+            AvatarSize::XLarge => "96px".to_string(),
         };
         let border_radius = match self.shape {
-            AvatarShape::Circle => "50%",
-            AvatarShape::Square => "0",
-            AvatarShape::Rounded => "8px",
+            AvatarShape::Circle => "50%".to_string(),
+            AvatarShape::Square => "0".to_string(),
+            AvatarShape::Rounded => "8px".to_string(),
         };
         let mut html = String::new();
         if self.src.is_empty() && !self.fallback.is_empty() {
@@ -87,10 +87,10 @@ impl Avatar {
             html.push_str(&border_radius);
             html.push_str("; background-color: #3b82f6; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: ");
             let font_size = match self.size {
-                AvatarSize::Small => "12px",
-                AvatarSize::Medium => "16px",
-                AvatarSize::Large => "20px",
-                AvatarSize::XLarge => "28px",
+                AvatarSize::Small => "12px".to_string(),
+                AvatarSize::Medium => "16px".to_string(),
+                AvatarSize::Large => "20px".to_string(),
+                AvatarSize::XLarge => "28px".to_string(),
             };
             html.push_str(&font_size);
             html.push_str(";\">");

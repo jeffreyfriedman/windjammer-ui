@@ -6,11 +6,11 @@ use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct Card {
-    title: String,
-    children: Vec<String>,
-    padding: String,
-    background_color: String,
-    border_color: String,
+    pub title: String,
+    pub children: Vec<String>,
+    pub padding: String,
+    pub background_color: String,
+    pub border_color: String,
 }
 
 impl Card {

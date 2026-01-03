@@ -12,13 +12,13 @@ pub enum ModalSize {
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Modal {
-    id: String,
-    title: String,
-    content: String,
-    footer: String,
-    size: ModalSize,
-    closeable: bool,
-    visible: bool,
+    pub id: String,
+    pub title: String,
+    pub content: String,
+    pub footer: String,
+    pub size: ModalSize,
+    pub closeable: bool,
+    pub visible: bool,
 }
 
 impl Modal {
@@ -62,16 +62,17 @@ impl Modal {
 }
 
 impl Renderable for Modal {
+    #[inline]
     fn render(self) -> String {
         let width = match self.size {
-            ModalSize::Small => "400px",
-            ModalSize::Medium => "600px",
-            ModalSize::Large => "800px",
-            ModalSize::FullScreen => "100vw",
+            ModalSize::Small => "400px".to_string(),
+            ModalSize::Medium => "600px".to_string(),
+            ModalSize::Large => "800px".to_string(),
+            ModalSize::FullScreen => "100vw".to_string(),
         };
         let height = match self.size {
-            ModalSize::FullScreen => "100vh",
-            _ => "auto",
+            ModalSize::FullScreen => "100vh".to_string(),
+            _ => "auto".to_string(),
         };
         let display = {
             if self.visible {
@@ -106,7 +107,7 @@ impl Renderable for Modal {
         html.push_str("<div style='padding: 24px; flex: 1; overflow-y: auto;'>");
         html.push_str(&self.content);
         html.push_str("</div>");
-        if (self.footer.len() as i32) > 0 {
+        if self.footer.len() > (0 as usize) {
             html.push_str("<div style='padding: 16px 24px; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 8px;'>");
             html.push_str(&self.footer);
             html.push_str("</div>")

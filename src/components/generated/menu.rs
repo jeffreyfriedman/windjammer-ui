@@ -2,9 +2,9 @@
 #![allow(noop_method_call)]
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct Menu {
-    items: Vec<String>,
-    trigger: String,
-    class: String,
+    pub items: Vec<String>,
+    pub trigger: String,
+    pub class: String,
 }
 
 impl Menu {
@@ -26,6 +26,7 @@ impl Menu {
         self.class = class;
         self
     }
+    #[inline]
     pub fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<div class=\"wj-menu ");
@@ -45,11 +46,11 @@ impl Menu {
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct MenuItem {
-    label: String,
-    icon: String,
-    href: String,
-    disabled: bool,
-    class: String,
+    pub label: String,
+    pub icon: String,
+    pub href: String,
+    pub disabled: bool,
+    pub class: String,
 }
 
 impl MenuItem {
@@ -83,6 +84,7 @@ impl MenuItem {
         self.class = class;
         self
     }
+    #[inline]
     pub fn render(&self) -> String {
         let disabled_style = {
             if self.disabled {

@@ -28,14 +28,14 @@ pub enum StackJustify {
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Stack {
-    direction: StackDirection,
-    gap: String,
-    align: StackAlign,
-    justify: StackJustify,
-    children: Vec<String>,
-    padding: String,
-    width: String,
-    height: String,
+    pub direction: StackDirection,
+    pub gap: String,
+    pub align: StackAlign,
+    pub justify: StackJustify,
+    pub children: Vec<String>,
+    pub padding: String,
+    pub width: String,
+    pub height: String,
 }
 
 impl Stack {
@@ -105,24 +105,25 @@ impl Stack {
 }
 
 impl Renderable for Stack {
+    #[inline]
     fn render(self) -> String {
         let flex_direction = match self.direction {
-            StackDirection::Vertical => "column",
-            StackDirection::Horizontal => "row",
+            StackDirection::Vertical => "column".to_string(),
+            StackDirection::Horizontal => "row".to_string(),
         };
         let align_items = match self.align {
-            StackAlign::Start => "flex-start",
-            StackAlign::Center => "center",
-            StackAlign::End => "flex-end",
-            StackAlign::Stretch => "stretch",
+            StackAlign::Start => "flex-start".to_string(),
+            StackAlign::Center => "center".to_string(),
+            StackAlign::End => "flex-end".to_string(),
+            StackAlign::Stretch => "stretch".to_string(),
         };
         let justify_content = match self.justify {
-            StackJustify::Start => "flex-start",
-            StackJustify::Center => "center",
-            StackJustify::End => "flex-end",
-            StackJustify::SpaceBetween => "space-between",
-            StackJustify::SpaceAround => "space-around",
-            StackJustify::SpaceEvenly => "space-evenly",
+            StackJustify::Start => "flex-start".to_string(),
+            StackJustify::Center => "center".to_string(),
+            StackJustify::End => "flex-end".to_string(),
+            StackJustify::SpaceBetween => "space-between".to_string(),
+            StackJustify::SpaceAround => "space-around".to_string(),
+            StackJustify::SpaceEvenly => "space-evenly".to_string(),
         };
         let mut html = String::new();
         html.push_str("<div style='display: flex; flex-direction: ");

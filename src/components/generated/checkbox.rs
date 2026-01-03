@@ -11,10 +11,10 @@ pub enum CheckboxSize {
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Checkbox {
-    label: String,
-    checked: bool,
-    disabled: bool,
-    size: CheckboxSize,
+    pub label: String,
+    pub checked: bool,
+    pub disabled: bool,
+    pub size: CheckboxSize,
 }
 
 impl Checkbox {
@@ -48,9 +48,9 @@ impl Renderable for Checkbox {
     #[inline]
     fn render(self) -> String {
         let size_class = match self.size {
-            CheckboxSize::Small => "sm",
-            CheckboxSize::Medium => "md",
-            CheckboxSize::Large => "lg",
+            CheckboxSize::Small => "sm".to_string(),
+            CheckboxSize::Medium => "md".to_string(),
+            CheckboxSize::Large => "lg".to_string(),
         };
         let checked_attr = {
             if self.checked {

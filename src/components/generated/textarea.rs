@@ -1,16 +1,15 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-
 #[derive(Debug, Clone, PartialEq)]
 pub struct Textarea {
-    value: String,
-    placeholder: String,
-    rows: i32,
-    disabled: bool,
-    readonly: bool,
-    max_length: i32,
-    resize: TextareaResize,
-    class: String,
+    pub value: String,
+    pub placeholder: String,
+    pub rows: i32,
+    pub disabled: bool,
+    pub readonly: bool,
+    pub max_length: i32,
+    pub resize: TextareaResize,
+    pub class: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -75,12 +74,13 @@ impl Textarea {
         self.class = class;
         self
     }
+    #[inline]
     pub fn render(&self) -> String {
         let resize_style = match self.resize {
-            TextareaResize::None => "resize: none;",
-            TextareaResize::Vertical => "resize: vertical;",
-            TextareaResize::Horizontal => "resize: horizontal;",
-            TextareaResize::Both => "resize: both;",
+            TextareaResize::None => "resize: none;".to_string(),
+            TextareaResize::Vertical => "resize: vertical;".to_string(),
+            TextareaResize::Horizontal => "resize: horizontal;".to_string(),
+            TextareaResize::Both => "resize: both;".to_string(),
         };
         let disabled_attr = {
             if self.disabled {

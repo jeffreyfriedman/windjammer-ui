@@ -4,7 +4,7 @@ use crate::vnode_ffi;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct VNode {
-    handle: u64,
+    pub handle: u64,
 }
 
 impl VNode {
@@ -12,28 +12,28 @@ impl VNode {
     #[inline]
     pub fn div() -> VNode {
         VNode {
-            handle: vnode_ffi::vnode_element("div".to_string()),
+            handle: vnode_ffi::vnode_element("div"),
         }
     }
     /// Create a new span element
     #[inline]
     pub fn span() -> VNode {
         VNode {
-            handle: vnode_ffi::vnode_element("span".to_string()),
+            handle: vnode_ffi::vnode_element("span"),
         }
     }
     /// Create a new button element
     #[inline]
     pub fn button() -> VNode {
         VNode {
-            handle: vnode_ffi::vnode_element("button".to_string()),
+            handle: vnode_ffi::vnode_element("button"),
         }
     }
     /// Create a new input element
     #[inline]
     pub fn input() -> VNode {
         VNode {
-            handle: vnode_ffi::vnode_element("input".to_string()),
+            handle: vnode_ffi::vnode_element("input"),
         }
     }
     /// Create a new text node
@@ -84,32 +84,32 @@ impl VNode {
     /// Set id attribute
     #[inline]
     pub fn set_id(self, id: String) -> VNode {
-        vnode_ffi::vnode_attr(self.handle, "id".to_string(), id.as_str());
+        vnode_ffi::vnode_attr(self.handle, "id", id.as_str());
         self
     }
     /// Set placeholder (for inputs)
     #[inline]
     pub fn set_placeholder(self, text: String) -> VNode {
-        vnode_ffi::vnode_attr(self.handle, "placeholder".to_string(), text.as_str());
+        vnode_ffi::vnode_attr(self.handle, "placeholder", text.as_str());
         self
     }
     /// Set type attribute (for inputs/buttons)
     #[inline]
     pub fn set_type(self, t: String) -> VNode {
-        vnode_ffi::vnode_attr(self.handle, "type".to_string(), t.as_str());
+        vnode_ffi::vnode_attr(self.handle, "type", t.as_str());
         self
     }
     /// Set value attribute
     #[inline]
     pub fn set_value(self, v: String) -> VNode {
-        vnode_ffi::vnode_attr(self.handle, "value".to_string(), v.as_str());
+        vnode_ffi::vnode_attr(self.handle, "value", v.as_str());
         self
     }
     /// Set disabled attribute
     #[inline]
     pub fn set_disabled(self, d: bool) -> VNode {
         if d {
-            vnode_ffi::vnode_attr(self.handle, "disabled".to_string(), "true".to_string())
+            vnode_ffi::vnode_attr(self.handle, "disabled", "true")
         }
         self
     }

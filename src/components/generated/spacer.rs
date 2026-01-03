@@ -1,13 +1,12 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct Spacer {
-    width: String,
-    height: String,
-    flex: bool,
+    pub width: String,
+    pub height: String,
+    pub flex: bool,
 }
 
 impl Spacer {
@@ -84,6 +83,7 @@ impl Spacer {
 }
 
 impl Renderable for Spacer {
+    #[inline]
     fn render(self) -> String {
         let mut style = "".to_string();
         if self.flex {

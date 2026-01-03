@@ -1,14 +1,13 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct Dialog {
-    title: String,
-    content: String,
-    open: bool,
-    width: String,
+    pub title: String,
+    pub content: String,
+    pub open: bool,
+    pub width: String,
 }
 
 impl Dialog {

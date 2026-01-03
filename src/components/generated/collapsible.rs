@@ -1,13 +1,12 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct CollapsibleSection {
-    title: String,
-    content: String,
-    open: bool,
+    pub title: String,
+    pub content: String,
+    pub open: bool,
 }
 
 impl CollapsibleSection {

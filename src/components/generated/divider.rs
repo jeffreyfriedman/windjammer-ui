@@ -1,6 +1,5 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -11,10 +10,10 @@ pub enum DividerOrientation {
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Divider {
-    orientation: DividerOrientation,
-    color: String,
-    thickness: String,
-    margin: String,
+    pub orientation: DividerOrientation,
+    pub color: String,
+    pub thickness: String,
+    pub margin: String,
 }
 
 impl Divider {
@@ -61,8 +60,8 @@ impl Renderable for Divider {
     #[inline]
     fn render(self) -> String {
         let orientation_class = match self.orientation {
-            DividerOrientation::Horizontal => "wj-divider-horizontal",
-            DividerOrientation::Vertical => "wj-divider-vertical",
+            DividerOrientation::Horizontal => "wj-divider-horizontal".to_string(),
+            DividerOrientation::Vertical => "wj-divider-vertical".to_string(),
         };
         let style = match self.orientation {
             DividerOrientation::Horizontal => {

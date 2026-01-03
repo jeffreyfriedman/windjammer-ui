@@ -2,10 +2,10 @@
 #![allow(noop_method_call)]
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct Label {
-    text: String,
-    for_id: String,
-    required: bool,
-    class: String,
+    pub text: String,
+    pub for_id: String,
+    pub required: bool,
+    pub class: String,
 }
 
 impl Label {
@@ -33,6 +33,7 @@ impl Label {
         self.class = class;
         self
     }
+    #[inline]
     pub fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<label class=\"wj-label ");

@@ -1,6 +1,5 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -53,10 +52,10 @@ pub struct CurveEditor {
 
 impl CurveEditor {
     #[inline]
-    pub fn new(&mut self) -> CurveEditor {
+    pub fn new() -> CurveEditor {
         let mut points = Vec::new();
-        self.points.push(CurvePoint::new(0.0, 0.0));
-        self.points.push(CurvePoint::new(1.0, 1.0));
+        points.push(CurvePoint::new(0.0, 0.0));
+        points.push(CurvePoint::new(1.0, 1.0));
         CurveEditor {
             width: 300,
             height: 200,
@@ -135,6 +134,7 @@ impl CurveEditor {
 }
 
 impl Renderable for CurveEditor {
+    #[inline]
     fn render(self) -> String {
         let mut path_d = "".to_string();
         let range = self.max_value - self.min_value;
@@ -253,12 +253,10 @@ pub struct GradientEditor {
 
 impl GradientEditor {
     #[inline]
-    pub fn new(&mut self) -> GradientEditor {
+    pub fn new() -> GradientEditor {
         let mut stops = Vec::new();
-        self.stops
-            .push(GradientStop::new(0.0, "#000000".to_string()));
-        self.stops
-            .push(GradientStop::new(1.0, "#ffffff".to_string()));
+        stops.push(GradientStop::new(0.0, "#000000".to_string()));
+        stops.push(GradientStop::new(1.0, "#ffffff".to_string()));
         GradientEditor {
             width: 300,
             height: 40,
@@ -287,7 +285,7 @@ impl Renderable for GradientEditor {
             match s {
                 Some(stop) => {
                     if i > 0 {
-                        gradient_stops = format!("{}{}", gradient_stops, ", ");
+                        gradient_stops += ", ";
                     }
                     gradient_stops = format!(
                         "{}{}{}{}",

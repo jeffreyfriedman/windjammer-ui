@@ -10,11 +10,11 @@ pub enum FlexDirection {
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Flex {
-    children: Vec<String>,
-    direction: FlexDirection,
-    gap: String,
-    padding: String,
-    background_color: String,
+    pub children: Vec<String>,
+    pub direction: FlexDirection,
+    pub gap: String,
+    pub padding: String,
+    pub background_color: String,
 }
 
 impl Flex {
@@ -66,10 +66,11 @@ impl Flex {
 }
 
 impl Renderable for Flex {
+    #[inline]
     fn render(self) -> String {
         let direction_str = match self.direction {
-            FlexDirection::Row => "row",
-            FlexDirection::Column => "column",
+            FlexDirection::Row => "row".to_string(),
+            FlexDirection::Column => "column".to_string(),
         };
         let mut style = format!(
             "{}{}{}{}{}",

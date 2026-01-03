@@ -2,16 +2,16 @@
 #![allow(noop_method_call)]
 #[derive(Debug, Clone, Default)]
 pub struct Breadcrumb {
-    items: Vec<BreadcrumbItem>,
-    separator: String,
-    class: String,
+    pub items: Vec<BreadcrumbItem>,
+    pub separator: String,
+    pub class: String,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct BreadcrumbItem {
-    label: String,
-    href: String,
-    active: bool,
+    pub label: String,
+    pub href: String,
+    pub active: bool,
 }
 
 impl Breadcrumb {

@@ -4,8 +4,8 @@ use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct Toolbar {
-    items: Vec<String>,
-    position: String,
+    pub items: Vec<String>,
+    pub position: String,
 }
 
 impl Toolbar {

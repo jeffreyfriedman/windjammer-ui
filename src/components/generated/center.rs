@@ -1,12 +1,11 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct Center {
-    child: String,
-    width: String,
-    height: String,
-    class: String,
+    pub child: String,
+    pub width: String,
+    pub height: String,
+    pub class: String,
 }
 
 impl Center {
@@ -34,6 +33,7 @@ impl Center {
         self.class = class;
         self
     }
+    #[inline]
     pub fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<div class=\"wj-center ");

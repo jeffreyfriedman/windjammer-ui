@@ -2,11 +2,11 @@
 #![allow(noop_method_call)]
 #[derive(Debug, Clone, PartialEq)]
 pub struct Column {
-    children: Vec<String>,
-    gap: String,
-    align: ColumnAlign,
-    justify: ColumnJustify,
-    class: String,
+    pub children: Vec<String>,
+    pub gap: String,
+    pub align: ColumnAlign,
+    pub justify: ColumnJustify,
+    pub class: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -63,20 +63,21 @@ impl Column {
         self.class = class;
         self
     }
+    #[inline]
     pub fn render(&self) -> String {
         let align_str = match self.align {
-            ColumnAlign::Start => "flex-start",
-            ColumnAlign::Center => "center",
-            ColumnAlign::End => "flex-end",
-            ColumnAlign::Stretch => "stretch",
+            ColumnAlign::Start => "flex-start".to_string(),
+            ColumnAlign::Center => "center".to_string(),
+            ColumnAlign::End => "flex-end".to_string(),
+            ColumnAlign::Stretch => "stretch".to_string(),
         };
         let justify_str = match self.justify {
-            ColumnJustify::Start => "flex-start",
-            ColumnJustify::Center => "center",
-            ColumnJustify::End => "flex-end",
-            ColumnJustify::SpaceBetween => "space-between",
-            ColumnJustify::SpaceAround => "space-around",
-            ColumnJustify::SpaceEvenly => "space-evenly",
+            ColumnJustify::Start => "flex-start".to_string(),
+            ColumnJustify::Center => "center".to_string(),
+            ColumnJustify::End => "flex-end".to_string(),
+            ColumnJustify::SpaceBetween => "space-between".to_string(),
+            ColumnJustify::SpaceAround => "space-around".to_string(),
+            ColumnJustify::SpaceEvenly => "space-evenly".to_string(),
         };
         let mut html = String::new();
         html.push_str("<div class=\"wj-column ");
