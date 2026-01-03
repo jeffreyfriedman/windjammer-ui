@@ -1,0 +1,64 @@
+# Dependabot configuration for windjammer-ui
+# Automatically creates PRs for dependency updates
+# See: https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  # Rust dependencies (Cargo.toml)
+  - package-ecosystem: "cargo"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 10
+    # Group minor and patch updates together to reduce PR noise
+    groups:
+      development-dependencies:
+        patterns:
+          - "criterion"
+          - "tokio-test"
+        update-types:
+          - "minor"
+          - "patch"
+      
+      production-dependencies:
+        patterns:
+          - "*"
+        update-types:
+          - "patch"
+    labels:
+      - "dependencies"
+      - "rust"
+    reviewers:
+      - "jeffreyfriedman"
+  
+  # Rust dependencies for macro crate
+  - package-ecosystem: "cargo"
+    directory: "/windjammer-ui-macro"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "rust"
+      - "macro"
+    reviewers:
+      - "jeffreyfriedman"
+  
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "ci"
+    reviewers:
+      - "jeffreyfriedman"
+
