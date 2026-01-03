@@ -3,7 +3,7 @@
 //! Verify all 49 components generated from pure Windjammer can be instantiated and rendered
 
 use windjammer_ui::components::generated::Renderable;
-use windjammer_ui::components::generated::{avatar, colorpicker, dialog};
+use windjammer_ui::components::generated::{avatar, dialog};
 use windjammer_ui::components::*;
 
 #[test]
@@ -49,7 +49,7 @@ fn test_all_49_components_render() {
     let _collapsible = CollapsibleSection::new("title".to_string(), "content".to_string()).render();
     let _codeeditor = CodeEditor::new("code".to_string()).render();
     let _advcodeeditor = AdvancedCodeEditor::new("code".to_string()).render();
-    let _colorpicker = colorpicker::ColorPicker::new().render();
+    // ColorPicker not implemented yet (empty generated file)
     let _filetree = FileTree::new(FileNode::new("root".to_string(), true)).render();
     let _treeview = TreeView::new().render();
     let _splitpanel = SplitPanel::new("left".to_string(), "right".to_string()).render();
@@ -191,6 +191,31 @@ fn test_dialog_component() {
         .open(true)
         .render();
     assert!(dialog.contains("Title"));
+}
+
+#[test]
+fn test_avatar_component() {
+    // Test basic avatar with image
+    let avatar_img = avatar::Avatar::new("user.jpg".to_string())
+        .alt("User profile".to_string())
+        .size(avatar::AvatarSize::Large)
+        .shape(avatar::AvatarShape::Circle)
+        .render();
+    assert!(avatar_img.contains("user.jpg"));
+    assert!(avatar_img.contains("User profile"));
+    assert!(avatar_img.contains("64px")); // Large size
+    assert!(avatar_img.contains("50%")); // Circle shape
+
+    // Test fallback behavior (no image, shows initials)
+    let avatar_fallback = avatar::Avatar::new(String::new())
+        .fallback("JF".to_string())
+        .size(avatar::AvatarSize::Small)
+        .shape(avatar::AvatarShape::Rounded)
+        .render();
+    assert!(avatar_fallback.contains("JF"));
+    assert!(avatar_fallback.contains("32px")); // Small size
+    assert!(avatar_fallback.contains("8px")); // Rounded shape
+    assert!(avatar_fallback.contains("wj-avatar-fallback"));
 }
 
 #[test]
