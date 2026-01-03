@@ -2,10 +2,8 @@
 #![allow(noop_method_call)]
 //! Cross-platform event system
 
-
 use std::fmt;
 use std::sync::{Arc, Mutex};
-
 
 /// Cross-platform event types
 #[derive(Debug, Clone, PartialEq)]
