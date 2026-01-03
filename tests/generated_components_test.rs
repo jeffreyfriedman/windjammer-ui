@@ -49,7 +49,7 @@ fn test_all_49_components_render() {
     let _collapsible = CollapsibleSection::new("title".to_string(), "content".to_string()).render();
     let _codeeditor = CodeEditor::new("code".to_string()).render();
     let _advcodeeditor = AdvancedCodeEditor::new("code".to_string()).render();
-    // ColorPicker not implemented yet (empty generated file)
+    let _colorpicker = colorpicker::ColorPicker::new().render();
     let _filetree = FileTree::new(FileNode::new("root".to_string(), true)).render();
     let _treeview = TreeView::new().render();
     let _splitpanel = SplitPanel::new("left".to_string(), "right".to_string()).render();

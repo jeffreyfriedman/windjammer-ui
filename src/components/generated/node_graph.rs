@@ -26,26 +26,40 @@ pub struct NodePin {
 }
 
 impl NodePin {
-#[inline]
-pub fn input(id: String, name: String, pin_type: PinType) -> NodePin {
-        NodePin { id, name, pin_type, is_input: true, connected_to: None, default_value: "".to_string() }
-}
-#[inline]
-pub fn output(id: String, name: String, pin_type: PinType) -> NodePin {
-        NodePin { id, name, pin_type, is_input: false, connected_to: None, default_value: "".to_string() }
-}
-#[inline]
-pub fn default_value(mut self, value: String) -> NodePin {
+    #[inline]
+    pub fn input(id: String, name: String, pin_type: PinType) -> NodePin {
+        NodePin {
+            id,
+            name,
+            pin_type,
+            is_input: true,
+            connected_to: None,
+            default_value: "".to_string(),
+        }
+    }
+    #[inline]
+    pub fn output(id: String, name: String, pin_type: PinType) -> NodePin {
+        NodePin {
+            id,
+            name,
+            pin_type,
+            is_input: false,
+            connected_to: None,
+            default_value: "".to_string(),
+        }
+    }
+    #[inline]
+    pub fn default_value(mut self, value: String) -> NodePin {
         self.default_value = value;
         self
-}
-#[inline]
-pub fn connect(mut self, target: String) -> NodePin {
+    }
+    #[inline]
+    pub fn connect(mut self, target: String) -> NodePin {
         self.connected_to = Some(target.to_string());
         self
-}
-#[inline]
-pub fn get_color(&self) -> String {
+    }
+    #[inline]
+    pub fn get_color(&self) -> String {
         match self.pin_type {
             PinType::Flow => "#ffffff".to_string(),
             PinType::Bool => "#e94560".to_string(),
@@ -59,7 +73,7 @@ pub fn get_color(&self) -> String {
             PinType::Object => "#3b82f6".to_string(),
             PinType::Any => "#888888".to_string(),
         }
-}
+    }
 }
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -89,38 +103,48 @@ pub struct GraphNode {
 }
 
 impl GraphNode {
-#[inline]
-pub fn new(id: String, title: String, category: NodeCategory) -> GraphNode {
-        GraphNode { id, title, category, x: 0.0, y: 0.0, inputs: Vec::new(), outputs: Vec::new(), collapsed: false, preview_enabled: false }
-}
-#[inline]
-pub fn position(mut self, x: f32, y: f32) -> GraphNode {
+    #[inline]
+    pub fn new(id: String, title: String, category: NodeCategory) -> GraphNode {
+        GraphNode {
+            id,
+            title,
+            category,
+            x: 0.0,
+            y: 0.0,
+            inputs: Vec::new(),
+            outputs: Vec::new(),
+            collapsed: false,
+            preview_enabled: false,
+        }
+    }
+    #[inline]
+    pub fn position(mut self, x: f32, y: f32) -> GraphNode {
         self.x = x;
         self.y = y;
         self
-}
-#[inline]
-pub fn input(mut self, pin: NodePin) -> GraphNode {
+    }
+    #[inline]
+    pub fn input(mut self, pin: NodePin) -> GraphNode {
         self.inputs.push(pin);
         self
-}
-#[inline]
-pub fn output(mut self, pin: NodePin) -> GraphNode {
+    }
+    #[inline]
+    pub fn output(mut self, pin: NodePin) -> GraphNode {
         self.outputs.push(pin);
         self
-}
-#[inline]
-pub fn collapsed(mut self, collapsed: bool) -> GraphNode {
+    }
+    #[inline]
+    pub fn collapsed(mut self, collapsed: bool) -> GraphNode {
         self.collapsed = collapsed;
         self
-}
-#[inline]
-pub fn preview(mut self, enabled: bool) -> GraphNode {
+    }
+    #[inline]
+    pub fn preview(mut self, enabled: bool) -> GraphNode {
         self.preview_enabled = enabled;
         self
-}
-#[inline]
-pub fn get_category_color(&self) -> String {
+    }
+    #[inline]
+    pub fn get_category_color(&self) -> String {
         match self.category {
             NodeCategory::Math => "#4ade80".to_string(),
             NodeCategory::Logic => "#e94560".to_string(),
@@ -132,12 +156,12 @@ pub fn get_category_color(&self) -> String {
             NodeCategory::Variable => "#a855f7".to_string(),
             NodeCategory::Custom => "#888888".to_string(),
         }
-}
+    }
 }
 
 impl Renderable for GraphNode {
-#[inline]
-fn render(self) -> String {
+    #[inline]
+    fn render(self) -> String {
         let header_color = self.get_category_color();
         let mut inputs_html = "".to_string();
         for pin in &self.inputs {
@@ -146,12 +170,19 @@ fn render(self) -> String {
                 Some(_) => "connected".to_string(),
                 None => "".to_string(),
             };
-            inputs_html += format!("
+            inputs_html += format!(
+                "
                 <div class='node-pin input {}'>
                     <div class='pin-socket' style='background: {};' data-pin='{}'></div>
                     <span class='pin-name'>{}</span>
                 </div>
-            ", connected_class, color, pin.id, pin.name.clone()).as_str();
+            ",
+                connected_class,
+                color,
+                pin.id,
+                pin.name.clone()
+            )
+            .as_str();
         }
         let mut outputs_html = "".to_string();
         for pin in &self.outputs {
@@ -160,21 +191,30 @@ fn render(self) -> String {
                 Some(_) => "connected".to_string(),
                 None => "".to_string(),
             };
-            outputs_html += format!("
+            outputs_html += format!(
+                "
                 <div class='node-pin output {}'>
                     <span class='pin-name'>{}</span>
                     <div class='pin-socket' style='background: {};' data-pin='{}'></div>
                 </div>
-            ", connected_class, pin.name.clone(), color, pin.id).as_str();
+            ",
+                connected_class,
+                pin.name.clone(),
+                color,
+                pin.id
+            )
+            .as_str();
         }
         let preview_html = {
             if self.preview_enabled {
-                "<div class='node-preview'><canvas class='preview-canvas'></canvas></div>".to_string()
+                "<div class='node-preview'><canvas class='preview-canvas'></canvas></div>"
+                    .to_string()
             } else {
                 "".to_string()
             }
         };
-        format!("
+        format!(
+            "
             <div class='graph-node' id='{}' style='left: {}px; top: {}px;'>
                 <div class='node-header' style='background: {};'>
                     <span class='node-title'>{}</span>
@@ -193,8 +233,17 @@ fn render(self) -> String {
                 </div>
                 {}
             </div>
-        ", self.id, self.x, self.y, header_color, self.title, inputs_html, outputs_html, preview_html)
-}
+        ",
+            self.id,
+            self.x,
+            self.y,
+            header_color,
+            self.title,
+            inputs_html,
+            outputs_html,
+            preview_html
+        )
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
@@ -219,54 +268,87 @@ pub struct NodeGraph {
 }
 
 impl NodeGraph {
-#[inline]
-pub fn new() -> NodeGraph {
-        NodeGraph { width: 800, height: 600, nodes: Vec::new(), connections: Vec::new(), zoom: 1.0, pan_x: 0.0, pan_y: 0.0, show_grid: true, on_change: "".to_string() }
-}
-#[inline]
-pub fn size(mut self, width: i32, height: i32) -> NodeGraph {
+    #[inline]
+    pub fn new() -> NodeGraph {
+        NodeGraph {
+            width: 800,
+            height: 600,
+            nodes: Vec::new(),
+            connections: Vec::new(),
+            zoom: 1.0,
+            pan_x: 0.0,
+            pan_y: 0.0,
+            show_grid: true,
+            on_change: "".to_string(),
+        }
+    }
+    #[inline]
+    pub fn size(mut self, width: i32, height: i32) -> NodeGraph {
         self.width = width;
         self.height = height;
         self
-}
-#[inline]
-pub fn node(mut self, node: GraphNode) -> NodeGraph {
+    }
+    #[inline]
+    pub fn node(mut self, node: GraphNode) -> NodeGraph {
         self.nodes.push(node);
         self
-}
-#[inline]
-pub fn connect(mut self, from_node: String, from_pin: String, to_node: String, to_pin: String) -> NodeGraph {
-        self.connections.push(NodeConnection { from_node, from_pin, to_node, to_pin });
+    }
+    #[inline]
+    pub fn connect(
+        mut self,
+        from_node: String,
+        from_pin: String,
+        to_node: String,
+        to_pin: String,
+    ) -> NodeGraph {
+        self.connections.push(NodeConnection {
+            from_node,
+            from_pin,
+            to_node,
+            to_pin,
+        });
         self
-}
-#[inline]
-pub fn zoom(mut self, zoom: f32) -> NodeGraph {
+    }
+    #[inline]
+    pub fn zoom(mut self, zoom: f32) -> NodeGraph {
         self.zoom = zoom;
         self
-}
-#[inline]
-pub fn pan(mut self, x: f32, y: f32) -> NodeGraph {
+    }
+    #[inline]
+    pub fn pan(mut self, x: f32, y: f32) -> NodeGraph {
         self.pan_x = x;
         self.pan_y = y;
         self
-}
+    }
 }
 
 impl Renderable for NodeGraph {
-#[inline]
-fn render(self) -> String {
+    #[inline]
+    fn render(self) -> String {
         let mut nodes_html = "".to_string();
         for n in &self.nodes {
-            nodes_html = format!("{}{}{}", nodes_html, n.clone().render().as_str(), "
-");
+            nodes_html = format!(
+                "{}{}{}",
+                nodes_html,
+                n.clone().render().as_str(),
+                "
+"
+            );
         }
         let mut connections_html = "".to_string();
         for c in &self.connections {
-            connections_html += format!("
+            connections_html += format!(
+                "
                 <path class='node-connection' 
                       data-from='{}:{}' 
                       data-to='{}:{}'/>
-            ", c.from_node.clone(), c.from_pin.clone(), c.to_node.clone(), c.to_pin.clone()).as_str();
+            ",
+                c.from_node.clone(),
+                c.from_pin.clone(),
+                c.to_node.clone(),
+                c.to_pin.clone()
+            )
+            .as_str();
         }
         let grid_class = {
             if self.show_grid {
@@ -275,7 +357,8 @@ fn render(self) -> String {
                 "".to_string()
             }
         };
-        format!("
+        format!(
+            "
             <div class='node-graph {}' style='width: {}px; height: {}px;'>
                 <div class='graph-toolbar'>
                     <button onclick='addNode()'>+ Add Node</button>
@@ -298,8 +381,18 @@ fn render(self) -> String {
                     <div class='minimap-viewport'></div>
                 </div>
             </div>
-        ", grid_class, self.width, self.height, self.zoom * 100.0, self.zoom, self.pan_x, self.pan_y, connections_html, nodes_html)
-}
+        ",
+            grid_class,
+            self.width,
+            self.height,
+            self.zoom * 100.0,
+            self.zoom,
+            self.pan_x,
+            self.pan_y,
+            connections_html,
+            nodes_html
+        )
+    }
 }
 
 #[inline]
@@ -511,6 +604,6 @@ pub fn node_graph_styles() -> String {
         border: 2px solid #e94560;
         background: rgba(233, 69, 96, 0.1);
     }
-    ".to_string()
+    "
+    .to_string()
 }
-

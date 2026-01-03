@@ -9,25 +9,30 @@ pub struct Dialog {
 }
 
 impl Dialog {
-#[inline]
-pub fn new(title: String, content: String) -> Dialog {
-        Dialog { title, content, open: false, width: "500px".to_string() }
-}
-#[inline]
-pub fn open(mut self, open: bool) -> Dialog {
+    #[inline]
+    pub fn new(title: String, content: String) -> Dialog {
+        Dialog {
+            title,
+            content,
+            open: false,
+            width: "500px".to_string(),
+        }
+    }
+    #[inline]
+    pub fn open(mut self, open: bool) -> Dialog {
         self.open = open;
         self
-}
-#[inline]
-pub fn width(mut self, width: String) -> Dialog {
+    }
+    #[inline]
+    pub fn width(mut self, width: String) -> Dialog {
         self.width = width;
         self
-}
+    }
 }
 
 impl Renderable for Dialog {
-#[inline]
-fn render(self) -> String {
+    #[inline]
+    fn render(self) -> String {
         let display_style = {
             if self.open {
                 "display: flex;".to_string()
@@ -35,7 +40,8 @@ fn render(self) -> String {
                 "display: none;".to_string()
             }
         };
-        format!("<div class='wj-dialog-overlay' style='{}'>
+        format!(
+            "<div class='wj-dialog-overlay' style='{}'>
   <div class='wj-dialog' style='max-width: {}; width: 90%;'>
     <div class='wj-dialog-header'>
       <h2>{}</h2>
@@ -45,7 +51,8 @@ fn render(self) -> String {
       {}
     </div>
   </div>
-</div>", display_style, self.width, self.title, self.content)
+</div>",
+            display_style, self.width, self.title, self.content
+        )
+    }
 }
-}
-

@@ -14,32 +14,37 @@ pub enum LoadingSize {
 }
 
 impl Loading {
-#[inline]
-pub fn new() -> Loading {
-        Loading { text: String::new(), size: LoadingSize::Medium, overlay: false, class: String::new() }
-}
-#[inline]
-pub fn text(mut self, text: String) -> Loading {
+    #[inline]
+    pub fn new() -> Loading {
+        Loading {
+            text: String::new(),
+            size: LoadingSize::Medium,
+            overlay: false,
+            class: String::new(),
+        }
+    }
+    #[inline]
+    pub fn text(mut self, text: String) -> Loading {
         self.text = text;
         self
-}
-#[inline]
-pub fn size(mut self, size: LoadingSize) -> Loading {
+    }
+    #[inline]
+    pub fn size(mut self, size: LoadingSize) -> Loading {
         self.size = size;
         self
-}
-#[inline]
-pub fn overlay(mut self, overlay: bool) -> Loading {
+    }
+    #[inline]
+    pub fn overlay(mut self, overlay: bool) -> Loading {
         self.overlay = overlay;
         self
-}
-#[inline]
-pub fn class(mut self, class: String) -> Loading {
+    }
+    #[inline]
+    pub fn class(mut self, class: String) -> Loading {
         self.class = class;
         self
-}
-#[inline]
-pub fn render(&self) -> String {
+    }
+    #[inline]
+    pub fn render(&self) -> String {
         let spinner_size = match self.size {
             LoadingSize::Small => "24px".to_string(),
             LoadingSize::Medium => "40px".to_string(),
@@ -55,8 +60,10 @@ pub fn render(&self) -> String {
             html.push_str("<div class=\"wj-loading-overlay\" style=\"position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; z-index: 9999;\">")
         }
         html.push_str("<div class=\"wj-loading ");
-        html.push_str(&self.class.as_str());
-        html.push_str("\" style=\"display: flex; flex-direction: column; align-items: center; gap: 12px;\">");
+        html.push_str(self.class.as_str());
+        html.push_str(
+            "\" style=\"display: flex; flex-direction: column; align-items: center; gap: 12px;\">",
+        );
         html.push_str("<div style=\"width: ");
         html.push_str(&spinner_size);
         html.push_str("; height: ");
@@ -72,7 +79,7 @@ pub fn render(&self) -> String {
                 html.push_str("#6b7280")
             }
             html.push_str("; font-size: 14px;\">");
-            html.push_str(&self.text.as_str());
+            html.push_str(self.text.as_str());
             html.push_str("</span>")
         }
         html.push_str("</div>");
@@ -81,6 +88,5 @@ pub fn render(&self) -> String {
         }
         html.push_str("<style>@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>");
         html
+    }
 }
-}
-

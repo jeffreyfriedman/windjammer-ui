@@ -10,45 +10,51 @@ pub struct Container {
 }
 
 impl Container {
-#[inline]
-pub fn new() -> Container {
-        Container { children: Vec::new(), max_width: "".to_string(), max_height: "".to_string(), padding: "16px".to_string(), background_color: "".to_string() }
-}
-#[inline]
-pub fn child(mut self, child: String) -> Container {
+    #[inline]
+    pub fn new() -> Container {
+        Container {
+            children: Vec::new(),
+            max_width: "".to_string(),
+            max_height: "".to_string(),
+            padding: "16px".to_string(),
+            background_color: "".to_string(),
+        }
+    }
+    #[inline]
+    pub fn child(mut self, child: String) -> Container {
         self.children.push(child);
         self
-}
-#[inline]
-pub fn children(mut self, children: Vec<String>) -> Container {
+    }
+    #[inline]
+    pub fn children(mut self, children: Vec<String>) -> Container {
         self.children = children;
         self
-}
-#[inline]
-pub fn max_width(mut self, width: String) -> Container {
+    }
+    #[inline]
+    pub fn max_width(mut self, width: String) -> Container {
         self.max_width = width;
         self
-}
-#[inline]
-pub fn max_height(mut self, height: String) -> Container {
+    }
+    #[inline]
+    pub fn max_height(mut self, height: String) -> Container {
         self.max_height = height;
         self
-}
-#[inline]
-pub fn padding(mut self, padding: String) -> Container {
+    }
+    #[inline]
+    pub fn padding(mut self, padding: String) -> Container {
         self.padding = padding;
         self
-}
-#[inline]
-pub fn background_color(mut self, color: String) -> Container {
+    }
+    #[inline]
+    pub fn background_color(mut self, color: String) -> Container {
         self.background_color = color;
         self
-}
+    }
 }
 
 impl Renderable for Container {
-#[inline]
-fn render(self) -> String {
+    #[inline]
+    fn render(self) -> String {
         let mut style = "margin: 0 auto; ".to_string();
         if self.max_width != "" {
             style = format!("{}{}{}{}", style, "max-width: ", self.max_width, "; ");
@@ -60,13 +66,20 @@ fn render(self) -> String {
             style = format!("{}{}{}{}", style, "padding: ", self.padding, "; ");
         }
         if self.background_color != "" {
-            style = format!("{}{}{}{}", style, "background-color: ", self.background_color, "; ");
+            style = format!(
+                "{}{}{}{}",
+                style, "background-color: ", self.background_color, "; "
+            );
         }
-        let children_html = self.children.join("
-  ");
-        format!("<div class='wj-container' style='{}'>
+        let children_html = self.children.join(
+            "
+  ",
+        );
+        format!(
+            "<div class='wj-container' style='{}'>
   {}
-</div>", style, children_html)
+</div>",
+            style, children_html
+        )
+    }
 }
-}
-

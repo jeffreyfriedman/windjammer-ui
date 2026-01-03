@@ -24,37 +24,44 @@ pub enum AvatarShape {
 }
 
 impl Avatar {
-#[inline]
-pub fn new(src: String) -> Avatar {
-        Avatar { src, alt: "Avatar".to_string(), size: AvatarSize::Medium, shape: AvatarShape::Circle, fallback: String::new(), class: String::new() }
-}
-#[inline]
-pub fn alt(mut self, alt: String) -> Avatar {
+    #[inline]
+    pub fn new(src: String) -> Avatar {
+        Avatar {
+            src,
+            alt: "Avatar".to_string(),
+            size: AvatarSize::Medium,
+            shape: AvatarShape::Circle,
+            fallback: String::new(),
+            class: String::new(),
+        }
+    }
+    #[inline]
+    pub fn alt(mut self, alt: String) -> Avatar {
         self.alt = alt;
         self
-}
-#[inline]
-pub fn size(mut self, size: AvatarSize) -> Avatar {
+    }
+    #[inline]
+    pub fn size(mut self, size: AvatarSize) -> Avatar {
         self.size = size;
         self
-}
-#[inline]
-pub fn shape(mut self, shape: AvatarShape) -> Avatar {
+    }
+    #[inline]
+    pub fn shape(mut self, shape: AvatarShape) -> Avatar {
         self.shape = shape;
         self
-}
-#[inline]
-pub fn fallback(mut self, fallback: String) -> Avatar {
+    }
+    #[inline]
+    pub fn fallback(mut self, fallback: String) -> Avatar {
         self.fallback = fallback;
         self
-}
-#[inline]
-pub fn class(mut self, class: String) -> Avatar {
+    }
+    #[inline]
+    pub fn class(mut self, class: String) -> Avatar {
         self.class = class;
         self
-}
-#[inline]
-pub fn render(&self) -> String {
+    }
+    #[inline]
+    pub fn render(&self) -> String {
         let size_px = match self.size {
             AvatarSize::Small => "32px".to_string(),
             AvatarSize::Medium => "48px".to_string(),
@@ -69,7 +76,7 @@ pub fn render(&self) -> String {
         let mut html = String::new();
         if self.src.is_empty() && !self.fallback.is_empty() {
             html.push_str("<div class=\"wj-avatar wj-avatar-fallback ");
-            html.push_str(&self.class.as_str());
+            html.push_str(self.class.as_str());
             html.push_str("\" style=\"width: ");
             html.push_str(&size_px);
             html.push_str("; height: ");
@@ -85,15 +92,15 @@ pub fn render(&self) -> String {
             };
             html.push_str(&font_size);
             html.push_str(";\">");
-            html.push_str(&self.fallback.as_str());
+            html.push_str(self.fallback.as_str());
             html.push_str("</div>")
         } else {
             html.push_str("<img class=\"wj-avatar ");
-            html.push_str(&self.class.as_str());
+            html.push_str(self.class.as_str());
             html.push_str("\" src=\"");
-            html.push_str(&self.src.as_str());
+            html.push_str(self.src.as_str());
             html.push_str("\" alt=\"");
-            html.push_str(&self.alt.as_str());
+            html.push_str(self.alt.as_str());
             html.push_str("\" style=\"width: ");
             html.push_str(&size_px);
             html.push_str("; height: ");
@@ -103,6 +110,5 @@ pub fn render(&self) -> String {
             html.push_str("; object-fit: cover;\">")
         }
         html
+    }
 }
-}
-

@@ -21,52 +21,91 @@ pub struct Property {
 }
 
 impl Property {
-#[inline]
-pub fn number(name: String, value: f32, min: f32, max: f32) -> Property {
-        Property { name, value: format!("{:.3}", value), property_type: PropertyType::Number { min, max, step: 0.1 }, unit: "".to_string(), tooltip: "".to_string(), on_change: "".to_string() }
-}
-#[inline]
-pub fn integer(name: String, value: i32, min: i32, max: i32) -> Property {
-        Property { name, value: format!("{}", value), property_type: PropertyType::Integer { min, max }, unit: "".to_string(), tooltip: "".to_string(), on_change: "".to_string() }
-}
-#[inline]
-pub fn boolean(name: String, value: bool) -> Property {
-        Property { name, value: {
-            if value {
-                "true".to_string()
-            } else {
-                "false".to_string()
-            }
-        }, property_type: PropertyType::Boolean, unit: "".to_string(), tooltip: "".to_string(), on_change: "".to_string() }
-}
-#[inline]
-pub fn text(name: String, value: String) -> Property {
-        Property { name, value, property_type: PropertyType::Text, unit: "".to_string(), tooltip: "".to_string(), on_change: "".to_string() }
-}
-#[inline]
-pub fn color(name: String, value: String) -> Property {
-        Property { name, value, property_type: PropertyType::Color, unit: "".to_string(), tooltip: "".to_string(), on_change: "".to_string() }
-}
-#[inline]
-pub fn unit(mut self, unit: String) -> Property {
+    #[inline]
+    pub fn number(name: String, value: f32, min: f32, max: f32) -> Property {
+        Property {
+            name,
+            value: format!("{:.3}", value),
+            property_type: PropertyType::Number {
+                min,
+                max,
+                step: 0.1,
+            },
+            unit: "".to_string(),
+            tooltip: "".to_string(),
+            on_change: "".to_string(),
+        }
+    }
+    #[inline]
+    pub fn integer(name: String, value: i32, min: i32, max: i32) -> Property {
+        Property {
+            name,
+            value: format!("{}", value),
+            property_type: PropertyType::Integer { min, max },
+            unit: "".to_string(),
+            tooltip: "".to_string(),
+            on_change: "".to_string(),
+        }
+    }
+    #[inline]
+    pub fn boolean(name: String, value: bool) -> Property {
+        Property {
+            name,
+            value: {
+                if value {
+                    "true".to_string()
+                } else {
+                    "false".to_string()
+                }
+            },
+            property_type: PropertyType::Boolean,
+            unit: "".to_string(),
+            tooltip: "".to_string(),
+            on_change: "".to_string(),
+        }
+    }
+    #[inline]
+    pub fn text(name: String, value: String) -> Property {
+        Property {
+            name,
+            value,
+            property_type: PropertyType::Text,
+            unit: "".to_string(),
+            tooltip: "".to_string(),
+            on_change: "".to_string(),
+        }
+    }
+    #[inline]
+    pub fn color(name: String, value: String) -> Property {
+        Property {
+            name,
+            value,
+            property_type: PropertyType::Color,
+            unit: "".to_string(),
+            tooltip: "".to_string(),
+            on_change: "".to_string(),
+        }
+    }
+    #[inline]
+    pub fn unit(mut self, unit: String) -> Property {
         self.unit = unit;
         self
-}
-#[inline]
-pub fn tooltip(mut self, tooltip: String) -> Property {
+    }
+    #[inline]
+    pub fn tooltip(mut self, tooltip: String) -> Property {
         self.tooltip = tooltip;
         self
-}
-#[inline]
-pub fn on_change(mut self, handler: String) -> Property {
+    }
+    #[inline]
+    pub fn on_change(mut self, handler: String) -> Property {
         self.on_change = handler;
         self
-}
+    }
 }
 
 impl Renderable for Property {
-#[inline]
-fn render(self) -> String {
+    #[inline]
+    fn render(self) -> String {
         let tooltip_attr = {
             if self.tooltip != "" {
                 format!(" title='{}'", self.tooltip)
@@ -82,26 +121,36 @@ fn render(self) -> String {
             }
         };
         let input_html = match self.property_type.clone() {
-            PropertyType::Number { min: mn, max: mx, step: st } => {
-                format!("
+            PropertyType::Number {
+                min: mn,
+                max: mx,
+                step: st,
+            } => {
+                format!(
+                    "
                     <div class='prop-number'>
                         <input type='number' class='prop-input' 
                                value='{}' min='{}' max='{}' step='{}'
                                onchange='{}(this.value)'/>
                         {}
                     </div>
-                ", self.value, mn, mx, st, self.on_change, unit_html)
-            },
+                ",
+                    self.value, mn, mx, st, self.on_change, unit_html
+                )
+            }
             PropertyType::Integer { min: mn, max: mx } => {
-                format!("
+                format!(
+                    "
                     <div class='prop-number'>
                         <input type='number' class='prop-input' 
                                value='{}' min='{}' max='{}' step='1'
                                onchange='{}(this.value)'/>
                         {}
                     </div>
-                ", self.value, mn, mx, self.on_change, unit_html)
-            },
+                ",
+                    self.value, mn, mx, self.on_change, unit_html
+                )
+            }
             PropertyType::Boolean => {
                 let checked = {
                     if self.value == "true" {
@@ -110,29 +159,38 @@ fn render(self) -> String {
                         "".to_string()
                     }
                 };
-                format!("
+                format!(
+                    "
                     <label class='prop-toggle'>
                         <input type='checkbox' {} onchange='{}(this.checked)'/>
                         <span class='toggle-slider'></span>
                     </label>
-                ", checked, self.on_change)
-            },
+                ",
+                    checked, self.on_change
+                )
+            }
             PropertyType::Text => {
-                format!("
+                format!(
+                    "
                     <input type='text' class='prop-input prop-text' 
                            value='{}' onchange='{}(this.value)'/>
-                ", self.value, self.on_change)
-            },
+                ",
+                    self.value, self.on_change
+                )
+            }
             PropertyType::Color => {
-                format!("
+                format!(
+                    "
                     <div class='prop-color'>
                         <input type='color' class='color-swatch' 
                                value='{}' onchange='{}(this.value)'/>
                         <input type='text' class='color-hex' 
                                value='{}' onchange='{}(this.value)'/>
                     </div>
-                ", self.value, self.on_change, self.value, self.on_change)
-            },
+                ",
+                    self.value, self.on_change, self.value, self.on_change
+                )
+            }
             PropertyType::Dropdown { options: opts } => {
                 let mut options_html = "".to_string();
                 for o in opts {
@@ -143,24 +201,31 @@ fn render(self) -> String {
                             "".to_string()
                         }
                     };
-                    options_html += format!("<option value='{}' {}>{}</option>", o, selected, o).as_str();
+                    options_html +=
+                        format!("<option value='{}' {}>{}</option>", o, selected, o).as_str();
                 }
-                format!("
+                format!(
+                    "
                     <select class='prop-select' onchange='{}(this.value)'>
                         {}
                     </select>
-                ", self.on_change, options_html)
-            },
+                ",
+                    self.on_change, options_html
+                )
+            }
         };
-        format!("
+        format!(
+            "
             <div class='prop-row'{}>
                 <label class='prop-label'>{}</label>
                 <div class='prop-value'>
                     {}
                 </div>
             </div>
-        ", tooltip_attr, self.name, input_html)
-}
+        ",
+            tooltip_attr, self.name, input_html
+        )
+    }
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -173,21 +238,28 @@ pub struct Vec3Editor {
 }
 
 impl Vec3Editor {
-#[inline]
-pub fn new(label: String, x: f32, y: f32, z: f32) -> Vec3Editor {
-        Vec3Editor { label, x, y, z, on_change: "".to_string() }
-}
-#[inline]
-pub fn on_change(mut self, handler: String) -> Vec3Editor {
+    #[inline]
+    pub fn new(label: String, x: f32, y: f32, z: f32) -> Vec3Editor {
+        Vec3Editor {
+            label,
+            x,
+            y,
+            z,
+            on_change: "".to_string(),
+        }
+    }
+    #[inline]
+    pub fn on_change(mut self, handler: String) -> Vec3Editor {
         self.on_change = handler;
         self
-}
+    }
 }
 
 impl Renderable for Vec3Editor {
-#[inline]
-fn render(self) -> String {
-        format!("
+    #[inline]
+    fn render(self) -> String {
+        format!(
+            "
             <div class='vec3-editor'>
                 <label class='prop-label'>{}</label>
                 <div class='vec3-inputs'>
@@ -208,8 +280,10 @@ fn render(self) -> String {
                     </div>
                 </div>
             </div>
-        ", self.label, self.x, self.on_change, self.y, self.on_change, self.z, self.on_change)
-}
+        ",
+            self.label, self.x, self.on_change, self.y, self.on_change, self.z, self.on_change
+        )
+    }
 }
 
 #[inline]
@@ -387,6 +461,6 @@ pub fn property_editor_styles() -> String {
         font-size: 12px;
         cursor: pointer;
     }
-    ".to_string()
+    "
+    .to_string()
 }
-

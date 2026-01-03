@@ -7,10 +7,10 @@ pub struct HamburgerMenuItem {
 }
 
 impl HamburgerMenuItem {
-#[inline]
-pub fn new(label: String, href: String) -> HamburgerMenuItem {
+    #[inline]
+    pub fn new(label: String, href: String) -> HamburgerMenuItem {
         HamburgerMenuItem { label, href }
-}
+    }
 }
 
 #[derive(Debug, Clone, Default)]
@@ -20,28 +20,35 @@ pub struct HamburgerMenu {
 }
 
 impl HamburgerMenu {
-#[inline]
-pub fn new() -> HamburgerMenu {
-        HamburgerMenu { items: Vec::new(), open: false }
-}
-#[inline]
-pub fn item(mut self, item: HamburgerMenuItem) -> HamburgerMenu {
+    #[inline]
+    pub fn new() -> HamburgerMenu {
+        HamburgerMenu {
+            items: Vec::new(),
+            open: false,
+        }
+    }
+    #[inline]
+    pub fn item(mut self, item: HamburgerMenuItem) -> HamburgerMenu {
         self.items.push(item);
         self
-}
-#[inline]
-pub fn open(mut self, open: bool) -> HamburgerMenu {
+    }
+    #[inline]
+    pub fn open(mut self, open: bool) -> HamburgerMenu {
         self.open = open;
         self
-}
+    }
 }
 
 impl Renderable for HamburgerMenu {
-#[inline]
-fn render(self) -> String {
+    #[inline]
+    fn render(self) -> String {
         let mut items_html = Vec::new();
         for item in &self.items {
-            items_html.push(format!("<a href='{}' class='wj-hamburger-item'>{}</a>", item.href.clone(), item.label.clone()));
+            items_html.push(format!(
+                "<a href='{}' class='wj-hamburger-item'>{}</a>",
+                item.href.clone(),
+                item.label.clone()
+            ));
         }
         let open_class = {
             if self.open {
@@ -60,6 +67,5 @@ fn render(self) -> String {
                     {}
                 </div>
             </div>", open_class, items_html.join(""))
+    }
 }
-}
-

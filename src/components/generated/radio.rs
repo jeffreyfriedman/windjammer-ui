@@ -10,15 +10,19 @@ pub struct RadioOption {
 }
 
 impl RadioOption {
-#[inline]
-pub fn new(value: String, label: String) -> RadioOption {
-        RadioOption { value, label, disabled: false }
-}
-#[inline]
-pub fn disabled(mut self, disabled: bool) -> RadioOption {
+    #[inline]
+    pub fn new(value: String, label: String) -> RadioOption {
+        RadioOption {
+            value,
+            label,
+            disabled: false,
+        }
+    }
+    #[inline]
+    pub fn disabled(mut self, disabled: bool) -> RadioOption {
         self.disabled = disabled;
         self
-}
+    }
 }
 
 #[derive(Debug, Clone, Default)]
@@ -29,28 +33,37 @@ pub struct RadioGroup {
 }
 
 impl RadioGroup {
-#[inline]
-pub fn new(name: String) -> RadioGroup {
-        RadioGroup { name, options: Vec::new(), selected: "".to_string() }
-}
-#[inline]
-pub fn option(mut self, option: RadioOption) -> RadioGroup {
+    #[inline]
+    pub fn new(name: String) -> RadioGroup {
+        RadioGroup {
+            name,
+            options: Vec::new(),
+            selected: "".to_string(),
+        }
+    }
+    #[inline]
+    pub fn option(mut self, option: RadioOption) -> RadioGroup {
         self.options.push(option);
         self
-}
-#[inline]
-pub fn selected(mut self, value: String) -> RadioGroup {
+    }
+    #[inline]
+    pub fn selected(mut self, value: String) -> RadioGroup {
         self.selected = value;
         self
-}
+    }
 }
 
 impl Renderable for RadioGroup {
-#[inline]
-fn render(self) -> String {
+    #[inline]
+    fn render(self) -> String {
         let mut html = {
             let mut __s = String::with_capacity(64);
-            write!(&mut __s, "<div class='wj-radio-group' data-name='{}'>", self.name).unwrap();
+            write!(
+                &mut __s,
+                "<div class='wj-radio-group' data-name='{}'>",
+                self.name
+            )
+            .unwrap();
             __s
         };
         let mut i = 0;
@@ -78,6 +91,5 @@ fn render(self) -> String {
             i += 1;
         }
         format!("{}</div>", html)
+    }
 }
-}
-

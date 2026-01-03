@@ -28,35 +28,41 @@ pub struct Toast {
 }
 
 impl Toast {
-#[inline]
-pub fn new(message: String) -> Toast {
-        Toast { message, variant: ToastVariant::Info, position: ToastPosition::TopRight, duration: 3000, show_close: true }
-}
-#[inline]
-pub fn variant(mut self, variant: ToastVariant) -> Toast {
+    #[inline]
+    pub fn new(message: String) -> Toast {
+        Toast {
+            message,
+            variant: ToastVariant::Info,
+            position: ToastPosition::TopRight,
+            duration: 3000,
+            show_close: true,
+        }
+    }
+    #[inline]
+    pub fn variant(mut self, variant: ToastVariant) -> Toast {
         self.variant = variant;
         self
-}
-#[inline]
-pub fn position(mut self, position: ToastPosition) -> Toast {
+    }
+    #[inline]
+    pub fn position(mut self, position: ToastPosition) -> Toast {
         self.position = position;
         self
-}
-#[inline]
-pub fn duration(mut self, duration: i32) -> Toast {
+    }
+    #[inline]
+    pub fn duration(mut self, duration: i32) -> Toast {
         self.duration = duration;
         self
-}
-#[inline]
-pub fn show_close(mut self, show: bool) -> Toast {
+    }
+    #[inline]
+    pub fn show_close(mut self, show: bool) -> Toast {
         self.show_close = show;
         self
-}
+    }
 }
 
 impl Renderable for Toast {
-#[inline]
-fn render(self) -> String {
+    #[inline]
+    fn render(self) -> String {
         let variant_class = match self.variant {
             ToastVariant::Success => "wj-toast-success".to_string(),
             ToastVariant::Error => "wj-toast-error".to_string(),
@@ -84,11 +90,13 @@ fn render(self) -> String {
                 "".to_string()
             }
         };
-        format!("<div class='wj-toast {} {}' data-duration='{}'>
+        format!(
+            "<div class='wj-toast {} {}' data-duration='{}'>
   <span class='wj-toast-icon'>{}</span>
   <span class='wj-toast-message'>{}</span>
   {}
-</div>", variant_class, position_class, self.duration, icon, self.message, close_button)
+</div>",
+            variant_class, position_class, self.duration, icon, self.message, close_button
+        )
+    }
 }
-}
-

@@ -1,12 +1,11 @@
 //! Cross-platform event system
 
-// Note: dispatcher module not available in generated context
-// pub mod dispatcher;
+pub mod dispatcher;
 
 use std::fmt;
 use std::sync::{Arc, Mutex};
 
-// pub use dispatcher::ComponentEventDispatcher;
+pub use dispatcher::ComponentEventDispatcher;
 
 /// Cross-platform event types
 #[derive(Debug, Clone, PartialEq)]

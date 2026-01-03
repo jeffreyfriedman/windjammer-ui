@@ -80,35 +80,33 @@ pub mod typingindicator;
 pub mod vnode;
 
 // Hand-written Rust modules (FFI/interop)
+pub mod app_docking;
 pub mod app_reactive_eframe;
 pub mod component_runtime;
-pub mod runtime;
-pub mod to_vnode;
-pub mod reactivity_optimized;
-pub mod events;
-pub mod renderer;
-pub mod app_docking;
-pub mod simple_renderer;
-pub mod vnode_ffi;
 pub mod desktop_app_context;
-pub mod signal;
+pub mod desktop_renderer_v2;
 pub mod event_handler;
 pub mod platform;
-pub mod undo_redo;
+pub mod reactivity_optimized;
+pub mod renderer;
+pub mod runtime;
+pub mod signal;
+pub mod simple_renderer;
 pub mod simple_vnode;
 pub mod ssr;
-pub mod desktop_renderer_v2;
-pub mod components;
-pub mod examples_wasm;
+pub mod to_vnode;
+pub mod undo_redo;
+pub mod vnode_ffi;
+// pub mod examples_wasm; // TODO: Incomplete - missing render_to_html and create_element methods
 pub mod reactivity;
-pub mod app_reactive;
+// pub mod app_reactive; // TODO: Incomplete - calls render_to_html which requires wasm32 target
+pub mod app;
 pub mod component;
-pub mod wasm_events;
 pub mod desktop_renderer;
+pub mod reactivity_tests;
 pub mod routing;
 pub mod vdom;
-pub mod app;
-pub mod reactivity_tests;
+pub mod wasm_events;
 
 // Auto-generated re-exports
 pub use accordion::*;

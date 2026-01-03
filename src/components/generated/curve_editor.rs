@@ -9,16 +9,21 @@ pub struct CurvePoint {
 }
 
 impl CurvePoint {
-#[inline]
-pub fn new(time: f32, value: f32) -> CurvePoint {
-        CurvePoint { time, value, in_tangent: 0.0, out_tangent: 0.0 }
-}
-#[inline]
-pub fn tangents(mut self, in_tan: f32, out_tan: f32) -> CurvePoint {
+    #[inline]
+    pub fn new(time: f32, value: f32) -> CurvePoint {
+        CurvePoint {
+            time,
+            value,
+            in_tangent: 0.0,
+            out_tangent: 0.0,
+        }
+    }
+    #[inline]
+    pub fn tangents(mut self, in_tan: f32, out_tan: f32) -> CurvePoint {
         self.in_tangent = in_tan;
         self.out_tangent = out_tan;
         self
-}
+    }
 }
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -44,121 +49,145 @@ pub struct CurveEditor {
 }
 
 impl CurveEditor {
-#[inline]
-pub fn new() -> CurveEditor {
-        let mut points = Vec::new();
-        points.push(CurvePoint::new(0.0, 0.0));
-        points.push(CurvePoint::new(1.0, 1.0));
-        CurveEditor { width: 300, height: 200, points, min_value: 0.0, max_value: 1.0, grid_enabled: true, on_change: "".to_string() }
-}
-#[inline]
-pub fn size(mut self, width: i32, height: i32) -> CurveEditor {
+    #[inline]
+    pub fn new() -> CurveEditor {
+        let points = vec![CurvePoint::new(0.0, 0.0), CurvePoint::new(1.0, 1.0)];
+        CurveEditor {
+            width: 300,
+            height: 200,
+            points,
+            min_value: 0.0,
+            max_value: 1.0,
+            grid_enabled: true,
+            on_change: "".to_string(),
+        }
+    }
+    #[inline]
+    pub fn size(mut self, width: i32, height: i32) -> CurveEditor {
         self.width = width;
         self.height = height;
         self
-}
-#[inline]
-pub fn range(mut self, min: f32, max: f32) -> CurveEditor {
+    }
+    #[inline]
+    pub fn range(mut self, min: f32, max: f32) -> CurveEditor {
         self.min_value = min;
         self.max_value = max;
         self
-}
-#[inline]
-pub fn points(mut self, points: Vec<CurvePoint>) -> CurveEditor {
+    }
+    #[inline]
+    pub fn points(mut self, points: Vec<CurvePoint>) -> CurveEditor {
         self.points = points;
         self
-}
-#[inline]
-pub fn add_point(mut self, point: CurvePoint) -> CurveEditor {
+    }
+    #[inline]
+    pub fn add_point(mut self, point: CurvePoint) -> CurveEditor {
         self.points.push(point);
         self
-}
-#[inline]
-pub fn grid(mut self, enabled: bool) -> CurveEditor {
+    }
+    #[inline]
+    pub fn grid(mut self, enabled: bool) -> CurveEditor {
         self.grid_enabled = enabled;
         self
-}
-#[inline]
-pub fn on_change(mut self, handler: String) -> CurveEditor {
+    }
+    #[inline]
+    pub fn on_change(mut self, handler: String) -> CurveEditor {
         self.on_change = handler;
         self
-}
-#[inline]
-pub fn apply_preset(&mut self, preset: EasingPreset) {
+    }
+    #[inline]
+    pub fn apply_preset(&mut self, preset: EasingPreset) {
         self.points.clear();
         match preset {
             EasingPreset::Linear => {
                 self.points.push(CurvePoint::new(0.0, 0.0));
                 self.points.push(CurvePoint::new(1.0, 1.0))
-            },
+            }
             EasingPreset::EaseIn => {
-                self.points.push(CurvePoint::new(0.0, 0.0).tangents(0.0, 0.5));
-                self.points.push(CurvePoint::new(1.0, 1.0).tangents(0.5, 0.0))
-            },
+                self.points
+                    .push(CurvePoint::new(0.0, 0.0).tangents(0.0, 0.5));
+                self.points
+                    .push(CurvePoint::new(1.0, 1.0).tangents(0.5, 0.0))
+            }
             EasingPreset::EaseOut => {
-                self.points.push(CurvePoint::new(0.0, 0.0).tangents(0.0, 2.0));
-                self.points.push(CurvePoint::new(1.0, 1.0).tangents(2.0, 0.0))
-            },
+                self.points
+                    .push(CurvePoint::new(0.0, 0.0).tangents(0.0, 2.0));
+                self.points
+                    .push(CurvePoint::new(1.0, 1.0).tangents(2.0, 0.0))
+            }
             EasingPreset::EaseInOut => {
-                self.points.push(CurvePoint::new(0.0, 0.0).tangents(0.0, 0.5));
+                self.points
+                    .push(CurvePoint::new(0.0, 0.0).tangents(0.0, 0.5));
                 self.points.push(CurvePoint::new(0.5, 0.5));
-                self.points.push(CurvePoint::new(1.0, 1.0).tangents(0.5, 0.0))
-            },
+                self.points
+                    .push(CurvePoint::new(1.0, 1.0).tangents(0.5, 0.0))
+            }
             _ => {
                 self.points.push(CurvePoint::new(0.0, 0.0));
                 self.points.push(CurvePoint::new(1.0, 1.0))
-            },
+            }
         }
-}
+    }
 }
 
 impl Renderable for CurveEditor {
-#[inline]
-fn render(self) -> String {
+    #[inline]
+    fn render(self) -> String {
         let mut path_d = "".to_string();
         let range = self.max_value - self.min_value;
         for i in 0..self.points.len() {
             let p = self.points.get(i);
-            match p {
-                Some(point) => {
-                    let x = point.time * self.width as f32;
-                    let y = self.height as f32 - (point.value - self.min_value) / range * self.height as f32;
-                    if i == 0 {
-                        path_d = format!("M {} {}", x, y);
-                    } else {
-                        path_d = format!("{} L {} {}", path_d, x, y);
-                    }
-                },
-                None => {
-                },
+            if let Some(point) = p {
+                let x = point.time * self.width as f32;
+                let y = self.height as f32
+                    - (point.value - self.min_value) / range * self.height as f32;
+                if i == 0 {
+                    path_d = format!("M {} {}", x, y);
+                } else {
+                    path_d = format!("{} L {} {}", path_d, x, y);
+                }
             }
         }
         let mut points_html = "".to_string();
         for i in 0..self.points.len() {
             let p = self.points.get(i);
-            match p {
-                Some(point) => {
-                    let x = point.time * self.width as f32;
-                    let y = self.height as f32 - (point.value - self.min_value) / range * self.height as f32;
-                    points_html = format!("{}<circle cx='{}' cy='{}' r='6' class='curve-point' data-index='{}'/>", points_html, x, y, i);
-                },
-                None => {
-                },
+            if let Some(point) = p {
+                let x = point.time * self.width as f32;
+                let y = self.height as f32
+                    - (point.value - self.min_value) / range * self.height as f32;
+                points_html = format!(
+                    "{}<circle cx='{}' cy='{}' r='6' class='curve-point' data-index='{}'/>",
+                    points_html, x, y, i
+                );
             }
         }
         let grid_html = {
             if self.grid_enabled {
-                format!("
+                format!(
+                    "
                 <line x1='0' y1='{}' x2='{}' y2='{}' class='grid-line'/>
                 <line x1='0' y1='{}' x2='{}' y2='{}' class='grid-line'/>
                 <line x1='{}' y1='0' x2='{}' y2='{}' class='grid-line'/>
                 <line x1='{}' y1='0' x2='{}' y2='{}' class='grid-line'/>
-            ", self.height / 4, self.width, self.height / 4, self.height * 3 / 4, self.width, self.height * 3 / 4, self.width / 4, self.width / 4, self.height, self.width * 3 / 4, self.width * 3 / 4, self.height)
+            ",
+                    self.height / 4,
+                    self.width,
+                    self.height / 4,
+                    self.height * 3 / 4,
+                    self.width,
+                    self.height * 3 / 4,
+                    self.width / 4,
+                    self.width / 4,
+                    self.height,
+                    self.width * 3 / 4,
+                    self.width * 3 / 4,
+                    self.height
+                )
             } else {
                 "".to_string()
             }
         };
-        format!("
+        format!(
+            "
             <div class='curve-editor'>
                 <div class='curve-toolbar'>
                     <button onclick='setCurvePreset(\"linear\")'>Linear</button>
@@ -177,8 +206,18 @@ fn render(self) -> String {
                     <span>{:.2}</span>
                 </div>
             </div>
-        ", self.width, self.height, self.width, self.height, grid_html, path_d, points_html, self.max_value, self.min_value)
-}
+        ",
+            self.width,
+            self.height,
+            self.width,
+            self.height,
+            grid_html,
+            path_d,
+            points_html,
+            self.max_value,
+            self.min_value
+        )
+    }
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -188,10 +227,10 @@ pub struct GradientStop {
 }
 
 impl GradientStop {
-#[inline]
-pub fn new(position: f32, color: String) -> GradientStop {
+    #[inline]
+    pub fn new(position: f32, color: String) -> GradientStop {
         GradientStop { position, color }
-}
+    }
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -203,58 +242,66 @@ pub struct GradientEditor {
 }
 
 impl GradientEditor {
-#[inline]
-pub fn new() -> GradientEditor {
-        let mut stops = Vec::new();
-        stops.push(GradientStop::new(0.0, "#000000".to_string()));
-        stops.push(GradientStop::new(1.0, "#ffffff".to_string()));
-        GradientEditor { width: 300, height: 40, stops, on_change: "".to_string() }
-}
-#[inline]
-pub fn add_stop(mut self, stop: GradientStop) -> GradientEditor {
+    #[inline]
+    pub fn new() -> GradientEditor {
+        let stops = vec![
+            GradientStop::new(0.0, "#000000".to_string()),
+            GradientStop::new(1.0, "#ffffff".to_string()),
+        ];
+        GradientEditor {
+            width: 300,
+            height: 40,
+            stops,
+            on_change: "".to_string(),
+        }
+    }
+    #[inline]
+    pub fn add_stop(mut self, stop: GradientStop) -> GradientEditor {
         self.stops.push(stop);
         self
-}
-#[inline]
-pub fn on_change(mut self, handler: String) -> GradientEditor {
+    }
+    #[inline]
+    pub fn on_change(mut self, handler: String) -> GradientEditor {
         self.on_change = handler;
         self
-}
+    }
 }
 
 impl Renderable for GradientEditor {
-#[inline]
-fn render(self) -> String {
+    #[inline]
+    fn render(self) -> String {
         let mut gradient_stops = "".to_string();
         for i in 0..self.stops.len() {
             let s = self.stops.get(i);
-            match s {
-                Some(stop) => {
-                    if i > 0 {
-                        gradient_stops += ", ";
-                    }
-                    gradient_stops = format!("{}{}{}{}", gradient_stops, stop.color.as_str(), " ", format!("{}%", (stop.position * 100.0) as i32).as_str());
-                },
-                None => {
-                },
+            if let Some(stop) = s {
+                if i > 0 {
+                    gradient_stops += ", ";
+                }
+                gradient_stops = format!(
+                    "{}{}{}{}",
+                    gradient_stops,
+                    stop.color.as_str(),
+                    " ",
+                    format!("{}%", (stop.position * 100.0) as i32).as_str()
+                );
             }
         }
         let mut markers_html = "".to_string();
         for i in 0..self.stops.len() {
             let s = self.stops.get(i);
-            match s {
-                Some(stop) => {
-                    let left = (stop.position * 100.0) as i32;
-                    markers_html = format!("{}
-                        <div class='gradient-stop' style='left: {}%; background: {};' 
-                             data-index='{}'></div>
-                    ", markers_html, left, stop.color, i);
-                },
-                None => {
-                },
+            if let Some(stop) = s {
+                let left = (stop.position * 100.0) as i32;
+                markers_html = format!(
+                    "{}
+                    <div class='gradient-stop' style='left: {}%; background: {};' 
+                         data-index='{}'></div>
+                ",
+                    markers_html, left, stop.color, i
+                );
             }
         }
-        format!("
+        format!(
+            "
             <div class='gradient-editor'>
                 <div class='gradient-bar' style='background: linear-gradient(to right, {});'>
                     {}
@@ -263,8 +310,10 @@ fn render(self) -> String {
                     <button onclick='addGradientStop()'>+ Add Stop</button>
                 </div>
             </div>
-        ", gradient_stops, markers_html)
-}
+        ",
+            gradient_stops, markers_html
+        )
+    }
 }
 
 #[inline]
@@ -382,6 +431,6 @@ pub fn curve_editor_styles() -> String {
         border-color: #e94560;
         color: #e94560;
     }
-    ".to_string()
+    "
+    .to_string()
 }
-

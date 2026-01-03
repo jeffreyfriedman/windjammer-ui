@@ -20,40 +20,48 @@ pub struct Modal {
 }
 
 impl Modal {
-#[inline]
-pub fn new(id: String, title: String) -> Modal {
-        Modal { id, title, content: String::new(), footer: String::new(), size: ModalSize::Medium, closeable: true, visible: false }
-}
-#[inline]
-pub fn content(mut self, content: String) -> Modal {
+    #[inline]
+    pub fn new(id: String, title: String) -> Modal {
+        Modal {
+            id,
+            title,
+            content: String::new(),
+            footer: String::new(),
+            size: ModalSize::Medium,
+            closeable: true,
+            visible: false,
+        }
+    }
+    #[inline]
+    pub fn content(mut self, content: String) -> Modal {
         self.content = content;
         self
-}
-#[inline]
-pub fn footer(mut self, footer: String) -> Modal {
+    }
+    #[inline]
+    pub fn footer(mut self, footer: String) -> Modal {
         self.footer = footer;
         self
-}
-#[inline]
-pub fn size(mut self, size: ModalSize) -> Modal {
+    }
+    #[inline]
+    pub fn size(mut self, size: ModalSize) -> Modal {
         self.size = size;
         self
-}
-#[inline]
-pub fn closeable(mut self, closeable: bool) -> Modal {
+    }
+    #[inline]
+    pub fn closeable(mut self, closeable: bool) -> Modal {
         self.closeable = closeable;
         self
-}
-#[inline]
-pub fn visible(mut self, visible: bool) -> Modal {
+    }
+    #[inline]
+    pub fn visible(mut self, visible: bool) -> Modal {
         self.visible = visible;
         self
-}
+    }
 }
 
 impl Renderable for Modal {
-#[inline]
-fn render(self) -> String {
+    #[inline]
+    fn render(self) -> String {
         let width = match self.size {
             ModalSize::Small => "400px".to_string(),
             ModalSize::Medium => "600px".to_string(),
@@ -97,7 +105,7 @@ fn render(self) -> String {
         html.push_str("<div style='padding: 24px; flex: 1; overflow-y: auto;'>");
         html.push_str(&self.content);
         html.push_str("</div>");
-        if self.footer.len() > (0 as usize) {
+        if self.footer.len() > 0_usize {
             html.push_str("<div style='padding: 16px 24px; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 8px;'>");
             html.push_str(&self.footer);
             html.push_str("</div>")
@@ -105,6 +113,5 @@ fn render(self) -> String {
         html.push_str("</div>");
         html.push_str("</div>");
         html
+    }
 }
-}
-

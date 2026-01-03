@@ -8,20 +8,24 @@ pub struct StepperStep {
 }
 
 impl StepperStep {
-#[inline]
-pub fn new(label: String) -> StepperStep {
-        StepperStep { label, description: String::new(), completed: false }
-}
-#[inline]
-pub fn description(mut self, desc: String) -> StepperStep {
+    #[inline]
+    pub fn new(label: String) -> StepperStep {
+        StepperStep {
+            label,
+            description: String::new(),
+            completed: false,
+        }
+    }
+    #[inline]
+    pub fn description(mut self, desc: String) -> StepperStep {
         self.description = desc;
         self
-}
-#[inline]
-pub fn completed(mut self, completed: bool) -> StepperStep {
+    }
+    #[inline]
+    pub fn completed(mut self, completed: bool) -> StepperStep {
         self.completed = completed;
         self
-}
+    }
 }
 
 #[derive(Debug, Clone)]
@@ -31,25 +35,28 @@ pub struct Stepper {
 }
 
 impl Stepper {
-#[inline]
-pub fn new() -> Stepper {
-        Stepper { steps: Vec::new(), current_step: 0 }
-}
-#[inline]
-pub fn step(mut self, step: StepperStep) -> Stepper {
+    #[inline]
+    pub fn new() -> Stepper {
+        Stepper {
+            steps: Vec::new(),
+            current_step: 0,
+        }
+    }
+    #[inline]
+    pub fn step(mut self, step: StepperStep) -> Stepper {
         self.steps.push(step);
         self
-}
-#[inline]
-pub fn current_step(mut self, index: i32) -> Stepper {
+    }
+    #[inline]
+    pub fn current_step(mut self, index: i32) -> Stepper {
         self.current_step = index;
         self
-}
+    }
 }
 
 impl Renderable for Stepper {
-#[inline]
-fn render(self) -> String {
+    #[inline]
+    fn render(self) -> String {
         let mut html = String::new();
         html.push_str("<div style='display: flex; align-items: center; justify-content: space-between; padding: 24px 0;'>");
         let total_steps = self.steps.len() as i32;
@@ -76,7 +83,9 @@ fn render(self) -> String {
                     "#718096".to_string()
                 }
             };
-            html.push_str("<div style='width: 40px; height: 40px; border-radius: 50%; background: ");
+            html.push_str(
+                "<div style='width: 40px; height: 40px; border-radius: 50%; background: ",
+            );
             html.push_str(&bg_color);
             html.push_str("; color: ");
             html.push_str(&text_color);
@@ -97,7 +106,7 @@ fn render(self) -> String {
             html.push_str("; margin-bottom: 4px;'>");
             html.push_str(&step.label);
             html.push_str("</div>");
-            if step.description.len() > (0 as usize) {
+            if step.description.len() > 0_usize {
                 html.push_str("<div style='font-size: 12px; color: #a0aec0;'>");
                 html.push_str(&step.description);
                 html.push_str("</div>")
@@ -119,6 +128,5 @@ fn render(self) -> String {
         }
         html.push_str("</div>");
         html
+    }
 }
-}
-

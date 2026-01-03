@@ -9,9 +9,11 @@ use std::rc::Rc;
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 
+type EventHandlerMap = Rc<RefCell<HashMap<String, Vec<Closure<dyn FnMut(web_sys::Event)>>>>>;
+
 /// Event handler registry for managing closures
 pub struct EventRegistry {
-    handlers: Rc<RefCell<HashMap<String, Vec<Closure<dyn FnMut(web_sys::Event)>>>>>,
+    handlers: EventHandlerMap,
 }
 
 impl EventRegistry {
@@ -44,7 +46,7 @@ impl EventRegistry {
         self.handlers
             .borrow_mut()
             .entry(key)
-            .or_insert_with(Vec::new)
+            .or_default()
             .push(closure);
 
         Ok(())
@@ -72,7 +74,7 @@ use std::cell::OnceCell;
 
 thread_local! {
     /// Global event registry (thread-local for WASM single-threaded environment)
-    static GLOBAL_REGISTRY: OnceCell<EventRegistry> = OnceCell::new();
+    static GLOBAL_REGISTRY: OnceCell<EventRegistry> = const { OnceCell::new() };
 }
 
 /// Get the global event registry

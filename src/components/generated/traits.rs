@@ -7,4 +7,3 @@ pub trait Renderable {
 pub trait RenderableVNode {
     fn to_vnode(&self) -> VNode;
 }
-

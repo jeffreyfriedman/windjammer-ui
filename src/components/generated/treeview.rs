@@ -10,25 +10,29 @@ pub struct TreeItem {
 }
 
 impl TreeItem {
-#[inline]
-pub fn new(label: String) -> TreeItem {
-        TreeItem { label, children: Vec::new(), expanded: false }
-}
-#[inline]
-pub fn child(mut self, item: TreeItem) -> TreeItem {
+    #[inline]
+    pub fn new(label: String) -> TreeItem {
+        TreeItem {
+            label,
+            children: Vec::new(),
+            expanded: false,
+        }
+    }
+    #[inline]
+    pub fn child(mut self, item: TreeItem) -> TreeItem {
         self.children.push(item);
         self
-}
-#[inline]
-pub fn expanded(mut self, expanded: bool) -> TreeItem {
+    }
+    #[inline]
+    pub fn expanded(mut self, expanded: bool) -> TreeItem {
         self.expanded = expanded;
         self
-}
-#[inline]
-pub fn render(&self, depth: i32) -> String {
+    }
+    #[inline]
+    pub fn render(&self, depth: i32) -> String {
         let indent_px = depth * 20;
         let icon = {
-            if self.children.len() > (0 as usize) {
+            if self.children.len() > 0_usize {
                 if self.expanded {
                     "▼".to_string()
                 } else {
@@ -40,11 +44,16 @@ pub fn render(&self, depth: i32) -> String {
         };
         let mut html = {
             let mut __s = String::with_capacity(64);
-            write!(&mut __s, "<div class='wj-tree-item' style='padding-left: {}px;'>
+            write!(
+                &mut __s,
+                "<div class='wj-tree-item' style='padding-left: {}px;'>
   <span class='wj-tree-icon'>{}</span>
   <span>{}</span>
 </div>
-", indent_px, icon, self.label).unwrap();
+",
+                indent_px, icon, self.label
+            )
+            .unwrap();
             __s
         };
         if self.expanded {
@@ -56,7 +65,7 @@ pub fn render(&self, depth: i32) -> String {
             }
         }
         html
-}
+    }
 }
 
 #[derive(Debug, Clone, Default)]
@@ -65,22 +74,23 @@ pub struct TreeView {
 }
 
 impl TreeView {
-#[inline]
-pub fn new() -> TreeView {
+    #[inline]
+    pub fn new() -> TreeView {
         TreeView { items: Vec::new() }
-}
-#[inline]
-pub fn item(mut self, item: TreeItem) -> TreeView {
+    }
+    #[inline]
+    pub fn item(mut self, item: TreeItem) -> TreeView {
         self.items.push(item);
         self
-}
+    }
 }
 
 impl Renderable for TreeView {
-#[inline]
-fn render(self) -> String {
+    #[inline]
+    fn render(self) -> String {
         let mut html = "<div class='wj-tree-view'>
-".to_string();
+"
+        .to_string();
         let mut i = 0;
         while i < (self.items.len() as i64) {
             let item = &self.items[i as usize];
@@ -88,6 +98,5 @@ fn render(self) -> String {
             i += 1;
         }
         format!("{}</div>", html)
+    }
 }
-}
-

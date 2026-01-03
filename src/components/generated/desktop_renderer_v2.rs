@@ -1,16 +1,20 @@
 /// Desktop renderer using egui - Version 2 with proper layout
 #[cfg(not(target_arch = "wasm32"))]
-use crate::simple_vnode::{VNode, VAttr};
+use crate::simple_vnode::{VAttr, VNode};
 #[cfg(not(target_arch = "wasm32"))]
-use egui::{Context, Ui, RichText, Color32, Frame, Margin, Rounding, Stroke};
-#[cfg(not(target_arch = "wasm32"))]
-use std::rc::Rc;
+use egui::{Color32, Context, Frame, Margin, RichText, Rounding, Stroke, Ui};
 #[cfg(not(target_arch = "wasm32"))]
 use std::cell::RefCell;
+#[cfg(not(target_arch = "wasm32"))]
+use std::rc::Rc;
+
+#[cfg(not(target_arch = "wasm32"))]
+type EventHandlers = Rc<RefCell<Vec<Rc<RefCell<dyn FnMut()>>>>>;
 
 #[cfg(not(target_arch = "wasm32"))]
 pub struct DesktopRendererV2 {
-    event_handlers: Rc<RefCell<Vec<Rc<RefCell<dyn FnMut()>>>>>,
+    #[allow(dead_code)]
+    event_handlers: EventHandlers,
 }
 
 #[cfg(not(target_arch = "wasm32"))]
@@ -29,7 +33,11 @@ impl DesktopRendererV2 {
                 // Render toolbar at top
                 egui::TopBottomPanel::top("toolbar")
                     .exact_height(50.0)
-                    .frame(Frame::none().fill(Color32::from_rgb(45, 45, 48)).inner_margin(Margin::same(8.0)))
+                    .frame(
+                        Frame::none()
+                            .fill(Color32::from_rgb(45, 45, 48))
+                            .inner_margin(Margin::same(8.0)),
+                    )
                     .show(ctx, |ui| {
                         self.render_vnode(ui, &children[0]);
                     });
@@ -37,7 +45,11 @@ impl DesktopRendererV2 {
                 // Render status bar at bottom
                 egui::TopBottomPanel::bottom("status_bar")
                     .exact_height(30.0)
-                    .frame(Frame::none().fill(Color32::from_rgb(0, 122, 204)).inner_margin(Margin::same(4.0)))
+                    .frame(
+                        Frame::none()
+                            .fill(Color32::from_rgb(0, 122, 204))
+                            .inner_margin(Margin::same(4.0)),
+                    )
                     .show(ctx, |ui| {
                         if children.len() > 2 {
                             self.render_vnode(ui, &children[children.len() - 1]);
@@ -77,7 +89,11 @@ impl DesktopRendererV2 {
 
     fn render_vnode(&mut self, ui: &mut Ui, vnode: &VNode) {
         match vnode {
-            VNode::Element { tag, attrs, children } => {
+            VNode::Element {
+                tag,
+                attrs,
+                children,
+            } => {
                 self.render_element(ui, tag, attrs, children);
             }
             VNode::Text(text) => {
@@ -86,9 +102,15 @@ impl DesktopRendererV2 {
         }
     }
 
-    fn render_element(&mut self, ui: &mut Ui, tag: &str, attrs: &[(String, VAttr)], children: &[VNode]) {
+    fn render_element(
+        &mut self,
+        ui: &mut Ui,
+        tag: &str,
+        attrs: &[(String, VAttr)],
+        children: &[VNode],
+    ) {
         let classes = self.get_attr_value(attrs, "class");
-        
+
         // Check for special components
         if classes.contains("split-panel") && classes.contains("horizontal") {
             self.render_horizontal_split(ui, children);
@@ -133,7 +155,11 @@ impl DesktopRendererV2 {
             }
             if children.len() >= 2 {
                 // Middle column gets the nested split panel
-                if let VNode::Element { children: nested_children, .. } = &children[1] {
+                if let VNode::Element {
+                    children: nested_children,
+                    ..
+                } = &children[1]
+                {
                     if nested_children.len() >= 2 {
                         // This is another horizontal split
                         columns[1].columns(2, |inner_cols| {
@@ -155,18 +181,18 @@ impl DesktopRendererV2 {
 
     fn render_vertical_split(&mut self, ui: &mut Ui, children: &[VNode]) {
         let available_height = ui.available_height();
-        
+
         for (i, child) in children.iter().enumerate() {
             if i > 0 {
                 ui.separator();
             }
-            
+
             let height = if i == 0 {
                 available_height * 0.6
             } else {
                 available_height * 0.4
             };
-            
+
             ui.allocate_ui(egui::vec2(ui.available_width(), height), |ui| {
                 self.render_vnode(ui, child);
             });
@@ -177,9 +203,14 @@ impl DesktopRendererV2 {
         // Extract title from first child
         let mut title = String::new();
         let mut body_children = Vec::new();
-        
+
         for child in children {
-            if let VNode::Element { tag, children: inner, .. } = child {
+            if let VNode::Element {
+                tag,
+                children: inner,
+                ..
+            } = child
+            {
                 if tag == "div" {
                     if let Some(VNode::Text(text)) = inner.first() {
                         if title.is_empty() {
@@ -193,7 +224,7 @@ impl DesktopRendererV2 {
                 }
             }
         }
-        
+
         Frame::group(ui.style())
             .fill(Color32::from_rgb(37, 37, 38))
             .stroke(Stroke::new(1.0, Color32::from_rgb(62, 62, 66)))
@@ -203,7 +234,7 @@ impl DesktopRendererV2 {
                         ui.heading(&title);
                         ui.separator();
                     }
-                    
+
                     egui::ScrollArea::vertical().show(ui, |ui| {
                         for child in &body_children {
                             self.render_vnode(ui, child);
@@ -216,10 +247,15 @@ impl DesktopRendererV2 {
     fn render_tree_view(&mut self, ui: &mut Ui, children: &[VNode]) {
         egui::ScrollArea::vertical().show(ui, |ui| {
             for child in children {
-                if let VNode::Element { children: item_children, attrs, .. } = child {
+                if let VNode::Element {
+                    children: item_children,
+                    attrs,
+                    ..
+                } = child
+                {
                     let text = self.get_text_content(item_children);
                     let response = ui.selectable_label(false, text);
-                    
+
                     if response.clicked() {
                         if let Some(handler) = self.get_event_handler(attrs, "on_click") {
                             handler.borrow_mut()();
@@ -233,7 +269,7 @@ impl DesktopRendererV2 {
     fn render_button(&mut self, ui: &mut Ui, attrs: &[(String, VAttr)], children: &[VNode]) {
         let label = self.get_text_content(children);
         let classes = self.get_attr_value(attrs, "class");
-        
+
         let (bg_color, text_color) = if classes.contains("wj-button-primary") {
             (Color32::from_rgb(0, 122, 204), Color32::WHITE)
         } else if classes.contains("wj-button-success") {
@@ -256,7 +292,8 @@ impl DesktopRendererV2 {
 
     // Helper methods
     fn get_attr_value(&self, attrs: &[(String, VAttr)], name: &str) -> String {
-        attrs.iter()
+        attrs
+            .iter()
             .find(|(k, _)| k == name)
             .and_then(|(_, v)| match v {
                 VAttr::Static(s) | VAttr::Dynamic(s) => Some(s.clone()),
@@ -265,8 +302,13 @@ impl DesktopRendererV2 {
             .unwrap_or_default()
     }
 
-    fn get_event_handler(&self, attrs: &[(String, VAttr)], name: &str) -> Option<Rc<RefCell<dyn FnMut()>>> {
-        attrs.iter()
+    fn get_event_handler(
+        &self,
+        attrs: &[(String, VAttr)],
+        name: &str,
+    ) -> Option<Rc<RefCell<dyn FnMut()>>> {
+        attrs
+            .iter()
             .find(|(k, _)| k == name)
             .and_then(|(_, v)| match v {
                 VAttr::Event(handler) => Some(handler.clone()),
@@ -275,7 +317,8 @@ impl DesktopRendererV2 {
     }
 
     fn get_text_content(&self, children: &[VNode]) -> String {
-        children.iter()
+        children
+            .iter()
             .filter_map(|child| match child {
                 VNode::Text(text) => Some(text.clone()),
                 _ => None,
@@ -284,4 +327,3 @@ impl DesktopRendererV2 {
             .join("")
     }
 }
-
