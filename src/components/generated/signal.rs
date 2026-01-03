@@ -218,7 +218,7 @@ impl Effect {
         });
 
         // Run effect once to establish dependencies
-        Self::run_effect(id, &f);
+        Self::run_effect(id, &f as &Rc<dyn Fn()>);
 
         id
     }

@@ -13,6 +13,7 @@ use std::rc::Rc;
 #[cfg(not(target_arch = "wasm32"))]
 pub struct DesktopRendererV2 {
     #[allow(dead_code)]
+    #[allow(dead_code)]
     event_handlers: Rc<RefCell<Vec<Rc<RefCell<dyn FnMut()>>>>>,
 }
 
@@ -105,7 +106,7 @@ impl DesktopRendererV2 {
         &mut self,
         ui: &mut Ui,
         tag: &str,
-        attrs: &[(String, VAttr)],
+        _attrs: &[(String, VAttr)],
         children: &[VNode],
     ) {
         let classes = self.get_attr_value(attrs, "class");
@@ -198,7 +199,7 @@ impl DesktopRendererV2 {
         }
     }
 
-    fn render_panel(&mut self, ui: &mut Ui, _attrs: &[(String, VAttr)], children: &[VNode]) {
+    fn render_panel(&mut self, ui: &mut Ui, __attrs: &[(String, VAttr)], children: &[VNode]) {
         // Extract title from first child
         let mut title = String::new();
         let mut body_children = Vec::new();
@@ -265,7 +266,7 @@ impl DesktopRendererV2 {
         });
     }
 
-    fn render_button(&mut self, ui: &mut Ui, attrs: &[(String, VAttr)], children: &[VNode]) {
+    fn render_button(&mut self, ui: &mut Ui, _attrs: &[(String, VAttr)], children: &[VNode]) {
         let label = self.get_text_content(children);
         let classes = self.get_attr_value(attrs, "class");
 
@@ -290,7 +291,7 @@ impl DesktopRendererV2 {
     }
 
     // Helper methods
-    fn get_attr_value(&self, attrs: &[(String, VAttr)], name: &str) -> String {
+    fn get_attr_value(&self, _attrs: &[(String, VAttr)], name: &str) -> String {
         attrs
             .iter()
             .find(|(k, _)| k == name)
@@ -303,7 +304,7 @@ impl DesktopRendererV2 {
 
     fn get_event_handler(
         &self,
-        attrs: &[(String, VAttr)],
+        _attrs: &[(String, VAttr)],
         name: &str,
     ) -> Option<Rc<RefCell<dyn FnMut()>>> {
         attrs

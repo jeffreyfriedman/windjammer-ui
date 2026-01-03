@@ -12,6 +12,9 @@ pub mod app;
 pub mod app_docking;
 #[cfg(feature = "desktop")]
 pub mod app_reactive_eframe;
+#[cfg(feature = "desktop")]
+#[cfg(feature = "desktop")]
+#[cfg(feature = "desktop")]
 pub mod avatar;
 pub mod badge;
 pub mod breadcrumb;
@@ -38,6 +41,9 @@ pub mod desktop_app_context;
 pub mod desktop_renderer;
 #[cfg(feature = "desktop")]
 pub mod desktop_renderer_v2;
+#[cfg(feature = "desktop")]
+#[cfg(feature = "desktop")]
+#[cfg(feature = "desktop")]
 pub mod dialog;
 pub mod divider;
 pub mod drawer;
@@ -121,6 +127,9 @@ pub use app::*;
 pub use app_docking::*;
 #[cfg(feature = "desktop")]
 pub use app_reactive_eframe::*;
+#[cfg(feature = "desktop")]
+#[cfg(feature = "desktop")]
+#[cfg(feature = "desktop")]
 pub use avatar::*;
 pub use badge::*;
 pub use breadcrumb::*;
@@ -144,9 +153,11 @@ pub use curve_editor::*;
 #[cfg(feature = "desktop")]
 pub use desktop_app_context::*;
 #[cfg(feature = "desktop")]
+pub use desktop_renderer_v2::*;
+#[cfg(feature = "desktop")]
+#[cfg(feature = "desktop")]
 // pub use desktop_renderer::*; // Removed: causes ambiguous re-exports with renderer::*
 #[cfg(feature = "desktop")]
-pub use desktop_renderer_v2::*;
 pub use dialog::*;
 pub use divider::*;
 pub use drawer::*;
