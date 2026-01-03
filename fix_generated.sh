@@ -48,5 +48,23 @@ sed -i '' 's/impl<T: Clone + std::fmt::Debug> std::fmt::Debug for Computed<T>/im
 # Fix 6: Cast Rc<F> to Rc<dyn Fn()> in Effect::new
 sed -i '' 's/let f = Rc::new(f);$/let f: Rc<dyn Fn()> = Rc::new(f);/' src/components/generated/signal.rs
 
+# Fix 7: Remove unused/ambiguous glob re-exports in mod.rs
+sed -i '' 's/^pub use reactivity::\*;$/\/\/ pub use reactivity::*; \/\/ Removed: causes ambiguous re-exports with signal::*/' src/components/generated/mod.rs
+sed -i '' 's/^pub use reactivity_tests::\*;$/\/\/ pub use reactivity_tests::*; \/\/ Removed: unused and test-only/' src/components/generated/mod.rs
+sed -i '' 's/^pub use signal::\*;$/\/\/ pub use signal::*; \/\/ Removed: causes ambiguous re-exports with reactivity_optimized::*/' src/components/generated/mod.rs
+sed -i '' 's/^pub use event_handler::\*;$/\/\/ pub use event_handler::*; \/\/ Removed: causes ambiguous re-exports with events::*/' src/components/generated/mod.rs
+sed -i '' 's/^pub use simple_vnode::\*;$/\/\/ pub use simple_vnode::*; \/\/ Removed: causes ambiguous re-exports with vdom::*/' src/components/generated/mod.rs
+sed -i '' 's/^pub use vnode::\*;$/\/\/ pub use vnode::*; \/\/ Removed: causes ambiguous re-exports with simple_vnode::*/' src/components/generated/mod.rs
+
+# Fix 8: Remove unused doc comment before thread_local! macro in signal.rs
+sed -i '' 's/^\/\/\/ Global reactive context (thread-local for single-threaded WASM)$/\/\/ Global reactive context (thread-local for single-threaded WASM)/' src/components/generated/signal.rs
+
+# Fix 9: Add #[allow(dead_code)] to unused Effect.id field
+if ! grep -q "#\[allow(dead_code)\]" src/components/generated/signal.rs; then
+    sed -i '' '/^pub struct Effect {$/a\
+    #[allow(dead_code)]
+' src/components/generated/signal.rs
+fi
+
 echo "✅ Fixes applied successfully!"
 

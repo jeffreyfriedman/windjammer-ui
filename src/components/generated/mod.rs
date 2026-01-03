@@ -151,7 +151,7 @@ pub use dialog::*;
 pub use divider::*;
 pub use drawer::*;
 pub use dropdown::*;
-pub use event_handler::*;
+// pub use event_handler::*; // Removed: causes ambiguous re-exports with events::*
 pub use events::*;
 pub use filetree::*;
 pub use flex::*;
@@ -175,9 +175,9 @@ pub use progress::*;
 pub use propertyeditor::*;
 pub use radio::*;
 pub use rating::*;
-pub use reactivity::*;
+// pub use reactivity::*; // Removed: causes ambiguous re-exports with signal::*
 pub use reactivity_optimized::*;
-pub use reactivity_tests::*;
+// pub use reactivity_tests::*; // Removed: unused and test-only
 pub use renderer::*;
 pub use routing::*;
 pub use row::*;
@@ -187,9 +187,9 @@ pub use scrollarea::*;
 pub use section::*;
 pub use select::*;
 pub use sidebar::*;
-pub use signal::*;
+// pub use signal::*; // Removed: causes ambiguous re-exports with reactivity_optimized::*
 pub use simple_renderer::*;
-pub use simple_vnode::*;
+// pub use simple_vnode::*; // Removed: causes ambiguous re-exports with vdom::*
 pub use skeleton::*;
 pub use slider::*;
 pub use spacer::*;
@@ -216,6 +216,6 @@ pub use treeview::*;
 pub use typingindicator::*;
 pub use undo_redo::*;
 pub use vdom::*;
-pub use vnode::*;
+// pub use vnode::*; // Removed: causes ambiguous re-exports with simple_vnode::*
 pub use vnode_ffi::*;
 pub use wasm_events::*;

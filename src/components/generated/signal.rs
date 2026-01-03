@@ -20,7 +20,7 @@ pub type SignalId = usize;
 /// Unique identifier for effects
 pub type EffectId = usize;
 
-/// Global reactive context (thread-local for single-threaded WASM)
+// Global reactive context (thread-local for single-threaded WASM)
 thread_local! {
     static REACTIVE_CONTEXT: RefCell<ReactiveContext> = RefCell::new(ReactiveContext::new());
     static EFFECT_REGISTRY: RefCell<HashMap<EffectId, EffectHandle>> = RefCell::new(HashMap::new());
@@ -196,6 +196,7 @@ impl<T: Clone + std::fmt::Debug + 'static> std::fmt::Debug for Computed<T> {
 
 /// Effect - a side effect that runs when its dependencies change
 pub struct Effect {
+    #[allow(dead_code)]
     id: EffectId,
 }
 
