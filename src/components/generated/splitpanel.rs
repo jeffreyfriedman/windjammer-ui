@@ -2,16 +2,18 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum SplitDirection {
     Horizontal,
     Vertical,
 }
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct SplitPanel {
-    left: String,
-    right: String,
-    direction: SplitDirection,
-    initial_size: i32,
+    pub left: String,
+    pub right: String,
+    pub direction: SplitDirection,
+    pub initial_size: i32,
 }
 
 impl SplitPanel {
@@ -40,8 +42,8 @@ impl Renderable for SplitPanel {
     #[inline]
     fn render(self) -> String {
         let flex_direction = match self.direction {
-            SplitDirection::Horizontal => "column",
-            SplitDirection::Vertical => "row",
+            SplitDirection::Horizontal => "column".to_string(),
+            SplitDirection::Vertical => "row".to_string(),
         };
         format!(
             "<div class='wj-split-panel' style='display: flex; flex-direction: {}; height: 100%;'>

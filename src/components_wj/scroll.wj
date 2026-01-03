@@ -70,7 +70,7 @@ impl Scroll {
         html.push_str(self.width.as_str())
         html.push_str(";\">")
         
-        for child in self.children.iter() {
+        for child in self.children {
             html.push_str(child.as_str())
         }
         

@@ -4,10 +4,11 @@ use std::fmt::Write;
 
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct TabPanelTab {
-    id: String,
-    title: String,
-    content: String,
+    pub id: String,
+    pub title: String,
+    pub content: String,
 }
 
 impl TabPanelTab {
@@ -17,10 +18,11 @@ impl TabPanelTab {
     }
 }
 
+#[derive(Debug, Clone, Default)]
 pub struct TabPanel {
-    tabs: Vec<TabPanelTab>,
-    active: String,
-    orientation: String,
+    pub tabs: Vec<TabPanelTab>,
+    pub active: String,
+    pub orientation: String,
 }
 
 impl TabPanel {
@@ -50,12 +52,13 @@ impl TabPanel {
 }
 
 impl Renderable for TabPanel {
+    #[inline]
     fn render(self) -> String {
         let flex_direction = {
             if self.orientation == "vertical" {
-                "row"
+                "row".to_string()
             } else {
-                "column"
+                "column".to_string()
             }
         };
         let mut tabs_html = {
@@ -70,13 +73,13 @@ impl Renderable for TabPanel {
             __s
         };
         let mut i = 0;
-        while i < self.tabs.len() {
-            let tab = &self.tabs[i];
+        while i < (self.tabs.len() as i64) {
+            let tab = &self.tabs[i as usize];
             let active_class = {
                 if tab.id == self.active {
-                    " wj-tab-active"
+                    " wj-tab-active".to_string()
                 } else {
-                    ""
+                    "".to_string()
                 }
             };
             tabs_html = format!(
@@ -95,13 +98,13 @@ impl Renderable for TabPanel {
 "
         .to_string();
         let mut j = 0;
-        while j < self.tabs.len() {
-            let tab = &self.tabs[j];
+        while j < (self.tabs.len() as i64) {
+            let tab = &self.tabs[j as usize];
             let display = {
                 if tab.id == self.active {
-                    "block"
+                    "block".to_string()
                 } else {
-                    "none"
+                    "none".to_string()
                 }
             };
             content_html = format!(

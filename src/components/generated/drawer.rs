@@ -1,13 +1,15 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Drawer {
-    children: Vec<String>,
-    position: DrawerPosition,
-    width: String,
-    open: bool,
-    class: String,
+    pub children: Vec<String>,
+    pub position: DrawerPosition,
+    pub width: String,
+    pub open: bool,
+    pub class: String,
 }
 
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum DrawerPosition {
     Left,
     Right,
@@ -51,6 +53,7 @@ impl Drawer {
         self.class = class;
         self
     }
+    #[inline]
     pub fn render(&self) -> String {
         let (position_style, size_prop) = match self.position {
             DrawerPosition::Left => (
@@ -72,38 +75,38 @@ impl Drawer {
         };
         let transform = {
             if self.open {
-                "transform: translateX(0);"
+                "transform: translateX(0);".to_string()
             } else {
                 match self.position {
-                    DrawerPosition::Left => "transform: translateX(-100%);",
-                    DrawerPosition::Right => "transform: translateX(100%);",
-                    DrawerPosition::Top => "transform: translateY(-100%);",
-                    DrawerPosition::Bottom => "transform: translateY(100%);",
+                    DrawerPosition::Left => "transform: translateX(-100%);".to_string(),
+                    DrawerPosition::Right => "transform: translateX(100%);".to_string(),
+                    DrawerPosition::Top => "transform: translateY(-100%);".to_string(),
+                    DrawerPosition::Bottom => "transform: translateY(100%);".to_string(),
                 }
             }
         };
         let display = {
             if self.open {
-                "display: block;"
+                "display: block;".to_string()
             } else {
-                "display: none;"
+                "display: none;".to_string()
             }
         };
         let mut html = String::new();
         html.push_str("<div class=\"wj-drawer-backdrop\" style=\"");
-        html.push_str(display);
+        html.push_str(&display);
         html.push_str(" position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5); z-index: 999;\"></div>");
         html.push_str("<div class=\"wj-drawer ");
-        html.push_str(self.class.as_str());
+        html.push_str(&self.class.as_str());
         html.push_str("\" style=\"position: fixed; ");
-        html.push_str(position_style);
+        html.push_str(&position_style);
         html.push(' ');
-        html.push_str(size_prop.as_str());
+        html.push_str(&size_prop.as_str());
         html.push(' ');
-        html.push_str(transform);
+        html.push_str(&transform);
         html.push_str(" background: white; box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); z-index: 1000; transition: transform 0.3s ease; overflow-y: auto; padding: 24px;\">");
-        for child in self.children.iter() {
-            html.push_str(child.as_str());
+        for child in &self.children {
+            html.push_str(&child.as_str());
         }
         html.push_str("</div>");
         html

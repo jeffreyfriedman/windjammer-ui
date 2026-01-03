@@ -2,17 +2,19 @@
 #![allow(noop_method_call)]
 use super::traits::Renderable;
 
+#[derive(Clone, Debug, PartialEq, Copy)]
 pub enum CheckboxSize {
     Small,
     Medium,
     Large,
 }
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct Checkbox {
-    label: String,
-    checked: bool,
-    disabled: bool,
-    size: CheckboxSize,
+    pub label: String,
+    pub checked: bool,
+    pub disabled: bool,
+    pub size: CheckboxSize,
 }
 
 impl Checkbox {
@@ -46,22 +48,22 @@ impl Renderable for Checkbox {
     #[inline]
     fn render(self) -> String {
         let size_class = match self.size {
-            CheckboxSize::Small => "sm",
-            CheckboxSize::Medium => "md",
-            CheckboxSize::Large => "lg",
+            CheckboxSize::Small => "sm".to_string(),
+            CheckboxSize::Medium => "md".to_string(),
+            CheckboxSize::Large => "lg".to_string(),
         };
         let checked_attr = {
             if self.checked {
-                " checked"
+                " checked".to_string()
             } else {
-                ""
+                "".to_string()
             }
         };
         let disabled_attr = {
             if self.disabled {
-                " disabled"
+                " disabled".to_string()
             } else {
-                ""
+                "".to_string()
             }
         };
         format!("<label class='wj-checkbox wj-checkbox-{}'><input type='checkbox'{}{}/><span>{}</span></label>", size_class, checked_attr, disabled_attr, self.label)

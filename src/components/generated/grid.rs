@@ -4,11 +4,12 @@ use std::fmt::Write;
 
 use super::traits::Renderable;
 
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Grid {
-    children: Vec<String>,
-    columns: i32,
-    gap: String,
-    padding: String,
+    pub children: Vec<String>,
+    pub columns: i32,
+    pub gap: String,
+    pub padding: String,
 }
 
 impl Grid {
