@@ -3,40 +3,30 @@
 /// Reactive application runtime for WASM
 /// Simpler version without the complex winit+wgpu setup
 use crate::simple_vnode::VNode;
-use std::rc::Rc;
-
-#[cfg(target_arch = "wasm32")]
 use std::cell::RefCell;
-#[cfg(target_arch = "wasm32")]
+use std::rc::Rc;
 use wasm_bindgen::prelude::*;
 
 // Global render callback for triggering re-renders
-#[cfg(target_arch = "wasm32")]
 static mut RENDER_CALLBACK: Option<Box<dyn Fn()>> = None;
 
-#[cfg(target_arch = "wasm32")]
 pub fn set_render_callback<F: Fn() + 'static>(callback: F) {
     unsafe {
         RENDER_CALLBACK = Some(Box::new(callback));
     }
 }
 
-#[cfg(target_arch = "wasm32")]
 pub fn trigger_rerender() {
     unsafe {
-        if let Some(callback) = &raw const RENDER_CALLBACK {
-            if let Some(cb) = callback.as_ref() {
-                cb();
-            }
+        if let Some(callback) = &RENDER_CALLBACK {
+            callback();
         }
     }
 }
 
 /// Reactive application that automatically re-renders when signals change
 pub struct ReactiveApp {
-    #[allow(dead_code)]
     title: String,
-    #[allow(dead_code)]
     render_fn: Rc<dyn Fn() -> VNode>,
 }
 
@@ -51,7 +41,6 @@ impl ReactiveApp {
         }
     }
 
-    #[cfg(target_arch = "wasm32")]
     pub fn run(self) {
         use wasm_bindgen::JsCast;
         use web_sys::{window, HtmlElement};
@@ -113,10 +102,5 @@ impl ReactiveApp {
                     .unchecked_ref(),
             )
             .unwrap();
-    }
-
-    #[cfg(not(target_arch = "wasm32"))]
-    pub fn run(self) {
-        panic!("ReactiveApp::run() is only available on wasm32 targets. Use ReactiveAppEframe for desktop.");
     }
 }

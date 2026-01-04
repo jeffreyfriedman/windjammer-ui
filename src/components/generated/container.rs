@@ -56,7 +56,7 @@ impl Container {
 
 impl Renderable for Container {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut style = "margin: 0 auto; ".to_string();
         if self.max_width != "" {
             style = format!("{}{}{}{}", style, "max-width: ", self.max_width, "; ");

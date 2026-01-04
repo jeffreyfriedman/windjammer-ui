@@ -89,7 +89,7 @@ impl Table {
 
 impl Renderable for Table {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut html = String::new();
         let border_style = {
             if self.bordered {

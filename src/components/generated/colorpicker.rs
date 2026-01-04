@@ -30,7 +30,7 @@ impl ColorPicker {
 
 impl Renderable for ColorPicker {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let label_html = {
             if self.label != "" {
                 format!("<label>{}</label>", self.label)

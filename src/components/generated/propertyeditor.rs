@@ -107,7 +107,7 @@ impl Property {
 
 impl Renderable for Property {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let tooltip_attr = {
             if self.tooltip != "" {
                 format!(" title='{}'", self.tooltip)
@@ -259,7 +259,7 @@ impl Vec3Editor {
 
 impl Renderable for Vec3Editor {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         format!(
             "
             <div class='vec3-editor'>

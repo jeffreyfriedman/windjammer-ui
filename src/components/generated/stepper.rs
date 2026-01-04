@@ -58,7 +58,7 @@ impl Stepper {
 
 impl Renderable for Stepper {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<div style='display: flex; align-items: center; justify-content: space-between; padding: 24px 0;'>");
         let total_steps = self.steps.len() as i32;

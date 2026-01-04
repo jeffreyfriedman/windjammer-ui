@@ -3,7 +3,7 @@
 use super::vnode::VNode;
 
 pub trait Renderable {
-    fn render(self) -> String;
+    fn render(&self) -> String;
 }
 
 pub trait RenderableVNode {

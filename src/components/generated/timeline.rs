@@ -58,7 +58,7 @@ impl Timeline {
 
 impl Renderable for Timeline {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<div style='position: relative; padding-left: 32px;'>");
         html.push_str("<div style='position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: #e2e8f0;'></div>");

@@ -34,7 +34,7 @@ impl Dialog {
 
 impl Renderable for Dialog {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let display_style = {
             if self.open {
                 "display: flex;".to_string()

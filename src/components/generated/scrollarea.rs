@@ -51,7 +51,7 @@ impl ScrollArea {
 
 impl Renderable for ScrollArea {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let overflow_style = match self.direction {
             ScrollDirection::Vertical => "overflow-y: auto; overflow-x: hidden;".to_string(),
             ScrollDirection::Horizontal => "overflow-x: auto; overflow-y: hidden;".to_string(),

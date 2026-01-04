@@ -5,24 +5,17 @@
 //! This module exports example functions that can be called from JavaScript
 
 use crate::reactivity::Signal;
-use crate::vdom::{VElement, VNode, VText};
-
-#[cfg(target_arch = "wasm32")]
 use crate::renderer::WebRenderer;
-#[cfg(target_arch = "wasm32")]
+use crate::vdom::{VElement, VNode, VText};
 use std::cell::RefCell;
-#[cfg(target_arch = "wasm32")]
 use std::rc::Rc;
-#[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
 
 /// Counter component with reactive state
-#[allow(dead_code)]
 struct Counter {
     count: Signal<i32>,
 }
 
-#[allow(dead_code)]
 impl Counter {
     fn new() -> Self {
         Self {
@@ -112,7 +105,6 @@ impl Counter {
 }
 
 /// Helper function to render counter to DOM
-#[cfg(target_arch = "wasm32")]
 fn render_counter(counter: &Rc<RefCell<Counter>>, target: &web_sys::Element) {
     let vnode = counter.borrow().render();
     let renderer = WebRenderer::new();
@@ -133,7 +125,6 @@ fn render_counter(counter: &Rc<RefCell<Counter>>, target: &web_sys::Element) {
 }
 
 /// Initialize and run the interactive counter example
-#[cfg(target_arch = "wasm32")]
 #[wasm_bindgen]
 pub fn run_interactive_counter() {
     use wasm_bindgen::JsCast;

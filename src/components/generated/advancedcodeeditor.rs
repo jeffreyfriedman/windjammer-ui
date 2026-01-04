@@ -53,7 +53,7 @@ impl AdvancedCodeEditor {
 
 impl Renderable for AdvancedCodeEditor {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let features_class = {
             if self.minimap {
                 " wj-editor-with-minimap".to_string()

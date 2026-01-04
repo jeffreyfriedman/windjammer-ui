@@ -109,7 +109,7 @@ impl FormField {
 
 impl Renderable for Form {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<form id='");
         html.push_str(&self.id);

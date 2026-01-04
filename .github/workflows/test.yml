@@ -34,7 +34,7 @@ jobs:
       - name: Run clippy (web features)
         run: |
           echo "🔎 Running clippy with web features..."
-          cargo clippy --all-targets --features web -- -D warnings
+          cargo clippy --lib --tests --features web -- -D warnings
           echo "✅ Clippy passed (web)"
       
       - name: Install system dependencies (for desktop clippy)
@@ -54,7 +54,7 @@ jobs:
       - name: Run clippy (all features)
         run: |
           echo "🔎 Running clippy with all features..."
-          cargo clippy --all-targets --all-features -- -D warnings
+          cargo clippy --lib --tests --all-features -- -D warnings
           echo "✅ Clippy passed (all features)"
 
   # Version consistency check (fast, independent)

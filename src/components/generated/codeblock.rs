@@ -39,7 +39,7 @@ impl CodeBlock {
 
 impl Renderable for CodeBlock {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let language_label = {
             if self.language.len() > (0 as usize) {
                 format!("<div class='wj-codeblock-language'>{}</div>", self.language)

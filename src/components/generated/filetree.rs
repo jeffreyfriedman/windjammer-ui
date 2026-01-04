@@ -83,7 +83,7 @@ impl FileTree {
 
 impl Renderable for FileTree {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         format!(
             "<div class='wj-file-tree'>
 {}</div>",

@@ -113,7 +113,7 @@ impl Span {
 
 impl Renderable for Span {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<span");
         if !self.class.is_empty() {
@@ -175,7 +175,7 @@ impl P {
 
 impl Renderable for P {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<p");
         if !self.class.is_empty() {
@@ -227,7 +227,7 @@ impl H1 {
 
 impl Renderable for H1 {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<h1");
         if !self.class.is_empty() {
@@ -277,7 +277,7 @@ impl H2 {
 
 impl Renderable for H2 {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<h2");
         if !self.class.is_empty() {
@@ -327,7 +327,7 @@ impl H3 {
 
 impl Renderable for H3 {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<h3");
         if !self.class.is_empty() {

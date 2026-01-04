@@ -53,7 +53,7 @@ impl TabPanel {
 
 impl Renderable for TabPanel {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let flex_direction = {
             if self.orientation == "vertical" {
                 "row".to_string()

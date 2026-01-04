@@ -23,7 +23,7 @@ impl TypingIndicator {
 
 impl Renderable for TypingIndicator {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         format!(
             "<div class='wj-typing-indicator'>
                 <div class='wj-typing-dots'>

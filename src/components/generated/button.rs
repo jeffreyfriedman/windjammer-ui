@@ -117,7 +117,7 @@ impl RenderableVNode for Button {
 
 impl Renderable for Button {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let variant_class = match self.variant {
             ButtonVariant::Primary => "wj-button-primary".to_string(),
             ButtonVariant::Secondary => "wj-button-secondary".to_string(),

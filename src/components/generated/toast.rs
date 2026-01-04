@@ -64,7 +64,7 @@ impl Toast {
 
 impl Renderable for Toast {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let variant_class = match self.variant {
             ToastVariant::Success => "wj-toast-success".to_string(),
             ToastVariant::Error => "wj-toast-error".to_string(),

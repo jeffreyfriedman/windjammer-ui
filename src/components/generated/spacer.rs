@@ -84,7 +84,7 @@ impl Spacer {
 
 impl Renderable for Spacer {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut style = "".to_string();
         if self.flex {
             style = "flex: 1; ".to_string();

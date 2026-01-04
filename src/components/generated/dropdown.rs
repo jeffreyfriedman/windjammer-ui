@@ -48,7 +48,7 @@ impl Dropdown {
 
 impl Renderable for Dropdown {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut items_html = "".to_string();
         let mut i = 0;
         while i < (self.items.len() as i64) {

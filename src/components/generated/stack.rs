@@ -106,7 +106,7 @@ impl Stack {
 
 impl Renderable for Stack {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let flex_direction = match self.direction {
             StackDirection::Vertical => "column".to_string(),
             StackDirection::Horizontal => "row".to_string(),

@@ -63,7 +63,7 @@ impl Navbar {
 
 impl Renderable for Navbar {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let mut items_html = Vec::new();
         for item in &self.items {
             items_html.push(format!(
