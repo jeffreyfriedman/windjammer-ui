@@ -38,8 +38,6 @@ pub mod divider;
 pub mod drawer;
 pub mod dropdown;
 pub mod event_handler;
-// pub mod events; // NOTE: Compiler correctly skips this (Bug #9 fix) - events.rs has submodules in src/events/
-// pub mod examples_wasm; // NOTE: Wasm-only, causes issues in non-wasm builds
 pub mod filetree;
 pub mod flex;
 pub mod form;
@@ -48,7 +46,6 @@ pub mod hamburgermenu;
 pub mod html_elements;
 pub mod input;
 pub mod label;
-// pub mod lib; // NOTE: Compiler correctly skips this (Bug #2 fix) - lib.rs is library entry point, not a module
 pub mod list;
 pub mod loading;
 pub mod menu;
@@ -144,8 +141,6 @@ pub use divider::*;
 pub use drawer::*;
 pub use dropdown::*;
 pub use event_handler::*;
-// pub use events::*; // NOTE: Corresponding module commented out
-// pub use examples_wasm::*; // NOTE: Corresponding module commented out
 pub use filetree::*;
 pub use flex::*;
 pub use form::*;
@@ -154,7 +149,6 @@ pub use hamburgermenu::*;
 pub use html_elements::*;
 pub use input::*;
 pub use label::*;
-// pub use lib::*; // NOTE: Corresponding module commented out
 pub use list::*;
 pub use loading::*;
 pub use menu::*;
