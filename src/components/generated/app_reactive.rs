@@ -3,30 +3,40 @@
 /// Reactive application runtime for WASM
 /// Simpler version without the complex winit+wgpu setup
 use crate::simple_vnode::VNode;
-use std::cell::RefCell;
 use std::rc::Rc;
+
+#[cfg(target_arch = "wasm32")]
+use std::cell::RefCell;
+#[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
 
 // Global render callback for triggering re-renders
+#[cfg(target_arch = "wasm32")]
 static mut RENDER_CALLBACK: Option<Box<dyn Fn()>> = None;
 
+#[cfg(target_arch = "wasm32")]
 pub fn set_render_callback<F: Fn() + 'static>(callback: F) {
     unsafe {
         RENDER_CALLBACK = Some(Box::new(callback));
     }
 }
 
+#[cfg(target_arch = "wasm32")]
 pub fn trigger_rerender() {
     unsafe {
-        if let Some(callback) = &RENDER_CALLBACK {
-            callback();
+        if let Some(callback) = &raw const RENDER_CALLBACK {
+            if let Some(cb) = callback.as_ref() {
+                cb();
+            }
         }
     }
 }
 
 /// Reactive application that automatically re-renders when signals change
 pub struct ReactiveApp {
+    #[allow(dead_code)]
     title: String,
+    #[allow(dead_code)]
     render_fn: Rc<dyn Fn() -> VNode>,
 }
 

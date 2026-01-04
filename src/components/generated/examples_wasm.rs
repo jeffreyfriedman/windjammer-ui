@@ -5,17 +5,24 @@
 //! This module exports example functions that can be called from JavaScript
 
 use crate::reactivity::Signal;
-use crate::renderer::WebRenderer;
 use crate::vdom::{VElement, VNode, VText};
+
+#[cfg(target_arch = "wasm32")]
+use crate::renderer::WebRenderer;
+#[cfg(target_arch = "wasm32")]
 use std::cell::RefCell;
+#[cfg(target_arch = "wasm32")]
 use std::rc::Rc;
+#[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
 
 /// Counter component with reactive state
+#[allow(dead_code)]
 struct Counter {
     count: Signal<i32>,
 }
 
+#[allow(dead_code)]
 impl Counter {
     fn new() -> Self {
         Self {
