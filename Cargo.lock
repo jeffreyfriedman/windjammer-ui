@@ -6440,7 +6440,7 @@ dependencies = [
  "js-sys",
  "notify",
  "objc",
- "png 0.17.16",
+ "png 0.18.0",
  "rfd",
  "serde",
  "serde_json",
