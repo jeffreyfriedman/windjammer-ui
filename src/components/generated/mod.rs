@@ -48,7 +48,7 @@ pub mod hamburgermenu;
 pub mod html_elements;
 pub mod input;
 pub mod label;
-pub mod lib;
+// pub mod lib; // NOTE: Compiler correctly skips this (Bug #2 fix) - lib.rs is library entry point, not a module
 pub mod list;
 pub mod loading;
 pub mod menu;
