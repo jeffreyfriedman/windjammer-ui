@@ -46,7 +46,7 @@ impl Grid {
 
 impl Renderable for Grid {
     #[inline]
-    fn render(&self) -> String {
+    fn render(self) -> String {
         let style = {
             let mut __s = String::with_capacity(64);
             write!(

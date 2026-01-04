@@ -10,6 +10,7 @@ use std::cell::RefCell;
 
 #[cfg(not(target_arch = "wasm32"))]
 pub struct DesktopRendererV2 {
+    #[allow(dead_code)]
     event_handlers: Rc<RefCell<Vec<Rc<RefCell<dyn FnMut()>>>>>,
 }
 

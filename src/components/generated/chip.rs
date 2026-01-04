@@ -63,7 +63,7 @@ impl Chip {
 
 impl Renderable for Chip {
     #[inline]
-    fn render(&self) -> String {
+    fn render(self) -> String {
         let bg_color = match self.variant {
             ChipVariant::Default => "#e2e8f0".to_string(),
             ChipVariant::Primary => "#3b82f6".to_string(),

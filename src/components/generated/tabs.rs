@@ -55,7 +55,7 @@ impl Tabs {
 
 impl Renderable for Tabs {
     #[inline]
-    fn render(&self) -> String {
+    fn render(self) -> String {
         let mut tabs_html = "<div class='wj-tabs-header'>".to_string();
         let mut i = 0;
         while i < (self.tabs.len() as i64) {

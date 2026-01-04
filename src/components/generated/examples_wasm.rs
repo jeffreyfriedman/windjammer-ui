@@ -4,6 +4,8 @@
 //!
 //! This module exports example functions that can be called from JavaScript
 
+#![cfg(target_arch = "wasm32")]
+
 use crate::reactivity::Signal;
 use crate::renderer::WebRenderer;
 use crate::vdom::{VElement, VNode, VText};

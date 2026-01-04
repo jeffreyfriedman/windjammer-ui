@@ -196,6 +196,7 @@ impl<T: Clone + std::fmt::Debug + 'static> std::fmt::Debug for Computed<T> {
 
 /// Effect - a side effect that runs when its dependencies change
 pub struct Effect {
+    #[allow(dead_code)]
     id: EffectId,
 }
 

@@ -53,7 +53,7 @@ impl Rating {
 
 impl Renderable for Rating {
     #[inline]
-    fn render(&self) -> String {
+    fn render(self) -> String {
         let star_size = match self.size {
             RatingSize::Small => "16px".to_string(),
             RatingSize::Medium => "24px".to_string(),

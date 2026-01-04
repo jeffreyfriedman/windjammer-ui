@@ -53,7 +53,7 @@ impl Accordion {
 
 impl Renderable for Accordion {
     #[inline]
-    fn render(&self) -> String {
+    fn render(self) -> String {
         let mut html = "<div class='wj-accordion'>".to_string();
         let mut i = 0;
         while i < (self.items.len() as i64) {
