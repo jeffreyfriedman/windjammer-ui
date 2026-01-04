@@ -103,7 +103,7 @@ tauri = { version = "2.0", features = ["protocol-asset"], optional = true }
 
 # Mobile platform (iOS)
 objc = { version = "0.2", optional = true }
-cocoa = { version = "0.25", optional = true }
+cocoa = { version = "0.26", optional = true }
 
 # Mobile platform (Android)
 jni = { version = "0.21", optional = true }
