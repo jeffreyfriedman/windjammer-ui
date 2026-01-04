@@ -6,7 +6,8 @@
 pub mod accordion;
 pub mod advancedcodeeditor;
 pub mod alert;
-pub mod app;
+// COMPILER BUG WORKAROUND: app is a top-level module in src/lib.rs, not a generated component
+// pub mod app;
 #[cfg(feature = "desktop")]
 pub mod app_docking;
 pub mod app_reactive;
@@ -43,7 +44,8 @@ pub mod divider;
 pub mod drawer;
 pub mod dropdown;
 pub mod event_handler;
-pub mod examples_wasm;
+// COMPILER BUG WORKAROUND: examples_wasm is a top-level module in src/lib.rs, not a generated component
+// pub mod examples_wasm;
 pub mod filetree;
 pub mod flex;
 pub mod form;

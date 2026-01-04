@@ -18,6 +18,10 @@ src/components/generated/components/
 src/components/generated/lib/
 # Note: platform/ is hand-written, not generated, so it's NOT excluded
 
+# Exclude hand-written files incorrectly copied by compiler
+src/components/generated/app.rs
+src/components/generated/examples_wasm.rs
+
 # IDE
 .vscode/
 .idea/
