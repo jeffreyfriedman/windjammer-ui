@@ -3,10 +3,7 @@
 /// Then serve with: python3 -m http.server 8080 in the examples/ directory
 use windjammer_ui::components::generated::traits::Renderable;
 use windjammer_ui::components::generated::{
-    accordion, alert, badge, breadcrumb, button, card, checkbox, codeblock, codeeditor,
-    collapsible, container, contextmenu, divider, dropdown, flex, grid, hamburgermenu, input, menu,
-    navbar, pagination, panel, progress, radio, scrollarea, select, sidebar, slider, spacer,
-    spinner, splitpanel, switch, tabpanel, tabs, text, toast, toolbar, tooltip,
+    button, checkbox, container, flex, input, slider, text,
 };
 
 #[cfg(target_arch = "wasm32")]
@@ -29,22 +26,22 @@ fn generate_demo_page() -> String {
         .child("<h2>Text Components</h2>".to_string())
         .child(
             text::Text::new("Small text example".to_string())
-                .size(TextSize::Small)
+                .size(text::TextSize::Small)
                 .render(),
         )
         .child(
             text::Text::new("Medium text example".to_string())
-                .size(TextSize::Medium)
+                .size(text::TextSize::Medium)
                 .render(),
         )
         .child(
             text::Text::new("Large text example".to_string())
-                .size(TextSize::Large)
+                .size(text::TextSize::Large)
                 .render(),
         )
         .child(
             text::Text::new("Bold large text".to_string())
-                .size(TextSize::XLarge)
+                .size(text::TextSize::XLarge)
                 .bold()
                 .render(),
         )
@@ -93,17 +90,17 @@ fn generate_demo_page() -> String {
                 .gap("16px".to_string())
                 .child(
                     button::Button::new("Small".to_string())
-                        .size(ButtonSize::Small)
+                        .size(button::ButtonSize::Small)
                         .render(),
                 )
                 .child(
                     button::Button::new("Medium".to_string())
-                        .size(ButtonSize::Medium)
+                        .size(button::ButtonSize::Medium)
                         .render(),
                 )
                 .child(
                     button::Button::new("Large".to_string())
-                        .size(ButtonSize::Large)
+                        .size(button::ButtonSize::Large)
                         .render(),
                 )
                 .child(
@@ -149,7 +146,7 @@ fn generate_demo_page() -> String {
                 )
                 .child(
                     checkbox::Checkbox::new("Enable notifications".to_string())
-                        .size(CheckboxSize::Large)
+                        .size(checkbox::CheckboxSize::Large)
                         .render(),
                 )
                 .render(),
