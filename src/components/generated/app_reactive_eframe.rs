@@ -111,7 +111,7 @@ impl ReactiveApp {
     }
 
     #[cfg(not(target_arch = "wasm32"))]
-    pub fn run(mut self) {
+    pub fn run(self) {
         #[cfg(feature = "desktop")]
         {
             match self.run_native_eframe() {

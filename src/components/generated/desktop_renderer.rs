@@ -2,16 +2,16 @@
 #![allow(noop_method_call)]
 /// Desktop renderer using egui + wgpu
 /// Converts VNode tree to egui UI
-#[cfg(not(target_arch = "wasm32"))]
+#[cfg(feature = "desktop")]
 use crate::simple_vnode::{VAttr, VNode};
-#[cfg(not(target_arch = "wasm32"))]
+#[cfg(feature = "desktop")]
 use egui::{Color32, Context, Frame, Margin, RichText, Rounding, Stroke, Ui};
-#[cfg(not(target_arch = "wasm32"))]
+#[cfg(feature = "desktop")]
 use std::cell::RefCell;
-#[cfg(not(target_arch = "wasm32"))]
+#[cfg(feature = "desktop")]
 use std::rc::Rc;
 
-#[cfg(not(target_arch = "wasm32"))]
+#[cfg(feature = "desktop")]
 pub struct DesktopRenderer {
     // Store event handlers for buttons
     #[allow(dead_code)]

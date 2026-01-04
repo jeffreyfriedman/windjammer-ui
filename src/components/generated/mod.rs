@@ -144,8 +144,8 @@ pub use divider::*;
 pub use drawer::*;
 pub use dropdown::*;
 pub use event_handler::*;
-pub use events::*;
-pub use examples_wasm::*;
+// pub use events::*; // NOTE: Corresponding module commented out
+// pub use examples_wasm::*; // NOTE: Corresponding module commented out
 pub use filetree::*;
 pub use flex::*;
 pub use form::*;
@@ -154,7 +154,7 @@ pub use hamburgermenu::*;
 pub use html_elements::*;
 pub use input::*;
 pub use label::*;
-pub use lib::*;
+// pub use lib::*; // NOTE: Corresponding module commented out
 pub use list::*;
 pub use loading::*;
 pub use menu::*;
