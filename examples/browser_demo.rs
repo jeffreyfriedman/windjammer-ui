@@ -1,14 +1,20 @@
 /// Interactive browser demo showcasing all Windjammer UI components
 /// Run with: cargo build --example browser_demo --target wasm32-unknown-unknown
 /// Then serve with: python3 -m http.server 8080 in the examples/ directory
-use windjammer_ui::components::generated::*;
+use windjammer_ui::components::generated::traits::Renderable;
+use windjammer_ui::components::generated::{
+    accordion, alert, badge, breadcrumb, button, card, checkbox, codeblock, codeeditor,
+    collapsible, container, contextmenu, divider, dropdown, flex, grid, hamburgermenu, input, menu,
+    navbar, pagination, panel, progress, radio, scrollarea, select, sidebar, slider, spacer,
+    spinner, splitpanel, switch, tabpanel, tabs, text, toast, toolbar, tooltip,
+};
 
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
 
 fn generate_demo_page() -> String {
     // Header
-    let header = Container::new()
+    let header = container::Container::new()
         .max_width("1200px".to_string())
         .padding("32px".to_string())
         .background_color("#f8f9fa".to_string())
@@ -17,27 +23,27 @@ fn generate_demo_page() -> String {
         .render();
 
     // Text examples
-    let text_section = Container::new()
+    let text_section = container::Container::new()
         .max_width("1200px".to_string())
         .padding("24px".to_string())
         .child("<h2>Text Components</h2>".to_string())
         .child(
-            Text::new("Small text example".to_string())
+            text::Text::new("Small text example".to_string())
                 .size(TextSize::Small)
                 .render(),
         )
         .child(
-            Text::new("Medium text example".to_string())
+            text::Text::new("Medium text example".to_string())
                 .size(TextSize::Medium)
                 .render(),
         )
         .child(
-            Text::new("Large text example".to_string())
+            text::Text::new("Large text example".to_string())
                 .size(TextSize::Large)
                 .render(),
         )
         .child(
-            Text::new("Bold large text".to_string())
+            text::Text::new("Bold large text".to_string())
                 .size(TextSize::XLarge)
                 .bold()
                 .render(),
@@ -45,100 +51,104 @@ fn generate_demo_page() -> String {
         .render();
 
     // Button examples
-    let button_section = Container::new()
+    let button_section = container::Container::new()
         .max_width("1200px".to_string())
         .padding("24px".to_string())
         .child("<h2>Button Components</h2>".to_string())
         .child(
-            Flex::new()
-                .direction(FlexDirection::Row)
+            flex::Flex::new()
+                .direction(flex::FlexDirection::Row)
                 .gap("16px".to_string())
                 .child(
-                    Button::new("Primary".to_string())
-                        .variant(ButtonVariant::Primary)
+                    button::Button::new("Primary".to_string())
+                        .variant(button::ButtonVariant::Primary)
                         .render(),
                 )
                 .child(
-                    Button::new("Secondary".to_string())
-                        .variant(ButtonVariant::Secondary)
+                    button::Button::new("Secondary".to_string())
+                        .variant(button::ButtonVariant::Secondary)
                         .render(),
                 )
                 .child(
-                    Button::new("Success".to_string())
-                        .variant(ButtonVariant::Success)
+                    button::Button::new("Success".to_string())
+                        .variant(button::ButtonVariant::Success)
                         .render(),
                 )
                 .child(
-                    Button::new("Danger".to_string())
-                        .variant(ButtonVariant::Danger)
+                    button::Button::new("Danger".to_string())
+                        .variant(button::ButtonVariant::Danger)
                         .render(),
                 )
                 .child(
-                    Button::new("Ghost".to_string())
-                        .variant(ButtonVariant::Ghost)
+                    button::Button::new("Ghost".to_string())
+                        .variant(button::ButtonVariant::Ghost)
                         .render(),
                 )
                 .render(),
         )
         .child("<br/>".to_string())
         .child(
-            Flex::new()
-                .direction(FlexDirection::Row)
+            flex::Flex::new()
+                .direction(flex::FlexDirection::Row)
                 .gap("16px".to_string())
                 .child(
-                    Button::new("Small".to_string())
+                    button::Button::new("Small".to_string())
                         .size(ButtonSize::Small)
                         .render(),
                 )
                 .child(
-                    Button::new("Medium".to_string())
+                    button::Button::new("Medium".to_string())
                         .size(ButtonSize::Medium)
                         .render(),
                 )
                 .child(
-                    Button::new("Large".to_string())
+                    button::Button::new("Large".to_string())
                         .size(ButtonSize::Large)
                         .render(),
                 )
-                .child(Button::new("Disabled".to_string()).disabled(true).render())
+                .child(
+                    button::Button::new("Disabled".to_string())
+                        .disabled(true)
+                        .render(),
+                )
                 .render(),
         )
         .render();
 
     // Input & Form examples
-    let form_section = Container::new()
+    let form_section = container::Container::new()
         .max_width("1200px".to_string())
         .padding("24px".to_string())
         .child("<h2>Form Components</h2>".to_string())
         .child(
-            Flex::new()
-                .direction(FlexDirection::Column)
+            flex::Flex::new()
+                .direction(flex::FlexDirection::Column)
                 .gap("16px".to_string())
                 .child("<label>Username:</label>".to_string())
                 .child(
-                    Input::new()
+                    input::Input::new()
                         .placeholder("Enter your username".to_string())
                         .render(),
                 )
                 .child("<label>Email:</label>".to_string())
                 .child(
-                    Input::new()
+                    input::Input::new()
                         .placeholder("your@email.com".to_string())
                         .render(),
                 )
                 .child("<br/>".to_string())
                 .child(
-                    Checkbox::new("I agree to the terms".to_string())
+                    checkbox::Checkbox::new("I agree to the terms".to_string())
                         .checked(false)
                         .render(),
                 )
                 .child(
-                    Checkbox::new("Subscribe to newsletter".to_string())
+                    checkbox::Checkbox::new("Subscribe to newsletter".to_string())
                         .checked(true)
                         .render(),
                 )
                 .child(
-                    Checkbox::new("Enable notifications".to_string())
+                    checkbox::Checkbox::new("Enable notifications".to_string())
                         .size(CheckboxSize::Large)
                         .render(),
                 )
@@ -147,19 +157,19 @@ fn generate_demo_page() -> String {
         .render();
 
     // Slider examples
-    let slider_section = Container::new()
+    let slider_section = container::Container::new()
         .max_width("1200px".to_string())
         .padding("24px".to_string())
         .child("<h2>Slider Components</h2>".to_string())
         .child(
-            Slider::new()
+            slider::Slider::new()
                 .label("Volume".to_string())
                 .value(50.0)
                 .render(),
         )
         .child("<br/>".to_string())
         .child(
-            Slider::new()
+            slider::Slider::new()
                 .label("Brightness".to_string())
                 .min(0.0)
                 .max(100.0)
@@ -168,7 +178,7 @@ fn generate_demo_page() -> String {
         )
         .child("<br/>".to_string())
         .child(
-            Slider::new()
+            slider::Slider::new()
                 .label("Precision".to_string())
                 .min(0.0)
                 .max(10.0)
@@ -179,14 +189,14 @@ fn generate_demo_page() -> String {
         .render();
 
     // Layout examples
-    let layout_section = Container::new()
+    let layout_section = container::Container::new()
         .max_width("1200px".to_string())
         .padding("24px".to_string())
         .child("<h2>Layout Components</h2>".to_string())
         .child("<h3>Flex Row:</h3>".to_string())
         .child(
-            Flex::new()
-                .direction(FlexDirection::Row)
+            flex::Flex::new()
+                .direction(flex::FlexDirection::Row)
                 .gap("16px".to_string())
                 .padding("16px".to_string())
                 .background_color("#e3f2fd".to_string())
@@ -198,8 +208,8 @@ fn generate_demo_page() -> String {
         .child("<br/>".to_string())
         .child("<h3>Flex Column:</h3>".to_string())
         .child(
-            Flex::new()
-                .direction(FlexDirection::Column)
+            flex::Flex::new()
+                .direction(flex::FlexDirection::Column)
                 .gap("8px".to_string())
                 .padding("16px".to_string())
                 .background_color("#fff3e0".to_string())

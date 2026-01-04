@@ -5,11 +5,11 @@
 use windjammer_ui::components::generated::traits::Renderable;
 use windjammer_ui::components::generated::{
     accordion, advancedcodeeditor, alert, avatar, badge, breadcrumb, button, card, chatinput,
-    chatmessage, checkbox, codeblock, codeeditor, collapsible, colorpicker, container,
-    contextmenu, dialog, divider, dropdown, filetree, flex, grid, hamburgermenu, input, menu,
-    messagelist, navbar, pagination, panel, progress, radio, scrollarea, select, sidebar,
-    skeleton, slider, spacer, spinner, splitpanel, switch, tabpanel, tabs, text, toast, toolbar,
-    tooltip, treeview, typingindicator,
+    chatmessage, checkbox, codeblock, codeeditor, collapsible, colorpicker, container, contextmenu,
+    dialog, divider, dropdown, filetree, flex, grid, hamburgermenu, input, menu, messagelist,
+    navbar, pagination, panel, progress, radio, scrollarea, select, sidebar, skeleton, slider,
+    spacer, spinner, splitpanel, switch, tabpanel, tabs, text, toast, toolbar, tooltip, treeview,
+    typingindicator,
 };
 
 #[test]
@@ -52,11 +52,13 @@ fn test_all_49_components_render() {
     // Advanced Components (17)
     let _dialog = dialog::Dialog::new("title".to_string(), "content".to_string()).render();
     let _scrollarea = scrollarea::ScrollArea::new().render();
-    let _collapsible = collapsible::CollapsibleSection::new("title".to_string(), "content".to_string()).render();
+    let _collapsible =
+        collapsible::CollapsibleSection::new("title".to_string(), "content".to_string()).render();
     let _codeeditor = codeeditor::CodeEditor::new("code".to_string()).render();
     let _advcodeeditor = advancedcodeeditor::AdvancedCodeEditor::new("code".to_string()).render();
     let _colorpicker = colorpicker::ColorPicker::new().render();
-    let _filetree = filetree::FileTree::new(filetree::FileNode::new("root".to_string(), true)).render();
+    let _filetree =
+        filetree::FileTree::new(filetree::FileNode::new("root".to_string(), true)).render();
     let _treeview = treeview::TreeView::new().render();
     let _splitpanel = splitpanel::SplitPanel::new("left".to_string(), "right".to_string()).render();
     let _toast = toast::Toast::new("test".to_string()).render();
@@ -100,19 +102,27 @@ fn test_button_component() {
 
 #[test]
 fn test_input_component() {
-    let input = input::Input::new().placeholder("Enter text".to_string()).render();
+    let input = input::Input::new()
+        .placeholder("Enter text".to_string())
+        .render();
     assert!(input.contains("Enter text"));
 }
 
 #[test]
 fn test_checkbox_component() {
-    let checkbox = checkbox::Checkbox::new("Accept".to_string()).checked(true).render();
+    let checkbox = checkbox::Checkbox::new("Accept".to_string())
+        .checked(true)
+        .render();
     assert!(checkbox.contains("Accept"));
 }
 
 #[test]
 fn test_slider_component() {
-    let slider = slider::Slider::new().min(0.0).max(100.0).value(50.0).render();
+    let slider = slider::Slider::new()
+        .min(0.0)
+        .max(100.0)
+        .value(50.0)
+        .render();
     assert!(slider.contains("50"));
 }
 
