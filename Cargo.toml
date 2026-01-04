@@ -96,7 +96,7 @@ png = { version = "0.17", optional = true }
 # Editor features
 rfd = { version = "0.14", optional = true }  # File dialogs
 syntect = { version = "5.0", optional = true }  # Syntax highlighting
-notify = { version = "6.0", optional = true }  # File watching
+notify = { version = "8.2", optional = true }  # File watching
 
 # Desktop platform (Tauri - legacy, keeping for compatibility)
 tauri = { version = "2.0", features = ["protocol-asset"], optional = true }
