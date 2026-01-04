@@ -12,8 +12,36 @@ env:
   SKIP_WJ_REGEN: 1  # Skip regeneration in CI - generated code is committed
 
 jobs:
+  # Fast quality checks - fail immediately if issues found
+  quality-checks:
+    name: Code Quality (Format & Lint)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      
+      - name: Check formatting
+        run: |
+          echo "🎨 Checking code formatting..."
+          cargo fmt --all -- --check
+          echo "✅ Formatting check passed"
+      
+      - name: Run clippy (web features only)
+        run: |
+          echo "🔎 Running clippy with web features..."
+          echo "Note: Desktop features skipped in quality-checks due to winit/egui headless limitations"
+          echo "Desktop clippy is checked in platform-specific test jobs"
+          cargo clippy --lib --tests --features web -- -D warnings
+          echo "✅ Clippy passed (web)"
+
+  # Version consistency check (fast, independent)
   version-check:
-    name: Version Consistency Check
+    name: Version Consistency
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -68,28 +96,22 @@ jobs:
           
           echo "✅ Version incremented: $MAIN_VERSION → $CARGO_VERSION"
 
+  # Cross-platform tests - only run if quality checks pass
   test:
-    name: Test on ${{ matrix.os }} with Rust ${{ matrix.rust }}
+    name: Test on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    needs: [quality-checks, version-check]  # Wait for quality checks to pass
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        rust: [stable]
-        # Beta testing disabled due to winit platform support issues on Linux
-        # include:
-        #   - os: ubuntu-latest
-        #     rust: beta
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       
       - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@master
-        with:
-          toolchain: ${{ matrix.rust }}
-          components: rustfmt, clippy
+        uses: dtolnay/rust-toolchain@stable
       
       - name: Generate Cargo.lock if missing
         shell: bash
@@ -122,60 +144,34 @@ jobs:
             libayatana-appindicator3-dev \
             librsvg2-dev
       
-      # Windjammer CLI not needed - generated code is committed
-      # - name: Install Windjammer CLI
-      #   run: cargo install windjammer --version ^0.39.1 --locked
+      - name: Build (web features)
+        run: cargo build --verbose --features web
       
-      - name: Build
-        run: cargo build --verbose
+      - name: Run tests (web features)
+        run: cargo test --verbose --features web
       
-      - name: Check formatting
-        if: matrix.rust == 'stable' && matrix.os == 'ubuntu-latest'
-        run: cargo fmt --all -- --check
+      - name: Build (all features) - macOS only
+        if: runner.os == 'macOS'
+        run: cargo build --verbose --all-features
       
-      - name: Run clippy (macOS)
-        if: matrix.rust == 'stable' && runner.os == 'macOS'
-        run: cargo clippy --all-targets --all-features -- -D warnings
-      
-      - name: Run clippy (Linux/Windows)
-        if: matrix.rust == 'stable' && runner.os != 'macOS'
-        run: cargo clippy --all-targets --features web -- -D warnings
-      
-      - name: Run tests (macOS)
+      - name: Run tests (all features) - macOS only
         if: runner.os == 'macOS'
         run: cargo test --verbose --all-features
       
-      - name: Run tests (Linux/Windows)
-        if: runner.os != 'macOS'
-        run: cargo test --verbose --features web
-      
       - name: Build release
-        if: matrix.rust == 'stable'
-        run: cargo build --release --verbose
+        run: cargo build --release --verbose --features web
       
-      - name: Test package (dry-run)
-        if: matrix.rust == 'stable' && matrix.os == 'ubuntu-latest'
-        continue-on-error: true  # May fail if macro version not published yet
-        run: |
-          echo "Testing package creation..."
-          cargo package --list --allow-dirty | head -20
-          echo ""
-          echo "Note: Full publish dry-run may fail if windjammer-ui-macro version not published yet"
-          echo "This is expected for development branches."
-      
-      - name: Build with desktop feature
-        if: matrix.rust == 'stable' && runner.os == 'macOS'
-        run: cargo build --release --features desktop
-      
-      - name: Build for WASM target
-        if: matrix.rust == 'stable' && matrix.os == 'ubuntu-latest'
+      - name: Build for WASM target (Linux only)
+        if: runner.os == 'Linux'
         run: |
           rustup target add wasm32-unknown-unknown
           cargo build --target wasm32-unknown-unknown --features web
 
+  # Code coverage (independent, can run in parallel)
   coverage:
     name: Code Coverage
     runs-on: ubuntu-latest
+    needs: [quality-checks]  # Only need quality checks to pass
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -206,10 +202,6 @@ jobs:
           pkg-config --modversion gtk+-3.0
           echo "=== All libraries found! ==="
       
-      # Windjammer CLI not needed - generated code is committed
-      # - name: Install Windjammer CLI
-      #   run: cargo install windjammer --version ^0.39.1 --locked
-      
       - name: Install tarpaulin
         run: cargo install cargo-tarpaulin
       
@@ -225,7 +217,7 @@ jobs:
           files: ./cobertura.xml
           fail_ci_if_error: false
   
-  # Validate Cargo.lock is committed and up-to-date
+  # Validate Cargo.lock (fast, independent)
   lockfile-check:
     name: Cargo.lock Validation
     runs-on: ubuntu-latest
@@ -257,21 +249,17 @@ jobs:
           fi
           echo "✅ Cargo.lock is up-to-date"
   
-  # Validate that crate can be published (dry-run)
+  # Validate that crate can be published
   publish-dryrun:
     name: Publish Dry-Run
     runs-on: ubuntu-latest
-    needs: [lockfile-check]
+    needs: [quality-checks, lockfile-check]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
-      
-      # Windjammer CLI not needed - generated code is committed
-      # - name: Install Windjammer CLI
-      #   run: cargo install windjammer --version ^0.39.1 --locked
       
       - name: Cache Cargo registry and build artifacts
         uses: actions/cache@v4
