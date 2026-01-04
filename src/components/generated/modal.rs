@@ -63,7 +63,7 @@ impl Modal {
 
 impl Renderable for Modal {
     #[inline]
-    fn render(&self) -> String {
+    fn render(self) -> String {
         let width = match self.size {
             ModalSize::Small => "400px".to_string(),
             ModalSize::Medium => "600px".to_string(),

@@ -89,7 +89,7 @@ impl TreeView {
 
 impl Renderable for TreeView {
     #[inline]
-    fn render(&self) -> String {
+    fn render(self) -> String {
         let mut html = "<div class='wj-tree-view'>
 "
         .to_string();

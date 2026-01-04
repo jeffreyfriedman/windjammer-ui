@@ -1,16 +1,16 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
 /// Desktop renderer using egui - Version 2 with proper layout
-#[cfg(feature = "desktop")]
+#[cfg(not(target_arch = "wasm32"))]
 use crate::simple_vnode::{VAttr, VNode};
-#[cfg(feature = "desktop")]
+#[cfg(not(target_arch = "wasm32"))]
 use egui::{Color32, Context, Frame, Margin, RichText, Rounding, Stroke, Ui};
-#[cfg(feature = "desktop")]
+#[cfg(not(target_arch = "wasm32"))]
 use std::cell::RefCell;
-#[cfg(feature = "desktop")]
+#[cfg(not(target_arch = "wasm32"))]
 use std::rc::Rc;
 
-#[cfg(feature = "desktop")]
+#[cfg(not(target_arch = "wasm32"))]
 pub struct DesktopRendererV2 {
     event_handlers: Rc<RefCell<Vec<Rc<RefCell<dyn FnMut()>>>>>,
 }

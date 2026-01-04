@@ -30,7 +30,7 @@ impl Toolbar {
 
 impl Renderable for Toolbar {
     #[inline]
-    fn render(&self) -> String {
+    fn render(self) -> String {
         let items_html = self.items.join(
             "
 ",

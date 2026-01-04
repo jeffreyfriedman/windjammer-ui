@@ -46,7 +46,7 @@ impl ChatMessage {
 
 impl Renderable for ChatMessage {
     #[inline]
-    fn render(&self) -> String {
+    fn render(self) -> String {
         let role_class = match self.role {
             MessageRole::User => "wj-message-user".to_string(),
             MessageRole::Assistant => "wj-message-assistant".to_string(),

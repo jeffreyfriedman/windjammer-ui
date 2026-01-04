@@ -27,7 +27,7 @@ impl CollapsibleSection {
 
 impl Renderable for CollapsibleSection {
     #[inline]
-    fn render(&self) -> String {
+    fn render(self) -> String {
         let icon = {
             if self.open {
                 "▼".to_string()

@@ -37,7 +37,7 @@ impl Input {
 
 impl Renderable for Input {
     #[inline]
-    fn render(&self) -> String {
+    fn render(self) -> String {
         format!(
             "<input class='wj-input' type='{}' value='{}' placeholder='{}'/>",
             self.input_type, self.value, self.placeholder

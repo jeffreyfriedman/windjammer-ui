@@ -119,11 +119,13 @@ pub mod prelude {
     // Re-export the component macro
     pub use crate::component;
 
-    // Re-export common components
-    pub use crate::components::{
-        Alert, AlertVariant, Button, ButtonSize, ButtonVariant, Container, Flex, FlexDirection,
-        Input, Text, TextSize, TextWeight,
-    };
+    // Re-export common components (explicit imports due to symbol conflicts)
+    pub use crate::components::alert::{Alert, AlertVariant};
+    pub use crate::components::button::{Button, ButtonSize, ButtonVariant};
+    pub use crate::components::container::Container;
+    pub use crate::components::flex::{Flex, FlexDirection};
+    pub use crate::components::input::Input;
+    pub use crate::components::text::{Text, TextSize, TextWeight};
 }
 
 /// Mount a component to the DOM (WASM only)

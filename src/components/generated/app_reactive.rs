@@ -41,6 +41,7 @@ impl ReactiveApp {
         }
     }
 
+    #[cfg(target_arch = "wasm32")]
     pub fn run(self) {
         use wasm_bindgen::JsCast;
         use web_sys::{window, HtmlElement};
@@ -102,5 +103,10 @@ impl ReactiveApp {
                     .unchecked_ref(),
             )
             .unwrap();
+    }
+
+    #[cfg(not(target_arch = "wasm32"))]
+    pub fn run(self) {
+        panic!("ReactiveApp::run() is only available on wasm32 targets. Use ReactiveAppEframe for desktop.");
     }
 }

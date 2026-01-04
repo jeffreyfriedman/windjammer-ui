@@ -105,6 +105,7 @@ impl Counter {
 }
 
 /// Helper function to render counter to DOM
+#[cfg(target_arch = "wasm32")]
 fn render_counter(counter: &Rc<RefCell<Counter>>, target: &web_sys::Element) {
     let vnode = counter.borrow().render();
     let renderer = WebRenderer::new();
@@ -125,6 +126,7 @@ fn render_counter(counter: &Rc<RefCell<Counter>>, target: &web_sys::Element) {
 }
 
 /// Initialize and run the interactive counter example
+#[cfg(target_arch = "wasm32")]
 #[wasm_bindgen]
 pub fn run_interactive_counter() {
     use wasm_bindgen::JsCast;

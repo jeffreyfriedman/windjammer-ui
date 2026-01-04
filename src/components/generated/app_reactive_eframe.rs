@@ -47,7 +47,7 @@ impl ReactiveApp {
     }
 
     #[cfg(target_arch = "wasm32")]
-    pub fn run(mut self) {
+    pub fn run(self) {
         // WASM implementation remains the same
         use wasm_bindgen::JsCast;
         use web_sys::{window, HtmlElement};

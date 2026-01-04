@@ -200,7 +200,7 @@ impl EditorTheme {
 
 impl Renderable for EditorTheme {
     #[inline]
-    fn render(&self) -> String {
+    fn render(self) -> String {
         let css = format!(
             "{}{}{}{}{}{}{}{}{}{}{}",
             ":root { 
@@ -260,7 +260,7 @@ impl ThemeSwitcher {
 
 impl Renderable for ThemeSwitcher {
     #[inline]
-    fn render(&self) -> String {
+    fn render(self) -> String {
         let mut options = "".to_string();
         for t in &self.themes {
             let selected = {
