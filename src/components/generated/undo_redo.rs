@@ -32,6 +32,8 @@
 #![allow(noop_method_call)]
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 // Undo/Redo System Module
 // Provides command pattern-based undo/redo functionality for editor operations
 //

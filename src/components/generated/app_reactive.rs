@@ -32,6 +32,8 @@
 #![allow(noop_method_call)]
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 /// Reactive application runtime for WASM
 /// Simpler version without the complex winit+wgpu setup
 use crate::simple_vnode::VNode;

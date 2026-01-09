@@ -32,6 +32,8 @@
 #![allow(noop_method_call)]
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 //! Server-Side Rendering (SSR) for web targets
 
 use crate::component::Component;
