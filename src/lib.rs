@@ -49,6 +49,14 @@
 pub use windjammer_ui_macro::component;
 pub use windjammer_ui_macro::Props;
 
+// Re-export dependencies for users (editor shouldn't depend on these directly)
+pub use serde;
+pub use serde_json;
+
+// Re-export egui for desktop platform
+#[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
+pub use egui;
+
 pub mod app;
 #[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
 pub mod app_docking;
