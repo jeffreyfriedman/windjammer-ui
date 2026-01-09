@@ -49,13 +49,13 @@
 pub use windjammer_ui_macro::component;
 pub use windjammer_ui_macro::Props;
 
-// Re-export dependencies for users (editor shouldn't depend on these directly)
+// Re-export serde for serialization (legitimate public API)
 pub use serde;
 pub use serde_json;
 
-// Re-export egui for desktop platform
-#[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
-pub use egui;
+// Generic UI types (implementation-agnostic)
+pub mod types;
+pub use types::{Color, Position, Size};
 
 pub mod app;
 #[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
