@@ -32,6 +32,8 @@
 #![allow(noop_method_call)]
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 //! Optimized reactivity system with performance improvements
 //!
 //! Key optimizations:

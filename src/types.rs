@@ -187,3 +187,71 @@ impl From<Size> for egui::Vec2 {
         egui::Vec2::new(s.width, s.height)
     }
 }
+
+// ============================================================================
+// Extension traits for ergonomic conversion in editor code
+// These are PUBLIC so editor can convert easily, but they're still generic
+// ============================================================================
+
+/// Extension trait for converting egui types to generic abstractions
+#[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
+pub trait EguiConvert {
+    type Output;
+    fn to_generic(&self) -> Self::Output;
+}
+
+#[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
+impl EguiConvert for egui::Color32 {
+    type Output = Color;
+    fn to_generic(&self) -> Color {
+        Color::from(*self)
+    }
+}
+
+#[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
+impl EguiConvert for egui::Pos2 {
+    type Output = Position;
+    fn to_generic(&self) -> Position {
+        Position::from(*self)
+    }
+}
+
+#[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
+impl EguiConvert for egui::Vec2 {
+    type Output = Size;
+    fn to_generic(&self) -> Size {
+        Size::from(*self)
+    }
+}
+
+/// Extension trait for converting generic abstractions to egui types
+/// This is only for internal use within windjammer-ui components
+#[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
+pub trait ToEgui {
+    type Output;
+    fn to_egui(&self) -> Self::Output;
+}
+
+#[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
+impl ToEgui for Color {
+    type Output = egui::Color32;
+    fn to_egui(&self) -> egui::Color32 {
+        egui::Color32::from(*self)
+    }
+}
+
+#[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
+impl ToEgui for Position {
+    type Output = egui::Pos2;
+    fn to_egui(&self) -> egui::Pos2 {
+        egui::Pos2::from(*self)
+    }
+}
+
+#[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
+impl ToEgui for Size {
+    type Output = egui::Vec2;
+    fn to_egui(&self) -> egui::Vec2 {
+        egui::Vec2::from(*self)
+    }
+}
