@@ -1,5 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
+
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -112,7 +115,7 @@ impl Renderable for Chip {
         html.push_str("; border: 1px solid ");
         html.push_str(&border_color);
         html.push_str(";'>");
-        if self.icon.len() > (0 as usize) {
+        if self.icon.len() > 0 {
             html.push_str("<span>");
             html.push_str(&self.icon);
             html.push_str("</span>")

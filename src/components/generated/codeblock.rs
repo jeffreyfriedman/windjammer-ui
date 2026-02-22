@@ -1,5 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
+
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
@@ -41,7 +44,7 @@ impl Renderable for CodeBlock {
     #[inline]
     fn render(self) -> String {
         let language_label = {
-            if self.language.len() > (0 as usize) {
+            if self.language.len() > 0 {
                 format!("<div class='wj-codeblock-language'>{}</div>", self.language)
             } else {
                 String::from("")

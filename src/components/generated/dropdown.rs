@@ -1,5 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
+
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
@@ -51,7 +54,7 @@ impl Renderable for Dropdown {
     fn render(self) -> String {
         let mut items_html = "".to_string();
         let mut i = 0;
-        while i < (self.items.len() as i64) {
+        while i < self.items.len() as i64 {
             let item = &self.items[i as usize];
             let disabled_class = {
                 if item.disabled {

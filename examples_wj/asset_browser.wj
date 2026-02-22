@@ -4,7 +4,7 @@
 @component
 fn AssetBrowser() -> UI {
     // Current directory
-    let current_path = signal("Assets/")
+    let mut current_path = signal("Assets/")
     
     // File list
     let files = signal([
@@ -19,7 +19,7 @@ fn AssetBrowser() -> UI {
     ])
     
     // Selected file
-    let selected_file = signal(None)
+    let mut selected_file = signal(None)
     
     // View mode
     let view_mode = signal("grid") // "grid" or "list"

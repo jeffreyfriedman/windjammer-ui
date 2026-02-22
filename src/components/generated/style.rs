@@ -1,5 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
+
 #[derive(Debug, Clone, Default)]
 pub struct Style {
     pub properties: Vec<StyleProperty>,

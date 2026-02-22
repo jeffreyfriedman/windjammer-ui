@@ -1,5 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
+
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -256,7 +259,7 @@ pub struct NodeConnection {
     pub to_pin: String,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 pub struct NodeGraph {
     pub width: i32,
     pub height: i32,

@@ -42,7 +42,7 @@ fn demo_gps() {
     print("📍 GPS/Location API Demo")
     print("=" * 40)
     
-    let gps = GPS.new()
+    let mut gps = GPS.new()
     
     // Enable GPS
     gps.enable().unwrap()

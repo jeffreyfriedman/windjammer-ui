@@ -60,7 +60,7 @@ pub use types::{Color, Position, Size};
 // Conversion traits for bridging generic types and backend types
 // These are public for editor convenience, but still maintain abstraction
 #[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
-pub use types::{EguiConvert, ToEgui};
+pub use types::{FromNative, ToNative};
 
 pub mod app;
 #[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]

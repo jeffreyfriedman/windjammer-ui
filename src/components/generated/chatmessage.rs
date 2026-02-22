@@ -1,5 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
+
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -53,7 +56,7 @@ impl Renderable for ChatMessage {
             MessageRole::System => "wj-message-system".to_string(),
         };
         let avatar_html = {
-            if self.avatar.len() > (0 as usize) {
+            if self.avatar.len() > 0 {
                 format!(
                     "<div class='wj-message-avatar'><img src='{}' alt='avatar'/></div>",
                     self.avatar
@@ -68,7 +71,7 @@ impl Renderable for ChatMessage {
             }
         };
         let timestamp_html = {
-            if self.timestamp.len() > (0 as usize) {
+            if self.timestamp.len() > 0 {
                 format!("<div class='wj-message-timestamp'>{}</div>", self.timestamp)
             } else {
                 String::from("")

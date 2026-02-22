@@ -81,7 +81,7 @@ fn build_ui() -> string {
 
 fn build_scripts() -> string {
     String::from("<script>
-        let count = 0;
+        let mut count = 0;
         
         function updateDisplay() {
             document.getElementById('counter').textContent = count;

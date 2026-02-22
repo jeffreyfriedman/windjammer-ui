@@ -1,5 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
+
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
@@ -76,7 +79,7 @@ impl Renderable for Timeline {
             html.push_str("<div style='font-weight: 600; font-size: 16px; color: #1a202c; margin-bottom: 8px;'>");
             html.push_str(&event.title);
             html.push_str("</div>");
-            if event.description.len() > (0 as usize) {
+            if event.description.len() > 0 {
                 html.push_str("<div style='font-size: 14px; color: #4a5568;'>");
                 html.push_str(&event.description);
                 html.push_str("</div>")

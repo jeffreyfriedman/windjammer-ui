@@ -1,5 +1,7 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
 use std::fmt::Write;
 
 use super::traits::Renderable;
@@ -73,7 +75,7 @@ impl Renderable for TabPanel {
             __s
         };
         let mut i = 0;
-        while i < (self.tabs.len() as i64) {
+        while i < self.tabs.len() as i64 {
             let tab = &self.tabs[i as usize];
             let active_class = {
                 if tab.id == self.active {
@@ -98,7 +100,7 @@ impl Renderable for TabPanel {
 "
         .to_string();
         let mut j = 0;
-        while j < (self.tabs.len() as i64) {
+        while j < self.tabs.len() as i64 {
             let tab = &self.tabs[j as usize];
             let display = {
                 if tab.id == self.active {

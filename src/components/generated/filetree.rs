@@ -1,5 +1,7 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
 use std::fmt::Write;
 
 use super::traits::Renderable;
@@ -59,7 +61,7 @@ impl FileNode {
         };
         if self.is_directory && self.expanded {
             let mut i = 0;
-            while i < (self.children.len() as i64) {
+            while i < self.children.len() as i64 {
                 let child = &self.children[i as usize];
                 html = format!("{}{}", html, child.render(depth + 1));
                 i += 1;

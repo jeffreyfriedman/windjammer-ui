@@ -1,5 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
+
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -84,7 +87,7 @@ impl Renderable for Navbar {
             }
         };
         let brand_html = {
-            if self.brand.len() > (0 as usize) {
+            if self.brand.len() > 0 {
                 format!("<div class='wj-navbar-brand'>{}</div>", self.brand)
             } else {
                 String::from("")
