@@ -1,5 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
+
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
@@ -92,12 +95,12 @@ impl FormField {
         }
         html.push_str("</label>");
         html.push_str(&self.input);
-        if self.help_text.len() > (0 as usize) {
+        if self.help_text.len() > 0 {
             html.push_str("<div style='margin-top: 4px; font-size: 12px; color: #718096;'>");
             html.push_str(&self.help_text);
             html.push_str("</div>")
         }
-        if self.error.len() > (0 as usize) {
+        if self.error.len() > 0 {
             html.push_str("<div style='margin-top: 4px; font-size: 12px; color: #e53e3e;'>");
             html.push_str(&self.error);
             html.push_str("</div>")

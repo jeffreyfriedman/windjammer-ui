@@ -1,10 +1,12 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
 use std::fmt::Write;
 
 use super::traits::Renderable;
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct Grid {
     pub children: Vec<String>,
     pub columns: i32,

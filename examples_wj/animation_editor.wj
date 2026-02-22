@@ -4,9 +4,9 @@
 @component
 fn AnimationEditor() -> UI {
     // Animation state
-    let current_time = signal(0.0) // in seconds
+    let mut current_time = signal(0.0) // in seconds
     let total_duration = signal(5.0)
-    let is_playing = signal(false)
+    let mut is_playing = signal(false)
     let playback_speed = signal(1.0)
     
     // Selected animation
@@ -37,7 +37,7 @@ fn AnimationEditor() -> UI {
     }))
     
     // Selected keyframe
-    let selected_keyframe = signal(None)
+    let mut selected_keyframe = signal(None)
     
     // Zoom level for timeline
     let timeline_zoom = signal(1.0)

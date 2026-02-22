@@ -4,16 +4,16 @@
 @component
 fn PBRMaterialEditor() -> UI {
     // Material properties
-    let albedo_color = signal([1.0, 1.0, 1.0, 1.0])
-    let metallic = signal(0.0)
-    let roughness = signal(0.5)
+    let mut albedo_color = signal([1.0, 1.0, 1.0, 1.0])
+    let mut metallic = signal(0.0)
+    let mut roughness = signal(0.5)
     let emissive_color = signal([0.0, 0.0, 0.0])
     let emissive_strength = signal(0.0)
     let normal_strength = signal(1.0)
     let ao_strength = signal(1.0)
     
     // Texture paths
-    let albedo_texture = signal(None)
+    let mut albedo_texture = signal(None)
     let metallic_texture = signal(None)
     let roughness_texture = signal(None)
     let normal_texture = signal(None)

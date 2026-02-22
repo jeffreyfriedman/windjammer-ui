@@ -1,5 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
+
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -107,7 +110,7 @@ impl Renderable for Modal {
         html.push_str("<div style='padding: 24px; flex: 1; overflow-y: auto;'>");
         html.push_str(&self.content);
         html.push_str("</div>");
-        if self.footer.len() > (0 as usize) {
+        if self.footer.len() > 0 {
             html.push_str("<div style='padding: 16px 24px; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 8px;'>");
             html.push_str(&self.footer);
             html.push_str("</div>")

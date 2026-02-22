@@ -1,5 +1,7 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
 use std::fmt::Write;
 
 use super::traits::Renderable;
@@ -69,7 +71,7 @@ impl Renderable for RadioGroup {
             __s
         };
         let mut i = 0;
-        while i < (self.options.len() as i64) {
+        while i < self.options.len() as i64 {
             let opt = &self.options[i as usize];
             let checked_attr = {
                 if opt.value == self.selected {

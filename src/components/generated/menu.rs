@@ -1,5 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
+
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct Menu {
     pub items: Vec<String>,

@@ -1,5 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
+
 use super::traits::Renderable;
 
 #[derive(Clone, Debug, PartialEq)]
@@ -230,7 +233,7 @@ impl Renderable for Property {
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Default)]
 pub struct Vec3Editor {
     pub label: String,
     pub x: f32,

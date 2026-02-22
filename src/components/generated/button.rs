@@ -1,5 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
+
 use super::traits::Renderable;
 use super::traits::RenderableVNode;
 use super::vnode::VNode;

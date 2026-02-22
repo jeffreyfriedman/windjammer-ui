@@ -227,8 +227,8 @@ fn get_styles() -> string {
 
 fn get_javascript() -> string {
     "// Todo App State
-    let todos = [];
-    let nextId = 1;
+    let mut todos = [];
+    let mut nextId = 1;
     
     // Load todos from localStorage
     function loadTodos() {

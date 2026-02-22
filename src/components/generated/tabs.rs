@@ -1,5 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
+
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
@@ -58,7 +61,7 @@ impl Renderable for Tabs {
     fn render(self) -> String {
         let mut tabs_html = "<div class='wj-tabs-header'>".to_string();
         let mut i = 0;
-        while i < (self.tabs.len() as i64) {
+        while i < self.tabs.len() as i64 {
             let tab = &self.tabs[i as usize];
             let active_class = {
                 if tab.id == self.active {
@@ -83,7 +86,7 @@ impl Renderable for Tabs {
         tabs_html = format!("{}</div>", tabs_html);
         let mut content_html = "<div class='wj-tabs-content'>".to_string();
         let mut j = 0;
-        while j < (self.tabs.len() as i64) {
+        while j < self.tabs.len() as i64 {
             let tab = &self.tabs[j as usize];
             let display_style = {
                 if tab.id == self.active {

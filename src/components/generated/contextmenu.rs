@@ -1,5 +1,8 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
+
 use super::traits::Renderable;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
@@ -71,14 +74,14 @@ impl Renderable for ContextMenu {
                 }
             };
             let disabled_class = {
-                if item.disabled.clone() {
+                if item.disabled {
                     " wj-context-item-disabled".to_string()
                 } else {
                     "".to_string()
                 }
             };
             let disabled_attr = {
-                if item.disabled.clone() {
+                if item.disabled {
                     " disabled".to_string()
                 } else {
                     "".to_string()

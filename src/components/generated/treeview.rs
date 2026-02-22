@@ -1,5 +1,7 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
 use std::fmt::Write;
 
 use super::traits::Renderable;
@@ -34,7 +36,7 @@ impl TreeItem {
     pub fn render(&self, depth: i32) -> String {
         let indent_px = depth * 20;
         let icon = {
-            if self.children.len() > (0 as usize) {
+            if self.children.len() > 0 {
                 if self.expanded {
                     "▼".to_string()
                 } else {
@@ -60,7 +62,7 @@ impl TreeItem {
         };
         if self.expanded {
             let mut i = 0;
-            while i < (self.children.len() as i64) {
+            while i < self.children.len() as i64 {
                 let child = &self.children[i as usize];
                 html = format!("{}{}", html, child.render(depth + 1));
                 i += 1;
@@ -94,7 +96,7 @@ impl Renderable for TreeView {
 "
         .to_string();
         let mut i = 0;
-        while i < (self.items.len() as i64) {
+        while i < self.items.len() as i64 {
             let item = &self.items[i as usize];
             html = format!("{}{}", html, item.render(0));
             i += 1;

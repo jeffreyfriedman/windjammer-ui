@@ -125,7 +125,7 @@ fn main() {
     print("=== Multi-Page Routing Example ===\n")
     
     // Create router
-    let router = Router.new()
+    let mut router = Router.new()
     
     // Register routes
     router.add_route(Route.new("/".to_string(), "HomePage".to_string()))

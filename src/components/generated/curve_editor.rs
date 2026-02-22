@@ -1,8 +1,11 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
+
 use super::traits::Renderable;
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Default)]
 pub struct CurvePoint {
     pub time: f32,
     pub value: f32,
@@ -39,7 +42,7 @@ pub enum EasingPreset {
     Custom,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Default)]
 pub struct CurveEditor {
     pub width: i32,
     pub height: i32,
@@ -104,30 +107,30 @@ impl CurveEditor {
         match preset {
             EasingPreset::Linear => {
                 self.points.push(CurvePoint::new(0.0, 0.0));
-                self.points.push(CurvePoint::new(1.0, 1.0))
+                self.points.push(CurvePoint::new(1.0, 1.0));
             }
             EasingPreset::EaseIn => {
                 self.points
                     .push(CurvePoint::new(0.0, 0.0).tangents(0.0, 0.5));
                 self.points
-                    .push(CurvePoint::new(1.0, 1.0).tangents(0.5, 0.0))
+                    .push(CurvePoint::new(1.0, 1.0).tangents(0.5, 0.0));
             }
             EasingPreset::EaseOut => {
                 self.points
                     .push(CurvePoint::new(0.0, 0.0).tangents(0.0, 2.0));
                 self.points
-                    .push(CurvePoint::new(1.0, 1.0).tangents(2.0, 0.0))
+                    .push(CurvePoint::new(1.0, 1.0).tangents(2.0, 0.0));
             }
             EasingPreset::EaseInOut => {
                 self.points
                     .push(CurvePoint::new(0.0, 0.0).tangents(0.0, 0.5));
                 self.points.push(CurvePoint::new(0.5, 0.5));
                 self.points
-                    .push(CurvePoint::new(1.0, 1.0).tangents(0.5, 0.0))
+                    .push(CurvePoint::new(1.0, 1.0).tangents(0.5, 0.0));
             }
             _ => {
                 self.points.push(CurvePoint::new(0.0, 0.0));
-                self.points.push(CurvePoint::new(1.0, 1.0))
+                self.points.push(CurvePoint::new(1.0, 1.0));
             }
         }
     }
@@ -230,7 +233,7 @@ impl Renderable for CurveEditor {
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Default)]
 pub struct GradientStop {
     pub position: f32,
     pub color: String,
@@ -243,7 +246,7 @@ impl GradientStop {
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Default)]
 pub struct GradientEditor {
     pub width: i32,
     pub height: i32,
