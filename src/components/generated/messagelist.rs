@@ -4,8 +4,8 @@
 use super::*;
 
 use super::traits::Renderable;
-
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
+#[repr(C)]
 pub struct MessageList {
     pub messages: Vec<String>,
     pub height: String,
@@ -40,7 +40,7 @@ impl MessageList {
 
 impl Renderable for MessageList {
     #[inline]
-    fn render(self) -> String {
+    fn render(&self) -> String {
         let scroll_script = {
             if self.auto_scroll {
                 "onload='this.scrollTop = this.scrollHeight'".to_string()
@@ -48,13 +48,6 @@ impl Renderable for MessageList {
                 "".to_string()
             }
         };
-        format!(
-            "<div class='wj-message-list' style='height: {}' {}>
-                {}
-            </div>",
-            self.height,
-            scroll_script,
-            self.messages.join("")
-        )
+        format!("<div class='wj-message-list' style='height: {}' {}>\n                {}\n            </div>", self.height.clone(), scroll_script, self.messages.join(""))
     }
 }

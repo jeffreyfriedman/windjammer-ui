@@ -11,8 +11,8 @@ pub struct Spacer {
 impl Spacer {
     pub fn new() -> Spacer {
         Spacer {
-            width: "".to_string(),
-            height: "".to_string(),
+            width: "",
+            height: "",
             flex: false,
         }
     }
@@ -20,14 +20,14 @@ impl Spacer {
     pub fn horizontal(width: string) -> Spacer {
         Spacer {
             width: width,
-            height: "".to_string(),
+            height: "",
             flex: false,
         }
     }
 
     pub fn vertical(height: string) -> Spacer {
         Spacer {
-            width: "".to_string(),
+            width: "",
             height: height,
             flex: false,
         }
@@ -35,8 +35,8 @@ impl Spacer {
 
     pub fn flexible() -> Spacer {
         Spacer {
-            width: "".to_string(),
-            height: "".to_string(),
+            width: "",
+            height: "",
             flex: true,
         }
     }
@@ -55,40 +55,40 @@ impl Spacer {
 
     // Grid system helpers (8px multiples)
     pub fn xxs() -> Spacer {
-        Spacer::vertical("4px".to_string())
+        Spacer::vertical("4px")
     }
 
     pub fn xs() -> Spacer {
-        Spacer::vertical("8px".to_string())
+        Spacer::vertical("8px")
     }
 
     pub fn sm() -> Spacer {
-        Spacer::vertical("12px".to_string())
+        Spacer::vertical("12px")
     }
 
     pub fn md() -> Spacer {
-        Spacer::vertical("16px".to_string())
+        Spacer::vertical("16px")
     }
 
     pub fn lg() -> Spacer {
-        Spacer::vertical("24px".to_string())
+        Spacer::vertical("24px")
     }
 
     pub fn xl() -> Spacer {
-        Spacer::vertical("32px".to_string())
+        Spacer::vertical("32px")
     }
 
     pub fn xxl() -> Spacer {
-        Spacer::vertical("48px".to_string())
+        Spacer::vertical("48px")
     }
 }
 
 impl Renderable for Spacer {
 pub fn render(self) -> string {
-        let mut style = "".to_string()
+        let mut style = ""
 
         if self.flex {
-            style = "flex: 1; ".to_string()
+            style = "flex: 1; "
         }
 
         if self.width != "" {
@@ -104,10 +104,10 @@ pub fn render(self) -> string {
 }
 
 fn main() {
-    let spacer1 = Spacer::horizontal("20px".to_string())
+    let spacer1 = Spacer::horizontal("20px")
     println!("Horizontal: {}", spacer1.render())
 
-    let spacer2 = Spacer::vertical("30px".to_string())
+    let spacer2 = Spacer::vertical("30px")
     println!("Vertical: {}", spacer2.render())
 
     let spacer3 = Spacer::flexible()

@@ -11,7 +11,7 @@ impl TableColumn {
     pub fn new(header: string) -> TableColumn {
         TableColumn {
             header: header,
-            width: "auto".to_string(),
+            width: "auto",
         }
     }
 

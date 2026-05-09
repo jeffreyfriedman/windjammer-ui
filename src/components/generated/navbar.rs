@@ -4,7 +4,6 @@
 use super::*;
 
 use super::traits::Renderable;
-
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum NavbarPosition {
     Top,
@@ -12,6 +11,7 @@ pub enum NavbarPosition {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct NavbarItem {
     pub label: String,
     pub href: String,
@@ -20,11 +20,15 @@ pub struct NavbarItem {
 impl NavbarItem {
     #[inline]
     pub fn new(label: String, href: String) -> NavbarItem {
-        NavbarItem { label, href }
+        NavbarItem {
+            label: label.to_string(),
+            href: href.to_string(),
+        }
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Navbar {
     pub brand: String,
     pub items: Vec<NavbarItem>,
@@ -66,14 +70,17 @@ impl Navbar {
 
 impl Renderable for Navbar {
     #[inline]
-    fn render(self) -> String {
-        let mut items_html = Vec::new();
+    fn render(&self) -> String {
+        let mut items_html: Vec<String> = Vec::new();
         for item in &self.items {
-            items_html.push(format!(
-                "<a href='{}' class='wj-navbar-item'>{}</a>",
-                item.href.clone(),
-                item.label.clone()
-            ));
+            {
+                let _temp0 = format!(
+                    "<a href='{}' class='wj-navbar-item'>{}</a>",
+                    item.href.clone(),
+                    item.label.clone()
+                );
+                items_html.push(_temp0)
+            };
         }
         let position_class = match self.position {
             NavbarPosition::Top => "wj-navbar-top".to_string(),
@@ -87,8 +94,8 @@ impl Renderable for Navbar {
             }
         };
         let brand_html = {
-            if self.brand.len() > 0 {
-                format!("<div class='wj-navbar-brand'>{}</div>", self.brand)
+            if !self.brand.is_empty() {
+                format!("<div class='wj-navbar-brand'>{}</div>", self.brand.clone())
             } else {
                 String::from("")
             }

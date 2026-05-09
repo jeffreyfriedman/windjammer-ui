@@ -13,7 +13,7 @@ impl Dialog {
             title,
             content,
             open: false,
-            width: "500px".to_string(),
+            width: "500px",
         }
     }
 
@@ -49,9 +49,9 @@ pub fn render(self) -> string {
 }
 
 fn main() {
-    let dialog = Dialog::new("Confirm Action".to_string(), "<p>Are you sure you want to proceed?</p>".to_string())
+    let dialog = Dialog::new("Confirm Action", "<p>Are you sure you want to proceed?</p>")
         .open(true)
-        .width("400px".to_string())
+        .width("400px")
 
     println!("{}", dialog.render())
 }

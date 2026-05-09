@@ -55,7 +55,7 @@ pub fn render(self) -> string {
 }
 
 fn main() {
-    let split = SplitPanel::new("<p>Left pane</p>".to_string(), "<p>Right pane</p>".to_string())
+    let split = SplitPanel::new("<p>Left pane</p>", "<p>Right pane</p>")
         .initial_size(40)
 
     println!("{}", split.render())

@@ -1,11 +1,9 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
 use super::traits::Renderable;
-
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct AdvancedCodeEditor {
     pub code: String,
     pub language: String,
@@ -16,47 +14,40 @@ pub struct AdvancedCodeEditor {
 }
 
 impl AdvancedCodeEditor {
-    #[inline]
-    pub fn new(code: String) -> AdvancedCodeEditor {
-        AdvancedCodeEditor {
-            code,
-            language: "rust".to_string(),
-            theme: "monokai".to_string(),
-            line_numbers: true,
-            minimap: true,
-            autocomplete: true,
-        }
-    }
-    #[inline]
-    pub fn language(mut self, language: String) -> AdvancedCodeEditor {
+#[inline]
+pub fn new(code: String) -> AdvancedCodeEditor {
+        AdvancedCodeEditor { code: code.to_string(), language: "rust".to_string(), theme: "monokai".to_string(), line_numbers: true, minimap: true, autocomplete: true }
+}
+#[inline]
+pub fn language(mut self, language: String) -> AdvancedCodeEditor {
         self.language = language;
         self
-    }
-    #[inline]
-    pub fn theme(mut self, theme: String) -> AdvancedCodeEditor {
+}
+#[inline]
+pub fn theme(mut self, theme: String) -> AdvancedCodeEditor {
         self.theme = theme;
         self
-    }
-    #[inline]
-    pub fn line_numbers(mut self, show: bool) -> AdvancedCodeEditor {
+}
+#[inline]
+pub fn line_numbers(mut self, show: bool) -> AdvancedCodeEditor {
         self.line_numbers = show;
         self
-    }
-    #[inline]
-    pub fn minimap(mut self, show: bool) -> AdvancedCodeEditor {
+}
+#[inline]
+pub fn minimap(mut self, show: bool) -> AdvancedCodeEditor {
         self.minimap = show;
         self
-    }
-    #[inline]
-    pub fn autocomplete(mut self, enable: bool) -> AdvancedCodeEditor {
+}
+#[inline]
+pub fn autocomplete(mut self, enable: bool) -> AdvancedCodeEditor {
         self.autocomplete = enable;
         self
-    }
+}
 }
 
 impl Renderable for AdvancedCodeEditor {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(&self) -> String {
         let features_class = {
             if self.minimap {
                 " wj-editor-with-minimap".to_string()
@@ -71,32 +62,13 @@ impl Renderable for AdvancedCodeEditor {
                 "".to_string()
             }
         };
-        format!(
-            "<div class='wj-advanced-editor wj-editor-{} wj-editor-theme-{}{}{}'>
-  <div class='wj-editor-toolbar'>
-    <span>Language: {}</span>
-    <span>Theme: {}</span>
-  </div>
-  <div class='wj-editor-main'>
-    <textarea class='wj-editor-textarea'>
-{}</textarea>
-    {}
-  </div>
-</div>",
-            self.language,
-            self.theme,
-            features_class,
-            line_class,
-            self.language,
-            self.theme,
-            self.code,
-            {
-                if self.minimap {
-                    "<div class='wj-editor-minimap'></div>".to_string()
-                } else {
-                    "".to_string()
-                }
+        format!("<div class='wj-advanced-editor wj-editor-{} wj-editor-theme-{}{}{}'>\n  <div class='wj-editor-toolbar'>\n    <span>Language: {}</span>\n    <span>Theme: {}</span>\n  </div>\n  <div class='wj-editor-main'>\n    <textarea class='wj-editor-textarea'>\n{}</textarea>\n    {}\n  </div>\n</div>", self.language.clone(), self.theme.clone(), features_class, line_class, self.language.clone(), self.theme.clone(), self.code.clone(), {
+            if self.minimap {
+                "<div class='wj-editor-minimap'></div>".to_string()
+            } else {
+                "".to_string()
             }
-        )
-    }
+        })
 }
+}
+

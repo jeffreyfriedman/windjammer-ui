@@ -18,9 +18,9 @@ impl Divider {
     pub fn new() -> Divider {
         Divider {
             orientation: DividerOrientation::Horizontal,
-            color: "#3E3E3E".to_string(),
-            thickness: "1px".to_string(),
-            margin: "0".to_string(),
+            color: "#3E3E3E",
+            thickness: "1px",
+            margin: "0",
         }
     }
 
@@ -31,9 +31,9 @@ impl Divider {
     pub fn vertical() -> Divider {
         Divider {
             orientation: DividerOrientation::Vertical,
-            color: "#3E3E3E".to_string(),
-            thickness: "1px".to_string(),
-            margin: "0".to_string(),
+            color: "#3E3E3E",
+            thickness: "1px",
+            margin: "0",
         }
     }
 
@@ -81,7 +81,7 @@ fn main() {
     let divider1 = Divider::horizontal()
     println!("Horizontal: {}", divider1.render())
 
-    let divider2 = Divider::vertical().color("#FF0000".to_string()).thickness("2px".to_string())
+    let divider2 = Divider::vertical().color("#FF0000").thickness("2px")
     println!("Vertical: {}", divider2.render())
 }
 

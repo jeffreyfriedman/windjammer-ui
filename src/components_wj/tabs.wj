@@ -32,7 +32,7 @@ impl Tabs {
     pub fn new() -> Tabs {
         Tabs {
             tabs: Vec::new(),
-            active: "".to_string(),
+            active: "",
         }
     }
 
@@ -50,7 +50,7 @@ impl Tabs {
 
 impl Renderable for Tabs {
 fn render(self) -> string {
-        let mut tabs_html = "<div class='wj-tabs-header'>".to_string()
+        let mut tabs_html = "<div class='wj-tabs-header'>"
 
         let mut i = 0
         while i < self.tabs.len() {
@@ -66,7 +66,7 @@ fn render(self) -> string {
 
         tabs_html = format!("{}</div>", tabs_html)
 
-        let mut content_html = "<div class='wj-tabs-content'>".to_string()
+        let mut content_html = "<div class='wj-tabs-content'>"
 
         let mut j = 0
         while j < self.tabs.len() {
@@ -91,10 +91,10 @@ fn render(self) -> string {
 
 fn main() {
     let tabs = Tabs::new()
-        .tab(Tab::new("home".to_string(), "Home".to_string(), "<p>Home content</p>".to_string()))
-        .tab(Tab::new("profile".to_string(), "Profile".to_string(), "<p>Profile content</p>".to_string()))
-        .tab(Tab::new("settings".to_string(), "Settings".to_string(), "<p>Settings content</p>".to_string()))
-        .active("home".to_string())
+        .tab(Tab::new("home", "Home", "<p>Home content</p>"))
+        .tab(Tab::new("profile", "Profile", "<p>Profile content</p>"))
+        .tab(Tab::new("settings", "Settings", "<p>Settings content</p>"))
+        .active("home")
 
     println!("{}", tabs.render())
 }

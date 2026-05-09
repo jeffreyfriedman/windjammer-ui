@@ -69,13 +69,13 @@ pub fn render(self) -> string {
 }
 
 fn main() {
-    let badge1 = Badge::new("New".to_string()).variant(BadgeVariant::Primary)
+    let badge1 = Badge::new("New").variant(BadgeVariant::Primary)
     println!("Badge 1: {}", badge1.render())
 
-    let badge2 = Badge::new("Error".to_string()).variant(BadgeVariant::Error).size(BadgeSize::Large)
+    let badge2 = Badge::new("Error").variant(BadgeVariant::Error).size(BadgeSize::Large)
     println!("Badge 2: {}", badge2.render())
     
-    let badge3 = Badge::new("Success".to_string()).variant(BadgeVariant::Success)
+    let badge3 = Badge::new("Success").variant(BadgeVariant::Success)
     println!("Badge 3: {}", badge3.render())
 }
 

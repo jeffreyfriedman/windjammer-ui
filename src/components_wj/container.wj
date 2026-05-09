@@ -17,10 +17,10 @@ impl Container {
     pub fn new() -> Container {
         Container {
             children: Vec::new(),
-            max_width: "".to_string(),
-            max_height: "".to_string(),
-            padding: "16px".to_string(),
-            background_color: "".to_string(),
+            max_width: "",
+            max_height: "",
+            padding: "16px",
+            background_color: "",
         }
     }
     
@@ -65,7 +65,7 @@ impl Container {
 // Test the Container component with Vec<string> children!
 impl Renderable for Container {
 pub fn render(self) -> string {
-        let mut style = "margin: 0 auto; ".to_string()
+        let mut style = "margin: 0 auto; "
         
         if self.max_width != "" {
             style = style + "max-width: " + self.max_width + "; "
@@ -92,16 +92,16 @@ pub fn render(self) -> string {
 
 fn main() {
     let container1 = Container::new()
-        .max_width("800px".to_string())
-        .padding("24px".to_string())
-        .child("<p>First child</p>".to_string())
-        .child("<p>Second child</p>".to_string())
+        .max_width("800px")
+        .padding("24px")
+        .child("<p>First child</p>")
+        .child("<p>Second child</p>")
     
     let container2 = Container::new()
-        .max_width("1200px".to_string())
-        .max_height("600px".to_string())
-        .background_color("#f0f0f0".to_string())
-        .children(vec!["<h1>Title</h1>".to_string(), "<p>Content</p>".to_string()])
+        .max_width("1200px")
+        .max_height("600px")
+        .background_color("#f0f0f0")
+        .children(vec!["<h1>Title</h1>", "<p>Content</p>"])
     
     println!("Container 1:\n{}", container1.render())
     println!("\nContainer 2:\n{}", container2.render())

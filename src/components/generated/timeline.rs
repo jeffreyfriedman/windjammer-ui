@@ -1,11 +1,9 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
 use super::traits::Renderable;
-
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct TimelineEvent {
     pub title: String,
     pub description: String,
@@ -15,53 +13,48 @@ pub struct TimelineEvent {
 }
 
 impl TimelineEvent {
-    #[inline]
-    pub fn new(title: String, timestamp: String) -> TimelineEvent {
-        TimelineEvent {
-            title,
-            description: String::new(),
-            timestamp,
-            icon: "●".to_string(),
-            color: "#3b82f6".to_string(),
-        }
-    }
-    #[inline]
-    pub fn description(mut self, desc: String) -> TimelineEvent {
+#[inline]
+pub fn new(title: String, timestamp: String) -> TimelineEvent {
+        TimelineEvent { title: title.to_string(), description: String::new(), timestamp: timestamp.to_string(), icon: "●".to_string(), color: "#3b82f6".to_string() }
+}
+#[inline]
+pub fn description(mut self, desc: String) -> TimelineEvent {
         self.description = desc;
         self
-    }
-    #[inline]
-    pub fn icon(mut self, icon: String) -> TimelineEvent {
+}
+#[inline]
+pub fn icon(mut self, icon: String) -> TimelineEvent {
         self.icon = icon;
         self
-    }
-    #[inline]
-    pub fn color(mut self, color: String) -> TimelineEvent {
+}
+#[inline]
+pub fn color(mut self, color: String) -> TimelineEvent {
         self.color = color;
         self
-    }
+}
 }
 
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, PartialEq, Default)]
+#[repr(C)]
 pub struct Timeline {
     pub events: Vec<TimelineEvent>,
 }
 
 impl Timeline {
-    #[inline]
-    pub fn new() -> Timeline {
+#[inline]
+pub fn new() -> Timeline {
         Timeline { events: Vec::new() }
-    }
-    #[inline]
-    pub fn event(mut self, event: TimelineEvent) -> Timeline {
+}
+#[inline]
+pub fn event(mut self, event: TimelineEvent) -> Timeline {
         self.events.push(event);
         self
-    }
+}
 }
 
 impl Renderable for Timeline {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<div style='position: relative; padding-left: 32px;'>");
         html.push_str("<div style='position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: #e2e8f0;'></div>");
@@ -79,15 +72,16 @@ impl Renderable for Timeline {
             html.push_str("<div style='font-weight: 600; font-size: 16px; color: #1a202c; margin-bottom: 8px;'>");
             html.push_str(&event.title);
             html.push_str("</div>");
-            if event.description.len() > 0 {
+            if !event.description.is_empty() {
                 html.push_str("<div style='font-size: 14px; color: #4a5568;'>");
                 html.push_str(&event.description);
-                html.push_str("</div>")
+                html.push_str("</div>");
             }
             html.push_str("</div>");
             html.push_str("</div>");
         }
         html.push_str("</div>");
         html
-    }
 }
+}
+

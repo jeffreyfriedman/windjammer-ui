@@ -43,7 +43,7 @@ impl Dropdown {
 
 impl Renderable for Dropdown {
 fn render(self) -> string {
-        let mut items_html = "".to_string()
+        let mut items_html = ""
 
         let mut i = 0
         while i < self.items.len() {
@@ -66,10 +66,10 @@ fn render(self) -> string {
 }
 
 fn main() {
-    let dropdown = Dropdown::new("Actions".to_string())
-        .item(DropdownItem::new("Edit".to_string(), "edit".to_string()))
-        .item(DropdownItem::new("Delete".to_string(), "delete".to_string()))
-        .item(DropdownItem::new("Archive".to_string(), "archive".to_string()).disabled(true))
+    let dropdown = Dropdown::new("Actions")
+        .item(DropdownItem::new("Edit", "edit"))
+        .item(DropdownItem::new("Delete", "delete"))
+        .item(DropdownItem::new("Archive", "archive").disabled(true))
 
     println!("{}", dropdown.render())
 }

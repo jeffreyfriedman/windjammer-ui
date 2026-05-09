@@ -2,8 +2,8 @@
 #![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
-
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Avatar {
     pub src: String,
     pub alt: String,
@@ -32,7 +32,7 @@ impl Avatar {
     #[inline]
     pub fn new(src: String) -> Avatar {
         Avatar {
-            src,
+            src: src.to_string(),
             alt: "Avatar".to_string(),
             size: AvatarSize::Medium,
             shape: AvatarShape::Circle,
@@ -81,7 +81,7 @@ impl Avatar {
         let mut html = String::new();
         if self.src.is_empty() && !self.fallback.is_empty() {
             html.push_str("<div class=\"wj-avatar wj-avatar-fallback ");
-            html.push_str(&self.class.as_str());
+            html.push_str(&self.class.clone());
             html.push_str("\" style=\"width: ");
             html.push_str(&size_px);
             html.push_str("; height: ");
@@ -97,15 +97,15 @@ impl Avatar {
             };
             html.push_str(&font_size);
             html.push_str(";\">");
-            html.push_str(&self.fallback.as_str());
+            html.push_str(&self.fallback.clone());
             html.push_str("</div>")
         } else {
             html.push_str("<img class=\"wj-avatar ");
-            html.push_str(&self.class.as_str());
+            html.push_str(&self.class.clone());
             html.push_str("\" src=\"");
-            html.push_str(&self.src.as_str());
+            html.push_str(&self.src.clone());
             html.push_str("\" alt=\"");
-            html.push_str(&self.alt.as_str());
+            html.push_str(&self.alt);
             html.push_str("\" style=\"width: ");
             html.push_str(&size_px);
             html.push_str("; height: ");

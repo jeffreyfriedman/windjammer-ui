@@ -18,13 +18,13 @@ pub struct Section {
 impl Section {
     pub fn new(title: string) -> Section {
         Section {
-            icon: "".to_string(),
+            icon: "",
             title,
             children: Vec::new(),
             collapsed: false,
-            accent_color: "".to_string(),
+            accent_color: "",
             removable: false,
-            on_remove: "".to_string(),
+            on_remove: "",
         }
     }
     
@@ -68,19 +68,19 @@ impl Renderable for Section {
         let icon_html = if self.icon != "" {
             format!("<span class='section-icon'>{}</span>", self.icon)
         } else {
-            "".to_string()
+            ""
         }
         
         let accent_style = if self.accent_color != "" {
             format!(" style='border-left: 3px solid {}'", self.accent_color)
         } else {
-            "".to_string()
+            ""
         }
         
         let remove_btn = if self.removable {
             format!("<button class='section-remove' onclick='{}'>×</button>", self.on_remove)
         } else {
-            "".to_string()
+            ""
         }
         
         let children_html = self.children.join("\n")
@@ -129,9 +129,9 @@ impl SectionGroup {
 
 impl Renderable for SectionGroup {
     pub fn render(self) -> string {
-        let mut sections_html = "".to_string()
+        let mut sections_html = ""
         for s in self.sections {
-            sections_html = sections_html + s.clone().render().as_str() + "\n"
+            sections_html = sections_html + s.clone().render() + "\n"
         }
         
         let class = if self.accordion { "section-group accordion" } else { "section-group" }
@@ -239,6 +239,6 @@ pub fn section_styles() -> string {
     .section-group.accordion .wj-section:last-child {
         border-radius: 0 0 8px 8px;
     }
-    ".to_string()
+    "
 }
 

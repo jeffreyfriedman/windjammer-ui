@@ -38,7 +38,7 @@ impl NodePin {
             pin_type,
             is_input: true,
             connected_to: None,
-            default_value: "".to_string(),
+            default_value: "",
         }
     }
     
@@ -49,7 +49,7 @@ impl NodePin {
             pin_type,
             is_input: false,
             connected_to: None,
-            default_value: "".to_string(),
+            default_value: "",
         }
     }
     
@@ -59,23 +59,23 @@ impl NodePin {
     }
     
     pub fn connect(self, target: string) -> NodePin {
-        self.connected_to = Some(target.to_string())
+        self.connected_to = Some(target)
         self
     }
     
     fn get_color(&self) -> string {
         match self.pin_type {
-            PinType::Flow => "#ffffff".to_string(),
-            PinType::Bool => "#e94560".to_string(),
-            PinType::Int => "#00d9ff".to_string(),
-            PinType::Float => "#4ade80".to_string(),
-            PinType::Vec2 => "#facc15".to_string(),
-            PinType::Vec3 => "#f59e0b".to_string(),
-            PinType::Vec4 => "#a855f7".to_string(),
-            PinType::Color => "#ec4899".to_string(),
-            PinType::Texture => "#fb923c".to_string(),
-            PinType::Object => "#3b82f6".to_string(),
-            PinType::Any => "#888888".to_string(),
+            PinType::Flow => "#ffffff",
+            PinType::Bool => "#e94560",
+            PinType::Int => "#00d9ff",
+            PinType::Float => "#4ade80",
+            PinType::Vec2 => "#facc15",
+            PinType::Vec3 => "#f59e0b",
+            PinType::Vec4 => "#a855f7",
+            PinType::Color => "#ec4899",
+            PinType::Texture => "#fb923c",
+            PinType::Object => "#3b82f6",
+            PinType::Any => "#888888",
         }
     }
 }
@@ -151,15 +151,15 @@ impl GraphNode {
     
     fn get_category_color(&self) -> string {
         match self.category {
-            NodeCategory::Math => "#4ade80".to_string(),
-            NodeCategory::Logic => "#e94560".to_string(),
-            NodeCategory::Texture => "#fb923c".to_string(),
-            NodeCategory::Color => "#ec4899".to_string(),
-            NodeCategory::Vector => "#facc15".to_string(),
-            NodeCategory::Flow => "#ffffff".to_string(),
-            NodeCategory::Event => "#3b82f6".to_string(),
-            NodeCategory::Variable => "#a855f7".to_string(),
-            NodeCategory::Custom => "#888888".to_string(),
+            NodeCategory::Math => "#4ade80",
+            NodeCategory::Logic => "#e94560",
+            NodeCategory::Texture => "#fb923c",
+            NodeCategory::Color => "#ec4899",
+            NodeCategory::Vector => "#facc15",
+            NodeCategory::Flow => "#ffffff",
+            NodeCategory::Event => "#3b82f6",
+            NodeCategory::Variable => "#a855f7",
+            NodeCategory::Custom => "#888888",
         }
     }
 }
@@ -169,7 +169,7 @@ impl Renderable for GraphNode {
         let header_color = self.get_category_color()
         
         // Render inputs
-        let mut inputs_html = "".to_string()
+        let mut inputs_html = ""
         for pin in self.inputs {
             let color = pin.get_color()
             let connected_class = match pin.connected_to {
@@ -181,11 +181,11 @@ impl Renderable for GraphNode {
                     <div class='pin-socket' style='background: {};' data-pin='{}'></div>
                     <span class='pin-name'>{}</span>
                 </div>
-            ", connected_class, color, pin.id, pin.name).as_str()
+            ", connected_class, color, pin.id, pin.name)
         }
         
         // Render outputs
-        let mut outputs_html = "".to_string()
+        let mut outputs_html = ""
         for pin in self.outputs {
             let color = pin.get_color()
             let connected_class = match pin.connected_to {
@@ -197,7 +197,7 @@ impl Renderable for GraphNode {
                     <span class='pin-name'>{}</span>
                     <div class='pin-socket' style='background: {};' data-pin='{}'></div>
                 </div>
-            ", connected_class, pin.name, color, pin.id).as_str()
+            ", connected_class, pin.name, color, pin.id)
         }
         
         let preview_html = if self.preview_enabled {
@@ -263,7 +263,7 @@ impl NodeGraph {
             pan_x: 0.0,
             pan_y: 0.0,
             show_grid: true,
-            on_change: "".to_string(),
+            on_change: "",
         }
     }
     
@@ -302,19 +302,19 @@ impl NodeGraph {
 
 impl Renderable for NodeGraph {
     pub fn render(self) -> string {
-        let mut nodes_html = "".to_string()
+        let mut nodes_html = ""
         for n in self.nodes {
-            nodes_html = nodes_html + n.clone().render().as_str() + "\n"
+            nodes_html = nodes_html + n.clone().render() + "\n"
         }
         
         // Generate SVG connections
-        let mut connections_html = "".to_string()
+        let mut connections_html = ""
         for c in self.connections {
             connections_html = connections_html + format!("
                 <path class='node-connection' 
                       data-from='{}:{}' 
                       data-to='{}:{}'/>
-            ", c.from_node, c.from_pin, c.to_node, c.to_pin).as_str()
+            ", c.from_node, c.from_pin, c.to_node, c.to_pin)
         }
         
         let grid_class = if self.show_grid { "show-grid" } else { "" }
@@ -556,6 +556,6 @@ pub fn node_graph_styles() -> string {
         border: 2px solid #e94560;
         background: rgba(233, 69, 96, 0.1);
     }
-    ".to_string()
+    "
 }
 

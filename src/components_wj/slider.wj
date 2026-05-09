@@ -19,7 +19,7 @@ impl Slider {
             step: 1.0,
             value: 50.0,
             disabled: false,
-            label: "".to_string(),
+            label: "",
         }
     }
     
@@ -60,9 +60,9 @@ impl Renderable for Slider {
 pub fn render(self) -> string {
         let disabled_attr = if self.disabled { " disabled" } else { "" }
         let label_html = if self.label != "" {
-            "<label>".to_string() + self.label + "</label>"
+            "<label>" + self.label + "</label>"
         } else {
-            "".to_string()
+            ""
         }
         
         format!("{}<input type='range' class='wj-slider' min='{}' max='{}' step='{}' value='{}'{}>",
@@ -72,7 +72,7 @@ pub fn render(self) -> string {
 
 fn main() {
     let slider1 = Slider::new().min(0.0).max(100.0).value(75.0)
-    let slider2 = Slider::new().min(0.0).max(10.0).step(0.5).value(5.5).label("Volume".to_string())
+    let slider2 = Slider::new().min(0.0).max(10.0).step(0.5).value(5.5).label("Volume")
     
     println!("{}", slider1.render())
     println!("{}", slider2.render())

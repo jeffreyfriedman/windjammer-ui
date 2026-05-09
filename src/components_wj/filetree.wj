@@ -68,10 +68,10 @@ impl Renderable for FileTree {
 
 fn main() {
     let tree = FileTree::new(
-        FileNode::new("src".to_string(), true)
+        FileNode::new("src", true)
             .expanded(true)
-            .child(FileNode::new("main.rs".to_string(), false))
-            .child(FileNode::new("lib.rs".to_string(), false))
+            .child(FileNode::new("main.rs", false))
+            .child(FileNode::new("lib.rs", false))
     )
 
     println!("{}", tree.render())

@@ -41,7 +41,7 @@ pub fn render(self) -> string {
 }
 
 fn main() {
-    let collapsible = CollapsibleSection::new("Advanced Options".to_string(), "<p>Hidden content here</p>".to_string())
+    let collapsible = CollapsibleSection::new("Advanced Options", "<p>Hidden content here</p>")
         .open(true)
 
     println!("{}", collapsible.render())

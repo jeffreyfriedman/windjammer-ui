@@ -20,7 +20,7 @@ impl Drawer {
         Drawer {
             children: Vec::new(),
             position: DrawerPosition::Right,
-            width: "320px".to_string(),
+            width: "320px",
             open: false,
             class: String::new(),
         }
@@ -81,17 +81,17 @@ impl Drawer {
         
         // Drawer panel
         html.push_str("<div class=\"wj-drawer ")
-        html.push_str(self.class.as_str())
+        html.push_str(self.class)
         html.push_str("\" style=\"position: fixed; ")
         html.push_str(position_style)
         html.push(' ')
-        html.push_str(size_prop.as_str())
+        html.push_str(size_prop)
         html.push(' ')
         html.push_str(transform)
         html.push_str(" background: white; box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); z-index: 1000; transition: transform 0.3s ease; overflow-y: auto; padding: 24px;\">")
         
         for child in self.children {
-            html.push_str(child.as_str())
+            html.push_str(child)
         }
         
         html.push_str("</div>")

@@ -1,10 +1,7 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
 use super::traits::Renderable;
-
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum RatingSize {
     Small,
@@ -13,6 +10,7 @@ pub enum RatingSize {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Rating {
     pub value: f32,
     pub max: i32,
@@ -22,41 +20,35 @@ pub struct Rating {
 }
 
 impl Rating {
-    #[inline]
-    pub fn new(value: f32) -> Rating {
-        Rating {
-            value,
-            max: 5,
-            size: RatingSize::Medium,
-            readonly: true,
-            color: "#fbbf24".to_string(),
-        }
-    }
-    #[inline]
-    pub fn max(mut self, max: i32) -> Rating {
+#[inline]
+pub fn new(value: f32) -> Rating {
+        Rating { value, max: 5_i32, size: RatingSize::Medium, readonly: true, color: "#fbbf24".to_string() }
+}
+#[inline]
+pub fn max(mut self, max: i32) -> Rating {
         self.max = max;
         self
-    }
-    #[inline]
-    pub fn size(mut self, size: RatingSize) -> Rating {
+}
+#[inline]
+pub fn size(mut self, size: RatingSize) -> Rating {
         self.size = size;
         self
-    }
-    #[inline]
-    pub fn readonly(mut self, readonly: bool) -> Rating {
+}
+#[inline]
+pub fn readonly(mut self, readonly: bool) -> Rating {
         self.readonly = readonly;
         self
-    }
-    #[inline]
-    pub fn color(mut self, color: String) -> Rating {
+}
+#[inline]
+pub fn color(mut self, color: String) -> Rating {
         self.color = color;
         self
-    }
+}
 }
 
 impl Renderable for Rating {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(&self) -> String {
         let star_size = match self.size {
             RatingSize::Small => "16px".to_string(),
             RatingSize::Medium => "24px".to_string(),
@@ -67,12 +59,12 @@ impl Renderable for Rating {
         let mut i = 1;
         while i <= self.max {
             let filled = i as f32 <= self.value;
-            let half_filled = i as f32 - 0.5 <= self.value && i as f32 > self.value;
+            let half_filled = i as f32 - 0.5_f32 <= self.value && (i as f32) > self.value;
             let star_color = {
                 if filled || half_filled {
-                    self.color.as_str()
+                    self.color.clone()
                 } else {
-                    "#e2e8f0"
+                    "#e2e8f0".to_string()
                 }
             };
             let cursor = {
@@ -85,9 +77,9 @@ impl Renderable for Rating {
             html.push_str("<span style='font-size: ");
             html.push_str(&star_size);
             html.push_str("; color: ");
-            html.push_str(&star_color);
+            html.push_str(&star_color.clone());
             html.push_str("; cursor: ");
-            html.push_str(&cursor);
+            html.push_str(&cursor.clone());
             html.push_str(";'>");
             if half_filled {
                 html.push('⯨')
@@ -99,5 +91,6 @@ impl Renderable for Rating {
         }
         html.push_str("</div>");
         html
-    }
 }
+}
+

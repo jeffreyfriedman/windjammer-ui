@@ -98,13 +98,13 @@ pub fn render(self) -> string {
 }
 
 fn main() {
-    let toast1 = Toast::new("Operation successful!".to_string())
+    let toast1 = Toast::new("Operation successful!")
         .variant(ToastVariant::Success)
         .position(ToastPosition::TopRight)
 
     println!("{}", toast1.render())
 
-    let toast2 = Toast::new("Error occurred".to_string())
+    let toast2 = Toast::new("Error occurred")
         .variant(ToastVariant::Error)
         .duration(5000)
 

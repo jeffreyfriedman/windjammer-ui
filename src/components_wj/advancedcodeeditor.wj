@@ -13,8 +13,8 @@ impl AdvancedCodeEditor {
     pub fn new(code: string) -> AdvancedCodeEditor {
         AdvancedCodeEditor {
             code,
-            language: "rust".to_string(),
-            theme: "monokai".to_string(),
+            language: "rust",
+            theme: "monokai",
             line_numbers: true,
             minimap: true,
             autocomplete: true,
@@ -70,9 +70,9 @@ pub fn render(self) -> string {
 }
 
 fn main() {
-    let editor = AdvancedCodeEditor::new("fn main() {\n    println!(\"Hello, Windjammer!\");\n}".to_string())
-        .language("rust".to_string())
-        .theme("monokai".to_string())
+    let editor = AdvancedCodeEditor::new("fn main() {\n    println!(\"Hello, Windjammer!\");\n}")
+        .language("rust")
+        .theme("monokai")
         .minimap(true)
 
     println!("{}", editor.render())

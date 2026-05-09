@@ -32,7 +32,7 @@ impl RadioGroup {
         RadioGroup {
             name,
             options: Vec::new(),
-            selected: "".to_string(),
+            selected: "",
         }
     }
 
@@ -69,11 +69,11 @@ fn render(self) -> string {
 }
 
 fn main() {
-    let radio = RadioGroup::new("theme".to_string())
-        .option(RadioOption::new("light".to_string(), "Light Theme".to_string()))
-        .option(RadioOption::new("dark".to_string(), "Dark Theme".to_string()))
-        .option(RadioOption::new("auto".to_string(), "Auto Theme".to_string()))
-        .selected("dark".to_string())
+    let radio = RadioGroup::new("theme")
+        .option(RadioOption::new("light", "Light Theme"))
+        .option(RadioOption::new("dark", "Dark Theme"))
+        .option(RadioOption::new("auto", "Auto Theme"))
+        .selected("dark")
 
     println!("{}", radio.render())
 }

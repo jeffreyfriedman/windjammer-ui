@@ -12,8 +12,8 @@ impl CodeEditor {
     pub fn new(code: string) -> CodeEditor {
         CodeEditor {
             code,
-            language: "rust".to_string(),
-            theme: "dark".to_string(),
+            language: "rust",
+            theme: "dark",
             line_numbers: true,
             readonly: false,
         }
@@ -55,9 +55,9 @@ pub fn render(self) -> string {
 }
 
 fn main() {
-    let editor = CodeEditor::new("fn main() {\n    println!(\"Hello\");\n}".to_string())
-        .language("rust".to_string())
-        .theme("dark".to_string())
+    let editor = CodeEditor::new("fn main() {\n    println!(\"Hello\");\n}")
+        .language("rust")
+        .theme("dark")
 
     println!("{}", editor.render())
 }

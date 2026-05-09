@@ -63,7 +63,7 @@ pub fn render(self) -> string {
         let label_html = if self.show_label {
             format!("{:.0}%", percentage)
         } else {
-            "".to_string()
+            ""
         }
 
         format!("<div class='wj-progress-container' style='width: 100%; background-color: #e0e0e0; border-radius: 4px; overflow: hidden;'>

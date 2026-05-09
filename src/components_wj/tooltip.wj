@@ -45,10 +45,10 @@ pub fn render(self) -> string {
 }
 
 fn main() {
-    let tooltip1 = Tooltip::new("This is a helpful tooltip".to_string(), "<button>Hover me</button>".to_string())
+    let tooltip1 = Tooltip::new("This is a helpful tooltip", "<button>Hover me</button>")
     println!("{}", tooltip1.render())
 
-    let tooltip2 = Tooltip::new("Bottom tooltip".to_string(), "<span>Info</span>".to_string())
+    let tooltip2 = Tooltip::new("Bottom tooltip", "<span>Info</span>")
         .position(TooltipPosition::Bottom)
     println!("{}", tooltip2.render())
 }
