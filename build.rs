@@ -14,14 +14,14 @@ fn main() {
     }
 
     // Tell Cargo to rerun this build script if .wj files change
-    println!("cargo:rerun-if-changed=src/components_wj");
+    println!("cargo:rerun-if-changed=src/components");
 
     // Get project root
     let manifest_dir = env::var("CARGO_MANIFEST_DIR").unwrap();
     let project_root = PathBuf::from(&manifest_dir);
 
     // Paths
-    let src_dir = project_root.join("src/components_wj");
+    let src_dir = project_root.join("src/components");
     let out_dir = project_root.join("src/components/generated");
 
     // Check if we're in a cargo package/publish verification context

@@ -1,6 +1,8 @@
-use std::fmt::Write;
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
+use std::fmt::Write;
 
 use super::traits::Renderable;
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
@@ -12,10 +14,14 @@ pub struct TabPanelTab {
 }
 
 impl TabPanelTab {
-#[inline]
-pub fn new(id: String, title: String, content: String) -> TabPanelTab {
-        TabPanelTab { id: id.to_string(), title: title.to_string(), content: content.to_string() }
-}
+    #[inline]
+    pub fn new(id: String, title: String, content: String) -> TabPanelTab {
+        TabPanelTab {
+            id: id.to_string(),
+            title: title.to_string(),
+            content: content.to_string(),
+        }
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Default)]
@@ -27,30 +33,34 @@ pub struct TabPanel {
 }
 
 impl TabPanel {
-#[inline]
-pub fn new() -> TabPanel {
-        TabPanel { tabs: Vec::new(), active: "".to_string(), orientation: "horizontal".to_string() }
-}
-#[inline]
-pub fn tab(mut self, tab: TabPanelTab) -> TabPanel {
+    #[inline]
+    pub fn new() -> TabPanel {
+        TabPanel {
+            tabs: Vec::new(),
+            active: "".to_string(),
+            orientation: "horizontal".to_string(),
+        }
+    }
+    #[inline]
+    pub fn tab(mut self, tab: TabPanelTab) -> TabPanel {
         self.tabs.push(tab);
         self
-}
-#[inline]
-pub fn active(mut self, id: String) -> TabPanel {
+    }
+    #[inline]
+    pub fn active(mut self, id: String) -> TabPanel {
         self.active = id;
         self
-}
-#[inline]
-pub fn orientation(mut self, orientation: String) -> TabPanel {
+    }
+    #[inline]
+    pub fn orientation(mut self, orientation: String) -> TabPanel {
         self.orientation = orientation;
         self
-}
+    }
 }
 
 impl Renderable for TabPanel {
-#[inline]
-fn render(&self) -> String {
+    #[inline]
+    fn render(&self) -> String {
         let flex_direction = {
             if self.orientation == "vertical" {
                 "row".to_string()
@@ -60,7 +70,12 @@ fn render(&self) -> String {
         };
         let mut tabs_html = {
             let mut __s = String::with_capacity(64);
-            write!(&mut __s, "<div class='wj-tab-panel-tabs wj-tab-panel-{}'>\n", self.orientation.clone()).unwrap();
+            write!(
+                &mut __s,
+                "<div class='wj-tab-panel-tabs wj-tab-panel-{}'>\n",
+                self.orientation.clone()
+            )
+            .unwrap();
             __s
         };
         let mut i = 0;
@@ -73,7 +88,10 @@ fn render(&self) -> String {
                     "".to_string()
                 }
             };
-            tabs_html = format!("{}  <button class='wj-tab-panel-tab{}' data-id='{}'>{}</button>\n", tabs_html, active_class, tab.id, tab.title);
+            tabs_html = format!(
+                "{}  <button class='wj-tab-panel-tab{}' data-id='{}'>{}</button>\n",
+                tabs_html, active_class, tab.id, tab.title
+            );
             i += 1;
         }
         tabs_html = format!("{}</div>\n", tabs_html);
@@ -92,7 +110,9 @@ fn render(&self) -> String {
             j += 1;
         }
         content_html = format!("{}</div>", content_html);
-        format!("<div class='wj-tab-panel' style='display: flex; flex-direction: {};'>\n{}{}\n</div>", flex_direction, tabs_html, content_html)
+        format!(
+            "<div class='wj-tab-panel' style='display: flex; flex-direction: {};'>\n{}{}\n</div>",
+            flex_direction, tabs_html, content_html
+        )
+    }
 }
-}
-

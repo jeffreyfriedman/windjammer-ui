@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 #[derive(Debug, Clone, PartialEq)]
@@ -19,42 +21,60 @@ pub enum DrawerPosition {
 }
 
 impl Drawer {
-#[inline]
-pub fn new() -> Drawer {
-        Drawer { children: Vec::new(), position: DrawerPosition::Right, width: "320px".to_string(), open: false, class: String::new() }
-}
-#[inline]
-pub fn child(mut self, child: String) -> Drawer {
+    #[inline]
+    pub fn new() -> Drawer {
+        Drawer {
+            children: Vec::new(),
+            position: DrawerPosition::Right,
+            width: "320px".to_string(),
+            open: false,
+            class: String::new(),
+        }
+    }
+    #[inline]
+    pub fn child(mut self, child: String) -> Drawer {
         self.children.push(child);
         self
-}
-#[inline]
-pub fn position(mut self, position: DrawerPosition) -> Drawer {
+    }
+    #[inline]
+    pub fn position(mut self, position: DrawerPosition) -> Drawer {
         self.position = position;
         self
-}
-#[inline]
-pub fn width(mut self, width: String) -> Drawer {
+    }
+    #[inline]
+    pub fn width(mut self, width: String) -> Drawer {
         self.width = width;
         self
-}
-#[inline]
-pub fn open(mut self, open: bool) -> Drawer {
+    }
+    #[inline]
+    pub fn open(mut self, open: bool) -> Drawer {
         self.open = open;
         self
-}
-#[inline]
-pub fn class(mut self, class: String) -> Drawer {
+    }
+    #[inline]
+    pub fn class(mut self, class: String) -> Drawer {
         self.class = class;
         self
-}
-#[inline]
-pub fn render(&self) -> String {
+    }
+    #[inline]
+    pub fn render(&self) -> String {
         let (position_style, size_prop) = match self.position {
-            DrawerPosition::Left => ("left: 0; top: 0; bottom: 0;".to_string(), format!("width: {};", self.width.clone())),
-            DrawerPosition::Right => ("right: 0; top: 0; bottom: 0;".to_string(), format!("width: {};", self.width.clone())),
-            DrawerPosition::Top => ("top: 0; left: 0; right: 0;".to_string(), format!("height: {};", self.width.clone())),
-            DrawerPosition::Bottom => ("bottom: 0; left: 0; right: 0;".to_string(), format!("height: {};", self.width.clone())),
+            DrawerPosition::Left => (
+                "left: 0; top: 0; bottom: 0;".to_string(),
+                format!("width: {};", self.width.clone()),
+            ),
+            DrawerPosition::Right => (
+                "right: 0; top: 0; bottom: 0;".to_string(),
+                format!("width: {};", self.width.clone()),
+            ),
+            DrawerPosition::Top => (
+                "top: 0; left: 0; right: 0;".to_string(),
+                format!("height: {};", self.width.clone()),
+            ),
+            DrawerPosition::Bottom => (
+                "bottom: 0; left: 0; right: 0;".to_string(),
+                format!("height: {};", self.width.clone()),
+            ),
         };
         let transform = {
             if self.open {
@@ -93,6 +113,5 @@ pub fn render(&self) -> String {
         }
         html.push_str("</div>");
         html
+    }
 }
-}
-

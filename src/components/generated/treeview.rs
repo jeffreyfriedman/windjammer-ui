@@ -1,6 +1,8 @@
-use std::fmt::Write;
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
+use std::fmt::Write;
 
 use super::traits::Renderable;
 #[derive(Debug, Clone, Default)]
@@ -12,22 +14,26 @@ pub struct TreeItem {
 }
 
 impl TreeItem {
-#[inline]
-pub fn new(label: String) -> TreeItem {
-        TreeItem { label: label.to_string(), children: Vec::new(), expanded: false }
-}
-#[inline]
-pub fn child(mut self, item: TreeItem) -> TreeItem {
+    #[inline]
+    pub fn new(label: String) -> TreeItem {
+        TreeItem {
+            label: label.to_string(),
+            children: Vec::new(),
+            expanded: false,
+        }
+    }
+    #[inline]
+    pub fn child(mut self, item: TreeItem) -> TreeItem {
         self.children.push(item);
         self
-}
-#[inline]
-pub fn expanded(mut self, expanded: bool) -> TreeItem {
+    }
+    #[inline]
+    pub fn expanded(mut self, expanded: bool) -> TreeItem {
         self.expanded = expanded;
         self
-}
-#[inline]
-pub fn render(&self, depth: i32) -> String {
+    }
+    #[inline]
+    pub fn render(&self, depth: i32) -> String {
         let indent_px = depth * 20_i32;
         let icon = {
             if !self.children.is_empty() {
@@ -54,7 +60,7 @@ pub fn render(&self, depth: i32) -> String {
             }
         }
         html
-}
+    }
 }
 
 #[derive(Debug, Clone, Default)]
@@ -64,20 +70,20 @@ pub struct TreeView {
 }
 
 impl TreeView {
-#[inline]
-pub fn new() -> TreeView {
+    #[inline]
+    pub fn new() -> TreeView {
         TreeView { items: Vec::new() }
-}
-#[inline]
-pub fn item(mut self, item: TreeItem) -> TreeView {
+    }
+    #[inline]
+    pub fn item(mut self, item: TreeItem) -> TreeView {
         self.items.push(item);
         self
-}
+    }
 }
 
 impl Renderable for TreeView {
-#[inline]
-fn render(&self) -> String {
+    #[inline]
+    fn render(&self) -> String {
         let mut html = "<div class='wj-tree-view'>\n".to_string();
         let mut i = 0;
         while i < self.items.len() {
@@ -86,6 +92,5 @@ fn render(&self) -> String {
             i += 1;
         }
         format!("{}</div>", html)
+    }
 }
-}
-

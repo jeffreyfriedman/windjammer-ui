@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 #[derive(Debug, Clone, PartialEq)]
@@ -29,37 +31,43 @@ pub enum ColumnJustify {
 }
 
 impl Column {
-#[inline]
-pub fn new() -> Column {
-        Column { children: Vec::new(), gap: "8px".to_string(), align: ColumnAlign::Start, justify: ColumnJustify::Start, class: String::new() }
-}
-#[inline]
-pub fn child(mut self, child: String) -> Column {
+    #[inline]
+    pub fn new() -> Column {
+        Column {
+            children: Vec::new(),
+            gap: "8px".to_string(),
+            align: ColumnAlign::Start,
+            justify: ColumnJustify::Start,
+            class: String::new(),
+        }
+    }
+    #[inline]
+    pub fn child(mut self, child: String) -> Column {
         self.children.push(child);
         self
-}
-#[inline]
-pub fn gap(mut self, gap: String) -> Column {
+    }
+    #[inline]
+    pub fn gap(mut self, gap: String) -> Column {
         self.gap = gap;
         self
-}
-#[inline]
-pub fn align(mut self, align: ColumnAlign) -> Column {
+    }
+    #[inline]
+    pub fn align(mut self, align: ColumnAlign) -> Column {
         self.align = align;
         self
-}
-#[inline]
-pub fn justify(mut self, justify: ColumnJustify) -> Column {
+    }
+    #[inline]
+    pub fn justify(mut self, justify: ColumnJustify) -> Column {
         self.justify = justify;
         self
-}
-#[inline]
-pub fn class(mut self, class: String) -> Column {
+    }
+    #[inline]
+    pub fn class(mut self, class: String) -> Column {
         self.class = class;
         self
-}
-#[inline]
-pub fn render(&self) -> String {
+    }
+    #[inline]
+    pub fn render(&self) -> String {
         let align_str = match self.align {
             ColumnAlign::Start => "flex-start".to_string(),
             ColumnAlign::Center => "center".to_string(),
@@ -89,6 +97,5 @@ pub fn render(&self) -> String {
         }
         html.push_str("</div>");
         html
+    }
 }
-}
-

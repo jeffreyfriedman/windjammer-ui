@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
@@ -10,31 +12,38 @@ pub struct Center {
 }
 
 impl Center {
-#[inline]
-pub fn new(child: String) -> Center {
-        Center { child: child.to_string(), width: "100%".to_string(), height: "100%".to_string(), class: String::new() }
-}
-#[inline]
-pub fn width(mut self, width: String) -> Center {
+    #[inline]
+    pub fn new(child: String) -> Center {
+        Center {
+            child: child.to_string(),
+            width: "100%".to_string(),
+            height: "100%".to_string(),
+            class: String::new(),
+        }
+    }
+    #[inline]
+    pub fn width(mut self, width: String) -> Center {
         self.width = width;
         self
-}
-#[inline]
-pub fn height(mut self, height: String) -> Center {
+    }
+    #[inline]
+    pub fn height(mut self, height: String) -> Center {
         self.height = height;
         self
-}
-#[inline]
-pub fn class(mut self, class: String) -> Center {
+    }
+    #[inline]
+    pub fn class(mut self, class: String) -> Center {
         self.class = class;
         self
-}
-#[inline]
-pub fn render(&self) -> String {
+    }
+    #[inline]
+    pub fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<div class=\"wj-center ");
         html.push_str(&self.class.clone());
-        html.push_str("\" style=\"display: flex; align-items: center; justify-content: center; width: ");
+        html.push_str(
+            "\" style=\"display: flex; align-items: center; justify-content: center; width: ",
+        );
         html.push_str(&self.width);
         html.push_str("; height: ");
         html.push_str(&self.height);
@@ -42,6 +51,5 @@ pub fn render(&self) -> String {
         html.push_str(&self.child);
         html.push_str("</div>");
         html
+    }
 }
-}
-

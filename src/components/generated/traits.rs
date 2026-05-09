@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -9,4 +11,3 @@ pub trait Renderable {
 pub trait RenderableVNode {
     fn to_vnode(&self) -> VNode;
 }
-
