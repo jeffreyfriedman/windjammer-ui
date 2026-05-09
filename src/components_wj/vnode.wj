@@ -13,7 +13,7 @@
 //       VNode::div()
 //           .add_class("container")
 //           .add_style("padding: 16px")
-//           .child(VNode::text("Hello, World!".to_string()))
+//           .child(VNode::text("Hello, World!"))
 //   }
 
 // Import the Rust FFI functions
@@ -53,12 +53,12 @@ impl VNode {
     
     /// Create a new text node
     pub fn text(content: string) -> VNode {
-        VNode { handle: vnode_ffi::vnode_text(content.as_str()) }
+        VNode { handle: vnode_ffi::vnode_text(content) }
     }
     
     /// Create any HTML element by tag name
     pub fn element(tag: string) -> VNode {
-        VNode { handle: vnode_ffi::vnode_element(tag.as_str()) }
+        VNode { handle: vnode_ffi::vnode_element(tag) }
     }
     
     // ========================================================================
@@ -68,19 +68,19 @@ impl VNode {
     
     /// Add a CSS class (takes owned String)
     pub fn add_class(self, class: string) -> VNode {
-        vnode_ffi::vnode_class(self.handle, class.as_str())
+        vnode_ffi::vnode_class(self.handle, class)
         self
     }
     
     /// Add inline style (takes owned String)
     pub fn add_style(self, style: string) -> VNode {
-        vnode_ffi::vnode_style(self.handle, style.as_str())
+        vnode_ffi::vnode_style(self.handle, style)
         self
     }
     
     /// Add an attribute (takes owned Strings)
     pub fn add_attr(self, name: string, value: string) -> VNode {
-        vnode_ffi::vnode_attr(self.handle, name.as_str(), value.as_str())
+        vnode_ffi::vnode_attr(self.handle, name, value)
         self
     }
     
@@ -103,25 +103,25 @@ impl VNode {
     
     /// Set id attribute
     pub fn set_id(self, id: string) -> VNode {
-        vnode_ffi::vnode_attr(self.handle, "id", id.as_str())
+        vnode_ffi::vnode_attr(self.handle, "id", id)
         self
     }
     
     /// Set placeholder (for inputs)
     pub fn set_placeholder(self, text: string) -> VNode {
-        vnode_ffi::vnode_attr(self.handle, "placeholder", text.as_str())
+        vnode_ffi::vnode_attr(self.handle, "placeholder", text)
         self
     }
     
     /// Set type attribute (for inputs/buttons)
     pub fn set_type(self, t: string) -> VNode {
-        vnode_ffi::vnode_attr(self.handle, "type", t.as_str())
+        vnode_ffi::vnode_attr(self.handle, "type", t)
         self
     }
     
     /// Set value attribute
     pub fn set_value(self, v: string) -> VNode {
-        vnode_ffi::vnode_attr(self.handle, "value", v.as_str())
+        vnode_ffi::vnode_attr(self.handle, "value", v)
         self
     }
     
@@ -150,27 +150,27 @@ impl VNode {
 /// Create a container with padding
 pub fn container() -> VNode {
     VNode::div()
-        .add_class("wj-container".to_string())
-        .add_style("padding: 16px".to_string())
+        .add_class("wj-container")
+        .add_style("padding: 16px")
 }
 
 /// Create a flex row
 pub fn row() -> VNode {
-    VNode::div().add_style("display: flex; flex-direction: row; gap: 8px".to_string())
+    VNode::div().add_style("display: flex; flex-direction: row; gap: 8px")
 }
 
 /// Create a flex column
 pub fn column() -> VNode {
-    VNode::div().add_style("display: flex; flex-direction: column; gap: 8px".to_string())
+    VNode::div().add_style("display: flex; flex-direction: column; gap: 8px")
 }
 
 /// Create a spacer element
 pub fn spacer() -> VNode {
-    VNode::div().add_style("flex: 1".to_string())
+    VNode::div().add_style("flex: 1")
 }
 
 /// Create a horizontal divider
 pub fn divider() -> VNode {
-    VNode::element("hr".to_string())
-        .add_style("border: 0; border-top: 1px solid #333; margin: 8px 0".to_string())
+    VNode::element("hr")
+        .add_style("border: 0; border-top: 1px solid #333; margin: 8px 0")
 }

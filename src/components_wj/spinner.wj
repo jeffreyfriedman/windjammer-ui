@@ -17,7 +17,7 @@ impl Spinner {
     pub fn new() -> Spinner {
         Spinner {
             size: SpinnerSize::Medium,
-            label: "".to_string(),
+            label: "",
         }
     }
 
@@ -57,7 +57,7 @@ fn main() {
     let spinner1 = Spinner::new()
     println!("Default: {}", spinner1.render())
 
-    let spinner2 = Spinner::new().size(SpinnerSize::Large).label("Loading...".to_string())
+    let spinner2 = Spinner::new().size(SpinnerSize::Large).label("Loading...")
     println!("With label: {}", spinner2.render())
 }
 

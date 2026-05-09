@@ -48,7 +48,7 @@ impl Accordion {
 
 impl Renderable for Accordion {
 fn render(self) -> string {
-        let mut html = "<div class='wj-accordion'>".to_string()
+        let mut html = "<div class='wj-accordion'>"
 
         let mut i = 0
         while i < self.items.len() {
@@ -71,9 +71,9 @@ fn render(self) -> string {
 
 fn main() {
     let accordion = Accordion::new()
-        .item(AccordionItem::new("Section 1".to_string(), "<p>Content for section 1</p>".to_string()).open(true))
-        .item(AccordionItem::new("Section 2".to_string(), "<p>Content for section 2</p>".to_string()))
-        .item(AccordionItem::new("Section 3".to_string(), "<p>Content for section 3</p>".to_string()))
+        .item(AccordionItem::new("Section 1", "<p>Content for section 1</p>").open(true))
+        .item(AccordionItem::new("Section 2", "<p>Content for section 2</p>"))
+        .item(AccordionItem::new("Section 3", "<p>Content for section 3</p>"))
 
     println!("{}", accordion.render())
 }

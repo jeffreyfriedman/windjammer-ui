@@ -11,11 +11,11 @@ pub struct Card {
 impl Card {
     pub fn new() -> Card {
         Card {
-            title: "".to_string(),
+            title: "",
             children: Vec::new(),
-            padding: "16px".to_string(),
-            background_color: "#fff".to_string(),
-            border_color: "#e0e0e0".to_string(),
+            padding: "16px",
+            background_color: "#fff",
+            border_color: "#e0e0e0",
         }
     }
 
@@ -59,7 +59,7 @@ pub fn render(self) -> string {
         let title_html = if self.title != "" {
             format!("<div class='wj-card-title' style='font-weight: bold; margin-bottom: 12px; font-size: 1.25rem;'>{}</div>", self.title)
         } else {
-            "".to_string()
+            ""
         }
 
         let children_html = self.children.join("
@@ -73,16 +73,16 @@ pub fn render(self) -> string {
 
 fn main() {
     let card1 = Card::new()
-        .title("My Card".to_string())
-        .child("<p>Card content goes here.</p>".to_string())
+        .title("My Card")
+        .child("<p>Card content goes here.</p>")
 
     println!("{}", card1.render())
 
     let card2 = Card::new()
-        .padding("24px".to_string())
-        .background_color("#f9f9f9".to_string())
-        .border_color("#3498db".to_string())
-        .children(vec!["<h3>Title</h3>".to_string(), "<p>Body text</p>".to_string()])
+        .padding("24px")
+        .background_color("#f9f9f9")
+        .border_color("#3498db")
+        .children(vec!["<h3>Title</h3>", "<p>Body text</p>"])
 
     println!("{}", card2.render())
 }

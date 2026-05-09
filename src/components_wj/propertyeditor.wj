@@ -29,9 +29,9 @@ impl Property {
             name,
             value: format!("{:.3}", value),
             property_type: PropertyType::Number { min: min, max: max, step: 0.1 },
-            unit: "".to_string(),
-            tooltip: "".to_string(),
-            on_change: "".to_string(),
+            unit: "",
+            tooltip: "",
+            on_change: "",
         }
     }
     
@@ -40,20 +40,20 @@ impl Property {
             name,
             value: format!("{}", value),
             property_type: PropertyType::Integer { min: min, max: max },
-            unit: "".to_string(),
-            tooltip: "".to_string(),
-            on_change: "".to_string(),
+            unit: "",
+            tooltip: "",
+            on_change: "",
         }
     }
     
     pub fn boolean(name: string, value: bool) -> Property {
         Property {
             name,
-            value: if value { "true".to_string() } else { "false".to_string() },
+            value: if value { "true" } else { "false" },
             property_type: PropertyType::Boolean,
-            unit: "".to_string(),
-            tooltip: "".to_string(),
-            on_change: "".to_string(),
+            unit: "",
+            tooltip: "",
+            on_change: "",
         }
     }
     
@@ -62,9 +62,9 @@ impl Property {
             name,
             value,
             property_type: PropertyType::Text,
-            unit: "".to_string(),
-            tooltip: "".to_string(),
-            on_change: "".to_string(),
+            unit: "",
+            tooltip: "",
+            on_change: "",
         }
     }
     
@@ -73,9 +73,9 @@ impl Property {
             name,
             value,
             property_type: PropertyType::Color,
-            unit: "".to_string(),
-            tooltip: "".to_string(),
-            on_change: "".to_string(),
+            unit: "",
+            tooltip: "",
+            on_change: "",
         }
     }
     
@@ -100,13 +100,13 @@ impl Renderable for Property {
         let tooltip_attr = if self.tooltip != "" {
             format!(" title='{}'", self.tooltip)
         } else {
-            "".to_string()
+            ""
         }
         
         let unit_html = if self.unit != "" {
             format!("<span class='prop-unit'>{}</span>", self.unit)
         } else {
-            "".to_string()
+            ""
         }
         
         let input_html = match self.property_type {
@@ -156,10 +156,10 @@ impl Renderable for Property {
                 ", self.value, self.on_change, self.value, self.on_change)
             },
             PropertyType::Dropdown { options: opts } => {
-                let mut options_html = "".to_string()
+                let mut options_html = ""
                 for o in opts {
-                    let selected = if o.as_str() == self.value.as_str() { "selected" } else { "" }
-                    options_html = options_html + format!("<option value='{}' {}>{}</option>", o, selected, o).as_str()
+                    let selected = if o == self.value { "selected" } else { "" }
+                    options_html = options_html + format!("<option value='{}' {}>{}</option>", o, selected, o)
                 }
                 
                 format!("
@@ -192,7 +192,7 @@ pub struct Vec3Editor {
 
 impl Vec3Editor {
     pub fn new(label: string, x: f32, y: f32, z: f32) -> Vec3Editor {
-        Vec3Editor { label, x, y, z, on_change: "".to_string() }
+        Vec3Editor { label, x, y, z, on_change: "" }
     }
     
     pub fn on_change(self, handler: string) -> Vec3Editor {
@@ -403,6 +403,6 @@ pub fn property_editor_styles() -> string {
         font-size: 12px;
         cursor: pointer;
     }
-    ".to_string()
+    "
 }
 

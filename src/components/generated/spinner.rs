@@ -1,11 +1,8 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
+use std::fmt::Write;
 #[allow(unused_imports)]
 use super::*;
-use std::fmt::Write;
 
 use super::traits::Renderable;
-
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum SpinnerSize {
     Small,
@@ -14,34 +11,32 @@ pub enum SpinnerSize {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Spinner {
     pub size: SpinnerSize,
     pub label: String,
 }
 
 impl Spinner {
-    #[inline]
-    pub fn new() -> Spinner {
-        Spinner {
-            size: SpinnerSize::Medium,
-            label: "".to_string(),
-        }
-    }
-    #[inline]
-    pub fn size(mut self, size: SpinnerSize) -> Spinner {
+#[inline]
+pub fn new() -> Spinner {
+        Spinner { size: SpinnerSize::Medium, label: "".to_string() }
+}
+#[inline]
+pub fn size(mut self, size: SpinnerSize) -> Spinner {
         self.size = size;
         self
-    }
-    #[inline]
-    pub fn label(mut self, label: String) -> Spinner {
+}
+#[inline]
+pub fn label(mut self, label: String) -> Spinner {
         self.label = label;
         self
-    }
+}
 }
 
 impl Renderable for Spinner {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(&self) -> String {
         let size_class = match self.size {
             SpinnerSize::Small => "wj-spinner-sm".to_string(),
             SpinnerSize::Medium => "wj-spinner-md".to_string(),
@@ -53,9 +48,10 @@ impl Renderable for Spinner {
             __s
         };
         if self.label != "" {
-            format!("<div class='wj-spinner-container'>{}<span class='wj-spinner-label'>{}</span></div>", spinner_html, self.label)
+            format!("<div class='wj-spinner-container'>{}<span class='wj-spinner-label'>{}</span></div>", spinner_html, self.label.clone())
         } else {
             spinner_html
         }
-    }
 }
+}
+

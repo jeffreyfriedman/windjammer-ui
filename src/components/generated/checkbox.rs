@@ -1,10 +1,7 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
 use super::traits::Renderable;
-
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum CheckboxSize {
     Small,
@@ -13,6 +10,7 @@ pub enum CheckboxSize {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Checkbox {
     pub label: String,
     pub checked: bool,
@@ -21,35 +19,30 @@ pub struct Checkbox {
 }
 
 impl Checkbox {
-    #[inline]
-    pub fn new(label: String) -> Checkbox {
-        Checkbox {
-            label,
-            checked: false,
-            disabled: false,
-            size: CheckboxSize::Medium,
-        }
-    }
-    #[inline]
-    pub fn checked(mut self, checked: bool) -> Checkbox {
+#[inline]
+pub fn new(label: String) -> Checkbox {
+        Checkbox { label: label.to_string(), checked: false, disabled: false, size: CheckboxSize::Medium }
+}
+#[inline]
+pub fn checked(mut self, checked: bool) -> Checkbox {
         self.checked = checked;
         self
-    }
-    #[inline]
-    pub fn disabled(mut self, disabled: bool) -> Checkbox {
+}
+#[inline]
+pub fn disabled(mut self, disabled: bool) -> Checkbox {
         self.disabled = disabled;
         self
-    }
-    #[inline]
-    pub fn size(mut self, size: CheckboxSize) -> Checkbox {
+}
+#[inline]
+pub fn size(mut self, size: CheckboxSize) -> Checkbox {
         self.size = size;
         self
-    }
+}
 }
 
 impl Renderable for Checkbox {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(&self) -> String {
         let size_class = match self.size {
             CheckboxSize::Small => "sm".to_string(),
             CheckboxSize::Medium => "md".to_string(),
@@ -69,6 +62,7 @@ impl Renderable for Checkbox {
                 "".to_string()
             }
         };
-        format!("<label class='wj-checkbox wj-checkbox-{}'><input type='checkbox'{}{}/><span>{}</span></label>", size_class, checked_attr, disabled_attr, self.label)
-    }
+        format!("<label class='wj-checkbox wj-checkbox-{}'><input type='checkbox'{}{}/><span>{}</span></label>", size_class, checked_attr, disabled_attr, self.label.clone())
 }
+}
+

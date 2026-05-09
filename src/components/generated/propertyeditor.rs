@@ -1,10 +1,7 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
 use super::traits::Renderable;
-
 #[derive(Clone, Debug, PartialEq)]
 pub enum PropertyType {
     Number { min: f32, max: f32, step: f32 },
@@ -16,6 +13,7 @@ pub enum PropertyType {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Property {
     pub name: String,
     pub value: String,
@@ -26,214 +24,110 @@ pub struct Property {
 }
 
 impl Property {
-    #[inline]
-    pub fn number(name: String, value: f32, min: f32, max: f32) -> Property {
-        Property {
-            name,
-            value: format!("{:.3}", value),
-            property_type: PropertyType::Number {
-                min,
-                max,
-                step: 0.1,
-            },
-            unit: "".to_string(),
-            tooltip: "".to_string(),
-            on_change: "".to_string(),
-        }
-    }
-    #[inline]
-    pub fn integer(name: String, value: i32, min: i32, max: i32) -> Property {
-        Property {
-            name,
-            value: format!("{}", value),
-            property_type: PropertyType::Integer { min, max },
-            unit: "".to_string(),
-            tooltip: "".to_string(),
-            on_change: "".to_string(),
-        }
-    }
-    #[inline]
-    pub fn boolean(name: String, value: bool) -> Property {
-        Property {
-            name,
-            value: {
-                if value {
-                    "true".to_string()
-                } else {
-                    "false".to_string()
-                }
-            },
-            property_type: PropertyType::Boolean,
-            unit: "".to_string(),
-            tooltip: "".to_string(),
-            on_change: "".to_string(),
-        }
-    }
-    #[inline]
-    pub fn text(name: String, value: String) -> Property {
-        Property {
-            name,
-            value,
-            property_type: PropertyType::Text,
-            unit: "".to_string(),
-            tooltip: "".to_string(),
-            on_change: "".to_string(),
-        }
-    }
-    #[inline]
-    pub fn color(name: String, value: String) -> Property {
-        Property {
-            name,
-            value,
-            property_type: PropertyType::Color,
-            unit: "".to_string(),
-            tooltip: "".to_string(),
-            on_change: "".to_string(),
-        }
-    }
-    #[inline]
-    pub fn unit(mut self, unit: String) -> Property {
+#[inline]
+pub fn number(name: String, value: f32, min: f32, max: f32) -> Property {
+        Property { name: name.to_string(), value: format!("{:.3}", value), property_type: PropertyType::Number { min, max, step: 0.1_f32 }, unit: "".to_string(), tooltip: "".to_string(), on_change: "".to_string() }
+}
+#[inline]
+pub fn integer(name: String, value: i32, min: i32, max: i32) -> Property {
+        Property { name: name.to_string(), value: format!("{}", value), property_type: PropertyType::Integer { min, max }, unit: "".to_string(), tooltip: "".to_string(), on_change: "".to_string() }
+}
+#[inline]
+pub fn boolean(name: String, value: bool) -> Property {
+        Property { name: name.to_string(), value: {
+            if value {
+                "true".to_string()
+            } else {
+                "false".to_string()
+            }
+        }, property_type: PropertyType::Boolean, unit: "".to_string(), tooltip: "".to_string(), on_change: "".to_string() }
+}
+#[inline]
+pub fn text(name: String, value: String) -> Property {
+        Property { name: name.to_string(), value: value.to_string(), property_type: PropertyType::Text, unit: "".to_string(), tooltip: "".to_string(), on_change: "".to_string() }
+}
+#[inline]
+pub fn color(name: String, value: String) -> Property {
+        Property { name: name.to_string(), value: value.to_string(), property_type: PropertyType::Color, unit: "".to_string(), tooltip: "".to_string(), on_change: "".to_string() }
+}
+#[inline]
+pub fn unit(mut self, unit: String) -> Property {
         self.unit = unit;
         self
-    }
-    #[inline]
-    pub fn tooltip(mut self, tooltip: String) -> Property {
+}
+#[inline]
+pub fn tooltip(mut self, tooltip: String) -> Property {
         self.tooltip = tooltip;
         self
-    }
-    #[inline]
-    pub fn on_change(mut self, handler: String) -> Property {
+}
+#[inline]
+pub fn on_change(mut self, handler: String) -> Property {
         self.on_change = handler;
         self
-    }
+}
 }
 
 impl Renderable for Property {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(&self) -> String {
         let tooltip_attr = {
             if self.tooltip != "" {
-                format!(" title='{}'", self.tooltip)
+                format!(" title='{}'", self.tooltip.clone())
             } else {
                 "".to_string()
             }
         };
         let unit_html = {
             if self.unit != "" {
-                format!("<span class='prop-unit'>{}</span>", self.unit)
+                format!("<span class='prop-unit'>{}</span>", self.unit.clone())
             } else {
                 "".to_string()
             }
         };
-        let input_html = match self.property_type.clone() {
-            PropertyType::Number {
-                min: mn,
-                max: mx,
-                step: st,
-            } => {
-                format!(
-                    "
-                    <div class='prop-number'>
-                        <input type='number' class='prop-input' 
-                               value='{}' min='{}' max='{}' step='{}'
-                               onchange='{}(this.value)'/>
-                        {}
-                    </div>
-                ",
-                    self.value, mn, mx, st, self.on_change, unit_html
-                )
-            }
+        let input_html = match &self.property_type {
+            PropertyType::Number { min: mn, max: mx, step: st } => {
+                format!("\n                    <div class='prop-number'>\n                        <input type='number' class='prop-input' \n                               value='{}' min='{}' max='{}' step='{}'\n                               onchange='{}(this.value)'/>\n                        {}\n                    </div>\n                ", self.value.clone(), mn, mx, st, self.on_change.clone(), unit_html)
+            },
             PropertyType::Integer { min: mn, max: mx } => {
-                format!(
-                    "
-                    <div class='prop-number'>
-                        <input type='number' class='prop-input' 
-                               value='{}' min='{}' max='{}' step='1'
-                               onchange='{}(this.value)'/>
-                        {}
-                    </div>
-                ",
-                    self.value, mn, mx, self.on_change, unit_html
-                )
-            }
+                format!("\n                    <div class='prop-number'>\n                        <input type='number' class='prop-input' \n                               value='{}' min='{}' max='{}' step='1'\n                               onchange='{}(this.value)'/>\n                        {}\n                    </div>\n                ", self.value.clone(), mn, mx, self.on_change.clone(), unit_html)
+            },
             PropertyType::Boolean => {
                 let checked = {
-                    if self.value == "true" {
+                    if self.value == "true".to_string() {
                         "checked".to_string()
                     } else {
                         "".to_string()
                     }
                 };
-                format!(
-                    "
-                    <label class='prop-toggle'>
-                        <input type='checkbox' {} onchange='{}(this.checked)'/>
-                        <span class='toggle-slider'></span>
-                    </label>
-                ",
-                    checked, self.on_change
-                )
-            }
+                format!("\n                    <label class='prop-toggle'>\n                        <input type='checkbox' {} onchange='{}(this.checked)'/>\n                        <span class='toggle-slider'></span>\n                    </label>\n                ", checked, self.on_change.clone())
+            },
             PropertyType::Text => {
-                format!(
-                    "
-                    <input type='text' class='prop-input prop-text' 
-                           value='{}' onchange='{}(this.value)'/>
-                ",
-                    self.value, self.on_change
-                )
-            }
+                format!("\n                    <input type='text' class='prop-input prop-text' \n                           value='{}' onchange='{}(this.value)'/>\n                ", self.value.clone(), self.on_change.clone())
+            },
             PropertyType::Color => {
-                format!(
-                    "
-                    <div class='prop-color'>
-                        <input type='color' class='color-swatch' 
-                               value='{}' onchange='{}(this.value)'/>
-                        <input type='text' class='color-hex' 
-                               value='{}' onchange='{}(this.value)'/>
-                    </div>
-                ",
-                    self.value, self.on_change, self.value, self.on_change
-                )
-            }
+                format!("\n                    <div class='prop-color'>\n                        <input type='color' class='color-swatch' \n                               value='{}' onchange='{}(this.value)'/>\n                        <input type='text' class='color-hex' \n                               value='{}' onchange='{}(this.value)'/>\n                    </div>\n                ", self.value.clone(), self.on_change.clone(), self.value.clone(), self.on_change.clone())
+            },
             PropertyType::Dropdown { options: opts } => {
-                let mut options_html = "".to_string();
+                let mut options_html = String::new();
                 for o in opts {
                     let selected = {
-                        if o.as_str() == self.value.as_str() {
+                        if *o == self.value {
                             "selected".to_string()
                         } else {
                             "".to_string()
                         }
                     };
-                    options_html +=
-                        format!("<option value='{}' {}>{}</option>", o, selected, o).as_str();
+                    options_html = options_html + &format!("<option value='{}' {}>{}</option>", o, selected, o);
                 }
-                format!(
-                    "
-                    <select class='prop-select' onchange='{}(this.value)'>
-                        {}
-                    </select>
-                ",
-                    self.on_change, options_html
-                )
-            }
+                format!("\n                    <select class='prop-select' onchange='{}(this.value)'>\n                        {}\n                    </select>\n                ", self.on_change.clone(), options_html)
+            },
         };
-        format!(
-            "
-            <div class='prop-row'{}>
-                <label class='prop-label'>{}</label>
-                <div class='prop-value'>
-                    {}
-                </div>
-            </div>
-        ",
-            tooltip_attr, self.name, input_html
-        )
-    }
+        format!("\n            <div class='prop-row'{}>\n                <label class='prop-label'>{}</label>\n                <div class='prop-value'>\n                    {}\n                </div>\n            </div>\n        ", tooltip_attr, self.name.clone(), input_html)
+}
 }
 
 #[derive(Debug, Clone, PartialEq, Default)]
+#[repr(C)]
 pub struct Vec3Editor {
     pub label: String,
     pub x: f32,
@@ -243,229 +137,26 @@ pub struct Vec3Editor {
 }
 
 impl Vec3Editor {
-    #[inline]
-    pub fn new(label: String, x: f32, y: f32, z: f32) -> Vec3Editor {
-        Vec3Editor {
-            label,
-            x,
-            y,
-            z,
-            on_change: "".to_string(),
-        }
-    }
-    #[inline]
-    pub fn on_change(mut self, handler: String) -> Vec3Editor {
+#[inline]
+pub fn new(label: String, x: f32, y: f32, z: f32) -> Vec3Editor {
+        Vec3Editor { label: label.to_string(), x, y, z, on_change: "".to_string() }
+}
+#[inline]
+pub fn on_change(mut self, handler: String) -> Vec3Editor {
         self.on_change = handler;
         self
-    }
+}
 }
 
 impl Renderable for Vec3Editor {
-    #[inline]
-    fn render(self) -> String {
-        format!(
-            "
-            <div class='vec3-editor'>
-                <label class='prop-label'>{}</label>
-                <div class='vec3-inputs'>
-                    <div class='vec3-axis'>
-                        <span class='axis-label x'>X</span>
-                        <input type='number' step='0.1' value='{:.3}' 
-                               onchange='{}(\"x\", this.value)'/>
-                    </div>
-                    <div class='vec3-axis'>
-                        <span class='axis-label y'>Y</span>
-                        <input type='number' step='0.1' value='{:.3}' 
-                               onchange='{}(\"y\", this.value)'/>
-                    </div>
-                    <div class='vec3-axis'>
-                        <span class='axis-label z'>Z</span>
-                        <input type='number' step='0.1' value='{:.3}' 
-                               onchange='{}(\"z\", this.value)'/>
-                    </div>
-                </div>
-            </div>
-        ",
-            self.label, self.x, self.on_change, self.y, self.on_change, self.z, self.on_change
-        )
-    }
+#[inline]
+fn render(&self) -> String {
+        format!("\n            <div class='vec3-editor'>\n                <label class='prop-label'>{}</label>\n                <div class='vec3-inputs'>\n                    <div class='vec3-axis'>\n                        <span class='axis-label x'>X</span>\n                        <input type='number' step='0.1' value='{:.3}' \n                               onchange='{}(\"x\", this.value)'/>\n                    </div>\n                    <div class='vec3-axis'>\n                        <span class='axis-label y'>Y</span>\n                        <input type='number' step='0.1' value='{:.3}' \n                               onchange='{}(\"y\", this.value)'/>\n                    </div>\n                    <div class='vec3-axis'>\n                        <span class='axis-label z'>Z</span>\n                        <input type='number' step='0.1' value='{:.3}' \n                               onchange='{}(\"z\", this.value)'/>\n                    </div>\n                </div>\n            </div>\n        ", self.label.clone(), self.x, self.on_change.clone(), self.y, self.on_change.clone(), self.z, self.on_change.clone())
+}
 }
 
 #[inline]
 pub fn property_editor_styles() -> String {
-    "
-    .prop-row {
-        display: flex;
-        align-items: center;
-        padding: 6px 0;
-        border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-    
-    .prop-row:hover {
-        background: rgba(255,255,255,0.02);
-    }
-    
-    .prop-label {
-        width: 100px;
-        font-size: 12px;
-        color: #999;
-        flex-shrink: 0;
-    }
-    
-    .prop-value {
-        flex: 1;
-    }
-    
-    .prop-input {
-        width: 100%;
-        padding: 6px 10px;
-        border: 1px solid #333;
-        border-radius: 4px;
-        background: #1a1a2e;
-        color: #e0e0e0;
-        font-size: 12px;
-    }
-    
-    .prop-input:focus {
-        border-color: #e94560;
-        outline: none;
-        box-shadow: 0 0 0 2px rgba(233, 69, 96, 0.2);
-    }
-    
-    .prop-number {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-    }
-    
-    .prop-unit {
-        font-size: 11px;
-        color: #666;
-    }
-    
-    /* Toggle switch */
-    .prop-toggle {
-        position: relative;
-        display: inline-block;
-        width: 44px;
-        height: 24px;
-    }
-    
-    .prop-toggle input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
-    
-    .toggle-slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #333;
-        transition: 0.3s;
-        border-radius: 24px;
-    }
-    
-    .toggle-slider:before {
-        position: absolute;
-        content: '';
-        height: 18px;
-        width: 18px;
-        left: 3px;
-        bottom: 3px;
-        background-color: white;
-        transition: 0.3s;
-        border-radius: 50%;
-    }
-    
-    .prop-toggle input:checked + .toggle-slider {
-        background-color: #e94560;
-    }
-    
-    .prop-toggle input:checked + .toggle-slider:before {
-        transform: translateX(20px);
-    }
-    
-    /* Color editor */
-    .prop-color {
-        display: flex;
-        gap: 8px;
-        align-items: center;
-    }
-    
-    .color-swatch {
-        width: 32px;
-        height: 32px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-    
-    .color-hex {
-        width: 80px;
-        padding: 6px 8px;
-        border: 1px solid #333;
-        border-radius: 4px;
-        background: #1a1a2e;
-        color: #e0e0e0;
-        font-family: monospace;
-        font-size: 12px;
-    }
-    
-    /* Vec3 editor */
-    .vec3-editor {
-        display: flex;
-        align-items: center;
-        padding: 6px 0;
-    }
-    
-    .vec3-inputs {
-        display: flex;
-        gap: 4px;
-        flex: 1;
-    }
-    
-    .vec3-axis {
-        display: flex;
-        align-items: center;
-        flex: 1;
-    }
-    
-    .vec3-axis input {
-        width: 100%;
-        padding: 6px 8px;
-        border: 1px solid #333;
-        border-radius: 0 4px 4px 0;
-        background: #1a1a2e;
-        color: #e0e0e0;
-        font-size: 12px;
-    }
-    
-    .axis-label {
-        padding: 6px 8px;
-        font-size: 11px;
-        font-weight: 600;
-        border-radius: 4px 0 0 4px;
-    }
-    
-    .axis-label.x { background: #e94560; color: white; }
-    .axis-label.y { background: #4ade80; color: #1a1a2e; }
-    .axis-label.z { background: #60a5fa; color: white; }
-    
-    /* Select dropdown */
-    .prop-select {
-        width: 100%;
-        padding: 6px 10px;
-        border: 1px solid #333;
-        border-radius: 4px;
-        background: #1a1a2e;
-        color: #e0e0e0;
-        font-size: 12px;
-        cursor: pointer;
-    }
-    "
-    .to_string()
+    "\n    .prop-row {\n        display: flex;\n        align-items: center;\n        padding: 6px 0;\n        border-bottom: 1px solid rgba(255,255,255,0.05);\n    }\n    \n    .prop-row:hover {\n        background: rgba(255,255,255,0.02);\n    }\n    \n    .prop-label {\n        width: 100px;\n        font-size: 12px;\n        color: #999;\n        flex-shrink: 0;\n    }\n    \n    .prop-value {\n        flex: 1;\n    }\n    \n    .prop-input {\n        width: 100%;\n        padding: 6px 10px;\n        border: 1px solid #333;\n        border-radius: 4px;\n        background: #1a1a2e;\n        color: #e0e0e0;\n        font-size: 12px;\n    }\n    \n    .prop-input:focus {\n        border-color: #e94560;\n        outline: none;\n        box-shadow: 0 0 0 2px rgba(233, 69, 96, 0.2);\n    }\n    \n    .prop-number {\n        display: flex;\n        align-items: center;\n        gap: 4px;\n    }\n    \n    .prop-unit {\n        font-size: 11px;\n        color: #666;\n    }\n    \n    /* Toggle switch */\n    .prop-toggle {\n        position: relative;\n        display: inline-block;\n        width: 44px;\n        height: 24px;\n    }\n    \n    .prop-toggle input {\n        opacity: 0;\n        width: 0;\n        height: 0;\n    }\n    \n    .toggle-slider {\n        position: absolute;\n        cursor: pointer;\n        top: 0;\n        left: 0;\n        right: 0;\n        bottom: 0;\n        background-color: #333;\n        transition: 0.3s;\n        border-radius: 24px;\n    }\n    \n    .toggle-slider:before {\n        position: absolute;\n        content: '';\n        height: 18px;\n        width: 18px;\n        left: 3px;\n        bottom: 3px;\n        background-color: white;\n        transition: 0.3s;\n        border-radius: 50%;\n    }\n    \n    .prop-toggle input:checked + .toggle-slider {\n        background-color: #e94560;\n    }\n    \n    .prop-toggle input:checked + .toggle-slider:before {\n        transform: translateX(20px);\n    }\n    \n    /* Color editor */\n    .prop-color {\n        display: flex;\n        gap: 8px;\n        align-items: center;\n    }\n    \n    .color-swatch {\n        width: 32px;\n        height: 32px;\n        border: none;\n        border-radius: 4px;\n        cursor: pointer;\n    }\n    \n    .color-hex {\n        width: 80px;\n        padding: 6px 8px;\n        border: 1px solid #333;\n        border-radius: 4px;\n        background: #1a1a2e;\n        color: #e0e0e0;\n        font-family: monospace;\n        font-size: 12px;\n    }\n    \n    /* Vec3 editor */\n    .vec3-editor {\n        display: flex;\n        align-items: center;\n        padding: 6px 0;\n    }\n    \n    .vec3-inputs {\n        display: flex;\n        gap: 4px;\n        flex: 1;\n    }\n    \n    .vec3-axis {\n        display: flex;\n        align-items: center;\n        flex: 1;\n    }\n    \n    .vec3-axis input {\n        width: 100%;\n        padding: 6px 8px;\n        border: 1px solid #333;\n        border-radius: 0 4px 4px 0;\n        background: #1a1a2e;\n        color: #e0e0e0;\n        font-size: 12px;\n    }\n    \n    .axis-label {\n        padding: 6px 8px;\n        font-size: 11px;\n        font-weight: 600;\n        border-radius: 4px 0 0 4px;\n    }\n    \n    .axis-label.x { background: #e94560; color: white; }\n    .axis-label.y { background: #4ade80; color: #1a1a2e; }\n    .axis-label.z { background: #60a5fa; color: white; }\n    \n    /* Select dropdown */\n    .prop-select {\n        width: 100%;\n        padding: 6px 10px;\n        border: 1px solid #333;\n        border-radius: 4px;\n        background: #1a1a2e;\n        color: #e0e0e0;\n        font-size: 12px;\n        cursor: pointer;\n    }\n    ".to_string()
 }
+

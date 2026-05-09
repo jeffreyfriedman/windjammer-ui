@@ -16,8 +16,8 @@ impl TimelineEvent {
             title: title,
             description: String::new(),
             timestamp: timestamp,
-            icon: "●".to_string(),
-            color: "#3b82f6".to_string(),
+            icon: "●",
+            color: "#3b82f6",
         }
     }
 

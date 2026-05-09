@@ -1,10 +1,7 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
 use super::traits::Renderable;
-
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum StackDirection {
     Vertical,
@@ -30,6 +27,7 @@ pub enum StackJustify {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Stack {
     pub direction: StackDirection,
     pub gap: String,
@@ -42,74 +40,65 @@ pub struct Stack {
 }
 
 impl Stack {
-    #[inline]
-    pub fn new() -> Stack {
-        Stack {
-            direction: StackDirection::Vertical,
-            gap: "8px".to_string(),
-            align: StackAlign::Stretch,
-            justify: StackJustify::Start,
-            children: Vec::new(),
-            padding: "0".to_string(),
-            width: "auto".to_string(),
-            height: "auto".to_string(),
-        }
-    }
-    #[inline]
-    pub fn vertical() -> Stack {
+#[inline]
+pub fn new() -> Stack {
+        Stack { direction: StackDirection::Vertical, gap: "8px".to_string(), align: StackAlign::Stretch, justify: StackJustify::Start, children: Vec::new(), padding: "0".to_string(), width: "auto".to_string(), height: "auto".to_string() }
+}
+#[inline]
+pub fn vertical() -> Stack {
         Stack::new()
-    }
-    #[inline]
-    pub fn horizontal() -> Stack {
+}
+#[inline]
+pub fn horizontal() -> Stack {
         let mut stack = Stack::new();
         stack.direction = StackDirection::Horizontal;
         stack
-    }
-    #[inline]
-    pub fn direction(mut self, dir: StackDirection) -> Stack {
+}
+#[inline]
+pub fn direction(mut self, dir: StackDirection) -> Stack {
         self.direction = dir;
         self
-    }
-    #[inline]
-    pub fn gap(mut self, gap: String) -> Stack {
+}
+#[inline]
+pub fn gap(mut self, gap: String) -> Stack {
         self.gap = gap;
         self
-    }
-    #[inline]
-    pub fn align(mut self, align: StackAlign) -> Stack {
+}
+#[inline]
+pub fn align(mut self, align: StackAlign) -> Stack {
         self.align = align;
         self
-    }
-    #[inline]
-    pub fn justify(mut self, justify: StackJustify) -> Stack {
+}
+#[inline]
+pub fn justify(mut self, justify: StackJustify) -> Stack {
         self.justify = justify;
         self
-    }
-    #[inline]
-    pub fn padding(mut self, padding: String) -> Stack {
+}
+#[inline]
+pub fn padding(mut self, padding: String) -> Stack {
         self.padding = padding;
         self
-    }
-    #[inline]
-    pub fn width(mut self, width: String) -> Stack {
+}
+#[inline]
+pub fn width(mut self, width: String) -> Stack {
         self.width = width;
         self
-    }
-    #[inline]
-    pub fn height(mut self, height: String) -> Stack {
+}
+#[inline]
+pub fn height(mut self, height: String) -> Stack {
         self.height = height;
         self
-    }
-    #[inline]
-    pub fn child(mut self, child: String) -> Stack {
+}
+#[inline]
+pub fn child(mut self, child: String) -> Stack {
         self.children.push(child);
         self
-    }
+}
 }
 
 impl Renderable for Stack {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(&self) -> String {
         let flex_direction = match self.direction {
             StackDirection::Vertical => "column".to_string(),
             StackDirection::Horizontal => "row".to_string(),
@@ -149,5 +138,6 @@ impl Renderable for Stack {
         }
         html.push_str("</div>");
         html
-    }
 }
+}
+

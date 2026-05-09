@@ -12,8 +12,8 @@ impl Grid {
         Grid {
             children: Vec::new(),
             columns,
-            gap: "16px".to_string(),
-            padding: "0".to_string(),
+            gap: "16px",
+            padding: "0",
         }
     }
 
@@ -53,11 +53,11 @@ pub fn render(self) -> string {
 
 fn main() {
     let grid = Grid::new(3)
-        .gap("20px".to_string())
-        .child("<div style='padding:20px; background:#e3f2fd;'>Item 1</div>".to_string())
-        .child("<div style='padding:20px; background:#e3f2fd;'>Item 2</div>".to_string())
-        .child("<div style='padding:20px; background:#e3f2fd;'>Item 3</div>".to_string())
-        .child("<div style='padding:20px; background:#e3f2fd;'>Item 4</div>".to_string())
+        .gap("20px")
+        .child("<div style='padding:20px; background:#e3f2fd;'>Item 1</div>")
+        .child("<div style='padding:20px; background:#e3f2fd;'>Item 2</div>")
+        .child("<div style='padding:20px; background:#e3f2fd;'>Item 3</div>")
+        .child("<div style='padding:20px; background:#e3f2fd;'>Item 4</div>")
 
     println!("{}", grid.render())
 }

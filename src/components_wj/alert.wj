@@ -67,16 +67,16 @@ pub fn render(self) -> string {
 }
 
 fn main() {
-    let alert1 = Alert::error("Something went wrong!".to_string())
+    let alert1 = Alert::error("Something went wrong!")
     println!("Error: {}", alert1.render())
 
-    let alert2 = Alert::success("Operation completed successfully".to_string())
+    let alert2 = Alert::success("Operation completed successfully")
     println!("Success: {}", alert2.render())
 
-    let alert3 = Alert::warning("Please review your input".to_string())
+    let alert3 = Alert::warning("Please review your input")
     println!("Warning: {}", alert3.render())
 
-    let alert4 = Alert::info("Did you know...".to_string())
+    let alert4 = Alert::info("Did you know...")
     println!("Info: {}", alert4.render())
 }
 

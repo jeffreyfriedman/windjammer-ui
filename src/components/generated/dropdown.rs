@@ -1,11 +1,9 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
 use super::traits::Renderable;
-
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct DropdownItem {
     pub label: String,
     pub value: String,
@@ -13,49 +11,43 @@ pub struct DropdownItem {
 }
 
 impl DropdownItem {
-    #[inline]
-    pub fn new(label: String, value: String) -> DropdownItem {
-        DropdownItem {
-            label,
-            value,
-            disabled: false,
-        }
-    }
-    #[inline]
-    pub fn disabled(mut self, disabled: bool) -> DropdownItem {
+#[inline]
+pub fn new(label: String, value: String) -> DropdownItem {
+        DropdownItem { label: label.to_string(), value: value.to_string(), disabled: false }
+}
+#[inline]
+pub fn disabled(mut self, disabled: bool) -> DropdownItem {
         self.disabled = disabled;
         self
-    }
+}
 }
 
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, PartialEq, Default)]
+#[repr(C)]
 pub struct Dropdown {
     pub label: String,
     pub items: Vec<DropdownItem>,
 }
 
 impl Dropdown {
-    #[inline]
-    pub fn new(label: String) -> Dropdown {
-        Dropdown {
-            label,
-            items: Vec::new(),
-        }
-    }
-    #[inline]
-    pub fn item(mut self, item: DropdownItem) -> Dropdown {
+#[inline]
+pub fn new(label: String) -> Dropdown {
+        Dropdown { label: label.to_string(), items: Vec::new() }
+}
+#[inline]
+pub fn item(mut self, item: DropdownItem) -> Dropdown {
         self.items.push(item);
         self
-    }
+}
 }
 
 impl Renderable for Dropdown {
-    #[inline]
-    fn render(self) -> String {
-        let mut items_html = "".to_string();
+#[inline]
+fn render(&self) -> String {
+        let mut items_html = String::new();
         let mut i = 0;
-        while i < self.items.len() as i64 {
-            let item = &self.items[i as usize];
+        while i < self.items.len() {
+            let item = &self.items[i];
             let disabled_class = {
                 if item.disabled {
                     " wj-dropdown-item-disabled".to_string()
@@ -63,20 +55,10 @@ impl Renderable for Dropdown {
                     "".to_string()
                 }
             };
-            items_html = format!(
-                "{}<a class='wj-dropdown-item{}' data-value='{}'>{}</a>",
-                items_html, disabled_class, item.value, item.label
-            );
+            items_html = format!("{}<a class='wj-dropdown-item{}' data-value='{}'>{}</a>", items_html, disabled_class, item.value, item.label);
             i += 1;
         }
-        format!(
-            "<div class='wj-dropdown'>
-  <button class='wj-dropdown-toggle'>{} ▼</button>
-  <div class='wj-dropdown-menu'>
-    {}
-  </div>
-</div>",
-            self.label, items_html
-        )
-    }
+        format!("<div class='wj-dropdown'>\n  <button class='wj-dropdown-toggle'>{} ▼</button>\n  <div class='wj-dropdown-menu'>\n    {}\n  </div>\n</div>", self.label.clone(), items_html)
 }
+}
+

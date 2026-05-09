@@ -14,10 +14,10 @@ impl Form {
     pub fn new(id: string) -> Form {
         Form {
             id: id,
-            action: "#".to_string(),
-            method: "POST".to_string(),
+            action: "#",
+            method: "POST",
             children: Vec::new(),
-            on_submit: "return false;".to_string(),
+            on_submit: "return false;",
         }
     }
 

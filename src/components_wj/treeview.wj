@@ -70,7 +70,7 @@ impl TreeView {
 
 impl Renderable for TreeView {
     fn render(self) -> string {
-        let mut html = "<div class='wj-tree-view'>\n".to_string()
+        let mut html = "<div class='wj-tree-view'>\n"
 
         let mut i = 0
         while i < self.items.len() {
@@ -85,11 +85,11 @@ impl Renderable for TreeView {
 
 fn main() {
     let tree = TreeView::new()
-        .item(TreeItem::new("Root 1".to_string())
+        .item(TreeItem::new("Root 1")
             .expanded(true)
-            .child(TreeItem::new("Child 1.1".to_string()))
-            .child(TreeItem::new("Child 1.2".to_string())))
-        .item(TreeItem::new("Root 2".to_string()))
+            .child(TreeItem::new("Child 1.1"))
+            .child(TreeItem::new("Child 1.2")))
+        .item(TreeItem::new("Root 2"))
 
     println!("{}", tree.render())
 }

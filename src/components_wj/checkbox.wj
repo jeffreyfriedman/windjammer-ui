@@ -60,8 +60,8 @@ pub fn render(self) -> string {
 }
 
 fn main() {
-    let cb1 = Checkbox::new("Accept terms".to_string()).checked(true)
-    let cb2 = Checkbox::new("Subscribe".to_string()).size(CheckboxSize::Large).disabled(true)
+    let cb1 = Checkbox::new("Accept terms").checked(true)
+    let cb2 = Checkbox::new("Subscribe").size(CheckboxSize::Large).disabled(true)
     
     println!("{}", cb1.render())
     println!("{}", cb2.render())

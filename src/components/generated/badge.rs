@@ -1,10 +1,7 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
 use super::traits::Renderable;
-
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum BadgeVariant {
     Default,
@@ -24,6 +21,7 @@ pub enum BadgeSize {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Badge {
     pub text: String,
     pub variant: BadgeVariant,
@@ -31,29 +29,25 @@ pub struct Badge {
 }
 
 impl Badge {
-    #[inline]
-    pub fn new(text: String) -> Badge {
-        Badge {
-            text,
-            variant: BadgeVariant::Default,
-            size: BadgeSize::Medium,
-        }
-    }
-    #[inline]
-    pub fn variant(mut self, variant: BadgeVariant) -> Badge {
+#[inline]
+pub fn new(text: String) -> Badge {
+        Badge { text: text.to_string(), variant: BadgeVariant::Default, size: BadgeSize::Medium }
+}
+#[inline]
+pub fn variant(mut self, variant: BadgeVariant) -> Badge {
         self.variant = variant;
         self
-    }
-    #[inline]
-    pub fn size(mut self, size: BadgeSize) -> Badge {
+}
+#[inline]
+pub fn size(mut self, size: BadgeSize) -> Badge {
         self.size = size;
         self
-    }
+}
 }
 
 impl Renderable for Badge {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(&self) -> String {
         let variant_class = match self.variant {
             BadgeVariant::Default => "wj-badge-default".to_string(),
             BadgeVariant::Primary => "wj-badge-primary".to_string(),
@@ -68,9 +62,7 @@ impl Renderable for Badge {
             BadgeSize::Medium => "wj-badge-md".to_string(),
             BadgeSize::Large => "wj-badge-lg".to_string(),
         };
-        format!(
-            "<span class='wj-badge {} {}'>{}</span>",
-            variant_class, size_class, self.text
-        )
-    }
+        format!("<span class='wj-badge {} {}'>{}</span>", variant_class, size_class, self.text.clone())
 }
+}
+

@@ -9,7 +9,7 @@ impl Toolbar {
     pub fn new() -> Toolbar {
         Toolbar {
             items: Vec::new(),
-            position: "top".to_string(),
+            position: "top",
         }
     }
 
@@ -38,9 +38,9 @@ pub fn render(self) -> string {
 
 fn main() {
     let toolbar = Toolbar::new()
-        .item("<button>New</button>".to_string())
-        .item("<button>Save</button>".to_string())
-        .item("<button>Export</button>".to_string())
+        .item("<button>New</button>")
+        .item("<button>Save</button>")
+        .item("<button>Export</button>")
 
     println!("{}", toolbar.render())
 }

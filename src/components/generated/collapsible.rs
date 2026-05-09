@@ -1,11 +1,9 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
 use super::traits::Renderable;
-
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct CollapsibleSection {
     pub title: String,
     pub content: String,
@@ -13,24 +11,20 @@ pub struct CollapsibleSection {
 }
 
 impl CollapsibleSection {
-    #[inline]
-    pub fn new(title: String, content: String) -> CollapsibleSection {
-        CollapsibleSection {
-            title,
-            content,
-            open: false,
-        }
-    }
-    #[inline]
-    pub fn open(mut self, open: bool) -> CollapsibleSection {
+#[inline]
+pub fn new(title: String, content: String) -> CollapsibleSection {
+        CollapsibleSection { title: title.to_string(), content: content.to_string(), open: false }
+}
+#[inline]
+pub fn open(mut self, open: bool) -> CollapsibleSection {
         self.open = open;
         self
-    }
+}
 }
 
 impl Renderable for CollapsibleSection {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(&self) -> String {
         let icon = {
             if self.open {
                 "▼".to_string()
@@ -45,17 +39,7 @@ impl Renderable for CollapsibleSection {
                 "display: none;".to_string()
             }
         };
-        format!(
-            "<div class='wj-collapsible'>
-  <div class='wj-collapsible-header'>
-    <span class='wj-collapsible-icon'>{}</span>
-    <span>{}</span>
-  </div>
-  <div class='wj-collapsible-content' style='{}'>
-    {}
-  </div>
-</div>",
-            icon, self.title, content_style, self.content
-        )
-    }
+        format!("<div class='wj-collapsible'>\n  <div class='wj-collapsible-header'>\n    <span class='wj-collapsible-icon'>{}</span>\n    <span>{}</span>\n  </div>\n  <div class='wj-collapsible-content' style='{}'>\n    {}\n  </div>\n</div>", icon, self.title.clone(), content_style, self.content.clone())
 }
+}
+

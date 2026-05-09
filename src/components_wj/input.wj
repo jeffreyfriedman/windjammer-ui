@@ -11,9 +11,9 @@ pub struct Input {
 impl Input {
     pub fn new() -> Input {
         Input {
-            value: "".to_string(),
-            placeholder: "".to_string(),
-            input_type: "text".to_string(),
+            value: "",
+            placeholder: "",
+            input_type: "text",
         }
     }
     
@@ -42,8 +42,8 @@ impl Renderable for Input {
 
 fn main() {
     let input = Input::new()
-        .value("Hello".to_string())
-        .placeholder("Enter text...".to_string())
+        .value("Hello")
+        .placeholder("Enter text...")
     
     println!("{}", input.render())
 }

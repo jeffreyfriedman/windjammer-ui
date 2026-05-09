@@ -39,13 +39,13 @@ impl Stack {
     pub fn new() -> Stack {
         Stack {
             direction: StackDirection::Vertical,
-            gap: "8px".to_string(),
+            gap: "8px",
             align: StackAlign::Stretch,
             justify: StackJustify::Start,
             children: Vec::new(),
-            padding: "0".to_string(),
-            width: "auto".to_string(),
-            height: "auto".to_string(),
+            padding: "0",
+            width: "auto",
+            height: "auto",
         }
     }
 

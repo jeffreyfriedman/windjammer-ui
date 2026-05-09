@@ -66,7 +66,7 @@ impl CurveEditor {
             min_value: 0.0,
             max_value: 1.0,
             grid_enabled: true,
-            on_change: "".to_string(),
+            on_change: "",
         }
     }
     
@@ -133,7 +133,7 @@ impl CurveEditor {
 impl Renderable for CurveEditor {
     pub fn render(self) -> string {
         // Generate SVG path for the curve
-        let mut path_d = "".to_string()
+        let mut path_d = ""
         let range = self.max_value - self.min_value
         
         for i in 0..self.points.len() {
@@ -154,7 +154,7 @@ impl Renderable for CurveEditor {
         }
         
         // Generate point markers
-        let mut points_html = "".to_string()
+        let mut points_html = ""
         for i in 0..self.points.len() {
             let p = self.points.get(i)
             match p {
@@ -181,7 +181,7 @@ impl Renderable for CurveEditor {
             self.width / 4, self.width / 4, self.height,
             self.width * 3 / 4, self.width * 3 / 4, self.height)
         } else {
-            "".to_string()
+            ""
         }
         
         format!("
@@ -232,14 +232,14 @@ pub struct GradientEditor {
 impl GradientEditor {
     pub fn new() -> GradientEditor {
         let mut stops = Vec::new()
-        stops.push(GradientStop::new(0.0, "#000000".to_string()))
-        stops.push(GradientStop::new(1.0, "#ffffff".to_string()))
+        stops.push(GradientStop::new(0.0, "#000000"))
+        stops.push(GradientStop::new(1.0, "#ffffff"))
         
         GradientEditor {
             width: 300,
             height: 40,
             stops,
-            on_change: "".to_string(),
+            on_change: "",
         }
     }
     
@@ -257,7 +257,7 @@ impl GradientEditor {
 impl Renderable for GradientEditor {
     pub fn render(self) -> string {
         // Build CSS gradient
-        let mut gradient_stops = "".to_string()
+        let mut gradient_stops = ""
         for i in 0..self.stops.len() {
             let s = self.stops.get(i)
             match s {
@@ -265,14 +265,14 @@ impl Renderable for GradientEditor {
                     if i > 0 {
                         gradient_stops = gradient_stops + ", "
                     }
-                    gradient_stops = gradient_stops + stop.color.as_str() + " " + format!("{}%", (stop.position * 100.0) as i32).as_str()
+                    gradient_stops = gradient_stops + stop.color + " " + format!("{}%", (stop.position * 100.0) as i32)
                 },
                 None => {},
             }
         }
         
         // Build stop markers
-        let mut markers_html = "".to_string()
+        let mut markers_html = ""
         for i in 0..self.stops.len() {
             let s = self.stops.get(i)
             match s {
@@ -415,6 +415,6 @@ pub fn curve_editor_styles() -> string {
         border-color: #e94560;
         color: #e94560;
     }
-    ".to_string()
+    "
 }
 

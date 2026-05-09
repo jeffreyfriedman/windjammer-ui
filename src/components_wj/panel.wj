@@ -15,7 +15,7 @@ impl Panel {
             children: Vec::new(),
             collapsible: false,
             collapsed: false,
-            padding: "16px".to_string(),
+            padding: "16px",
         }
     }
 
@@ -72,8 +72,8 @@ pub fn render(self) -> string {
 }
 
 fn main() {
-    let panel = Panel::new("Settings".to_string())
-        .child("<p>Panel content goes here</p>".to_string())
+    let panel = Panel::new("Settings")
+        .child("<p>Panel content goes here</p>")
         .collapsible(true)
 
     println!("{}", panel.render())

@@ -8,8 +8,8 @@ pub struct ColorPicker {
 impl ColorPicker {
     pub fn new() -> ColorPicker {
         ColorPicker {
-            value: "#000000".to_string(),
-            label: "".to_string(),
+            value: "#000000",
+            label: "",
         }
     }
 
@@ -31,7 +31,7 @@ pub fn render(self) -> string {
         let label_html = if self.label != "" {
             format!("<label>{}</label>", self.label)
         } else {
-            "".to_string()
+            ""
         }
 
         format!("<div class='wj-color-picker'>
@@ -44,8 +44,8 @@ pub fn render(self) -> string {
 
 fn main() {
     let picker = ColorPicker::new()
-        .value("#667eea".to_string())
-        .label("Theme Color".to_string())
+        .value("#667eea")
+        .label("Theme Color")
 
     println!("{}", picker.render())
 }

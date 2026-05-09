@@ -71,7 +71,7 @@ impl Switch {
         
         let mut html = String::new()
         html.push_str("<label class=\"wj-switch ")
-        html.push_str(self.class.as_str())
+        html.push_str(self.class)
         html.push_str("\" style=\"display: inline-flex; align-items: center; gap: 8px;")
         html.push_str(disabled_style)
         html.push_str("\">")
@@ -106,7 +106,7 @@ impl Switch {
         // Label text
         if !self.label.is_empty() {
             html.push_str("<span style=\"font-size: 14px;\">")
-            html.push_str(self.label.as_str())
+            html.push_str(self.label)
             html.push_str("</span>")
         }
         

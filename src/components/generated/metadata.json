@@ -1,0 +1,7276 @@
+{
+  "structs": {
+    "Dialog": {
+      "title": "String",
+      "content": "String",
+      "width": "String",
+      "open": "Bool"
+    },
+    "Drawer": {
+      "children": "Vec(String)",
+      "position": "Custom(\"DrawerPosition\")",
+      "open": "Bool",
+      "class": "String",
+      "width": "String"
+    },
+    "DropdownItem": {
+      "disabled": "Bool",
+      "value": "String",
+      "label": "String"
+    },
+    "ChatMessage": {
+      "role": "Custom(\"MessageRole\")",
+      "content": "String",
+      "avatar": "String",
+      "timestamp": "String"
+    },
+    "MessageList": {
+      "auto_scroll": "Bool",
+      "messages": "Vec(String)",
+      "height": "String"
+    },
+    "ScrollArea": {
+      "height": "String",
+      "direction": "Custom(\"ScrollDirection\")",
+      "children": "Vec(String)",
+      "width": "String"
+    },
+    "Checkbox": {
+      "disabled": "Bool",
+      "size": "Custom(\"CheckboxSize\")",
+      "label": "String",
+      "checked": "Bool"
+    },
+    "SelectOption": {
+      "label": "String",
+      "value": "String"
+    },
+    "Spacer": {
+      "flex": "Bool",
+      "height": "String",
+      "width": "String"
+    },
+    "Table": {
+      "striped": "Bool",
+      "hoverable": "Bool",
+      "rows": "Vec(Custom(\"TableRow\"))",
+      "columns": "Vec(Custom(\"TableColumn\"))",
+      "bordered": "Bool"
+    },
+    "TimelineEvent": {
+      "description": "String",
+      "icon": "String",
+      "timestamp": "String",
+      "color": "String",
+      "title": "String"
+    },
+    "Toolbar": {
+      "position": "String",
+      "items": "Vec(String)"
+    },
+    "GradientEditor": {
+      "on_change": "String",
+      "height": "Custom(\"i32\")",
+      "width": "Custom(\"i32\")",
+      "stops": "Vec(Custom(\"GradientStop\"))"
+    },
+    "Style": {
+      "properties": "Vec(Custom(\"StyleProperty\"))"
+    },
+    "AccordionItem": {
+      "title": "String",
+      "content": "String",
+      "open": "Bool"
+    },
+    "Accordion": {
+      "allow_multiple": "Bool",
+      "items": "Vec(Custom(\"AccordionItem\"))"
+    },
+    "Avatar": {
+      "class": "String",
+      "size": "Custom(\"AvatarSize\")",
+      "fallback": "String",
+      "src": "String",
+      "shape": "Custom(\"AvatarShape\")",
+      "alt": "String"
+    },
+    "TreeItem": {
+      "children": "Vec(Custom(\"TreeItem\"))",
+      "expanded": "Bool",
+      "label": "String"
+    },
+    "TreeView": {
+      "items": "Vec(Custom(\"TreeItem\"))"
+    },
+    "Form": {
+      "method": "String",
+      "id": "String",
+      "children": "Vec(String)",
+      "on_submit": "String",
+      "action": "String"
+    },
+    "HamburgerMenu": {
+      "items": "Vec(Custom(\"HamburgerMenuItem\"))",
+      "open": "Bool"
+    },
+    "Div": {
+      "style": "String",
+      "children": "Vec(String)",
+      "class": "String",
+      "id": "String"
+    },
+    "EditorTheme": {
+      "palette": "Custom(\"ColorPalette\")",
+      "spacing_unit": "Custom(\"i32\")",
+      "name": "String",
+      "border_radius": "Custom(\"i32\")",
+      "font_family": "String",
+      "animation_duration": "Custom(\"i32\")",
+      "font_size_base": "Custom(\"i32\")"
+    },
+    "CollapsibleSection": {
+      "title": "String",
+      "content": "String",
+      "open": "Bool"
+    },
+    "Text": {
+      "content": "String",
+      "weight": "Custom(\"TextWeight\")",
+      "size": "Custom(\"TextSize\")",
+      "color": "String"
+    },
+    "Alert": {
+      "message": "String",
+      "variant": "Custom(\"AlertVariant\")"
+    },
+    "FileTree": {
+      "root": "Custom(\"FileNode\")"
+    },
+    "Flex": {
+      "gap": "String",
+      "direction": "Custom(\"FlexDirection\")",
+      "padding": "String",
+      "background_color": "String",
+      "children": "Vec(String)"
+    },
+    "Property": {
+      "on_change": "String",
+      "name": "String",
+      "unit": "String",
+      "property_type": "Custom(\"PropertyType\")",
+      "tooltip": "String",
+      "value": "String"
+    },
+    "Vec3Editor": {
+      "label": "String",
+      "y": "Custom(\"f32\")",
+      "x": "Custom(\"f32\")",
+      "z": "Custom(\"f32\")",
+      "on_change": "String"
+    },
+    "StepperStep": {
+      "description": "String",
+      "label": "String",
+      "completed": "Bool"
+    },
+    "Toast": {
+      "variant": "Custom(\"ToastVariant\")",
+      "position": "Custom(\"ToastPosition\")",
+      "message": "String",
+      "show_close": "Bool",
+      "duration": "Custom(\"i32\")"
+    },
+    "Progress": {
+      "max": "Float",
+      "variant": "Custom(\"ProgressVariant\")",
+      "show_label": "Bool",
+      "value": "Float"
+    },
+    "GradientStop": {
+      "color": "String",
+      "position": "Custom(\"f32\")"
+    },
+    "ChatInput": {
+      "disabled": "Bool",
+      "multiline": "Bool",
+      "rows": "Custom(\"i32\")",
+      "placeholder": "String",
+      "value": "String"
+    },
+    "ColorPicker": {
+      "label": "String",
+      "value": "String"
+    },
+    "Divider": {
+      "thickness": "String",
+      "color": "String",
+      "orientation": "Custom(\"DividerOrientation\")",
+      "margin": "String"
+    },
+    "Section": {
+      "collapsed": "Bool",
+      "removable": "Bool",
+      "title": "String",
+      "icon": "String",
+      "children": "Vec(String)",
+      "accent_color": "String",
+      "on_remove": "String"
+    },
+    "Sidebar": {
+      "width": "String",
+      "items": "Vec(Custom(\"SidebarItem\"))",
+      "position": "Custom(\"SidebarPosition\")",
+      "collapsed": "Bool"
+    },
+    "StyleProperty": {
+      "value": "String",
+      "name": "String"
+    },
+    "AdvancedCodeEditor": {
+      "line_numbers": "Bool",
+      "minimap": "Bool",
+      "autocomplete": "Bool",
+      "theme": "String",
+      "code": "String",
+      "language": "String"
+    },
+    "FormField": {
+      "error": "String",
+      "required": "Bool",
+      "help_text": "String",
+      "label": "String",
+      "input": "String"
+    },
+    "Loading": {
+      "overlay": "Bool",
+      "size": "Custom(\"LoadingSize\")",
+      "text": "String",
+      "class": "String"
+    },
+    "Scroll": {
+      "height": "String",
+      "class": "String",
+      "children": "Vec(String)",
+      "width": "String",
+      "direction": "Custom(\"ScrollDir\")"
+    },
+    "TabPanelTab": {
+      "content": "String",
+      "id": "String",
+      "title": "String"
+    },
+    "RadioOption": {
+      "value": "String",
+      "disabled": "Bool",
+      "label": "String"
+    },
+    "Dropdown": {
+      "items": "Vec(Custom(\"DropdownItem\"))",
+      "label": "String"
+    },
+    "Button": {
+      "variant": "Custom(\"ButtonVariant\")",
+      "disabled": "Bool",
+      "size": "Custom(\"ButtonSize\")",
+      "label": "String"
+    },
+    "TabPanel": {
+      "active": "String",
+      "orientation": "String",
+      "tabs": "Vec(Custom(\"TabPanelTab\"))"
+    },
+    "Menu": {
+      "trigger": "String",
+      "items": "Vec(String)",
+      "class": "String"
+    },
+    "SidebarItem": {
+      "icon": "String",
+      "label": "String",
+      "href": "String"
+    },
+    "Textarea": {
+      "max_length": "Custom(\"i32\")",
+      "readonly": "Bool",
+      "resize": "Custom(\"TextareaResize\")",
+      "disabled": "Bool",
+      "rows": "Custom(\"i32\")",
+      "class": "String",
+      "placeholder": "String",
+      "value": "String"
+    },
+    "Panel": {
+      "padding": "String",
+      "collapsed": "Bool",
+      "children": "Vec(String)",
+      "title": "String",
+      "collapsible": "Bool"
+    },
+    "RadioGroup": {
+      "selected": "String",
+      "options": "Vec(Custom(\"RadioOption\"))",
+      "name": "String"
+    },
+    "List": {
+      "class": "String",
+      "ordered": "Bool",
+      "items": "Vec(String)"
+    },
+    "Chip": {
+      "size": "Custom(\"ChipSize\")",
+      "variant": "Custom(\"ChipVariant\")",
+      "icon": "String",
+      "label": "String",
+      "removable": "Bool"
+    },
+    "Switch": {
+      "size": "Custom(\"SwitchSize\")",
+      "disabled": "Bool",
+      "label": "String",
+      "checked": "Bool",
+      "class": "String"
+    },
+    "Column": {
+      "children": "Vec(String)",
+      "align": "Custom(\"ColumnAlign\")",
+      "class": "String",
+      "justify": "Custom(\"ColumnJustify\")",
+      "gap": "String"
+    },
+    "Grid": {
+      "gap": "String",
+      "padding": "String",
+      "columns": "Custom(\"i32\")",
+      "children": "Vec(String)"
+    },
+    "CurveEditor": {
+      "points": "Vec(Custom(\"CurvePoint\"))",
+      "min_value": "Custom(\"f32\")",
+      "on_change": "String",
+      "height": "Custom(\"i32\")",
+      "max_value": "Custom(\"f32\")",
+      "width": "Custom(\"i32\")",
+      "grid_enabled": "Bool"
+    },
+    "CurvePoint": {
+      "out_tangent": "Custom(\"f32\")",
+      "value": "Custom(\"f32\")",
+      "time": "Custom(\"f32\")",
+      "in_tangent": "Custom(\"f32\")"
+    },
+    "NodeGraph": {
+      "show_grid": "Bool",
+      "zoom": "Custom(\"f32\")",
+      "height": "Custom(\"i32\")",
+      "pan_x": "Custom(\"f32\")",
+      "width": "Custom(\"i32\")",
+      "pan_y": "Custom(\"f32\")",
+      "connections": "Vec(Custom(\"NodeConnection\"))",
+      "nodes": "Vec(Custom(\"GraphNode\"))",
+      "on_change": "String"
+    },
+    "H1": {
+      "style": "String",
+      "class": "String",
+      "text": "String"
+    },
+    "Label": {
+      "text": "String",
+      "for_id": "String",
+      "required": "Bool",
+      "class": "String"
+    },
+    "Popover": {
+      "content": "String",
+      "trigger": "String",
+      "class": "String",
+      "position": "Custom(\"PopoverPosition\")"
+    },
+    "BreadcrumbItem": {
+      "label": "String",
+      "href": "String",
+      "active": "Bool"
+    },
+    "ContextMenuItem": {
+      "action": "String",
+      "icon": "String",
+      "disabled": "Bool",
+      "label": "String"
+    },
+    "CodeEditor": {
+      "line_numbers": "Bool",
+      "code": "String",
+      "readonly": "Bool",
+      "language": "String",
+      "theme": "String"
+    },
+    "Input": {
+      "input_type": "String",
+      "placeholder": "String",
+      "value": "String"
+    },
+    "HamburgerMenuItem": {
+      "href": "String",
+      "label": "String"
+    },
+    "Navbar": {
+      "position": "Custom(\"NavbarPosition\")",
+      "brand": "String",
+      "items": "Vec(Custom(\"NavbarItem\"))",
+      "sticky": "Bool"
+    },
+    "GraphNode": {
+      "collapsed": "Bool",
+      "x": "Custom(\"f32\")",
+      "category": "Custom(\"NodeCategory\")",
+      "inputs": "Vec(Custom(\"NodePin\"))",
+      "title": "String",
+      "id": "String",
+      "preview_enabled": "Bool",
+      "y": "Custom(\"f32\")",
+      "outputs": "Vec(Custom(\"NodePin\"))"
+    },
+    "NodePin": {
+      "id": "String",
+      "pin_type": "Custom(\"PinType\")",
+      "name": "String",
+      "is_input": "Bool",
+      "connected_to": "Option(String)",
+      "default_value": "String"
+    },
+    "Tabs": {
+      "tabs": "Vec(Custom(\"Tab\"))",
+      "active": "String"
+    },
+    "Timeline": {
+      "events": "Vec(Custom(\"TimelineEvent\"))"
+    },
+    "ListItem": {
+      "class": "String",
+      "content": "String"
+    },
+    "ThemeSwitcher": {
+      "themes": "Vec(String)",
+      "current_theme": "String",
+      "on_change": "String"
+    },
+    "SplitPanel": {
+      "direction": "Custom(\"SplitDirection\")",
+      "right": "String",
+      "initial_size": "Custom(\"i32\")",
+      "left": "String"
+    },
+    "CodeBlock": {
+      "language": "String",
+      "show_line_numbers": "Bool",
+      "code": "String",
+      "show_copy_button": "Bool"
+    },
+    "TableColumn": {
+      "header": "String",
+      "width": "String"
+    },
+    "ColorPalette": {
+      "text_primary": "String",
+      "bg_secondary": "String",
+      "border_subtle": "String",
+      "text_muted": "String",
+      "axis_y": "String",
+      "bg_primary": "String",
+      "axis_z": "String",
+      "axis_x": "String",
+      "bg_elevated": "String",
+      "accent_warning": "String",
+      "accent_secondary": "String",
+      "accent_success": "String",
+      "accent_primary": "String",
+      "bg_tertiary": "String",
+      "border_default": "String",
+      "accent_error": "String",
+      "text_secondary": "String"
+    },
+    "TypingIndicator": {
+      "label": "String"
+    },
+    "VNode": {
+      "handle": "Custom(\"u64\")"
+    },
+    "Modal": {
+      "visible": "Bool",
+      "closeable": "Bool",
+      "content": "String",
+      "size": "Custom(\"ModalSize\")",
+      "title": "String",
+      "footer": "String",
+      "id": "String"
+    },
+    "NodeConnection": {
+      "from_pin": "String",
+      "to_node": "String",
+      "from_node": "String",
+      "to_pin": "String"
+    },
+    "Card": {
+      "title": "String",
+      "border_color": "String",
+      "background_color": "String",
+      "padding": "String",
+      "children": "Vec(String)"
+    },
+    "TableRow": {
+      "cells": "Vec(String)"
+    },
+    "FileNode": {
+      "is_directory": "Bool",
+      "expanded": "Bool",
+      "name": "String",
+      "children": "Vec(Custom(\"FileNode\"))"
+    },
+    "Tab": {
+      "content": "String",
+      "disabled": "Bool",
+      "label": "String",
+      "id": "String"
+    },
+    "NavbarItem": {
+      "label": "String",
+      "href": "String"
+    },
+    "SectionGroup": {
+      "sections": "Vec(Custom(\"Section\"))",
+      "accordion": "Bool"
+    },
+    "Slider": {
+      "max": "Float",
+      "label": "String",
+      "disabled": "Bool",
+      "min": "Float",
+      "step": "Float",
+      "value": "Float"
+    },
+    "Tooltip": {
+      "text": "String",
+      "position": "Custom(\"TooltipPosition\")",
+      "child": "String"
+    },
+    "ContextMenu": {
+      "items": "Vec(Custom(\"ContextMenuItem\"))",
+      "trigger_id": "String"
+    },
+    "Select": {
+      "disabled": "Bool",
+      "size": "Custom(\"SelectSize\")",
+      "class": "String",
+      "placeholder": "String",
+      "selected": "String",
+      "options": "Vec(Custom(\"SelectOption\"))"
+    },
+    "Span": {
+      "children": "Vec(String)",
+      "class": "String",
+      "style": "String"
+    },
+    "Pagination": {
+      "show_first_last": "Bool",
+      "show_prev_next": "Bool",
+      "total_pages": "Custom(\"i32\")",
+      "current_page": "Custom(\"i32\")"
+    },
+    "Center": {
+      "width": "String",
+      "child": "String",
+      "height": "String",
+      "class": "String"
+    },
+    "H2": {
+      "text": "String",
+      "style": "String",
+      "class": "String"
+    },
+    "Stepper": {
+      "current_step": "Custom(\"i32\")",
+      "steps": "Vec(Custom(\"StepperStep\"))"
+    },
+    "P": {
+      "style": "String",
+      "class": "String",
+      "children": "Vec(String)"
+    },
+    "MenuItem": {
+      "icon": "String",
+      "href": "String",
+      "class": "String",
+      "label": "String",
+      "disabled": "Bool"
+    },
+    "Row": {
+      "class": "String",
+      "align": "Custom(\"RowAlign\")",
+      "gap": "String",
+      "wrap": "Bool",
+      "justify": "Custom(\"RowJustify\")",
+      "children": "Vec(String)"
+    },
+    "Badge": {
+      "variant": "Custom(\"BadgeVariant\")",
+      "size": "Custom(\"BadgeSize\")",
+      "text": "String"
+    },
+    "Skeleton": {
+      "class": "String",
+      "width": "String",
+      "height": "String",
+      "variant": "Custom(\"SkeletonVariant\")"
+    },
+    "Container": {
+      "background_color": "String",
+      "children": "Vec(String)",
+      "max_height": "String",
+      "padding": "String",
+      "max_width": "String"
+    },
+    "Spinner": {
+      "size": "Custom(\"SpinnerSize\")",
+      "label": "String"
+    },
+    "Rating": {
+      "max": "Custom(\"i32\")",
+      "size": "Custom(\"RatingSize\")",
+      "color": "String",
+      "value": "Custom(\"f32\")",
+      "readonly": "Bool"
+    },
+    "H3": {
+      "style": "String",
+      "class": "String",
+      "text": "String"
+    },
+    "Breadcrumb": {
+      "separator": "String",
+      "items": "Vec(Custom(\"BreadcrumbItem\"))",
+      "class": "String"
+    },
+    "Stack": {
+      "direction": "Custom(\"StackDirection\")",
+      "justify": "Custom(\"StackJustify\")",
+      "height": "String",
+      "gap": "String",
+      "children": "Vec(String)",
+      "width": "String",
+      "padding": "String",
+      "align": "Custom(\"StackAlign\")"
+    }
+  },
+  "functions": {
+    "CurvePoint::new": {
+      "params": [
+        "Custom(\"f32\")",
+        "Custom(\"f32\")"
+      ],
+      "return_type": "Custom(\"CurvePoint\")",
+      "is_associated": true,
+      "parent_type": "CurvePoint",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "EditorTheme::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "EditorTheme",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Form::on_submit": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Form\")",
+      "is_associated": true,
+      "parent_type": "Form",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Navbar::item": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"NavbarItem\")"
+      ],
+      "return_type": "Custom(\"Navbar\")",
+      "is_associated": true,
+      "parent_type": "Navbar",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::min_width": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "property_editor_styles": {
+      "params": [],
+      "return_type": "String",
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Rating::max": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"i32\")"
+      ],
+      "return_type": "Custom(\"Rating\")",
+      "is_associated": true,
+      "parent_type": "Rating",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "AdvancedCodeEditor::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"AdvancedCodeEditor\")",
+      "is_associated": true,
+      "parent_type": "AdvancedCodeEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Card::title": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Card\")",
+      "is_associated": true,
+      "parent_type": "Card",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "GraphNode::preview": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"GraphNode\")",
+      "is_associated": true,
+      "parent_type": "GraphNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ChatMessage::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"ChatMessage\")",
+      "is_associated": true,
+      "parent_type": "ChatMessage",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "AdvancedCodeEditor::minimap": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"AdvancedCodeEditor\")",
+      "is_associated": true,
+      "parent_type": "AdvancedCodeEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Row::new": {
+      "params": [],
+      "return_type": "Custom(\"Row\")",
+      "is_associated": true,
+      "parent_type": "Row",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Navbar::brand": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Navbar\")",
+      "is_associated": true,
+      "parent_type": "Navbar",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Scroll::width": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Scroll\")",
+      "is_associated": true,
+      "parent_type": "Scroll",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Section::children": {
+      "params": [
+        "Custom(\"Self\")",
+        "Vec(String)"
+      ],
+      "return_type": "Custom(\"Section\")",
+      "is_associated": true,
+      "parent_type": "Section",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Slider::value": {
+      "params": [
+        "Custom(\"Self\")",
+        "Float"
+      ],
+      "return_type": "Custom(\"Slider\")",
+      "is_associated": true,
+      "parent_type": "Slider",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Button::get_variant_class": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Button",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "EditorTheme::light": {
+      "params": [],
+      "return_type": "Custom(\"EditorTheme\")",
+      "is_associated": true,
+      "parent_type": "EditorTheme",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Breadcrumb::class": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Breadcrumb\")",
+      "is_associated": true,
+      "parent_type": "Breadcrumb",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "MessageList::new": {
+      "params": [],
+      "return_type": "Custom(\"MessageList\")",
+      "is_associated": true,
+      "parent_type": "MessageList",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "TabPanel::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "TabPanel",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "TimelineEvent::color": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"TimelineEvent\")",
+      "is_associated": true,
+      "parent_type": "TimelineEvent",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "NodeGraph::connect": {
+      "params": [
+        "Custom(\"Self\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "return_type": "Custom(\"NodeGraph\")",
+      "is_associated": true,
+      "parent_type": "NodeGraph",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "TableRow::new": {
+      "params": [],
+      "return_type": "Custom(\"TableRow\")",
+      "is_associated": true,
+      "parent_type": "TableRow",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Card::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Card",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CurveEditor::grid": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"CurveEditor\")",
+      "is_associated": true,
+      "parent_type": "CurveEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ColorPicker::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "ColorPicker",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Popover::position": {
+      "params": [
+        "Custom(\"PopoverPosition\")"
+      ],
+      "return_type": "Custom(\"Popover\")",
+      "is_associated": true,
+      "parent_type": "Popover",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Grid::child": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Grid\")",
+      "is_associated": true,
+      "parent_type": "Grid",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "AdvancedCodeEditor::autocomplete": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"AdvancedCodeEditor\")",
+      "is_associated": true,
+      "parent_type": "AdvancedCodeEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ContextMenuItem::disabled": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"ContextMenuItem\")",
+      "is_associated": true,
+      "parent_type": "ContextMenuItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Panel::padding": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Panel\")",
+      "is_associated": true,
+      "parent_type": "Panel",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Popover::class": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Popover\")",
+      "is_associated": true,
+      "parent_type": "Popover",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Stepper::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Stepper",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::height": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::new": {
+      "params": [],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Badge::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Badge",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Row::wrap": {
+      "params": [
+        "Bool"
+      ],
+      "return_type": "Custom(\"Row\")",
+      "is_associated": true,
+      "parent_type": "Row",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Progress::max": {
+      "params": [
+        "Custom(\"Self\")",
+        "Float"
+      ],
+      "return_type": "Custom(\"Progress\")",
+      "is_associated": true,
+      "parent_type": "Progress",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Skeleton::width": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Skeleton\")",
+      "is_associated": true,
+      "parent_type": "Skeleton",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Timeline::new": {
+      "params": [],
+      "return_type": "Custom(\"Timeline\")",
+      "is_associated": true,
+      "parent_type": "Timeline",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ChatMessage::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "ChatMessage",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "NodePin::output": {
+      "params": [
+        "String",
+        "String",
+        "Custom(\"PinType\")"
+      ],
+      "return_type": "Custom(\"NodePin\")",
+      "is_associated": true,
+      "parent_type": "NodePin",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Button::get_style": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Button",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::display": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Pagination::new": {
+      "params": [
+        "Custom(\"i32\")",
+        "Custom(\"i32\")"
+      ],
+      "return_type": "Custom(\"Pagination\")",
+      "is_associated": true,
+      "parent_type": "Pagination",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Sidebar::position": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"SidebarPosition\")"
+      ],
+      "return_type": "Custom(\"Sidebar\")",
+      "is_associated": true,
+      "parent_type": "Sidebar",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spinner::label": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Spinner\")",
+      "is_associated": true,
+      "parent_type": "Spinner",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Input::input_type": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Input\")",
+      "is_associated": true,
+      "parent_type": "Input",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ColorPicker::value": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"ColorPicker\")",
+      "is_associated": true,
+      "parent_type": "ColorPicker",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "VNode::button": {
+      "params": [],
+      "return_type": "Custom(\"VNode\")",
+      "is_associated": true,
+      "parent_type": "VNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Avatar::render": {
+      "params": [],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Avatar",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Stack::horizontal": {
+      "params": [],
+      "return_type": "Custom(\"Stack\")",
+      "is_associated": true,
+      "parent_type": "Stack",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Stack::justify": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"StackJustify\")"
+      ],
+      "return_type": "Custom(\"Stack\")",
+      "is_associated": true,
+      "parent_type": "Stack",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::xs": {
+      "params": [],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Tab::new": {
+      "params": [
+        "String",
+        "String",
+        "String"
+      ],
+      "return_type": "Custom(\"Tab\")",
+      "is_associated": true,
+      "parent_type": "Tab",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Select::class": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Select\")",
+      "is_associated": true,
+      "parent_type": "Select",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "VNode::add_attr": {
+      "params": [
+        "Custom(\"Self\")",
+        "String",
+        "String"
+      ],
+      "return_type": "Custom(\"VNode\")",
+      "is_associated": true,
+      "parent_type": "VNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Stack::width": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Stack\")",
+      "is_associated": true,
+      "parent_type": "Stack",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Button::to_vnode": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "Custom(\"VNode\")",
+      "is_associated": true,
+      "parent_type": "Button",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Vec3Editor::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Vec3Editor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Badge::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Badge\")",
+      "is_associated": true,
+      "parent_type": "Badge",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "SectionGroup::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "SectionGroup",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "TabPanel::tab": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"TabPanelTab\")"
+      ],
+      "return_type": "Custom(\"TabPanel\")",
+      "is_associated": true,
+      "parent_type": "TabPanel",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "VNode::div": {
+      "params": [],
+      "return_type": "Custom(\"VNode\")",
+      "is_associated": true,
+      "parent_type": "VNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "SplitPanel::new": {
+      "params": [
+        "String",
+        "String"
+      ],
+      "return_type": "Custom(\"SplitPanel\")",
+      "is_associated": true,
+      "parent_type": "SplitPanel",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Table::hoverable": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Table\")",
+      "is_associated": true,
+      "parent_type": "Table",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "RadioGroup::selected": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"RadioGroup\")",
+      "is_associated": true,
+      "parent_type": "RadioGroup",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ThemeSwitcher::new": {
+      "params": [],
+      "return_type": "Custom(\"ThemeSwitcher\")",
+      "is_associated": true,
+      "parent_type": "ThemeSwitcher",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ColorPalette::monokai": {
+      "params": [],
+      "return_type": "Custom(\"ColorPalette\")",
+      "is_associated": true,
+      "parent_type": "ColorPalette",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Pagination::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Pagination",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Select::placeholder": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Select\")",
+      "is_associated": true,
+      "parent_type": "Select",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Drawer::width": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Drawer\")",
+      "is_associated": true,
+      "parent_type": "Drawer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Avatar::shape": {
+      "params": [
+        "Custom(\"AvatarShape\")"
+      ],
+      "return_type": "Custom(\"Avatar\")",
+      "is_associated": true,
+      "parent_type": "Avatar",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Loading::text": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Loading\")",
+      "is_associated": true,
+      "parent_type": "Loading",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "H3::style": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"H3\")",
+      "is_associated": true,
+      "parent_type": "H3",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Badge::size": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"BadgeSize\")"
+      ],
+      "return_type": "Custom(\"Badge\")",
+      "is_associated": true,
+      "parent_type": "Badge",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Panel::child": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Panel\")",
+      "is_associated": true,
+      "parent_type": "Panel",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CodeEditor::line_numbers": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"CodeEditor\")",
+      "is_associated": true,
+      "parent_type": "CodeEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CodeBlock::language": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"CodeBlock\")",
+      "is_associated": true,
+      "parent_type": "CodeBlock",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Switch::render": {
+      "params": [],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Switch",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Rating::size": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"RatingSize\")"
+      ],
+      "return_type": "Custom(\"Rating\")",
+      "is_associated": true,
+      "parent_type": "Rating",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ContextMenu::item": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"ContextMenuItem\")"
+      ],
+      "return_type": "Custom(\"ContextMenu\")",
+      "is_associated": true,
+      "parent_type": "ContextMenu",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CurvePoint::tangents": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"f32\")",
+        "Custom(\"f32\")"
+      ],
+      "return_type": "Custom(\"CurvePoint\")",
+      "is_associated": true,
+      "parent_type": "CurvePoint",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Div::text": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Div\")",
+      "is_associated": true,
+      "parent_type": "Div",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "List::new": {
+      "params": [],
+      "return_type": "Custom(\"List\")",
+      "is_associated": true,
+      "parent_type": "List",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::bottom": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ChatInput::disabled": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"ChatInput\")",
+      "is_associated": true,
+      "parent_type": "ChatInput",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Flex::direction": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"FlexDirection\")"
+      ],
+      "return_type": "Custom(\"Flex\")",
+      "is_associated": true,
+      "parent_type": "Flex",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Span::style": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Span\")",
+      "is_associated": true,
+      "parent_type": "Span",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Divider::new": {
+      "params": [],
+      "return_type": "Custom(\"Divider\")",
+      "is_associated": true,
+      "parent_type": "Divider",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::gap": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "MessageList::message": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"MessageList\")",
+      "is_associated": true,
+      "parent_type": "MessageList",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "RadioGroup::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "RadioGroup",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Breadcrumb::item": {
+      "params": [
+        "String",
+        "String",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Breadcrumb\")",
+      "is_associated": true,
+      "parent_type": "Breadcrumb",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Sidebar::collapsed": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Sidebar\")",
+      "is_associated": true,
+      "parent_type": "Sidebar",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::flexible": {
+      "params": [],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Toast::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Toast\")",
+      "is_associated": true,
+      "parent_type": "Toast",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Div::render": {
+      "params": [],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Div",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CodeBlock::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "CodeBlock",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "GradientEditor::new": {
+      "params": [],
+      "return_type": "Custom(\"GradientEditor\")",
+      "is_associated": true,
+      "parent_type": "GradientEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Modal::visible": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Modal\")",
+      "is_associated": true,
+      "parent_type": "Modal",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "node_graph_styles": {
+      "params": [],
+      "return_type": "String",
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Row::align": {
+      "params": [
+        "Custom(\"RowAlign\")"
+      ],
+      "return_type": "Custom(\"Row\")",
+      "is_associated": true,
+      "parent_type": "Row",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Menu::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Menu\")",
+      "is_associated": true,
+      "parent_type": "Menu",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Center::height": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Center\")",
+      "is_associated": true,
+      "parent_type": "Center",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "GraphNode::collapsed": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"GraphNode\")",
+      "is_associated": true,
+      "parent_type": "GraphNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::justify_content": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "MenuItem::class": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"MenuItem\")",
+      "is_associated": true,
+      "parent_type": "MenuItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "TabPanel::active": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"TabPanel\")",
+      "is_associated": true,
+      "parent_type": "TabPanel",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Text::bold": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "Custom(\"Text\")",
+      "is_associated": true,
+      "parent_type": "Text",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "GradientEditor::add_stop": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"GradientStop\")"
+      ],
+      "return_type": "Custom(\"GradientEditor\")",
+      "is_associated": true,
+      "parent_type": "GradientEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Chip::removable": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Chip\")",
+      "is_associated": true,
+      "parent_type": "Chip",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "VNode::add_style": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"VNode\")",
+      "is_associated": true,
+      "parent_type": "VNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Stack::padding": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Stack\")",
+      "is_associated": true,
+      "parent_type": "Stack",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "VNode::set_value": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"VNode\")",
+      "is_associated": true,
+      "parent_type": "VNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "SidebarItem::href": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"SidebarItem\")",
+      "is_associated": true,
+      "parent_type": "SidebarItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "DropdownItem::disabled": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"DropdownItem\")",
+      "is_associated": true,
+      "parent_type": "DropdownItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "List::item": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"List\")",
+      "is_associated": true,
+      "parent_type": "List",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Modal::closeable": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Modal\")",
+      "is_associated": true,
+      "parent_type": "Modal",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Container::child": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Container\")",
+      "is_associated": true,
+      "parent_type": "Container",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ContextMenuItem::action": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"ContextMenuItem\")",
+      "is_associated": true,
+      "parent_type": "ContextMenuItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ColorPalette::high_contrast": {
+      "params": [],
+      "return_type": "Custom(\"ColorPalette\")",
+      "is_associated": true,
+      "parent_type": "ColorPalette",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Center::width": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Center\")",
+      "is_associated": true,
+      "parent_type": "Center",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Section::accent": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Section\")",
+      "is_associated": true,
+      "parent_type": "Section",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Button::variant": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"ButtonVariant\")"
+      ],
+      "return_type": "Custom(\"Button\")",
+      "is_associated": true,
+      "parent_type": "Button",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Label::for_id": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Label\")",
+      "is_associated": true,
+      "parent_type": "Label",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "GradientEditor::on_change": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"GradientEditor\")",
+      "is_associated": true,
+      "parent_type": "GradientEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Button::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Button",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Textarea::class": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Textarea\")",
+      "is_associated": true,
+      "parent_type": "Textarea",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Label::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Label\")",
+      "is_associated": true,
+      "parent_type": "Label",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "FormField::new": {
+      "params": [
+        "String",
+        "String"
+      ],
+      "return_type": "Custom(\"FormField\")",
+      "is_associated": true,
+      "parent_type": "FormField",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CurveEditor::size": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"i32\")",
+        "Custom(\"i32\")"
+      ],
+      "return_type": "Custom(\"CurveEditor\")",
+      "is_associated": true,
+      "parent_type": "CurveEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "GraphNode::output": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"NodePin\")"
+      ],
+      "return_type": "Custom(\"GraphNode\")",
+      "is_associated": true,
+      "parent_type": "GraphNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Slider::max": {
+      "params": [
+        "Custom(\"Self\")",
+        "Float"
+      ],
+      "return_type": "Custom(\"Slider\")",
+      "is_associated": true,
+      "parent_type": "Slider",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "AdvancedCodeEditor::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "AdvancedCodeEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "TreeItem::child": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"TreeItem\")"
+      ],
+      "return_type": "Custom(\"TreeItem\")",
+      "is_associated": true,
+      "parent_type": "TreeItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "AdvancedCodeEditor::line_numbers": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"AdvancedCodeEditor\")",
+      "is_associated": true,
+      "parent_type": "AdvancedCodeEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Toolbar::new": {
+      "params": [],
+      "return_type": "Custom(\"Toolbar\")",
+      "is_associated": true,
+      "parent_type": "Toolbar",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Vec3Editor::new": {
+      "params": [
+        "String",
+        "Custom(\"f32\")",
+        "Custom(\"f32\")",
+        "Custom(\"f32\")"
+      ],
+      "return_type": "Custom(\"Vec3Editor\")",
+      "is_associated": true,
+      "parent_type": "Vec3Editor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "RadioOption::disabled": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"RadioOption\")",
+      "is_associated": true,
+      "parent_type": "RadioOption",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Table::bordered": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Table\")",
+      "is_associated": true,
+      "parent_type": "Table",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Toast::duration": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"i32\")"
+      ],
+      "return_type": "Custom(\"Toast\")",
+      "is_associated": true,
+      "parent_type": "Toast",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ChatInput::placeholder": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"ChatInput\")",
+      "is_associated": true,
+      "parent_type": "ChatInput",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::right": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Divider::vertical": {
+      "params": [],
+      "return_type": "Custom(\"Divider\")",
+      "is_associated": true,
+      "parent_type": "Divider",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Avatar::fallback": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Avatar\")",
+      "is_associated": true,
+      "parent_type": "Avatar",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "RadioGroup::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"RadioGroup\")",
+      "is_associated": true,
+      "parent_type": "RadioGroup",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Scroll::class": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Scroll\")",
+      "is_associated": true,
+      "parent_type": "Scroll",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::vertical": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Loading::overlay": {
+      "params": [
+        "Bool"
+      ],
+      "return_type": "Custom(\"Loading\")",
+      "is_associated": true,
+      "parent_type": "Loading",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Property::color": {
+      "params": [
+        "String",
+        "String"
+      ],
+      "return_type": "Custom(\"Property\")",
+      "is_associated": true,
+      "parent_type": "Property",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "GradientStop::new": {
+      "params": [
+        "Custom(\"f32\")",
+        "String"
+      ],
+      "return_type": "Custom(\"GradientStop\")",
+      "is_associated": true,
+      "parent_type": "GradientStop",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "container": {
+      "params": [],
+      "return_type": "Custom(\"VNode\")",
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "H1::style": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"H1\")",
+      "is_associated": true,
+      "parent_type": "H1",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Panel::collapsed": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Panel\")",
+      "is_associated": true,
+      "parent_type": "Panel",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Slider::min": {
+      "params": [
+        "Custom(\"Self\")",
+        "Float"
+      ],
+      "return_type": "Custom(\"Slider\")",
+      "is_associated": true,
+      "parent_type": "Slider",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Divider::thickness": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Divider\")",
+      "is_associated": true,
+      "parent_type": "Divider",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "SectionGroup::new": {
+      "params": [],
+      "return_type": "Custom(\"SectionGroup\")",
+      "is_associated": true,
+      "parent_type": "SectionGroup",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Row::class": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Row\")",
+      "is_associated": true,
+      "parent_type": "Row",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Flex::child": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Flex\")",
+      "is_associated": true,
+      "parent_type": "Flex",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ChatMessage::timestamp": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"ChatMessage\")",
+      "is_associated": true,
+      "parent_type": "ChatMessage",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Navbar::sticky": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Navbar\")",
+      "is_associated": true,
+      "parent_type": "Navbar",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Text::color": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Text\")",
+      "is_associated": true,
+      "parent_type": "Text",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "VNode::span": {
+      "params": [],
+      "return_type": "Custom(\"VNode\")",
+      "is_associated": true,
+      "parent_type": "VNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Button::disabled": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Button\")",
+      "is_associated": true,
+      "parent_type": "Button",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Stack::vertical": {
+      "params": [],
+      "return_type": "Custom(\"Stack\")",
+      "is_associated": true,
+      "parent_type": "Stack",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Stack::child": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Stack\")",
+      "is_associated": true,
+      "parent_type": "Stack",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Textarea::resize": {
+      "params": [
+        "Custom(\"TextareaResize\")"
+      ],
+      "return_type": "Custom(\"Textarea\")",
+      "is_associated": true,
+      "parent_type": "Textarea",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Container::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Container",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ChatMessage::role": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"MessageRole\")"
+      ],
+      "return_type": "Custom(\"ChatMessage\")",
+      "is_associated": true,
+      "parent_type": "ChatMessage",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Popover::render": {
+      "params": [],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Popover",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "EditorTheme::nord": {
+      "params": [],
+      "return_type": "Custom(\"EditorTheme\")",
+      "is_associated": true,
+      "parent_type": "EditorTheme",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::overflow_x": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Table::column": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"TableColumn\")"
+      ],
+      "return_type": "Custom(\"Table\")",
+      "is_associated": true,
+      "parent_type": "Table",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Drawer::new": {
+      "params": [],
+      "return_type": "Custom(\"Drawer\")",
+      "is_associated": true,
+      "parent_type": "Drawer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Container::background_color": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Container\")",
+      "is_associated": true,
+      "parent_type": "Container",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Divider::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Divider",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Flex::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Flex",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Sidebar::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Sidebar",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Row::gap": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Row\")",
+      "is_associated": true,
+      "parent_type": "Row",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "List::ordered": {
+      "params": [
+        "Bool"
+      ],
+      "return_type": "Custom(\"List\")",
+      "is_associated": true,
+      "parent_type": "List",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::cursor": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "H2::class": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"H2\")",
+      "is_associated": true,
+      "parent_type": "H2",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Skeleton::variant": {
+      "params": [
+        "Custom(\"SkeletonVariant\")"
+      ],
+      "return_type": "Custom(\"Skeleton\")",
+      "is_associated": true,
+      "parent_type": "Skeleton",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "StepperStep::completed": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"StepperStep\")",
+      "is_associated": true,
+      "parent_type": "StepperStep",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Switch::size": {
+      "params": [
+        "Custom(\"SwitchSize\")"
+      ],
+      "return_type": "Custom(\"Switch\")",
+      "is_associated": true,
+      "parent_type": "Switch",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::xxl": {
+      "params": [],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Accordion::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Accordion",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CurveEditor::apply_preset": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"EasingPreset\")"
+      ],
+      "return_type": null,
+      "is_associated": true,
+      "parent_type": "CurveEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "H3::class": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"H3\")",
+      "is_associated": true,
+      "parent_type": "H3",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Card::child": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Card\")",
+      "is_associated": true,
+      "parent_type": "Card",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "FileTree::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "FileTree",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ScrollArea::height": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"ScrollArea\")",
+      "is_associated": true,
+      "parent_type": "ScrollArea",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::font_weight": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "AccordionItem::new": {
+      "params": [
+        "String",
+        "String"
+      ],
+      "return_type": "Custom(\"AccordionItem\")",
+      "is_associated": true,
+      "parent_type": "AccordionItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Row::render": {
+      "params": [],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Row",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Loading::size": {
+      "params": [
+        "Custom(\"LoadingSize\")"
+      ],
+      "return_type": "Custom(\"Loading\")",
+      "is_associated": true,
+      "parent_type": "Loading",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Avatar::alt": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Avatar\")",
+      "is_associated": true,
+      "parent_type": "Avatar",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Form::action": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Form\")",
+      "is_associated": true,
+      "parent_type": "Form",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "GraphNode::get_category_color": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "GraphNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Scroll::render": {
+      "params": [],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Scroll",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "EditorTheme::monokai": {
+      "params": [],
+      "return_type": "Custom(\"EditorTheme\")",
+      "is_associated": true,
+      "parent_type": "EditorTheme",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "VNode::set_disabled": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"VNode\")",
+      "is_associated": true,
+      "parent_type": "VNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "FileTree::new": {
+      "params": [
+        "Custom(\"FileNode\")"
+      ],
+      "return_type": "Custom(\"FileTree\")",
+      "is_associated": true,
+      "parent_type": "FileTree",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Label::render": {
+      "params": [],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Label",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Column::gap": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Column\")",
+      "is_associated": true,
+      "parent_type": "Column",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Property::integer": {
+      "params": [
+        "String",
+        "Custom(\"i32\")",
+        "Custom(\"i32\")",
+        "Custom(\"i32\")"
+      ],
+      "return_type": "Custom(\"Property\")",
+      "is_associated": true,
+      "parent_type": "Property",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Property::unit": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Property\")",
+      "is_associated": true,
+      "parent_type": "Property",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Center::class": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Center\")",
+      "is_associated": true,
+      "parent_type": "Center",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "TypingIndicator::new": {
+      "params": [],
+      "return_type": "Custom(\"TypingIndicator\")",
+      "is_associated": true,
+      "parent_type": "TypingIndicator",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "FormField::error": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"FormField\")",
+      "is_associated": true,
+      "parent_type": "FormField",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Container::max_width": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Container\")",
+      "is_associated": true,
+      "parent_type": "Container",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Grid::gap": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Grid\")",
+      "is_associated": true,
+      "parent_type": "Grid",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Divider::horizontal": {
+      "params": [],
+      "return_type": "Custom(\"Divider\")",
+      "is_associated": true,
+      "parent_type": "Divider",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Label::class": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Label\")",
+      "is_associated": true,
+      "parent_type": "Label",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::height": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::background_color": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Flex::children": {
+      "params": [
+        "Custom(\"Self\")",
+        "Vec(String)"
+      ],
+      "return_type": "Custom(\"Flex\")",
+      "is_associated": true,
+      "parent_type": "Flex",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CollapsibleSection::new": {
+      "params": [
+        "String",
+        "String"
+      ],
+      "return_type": "Custom(\"CollapsibleSection\")",
+      "is_associated": true,
+      "parent_type": "CollapsibleSection",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CodeEditor::language": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"CodeEditor\")",
+      "is_associated": true,
+      "parent_type": "CodeEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Table::row": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"TableRow\")"
+      ],
+      "return_type": "Custom(\"Table\")",
+      "is_associated": true,
+      "parent_type": "Table",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "H1::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"H1\")",
+      "is_associated": true,
+      "parent_type": "H1",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "P::style": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"P\")",
+      "is_associated": true,
+      "parent_type": "P",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "H2::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "H2",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "NodeGraph::size": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"i32\")",
+        "Custom(\"i32\")"
+      ],
+      "return_type": "Custom(\"NodeGraph\")",
+      "is_associated": true,
+      "parent_type": "NodeGraph",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Select::option": {
+      "params": [
+        "String",
+        "String"
+      ],
+      "return_type": "Custom(\"Select\")",
+      "is_associated": true,
+      "parent_type": "Select",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Div::class": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Div\")",
+      "is_associated": true,
+      "parent_type": "Div",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ThemeSwitcher::on_change": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"ThemeSwitcher\")",
+      "is_associated": true,
+      "parent_type": "ThemeSwitcher",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Span::class": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Span\")",
+      "is_associated": true,
+      "parent_type": "Span",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Flex::new": {
+      "params": [],
+      "return_type": "Custom(\"Flex\")",
+      "is_associated": true,
+      "parent_type": "Flex",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "H1::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "H1",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Progress::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Progress",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Alert::success": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Alert\")",
+      "is_associated": true,
+      "parent_type": "Alert",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::xxs": {
+      "params": [],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Column::align": {
+      "params": [
+        "Custom(\"ColumnAlign\")"
+      ],
+      "return_type": "Custom(\"Column\")",
+      "is_associated": true,
+      "parent_type": "Column",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Drawer::render": {
+      "params": [],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Drawer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ScrollArea::child": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"ScrollArea\")",
+      "is_associated": true,
+      "parent_type": "ScrollArea",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "TimelineEvent::icon": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"TimelineEvent\")",
+      "is_associated": true,
+      "parent_type": "TimelineEvent",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "VNode::child": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"VNode\")"
+      ],
+      "return_type": "Custom(\"VNode\")",
+      "is_associated": true,
+      "parent_type": "VNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::to_string": {
+      "params": [],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Avatar::size": {
+      "params": [
+        "Custom(\"AvatarSize\")"
+      ],
+      "return_type": "Custom(\"Avatar\")",
+      "is_associated": true,
+      "parent_type": "Avatar",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "FileNode::expanded": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"FileNode\")",
+      "is_associated": true,
+      "parent_type": "FileNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "HamburgerMenuItem::new": {
+      "params": [
+        "String",
+        "String"
+      ],
+      "return_type": "Custom(\"HamburgerMenuItem\")",
+      "is_associated": true,
+      "parent_type": "HamburgerMenuItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Rating::color": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Rating\")",
+      "is_associated": true,
+      "parent_type": "Rating",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Scroll::height": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Scroll\")",
+      "is_associated": true,
+      "parent_type": "Scroll",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Toast::position": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"ToastPosition\")"
+      ],
+      "return_type": "Custom(\"Toast\")",
+      "is_associated": true,
+      "parent_type": "Toast",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::text_align": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Scroll::new": {
+      "params": [],
+      "return_type": "Custom(\"Scroll\")",
+      "is_associated": true,
+      "parent_type": "Scroll",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ChatInput::rows": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"i32\")"
+      ],
+      "return_type": "Custom(\"ChatInput\")",
+      "is_associated": true,
+      "parent_type": "ChatInput",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Menu::render": {
+      "params": [],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Menu",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Textarea::readonly": {
+      "params": [
+        "Bool"
+      ],
+      "return_type": "Custom(\"Textarea\")",
+      "is_associated": true,
+      "parent_type": "Textarea",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "TreeItem::render": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"i32\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "TreeItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "column": {
+      "params": [],
+      "return_type": "Custom(\"VNode\")",
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CodeBlock::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"CodeBlock\")",
+      "is_associated": true,
+      "parent_type": "CodeBlock",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "row": {
+      "params": [],
+      "return_type": "Custom(\"VNode\")",
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "TableColumn::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"TableColumn\")",
+      "is_associated": true,
+      "parent_type": "TableColumn",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Dialog::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Dialog",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Sidebar::width": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Sidebar\")",
+      "is_associated": true,
+      "parent_type": "Sidebar",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "H2::style": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"H2\")",
+      "is_associated": true,
+      "parent_type": "H2",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ThemeSwitcher::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "ThemeSwitcher",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Navbar::position": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"NavbarPosition\")"
+      ],
+      "return_type": "Custom(\"Navbar\")",
+      "is_associated": true,
+      "parent_type": "Navbar",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "TimelineEvent::description": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"TimelineEvent\")",
+      "is_associated": true,
+      "parent_type": "TimelineEvent",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Input::new": {
+      "params": [],
+      "return_type": "Custom(\"Input\")",
+      "is_associated": true,
+      "parent_type": "Input",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ListItem::class": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"ListItem\")",
+      "is_associated": true,
+      "parent_type": "ListItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "TabPanel::orientation": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"TabPanel\")",
+      "is_associated": true,
+      "parent_type": "TabPanel",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "MessageList::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "MessageList",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::top": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Rating::new": {
+      "params": [
+        "Custom(\"f32\")"
+      ],
+      "return_type": "Custom(\"Rating\")",
+      "is_associated": true,
+      "parent_type": "Rating",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Skeleton::height": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Skeleton\")",
+      "is_associated": true,
+      "parent_type": "Skeleton",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Text::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Text",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::md": {
+      "params": [],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Column::render": {
+      "params": [],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Column",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Form::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Form\")",
+      "is_associated": true,
+      "parent_type": "Form",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Form::method": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Form\")",
+      "is_associated": true,
+      "parent_type": "Form",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::left": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ColorPalette::light": {
+      "params": [],
+      "return_type": "Custom(\"ColorPalette\")",
+      "is_associated": true,
+      "parent_type": "ColorPalette",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Div::new": {
+      "params": [],
+      "return_type": "Custom(\"Div\")",
+      "is_associated": true,
+      "parent_type": "Div",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ColorPalette::dark": {
+      "params": [],
+      "return_type": "Custom(\"ColorPalette\")",
+      "is_associated": true,
+      "parent_type": "ColorPalette",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Chip::variant": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"ChipVariant\")"
+      ],
+      "return_type": "Custom(\"Chip\")",
+      "is_associated": true,
+      "parent_type": "Chip",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Alert::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Alert",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "List::render": {
+      "params": [],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "List",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ScrollArea::new": {
+      "params": [],
+      "return_type": "Custom(\"ScrollArea\")",
+      "is_associated": true,
+      "parent_type": "ScrollArea",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "SectionGroup::accordion": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"SectionGroup\")",
+      "is_associated": true,
+      "parent_type": "SectionGroup",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Panel::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Panel\")",
+      "is_associated": true,
+      "parent_type": "Panel",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Pagination::show_prev_next": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Pagination\")",
+      "is_associated": true,
+      "parent_type": "Pagination",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Pagination::show_first_last": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Pagination\")",
+      "is_associated": true,
+      "parent_type": "Pagination",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "TableColumn::width": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"TableColumn\")",
+      "is_associated": true,
+      "parent_type": "TableColumn",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "FileNode::new": {
+      "params": [
+        "String",
+        "Bool"
+      ],
+      "return_type": "Custom(\"FileNode\")",
+      "is_associated": true,
+      "parent_type": "FileNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "spacer": {
+      "params": [],
+      "return_type": "Custom(\"VNode\")",
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "P::new": {
+      "params": [],
+      "return_type": "Custom(\"P\")",
+      "is_associated": true,
+      "parent_type": "P",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "TabPanel::new": {
+      "params": [],
+      "return_type": "Custom(\"TabPanel\")",
+      "is_associated": true,
+      "parent_type": "TabPanel",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::overflow_y": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Sidebar::new": {
+      "params": [],
+      "return_type": "Custom(\"Sidebar\")",
+      "is_associated": true,
+      "parent_type": "Sidebar",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Alert::warning": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Alert\")",
+      "is_associated": true,
+      "parent_type": "Alert",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Modal::footer": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Modal\")",
+      "is_associated": true,
+      "parent_type": "Modal",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "SplitPanel::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "SplitPanel",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "VNode::set_placeholder": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"VNode\")",
+      "is_associated": true,
+      "parent_type": "VNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Input::value": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Input\")",
+      "is_associated": true,
+      "parent_type": "Input",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ColorPicker::new": {
+      "params": [],
+      "return_type": "Custom(\"ColorPicker\")",
+      "is_associated": true,
+      "parent_type": "ColorPicker",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Skeleton::render": {
+      "params": [],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Skeleton",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Stack::new": {
+      "params": [],
+      "return_type": "Custom(\"Stack\")",
+      "is_associated": true,
+      "parent_type": "Stack",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Button::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Button\")",
+      "is_associated": true,
+      "parent_type": "Button",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "P::class": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"P\")",
+      "is_associated": true,
+      "parent_type": "P",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "GraphNode::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "GraphNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Textarea::new": {
+      "params": [],
+      "return_type": "Custom(\"Textarea\")",
+      "is_associated": true,
+      "parent_type": "Textarea",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Span::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Span",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Loading::render": {
+      "params": [],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Loading",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Textarea::placeholder": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Textarea\")",
+      "is_associated": true,
+      "parent_type": "Textarea",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ColorPalette::nord": {
+      "params": [],
+      "return_type": "Custom(\"ColorPalette\")",
+      "is_associated": true,
+      "parent_type": "ColorPalette",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Property::number": {
+      "params": [
+        "String",
+        "Custom(\"f32\")",
+        "Custom(\"f32\")",
+        "Custom(\"f32\")"
+      ],
+      "return_type": "Custom(\"Property\")",
+      "is_associated": true,
+      "parent_type": "Property",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "P::child": {
+      "params": [
+        "Custom(\"T\")"
+      ],
+      "return_type": "Custom(\"P\")",
+      "is_associated": true,
+      "parent_type": "P",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "main": {
+      "params": [],
+      "return_type": null,
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Section::child": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Section\")",
+      "is_associated": true,
+      "parent_type": "Section",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Span::text": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Span\")",
+      "is_associated": true,
+      "parent_type": "Span",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Slider::label": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Slider\")",
+      "is_associated": true,
+      "parent_type": "Slider",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "NodeGraph::pan": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"f32\")",
+        "Custom(\"f32\")"
+      ],
+      "return_type": "Custom(\"NodeGraph\")",
+      "is_associated": true,
+      "parent_type": "NodeGraph",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::color": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "H3::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "H3",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Modal::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Modal",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "FormField::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "FormField",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Chip::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Chip",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CurveEditor::range": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"f32\")",
+        "Custom(\"f32\")"
+      ],
+      "return_type": "Custom(\"CurveEditor\")",
+      "is_associated": true,
+      "parent_type": "CurveEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Checkbox::size": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"CheckboxSize\")"
+      ],
+      "return_type": "Custom(\"Checkbox\")",
+      "is_associated": true,
+      "parent_type": "Checkbox",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Card::border_color": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Card\")",
+      "is_associated": true,
+      "parent_type": "Card",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CurveEditor::points": {
+      "params": [
+        "Custom(\"Self\")",
+        "Vec(Custom(\"CurvePoint\"))"
+      ],
+      "return_type": "Custom(\"CurveEditor\")",
+      "is_associated": true,
+      "parent_type": "CurveEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Flex::gap_px": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"i32\")"
+      ],
+      "return_type": "Custom(\"Flex\")",
+      "is_associated": true,
+      "parent_type": "Flex",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ScrollArea::width": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"ScrollArea\")",
+      "is_associated": true,
+      "parent_type": "ScrollArea",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Progress::show_label": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Progress\")",
+      "is_associated": true,
+      "parent_type": "Progress",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Stepper::step": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"StepperStep\")"
+      ],
+      "return_type": "Custom(\"Stepper\")",
+      "is_associated": true,
+      "parent_type": "Stepper",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "List::class": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"List\")",
+      "is_associated": true,
+      "parent_type": "List",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Switch::disabled": {
+      "params": [
+        "Bool"
+      ],
+      "return_type": "Custom(\"Switch\")",
+      "is_associated": true,
+      "parent_type": "Switch",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Textarea::max_length": {
+      "params": [
+        "Custom(\"i32\")"
+      ],
+      "return_type": "Custom(\"Textarea\")",
+      "is_associated": true,
+      "parent_type": "Textarea",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Property::boolean": {
+      "params": [
+        "String",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Property\")",
+      "is_associated": true,
+      "parent_type": "Property",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Dialog::width": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Dialog\")",
+      "is_associated": true,
+      "parent_type": "Dialog",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Dropdown::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Dropdown\")",
+      "is_associated": true,
+      "parent_type": "Dropdown",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CurveEditor::on_change": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"CurveEditor\")",
+      "is_associated": true,
+      "parent_type": "CurveEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "EditorTheme::default": {
+      "params": [],
+      "return_type": "Custom(\"EditorTheme\")",
+      "is_associated": true,
+      "parent_type": "EditorTheme",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Grid::new": {
+      "params": [
+        "Custom(\"i32\")"
+      ],
+      "return_type": "Custom(\"Grid\")",
+      "is_associated": true,
+      "parent_type": "Grid",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Accordion::allow_multiple": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Accordion\")",
+      "is_associated": true,
+      "parent_type": "Accordion",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Card::background_color": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Card\")",
+      "is_associated": true,
+      "parent_type": "Card",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Tabs::tab": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"Tab\")"
+      ],
+      "return_type": "Custom(\"Tabs\")",
+      "is_associated": true,
+      "parent_type": "Tabs",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "MessageList::auto_scroll": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"MessageList\")",
+      "is_associated": true,
+      "parent_type": "MessageList",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Vec3Editor::on_change": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Vec3Editor\")",
+      "is_associated": true,
+      "parent_type": "Vec3Editor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Slider::new": {
+      "params": [],
+      "return_type": "Custom(\"Slider\")",
+      "is_associated": true,
+      "parent_type": "Slider",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Checkbox::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Checkbox\")",
+      "is_associated": true,
+      "parent_type": "Checkbox",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "MessageList::height": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"MessageList\")",
+      "is_associated": true,
+      "parent_type": "MessageList",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Table::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Table",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::border": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Stack::direction": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"StackDirection\")"
+      ],
+      "return_type": "Custom(\"Stack\")",
+      "is_associated": true,
+      "parent_type": "Stack",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Tooltip::new": {
+      "params": [
+        "String",
+        "String"
+      ],
+      "return_type": "Custom(\"Tooltip\")",
+      "is_associated": true,
+      "parent_type": "Tooltip",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Input::placeholder": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Input\")",
+      "is_associated": true,
+      "parent_type": "Input",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "TreeView::item": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"TreeItem\")"
+      ],
+      "return_type": "Custom(\"TreeView\")",
+      "is_associated": true,
+      "parent_type": "TreeView",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Alert::info": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Alert\")",
+      "is_associated": true,
+      "parent_type": "Alert",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "AccordionItem::open": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"AccordionItem\")",
+      "is_associated": true,
+      "parent_type": "AccordionItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Badge::variant": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"BadgeVariant\")"
+      ],
+      "return_type": "Custom(\"Badge\")",
+      "is_associated": true,
+      "parent_type": "Badge",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CollapsibleSection::open": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"CollapsibleSection\")",
+      "is_associated": true,
+      "parent_type": "CollapsibleSection",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CurveEditor::add_point": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"CurvePoint\")"
+      ],
+      "return_type": "Custom(\"CurveEditor\")",
+      "is_associated": true,
+      "parent_type": "CurveEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Span::new": {
+      "params": [],
+      "return_type": "Custom(\"Span\")",
+      "is_associated": true,
+      "parent_type": "Span",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::font_size": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Stack::gap": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Stack\")",
+      "is_associated": true,
+      "parent_type": "Stack",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Textarea::render": {
+      "params": [],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Textarea",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spinner::new": {
+      "params": [],
+      "return_type": "Custom(\"Spinner\")",
+      "is_associated": true,
+      "parent_type": "Spinner",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Chip::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Chip\")",
+      "is_associated": true,
+      "parent_type": "Chip",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Column::class": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Column\")",
+      "is_associated": true,
+      "parent_type": "Column",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Card::new": {
+      "params": [],
+      "return_type": "Custom(\"Card\")",
+      "is_associated": true,
+      "parent_type": "Card",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "P::text": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"P\")",
+      "is_associated": true,
+      "parent_type": "P",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "MenuItem::href": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"MenuItem\")",
+      "is_associated": true,
+      "parent_type": "MenuItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Property::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Property",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Row::child": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Row\")",
+      "is_associated": true,
+      "parent_type": "Row",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Drawer::open": {
+      "params": [
+        "Bool"
+      ],
+      "return_type": "Custom(\"Drawer\")",
+      "is_associated": true,
+      "parent_type": "Drawer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Label::required": {
+      "params": [
+        "Bool"
+      ],
+      "return_type": "Custom(\"Label\")",
+      "is_associated": true,
+      "parent_type": "Label",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "NodePin::default_value": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"NodePin\")",
+      "is_associated": true,
+      "parent_type": "NodePin",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::opacity": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::border_radius": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "TreeView::new": {
+      "params": [],
+      "return_type": "Custom(\"TreeView\")",
+      "is_associated": true,
+      "parent_type": "TreeView",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "VNode::add_text": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"VNode\")",
+      "is_associated": true,
+      "parent_type": "VNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::position": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "FormField::help_text": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"FormField\")",
+      "is_associated": true,
+      "parent_type": "FormField",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ScrollArea::direction": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"ScrollDirection\")"
+      ],
+      "return_type": "Custom(\"ScrollArea\")",
+      "is_associated": true,
+      "parent_type": "ScrollArea",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Section::collapsed": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Section\")",
+      "is_associated": true,
+      "parent_type": "Section",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Tooltip::position": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"TooltipPosition\")"
+      ],
+      "return_type": "Custom(\"Tooltip\")",
+      "is_associated": true,
+      "parent_type": "Tooltip",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "RadioOption::new": {
+      "params": [
+        "String",
+        "String"
+      ],
+      "return_type": "Custom(\"RadioOption\")",
+      "is_associated": true,
+      "parent_type": "RadioOption",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::new": {
+      "params": [],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Chip::size": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"ChipSize\")"
+      ],
+      "return_type": "Custom(\"Chip\")",
+      "is_associated": true,
+      "parent_type": "Chip",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Form::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Form",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::max_width": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "VNode::add_class": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"VNode\")",
+      "is_associated": true,
+      "parent_type": "VNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "VNode::element": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"VNode\")",
+      "is_associated": true,
+      "parent_type": "VNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "SidebarItem::icon": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"SidebarItem\")",
+      "is_associated": true,
+      "parent_type": "SidebarItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Accordion::item": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"AccordionItem\")"
+      ],
+      "return_type": "Custom(\"Accordion\")",
+      "is_associated": true,
+      "parent_type": "Accordion",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ChatInput::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "ChatInput",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Container::children": {
+      "params": [
+        "Custom(\"Self\")",
+        "Vec(String)"
+      ],
+      "return_type": "Custom(\"Container\")",
+      "is_associated": true,
+      "parent_type": "Container",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Stack::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Stack",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "HamburgerMenu::item": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"HamburgerMenuItem\")"
+      ],
+      "return_type": "Custom(\"HamburgerMenu\")",
+      "is_associated": true,
+      "parent_type": "HamburgerMenu",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ListItem::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"ListItem\")",
+      "is_associated": true,
+      "parent_type": "ListItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::box_shadow": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Textarea::value": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Textarea\")",
+      "is_associated": true,
+      "parent_type": "Textarea",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Table::new": {
+      "params": [],
+      "return_type": "Custom(\"Table\")",
+      "is_associated": true,
+      "parent_type": "Table",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::width": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Span::child": {
+      "params": [
+        "Custom(\"T\")"
+      ],
+      "return_type": "Custom(\"Span\")",
+      "is_associated": true,
+      "parent_type": "Span",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::horizontal": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Drawer::class": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Drawer\")",
+      "is_associated": true,
+      "parent_type": "Drawer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Container::new": {
+      "params": [],
+      "return_type": "Custom(\"Container\")",
+      "is_associated": true,
+      "parent_type": "Container",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Stepper::current_step": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"i32\")"
+      ],
+      "return_type": "Custom(\"Stepper\")",
+      "is_associated": true,
+      "parent_type": "Stepper",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CodeBlock::show_line_numbers": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"CodeBlock\")",
+      "is_associated": true,
+      "parent_type": "CodeBlock",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Sidebar::item": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"SidebarItem\")"
+      ],
+      "return_type": "Custom(\"Sidebar\")",
+      "is_associated": true,
+      "parent_type": "Sidebar",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Slider::disabled": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Slider\")",
+      "is_associated": true,
+      "parent_type": "Slider",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Slider::step": {
+      "params": [
+        "Custom(\"Self\")",
+        "Float"
+      ],
+      "return_type": "Custom(\"Slider\")",
+      "is_associated": true,
+      "parent_type": "Slider",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "SplitPanel::direction": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"SplitDirection\")"
+      ],
+      "return_type": "Custom(\"SplitPanel\")",
+      "is_associated": true,
+      "parent_type": "SplitPanel",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "divider": {
+      "params": [],
+      "return_type": "Custom(\"VNode\")",
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Popover::new": {
+      "params": [
+        "String",
+        "String"
+      ],
+      "return_type": "Custom(\"Popover\")",
+      "is_associated": true,
+      "parent_type": "Popover",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "section_styles": {
+      "params": [],
+      "return_type": "String",
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "curve_editor_styles": {
+      "params": [],
+      "return_type": "String",
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CurveEditor::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "CurveEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "H1::class": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"H1\")",
+      "is_associated": true,
+      "parent_type": "H1",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "GraphNode::new": {
+      "params": [
+        "String",
+        "String",
+        "Custom(\"NodeCategory\")"
+      ],
+      "return_type": "Custom(\"GraphNode\")",
+      "is_associated": true,
+      "parent_type": "GraphNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Progress::new": {
+      "params": [
+        "Float"
+      ],
+      "return_type": "Custom(\"Progress\")",
+      "is_associated": true,
+      "parent_type": "Progress",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Select::size": {
+      "params": [
+        "Custom(\"SelectSize\")"
+      ],
+      "return_type": "Custom(\"Select\")",
+      "is_associated": true,
+      "parent_type": "Select",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Skeleton::new": {
+      "params": [],
+      "return_type": "Custom(\"Skeleton\")",
+      "is_associated": true,
+      "parent_type": "Skeleton",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "TabPanelTab::new": {
+      "params": [
+        "String",
+        "String",
+        "String"
+      ],
+      "return_type": "Custom(\"TabPanelTab\")",
+      "is_associated": true,
+      "parent_type": "TabPanelTab",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ColorPicker::label": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"ColorPicker\")",
+      "is_associated": true,
+      "parent_type": "ColorPicker",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "TimelineEvent::new": {
+      "params": [
+        "String",
+        "String"
+      ],
+      "return_type": "Custom(\"TimelineEvent\")",
+      "is_associated": true,
+      "parent_type": "TimelineEvent",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CodeEditor::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"CodeEditor\")",
+      "is_associated": true,
+      "parent_type": "CodeEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Flex::background_color": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Flex\")",
+      "is_associated": true,
+      "parent_type": "Flex",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Navbar::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Navbar",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "MenuItem::icon": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"MenuItem\")",
+      "is_associated": true,
+      "parent_type": "MenuItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::xl": {
+      "params": [],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::padding": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Tabs::active": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Tabs\")",
+      "is_associated": true,
+      "parent_type": "Tabs",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "StepperStep::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"StepperStep\")",
+      "is_associated": true,
+      "parent_type": "StepperStep",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ScrollArea::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "ScrollArea",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Scroll::child": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Scroll\")",
+      "is_associated": true,
+      "parent_type": "Scroll",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Button::get_size_class": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Button",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Select::new": {
+      "params": [],
+      "return_type": "Custom(\"Select\")",
+      "is_associated": true,
+      "parent_type": "Select",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Skeleton::class": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Skeleton\")",
+      "is_associated": true,
+      "parent_type": "Skeleton",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "FormField::required": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"FormField\")",
+      "is_associated": true,
+      "parent_type": "FormField",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Select::render": {
+      "params": [],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Select",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Grid::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Grid",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "HamburgerMenu::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "HamburgerMenu",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ChatInput::value": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"ChatInput\")",
+      "is_associated": true,
+      "parent_type": "ChatInput",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "FileNode::render": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"i32\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "FileNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "MenuItem::disabled": {
+      "params": [
+        "Bool"
+      ],
+      "return_type": "Custom(\"MenuItem\")",
+      "is_associated": true,
+      "parent_type": "MenuItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Rating::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Rating",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Textarea::rows": {
+      "params": [
+        "Custom(\"i32\")"
+      ],
+      "return_type": "Custom(\"Textarea\")",
+      "is_associated": true,
+      "parent_type": "Textarea",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Center::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Center\")",
+      "is_associated": true,
+      "parent_type": "Center",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Progress::variant": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"ProgressVariant\")"
+      ],
+      "return_type": "Custom(\"Progress\")",
+      "is_associated": true,
+      "parent_type": "Progress",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Div::style": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Div\")",
+      "is_associated": true,
+      "parent_type": "Div",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::width": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "AdvancedCodeEditor::language": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"AdvancedCodeEditor\")",
+      "is_associated": true,
+      "parent_type": "AdvancedCodeEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Tabs::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Tabs",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Grid::children": {
+      "params": [
+        "Custom(\"Self\")",
+        "Vec(String)"
+      ],
+      "return_type": "Custom(\"Grid\")",
+      "is_associated": true,
+      "parent_type": "Grid",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Drawer::child": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Drawer\")",
+      "is_associated": true,
+      "parent_type": "Drawer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Text::size": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"TextSize\")"
+      ],
+      "return_type": "Custom(\"Text\")",
+      "is_associated": true,
+      "parent_type": "Text",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Checkbox::disabled": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Checkbox\")",
+      "is_associated": true,
+      "parent_type": "Checkbox",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "DropdownItem::new": {
+      "params": [
+        "String",
+        "String"
+      ],
+      "return_type": "Custom(\"DropdownItem\")",
+      "is_associated": true,
+      "parent_type": "DropdownItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Accordion::new": {
+      "params": [],
+      "return_type": "Custom(\"Accordion\")",
+      "is_associated": true,
+      "parent_type": "Accordion",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "StepperStep::description": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"StepperStep\")",
+      "is_associated": true,
+      "parent_type": "StepperStep",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Table::striped": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Table\")",
+      "is_associated": true,
+      "parent_type": "Table",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "VNode::text": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"VNode\")",
+      "is_associated": true,
+      "parent_type": "VNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Rating::readonly": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Rating\")",
+      "is_associated": true,
+      "parent_type": "Rating",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CodeBlock::show_copy_button": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"CodeBlock\")",
+      "is_associated": true,
+      "parent_type": "CodeBlock",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Section::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Section",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Property::on_change": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Property\")",
+      "is_associated": true,
+      "parent_type": "Property",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Panel::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Panel",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::margin": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "GraphNode::position": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"f32\")",
+        "Custom(\"f32\")"
+      ],
+      "return_type": "Custom(\"GraphNode\")",
+      "is_associated": true,
+      "parent_type": "GraphNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Avatar::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Avatar\")",
+      "is_associated": true,
+      "parent_type": "Avatar",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Drawer::position": {
+      "params": [
+        "Custom(\"DrawerPosition\")"
+      ],
+      "return_type": "Custom(\"Drawer\")",
+      "is_associated": true,
+      "parent_type": "Drawer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Checkbox::checked": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Checkbox\")",
+      "is_associated": true,
+      "parent_type": "Checkbox",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::lg": {
+      "params": [],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Stack::align": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"StackAlign\")"
+      ],
+      "return_type": "Custom(\"Stack\")",
+      "is_associated": true,
+      "parent_type": "Stack",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Breadcrumb::separator": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Breadcrumb\")",
+      "is_associated": true,
+      "parent_type": "Breadcrumb",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Divider::color": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Divider\")",
+      "is_associated": true,
+      "parent_type": "Divider",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Toolbar::position": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Toolbar\")",
+      "is_associated": true,
+      "parent_type": "Toolbar",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Scroll::direction": {
+      "params": [
+        "Custom(\"ScrollDir\")"
+      ],
+      "return_type": "Custom(\"Scroll\")",
+      "is_associated": true,
+      "parent_type": "Scroll",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "SplitPanel::initial_size": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"i32\")"
+      ],
+      "return_type": "Custom(\"SplitPanel\")",
+      "is_associated": true,
+      "parent_type": "SplitPanel",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ChatMessage::avatar": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"ChatMessage\")",
+      "is_associated": true,
+      "parent_type": "ChatMessage",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "NodeGraph::zoom": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"f32\")"
+      ],
+      "return_type": "Custom(\"NodeGraph\")",
+      "is_associated": true,
+      "parent_type": "NodeGraph",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Stepper::new": {
+      "params": [],
+      "return_type": "Custom(\"Stepper\")",
+      "is_associated": true,
+      "parent_type": "Stepper",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "NodeGraph::node": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"GraphNode\")"
+      ],
+      "return_type": "Custom(\"NodeGraph\")",
+      "is_associated": true,
+      "parent_type": "NodeGraph",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "SectionGroup::section": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"Section\")"
+      ],
+      "return_type": "Custom(\"SectionGroup\")",
+      "is_associated": true,
+      "parent_type": "SectionGroup",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spinner::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Spinner",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Loading::new": {
+      "params": [],
+      "return_type": "Custom(\"Loading\")",
+      "is_associated": true,
+      "parent_type": "Loading",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Avatar::class": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Avatar\")",
+      "is_associated": true,
+      "parent_type": "Avatar",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ContextMenuItem::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"ContextMenuItem\")",
+      "is_associated": true,
+      "parent_type": "ContextMenuItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Switch::label": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Switch\")",
+      "is_associated": true,
+      "parent_type": "Switch",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Menu::item": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Menu\")",
+      "is_associated": true,
+      "parent_type": "Menu",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Switch::class": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Switch\")",
+      "is_associated": true,
+      "parent_type": "Switch",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Divider::margin": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Divider\")",
+      "is_associated": true,
+      "parent_type": "Divider",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CurveEditor::new": {
+      "params": [],
+      "return_type": "Custom(\"CurveEditor\")",
+      "is_associated": true,
+      "parent_type": "CurveEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Toast::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Toast",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "GradientEditor::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "GradientEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Div::child": {
+      "params": [
+        "Custom(\"T\")"
+      ],
+      "return_type": "Custom(\"Div\")",
+      "is_associated": true,
+      "parent_type": "Div",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "GraphNode::input": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"NodePin\")"
+      ],
+      "return_type": "Custom(\"GraphNode\")",
+      "is_associated": true,
+      "parent_type": "GraphNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Tooltip::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Tooltip",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "AdvancedCodeEditor::theme": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"AdvancedCodeEditor\")",
+      "is_associated": true,
+      "parent_type": "AdvancedCodeEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "NavbarItem::new": {
+      "params": [
+        "String",
+        "String"
+      ],
+      "return_type": "Custom(\"NavbarItem\")",
+      "is_associated": true,
+      "parent_type": "NavbarItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Section::removable": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Section\")",
+      "is_associated": true,
+      "parent_type": "Section",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::sm": {
+      "params": [],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Flex::padding": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Flex\")",
+      "is_associated": true,
+      "parent_type": "Flex",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Container::max_height": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Container\")",
+      "is_associated": true,
+      "parent_type": "Container",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "NodePin::connect": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"NodePin\")",
+      "is_associated": true,
+      "parent_type": "NodePin",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Input::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Input",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "TreeView::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "TreeView",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Div::id": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Div\")",
+      "is_associated": true,
+      "parent_type": "Div",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "VNode::raw_handle": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "Custom(\"u64\")",
+      "is_associated": true,
+      "parent_type": "VNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Dropdown::item": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"DropdownItem\")"
+      ],
+      "return_type": "Custom(\"Dropdown\")",
+      "is_associated": true,
+      "parent_type": "Dropdown",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Toolbar::item": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Toolbar\")",
+      "is_associated": true,
+      "parent_type": "Toolbar",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Card::padding": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Card\")",
+      "is_associated": true,
+      "parent_type": "Card",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Row::justify": {
+      "params": [
+        "Custom(\"RowJustify\")"
+      ],
+      "return_type": "Custom(\"Row\")",
+      "is_associated": true,
+      "parent_type": "Row",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Tabs::new": {
+      "params": [],
+      "return_type": "Custom(\"Tabs\")",
+      "is_associated": true,
+      "parent_type": "Tabs",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Section::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Section\")",
+      "is_associated": true,
+      "parent_type": "Section",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Select::selected": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Select\")",
+      "is_associated": true,
+      "parent_type": "Select",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "VNode::input": {
+      "params": [],
+      "return_type": "Custom(\"VNode\")",
+      "is_associated": true,
+      "parent_type": "VNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Checkbox::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Checkbox",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Container::padding": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Container\")",
+      "is_associated": true,
+      "parent_type": "Container",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CodeEditor::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "CodeEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ListItem::render": {
+      "params": [],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "ListItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "H3::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"H3\")",
+      "is_associated": true,
+      "parent_type": "H3",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "MenuItem::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"MenuItem\")",
+      "is_associated": true,
+      "parent_type": "MenuItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "NodeGraph::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "NodeGraph",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Breadcrumb::render": {
+      "params": [],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Breadcrumb",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "NodePin::input": {
+      "params": [
+        "String",
+        "String",
+        "Custom(\"PinType\")"
+      ],
+      "return_type": "Custom(\"NodePin\")",
+      "is_associated": true,
+      "parent_type": "NodePin",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "TreeItem::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"TreeItem\")",
+      "is_associated": true,
+      "parent_type": "TreeItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "VNode::set_type": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"VNode\")",
+      "is_associated": true,
+      "parent_type": "VNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "FileNode::child": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"FileNode\")"
+      ],
+      "return_type": "Custom(\"FileNode\")",
+      "is_associated": true,
+      "parent_type": "FileNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "MenuItem::render": {
+      "params": [],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "MenuItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "TableRow::cell": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"TableRow\")",
+      "is_associated": true,
+      "parent_type": "TableRow",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "HamburgerMenu::open": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"HamburgerMenu\")",
+      "is_associated": true,
+      "parent_type": "HamburgerMenu",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Timeline::event": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"TimelineEvent\")"
+      ],
+      "return_type": "Custom(\"Timeline\")",
+      "is_associated": true,
+      "parent_type": "Timeline",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Chip::icon": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Chip\")",
+      "is_associated": true,
+      "parent_type": "Chip",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::border_color": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Dialog::open": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Dialog\")",
+      "is_associated": true,
+      "parent_type": "Dialog",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Property::tooltip": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Property\")",
+      "is_associated": true,
+      "parent_type": "Property",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "NodePin::get_color": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "NodePin",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Text::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Text\")",
+      "is_associated": true,
+      "parent_type": "Text",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Stack::height": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Stack\")",
+      "is_associated": true,
+      "parent_type": "Stack",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Select::disabled": {
+      "params": [
+        "Bool"
+      ],
+      "return_type": "Custom(\"Select\")",
+      "is_associated": true,
+      "parent_type": "Select",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "H2::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"H2\")",
+      "is_associated": true,
+      "parent_type": "H2",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Column::justify": {
+      "params": [
+        "Custom(\"ColumnJustify\")"
+      ],
+      "return_type": "Custom(\"Column\")",
+      "is_associated": true,
+      "parent_type": "Column",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Section::icon": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Section\")",
+      "is_associated": true,
+      "parent_type": "Section",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Breadcrumb::new": {
+      "params": [],
+      "return_type": "Custom(\"Breadcrumb\")",
+      "is_associated": true,
+      "parent_type": "Breadcrumb",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ChatInput::multiline": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"ChatInput\")",
+      "is_associated": true,
+      "parent_type": "ChatInput",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::overflow": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Alert::error": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Alert\")",
+      "is_associated": true,
+      "parent_type": "Alert",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Panel::collapsible": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Panel\")",
+      "is_associated": true,
+      "parent_type": "Panel",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Toast::show_close": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Toast\")",
+      "is_associated": true,
+      "parent_type": "Toast",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Grid::padding": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Grid\")",
+      "is_associated": true,
+      "parent_type": "Grid",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "P::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "P",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ContextMenu::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"ContextMenu\")",
+      "is_associated": true,
+      "parent_type": "ContextMenu",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "VNode::set_id": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"VNode\")",
+      "is_associated": true,
+      "parent_type": "VNode",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Timeline::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Timeline",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Center::render": {
+      "params": [],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Center",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Dropdown::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Dropdown",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Slider::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Slider",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Modal::content": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Modal\")",
+      "is_associated": true,
+      "parent_type": "Modal",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "TreeItem::expanded": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"TreeItem\")",
+      "is_associated": true,
+      "parent_type": "TreeItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Navbar::new": {
+      "params": [],
+      "return_type": "Custom(\"Navbar\")",
+      "is_associated": true,
+      "parent_type": "Navbar",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Toolbar::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Toolbar",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Button::size": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"ButtonSize\")"
+      ],
+      "return_type": "Custom(\"Button\")",
+      "is_associated": true,
+      "parent_type": "Button",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "HamburgerMenu::new": {
+      "params": [],
+      "return_type": "Custom(\"HamburgerMenu\")",
+      "is_associated": true,
+      "parent_type": "HamburgerMenu",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Switch::new": {
+      "params": [],
+      "return_type": "Custom(\"Switch\")",
+      "is_associated": true,
+      "parent_type": "Switch",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Tab::disabled": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Tab\")",
+      "is_associated": true,
+      "parent_type": "Tab",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "SidebarItem::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"SidebarItem\")",
+      "is_associated": true,
+      "parent_type": "SidebarItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Modal::new": {
+      "params": [
+        "String",
+        "String"
+      ],
+      "return_type": "Custom(\"Modal\")",
+      "is_associated": true,
+      "parent_type": "Modal",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Switch::checked": {
+      "params": [
+        "Bool"
+      ],
+      "return_type": "Custom(\"Switch\")",
+      "is_associated": true,
+      "parent_type": "Switch",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spinner::size": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"SpinnerSize\")"
+      ],
+      "return_type": "Custom(\"Spinner\")",
+      "is_associated": true,
+      "parent_type": "Spinner",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ContextMenu::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "ContextMenu",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::align_items": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Column::new": {
+      "params": [],
+      "return_type": "Custom(\"Column\")",
+      "is_associated": true,
+      "parent_type": "Column",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "RadioGroup::option": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"RadioOption\")"
+      ],
+      "return_type": "Custom(\"RadioGroup\")",
+      "is_associated": true,
+      "parent_type": "RadioGroup",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Column::child": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Column\")",
+      "is_associated": true,
+      "parent_type": "Column",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Toast::variant": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"ToastVariant\")"
+      ],
+      "return_type": "Custom(\"Toast\")",
+      "is_associated": true,
+      "parent_type": "Toast",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "TypingIndicator::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "TypingIndicator",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Card::children": {
+      "params": [
+        "Custom(\"Self\")",
+        "Vec(String)"
+      ],
+      "return_type": "Custom(\"Card\")",
+      "is_associated": true,
+      "parent_type": "Card",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "NodeGraph::new": {
+      "params": [],
+      "return_type": "Custom(\"NodeGraph\")",
+      "is_associated": true,
+      "parent_type": "NodeGraph",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Textarea::disabled": {
+      "params": [
+        "Bool"
+      ],
+      "return_type": "Custom(\"Textarea\")",
+      "is_associated": true,
+      "parent_type": "Textarea",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CodeEditor::theme": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"CodeEditor\")",
+      "is_associated": true,
+      "parent_type": "CodeEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CollapsibleSection::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "CollapsibleSection",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Flex::gap": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Flex\")",
+      "is_associated": true,
+      "parent_type": "Flex",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Loading::class": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Loading\")",
+      "is_associated": true,
+      "parent_type": "Loading",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "TypingIndicator::label": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"TypingIndicator\")",
+      "is_associated": true,
+      "parent_type": "TypingIndicator",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Form::child": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Form\")",
+      "is_associated": true,
+      "parent_type": "Form",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Property::text": {
+      "params": [
+        "String",
+        "String"
+      ],
+      "return_type": "Custom(\"Property\")",
+      "is_associated": true,
+      "parent_type": "Property",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Dialog::new": {
+      "params": [
+        "String",
+        "String"
+      ],
+      "return_type": "Custom(\"Dialog\")",
+      "is_associated": true,
+      "parent_type": "Dialog",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CodeEditor::readonly": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"CodeEditor\")",
+      "is_associated": true,
+      "parent_type": "CodeEditor",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Menu::class": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Menu\")",
+      "is_associated": true,
+      "parent_type": "Menu",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ChatInput::new": {
+      "params": [],
+      "return_type": "Custom(\"ChatInput\")",
+      "is_associated": true,
+      "parent_type": "ChatInput",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ContextMenuItem::icon": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"ContextMenuItem\")",
+      "is_associated": true,
+      "parent_type": "ContextMenuItem",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Modal::size": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"ModalSize\")"
+      ],
+      "return_type": "Custom(\"Modal\")",
+      "is_associated": true,
+      "parent_type": "Modal",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::flex_direction": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    }
+  },
+  "version": "0.46.2"
+}
