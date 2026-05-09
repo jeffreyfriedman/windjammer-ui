@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -19,27 +21,35 @@ pub struct Tooltip {
 }
 
 impl Tooltip {
-#[inline]
-pub fn new(text: String, child: String) -> Tooltip {
-        Tooltip { text: text.to_string(), position: TooltipPosition::Top, child: child.to_string() }
-}
-#[inline]
-pub fn position(mut self, position: TooltipPosition) -> Tooltip {
+    #[inline]
+    pub fn new(text: String, child: String) -> Tooltip {
+        Tooltip {
+            text: text.to_string(),
+            position: TooltipPosition::Top,
+            child: child.to_string(),
+        }
+    }
+    #[inline]
+    pub fn position(mut self, position: TooltipPosition) -> Tooltip {
         self.position = position;
         self
-}
+    }
 }
 
 impl Renderable for Tooltip {
-#[inline]
-fn render(&self) -> String {
+    #[inline]
+    fn render(&self) -> String {
         let position_class = match self.position {
             TooltipPosition::Top => "wj-tooltip-top".to_string(),
             TooltipPosition::Bottom => "wj-tooltip-bottom".to_string(),
             TooltipPosition::Left => "wj-tooltip-left".to_string(),
             TooltipPosition::Right => "wj-tooltip-right".to_string(),
         };
-        format!("<div class='wj-tooltip-container {}'>{}<span class='wj-tooltip-text'>{}</span></div>", position_class, self.child.clone(), self.text.clone())
+        format!(
+            "<div class='wj-tooltip-container {}'>{}<span class='wj-tooltip-text'>{}</span></div>",
+            position_class,
+            self.child.clone(),
+            self.text.clone()
+        )
+    }
 }
-}
-

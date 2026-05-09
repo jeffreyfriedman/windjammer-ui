@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
@@ -9,22 +11,26 @@ pub struct Menu {
 }
 
 impl Menu {
-#[inline]
-pub fn new(trigger: String) -> Menu {
-        Menu { items: Vec::new(), trigger: trigger.to_string(), class: String::new() }
-}
-#[inline]
-pub fn item(mut self, item: String) -> Menu {
+    #[inline]
+    pub fn new(trigger: String) -> Menu {
+        Menu {
+            items: Vec::new(),
+            trigger: trigger.to_string(),
+            class: String::new(),
+        }
+    }
+    #[inline]
+    pub fn item(mut self, item: String) -> Menu {
         self.items.push(item);
         self
-}
-#[inline]
-pub fn class(mut self, class: String) -> Menu {
+    }
+    #[inline]
+    pub fn class(mut self, class: String) -> Menu {
         self.class = class;
         self
-}
-#[inline]
-pub fn render(&self) -> String {
+    }
+    #[inline]
+    pub fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<div class=\"wj-menu ");
         html.push_str(&self.class.clone());
@@ -38,7 +44,7 @@ pub fn render(&self) -> String {
         html.push_str("</div>");
         html.push_str("<style>.wj-menu:hover .wj-menu-items { display: block; }</style>");
         html
-}
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
@@ -52,32 +58,38 @@ pub struct MenuItem {
 }
 
 impl MenuItem {
-#[inline]
-pub fn new(label: String) -> MenuItem {
-        MenuItem { label: label.to_string(), icon: String::new(), href: "#".to_string(), disabled: false, class: String::new() }
-}
-#[inline]
-pub fn icon(mut self, icon: String) -> MenuItem {
+    #[inline]
+    pub fn new(label: String) -> MenuItem {
+        MenuItem {
+            label: label.to_string(),
+            icon: String::new(),
+            href: "#".to_string(),
+            disabled: false,
+            class: String::new(),
+        }
+    }
+    #[inline]
+    pub fn icon(mut self, icon: String) -> MenuItem {
         self.icon = icon;
         self
-}
-#[inline]
-pub fn href(mut self, href: String) -> MenuItem {
+    }
+    #[inline]
+    pub fn href(mut self, href: String) -> MenuItem {
         self.href = href;
         self
-}
-#[inline]
-pub fn disabled(mut self, disabled: bool) -> MenuItem {
+    }
+    #[inline]
+    pub fn disabled(mut self, disabled: bool) -> MenuItem {
         self.disabled = disabled;
         self
-}
-#[inline]
-pub fn class(mut self, class: String) -> MenuItem {
+    }
+    #[inline]
+    pub fn class(mut self, class: String) -> MenuItem {
         self.class = class;
         self
-}
-#[inline]
-pub fn render(&self) -> String {
+    }
+    #[inline]
+    pub fn render(&self) -> String {
         let disabled_style = {
             if self.disabled {
                 " opacity: 0.5; cursor: not-allowed;".to_string()
@@ -104,6 +116,5 @@ pub fn render(&self) -> String {
         html.push_str("</a>");
         html.push_str("<style>.wj-menu-item:hover:not([style*='cursor: not-allowed']) { background-color: #f3f4f6; }</style>");
         html
+    }
 }
-}
-
