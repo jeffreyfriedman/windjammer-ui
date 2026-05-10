@@ -7,7 +7,7 @@
 ### 1. **Test Functions Included in Library Output**
 ```bash
 # Current: wj generates main() test functions
-wj build src_wj/components/button.wj -o generated/
+wj build src/components/button.wj -o generated/
 
 # Output includes:
 fn main() {
@@ -20,7 +20,7 @@ fn main() {
 
 **Solution:** Add `--library` flag:
 ```bash
-wj build src_wj/components/ -o generated/ --library
+wj build src/components/ -o generated/ --library
 # Should NOT generate main() functions
 ```
 
@@ -38,7 +38,7 @@ EOF
 
 **Solution:** Auto-generate mod.rs:
 ```bash
-wj build src_wj/components/ -o generated/ --library
+wj build src/components/ -o generated/ --library
 # Should auto-create:
 # generated/mod.rs with:
 #   pub mod button;
@@ -51,7 +51,7 @@ wj build src_wj/components/ -o generated/ --library
 fn main() {
     let output = Command::new("wj")
         .arg("build")
-        .arg("src_wj/components")
+        .arg("src/components")
         .arg("-o")
         .arg("src/components/generated")
         .status();
@@ -66,7 +66,7 @@ fn main() {
 ```rust
 // build.rs
 fn main() {
-    windjammer_build::transpile_library("src_wj/components", "src/components/generated");
+    windjammer_build::transpile_library("src/components", "src/components/generated");
 }
 ```
 
@@ -81,7 +81,7 @@ cargo build
 
 **Solution:** Add watch mode:
 ```bash
-wj watch src_wj/components/ -o generated/ --library
+wj watch src/components/ -o generated/ --library
 # Auto-rebuilds on file changes
 ```
 
@@ -93,7 +93,7 @@ wj watch src_wj/components/ -o generated/ --library
 
 ```bash
 # Auto-detects as library (no --library needed!)
-wj build src_wj/components/ -o generated/
+wj build src/components/ -o generated/
 # ✅ Multiple files + no main() = library mode
 
 # Auto-detects as binary
@@ -109,7 +109,7 @@ wj build lib/ -o out/ --binary
 
 1. **Explicit flags win**: `--library` or `--binary` always respected
 2. **No main() function**: If no `fn main()` exists across all files → library mode
-3. **Directory patterns**: Paths like `src_wj/`, `components/`, `lib/`, `modules/` → library mode
+3. **Directory patterns**: Paths like `src/`, `components/`, `lib/`, `modules/` → library mode
 4. **Project config**: If `.wj-config.toml` exists, read `type = "library"` or `type = "binary"`
 5. **Cargo.toml detection**: If nearby Cargo.toml has `[lib]` section → library mode
 6. **All items pub**: If >80% of top-level items are `pub` → library mode
@@ -135,11 +135,11 @@ Flags:
 wj init my-ui-lib --library
 
 # Set up Windjammer in existing Rust project
-wj integrate --source src_wj/ --output src/generated/
+wj integrate --source src/ --output src/generated/
 
 # Build library with all conveniences
-wj build-lib src_wj/ -o src/generated/
-# Equivalent to: wj build src_wj/ -o src/generated/ --library --module-file
+wj build-lib src/ -o src/generated/
+# Equivalent to: wj build src/ -o src/generated/ --library --module-file
 ```
 
 ### Example: Ideal Workflow
@@ -147,7 +147,7 @@ wj build-lib src_wj/ -o src/generated/
 ```bash
 # Step 1: Initialize (one-time)
 cd windjammer-ui
-wj integrate --source src_wj/components --output src/components/generated
+wj integrate --source src/components --output src/components/generated
 
 # This creates:
 # - build.rs (auto-configured)
@@ -155,7 +155,7 @@ wj integrate --source src_wj/components --output src/components/generated
 # - Cargo.toml updates (if needed)
 
 # Step 2: Develop (ongoing)
-wj watch src_wj/components  # Auto-detects library mode! No --library flag needed!
+wj watch src/components  # Auto-detects library mode! No --library flag needed!
 cargo run --example gallery # In another terminal
 
 # Changes to .wj files auto-trigger:
@@ -193,7 +193,7 @@ wj build tests/ -o target/tests/ --binary
 # Mixed project (use config)
 cat > .wj-config.toml << EOF
 type = "library"
-source = "src_wj/"
+source = "src/"
 output = "src/generated/"
 EOF
 
@@ -227,7 +227,7 @@ fn detect_build_mode(source_path: &Path, files: &[PathBuf]) -> BuildMode {
         return BuildMode::Library;
     }
     
-    // 3. Check directory patterns (no more src_wj/ needed!)
+    // 3. Check directory patterns (no more src/ needed!)
     let path_str = source_path.to_string_lossy();
     if path_str.contains("components") || path_str.contains("lib") 
         || path_str.contains("modules") {
@@ -275,7 +275,7 @@ fn detect_build_mode(source_path: &Path, files: &[PathBuf]) -> BuildMode {
 - Create `.wj-config.toml`:
   ```toml
   [library]
-  source = "src_wj/components"
+  source = "src/components"
   output = "src/components/generated"
   auto_mod = true
   ```
@@ -292,7 +292,7 @@ This is exactly what dogfooding is for - we discovered:
 
 Once these CLI improvements land, building windjammer-ui becomes:
 ```bash
-wj integrate src_wj/components src/components/generated
+wj integrate src/components src/components/generated
 cargo build  # Just works! ✨
 ```
 

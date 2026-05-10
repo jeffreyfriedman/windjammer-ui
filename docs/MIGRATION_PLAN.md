@@ -1,4 +1,4 @@
-# Migration Plan: src_wj/ → src/ Simplification
+# Migration Plan: src/ → src/ Simplification
 
 ## Why Simplify?
 
@@ -8,9 +8,9 @@ windjammer-ui/
   src/                      # Rust library code
     components/
       mod.rs
-      generated/            # Transpiled from src_wj/
+      generated/            # Transpiled from src/
         *.rs
-  src_wj/                   # Windjammer source (weird naming!)
+  src/                   # Windjammer source (weird naming!)
     components/
       *.wj
 ```
@@ -27,7 +27,7 @@ windjammer-ui/
 
 ## Benefits
 
-1. ✅ **No weird `src_wj/` folder** - just use standard `src/`
+1. ✅ **No weird `src/` folder** - just use standard `src/`
 2. ✅ **Co-located files** - `button.wj` next to `button.rs` 
 3. ✅ **Standard Rust layout** - matches cargo conventions
 4. ✅ **Better IDE support** - src/ is where code lives
@@ -39,14 +39,14 @@ windjammer-ui/
 
 ```bash
 # 1. Move .wj files to src/components/
-mv src_wj/components/*.wj src/components/
+mv src/components/*.wj src/components/
 
 # 2. Update .gitignore
 echo "src/components/*.rs" >> .gitignore
 echo "!src/components/mod.rs" >> .gitignore
 
 # 3. Update build.rs
-# Change: source = "src_wj/components"
+# Change: source = "src/components"
 # To:     source = "src/components"
 # Change: output = "src/components/generated"  
 # To:     output = "src/components" (same dir)
@@ -55,17 +55,17 @@ echo "!src/components/mod.rs" >> .gitignore
 wj build src/components/  # Auto-detects, generates .rs alongside .wj
 
 # 5. Delete old folder
-rm -rf src_wj/
+rm -rf src/
 ```
 
 ### Option B: Separate Generated Dir (Current approach)
 
 ```bash
-# 1. Rename src_wj/ to src/windjammer/
-mv src_wj/ src/windjammer/
+# 1. Rename src/ to src/windjammer/
+mv src/ src/windjammer/
 
 # 2. Update build.rs
-# Change: source = "src_wj/components"
+# Change: source = "src/components"
 # To:     source = "src/windjammer/components"
 
 # Still generates to src/components/generated/
