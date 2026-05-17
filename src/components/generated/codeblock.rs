@@ -18,7 +18,7 @@ impl CodeBlock {
     pub fn new(code: String) -> CodeBlock {
         CodeBlock {
             code: code.to_string(),
-            language: String::from(""),
+            language: String::from("".to_string()),
             show_line_numbers: false,
             show_copy_button: true,
         }
@@ -50,14 +50,14 @@ impl Renderable for CodeBlock {
                     self.language.clone()
                 )
             } else {
-                String::from("")
+                String::from("".to_string())
             }
         };
         let copy_button = {
             if self.show_copy_button {
                 format!("<button class='wj-codeblock-copy' onclick='navigator.clipboard.writeText(this.parentElement.querySelector(\"code\").textContent); this.textContent=\"✓ Copied!\"; setTimeout(() => this.textContent=\"📋 Copy\", 2000)'>\n                    📋 Copy\n                </button>")
             } else {
-                String::from("")
+                String::from("".to_string())
             }
         };
         let line_number_class = {

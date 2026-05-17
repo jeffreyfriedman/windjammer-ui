@@ -40,7 +40,7 @@ impl Navbar {
     #[inline]
     pub fn new() -> Navbar {
         Navbar {
-            brand: String::from(""),
+            brand: String::from("".to_string()),
             items: Vec::new(),
             position: NavbarPosition::Top,
             sticky: false,
@@ -97,7 +97,7 @@ impl Renderable for Navbar {
             if !self.brand.is_empty() {
                 format!("<div class='wj-navbar-brand'>{}</div>", self.brand.clone())
             } else {
-                String::from("")
+                String::from("".to_string())
             }
         };
         format!(

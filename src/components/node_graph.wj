@@ -16,6 +16,7 @@ pub enum PinType {
     Color,     // Color (pink)
     Texture,   // Texture reference (orange)
     Object,    // Object reference (blue)
+    Entity,    // ECS entity handle (teal)
     Any,       // Wildcard (gray)
 }
 
@@ -75,6 +76,7 @@ impl NodePin {
             PinType::Color => "#ec4899",
             PinType::Texture => "#fb923c",
             PinType::Object => "#3b82f6",
+            PinType::Entity => "#14b8a6",
             PinType::Any => "#888888",
         }
     }

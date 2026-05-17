@@ -18,8 +18,8 @@ impl ContextMenuItem {
     pub fn new(label: String) -> ContextMenuItem {
         ContextMenuItem {
             label: label.to_string(),
-            icon: String::from(""),
-            action: String::from(""),
+            icon: String::from("".to_string()),
+            action: String::from("".to_string()),
             disabled: false,
         }
     }
@@ -71,7 +71,7 @@ impl Renderable for ContextMenu {
                 if item.icon.len() > 0 {
                     format!("<span class='wj-context-icon'>{}</span>", item.icon.clone())
                 } else {
-                    String::from("")
+                    String::from("".to_string())
                 }
             };
             let disabled_class = {
