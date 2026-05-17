@@ -17,7 +17,7 @@ impl MessageList {
     pub fn new() -> MessageList {
         MessageList {
             messages: Vec::new(),
-            height: String::from("600px"),
+            height: String::from("600px".to_string()),
             auto_scroll: true,
         }
     }

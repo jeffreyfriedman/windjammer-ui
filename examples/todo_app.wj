@@ -2,7 +2,7 @@
 // Demonstrates: Lists, CRUD operations, state management, filtering
 
 use windjammer_ui::*
-use std::collections::*
+use windjammer::collections::*
 
 @derive(Clone)
 struct TodoItem {

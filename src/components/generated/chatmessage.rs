@@ -26,8 +26,8 @@ impl ChatMessage {
         ChatMessage {
             role: MessageRole::User,
             content: content.to_string(),
-            avatar: String::from(""),
-            timestamp: String::from(""),
+            avatar: String::from("".to_string()),
+            timestamp: String::from("".to_string()),
         }
     }
     #[inline]
@@ -77,7 +77,7 @@ impl Renderable for ChatMessage {
                     self.timestamp.clone()
                 )
             } else {
-                String::from("")
+                String::from("".to_string())
             }
         };
         format!("<div class='wj-chat-message {}'>\n                {}\n                <div class='wj-message-content-wrapper'>\n                    <div class='wj-message-content'>{}</div>\n                    {}\n                </div>\n            </div>", role_class, avatar_html, self.content.clone(), timestamp_html)

@@ -23,8 +23,8 @@ impl SidebarItem {
     pub fn new(label: String) -> SidebarItem {
         SidebarItem {
             label: label.to_string(),
-            icon: String::from(""),
-            href: String::from("#"),
+            icon: String::from("".to_string()),
+            href: String::from("#".to_string()),
         }
     }
     #[inline]
@@ -54,7 +54,7 @@ impl Sidebar {
         Sidebar {
             items: Vec::new(),
             position: SidebarPosition::Left,
-            width: String::from("250px"),
+            width: String::from("250px".to_string()),
             collapsed: false,
         }
     }
@@ -89,7 +89,7 @@ impl Renderable for Sidebar {
                 if item.icon.len() > 0 {
                     format!("<span class='wj-sidebar-icon'>{}</span>", item.icon.clone())
                 } else {
-                    String::from("")
+                    String::from("".to_string())
                 }
             };
             {

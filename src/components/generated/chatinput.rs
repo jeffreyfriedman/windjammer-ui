@@ -18,8 +18,8 @@ impl ChatInput {
     #[inline]
     pub fn new() -> ChatInput {
         ChatInput {
-            placeholder: String::from("Type a message..."),
-            value: String::from(""),
+            placeholder: String::from("Type a message...".to_string()),
+            value: String::from("".to_string()),
             disabled: false,
             multiline: true,
             rows: 3_i32,
