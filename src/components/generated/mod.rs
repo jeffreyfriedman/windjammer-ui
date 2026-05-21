@@ -157,3 +157,13 @@ pub use traits::*;
 pub use treeview::*;
 pub use typingindicator::*;
 pub use vnode::*;
+
+// bt_visual_* omitted until Renderable uses owned self (WIP in src/components/)
+pub mod profiler_timeline_model;
+pub use profiler_timeline_model::*;
+
+pub mod realtime_profiler_panel;
+pub use realtime_profiler_panel::*;
+
+pub mod frame_debugger_panel;
+pub use frame_debugger_panel::*;
