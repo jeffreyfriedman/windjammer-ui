@@ -1,0 +1,91 @@
+// Data model for ECS Inspector panel — mirrors engine editor/ecs_inspector.wj shapes.
+// UI hosts use mock snapshots until engine FFI feeds live DynamicWorld introspection.
+
+pub struct EcsEntityRow {
+    pub entity_id: i64,
+    pub component_names: Vec<string>,
+}
+
+pub struct EcsInspectorField {
+    pub name: string,
+    pub display_value: string,
+}
+
+pub struct EcsComponentSection {
+    pub name: string,
+    pub fields: Vec<EcsInspectorField>,
+}
+
+pub struct EcsInspectorSnapshot {
+    pub entities: Vec<EcsEntityRow>,
+    pub selected_entity_id: Option<i64>,
+    pub components: Vec<EcsComponentSection>,
+}
+
+impl EcsInspectorSnapshot {
+    pub fn empty() -> EcsInspectorSnapshot {
+        EcsInspectorSnapshot {
+            entities: Vec::new(),
+            selected_entity_id: None,
+            components: Vec::new(),
+        }
+    }
+
+    pub fn entity_count(self) -> usize {
+        self.entities.len()
+    }
+
+    pub fn selected_entity_label(self) -> string {
+        if let Some(id) = self.selected_entity_id {
+            format!("Entity #{}", id)
+        } else {
+            "No entity selected".to_string()
+        }
+    }
+
+    pub fn mock_runtime_demo() -> EcsInspectorSnapshot {
+        let mut entities = Vec::new()
+        entities.push(EcsEntityRow {
+            entity_id: 1,
+            component_names: vec!["Transform".to_string(), "Velocity".to_string()],
+        })
+        entities.push(EcsEntityRow {
+            entity_id: 2,
+            component_names: vec!["Transform".to_string()],
+        })
+        entities.push(EcsEntityRow {
+            entity_id: 42,
+            component_names: vec!["Transform".to_string(), "Velocity".to_string(), "Health".to_string()],
+        })
+
+        let mut components = Vec::new()
+        components.push(EcsComponentSection {
+            name: "Transform".to_string(),
+            fields: vec![
+                EcsInspectorField { name: "position.x".to_string(), display_value: "1.0".to_string() },
+                EcsInspectorField { name: "position.y".to_string(), display_value: "0.0".to_string() },
+                EcsInspectorField { name: "position.z".to_string(), display_value: "0.0".to_string() },
+                EcsInspectorField { name: "rotation.x".to_string(), display_value: "0.0".to_string() },
+                EcsInspectorField { name: "rotation.y".to_string(), display_value: "0.0".to_string() },
+                EcsInspectorField { name: "rotation.z".to_string(), display_value: "0.0".to_string() },
+                EcsInspectorField { name: "scale.x".to_string(), display_value: "1.0".to_string() },
+                EcsInspectorField { name: "scale.y".to_string(), display_value: "1.0".to_string() },
+                EcsInspectorField { name: "scale.z".to_string(), display_value: "1.0".to_string() },
+            ],
+        })
+        components.push(EcsComponentSection {
+            name: "Velocity".to_string(),
+            fields: vec![
+                EcsInspectorField { name: "value.x".to_string(), display_value: "0.0".to_string() },
+                EcsInspectorField { name: "value.y".to_string(), display_value: "1.0".to_string() },
+                EcsInspectorField { name: "value.z".to_string(), display_value: "0.0".to_string() },
+            ],
+        })
+
+        EcsInspectorSnapshot {
+            entities: entities,
+            selected_entity_id: Some(1),
+            components: components,
+        }
+    }
+}
