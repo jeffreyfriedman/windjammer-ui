@@ -167,3 +167,11 @@ pub use realtime_profiler_panel::*;
 
 pub mod frame_debugger_panel;
 pub use frame_debugger_panel::*;
+
+// bt_visual_* omitted until Renderable uses owned self (WIP in src/components/)
+
+pub mod ecs_inspector_model;
+pub use ecs_inspector_model::*;
+
+pub mod ecs_inspector_panel;
+pub use ecs_inspector_panel::*;
