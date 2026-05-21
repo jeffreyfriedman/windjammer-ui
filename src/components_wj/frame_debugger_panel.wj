@@ -1,5 +1,6 @@
 // Frame debugger panel — capture frame index and step through recorded frames.
 
+use crate::frame_trace_ffi
 use super::traits::Renderable
 
 pub struct FrameDebuggerViewState {
@@ -62,6 +63,25 @@ impl FrameDebuggerPanel {
     pub fn from_mock() -> FrameDebuggerPanel {
         FrameDebuggerPanel {
             state: FrameDebuggerViewState::mock_captured(),
+            step_back_handler: "frame_debug_step_back()",
+            step_forward_handler: "frame_debug_step_forward()",
+            capture_handler: "frame_debug_capture()",
+        }
+    }
+
+    pub fn from_live() -> FrameDebuggerPanel {
+        if !frame_trace_ffi::has_live_data() {
+            return FrameDebuggerPanel::inactive()
+        }
+        let state = FrameDebuggerViewState::from_trace(
+            frame_trace_ffi::live_frame_index(),
+            frame_trace_ffi::live_frame_count() as usize,
+            frame_trace_ffi::live_frame_time_ms(),
+            frame_trace_ffi::live_can_step_back(),
+            frame_trace_ffi::live_can_step_forward(),
+        )
+        FrameDebuggerPanel {
+            state: state,
             step_back_handler: "frame_debug_step_back()",
             step_forward_handler: "frame_debug_step_forward()",
             capture_handler: "frame_debug_capture()",

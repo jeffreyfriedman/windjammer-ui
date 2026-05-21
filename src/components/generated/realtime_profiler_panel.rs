@@ -16,6 +16,13 @@ pub fn from_mock() -> RealtimeProfilerPanel {
         RealtimeProfilerPanel { snapshot: LiveProfilerSnapshot::mock_runtime_demo(), refresh_handler: "profiler_refresh()".to_string() }
 }
 #[inline]
+pub fn from_live(budget_ms: f32) -> RealtimeProfilerPanel {
+        if !crate::frame_trace_ffi::has_live_data() {
+            return RealtimeProfilerPanel::from_mock();
+        }
+        RealtimeProfilerPanel { snapshot: LiveProfilerSnapshot::from_engine_live(budget_ms), refresh_handler: "profiler_refresh()".to_string() }
+}
+#[inline]
 pub fn snapshot(mut self, snap: LiveProfilerSnapshot) -> RealtimeProfilerPanel {
         self.snapshot = snap;
         self

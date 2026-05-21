@@ -1,5 +1,7 @@
 // Data model for realtime profiler timeline (frame budget + scope rows).
-// UI hosts use mock snapshots until engine FFI feeds live metrics.
+// Reads live engine metrics via crate::frame_trace_ffi when a provider is registered.
+
+use crate::frame_trace_ffi
 
 pub enum ProfilerScopeKind {
     Cpu,
@@ -62,6 +64,53 @@ impl LiveProfilerSnapshot {
         } else {
             "#2ecc71"
         }
+    }
+
+    pub fn from_scope_rows(
+        frame_index: u64,
+        frame_time_ms: f32,
+        budget_ms: f32,
+        rows: Vec<ProfilerScopeRow>,
+    ) -> LiveProfilerSnapshot {
+        let mut snap = LiveProfilerSnapshot::new(frame_index, frame_time_ms, budget_ms)
+        for row in rows {
+            snap = snap.scope(row)
+        }
+        snap
+    }
+
+    pub fn from_engine_live(budget_ms: f32) -> LiveProfilerSnapshot {
+        if !frame_trace_ffi::has_live_data() {
+            return LiveProfilerSnapshot::new(0, 0.0, budget_ms)
+        }
+        let frame_index = frame_trace_ffi::live_frame_index()
+        let frame_time_ms = frame_trace_ffi::live_frame_time_ms()
+        let mut snap = LiveProfilerSnapshot::new(frame_index, frame_time_ms, budget_ms)
+        let count = frame_trace_ffi::live_scope_count()
+        let mut i = 0
+        while i < count {
+            let name = frame_trace_ffi::live_scope_name(i)
+            let duration_ms = frame_trace_ffi::live_scope_duration_ms(i)
+            let is_gpu = frame_trace_ffi::live_scope_is_gpu(i)
+            let kind = if is_gpu {
+                ProfilerScopeKind::Gpu
+            } else {
+                ProfilerScopeKind::Cpu
+            }
+            let pct = if frame_time_ms > 0.0 {
+                (duration_ms / frame_time_ms) * 100.0
+            } else {
+                0.0
+            }
+            snap = snap.scope(ProfilerScopeRow {
+                name: name,
+                duration_ms: duration_ms,
+                percentage: pct,
+                kind: kind,
+            })
+            i = i + 1
+        }
+        snap
     }
 
     pub fn mock_runtime_demo() -> LiveProfilerSnapshot {

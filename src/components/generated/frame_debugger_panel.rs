@@ -1,6 +1,7 @@
 #[allow(unused_imports)]
 use super::*;
 
+use crate::frame_trace_ffi;
 use super::traits::Renderable;
 #[derive(Debug, Clone, Copy, PartialEq, Default)]
 #[repr(C)]
@@ -56,6 +57,20 @@ pub fn inactive() -> FrameDebuggerPanel {
 #[inline]
 pub fn from_mock() -> FrameDebuggerPanel {
         FrameDebuggerPanel { state: FrameDebuggerViewState::mock_captured(), step_back_handler: "frame_debug_step_back()".to_string(), step_forward_handler: "frame_debug_step_forward()".to_string(), capture_handler: "frame_debug_capture()".to_string() }
+}
+#[inline]
+pub fn from_live() -> FrameDebuggerPanel {
+        if !frame_trace_ffi::has_live_data() {
+            return FrameDebuggerPanel::inactive();
+        }
+        let state = FrameDebuggerViewState::from_trace(
+            frame_trace_ffi::live_frame_index(),
+            frame_trace_ffi::live_frame_count() as usize,
+            frame_trace_ffi::live_frame_time_ms(),
+            frame_trace_ffi::live_can_step_back(),
+            frame_trace_ffi::live_can_step_forward(),
+        );
+        FrameDebuggerPanel { state, step_back_handler: "frame_debug_step_back()".to_string(), step_forward_handler: "frame_debug_step_forward()".to_string(), capture_handler: "frame_debug_capture()".to_string() }
 }
 #[inline]
 pub fn state(mut self, view: FrameDebuggerViewState) -> FrameDebuggerPanel {
