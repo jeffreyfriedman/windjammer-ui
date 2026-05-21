@@ -1,0 +1,151 @@
+// Realtime profiler panel — frame budget bar + per-scope timeline list.
+
+use super::profiler_timeline_model::{LiveProfilerSnapshot, ProfilerScopeKind, ProfilerScopeRow}
+use super::traits::Renderable
+
+pub struct RealtimeProfilerPanel {
+    pub snapshot: LiveProfilerSnapshot,
+    pub refresh_handler: string,
+}
+
+impl RealtimeProfilerPanel {
+    pub fn from_mock() -> RealtimeProfilerPanel {
+        RealtimeProfilerPanel {
+            snapshot: LiveProfilerSnapshot::mock_runtime_demo(),
+            refresh_handler: "profiler_refresh()",
+        }
+    }
+
+    pub fn snapshot(self, snap: LiveProfilerSnapshot) -> RealtimeProfilerPanel {
+        self.snapshot = snap
+        self
+    }
+}
+
+fn render_budget_bar(frame_time_ms: f32, budget_ms: f32) -> string {
+    let util = if budget_ms <= 0.0 {
+        0.0
+    } else {
+        (frame_time_ms / budget_ms) * 100.0
+    }
+    let clamped = if util > 100.0 { 100.0 } else { util }
+    let vclass = if util > 100.0 {
+        "wj-progress-danger"
+    } else if util > 85.0 {
+        "wj-progress-warning"
+    } else {
+        "wj-progress-success"
+    }
+    let color = if util > 100.0 {
+        "#e74c3c"
+    } else if util > 85.0 {
+        "#f39c12"
+    } else {
+        "#2ecc71"
+    }
+    format!(
+        "<div class='rt-profiler-budget'>
+  <div class='rt-profiler-budget-label'>
+    <span>Frame budget</span>
+    <span>{:.2} / {:.2} ms ({:.0}%)</span>
+  </div>
+  <div class='wj-progress-container' style='width:100%;background:#1a1a2e;border-radius:4px;overflow:hidden;'>
+    <div class='wj-progress-bar {}' style='width:{:.0}%;height:20px;background-color:{};'></div>
+  </div>
+</div>",
+        frame_time_ms,
+        budget_ms,
+        util,
+        vclass,
+        clamped,
+        color,
+    )
+}
+
+fn render_scope_row(row: ProfilerScopeRow) -> string {
+    let kind_label = match row.kind {
+        ProfilerScopeKind::Cpu => "CPU",
+        ProfilerScopeKind::Gpu => "GPU",
+    }
+    let bar_w = if row.percentage > 100.0 { 100.0 } else { row.percentage }
+    format!(
+        "<div class='rt-profiler-scope'>
+  <div class='rt-profiler-scope-head'>
+    <span class='rt-profiler-scope-name'>{}</span>
+    <span class='rt-profiler-scope-kind'>{}</span>
+    <span class='rt-profiler-scope-ms'>{:.2} ms</span>
+    <span class='rt-profiler-scope-pct'>{:.1}%</span>
+  </div>
+  <div class='rt-profiler-scope-bar' style='width:{:.0}%;'></div>
+</div>",
+        row.name,
+        kind_label,
+        row.duration_ms,
+        row.percentage,
+        bar_w,
+    )
+}
+
+fn render_scope_list(scopes: Vec<ProfilerScopeRow>) -> string {
+    if scopes.len() == 0 {
+        return "<div class='rt-profiler-empty'>No scope metrics (wire engine snapshot)</div>"
+    }
+    let mut html = ""
+    for row in scopes {
+        html = html + render_scope_row(row)
+    }
+    html
+}
+
+impl Renderable for RealtimeProfilerPanel {
+    pub fn render(self) -> string {
+        let styles = realtime_profiler_styles()
+        let frame_index = self.snapshot.frame_index
+        let frame_time_ms = self.snapshot.frame_time_ms
+        let budget_ms = self.snapshot.budget_ms
+        let scopes = self.snapshot.scopes
+        let budget_html = render_budget_bar(frame_time_ms, budget_ms)
+        let scopes_html = render_scope_list(scopes)
+        format!(
+            "<style>{}</style>
+<div class='rt-profiler-panel'>
+  <header class='rt-profiler-header'>
+    <h3>Realtime Profiler</h3>
+    <button type='button' onclick='{}'>Refresh</button>
+    <span class='rt-profiler-frame-tag'>Frame #{}</span>
+  </header>
+  {}
+  <section class='rt-profiler-scopes'>
+    <h4>Scopes</h4>
+    {}
+  </section>
+</div>",
+            styles,
+            self.refresh_handler,
+            frame_index,
+            budget_html,
+            scopes_html,
+        )
+    }
+}
+
+pub fn realtime_profiler_styles() -> string {
+    "
+.rt-profiler-panel { background:#0f0f1a; color:#e5e7eb; padding:12px; font-family:monospace; font-size:12px; }
+.rt-profiler-header { display:flex; align-items:center; gap:12px; margin-bottom:12px; border-bottom:1px solid #333; padding-bottom:8px; }
+.rt-profiler-header h3 { margin:0; flex:1; color:#60a5fa; }
+.rt-profiler-header button { background:#0f3460; color:#e5e7eb; border:none; padding:6px 10px; border-radius:4px; cursor:pointer; }
+.rt-profiler-frame-tag { color:#888; }
+.rt-profiler-budget { margin-bottom:16px; }
+.rt-profiler-budget-label { display:flex; justify-content:space-between; margin-bottom:6px; color:#aaa; }
+.rt-profiler-scopes h4 { margin:0 0 8px 0; color:#888; font-size:11px; text-transform:uppercase; }
+.rt-profiler-scope { background:#16213e; border-radius:4px; padding:8px; margin-bottom:6px; position:relative; overflow:hidden; }
+.rt-profiler-scope-head { display:flex; gap:8px; position:relative; z-index:1; }
+.rt-profiler-scope-name { flex:1; color:#e0e0e0; }
+.rt-profiler-scope-kind { color:#888; font-size:10px; }
+.rt-profiler-scope-ms { color:#60a5fa; }
+.rt-profiler-scope-pct { color:#4ade80; min-width:48px; text-align:right; }
+.rt-profiler-scope-bar { position:absolute; left:0; top:0; bottom:0; background:rgba(96,165,250,0.15); z-index:0; }
+.rt-profiler-empty { color:#666; padding:16px; text-align:center; }
+"
+}

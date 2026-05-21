@@ -1,0 +1,157 @@
+// Frame debugger panel — capture frame index and step through recorded frames.
+
+use super::traits::Renderable
+
+pub struct FrameDebuggerViewState {
+    pub current_frame_index: u64,
+    pub total_frames: usize,
+    pub frame_time_ms: f32,
+    pub can_step_back: bool,
+    pub can_step_forward: bool,
+}
+
+impl FrameDebuggerViewState {
+    pub fn empty() -> FrameDebuggerViewState {
+        FrameDebuggerViewState {
+            current_frame_index: 0,
+            total_frames: 0,
+            frame_time_ms: 0.0,
+            can_step_back: false,
+            can_step_forward: false,
+        }
+    }
+
+    pub fn from_trace(
+        current_index: u64,
+        total: usize,
+        frame_time_ms: f32,
+        can_back: bool,
+        can_forward: bool,
+    ) -> FrameDebuggerViewState {
+        FrameDebuggerViewState {
+            current_frame_index: current_index,
+            total_frames: total,
+            frame_time_ms: frame_time_ms,
+            can_step_back: can_back,
+            can_step_forward: can_forward,
+        }
+    }
+
+    pub fn mock_captured() -> FrameDebuggerViewState {
+        FrameDebuggerViewState::from_trace(12, 48, 15.8, true, true)
+    }
+}
+
+pub struct FrameDebuggerPanel {
+    pub state: FrameDebuggerViewState,
+    pub step_back_handler: string,
+    pub step_forward_handler: string,
+    pub capture_handler: string,
+}
+
+impl FrameDebuggerPanel {
+    pub fn inactive() -> FrameDebuggerPanel {
+        FrameDebuggerPanel {
+            state: FrameDebuggerViewState::empty(),
+            step_back_handler: "frame_debug_step_back()",
+            step_forward_handler: "frame_debug_step_forward()",
+            capture_handler: "frame_debug_capture()",
+        }
+    }
+
+    pub fn from_mock() -> FrameDebuggerPanel {
+        FrameDebuggerPanel {
+            state: FrameDebuggerViewState::mock_captured(),
+            step_back_handler: "frame_debug_step_back()",
+            step_forward_handler: "frame_debug_step_forward()",
+            capture_handler: "frame_debug_capture()",
+        }
+    }
+
+    pub fn state(self, view: FrameDebuggerViewState) -> FrameDebuggerPanel {
+        self.state = view
+        self
+    }
+}
+
+fn step_button_class(enabled: bool) -> string {
+    if enabled {
+        ""
+    } else {
+        "disabled"
+    }
+}
+
+fn frame_position_label(
+    current_index: u64,
+    total_frames: usize,
+    frame_time_ms: f32,
+) -> string {
+    if total_frames == 0 {
+        "No frames captured"
+    } else {
+        format!(
+            "Frame {} / {} ({:.2} ms)",
+            current_index,
+            total_frames,
+            frame_time_ms,
+        )
+    }
+}
+
+impl Renderable for FrameDebuggerPanel {
+    pub fn render(self) -> string {
+        let current_frame_index = self.state.current_frame_index
+        let total_frames = self.state.total_frames
+        let frame_time_ms = self.state.frame_time_ms
+        let can_step_back = self.state.can_step_back
+        let can_step_forward = self.state.can_step_forward
+        let capture_handler = self.capture_handler
+        let step_back_handler = self.step_back_handler
+        let step_forward_handler = self.step_forward_handler
+        let styles = frame_debugger_panel_styles()
+        let position_label = frame_position_label(
+            current_frame_index,
+            total_frames,
+            frame_time_ms,
+        )
+        let back_class = step_button_class(can_step_back)
+        let forward_class = step_button_class(can_step_forward)
+        format!(
+            "<style>{}</style>
+<div class='frame-debug-panel'>
+  <header>
+    <h3>Frame Debugger</h3>
+    <button type='button' onclick='{}'>Capture</button>
+  </header>
+  <div class='frame-debug-transport'>
+    <button type='button' class='{}' onclick='{}' title='Previous frame'>&larr; Prev</button>
+    <span class='frame-debug-position'>{}</span>
+    <button type='button' class='{}' onclick='{}' title='Next frame'>Next &rarr;</button>
+  </div>
+  <p class='frame-debug-hint'>Step through captured frame traces from the engine ring buffer.</p>
+</div>",
+            styles,
+            capture_handler,
+            back_class,
+            step_back_handler,
+            position_label,
+            forward_class,
+            step_forward_handler,
+        )
+    }
+}
+
+pub fn frame_debugger_panel_styles() -> string {
+    "
+.frame-debug-panel { background:#09090f; border-top:2px solid #60a5fa; color:#ecfdf5; padding:10px; font-family:monospace; }
+.frame-debug-panel header { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.frame-debug-panel header h3 { margin:0; flex:1; color:#60a5fa; font-size:14px; }
+.frame-debug-panel header button { padding:6px 10px; border-radius:4px; border:none; background:#0f3460; color:#e5e7eb; cursor:pointer; }
+.frame-debug-transport { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+.frame-debug-transport button { padding:8px 14px; border-radius:4px; border:none; background:#16213e; color:#e5e7eb; cursor:pointer; }
+.frame-debug-transport button.disabled { opacity:0.4; cursor:not-allowed; }
+.frame-debug-position { flex:1; text-align:center; color:#e0e0e0; font-weight:600; }
+.frame-debug-hint { margin:0; color:#666; font-size:11px; }
+"
+}
