@@ -83,6 +83,7 @@ pub mod ssr;
 pub mod to_vnode;
 pub mod vdom;
 pub mod vnode_ffi; // FFI for Windjammer components to construct VNodes
+pub mod frame_trace_ffi; // Live engine frame trace read bridge for profiler panels
 #[cfg(target_arch = "wasm32")]
 pub mod wasm_events;
 

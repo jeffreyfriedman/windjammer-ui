@@ -16,6 +16,17 @@ impl RealtimeProfilerPanel {
         }
     }
 
+    /// Prefer live engine frame trace; fall back to mock when no host data is registered.
+    pub fn from_live(budget_ms: f32) -> RealtimeProfilerPanel {
+        if !crate::frame_trace_ffi::has_live_data() {
+            return RealtimeProfilerPanel::from_mock()
+        }
+        RealtimeProfilerPanel {
+            snapshot: LiveProfilerSnapshot::from_engine_live(budget_ms),
+            refresh_handler: "profiler_refresh()",
+        }
+    }
+
     pub fn snapshot(self, snap: LiveProfilerSnapshot) -> RealtimeProfilerPanel {
         self.snapshot = snap
         self
