@@ -1,0 +1,94 @@
+use super::traits::Renderable
+use super::bt_visual_canvas::bt_visual_canvas_styles
+use super::bt_visual_palette::bt_visual_palette_styles
+use super::bt_visual_properties::bt_visual_properties_styles
+
+@auto
+pub struct BtDebuggerOverlay {}
+
+impl Renderable for BtDebuggerOverlay {
+    pub fn render(self) -> string {
+        let legend = "".to_string()
+            + "<ul class=\"bt-legend\">"
+            + "<li><span class=\"swatch bt-visual-running\"></span> Running</li>"
+            + "<li><span class=\"swatch bt-visual-success\"></span> Success</li>"
+            + "<li><span class=\"swatch bt-visual-failure\"></span> Failure</li>"
+            + "<li><span class=\"swatch bt-visual-idle\"></span> Idle</li>"
+            + "</ul>"
+        let mut dbg = "".to_string()
+        dbg = dbg + "<aside class=\"bt-debug-pane\">"
+        dbg = dbg + "<strong>Visualizer</strong><p class=\"muted\">Shares color tokens with windjammer-game-core bt_visual_debug snapshots.</p>"
+        dbg = format!("{}{}", dbg, legend)
+        dbg + "</aside>"
+    }
+}
+
+pub fn bt_visual_debug_styles() -> string {
+    "
+    .bt-debug-pane {
+        border-top: 1px solid rgba(255,255,255,0.08);
+        padding: 10px 16px;
+        color: #d7ddfb;
+        background: rgba(6,12,42,0.9);
+        display: flex;
+        align-items: center;
+        gap: 18px;
+    }
+    .bt-debug-pane .muted {
+        margin: 0;
+        flex: 1;
+        color: #8b93c9;
+        font-size: 12px;
+    }
+    .bt-legend {
+        list-style: none;
+        display: flex;
+        gap: 12px;
+        margin: 0;
+        padding: 0;
+    }
+    .bt-legend li {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+    }
+    .bt-legend .swatch {
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+        background: rgba(255,255,255,0.14);
+        display: inline-flex;
+        border: 1px dashed rgba(255,255,255,0.3);
+    }
+    .bt-shell {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        background: #060915;
+        color: #dfe5ff;
+    }
+    .bt-shell-body {
+        display: flex;
+        flex: 1;
+        min-height: 0;
+    }
+    "
+}
+
+pub fn bt_behavior_editor_styles() -> string {
+    let mut blob = "".to_string()
+    blob = blob + bt_visual_canvas_styles()
+    blob = blob + bt_visual_palette_styles()
+    blob = blob + bt_visual_properties_styles()
+    blob + bt_visual_debug_styles()
+}
+
+pub fn bt_editor_layout_stub() -> string {
+    "".to_string()
+        + "<div class=\"bt-shell\">"
+        + "<header style=\"padding:14px;border-bottom:1px solid rgba(255,255,255,0.08)\">Windjammer · Visual Behavior Tree Shell</header>"
+        + "<div class=\"bt-shell-body\">{{PALETTE}}</div>"
+        + "{{DEBUG}}"
+        + "</div>"
+}
