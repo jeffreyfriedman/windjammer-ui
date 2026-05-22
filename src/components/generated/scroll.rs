@@ -1,12 +1,15 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Scroll {
-    pub children: Vec<String>,
-    pub direction: ScrollDir,
-    pub height: String,
-    pub width: String,
-    pub class: String,
+    children: Vec<String>,
+    direction: ScrollDir,
+    height: String,
+    width: String,
+    class: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -23,8 +26,8 @@ impl Scroll {
         Scroll {
             children: Vec::new(),
             direction: ScrollDir::Vertical,
-            height: "400px".to_string(),
-            width: "100%".to_string(),
+            height: "400px".to_string().to_string(),
+            width: "100%".to_string().to_string(),
             class: String::new(),
         }
     }
@@ -63,16 +66,16 @@ impl Scroll {
         };
         let mut html = String::new();
         html.push_str("<div class=\"wj-scroll ");
-        html.push_str(&self.class.as_str());
+        html.push_str(&self.class.clone());
         html.push_str("\" style=\"");
         html.push_str(&overflow);
         html.push_str("; height: ");
-        html.push_str(&self.height.as_str());
+        html.push_str(&self.height);
         html.push_str("; width: ");
-        html.push_str(&self.width.as_str());
+        html.push_str(&self.width);
         html.push_str(";\">");
         for child in &self.children {
-            html.push_str(&child.as_str());
+            html.push_str(&child);
         }
         html.push_str("</div>");
         html

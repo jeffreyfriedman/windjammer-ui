@@ -1,25 +1,28 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
+#[repr(C)]
 pub struct Panel {
-    pub title: String,
-    pub children: Vec<String>,
-    pub collapsible: bool,
-    pub collapsed: bool,
-    pub padding: String,
+    title: String,
+    children: Vec<String>,
+    collapsible: bool,
+    collapsed: bool,
+    padding: String,
 }
 
 impl Panel {
     #[inline]
     pub fn new(title: String) -> Panel {
         Panel {
-            title,
+            title: title.to_string(),
             children: Vec::new(),
             collapsible: false,
             collapsed: false,
-            padding: "16px".to_string(),
+            padding: "16px".to_string().to_string(),
         }
     }
     #[inline]
@@ -72,21 +75,7 @@ impl Renderable for Panel {
                 "display: block;".to_string()
             }
         };
-        let children_html = self.children.join(
-            "
-",
-        );
-        format!(
-            "<div class='wj-panel'>
-  <div class='{}'>
-    <span>{}</span>
-    <h3>{}</h3>
-  </div>
-  <div class='wj-panel-content' style='{}padding: {};'>
-    {}
-  </div>
-</div>",
-            header_class, icon, self.title, content_style, self.padding, children_html
-        )
+        let children_html = self.children.join("\n");
+        format!("<div class='wj-panel'>\n  <div class='{}'>\n    <span>{}</span>\n    <h3>{}</h3>\n  </div>\n  <div class='wj-panel-content' style='{}padding: {};'>\n    {}\n  </div>\n</div>", header_class, icon, self.title, content_style, self.padding, children_html)
     }
 }

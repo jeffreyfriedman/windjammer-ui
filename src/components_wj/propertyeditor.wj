@@ -158,8 +158,8 @@ impl Renderable for Property {
             PropertyType::Dropdown { options: opts } => {
                 let mut options_html = "".to_string()
                 for o in opts {
-                    let selected = if o.as_str() == self.value.as_str() { "selected" } else { "" }
-                    options_html = options_html + format!("<option value='{}' {}>{}</option>", o, selected, o).as_str()
+                    let selected = if o == self.value { "selected" } else { "" }
+                    options_html = options_html + format!("<option value='{}' {}>{}</option>", o, selected, o)
                 }
                 
                 format!("

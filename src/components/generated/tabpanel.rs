@@ -1,28 +1,35 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
 use std::fmt::Write;
 
 use super::traits::Renderable;
-
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct TabPanelTab {
-    pub id: String,
-    pub title: String,
-    pub content: String,
+    id: String,
+    title: String,
+    content: String,
 }
 
 impl TabPanelTab {
     #[inline]
     pub fn new(id: String, title: String, content: String) -> TabPanelTab {
-        TabPanelTab { id, title, content }
+        TabPanelTab {
+            id: id.to_string(),
+            title: title.to_string(),
+            content: content.to_string(),
+        }
     }
 }
 
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, PartialEq, Default)]
+#[repr(C)]
 pub struct TabPanel {
-    pub tabs: Vec<TabPanelTab>,
-    pub active: String,
-    pub orientation: String,
+    tabs: Vec<TabPanelTab>,
+    active: String,
+    orientation: String,
 }
 
 impl TabPanel {
@@ -30,8 +37,8 @@ impl TabPanel {
     pub fn new() -> TabPanel {
         TabPanel {
             tabs: Vec::new(),
-            active: "".to_string(),
-            orientation: "horizontal".to_string(),
+            active: "".to_string().to_string(),
+            orientation: "horizontal".to_string().to_string(),
         }
     }
     #[inline]
@@ -65,16 +72,15 @@ impl Renderable for TabPanel {
             let mut __s = String::with_capacity(64);
             write!(
                 &mut __s,
-                "<div class='wj-tab-panel-tabs wj-tab-panel-{}'>
-",
+                "<div class='wj-tab-panel-tabs wj-tab-panel-{}'>\n",
                 self.orientation
             )
             .unwrap();
             __s
         };
         let mut i = 0;
-        while i < (self.tabs.len() as i64) {
-            let tab = &self.tabs[i as usize];
+        while i < self.tabs.len() {
+            let tab = &self.tabs[i];
             let active_class = {
                 if tab.id == self.active {
                     " wj-tab-active".to_string()
@@ -83,23 +89,16 @@ impl Renderable for TabPanel {
                 }
             };
             tabs_html = format!(
-                "{}  <button class='wj-tab-panel-tab{}' data-id='{}'>{}</button>
-",
+                "{}  <button class='wj-tab-panel-tab{}' data-id='{}'>{}</button>\n",
                 tabs_html, active_class, tab.id, tab.title
             );
             i += 1;
         }
-        tabs_html = format!(
-            "{}</div>
-",
-            tabs_html
-        );
-        let mut content_html = "<div class='wj-tab-panel-content'>
-"
-        .to_string();
+        tabs_html = format!("{}</div>\n", tabs_html);
+        let mut content_html = "<div class='wj-tab-panel-content'>\n".to_string();
         let mut j = 0;
-        while j < (self.tabs.len() as i64) {
-            let tab = &self.tabs[j as usize];
+        while j < self.tabs.len() {
+            let tab = &self.tabs[j];
             let display = {
                 if tab.id == self.active {
                     "block".to_string()
@@ -107,20 +106,12 @@ impl Renderable for TabPanel {
                     "none".to_string()
                 }
             };
-            content_html = format!(
-                "{}  <div class='wj-tab-panel-pane' data-id='{}' style='display: {};'>
-    {}
-  </div>
-",
-                content_html, tab.id, display, tab.content
-            );
+            content_html = format!("{}  <div class='wj-tab-panel-pane' data-id='{}' style='display: {};'>\n    {}\n  </div>\n", content_html, tab.id, display, tab.content);
             j += 1;
         }
         content_html = format!("{}</div>", content_html);
         format!(
-            "<div class='wj-tab-panel' style='display: flex; flex-direction: {};'>
-{}{}
-</div>",
+            "<div class='wj-tab-panel' style='display: flex; flex-direction: {};'>\n{}{}\n</div>",
             flex_direction, tabs_html, content_html
         )
     }

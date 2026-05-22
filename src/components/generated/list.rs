@@ -1,10 +1,13 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
+#[repr(C)]
 pub struct List {
-    pub items: Vec<String>,
-    pub ordered: bool,
-    pub class: String,
+    items: Vec<String>,
+    ordered: bool,
+    class: String,
 }
 
 impl List {
@@ -44,11 +47,11 @@ impl List {
         html.push('<');
         html.push_str(&tag.clone());
         html.push_str(" class=\"wj-list ");
-        html.push_str(&self.class.as_str());
+        html.push_str(&self.class.clone());
         html.push_str("\" style=\"list-style-position: inside; padding-left: 0;\">");
         for item in &self.items {
             html.push_str("<li style=\"padding: 8px 0;\">");
-            html.push_str(&item.as_str());
+            html.push_str(&item);
             html.push_str("</li>");
         }
         html.push_str("</");
@@ -59,16 +62,17 @@ impl List {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct ListItem {
-    pub content: String,
-    pub class: String,
+    content: String,
+    class: String,
 }
 
 impl ListItem {
     #[inline]
     pub fn new(content: String) -> ListItem {
         ListItem {
-            content,
+            content: content.to_string(),
             class: String::new(),
         }
     }
@@ -81,9 +85,9 @@ impl ListItem {
     pub fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<li class=\"wj-list-item ");
-        html.push_str(&self.class.as_str());
+        html.push_str(&self.class.clone());
         html.push_str("\" style=\"padding: 8px 0;\">");
-        html.push_str(&self.content.as_str());
+        html.push_str(&self.content);
         html.push_str("</li>");
         html
     }

@@ -265,7 +265,7 @@ impl Renderable for GradientEditor {
                     if i > 0 {
                         gradient_stops = gradient_stops + ", "
                     }
-                    gradient_stops = gradient_stops + stop.color.as_str() + " " + format!("{}%", (stop.position * 100.0) as i32).as_str()
+                    gradient_stops = gradient_stops + stop.color + " " + format!("{}%", (stop.position * 100.0) as i32)
                 },
                 None => {},
             }

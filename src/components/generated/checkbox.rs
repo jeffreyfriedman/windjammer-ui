@@ -1,7 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum CheckboxSize {
     Small,
@@ -10,18 +12,19 @@ pub enum CheckboxSize {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Checkbox {
-    pub label: String,
-    pub checked: bool,
-    pub disabled: bool,
-    pub size: CheckboxSize,
+    label: String,
+    checked: bool,
+    disabled: bool,
+    size: CheckboxSize,
 }
 
 impl Checkbox {
     #[inline]
     pub fn new(label: String) -> Checkbox {
         Checkbox {
-            label,
+            label: label.to_string(),
             checked: false,
             disabled: false,
             size: CheckboxSize::Medium,

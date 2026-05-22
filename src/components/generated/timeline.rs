@@ -1,25 +1,28 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct TimelineEvent {
-    pub title: String,
-    pub description: String,
-    pub timestamp: String,
-    pub icon: String,
-    pub color: String,
+    title: String,
+    description: String,
+    timestamp: String,
+    icon: String,
+    color: String,
 }
 
 impl TimelineEvent {
     #[inline]
     pub fn new(title: String, timestamp: String) -> TimelineEvent {
         TimelineEvent {
-            title,
+            title: title.to_string(),
             description: String::new(),
-            timestamp,
-            icon: "●".to_string(),
-            color: "#3b82f6".to_string(),
+            timestamp: timestamp.to_string(),
+            icon: "●".to_string().to_string(),
+            color: "#3b82f6".to_string().to_string(),
         }
     }
     #[inline]
@@ -39,9 +42,10 @@ impl TimelineEvent {
     }
 }
 
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, PartialEq, Default)]
+#[repr(C)]
 pub struct Timeline {
-    pub events: Vec<TimelineEvent>,
+    events: Vec<TimelineEvent>,
 }
 
 impl Timeline {
@@ -76,10 +80,10 @@ impl Renderable for Timeline {
             html.push_str("<div style='font-weight: 600; font-size: 16px; color: #1a202c; margin-bottom: 8px;'>");
             html.push_str(&event.title);
             html.push_str("</div>");
-            if event.description.len() > (0 as usize) {
+            if !event.description.is_empty() {
                 html.push_str("<div style='font-size: 14px; color: #4a5568;'>");
                 html.push_str(&event.description);
-                html.push_str("</div>")
+                html.push_str("</div>");
             }
             html.push_str("</div>");
             html.push_str("</div>");

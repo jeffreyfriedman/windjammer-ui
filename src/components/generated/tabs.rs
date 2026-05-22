@@ -1,22 +1,25 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct Tab {
-    pub id: String,
-    pub label: String,
-    pub content: String,
-    pub disabled: bool,
+    id: String,
+    label: String,
+    content: String,
+    disabled: bool,
 }
 
 impl Tab {
     #[inline]
     pub fn new(id: String, label: String, content: String) -> Tab {
         Tab {
-            id,
-            label,
-            content,
+            id: id.to_string(),
+            label: label.to_string(),
+            content: content.to_string(),
             disabled: false,
         }
     }
@@ -27,10 +30,11 @@ impl Tab {
     }
 }
 
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, PartialEq, Default)]
+#[repr(C)]
 pub struct Tabs {
-    pub tabs: Vec<Tab>,
-    pub active: String,
+    tabs: Vec<Tab>,
+    active: String,
 }
 
 impl Tabs {
@@ -38,7 +42,7 @@ impl Tabs {
     pub fn new() -> Tabs {
         Tabs {
             tabs: Vec::new(),
-            active: "".to_string(),
+            active: "".to_string().to_string(),
         }
     }
     #[inline]
@@ -58,8 +62,8 @@ impl Renderable for Tabs {
     fn render(self) -> String {
         let mut tabs_html = "<div class='wj-tabs-header'>".to_string();
         let mut i = 0;
-        while i < (self.tabs.len() as i64) {
-            let tab = &self.tabs[i as usize];
+        while i < self.tabs.len() {
+            let tab = &self.tabs[i];
             let active_class = {
                 if tab.id == self.active {
                     " wj-tab-active".to_string()
@@ -83,8 +87,8 @@ impl Renderable for Tabs {
         tabs_html = format!("{}</div>", tabs_html);
         let mut content_html = "<div class='wj-tabs-content'>".to_string();
         let mut j = 0;
-        while j < (self.tabs.len() as i64) {
-            let tab = &self.tabs[j as usize];
+        while j < self.tabs.len() {
+            let tab = &self.tabs[j];
             let display_style = {
                 if tab.id == self.active {
                     "display: block;".to_string()

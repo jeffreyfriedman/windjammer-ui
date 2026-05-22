@@ -1,7 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::vnode::VNode;
+#[allow(unused_imports)]
+use super::*;
 
+use super::vnode::VNode;
 pub trait Renderable {
     fn render(self) -> String;
 }

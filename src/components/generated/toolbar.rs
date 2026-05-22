@@ -1,11 +1,14 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
+#[repr(C)]
 pub struct Toolbar {
-    pub items: Vec<String>,
-    pub position: String,
+    items: Vec<String>,
+    position: String,
 }
 
 impl Toolbar {
@@ -13,7 +16,7 @@ impl Toolbar {
     pub fn new() -> Toolbar {
         Toolbar {
             items: Vec::new(),
-            position: "top".to_string(),
+            position: "top".to_string().to_string(),
         }
     }
     #[inline]
@@ -31,14 +34,9 @@ impl Toolbar {
 impl Renderable for Toolbar {
     #[inline]
     fn render(self) -> String {
-        let items_html = self.items.join(
-            "
-",
-        );
+        let items_html = self.items.join("\n");
         format!(
-            "<div class='wj-toolbar wj-toolbar-{}'>
-  {}
-</div>",
+            "<div class='wj-toolbar wj-toolbar-{}'>\n  {}\n</div>",
             self.position, items_html
         )
     }

@@ -1,22 +1,25 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct ContextMenuItem {
-    pub label: String,
-    pub icon: String,
-    pub action: String,
-    pub disabled: bool,
+    label: String,
+    icon: String,
+    action: String,
+    disabled: bool,
 }
 
 impl ContextMenuItem {
     #[inline]
     pub fn new(label: String) -> ContextMenuItem {
         ContextMenuItem {
-            label,
-            icon: String::from(""),
-            action: String::from(""),
+            label: label.to_string(),
+            icon: String::from("".to_string()),
+            action: String::from("".to_string()),
             disabled: false,
         }
     }
@@ -37,10 +40,11 @@ impl ContextMenuItem {
     }
 }
 
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, PartialEq, Default)]
+#[repr(C)]
 pub struct ContextMenu {
-    pub items: Vec<ContextMenuItem>,
-    pub trigger_id: String,
+    items: Vec<ContextMenuItem>,
+    trigger_id: String,
 }
 
 impl ContextMenu {
@@ -48,7 +52,7 @@ impl ContextMenu {
     pub fn new(trigger_id: String) -> ContextMenu {
         ContextMenu {
             items: Vec::new(),
-            trigger_id,
+            trigger_id: trigger_id.to_string(),
         }
     }
     #[inline]
@@ -61,47 +65,34 @@ impl ContextMenu {
 impl Renderable for ContextMenu {
     #[inline]
     fn render(self) -> String {
-        let mut items_html = Vec::new();
-        for item in &self.items {
+        let mut items_html: Vec<String> = Vec::new();
+        for item in self.items {
             let icon_html = {
-                if item.icon.clone().len() > 0 {
-                    format!("<span class='wj-context-icon'>{}</span>", item.icon.clone())
+                if item.icon.len() > 0 {
+                    format!("<span class='wj-context-icon'>{}</span>", item.icon)
                 } else {
-                    String::from("")
+                    String::from("".to_string())
                 }
             };
             let disabled_class = {
-                if item.disabled.clone() {
+                if item.disabled {
                     " wj-context-item-disabled".to_string()
                 } else {
                     "".to_string()
                 }
             };
             let disabled_attr = {
-                if item.disabled.clone() {
+                if item.disabled {
                     " disabled".to_string()
                 } else {
                     "".to_string()
                 }
             };
-            items_html.push(format!(
-                "<button class='wj-context-item{}' onclick='{}'{}>
-                    {}
-                    <span>{}</span>
-                </button>",
-                disabled_class,
-                item.action.clone(),
-                disabled_attr,
-                icon_html,
-                item.label.clone()
-            ));
+            {
+                let _temp0 = format!("<button class='wj-context-item{}' onclick='{}'{}>\n                    {}\n                    <span>{}</span>\n                </button>", disabled_class, item.action, disabled_attr, icon_html, item.label);
+                items_html.push(_temp0)
+            };
         }
-        format!(
-            "<div class='wj-context-menu' id='context-{}' style='display: none'>
-                {}
-            </div>",
-            self.trigger_id,
-            items_html.join("")
-        )
+        format!("<div class='wj-context-menu' id='context-{}' style='display: none'>\n                {}\n            </div>", self.trigger_id, items_html.join(""))
     }
 }

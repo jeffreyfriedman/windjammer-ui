@@ -1,7 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum DividerOrientation {
     Horizontal,
@@ -9,11 +11,12 @@ pub enum DividerOrientation {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Divider {
-    pub orientation: DividerOrientation,
-    pub color: String,
-    pub thickness: String,
-    pub margin: String,
+    orientation: DividerOrientation,
+    color: String,
+    thickness: String,
+    margin: String,
 }
 
 impl Divider {
@@ -21,9 +24,9 @@ impl Divider {
     pub fn new() -> Divider {
         Divider {
             orientation: DividerOrientation::Horizontal,
-            color: "#3E3E3E".to_string(),
-            thickness: "1px".to_string(),
-            margin: "0".to_string(),
+            color: "#3E3E3E".to_string().to_string(),
+            thickness: "1px".to_string().to_string(),
+            margin: "0".to_string().to_string(),
         }
     }
     #[inline]
@@ -34,9 +37,9 @@ impl Divider {
     pub fn vertical() -> Divider {
         Divider {
             orientation: DividerOrientation::Vertical,
-            color: "#3E3E3E".to_string(),
-            thickness: "1px".to_string(),
-            margin: "0".to_string(),
+            color: "#3E3E3E".to_string().to_string(),
+            thickness: "1px".to_string().to_string(),
+            margin: "0".to_string().to_string(),
         }
     }
     #[inline]

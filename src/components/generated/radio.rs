@@ -1,22 +1,24 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
 use std::fmt::Write;
 
 use super::traits::Renderable;
-
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct RadioOption {
-    pub value: String,
-    pub label: String,
-    pub disabled: bool,
+    value: String,
+    label: String,
+    disabled: bool,
 }
 
 impl RadioOption {
     #[inline]
     pub fn new(value: String, label: String) -> RadioOption {
         RadioOption {
-            value,
-            label,
+            value: value.to_string(),
+            label: label.to_string(),
             disabled: false,
         }
     }
@@ -27,20 +29,21 @@ impl RadioOption {
     }
 }
 
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, PartialEq, Default)]
+#[repr(C)]
 pub struct RadioGroup {
-    pub name: String,
-    pub options: Vec<RadioOption>,
-    pub selected: String,
+    name: String,
+    options: Vec<RadioOption>,
+    selected: String,
 }
 
 impl RadioGroup {
     #[inline]
     pub fn new(name: String) -> RadioGroup {
         RadioGroup {
-            name,
+            name: name.to_string(),
             options: Vec::new(),
-            selected: "".to_string(),
+            selected: "".to_string().to_string(),
         }
     }
     #[inline]
@@ -69,8 +72,8 @@ impl Renderable for RadioGroup {
             __s
         };
         let mut i = 0;
-        while i < (self.options.len() as i64) {
-            let opt = &self.options[i as usize];
+        while i < self.options.len() {
+            let opt = &self.options[i];
             let checked_attr = {
                 if opt.value == self.selected {
                     " checked".to_string()
@@ -85,11 +88,7 @@ impl Renderable for RadioGroup {
                     "".to_string()
                 }
             };
-            html = {
-                let mut __s = String::with_capacity(64);
-                write!(&mut __s, "{}<label class='wj-radio'><input type='radio' name='{}' value='{}'{}{}><span>{}</span></label>", html, self.name, opt.value, checked_attr, disabled_attr, opt.label).unwrap();
-                __s
-            };
+            html = format!("{}<label class='wj-radio'><input type='radio' name='{}' value='{}'{}{}><span>{}</span></label>", html, self.name, opt.value, checked_attr, disabled_attr, opt.label);
             i += 1;
         }
         format!("{}</div>", html)

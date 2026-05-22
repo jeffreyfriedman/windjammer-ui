@@ -1,7 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum TextSize {
     Small,
@@ -17,21 +19,22 @@ pub enum TextWeight {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Text {
-    pub content: String,
-    pub size: TextSize,
-    pub weight: TextWeight,
-    pub color: String,
+    content: String,
+    size: TextSize,
+    weight: TextWeight,
+    color: String,
 }
 
 impl Text {
     #[inline]
     pub fn new(content: String) -> Text {
         Text {
-            content,
+            content: content.to_string(),
             size: TextSize::Medium,
             weight: TextWeight::Normal,
-            color: "".to_string(),
+            color: "".to_string().to_string(),
         }
     }
     #[inline]
@@ -68,7 +71,7 @@ impl Renderable for Text {
             if self.color != "" {
                 format!(" style='color: {};'", self.color)
             } else {
-                "".to_string()
+                "".to_string().to_string()
             }
         };
         format!(

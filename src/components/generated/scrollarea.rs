@@ -1,7 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum ScrollDirection {
     Vertical,
@@ -10,11 +12,12 @@ pub enum ScrollDirection {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct ScrollArea {
-    pub children: Vec<String>,
-    pub direction: ScrollDirection,
-    pub height: String,
-    pub width: String,
+    children: Vec<String>,
+    direction: ScrollDirection,
+    height: String,
+    width: String,
 }
 
 impl ScrollArea {
@@ -23,8 +26,8 @@ impl ScrollArea {
         ScrollArea {
             children: Vec::new(),
             direction: ScrollDirection::Vertical,
-            height: "300px".to_string(),
-            width: "100%".to_string(),
+            height: "300px".to_string().to_string(),
+            width: "100%".to_string().to_string(),
         }
     }
     #[inline]
@@ -57,14 +60,9 @@ impl Renderable for ScrollArea {
             ScrollDirection::Horizontal => "overflow-x: auto; overflow-y: hidden;".to_string(),
             ScrollDirection::Both => "overflow: auto;".to_string(),
         };
-        let children_html = self.children.join(
-            "
-",
-        );
+        let children_html = self.children.join("\n");
         format!(
-            "<div class='wj-scroll-area' style='height: {}; width: {}; {}'>
-  {}
-</div>",
+            "<div class='wj-scroll-area' style='height: {}; width: {}; {}'>\n  {}\n</div>",
             self.height, self.width, overflow_style, children_html
         )
     }

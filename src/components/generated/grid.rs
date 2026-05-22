@@ -1,15 +1,17 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
 use std::fmt::Write;
 
 use super::traits::Renderable;
-
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+#[repr(C)]
 pub struct Grid {
-    pub children: Vec<String>,
-    pub columns: i32,
-    pub gap: String,
-    pub padding: String,
+    children: Vec<String>,
+    columns: i32,
+    gap: String,
+    padding: String,
 }
 
 impl Grid {
@@ -18,8 +20,8 @@ impl Grid {
         Grid {
             children: Vec::new(),
             columns,
-            gap: "16px".to_string(),
-            padding: "0".to_string(),
+            gap: "16px".to_string().to_string(),
+            padding: "0".to_string().to_string(),
         }
     }
     #[inline]
@@ -57,14 +59,9 @@ impl Renderable for Grid {
             .unwrap();
             __s
         };
-        let children_html = self.children.join(
-            "
-",
-        );
+        let children_html = self.children.join("\n");
         format!(
-            "<div class='wj-grid' style='{}'>
-{}
-</div>",
+            "<div class='wj-grid' style='{}'>\n{}\n</div>",
             style, children_html
         )
     }

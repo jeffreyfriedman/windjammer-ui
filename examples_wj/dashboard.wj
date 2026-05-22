@@ -76,7 +76,7 @@ fn start() {
                                         .gap("8px")
                                         .child(Text::new("💰 Revenue").size(TextSize::Small))
                                         .child(
-                                            Text::new(format!("${}", revenue_display.get()))
+                                            Text::new(format!("{}", revenue_display.get()))
                                                 .size(TextSize::XLarge)
                                                 .bold()
                                         )
@@ -90,7 +90,7 @@ fn start() {
                                         .gap("8px")
                                         .child(Text::new("📈 Growth").size(TextSize::Small))
                                         .child(
-                                            Text::new(format!("{}%", growth_display.get()))
+                                            Text::new(format!("{}", growth_display.get()) + "%")
                                                 .size(TextSize::XLarge)
                                                 .bold()
                                         )

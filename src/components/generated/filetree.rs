@@ -1,22 +1,24 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
 use std::fmt::Write;
 
 use super::traits::Renderable;
-
 #[derive(Debug, Clone, Default)]
+#[repr(C)]
 pub struct FileNode {
-    pub name: String,
-    pub is_directory: bool,
-    pub children: Vec<FileNode>,
-    pub expanded: bool,
+    name: String,
+    is_directory: bool,
+    children: Vec<FileNode>,
+    expanded: bool,
 }
 
 impl FileNode {
     #[inline]
     pub fn new(name: String, is_directory: bool) -> FileNode {
         FileNode {
-            name,
+            name: name.to_string(),
             is_directory,
             children: Vec::new(),
             expanded: false,
@@ -48,19 +50,13 @@ impl FileNode {
         };
         let mut html = {
             let mut __s = String::with_capacity(64);
-            write!(
-                &mut __s,
-                "{}{} {}
-",
-                indent, icon, self.name
-            )
-            .unwrap();
+            write!(&mut __s, "{}{} {}\n", indent, icon, self.name.clone()).unwrap();
             __s
         };
         if self.is_directory && self.expanded {
             let mut i = 0;
-            while i < (self.children.len() as i64) {
-                let child = &self.children[i as usize];
+            while i < self.children.len() {
+                let child = &self.children[i];
                 html = format!("{}{}", html, child.render(depth + 1));
                 i += 1;
             }
@@ -70,8 +66,9 @@ impl FileNode {
 }
 
 #[derive(Debug, Clone)]
+#[repr(C)]
 pub struct FileTree {
-    pub root: FileNode,
+    root: FileNode,
 }
 
 impl FileTree {
@@ -85,9 +82,8 @@ impl Renderable for FileTree {
     #[inline]
     fn render(self) -> String {
         format!(
-            "<div class='wj-file-tree'>
-{}</div>",
-            self.root.render(0)
+            "<div class='wj-file-tree'>\n{}</div>",
+            self.root.render(0_i32)
         )
     }
 }

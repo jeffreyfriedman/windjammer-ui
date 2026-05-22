@@ -1,7 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum AlertVariant {
     Error,
@@ -11,37 +13,38 @@ pub enum AlertVariant {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Alert {
-    pub message: String,
-    pub variant: AlertVariant,
+    message: String,
+    variant: AlertVariant,
 }
 
 impl Alert {
     #[inline]
     pub fn error(message: String) -> Alert {
         Alert {
-            message,
+            message: message.to_string(),
             variant: AlertVariant::Error,
         }
     }
     #[inline]
     pub fn warning(message: String) -> Alert {
         Alert {
-            message,
+            message: message.to_string(),
             variant: AlertVariant::Warning,
         }
     }
     #[inline]
     pub fn info(message: String) -> Alert {
         Alert {
-            message,
+            message: message.to_string(),
             variant: AlertVariant::Info,
         }
     }
     #[inline]
     pub fn success(message: String) -> Alert {
         Alert {
-            message,
+            message: message.to_string(),
             variant: AlertVariant::Success,
         }
     }

@@ -1,20 +1,23 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct AccordionItem {
-    pub title: String,
-    pub content: String,
-    pub open: bool,
+    title: String,
+    content: String,
+    open: bool,
 }
 
 impl AccordionItem {
     #[inline]
     pub fn new(title: String, content: String) -> AccordionItem {
         AccordionItem {
-            title,
-            content,
+            title: title.to_string(),
+            content: content.to_string(),
             open: false,
         }
     }
@@ -25,10 +28,11 @@ impl AccordionItem {
     }
 }
 
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, PartialEq, Default)]
+#[repr(C)]
 pub struct Accordion {
-    pub items: Vec<AccordionItem>,
-    pub allow_multiple: bool,
+    items: Vec<AccordionItem>,
+    allow_multiple: bool,
 }
 
 impl Accordion {
@@ -56,8 +60,8 @@ impl Renderable for Accordion {
     fn render(self) -> String {
         let mut html = "<div class='wj-accordion'>".to_string();
         let mut i = 0;
-        while i < (self.items.len() as i64) {
-            let item = &self.items[i as usize];
+        while i < self.items.len() {
+            let item = &self.items[i];
             let open_attr = {
                 if item.open {
                     " open".to_string()
@@ -65,15 +69,7 @@ impl Renderable for Accordion {
                     "".to_string()
                 }
             };
-            html = format!(
-                "{}<details class='wj-accordion-item'{}>
-  <summary class='wj-accordion-title'>{}</summary>
-  <div class='wj-accordion-content'>
-    {}
-  </div>
-</details>",
-                html, open_attr, item.title, item.content
-            );
+            html = format!("{}<details class='wj-accordion-item'{}>\n  <summary class='wj-accordion-title'>{}</summary>\n  <div class='wj-accordion-content'>\n    {}\n  </div>\n</details>", html, open_attr, item.title, item.content);
             i += 1;
         }
         format!("{}</div>", html)

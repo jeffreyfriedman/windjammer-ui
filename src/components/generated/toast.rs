@@ -1,7 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum ToastVariant {
     Success,
@@ -21,22 +23,23 @@ pub enum ToastPosition {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Toast {
-    pub message: String,
-    pub variant: ToastVariant,
-    pub position: ToastPosition,
-    pub duration: i32,
-    pub show_close: bool,
+    message: String,
+    variant: ToastVariant,
+    position: ToastPosition,
+    duration: i32,
+    show_close: bool,
 }
 
 impl Toast {
     #[inline]
     pub fn new(message: String) -> Toast {
         Toast {
-            message,
+            message: message.to_string(),
             variant: ToastVariant::Info,
             position: ToastPosition::TopRight,
-            duration: 3000,
+            duration: 3000_i32,
             show_close: true,
         }
     }
@@ -92,13 +95,6 @@ impl Renderable for Toast {
                 "".to_string()
             }
         };
-        format!(
-            "<div class='wj-toast {} {}' data-duration='{}'>
-  <span class='wj-toast-icon'>{}</span>
-  <span class='wj-toast-message'>{}</span>
-  {}
-</div>",
-            variant_class, position_class, self.duration, icon, self.message, close_button
-        )
+        format!("<div class='wj-toast {} {}' data-duration='{}'>\n  <span class='wj-toast-icon'>{}</span>\n  <span class='wj-toast-message'>{}</span>\n  {}\n</div>", variant_class, position_class, self.duration, icon, self.message, close_button)
     }
 }

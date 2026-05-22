@@ -1,13 +1,26 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+use super::traits::Renderable;
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct Pagination {
-    pub current_page: i32,
-    pub total_pages: i32,
-    pub show_first_last: bool,
-    pub show_prev_next: bool,
+    current_page: i32,
+    total_pages: i32,
+    show_first_last: bool,
+    show_prev_next: bool,
+}
+impl Pagination {
+    pub fn to_bytes(&self) -> Vec<u8> {
+        let mut __bytes = Vec::with_capacity(16);
+        __bytes.extend_from_slice(&self.current_page.to_ne_bytes());
+        __bytes.extend_from_slice(&self.total_pages.to_ne_bytes());
+        __bytes.extend_from_slice(&(if self.show_first_last { 1u32 } else { 0u32 }).to_ne_bytes());
+        __bytes.extend_from_slice(&(if self.show_prev_next { 1u32 } else { 0u32 }).to_ne_bytes());
+        __bytes
+    }
 }
 
 impl Pagination {

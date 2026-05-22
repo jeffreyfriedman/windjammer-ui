@@ -1,9 +1,10 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
 use std::fmt::Write;
 
 use super::traits::Renderable;
-
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum SpinnerSize {
     Small,
@@ -12,9 +13,10 @@ pub enum SpinnerSize {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Spinner {
-    pub size: SpinnerSize,
-    pub label: String,
+    size: SpinnerSize,
+    label: String,
 }
 
 impl Spinner {
@@ -22,7 +24,7 @@ impl Spinner {
     pub fn new() -> Spinner {
         Spinner {
             size: SpinnerSize::Medium,
-            label: "".to_string(),
+            label: "".to_string().to_string(),
         }
     }
     #[inline]

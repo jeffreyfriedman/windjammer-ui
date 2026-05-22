@@ -214,13 +214,13 @@ impl EditorTheme {
 impl Renderable for EditorTheme {
     pub fn render(self) -> string {
         let css = ":root { 
-            --bg-primary: " + self.palette.bg_primary.as_str() + ";
-            --bg-secondary: " + self.palette.bg_secondary.as_str() + ";
-            --accent-primary: " + self.palette.accent_primary.as_str() + ";
-            --text-primary: " + self.palette.text_primary.as_str() + ";
+            --bg-primary: " + self.palette.bg_primary + ";
+            --bg-secondary: " + self.palette.bg_secondary + ";
+            --accent-primary: " + self.palette.accent_primary + ";
+            --text-primary: " + self.palette.text_primary + ";
         }
         body {
-            font-family: " + self.font_family.as_str() + ";
+            font-family: " + self.font_family + ";
             color: var(--text-primary);
             background: var(--bg-primary);
         }"
@@ -261,8 +261,8 @@ impl Renderable for ThemeSwitcher {
     pub fn render(self) -> string {
         let mut options = "".to_string()
         for t in self.themes {
-            let selected = if t.as_str() == self.current_theme.as_str() { "selected" } else { "" }
-            options = options + format!("<option value='{}' {}>{}</option>", t, selected, t).as_str()
+            let selected = if t == self.current_theme { "selected" } else { "" }
+            options = options + format!("<option value='{}' {}>{}</option>", t, selected, t)
         }
         
         format!("

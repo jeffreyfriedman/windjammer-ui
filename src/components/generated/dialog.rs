@@ -1,23 +1,26 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct Dialog {
-    pub title: String,
-    pub content: String,
-    pub open: bool,
-    pub width: String,
+    title: String,
+    content: String,
+    open: bool,
+    width: String,
 }
 
 impl Dialog {
     #[inline]
     pub fn new(title: String, content: String) -> Dialog {
         Dialog {
-            title,
-            content,
+            title: title.to_string(),
+            content: content.to_string(),
             open: false,
-            width: "500px".to_string(),
+            width: "500px".to_string().to_string(),
         }
     }
     #[inline]
@@ -42,19 +45,6 @@ impl Renderable for Dialog {
                 "display: none;".to_string()
             }
         };
-        format!(
-            "<div class='wj-dialog-overlay' style='{}'>
-  <div class='wj-dialog' style='max-width: {}; width: 90%;'>
-    <div class='wj-dialog-header'>
-      <h2>{}</h2>
-      <button class='wj-dialog-close'>×</button>
-    </div>
-    <div class='wj-dialog-content'>
-      {}
-    </div>
-  </div>
-</div>",
-            display_style, self.width, self.title, self.content
-        )
+        format!("<div class='wj-dialog-overlay' style='{}'>\n  <div class='wj-dialog' style='max-width: {}; width: 90%;'>\n    <div class='wj-dialog-header'>\n      <h2>{}</h2>\n      <button class='wj-dialog-close'>×</button>\n    </div>\n    <div class='wj-dialog-content'>\n      {}\n    </div>\n  </div>\n</div>", display_style, self.width, self.title, self.content)
     }
 }

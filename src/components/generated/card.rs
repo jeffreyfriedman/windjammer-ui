@@ -1,27 +1,29 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
 use std::fmt::Write;
 
 use super::traits::Renderable;
-
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
+#[repr(C)]
 pub struct Card {
-    pub title: String,
-    pub children: Vec<String>,
-    pub padding: String,
-    pub background_color: String,
-    pub border_color: String,
+    title: String,
+    children: Vec<String>,
+    padding: String,
+    background_color: String,
+    border_color: String,
 }
 
 impl Card {
     #[inline]
     pub fn new() -> Card {
         Card {
-            title: "".to_string(),
+            title: "".to_string().to_string(),
             children: Vec::new(),
-            padding: "16px".to_string(),
-            background_color: "#fff".to_string(),
-            border_color: "#e0e0e0".to_string(),
+            padding: "16px".to_string().to_string(),
+            background_color: "#fff".to_string().to_string(),
+            border_color: "#e0e0e0".to_string().to_string(),
         }
     }
     #[inline]
@@ -71,23 +73,14 @@ impl Renderable for Card {
         };
         let title_html = {
             if self.title != "" {
-                {
-                    let mut __s = String::with_capacity(64);
-                    write!(&mut __s, "<div class='wj-card-title' style='font-weight: bold; margin-bottom: 12px; font-size: 1.25rem;'>{}</div>", self.title).unwrap();
-                    __s
-                }
+                format!("<div class='wj-card-title' style='font-weight: bold; margin-bottom: 12px; font-size: 1.25rem;'>{}</div>", self.title)
             } else {
-                "".to_string()
+                "".to_string().to_string()
             }
         };
-        let children_html = self.children.join(
-            "
-",
-        );
+        let children_html = self.children.join("\n");
         format!(
-            "<div class='wj-card' style='{}'>
-{}{}
-</div>",
+            "<div class='wj-card' style='{}'>\n{}{}\n</div>",
             style, title_html, children_html
         )
     }

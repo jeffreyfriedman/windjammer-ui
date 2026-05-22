@@ -1,19 +1,23 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#[derive(Debug, Clone)]
+#[allow(unused_imports)]
+use super::*;
+#[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Select {
-    pub options: Vec<SelectOption>,
-    pub selected: String,
-    pub placeholder: String,
-    pub disabled: bool,
-    pub size: SelectSize,
-    pub class: String,
+    options: Vec<SelectOption>,
+    selected: String,
+    placeholder: String,
+    disabled: bool,
+    size: SelectSize,
+    class: String,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct SelectOption {
-    pub value: String,
-    pub label: String,
+    value: String,
+    label: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -29,7 +33,7 @@ impl Select {
         Select {
             options: Vec::new(),
             selected: String::new(),
-            placeholder: "Select an option".to_string(),
+            placeholder: "Select an option".to_string().to_string(),
             disabled: false,
             size: SelectSize::Medium,
             class: String::new(),
@@ -37,7 +41,10 @@ impl Select {
     }
     #[inline]
     pub fn option(mut self, value: String, label: String) -> Select {
-        self.options.push(SelectOption { value, label });
+        self.options.push(SelectOption {
+            value: value.to_string(),
+            label: label.to_string(),
+        });
         self
     }
     #[inline]
@@ -81,7 +88,7 @@ impl Select {
         };
         let mut html = String::new();
         html.push_str("<select class=\"wj-select ");
-        html.push_str(&self.class.as_str());
+        html.push_str(&self.class.clone());
         html.push_str("\" style=\"");
         html.push_str(&size_style);
         html.push_str(
@@ -92,21 +99,21 @@ impl Select {
         if !self.placeholder.is_empty() {
             html.push_str("<option value=\"\" disabled");
             if self.selected.is_empty() {
-                html.push_str(" selected")
+                html.push_str(" selected");
             }
             html.push_str(">");
-            html.push_str(&self.placeholder.as_str());
-            html.push_str("</option>")
+            html.push_str(&self.placeholder.clone());
+            html.push_str("</option>");
         }
         for opt in &self.options {
             html.push_str("<option value=\"");
-            html.push_str(&opt.value.clone().as_str());
+            html.push_str(&opt.value.clone());
             html.push('"');
-            if opt.value.clone() == self.selected {
-                html.push_str(" selected")
+            if opt.value == self.selected {
+                html.push_str(" selected");
             }
             html.push('>');
-            html.push_str(&opt.label.clone().as_str());
+            html.push_str(&opt.label.clone());
             html.push_str("</option>");
         }
         html.push_str("</select>");

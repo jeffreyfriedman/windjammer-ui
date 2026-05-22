@@ -164,4 +164,49 @@ fn main() {
         }
         println!("cargo:warning=✅ Generated code formatted!");
     }
+
+    // Batch wj codegen wraps vnode_ffi with windjammer_runtime::ffi (not linked in this crate).
+    let stable_vnode = project_root.join("src/components/vnode.stable.rs");
+    let vnode_out = out_dir.join("vnode.rs");
+    if stable_vnode.exists() {
+        std::fs::copy(&stable_vnode, &vnode_out)
+            .expect("Failed to restore stable vnode.rs after wj build");
+        println!("cargo:warning=📌 Restored vnode.rs from vnode.stable.rs");
+    }
+
+    // wj --module-file may append stray modules for files outside components_wj; strip known bad entries.
+    let mod_rs = out_dir.join("mod.rs");
+    if let Ok(content) = std::fs::read_to_string(&mod_rs) {
+        let mut lines: Vec<&str> = content.lines().collect();
+        lines.retain(|line| {
+            !line.contains("pub mod bt_visual_")
+                && !line.contains("pub use bt_visual_")
+                && !line.contains("pub mod components;")
+                && !line.contains("pub use components::*")
+                && !line.contains("pub mod components_wj")
+                && !line.contains("pub use components_wj::*")
+                && !line.contains("pub mod vnode.stable")
+                && !line.contains("pub use vnode.stable::*")
+        });
+        let cleaned = lines.join("\n");
+        if cleaned != content {
+            std::fs::write(&mod_rs, format!("{cleaned}\n")).expect("Failed to clean mod.rs");
+            println!("cargo:warning=📌 Cleaned stray entries from generated/mod.rs");
+        }
+    }
+
+    // Trait-impl codegen still emits &String for vnode builders; patch button.rs until fixed upstream.
+    let button_path = out_dir.join("button.rs");
+    if let Ok(content) = std::fs::read_to_string(&button_path) {
+        let patched = content
+            .replace(".add_class(&\"wj-button\")", ".add_class(\"wj-button\".to_string())")
+            .replace(".add_class(&self.get_variant_class())", ".add_class(self.get_variant_class())")
+            .replace(".add_class(&self.get_size_class())", ".add_class(self.get_size_class())")
+            .replace(".add_style(&self.get_style())", ".add_style(self.get_style())")
+            .replace(".add_text(&self.label)", ".add_text(self.label.clone())");
+        if patched != content {
+            std::fs::write(&button_path, patched).expect("Failed to patch button.rs");
+            println!("cargo:warning=📌 Patched button.rs VNode builder signatures");
+        }
+    }
 }

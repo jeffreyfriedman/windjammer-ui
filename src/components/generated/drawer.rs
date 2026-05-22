@@ -1,12 +1,15 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Drawer {
-    pub children: Vec<String>,
-    pub position: DrawerPosition,
-    pub width: String,
-    pub open: bool,
-    pub class: String,
+    children: Vec<String>,
+    position: DrawerPosition,
+    width: String,
+    open: bool,
+    class: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -23,7 +26,7 @@ impl Drawer {
         Drawer {
             children: Vec::new(),
             position: DrawerPosition::Right,
-            width: "320px".to_string(),
+            width: "320px".to_string().to_string(),
             open: false,
             class: String::new(),
         }
@@ -57,20 +60,20 @@ impl Drawer {
     pub fn render(&self) -> String {
         let (position_style, size_prop) = match self.position {
             DrawerPosition::Left => (
-                "left: 0; top: 0; bottom: 0;",
-                format!("width: {};", self.width),
+                "left: 0; top: 0; bottom: 0;".to_string(),
+                format!("width: {};", self.width.clone()),
             ),
             DrawerPosition::Right => (
-                "right: 0; top: 0; bottom: 0;",
-                format!("width: {};", self.width),
+                "right: 0; top: 0; bottom: 0;".to_string(),
+                format!("width: {};", self.width.clone()),
             ),
             DrawerPosition::Top => (
-                "top: 0; left: 0; right: 0;",
-                format!("height: {};", self.width),
+                "top: 0; left: 0; right: 0;".to_string(),
+                format!("height: {};", self.width.clone()),
             ),
             DrawerPosition::Bottom => (
-                "bottom: 0; left: 0; right: 0;",
-                format!("height: {};", self.width),
+                "bottom: 0; left: 0; right: 0;".to_string(),
+                format!("height: {};", self.width.clone()),
             ),
         };
         let transform = {
@@ -97,16 +100,16 @@ impl Drawer {
         html.push_str(&display);
         html.push_str(" position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5); z-index: 999;\"></div>");
         html.push_str("<div class=\"wj-drawer ");
-        html.push_str(&self.class.as_str());
+        html.push_str(&self.class.clone());
         html.push_str("\" style=\"position: fixed; ");
         html.push_str(&position_style);
         html.push(' ');
-        html.push_str(&size_prop.as_str());
+        html.push_str(&size_prop);
         html.push(' ');
         html.push_str(&transform);
         html.push_str(" background: white; box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); z-index: 1000; transition: transform 0.3s ease; overflow-y: auto; padding: 24px;\">");
         for child in &self.children {
-            html.push_str(&child.as_str());
+            html.push_str(&child);
         }
         html.push_str("</div>");
         html

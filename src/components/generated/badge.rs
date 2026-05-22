@@ -1,7 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum BadgeVariant {
     Default,
@@ -21,17 +23,18 @@ pub enum BadgeSize {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Badge {
-    pub text: String,
-    pub variant: BadgeVariant,
-    pub size: BadgeSize,
+    text: String,
+    variant: BadgeVariant,
+    size: BadgeSize,
 }
 
 impl Badge {
     #[inline]
     pub fn new(text: String) -> Badge {
         Badge {
-            text,
+            text: text.to_string(),
             variant: BadgeVariant::Default,
             size: BadgeSize::Medium,
         }
