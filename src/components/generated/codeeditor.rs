@@ -1,23 +1,26 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct CodeEditor {
-    pub code: String,
-    pub language: String,
-    pub theme: String,
-    pub line_numbers: bool,
-    pub readonly: bool,
+    code: String,
+    language: String,
+    theme: String,
+    line_numbers: bool,
+    readonly: bool,
 }
 
 impl CodeEditor {
     #[inline]
     pub fn new(code: String) -> CodeEditor {
         CodeEditor {
-            code,
-            language: "rust".to_string(),
-            theme: "dark".to_string(),
+            code: code.to_string(),
+            language: "rust".to_string().to_string(),
+            theme: "dark".to_string().to_string(),
             line_numbers: true,
             readonly: false,
         }
@@ -61,12 +64,6 @@ impl Renderable for CodeEditor {
                 "".to_string()
             }
         };
-        format!(
-            "<div class='wj-code-editor wj-editor-{} wj-editor-theme-{}{}'>
-  <textarea{}>
-{}</textarea>
-</div>",
-            self.language, self.theme, line_numbers_class, readonly_attr, self.code
-        )
+        format!("<div class='wj-code-editor wj-editor-{} wj-editor-theme-{}{}'>\n  <textarea{}>\n{}</textarea>\n</div>", self.language, self.theme, line_numbers_class, readonly_attr, self.code)
     }
 }

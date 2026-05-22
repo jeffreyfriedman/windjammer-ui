@@ -1,21 +1,24 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct Input {
-    pub value: String,
-    pub placeholder: String,
-    pub input_type: String,
+    value: String,
+    placeholder: String,
+    input_type: String,
 }
 
 impl Input {
     #[inline]
     pub fn new() -> Input {
         Input {
-            value: "".to_string(),
-            placeholder: "".to_string(),
-            input_type: "text".to_string(),
+            value: "".to_string().to_string(),
+            placeholder: "".to_string().to_string(),
+            input_type: "text".to_string().to_string(),
         }
     }
     #[inline]

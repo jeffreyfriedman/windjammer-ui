@@ -50,26 +50,26 @@ impl Div {
         
         if !self.id.is_empty() {
             html.push_str(" id=\"")
-            html.push_str(self.id.as_str())
+            html.push_str(self.id)
             html.push('"')
         }
         
         if !self.class.is_empty() {
             html.push_str(" class=\"")
-            html.push_str(self.class.as_str())
+            html.push_str(self.class)
             html.push('"')
         }
         
         if !self.style.is_empty() {
             html.push_str(" style=\"")
-            html.push_str(self.style.as_str())
+            html.push_str(self.style)
             html.push('"')
         }
         
         html.push('>')
         
         for child in self.children {
-            html.push_str(child.as_str())
+            html.push_str(child)
         }
         
         html.push_str("</div>")
@@ -122,20 +122,20 @@ impl Renderable for Span {
         
         if !self.class.is_empty() {
             html.push_str(" class=\"")
-            html.push_str(self.class.as_str())
+            html.push_str(self.class)
             html.push('"')
         }
         
         if !self.style.is_empty() {
             html.push_str(" style=\"")
-            html.push_str(self.style.as_str())
+            html.push_str(self.style)
             html.push('"')
         }
         
         html.push('>')
         
         for child in self.children {
-            html.push_str(child.as_str())
+            html.push_str(child)
         }
         
         html.push_str("</span>")
@@ -188,20 +188,20 @@ impl Renderable for P {
         
         if !self.class.is_empty() {
             html.push_str(" class=\"")
-            html.push_str(self.class.as_str())
+            html.push_str(self.class)
             html.push('"')
         }
         
         if !self.style.is_empty() {
             html.push_str(" style=\"")
-            html.push_str(self.style.as_str())
+            html.push_str(self.style)
             html.push('"')
         }
         
         html.push('>')
         
         for child in self.children {
-            html.push_str(child.as_str())
+            html.push_str(child)
         }
         
         html.push_str("</p>")
@@ -244,18 +244,18 @@ impl Renderable for H1 {
         
         if !self.class.is_empty() {
             html.push_str(" class=\"")
-            html.push_str(self.class.as_str())
+            html.push_str(self.class)
             html.push('"')
         }
         
         if !self.style.is_empty() {
             html.push_str(" style=\"")
-            html.push_str(self.style.as_str())
+            html.push_str(self.style)
             html.push('"')
         }
         
         html.push('>')
-        html.push_str(self.text.as_str())
+        html.push_str(self.text)
         html.push_str("</h1>")
         html
     }
@@ -296,18 +296,18 @@ impl Renderable for H2 {
         
         if !self.class.is_empty() {
             html.push_str(" class=\"")
-            html.push_str(self.class.as_str())
+            html.push_str(self.class)
             html.push('"')
         }
         
         if !self.style.is_empty() {
             html.push_str(" style=\"")
-            html.push_str(self.style.as_str())
+            html.push_str(self.style)
             html.push('"')
         }
         
         html.push('>')
-        html.push_str(self.text.as_str())
+        html.push_str(self.text)
         html.push_str("</h2>")
         html
     }
@@ -348,18 +348,18 @@ impl Renderable for H3 {
         
         if !self.class.is_empty() {
             html.push_str(" class=\"")
-            html.push_str(self.class.as_str())
+            html.push_str(self.class)
             html.push('"')
         }
         
         if !self.style.is_empty() {
             html.push_str(" style=\"")
-            html.push_str(self.style.as_str())
+            html.push_str(self.style)
             html.push('"')
         }
         
         html.push('>')
-        html.push_str(self.text.as_str())
+        html.push_str(self.text)
         html.push_str("</h3>")
         html
     }

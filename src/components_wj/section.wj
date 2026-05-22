@@ -131,7 +131,7 @@ impl Renderable for SectionGroup {
     pub fn render(self) -> string {
         let mut sections_html = "".to_string()
         for s in self.sections {
-            sections_html = sections_html + s.clone().render().as_str() + "\n"
+            sections_html = sections_html + s.clone().render() + "\n"
         }
         
         let class = if self.accordion { "section-group accordion" } else { "section-group" }

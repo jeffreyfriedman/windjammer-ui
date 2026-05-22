@@ -1,20 +1,23 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct DropdownItem {
-    pub label: String,
-    pub value: String,
-    pub disabled: bool,
+    label: String,
+    value: String,
+    disabled: bool,
 }
 
 impl DropdownItem {
     #[inline]
     pub fn new(label: String, value: String) -> DropdownItem {
         DropdownItem {
-            label,
-            value,
+            label: label.to_string(),
+            value: value.to_string(),
             disabled: false,
         }
     }
@@ -25,17 +28,18 @@ impl DropdownItem {
     }
 }
 
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, PartialEq, Default)]
+#[repr(C)]
 pub struct Dropdown {
-    pub label: String,
-    pub items: Vec<DropdownItem>,
+    label: String,
+    items: Vec<DropdownItem>,
 }
 
 impl Dropdown {
     #[inline]
     pub fn new(label: String) -> Dropdown {
         Dropdown {
-            label,
+            label: label.to_string(),
             items: Vec::new(),
         }
     }
@@ -51,8 +55,8 @@ impl Renderable for Dropdown {
     fn render(self) -> String {
         let mut items_html = "".to_string();
         let mut i = 0;
-        while i < (self.items.len() as i64) {
-            let item = &self.items[i as usize];
+        while i < self.items.len() {
+            let item = &self.items[i];
             let disabled_class = {
                 if item.disabled {
                     " wj-dropdown-item-disabled".to_string()
@@ -66,14 +70,6 @@ impl Renderable for Dropdown {
             );
             i += 1;
         }
-        format!(
-            "<div class='wj-dropdown'>
-  <button class='wj-dropdown-toggle'>{} ▼</button>
-  <div class='wj-dropdown-menu'>
-    {}
-  </div>
-</div>",
-            self.label, items_html
-        )
+        format!("<div class='wj-dropdown'>\n  <button class='wj-dropdown-toggle'>{} ▼</button>\n  <div class='wj-dropdown-menu'>\n    {}\n  </div>\n</div>", self.label, items_html)
     }
 }

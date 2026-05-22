@@ -181,7 +181,7 @@ impl Renderable for GraphNode {
                     <div class='pin-socket' style='background: {};' data-pin='{}'></div>
                     <span class='pin-name'>{}</span>
                 </div>
-            ", connected_class, color, pin.id, pin.name).as_str()
+            ", connected_class, color, pin.id, pin.name)
         }
         
         // Render outputs
@@ -197,7 +197,7 @@ impl Renderable for GraphNode {
                     <span class='pin-name'>{}</span>
                     <div class='pin-socket' style='background: {};' data-pin='{}'></div>
                 </div>
-            ", connected_class, pin.name, color, pin.id).as_str()
+            ", connected_class, pin.name, color, pin.id)
         }
         
         let preview_html = if self.preview_enabled {
@@ -304,7 +304,7 @@ impl Renderable for NodeGraph {
     pub fn render(self) -> string {
         let mut nodes_html = "".to_string()
         for n in self.nodes {
-            nodes_html = nodes_html + n.clone().render().as_str() + "\n"
+            nodes_html = nodes_html + n.clone().render() + "\n"
         }
         
         // Generate SVG connections
@@ -314,7 +314,7 @@ impl Renderable for NodeGraph {
                 <path class='node-connection' 
                       data-from='{}:{}' 
                       data-to='{}:{}'/>
-            ", c.from_node, c.from_pin, c.to_node, c.to_pin).as_str()
+            ", c.from_node, c.from_pin, c.to_node, c.to_pin)
         }
         
         let grid_class = if self.show_grid { "show-grid" } else { "" }

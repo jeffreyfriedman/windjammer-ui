@@ -1,7 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum MessageRole {
     User,
@@ -10,11 +12,12 @@ pub enum MessageRole {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct ChatMessage {
-    pub role: MessageRole,
-    pub content: String,
-    pub avatar: String,
-    pub timestamp: String,
+    role: MessageRole,
+    content: String,
+    avatar: String,
+    timestamp: String,
 }
 
 impl ChatMessage {
@@ -22,9 +25,9 @@ impl ChatMessage {
     pub fn new(content: String) -> ChatMessage {
         ChatMessage {
             role: MessageRole::User,
-            content,
-            avatar: String::from(""),
-            timestamp: String::from(""),
+            content: content.to_string(),
+            avatar: String::from("".to_string()),
+            timestamp: String::from("".to_string()),
         }
     }
     #[inline]
@@ -53,7 +56,7 @@ impl Renderable for ChatMessage {
             MessageRole::System => "wj-message-system".to_string(),
         };
         let avatar_html = {
-            if self.avatar.len() > (0 as usize) {
+            if !self.avatar.is_empty() {
                 format!(
                     "<div class='wj-message-avatar'><img src='{}' alt='avatar'/></div>",
                     self.avatar
@@ -68,21 +71,12 @@ impl Renderable for ChatMessage {
             }
         };
         let timestamp_html = {
-            if self.timestamp.len() > (0 as usize) {
+            if !self.timestamp.is_empty() {
                 format!("<div class='wj-message-timestamp'>{}</div>", self.timestamp)
             } else {
-                String::from("")
+                String::from("".to_string())
             }
         };
-        format!(
-            "<div class='wj-chat-message {}'>
-                {}
-                <div class='wj-message-content-wrapper'>
-                    <div class='wj-message-content'>{}</div>
-                    {}
-                </div>
-            </div>",
-            role_class, avatar_html, self.content, timestamp_html
-        )
+        format!("<div class='wj-chat-message {}'>\n                {}\n                <div class='wj-message-content-wrapper'>\n                    <div class='wj-message-content'>{}</div>\n                    {}\n                </div>\n            </div>", role_class, avatar_html, self.content, timestamp_html)
     }
 }

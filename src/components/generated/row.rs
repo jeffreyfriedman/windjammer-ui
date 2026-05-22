@@ -1,13 +1,16 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Row {
-    pub children: Vec<String>,
-    pub gap: String,
-    pub align: RowAlign,
-    pub justify: RowJustify,
-    pub wrap: bool,
-    pub class: String,
+    children: Vec<String>,
+    gap: String,
+    align: RowAlign,
+    justify: RowJustify,
+    wrap: bool,
+    class: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -33,7 +36,7 @@ impl Row {
     pub fn new() -> Row {
         Row {
             children: Vec::new(),
-            gap: "8px".to_string(),
+            gap: "8px".to_string().to_string(),
             align: RowAlign::Start,
             justify: RowJustify::Start,
             wrap: false,
@@ -95,9 +98,9 @@ impl Row {
         };
         let mut html = String::new();
         html.push_str("<div class=\"wj-row ");
-        html.push_str(&self.class.as_str());
+        html.push_str(&self.class.clone());
         html.push_str("\" style=\"display: flex; flex-direction: row; gap: ");
-        html.push_str(&self.gap.as_str());
+        html.push_str(&self.gap.clone());
         html.push_str("; align-items: ");
         html.push_str(&align_str);
         html.push_str("; justify-content: ");
@@ -106,7 +109,7 @@ impl Row {
         html.push_str(&wrap_str);
         html.push_str(";\">");
         for child in &self.children {
-            html.push_str(&child.as_str());
+            html.push_str(&child);
         }
         html.push_str("</div>");
         html

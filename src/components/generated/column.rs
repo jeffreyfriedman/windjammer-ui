@@ -1,12 +1,15 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Column {
-    pub children: Vec<String>,
-    pub gap: String,
-    pub align: ColumnAlign,
-    pub justify: ColumnJustify,
-    pub class: String,
+    children: Vec<String>,
+    gap: String,
+    align: ColumnAlign,
+    justify: ColumnJustify,
+    class: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -32,7 +35,7 @@ impl Column {
     pub fn new() -> Column {
         Column {
             children: Vec::new(),
-            gap: "8px".to_string(),
+            gap: "8px".to_string().to_string(),
             align: ColumnAlign::Start,
             justify: ColumnJustify::Start,
             class: String::new(),
@@ -81,16 +84,16 @@ impl Column {
         };
         let mut html = String::new();
         html.push_str("<div class=\"wj-column ");
-        html.push_str(&self.class.as_str());
+        html.push_str(&self.class.clone());
         html.push_str("\" style=\"display: flex; flex-direction: column; gap: ");
-        html.push_str(&self.gap.as_str());
+        html.push_str(&self.gap.clone());
         html.push_str("; align-items: ");
         html.push_str(&align_str);
         html.push_str("; justify-content: ");
         html.push_str(&justify_str);
         html.push_str(";\">");
         for child in &self.children {
-            html.push_str(&child.as_str());
+            html.push_str(&child);
         }
         html.push_str("</div>");
         html

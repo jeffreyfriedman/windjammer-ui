@@ -1,7 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum StackDirection {
     Vertical,
@@ -27,15 +29,16 @@ pub enum StackJustify {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Stack {
-    pub direction: StackDirection,
-    pub gap: String,
-    pub align: StackAlign,
-    pub justify: StackJustify,
-    pub children: Vec<String>,
-    pub padding: String,
-    pub width: String,
-    pub height: String,
+    direction: StackDirection,
+    gap: String,
+    align: StackAlign,
+    justify: StackJustify,
+    children: Vec<String>,
+    padding: String,
+    width: String,
+    height: String,
 }
 
 impl Stack {
@@ -43,13 +46,13 @@ impl Stack {
     pub fn new() -> Stack {
         Stack {
             direction: StackDirection::Vertical,
-            gap: "8px".to_string(),
+            gap: "8px".to_string().to_string(),
             align: StackAlign::Stretch,
             justify: StackJustify::Start,
             children: Vec::new(),
-            padding: "0".to_string(),
-            width: "auto".to_string(),
-            height: "auto".to_string(),
+            padding: "0".to_string().to_string(),
+            width: "auto".to_string().to_string(),
+            height: "auto".to_string().to_string(),
         }
     }
     #[inline]
@@ -141,7 +144,7 @@ impl Renderable for Stack {
         html.push_str("; height: ");
         html.push_str(&self.height);
         html.push_str(";'>");
-        for child in &self.children {
+        for child in self.children {
             html.push_str(&child);
         }
         html.push_str("</div>");

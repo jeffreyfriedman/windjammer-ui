@@ -1,25 +1,28 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
+#[repr(C)]
 pub struct Form {
-    pub id: String,
-    pub action: String,
-    pub method: String,
-    pub children: Vec<String>,
-    pub on_submit: String,
+    id: String,
+    action: String,
+    method: String,
+    children: Vec<String>,
+    on_submit: String,
 }
 
 impl Form {
     #[inline]
     pub fn new(id: String) -> Form {
         Form {
-            id,
-            action: "#".to_string(),
-            method: "POST".to_string(),
+            id: id.to_string(),
+            action: "#".to_string().to_string(),
+            method: "POST".to_string().to_string(),
             children: Vec::new(),
-            on_submit: "return false;".to_string(),
+            on_submit: "return false;".to_string().to_string(),
         }
     }
     #[inline]
@@ -45,20 +48,21 @@ impl Form {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct FormField {
-    pub label: String,
-    pub input: String,
-    pub error: String,
-    pub required: bool,
-    pub help_text: String,
+    label: String,
+    input: String,
+    error: String,
+    required: bool,
+    help_text: String,
 }
 
 impl FormField {
     #[inline]
     pub fn new(label: String, input: String) -> FormField {
         FormField {
-            label,
-            input,
+            label: label.to_string(),
+            input: input.to_string(),
             error: String::new(),
             required: false,
             help_text: String::new(),
@@ -88,19 +92,19 @@ impl FormField {
         );
         html.push_str(&self.label);
         if self.required {
-            html.push_str(" <span style='color: #e53e3e;'>*</span>")
+            html.push_str(" <span style='color: #e53e3e;'>*</span>");
         }
         html.push_str("</label>");
         html.push_str(&self.input);
-        if self.help_text.len() > (0 as usize) {
+        if !self.help_text.is_empty() {
             html.push_str("<div style='margin-top: 4px; font-size: 12px; color: #718096;'>");
             html.push_str(&self.help_text);
-            html.push_str("</div>")
+            html.push_str("</div>");
         }
-        if self.error.len() > (0 as usize) {
+        if !self.error.is_empty() {
             html.push_str("<div style='margin-top: 4px; font-size: 12px; color: #e53e3e;'>");
             html.push_str(&self.error);
-            html.push_str("</div>")
+            html.push_str("</div>");
         }
         html.push_str("</div>");
         html
@@ -120,7 +124,7 @@ impl Renderable for Form {
         html.push_str("' onsubmit='");
         html.push_str(&self.on_submit);
         html.push_str("'>");
-        for child in &self.children {
+        for child in self.children {
             html.push_str(&child);
         }
         html.push_str("</form>");

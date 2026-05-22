@@ -1,7 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum ChipVariant {
     Default,
@@ -20,19 +22,20 @@ pub enum ChipSize {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Chip {
-    pub label: String,
-    pub variant: ChipVariant,
-    pub size: ChipSize,
-    pub removable: bool,
-    pub icon: String,
+    label: String,
+    variant: ChipVariant,
+    size: ChipSize,
+    removable: bool,
+    icon: String,
 }
 
 impl Chip {
     #[inline]
     pub fn new(label: String) -> Chip {
         Chip {
-            label,
+            label: label.to_string(),
             variant: ChipVariant::Default,
             size: ChipSize::Medium,
             removable: false,
@@ -112,10 +115,10 @@ impl Renderable for Chip {
         html.push_str("; border: 1px solid ");
         html.push_str(&border_color);
         html.push_str(";'>");
-        if self.icon.len() > (0 as usize) {
+        if !self.icon.is_empty() {
             html.push_str("<span>");
             html.push_str(&self.icon);
-            html.push_str("</span>")
+            html.push_str("</span>");
         }
         html.push_str("<span>");
         html.push_str(&self.label);
@@ -123,7 +126,7 @@ impl Renderable for Chip {
         if self.removable {
             html.push_str("<button onclick='this.parentElement.remove()' style='background: none; border: none; cursor: pointer; padding: 0; margin: 0; display: flex; align-items: center; color: ");
             html.push_str(&text_color);
-            html.push_str("; opacity: 0.7; font-size: 18px; line-height: 1;' onmouseover='this.style.opacity=\"1\"' onmouseout='this.style.opacity=\"0.7\"'>&times;</button>")
+            html.push_str("; opacity: 0.7; font-size: 18px; line-height: 1;' onmouseover='this.style.opacity=\"1\"' onmouseout='this.style.opacity=\"0.7\"'>&times;</button>");
         }
         html.push_str("</span>");
         html

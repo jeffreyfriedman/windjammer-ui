@@ -1,25 +1,28 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+use super::traits::Renderable;
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct ChatInput {
-    pub placeholder: String,
-    pub value: String,
-    pub disabled: bool,
-    pub multiline: bool,
-    pub rows: i32,
+    placeholder: String,
+    value: String,
+    disabled: bool,
+    multiline: bool,
+    rows: i32,
 }
 
 impl ChatInput {
     #[inline]
     pub fn new() -> ChatInput {
         ChatInput {
-            placeholder: String::from("Type a message..."),
-            value: String::from(""),
+            placeholder: String::from("Type a message...".to_string()),
+            value: String::from("".to_string()),
             disabled: false,
             multiline: true,
-            rows: 3,
+            rows: 3_i32,
         }
     }
     #[inline]
@@ -66,14 +69,6 @@ impl Renderable for ChatInput {
                 format!("<input type='text' class='wj-chat-input-field' placeholder='{}' value='{}'{}/>", self.placeholder, self.value, disabled_attr)
             }
         };
-        format!(
-            "<div class='wj-chat-input'>
-                {}
-                <button class='wj-chat-send-button'{}>
-                    <span>➤</span>
-                </button>
-            </div>",
-            input_html, disabled_attr
-        )
+        format!("<div class='wj-chat-input'>\n                {}\n                <button class='wj-chat-send-button'{}>\n                    <span>➤</span>\n                </button>\n            </div>", input_html, disabled_attr)
     }
 }

@@ -1,44 +1,47 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct Spacer {
-    pub width: String,
-    pub height: String,
-    pub flex: bool,
+    width: String,
+    height: String,
+    flex: bool,
 }
 
 impl Spacer {
     #[inline]
     pub fn new() -> Spacer {
         Spacer {
-            width: "".to_string(),
-            height: "".to_string(),
+            width: "".to_string().to_string(),
+            height: "".to_string().to_string(),
             flex: false,
         }
     }
     #[inline]
     pub fn horizontal(width: String) -> Spacer {
         Spacer {
-            width,
-            height: "".to_string(),
+            width: width.to_string(),
+            height: "".to_string().to_string(),
             flex: false,
         }
     }
     #[inline]
     pub fn vertical(height: String) -> Spacer {
         Spacer {
-            width: "".to_string(),
-            height,
+            width: "".to_string().to_string(),
+            height: height.to_string(),
             flex: false,
         }
     }
     #[inline]
     pub fn flexible() -> Spacer {
         Spacer {
-            width: "".to_string(),
-            height: "".to_string(),
+            width: "".to_string().to_string(),
+            height: "".to_string().to_string(),
             flex: true,
         }
     }

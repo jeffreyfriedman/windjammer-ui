@@ -1,14 +1,17 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
+#[repr(C)]
 pub struct Container {
-    pub children: Vec<String>,
-    pub max_width: String,
-    pub max_height: String,
-    pub padding: String,
-    pub background_color: String,
+    children: Vec<String>,
+    max_width: String,
+    max_height: String,
+    padding: String,
+    background_color: String,
 }
 
 impl Container {
@@ -16,10 +19,10 @@ impl Container {
     pub fn new() -> Container {
         Container {
             children: Vec::new(),
-            max_width: "".to_string(),
-            max_height: "".to_string(),
-            padding: "16px".to_string(),
-            background_color: "".to_string(),
+            max_width: "".to_string().to_string(),
+            max_height: "".to_string().to_string(),
+            padding: "16px".to_string().to_string(),
+            background_color: "".to_string().to_string(),
         }
     }
     #[inline]
@@ -73,14 +76,9 @@ impl Renderable for Container {
                 style, "background-color: ", self.background_color, "; "
             );
         }
-        let children_html = self.children.join(
-            "
-  ",
-        );
+        let children_html = self.children.join("\n  ");
         format!(
-            "<div class='wj-container' style='{}'>
-  {}
-</div>",
+            "<div class='wj-container' style='{}'>\n  {}\n</div>",
             style, children_html
         )
     }

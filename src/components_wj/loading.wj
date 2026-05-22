@@ -63,7 +63,7 @@ impl Loading {
         }
         
         html.push_str("<div class=\"wj-loading ")
-        html.push_str(self.class.as_str())
+        html.push_str(self.class)
         html.push_str("\" style=\"display: flex; flex-direction: column; align-items: center; gap: 12px;\">")
         
         // Spinner
@@ -84,7 +84,7 @@ impl Loading {
                 html.push_str("#6b7280")
             }
             html.push_str("; font-size: 14px;\">")
-            html.push_str(self.text.as_str())
+            html.push_str(self.text)
             html.push_str("</span>")
         }
         

@@ -1,24 +1,27 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct AdvancedCodeEditor {
-    pub code: String,
-    pub language: String,
-    pub theme: String,
-    pub line_numbers: bool,
-    pub minimap: bool,
-    pub autocomplete: bool,
+    code: String,
+    language: String,
+    theme: String,
+    line_numbers: bool,
+    minimap: bool,
+    autocomplete: bool,
 }
 
 impl AdvancedCodeEditor {
     #[inline]
     pub fn new(code: String) -> AdvancedCodeEditor {
         AdvancedCodeEditor {
-            code,
-            language: "rust".to_string(),
-            theme: "monokai".to_string(),
+            code: code.to_string(),
+            language: "rust".to_string().to_string(),
+            theme: "monokai".to_string().to_string(),
             line_numbers: true,
             minimap: true,
             autocomplete: true,
@@ -68,32 +71,12 @@ impl Renderable for AdvancedCodeEditor {
                 "".to_string()
             }
         };
-        format!(
-            "<div class='wj-advanced-editor wj-editor-{} wj-editor-theme-{}{}{}'>
-  <div class='wj-editor-toolbar'>
-    <span>Language: {}</span>
-    <span>Theme: {}</span>
-  </div>
-  <div class='wj-editor-main'>
-    <textarea class='wj-editor-textarea'>
-{}</textarea>
-    {}
-  </div>
-</div>",
-            self.language,
-            self.theme,
-            features_class,
-            line_class,
-            self.language,
-            self.theme,
-            self.code,
-            {
-                if self.minimap {
-                    "<div class='wj-editor-minimap'></div>".to_string()
-                } else {
-                    "".to_string()
-                }
+        format!("<div class='wj-advanced-editor wj-editor-{} wj-editor-theme-{}{}{}'>\n  <div class='wj-editor-toolbar'>\n    <span>Language: {}</span>\n    <span>Theme: {}</span>\n  </div>\n  <div class='wj-editor-main'>\n    <textarea class='wj-editor-textarea'>\n{}</textarea>\n    {}\n  </div>\n</div>", self.language, self.theme, features_class, line_class, self.language, self.theme, self.code, {
+            if self.minimap {
+                "<div class='wj-editor-minimap'></div>".to_string()
+            } else {
+                "".to_string()
             }
-        )
+        })
     }
 }

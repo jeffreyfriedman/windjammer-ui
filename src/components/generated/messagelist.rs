@@ -1,12 +1,15 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
-#[derive(Debug, Clone, Default)]
+use super::traits::Renderable;
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+#[repr(C)]
 pub struct MessageList {
-    pub messages: Vec<String>,
-    pub height: String,
-    pub auto_scroll: bool,
+    messages: Vec<String>,
+    height: String,
+    auto_scroll: bool,
 }
 
 impl MessageList {
@@ -14,7 +17,7 @@ impl MessageList {
     pub fn new() -> MessageList {
         MessageList {
             messages: Vec::new(),
-            height: String::from("600px"),
+            height: String::from("600px".to_string()),
             auto_scroll: true,
         }
     }
@@ -45,13 +48,6 @@ impl Renderable for MessageList {
                 "".to_string()
             }
         };
-        format!(
-            "<div class='wj-message-list' style='height: {}' {}>
-                {}
-            </div>",
-            self.height,
-            scroll_script,
-            self.messages.join("")
-        )
+        format!("<div class='wj-message-list' style='height: {}' {}>\n                {}\n            </div>", self.height, scroll_script, self.messages.join(""))
     }
 }

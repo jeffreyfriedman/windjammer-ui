@@ -1,7 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum RatingSize {
     Small,
@@ -10,12 +12,13 @@ pub enum RatingSize {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Rating {
-    pub value: f32,
-    pub max: i32,
-    pub size: RatingSize,
-    pub readonly: bool,
-    pub color: String,
+    value: f32,
+    max: i32,
+    size: RatingSize,
+    readonly: bool,
+    color: String,
 }
 
 impl Rating {
@@ -23,10 +26,10 @@ impl Rating {
     pub fn new(value: f32) -> Rating {
         Rating {
             value,
-            max: 5,
+            max: 5_i32,
             size: RatingSize::Medium,
             readonly: true,
-            color: "#fbbf24".to_string(),
+            color: "#fbbf24".to_string().to_string(),
         }
     }
     #[inline]
@@ -64,12 +67,12 @@ impl Renderable for Rating {
         let mut i = 1;
         while i <= self.max {
             let filled = i as f32 <= self.value;
-            let half_filled = i as f32 - 0.5 <= self.value && i as f32 > self.value;
+            let half_filled = i as f32 - 0.5_f32 <= self.value && (i as f32) > self.value;
             let star_color = {
                 if filled || half_filled {
-                    self.color.as_str()
+                    self.color.clone()
                 } else {
-                    "#e2e8f0"
+                    "#e2e8f0".to_string()
                 }
             };
             let cursor = {
@@ -82,9 +85,9 @@ impl Renderable for Rating {
             html.push_str("<span style='font-size: ");
             html.push_str(&star_size);
             html.push_str("; color: ");
-            html.push_str(&star_color);
+            html.push_str(&star_color.clone());
             html.push_str("; cursor: ");
-            html.push_str(&cursor);
+            html.push_str(&cursor.clone());
             html.push_str(";'>");
             if half_filled {
                 html.push('⯨')

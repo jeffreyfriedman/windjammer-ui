@@ -84,7 +84,7 @@ pub fn render(self) -> string {
             FlexDirection::Column => "column",
         }
         
-        let mut style = "display: flex; flex-direction: ".to_string() + direction_str + "; gap: " + self.gap + ";"
+        let mut style = "display: flex; flex-direction: ".to_string() + direction_str.to_string() + "; gap: " + self.gap + ";"
         
         if self.padding != "" {
             style = style + " padding: " + self.padding + ";"

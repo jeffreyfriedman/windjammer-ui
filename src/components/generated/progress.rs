@@ -1,7 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum ProgressVariant {
     Default,
@@ -10,12 +12,13 @@ pub enum ProgressVariant {
     Danger,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq)]
+#[repr(C)]
 pub struct Progress {
-    pub value: f64,
-    pub max: f64,
-    pub variant: ProgressVariant,
-    pub show_label: bool,
+    value: f64,
+    max: f64,
+    variant: ProgressVariant,
+    show_label: bool,
 }
 
 impl Progress {
@@ -23,7 +26,7 @@ impl Progress {
     pub fn new(value: f64) -> Progress {
         Progress {
             value,
-            max: 100.0,
+            max: 100.0_f64,
             variant: ProgressVariant::Default,
             show_label: true,
         }
@@ -48,7 +51,7 @@ impl Progress {
 impl Renderable for Progress {
     #[inline]
     fn render(self) -> String {
-        let percentage = (self.value / self.max * 100.0).clamp(0.0, 100.0);
+        let percentage = (self.value / self.max * 100.0_f64).clamp(0.0_f64, 100.0_f64);
         let variant_class = match self.variant {
             ProgressVariant::Default => "wj-progress-default".to_string(),
             ProgressVariant::Success => "wj-progress-success".to_string(),
@@ -65,13 +68,9 @@ impl Renderable for Progress {
             if self.show_label {
                 format!("{:.0}%", percentage)
             } else {
-                "".to_string()
+                "".to_string().to_string()
             }
         };
-        format!("<div class='wj-progress-container' style='width: 100%; background-color: #e0e0e0; border-radius: 4px; overflow: hidden;'>
-  <div class='wj-progress-bar {}' style='width: {}%; height: 24px; background-color: {}; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; transition: width 0.3s ease;'>
-    {}
-  </div>
-</div>", variant_class, percentage, color, label_html)
+        format!("<div class='wj-progress-container' style='width: 100%; background-color: #e0e0e0; border-radius: 4px; overflow: hidden;'>\n  <div class='wj-progress-bar {}' style='width: {}%; height: 24px; background-color: {}; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; transition: width 0.3s ease;'>\n    {}\n  </div>\n</div>", variant_class, percentage, color, label_html)
     }
 }

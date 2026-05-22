@@ -53,12 +53,12 @@ impl VNode {
     
     /// Create a new text node
     pub fn text(content: string) -> VNode {
-        VNode { handle: vnode_ffi::vnode_text(content.as_str()) }
+        VNode { handle: vnode_ffi::vnode_text(content) }
     }
     
     /// Create any HTML element by tag name
     pub fn element(tag: string) -> VNode {
-        VNode { handle: vnode_ffi::vnode_element(tag.as_str()) }
+        VNode { handle: vnode_ffi::vnode_element(tag) }
     }
     
     // ========================================================================
@@ -68,19 +68,19 @@ impl VNode {
     
     /// Add a CSS class (takes owned String)
     pub fn add_class(self, class: string) -> VNode {
-        vnode_ffi::vnode_class(self.handle, class.as_str())
+        vnode_ffi::vnode_class(self.handle, class)
         self
     }
     
     /// Add inline style (takes owned String)
     pub fn add_style(self, style: string) -> VNode {
-        vnode_ffi::vnode_style(self.handle, style.as_str())
+        vnode_ffi::vnode_style(self.handle, style)
         self
     }
     
     /// Add an attribute (takes owned Strings)
     pub fn add_attr(self, name: string, value: string) -> VNode {
-        vnode_ffi::vnode_attr(self.handle, name.as_str(), value.as_str())
+        vnode_ffi::vnode_attr(self.handle, name, value)
         self
     }
     
@@ -103,25 +103,25 @@ impl VNode {
     
     /// Set id attribute
     pub fn set_id(self, id: string) -> VNode {
-        vnode_ffi::vnode_attr(self.handle, "id", id.as_str())
+        vnode_ffi::vnode_attr(self.handle, "id", id)
         self
     }
     
     /// Set placeholder (for inputs)
     pub fn set_placeholder(self, text: string) -> VNode {
-        vnode_ffi::vnode_attr(self.handle, "placeholder", text.as_str())
+        vnode_ffi::vnode_attr(self.handle, "placeholder", text)
         self
     }
     
     /// Set type attribute (for inputs/buttons)
     pub fn set_type(self, t: string) -> VNode {
-        vnode_ffi::vnode_attr(self.handle, "type", t.as_str())
+        vnode_ffi::vnode_attr(self.handle, "type", t)
         self
     }
     
     /// Set value attribute
     pub fn set_value(self, v: string) -> VNode {
-        vnode_ffi::vnode_attr(self.handle, "value", v.as_str())
+        vnode_ffi::vnode_attr(self.handle, "value", v)
         self
     }
     

@@ -1,7 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum FlexDirection {
     Row,
@@ -9,12 +11,13 @@ pub enum FlexDirection {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Flex {
-    pub children: Vec<String>,
-    pub direction: FlexDirection,
-    pub gap: String,
-    pub padding: String,
-    pub background_color: String,
+    children: Vec<String>,
+    direction: FlexDirection,
+    gap: String,
+    padding: String,
+    background_color: String,
 }
 
 impl Flex {
@@ -23,9 +26,9 @@ impl Flex {
         Flex {
             children: Vec::new(),
             direction: FlexDirection::Row,
-            gap: "8px".to_string(),
-            padding: "".to_string(),
-            background_color: "".to_string(),
+            gap: "8px".to_string().to_string(),
+            padding: "".to_string().to_string(),
+            background_color: "".to_string().to_string(),
         }
     }
     #[inline]
@@ -72,14 +75,11 @@ impl Renderable for Flex {
             FlexDirection::Row => "row".to_string(),
             FlexDirection::Column => "column".to_string(),
         };
-        let mut style = format!(
-            "{}{}{}{}{}",
-            "display: flex; flex-direction: ".to_string(),
-            direction_str,
-            "; gap: ",
-            self.gap,
-            ";"
-        );
+        let mut style = "display: flex; flex-direction: ".to_string()
+            + &direction_str.to_string()
+            + &"; gap: "
+            + &self.gap
+            + &";";
         if self.padding != "" {
             style = format!("{}{}{}{}", style, " padding: ", self.padding, ";");
         }
@@ -89,14 +89,9 @@ impl Renderable for Flex {
                 style, " background-color: ", self.background_color, ";"
             );
         }
-        let children_html = self.children.join(
-            "
-  ",
-        );
+        let children_html = self.children.join("\n  ");
         format!(
-            "<div class='wj-flex' style='{}'>
-  {}
-</div>",
+            "<div class='wj-flex' style='{}'>\n  {}\n</div>",
             style, children_html
         )
     }

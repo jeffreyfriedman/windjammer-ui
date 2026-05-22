@@ -1,9 +1,11 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
+
 use super::traits::Renderable;
 use super::traits::RenderableVNode;
 use super::vnode::VNode;
-
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum ButtonVariant {
     Primary,
@@ -22,18 +24,19 @@ pub enum ButtonSize {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Button {
-    pub label: String,
-    pub variant: ButtonVariant,
-    pub size: ButtonSize,
-    pub disabled: bool,
+    label: String,
+    variant: ButtonVariant,
+    size: ButtonSize,
+    disabled: bool,
 }
 
 impl Button {
     #[inline]
     pub fn new(label: String) -> Button {
         Button {
-            label,
+            label: label.to_string(),
             variant: ButtonVariant::Primary,
             size: ButtonSize::Medium,
             disabled: false,
@@ -57,20 +60,20 @@ impl Button {
     #[inline]
     pub fn get_variant_class(&self) -> String {
         match self.variant {
-            ButtonVariant::Primary => "wj-button-primary".to_string(),
-            ButtonVariant::Secondary => "wj-button-secondary".to_string(),
-            ButtonVariant::Success => "wj-button-success".to_string(),
-            ButtonVariant::Danger => "wj-button-danger".to_string(),
-            ButtonVariant::Warning => "wj-button-warning".to_string(),
-            ButtonVariant::Ghost => "wj-button-ghost".to_string(),
+            ButtonVariant::Primary => "wj-button-primary".to_string().to_string(),
+            ButtonVariant::Secondary => "wj-button-secondary".to_string().to_string(),
+            ButtonVariant::Success => "wj-button-success".to_string().to_string(),
+            ButtonVariant::Danger => "wj-button-danger".to_string().to_string(),
+            ButtonVariant::Warning => "wj-button-warning".to_string().to_string(),
+            ButtonVariant::Ghost => "wj-button-ghost".to_string().to_string(),
         }
     }
     #[inline]
     pub fn get_size_class(&self) -> String {
         match self.size {
-            ButtonSize::Small => "wj-button-sm".to_string(),
-            ButtonSize::Medium => "wj-button-md".to_string(),
-            ButtonSize::Large => "wj-button-lg".to_string(),
+            ButtonSize::Small => "wj-button-sm".to_string().to_string(),
+            ButtonSize::Medium => "wj-button-md".to_string().to_string(),
+            ButtonSize::Large => "wj-button-lg".to_string().to_string(),
         }
     }
     #[inline]

@@ -1,5 +1,15 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 // Auto-generated mod.rs by Windjammer CLI
 // This file declares all generated Windjammer modules
 
@@ -175,3 +185,5 @@ pub use ecs_inspector_model::*;
 
 pub mod ecs_inspector_panel;
 pub use ecs_inspector_panel::*;
+
+

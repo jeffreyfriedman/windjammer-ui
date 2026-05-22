@@ -1,7 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum TooltipPosition {
     Top,
@@ -11,19 +13,20 @@ pub enum TooltipPosition {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Tooltip {
-    pub text: String,
-    pub position: TooltipPosition,
-    pub child: String,
+    text: String,
+    position: TooltipPosition,
+    child: String,
 }
 
 impl Tooltip {
     #[inline]
     pub fn new(text: String, child: String) -> Tooltip {
         Tooltip {
-            text,
+            text: text.to_string(),
             position: TooltipPosition::Top,
-            child,
+            child: child.to_string(),
         }
     }
     #[inline]

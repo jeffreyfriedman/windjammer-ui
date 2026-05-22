@@ -1,7 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum SplitDirection {
     Horizontal,
@@ -9,21 +11,22 @@ pub enum SplitDirection {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct SplitPanel {
-    pub left: String,
-    pub right: String,
-    pub direction: SplitDirection,
-    pub initial_size: i32,
+    left: String,
+    right: String,
+    direction: SplitDirection,
+    initial_size: i32,
 }
 
 impl SplitPanel {
     #[inline]
     pub fn new(left: String, right: String) -> SplitPanel {
         SplitPanel {
-            left,
-            right,
+            left: left.to_string(),
+            right: right.to_string(),
             direction: SplitDirection::Vertical,
-            initial_size: 50,
+            initial_size: 50_i32,
         }
     }
     #[inline]
@@ -45,21 +48,6 @@ impl Renderable for SplitPanel {
             SplitDirection::Horizontal => "column".to_string(),
             SplitDirection::Vertical => "row".to_string(),
         };
-        format!(
-            "<div class='wj-split-panel' style='display: flex; flex-direction: {}; height: 100%;'>
-  <div class='wj-split-pane' style='flex: {}%;'>
-    {}
-  </div>
-  <div class='wj-split-divider'></div>
-  <div class='wj-split-pane' style='flex: {}%;'>
-    {}
-  </div>
-</div>",
-            flex_direction,
-            self.initial_size,
-            self.left,
-            100 - self.initial_size,
-            self.right
-        )
+        format!("<div class='wj-split-panel' style='display: flex; flex-direction: {}; height: 100%;'>\n  <div class='wj-split-pane' style='flex: {}%;'>\n    {}\n  </div>\n  <div class='wj-split-divider'></div>\n  <div class='wj-split-pane' style='flex: {}%;'>\n    {}\n  </div>\n</div>", flex_direction, self.initial_size, self.left, 100 - self.initial_size, self.right)
     }
 }

@@ -1,27 +1,30 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Debug, Clone, PartialEq, Default)]
+#[repr(C)]
 pub struct Slider {
-    pub min: f64,
-    pub max: f64,
-    pub step: f64,
-    pub value: f64,
-    pub disabled: bool,
-    pub label: String,
+    min: f64,
+    max: f64,
+    step: f64,
+    value: f64,
+    disabled: bool,
+    label: String,
 }
 
 impl Slider {
     #[inline]
     pub fn new() -> Slider {
         Slider {
-            min: 0.0,
-            max: 100.0,
-            step: 1.0,
-            value: 50.0,
+            min: 0.0_f64,
+            max: 100.0_f64,
+            step: 1.0_f64,
+            value: 50.0_f64,
             disabled: false,
-            label: "".to_string(),
+            label: "".to_string().to_string(),
         }
     }
     #[inline]
@@ -68,9 +71,9 @@ impl Renderable for Slider {
         };
         let label_html = {
             if self.label != "" {
-                format!("{}{}{}", "<label>".to_string(), self.label, "</label>")
+                "<label>".to_string().to_string() + &self.label + &"</label>".to_string()
             } else {
-                "".to_string()
+                "".to_string().to_string()
             }
         };
         format!(

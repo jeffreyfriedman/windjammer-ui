@@ -1,12 +1,15 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Switch {
-    pub checked: bool,
-    pub disabled: bool,
-    pub size: SwitchSize,
-    pub label: String,
-    pub class: String,
+    checked: bool,
+    disabled: bool,
+    size: SwitchSize,
+    label: String,
+    class: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -55,9 +58,9 @@ impl Switch {
     #[inline]
     pub fn render(&self) -> String {
         let (width, height, thumb_size) = match self.size {
-            SwitchSize::Small => ("32px", "18px", "14px"),
-            SwitchSize::Medium => ("44px", "24px", "20px"),
-            SwitchSize::Large => ("56px", "32px", "28px"),
+            SwitchSize::Small => ("32px".to_string(), "18px".to_string(), "14px".to_string()),
+            SwitchSize::Medium => ("44px".to_string(), "24px".to_string(), "20px".to_string()),
+            SwitchSize::Large => ("56px".to_string(), "32px".to_string(), "28px".to_string()),
         };
         let bg_color = {
             if self.checked {
@@ -93,13 +96,13 @@ impl Switch {
         };
         let mut html = String::new();
         html.push_str("<label class=\"wj-switch ");
-        html.push_str(&self.class.as_str());
+        html.push_str(&self.class.clone());
         html.push_str("\" style=\"display: inline-flex; align-items: center; gap: 8px;");
         html.push_str(&disabled_style);
         html.push_str("\">");
         html.push_str("<input type=\"checkbox\"");
         if self.checked {
-            html.push_str(" checked")
+            html.push_str(" checked");
         }
         html.push_str(&disabled_attr);
         html.push_str(" style=\"position: absolute; opacity: 0; width: 0; height: 0;\">");
@@ -120,8 +123,8 @@ impl Switch {
         html.push_str("</span>");
         if !self.label.is_empty() {
             html.push_str("<span style=\"font-size: 14px;\">");
-            html.push_str(&self.label.as_str());
-            html.push_str("</span>")
+            html.push_str(&self.label);
+            html.push_str("</span>");
         }
         html.push_str("</label>");
         html
