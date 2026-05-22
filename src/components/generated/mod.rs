@@ -10,6 +10,14 @@
 #![allow(noop_method_call)]
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 // Auto-generated mod.rs by Windjammer CLI
 // This file declares all generated Windjammer modules
 
@@ -168,7 +176,7 @@ pub use treeview::*;
 pub use typingindicator::*;
 pub use vnode::*;
 
-// bt_visual_* omitted until Renderable uses owned self (WIP in src/components/)
+// bt_visual_* omitted until Renderable trait impl codegen matches object-safe &self (E0053)
 pub mod profiler_timeline_model;
 pub use profiler_timeline_model::*;
 
@@ -178,12 +186,16 @@ pub use realtime_profiler_panel::*;
 pub mod frame_debugger_panel;
 pub use frame_debugger_panel::*;
 
-// bt_visual_* omitted until Renderable uses owned self (WIP in src/components/)
+// bt_visual_* WIP — sources in src/components/bt_visual_*.wj
 
 pub mod ecs_inspector_model;
 pub use ecs_inspector_model::*;
 
 pub mod ecs_inspector_panel;
 pub use ecs_inspector_panel::*;
+
+
+
+
 
 
