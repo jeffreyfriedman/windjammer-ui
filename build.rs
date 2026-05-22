@@ -179,9 +179,7 @@ fn main() {
     if let Ok(content) = std::fs::read_to_string(&mod_rs) {
         let mut lines: Vec<&str> = content.lines().collect();
         lines.retain(|line| {
-            !line.contains("pub mod bt_visual_")
-                && !line.contains("pub use bt_visual_")
-                && !line.contains("pub mod components;")
+            !line.contains("pub mod components;")
                 && !line.contains("pub use components::*")
                 && !line.contains("pub mod components_wj")
                 && !line.contains("pub use components_wj::*")

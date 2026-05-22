@@ -1,31 +1,5 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -36,7 +10,7 @@ pub struct BtPalettePanel;
 
 impl Renderable for BtPalettePanel {
     #[inline]
-    fn render(&self) -> String {
+    fn render(self) -> String {
         let mut mk = "".to_string();
         mk = format!("{}{}", mk, "<div class=\"bt-pane-label\">Compositor</div>");
         mk = format!("{}{}", mk, "<button class=\"bt-drag-chip\" draggable=\"true\" data-bt-kind=\"sequence\">Sequence</button>");
