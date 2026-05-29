@@ -83,6 +83,23 @@ pub mod ssr;
 pub mod to_vnode;
 pub mod vdom;
 pub mod vnode_ffi; // FFI for Windjammer components to construct VNodes
+pub mod signal_ffi; // FFI for Windjammer components to use reactive signals
+
+/// Canonical VNode type — use `simple_vnode::VNode` for all new code.
+/// The `vdom::VNode` type is legacy and will be migrated.
+pub mod ui {
+    pub use crate::simple_vnode::{VAttr, VNode};
+    pub use crate::vnode_ffi::{
+        callback_clear, callback_invoke, callback_register, callback_remove, vnode_child,
+        vnode_clear, vnode_element, vnode_on_change, vnode_on_change_cb, vnode_on_click,
+        vnode_on_click_cb, vnode_on_input, vnode_take, vnode_text,
+    };
+    pub use crate::signal_ffi::{
+        signal_get_bool, signal_get_f32, signal_get_i32, signal_get_string, signal_new_bool,
+        signal_new_f32, signal_new_i32, signal_new_string, signal_set_bool, signal_set_f32,
+        signal_set_i32, signal_set_string,
+    };
+}
 pub mod frame_trace_ffi; // Live engine frame trace read bridge for profiler panels
 #[cfg(target_arch = "wasm32")]
 pub mod wasm_events;

@@ -156,6 +156,50 @@ pub fn vnode_style(handle: u64, style: impl AsRef<str>) {
     });
 }
 
+/// Attach an on_click handler name to a VNode
+/// The renderer looks up this name in the event dispatcher to find the callback
+#[inline]
+pub fn vnode_on_click(handle: u64, handler_name: impl AsRef<str>) {
+    VNODE_REGISTRY.with(|registry| {
+        let mut reg = registry.borrow_mut();
+        if let Some(VNode::Element { attrs, .. }) = reg.nodes.get_mut(&handle) {
+            attrs.push((
+                "on_click".to_string(),
+                VAttr::Dynamic(handler_name.as_ref().to_string()),
+            ));
+        }
+    });
+}
+
+/// Attach an on_change handler name to a VNode
+/// The renderer looks up this name in the event dispatcher to find the callback
+#[inline]
+pub fn vnode_on_change(handle: u64, handler_name: impl AsRef<str>) {
+    VNODE_REGISTRY.with(|registry| {
+        let mut reg = registry.borrow_mut();
+        if let Some(VNode::Element { attrs, .. }) = reg.nodes.get_mut(&handle) {
+            attrs.push((
+                "on_change".to_string(),
+                VAttr::Dynamic(handler_name.as_ref().to_string()),
+            ));
+        }
+    });
+}
+
+/// Attach an on_input handler name to a VNode
+#[inline]
+pub fn vnode_on_input(handle: u64, handler_name: impl AsRef<str>) {
+    VNODE_REGISTRY.with(|registry| {
+        let mut reg = registry.borrow_mut();
+        if let Some(VNode::Element { attrs, .. }) = reg.nodes.get_mut(&handle) {
+            attrs.push((
+                "on_input".to_string(),
+                VAttr::Dynamic(handler_name.as_ref().to_string()),
+            ));
+        }
+    });
+}
+
 /// Get the VNode for a handle and remove it from the registry
 /// This is called when the VNode tree is complete and ready to render
 #[inline]
@@ -173,6 +217,101 @@ pub fn vnode_get(handle: u64) -> Option<VNode> {
 #[inline]
 pub fn vnode_clear() {
     VNODE_REGISTRY.with(|registry| registry.borrow_mut().clear());
+}
+
+// ============================================================================
+// Callback FFI — function pointer event handlers
+// ============================================================================
+
+thread_local! {
+    static CALLBACK_REGISTRY: RefCell<CallbackRegistry> = RefCell::new(CallbackRegistry::new());
+}
+
+struct CallbackRegistry {
+    callbacks: HashMap<u64, Box<dyn Fn()>>,
+    next_handle: u64,
+}
+
+impl CallbackRegistry {
+    fn new() -> Self {
+        Self {
+            callbacks: HashMap::new(),
+            next_handle: 1,
+        }
+    }
+}
+
+/// Register a callback function and return a handle.
+/// The callback is stored and can be invoked later by handle.
+#[inline]
+pub fn callback_register(cb: impl Fn() + 'static) -> u64 {
+    CALLBACK_REGISTRY.with(|registry| {
+        let mut reg = registry.borrow_mut();
+        let handle = reg.next_handle;
+        reg.next_handle += 1;
+        reg.callbacks.insert(handle, Box::new(cb));
+        handle
+    })
+}
+
+/// Invoke a callback by handle. Returns true if the callback was found and called.
+#[inline]
+pub fn callback_invoke(handle: u64) -> bool {
+    CALLBACK_REGISTRY.with(|registry| {
+        let reg = registry.borrow();
+        if let Some(cb) = reg.callbacks.get(&handle) {
+            cb();
+            true
+        } else {
+            false
+        }
+    })
+}
+
+/// Remove a callback from the registry
+#[inline]
+pub fn callback_remove(handle: u64) {
+    CALLBACK_REGISTRY.with(|registry| {
+        registry.borrow_mut().callbacks.remove(&handle);
+    });
+}
+
+/// Clear all callbacks
+#[inline]
+pub fn callback_clear() {
+    CALLBACK_REGISTRY.with(|registry| {
+        registry.borrow_mut().callbacks.clear();
+    });
+}
+
+/// Attach a callback handle to a VNode's on_click event.
+/// The callback handle is stored as a dynamic attribute prefixed with "cb:"
+/// so the renderer can distinguish it from string-based handler names.
+#[inline]
+pub fn vnode_on_click_cb(handle: u64, callback_handle: u64) {
+    VNODE_REGISTRY.with(|registry| {
+        let mut reg = registry.borrow_mut();
+        if let Some(VNode::Element { attrs, .. }) = reg.nodes.get_mut(&handle) {
+            attrs.push((
+                "on_click".to_string(),
+                VAttr::Dynamic(format!("cb:{}", callback_handle)),
+            ));
+        }
+    });
+}
+
+/// Attach a callback handle to a VNode's on_change event.
+#[inline]
+pub fn vnode_on_change_cb(handle: u64, callback_handle: u64) {
+    VNODE_REGISTRY.with(|registry| {
+        let mut reg = registry.borrow_mut();
+        if let Some(VNode::Element { attrs, .. }) = reg.nodes.get_mut(&handle) {
+            attrs.push((
+                "on_change".to_string(),
+                VAttr::Dynamic(format!("cb:{}", callback_handle)),
+            ));
+        }
+    });
 }
 
 // ============================================================================
@@ -286,6 +425,71 @@ mod tests {
             if let Some((_, VAttr::Static(classes))) = class_attr {
                 assert!(classes.contains("wj-button"));
                 assert!(classes.contains("wj-button-primary"));
+            }
+        }
+    }
+
+    #[test]
+    fn test_on_click_event() {
+        vnode_clear();
+        let handle = vnode_element("button");
+        vnode_on_click(handle, "increment");
+
+        let node = vnode_take(handle);
+        if let Some(VNode::Element { attrs, .. }) = node {
+            let event_attr = attrs
+                .iter()
+                .find(|(n, _)| n == "on_click");
+            assert!(event_attr.is_some());
+            if let Some((_, VAttr::Dynamic(handler_name))) = event_attr {
+                assert_eq!(handler_name, "increment");
+            }
+        }
+    }
+
+    #[test]
+    fn test_on_change_event() {
+        vnode_clear();
+        let handle = vnode_element("input");
+        vnode_on_change(handle, "update_value");
+
+        let node = vnode_take(handle);
+        if let Some(VNode::Element { attrs, .. }) = node {
+            let event_attr = attrs
+                .iter()
+                .find(|(n, _)| n == "on_change");
+            assert!(event_attr.is_some());
+            if let Some((_, VAttr::Dynamic(handler_name))) = event_attr {
+                assert_eq!(handler_name, "update_value");
+            }
+        }
+    }
+
+    #[test]
+    fn test_callback_register_and_invoke() {
+        callback_clear();
+        let handle = callback_register(|| {});
+        assert!(handle > 0);
+        assert!(callback_invoke(handle));
+        assert!(!callback_invoke(9999)); // nonexistent
+        callback_remove(handle);
+        assert!(!callback_invoke(handle)); // removed
+    }
+
+    #[test]
+    fn test_vnode_on_click_cb() {
+        vnode_clear();
+        callback_clear();
+        let btn = vnode_element("button");
+        let cb = callback_register(|| {});
+        vnode_on_click_cb(btn, cb);
+
+        let node = vnode_take(btn);
+        if let Some(VNode::Element { attrs, .. }) = node {
+            let event_attr = attrs.iter().find(|(n, _)| n == "on_click");
+            assert!(event_attr.is_some());
+            if let Some((_, VAttr::Dynamic(val))) = event_attr {
+                assert!(val.starts_with("cb:"));
             }
         }
     }
