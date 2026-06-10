@@ -15,7 +15,7 @@ impl Label {
     #[inline]
     pub fn new(text: String) -> Label {
         Label {
-            text: text.to_string(),
+            text,
             for_id: String::new(),
             required: false,
             class: String::new(),

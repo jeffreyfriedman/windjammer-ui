@@ -50,15 +50,15 @@ impl Loading {
     }
     #[inline]
     pub fn render(&self) -> String {
-        let spinner_size = match self.size {
-            LoadingSize::Small => "24px".to_string(),
-            LoadingSize::Medium => "40px".to_string(),
-            LoadingSize::Large => "64px".to_string(),
+        let spinner_size: String = match self.size {
+            LoadingSize::Small => String::from("24px"),
+            LoadingSize::Medium => String::from("40px"),
+            LoadingSize::Large => String::from("64px"),
         };
-        let border_width = match self.size {
-            LoadingSize::Small => "2px".to_string(),
-            LoadingSize::Medium => "3px".to_string(),
-            LoadingSize::Large => "4px".to_string(),
+        let border_width: String = match self.size {
+            LoadingSize::Small => String::from("2px"),
+            LoadingSize::Medium => String::from("3px"),
+            LoadingSize::Large => String::from("4px"),
         };
         let mut html = String::new();
         if self.overlay {

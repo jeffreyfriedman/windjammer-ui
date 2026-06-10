@@ -36,7 +36,7 @@ impl Row {
     pub fn new() -> Row {
         Row {
             children: Vec::new(),
-            gap: "8px".to_string().to_string(),
+            gap: "8px".to_string(),
             align: RowAlign::Start,
             justify: RowJustify::Start,
             wrap: false,
@@ -75,25 +75,25 @@ impl Row {
     }
     #[inline]
     pub fn render(&self) -> String {
-        let align_str = match self.align {
-            RowAlign::Start => "flex-start".to_string(),
-            RowAlign::Center => "center".to_string(),
-            RowAlign::End => "flex-end".to_string(),
-            RowAlign::Stretch => "stretch".to_string(),
+        let align_str: String = match self.align {
+            RowAlign::Start => String::from("flex-start"),
+            RowAlign::Center => String::from("center"),
+            RowAlign::End => String::from("flex-end"),
+            RowAlign::Stretch => String::from("stretch"),
         };
-        let justify_str = match self.justify {
-            RowJustify::Start => "flex-start".to_string(),
-            RowJustify::Center => "center".to_string(),
-            RowJustify::End => "flex-end".to_string(),
-            RowJustify::SpaceBetween => "space-between".to_string(),
-            RowJustify::SpaceAround => "space-around".to_string(),
-            RowJustify::SpaceEvenly => "space-evenly".to_string(),
+        let justify_str: String = match self.justify {
+            RowJustify::Start => String::from("flex-start"),
+            RowJustify::Center => String::from("center"),
+            RowJustify::End => String::from("flex-end"),
+            RowJustify::SpaceBetween => String::from("space-between"),
+            RowJustify::SpaceAround => String::from("space-around"),
+            RowJustify::SpaceEvenly => String::from("space-evenly"),
         };
-        let wrap_str = {
+        let wrap_str: String = {
             if self.wrap {
-                "wrap".to_string()
+                String::from("wrap")
             } else {
-                "nowrap".to_string()
+                String::from("nowrap")
             }
         };
         let mut html = String::new();
@@ -109,7 +109,7 @@ impl Row {
         html.push_str(&wrap_str);
         html.push_str(";\">");
         for child in &self.children {
-            html.push_str(&child);
+            html.push_str(child);
         }
         html.push_str("</div>");
         html

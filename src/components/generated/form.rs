@@ -18,11 +18,11 @@ impl Form {
     #[inline]
     pub fn new(id: String) -> Form {
         Form {
-            id: id.to_string(),
-            action: "#".to_string().to_string(),
-            method: "POST".to_string().to_string(),
+            id,
+            action: "#".to_string(),
+            method: "POST".to_string(),
             children: Vec::new(),
-            on_submit: "return false;".to_string().to_string(),
+            on_submit: "return false;".to_string(),
         }
     }
     #[inline]
@@ -61,8 +61,8 @@ impl FormField {
     #[inline]
     pub fn new(label: String, input: String) -> FormField {
         FormField {
-            label: label.to_string(),
-            input: input.to_string(),
+            label,
+            input,
             error: String::new(),
             required: false,
             help_text: String::new(),

@@ -15,9 +15,9 @@ impl Center {
     #[inline]
     pub fn new(child: String) -> Center {
         Center {
-            child: child.to_string(),
-            width: "100%".to_string().to_string(),
-            height: "100%".to_string().to_string(),
+            child,
+            width: "100%".to_string(),
+            height: "100%".to_string(),
             class: String::new(),
         }
     }
@@ -44,11 +44,11 @@ impl Center {
         html.push_str(
             "\" style=\"display: flex; align-items: center; justify-content: center; width: ",
         );
-        html.push_str(&self.width);
+        html.push_str(&self.width.clone());
         html.push_str("; height: ");
-        html.push_str(&self.height);
+        html.push_str(&self.height.clone());
         html.push_str(";\">");
-        html.push_str(&self.child);
+        html.push_str(&self.child.clone());
         html.push_str("</div>");
         html
     }

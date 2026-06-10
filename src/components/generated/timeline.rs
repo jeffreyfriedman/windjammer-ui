@@ -18,11 +18,11 @@ impl TimelineEvent {
     #[inline]
     pub fn new(title: String, timestamp: String) -> TimelineEvent {
         TimelineEvent {
-            title: title.to_string(),
+            title,
             description: String::new(),
-            timestamp: timestamp.to_string(),
-            icon: "●".to_string().to_string(),
-            color: "#3b82f6".to_string().to_string(),
+            timestamp,
+            icon: "●".to_string(),
+            color: "#3b82f6".to_string(),
         }
     }
     #[inline]

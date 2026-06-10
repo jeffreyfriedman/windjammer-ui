@@ -40,7 +40,7 @@ impl Row {
             align: RowAlign::Start,
             justify: RowJustify::Start,
             wrap: false,
-            class: String::new(),
+            class: "",
         }
     }
     
@@ -93,7 +93,7 @@ impl Row {
         
         let wrap_str = if self.wrap { "wrap" } else { "nowrap" }
         
-        let mut html = String::new()
+        let mut html = ""
         html.push_str("<div class=\"wj-row ")
         html.push_str(self.class)
         html.push_str("\" style=\"display: flex; flex-direction: row; gap: ")

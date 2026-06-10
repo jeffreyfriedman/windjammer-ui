@@ -26,8 +26,8 @@ impl Scroll {
         Scroll {
             children: Vec::new(),
             direction: ScrollDir::Vertical,
-            height: "400px".to_string().to_string(),
-            width: "100%".to_string().to_string(),
+            height: "400px".to_string(),
+            width: "100%".to_string(),
             class: String::new(),
         }
     }
@@ -58,11 +58,11 @@ impl Scroll {
     }
     #[inline]
     pub fn render(&self) -> String {
-        let overflow = match self.direction {
-            ScrollDir::Vertical => "overflow-x: hidden; overflow-y: auto".to_string(),
-            ScrollDir::Horizontal => "overflow-x: auto; overflow-y: hidden".to_string(),
-            ScrollDir::Both => "overflow: auto".to_string(),
-            ScrollDir::None => "overflow: hidden".to_string(),
+        let overflow: String = match self.direction {
+            ScrollDir::Vertical => String::from("overflow-x: hidden; overflow-y: auto"),
+            ScrollDir::Horizontal => String::from("overflow-x: auto; overflow-y: hidden"),
+            ScrollDir::Both => String::from("overflow: auto"),
+            ScrollDir::None => String::from("overflow: hidden"),
         };
         let mut html = String::new();
         html.push_str("<div class=\"wj-scroll ");
@@ -70,12 +70,12 @@ impl Scroll {
         html.push_str("\" style=\"");
         html.push_str(&overflow);
         html.push_str("; height: ");
-        html.push_str(&self.height);
+        html.push_str(&self.height.clone());
         html.push_str("; width: ");
-        html.push_str(&self.width);
+        html.push_str(&self.width.clone());
         html.push_str(";\">");
         for child in &self.children {
-            html.push_str(&child);
+            html.push_str(child);
         }
         html.push_str("</div>");
         html

@@ -11,8 +11,8 @@ impl ContextMenuItem {
     pub fn new(label: string) -> ContextMenuItem {
         ContextMenuItem {
             label: label,
-            icon: String::from(""),
-            action: String::from(""),
+            icon: "",
+            action: "",
             disabled: false,
         }
     }
@@ -61,7 +61,7 @@ fn render(self) -> string {
             let icon_html = if item.icon.len() > 0 {
                 format!("<span class='wj-context-icon'>{}</span>", item.icon)
             } else {
-                String::from("")
+                ""
             }
             
             let disabled_class = if item.disabled { " wj-context-item-disabled" } else { "" }

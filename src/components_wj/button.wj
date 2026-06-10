@@ -29,6 +29,7 @@ pub struct Button {
     variant: ButtonVariant,
     size: ButtonSize,
     disabled: bool,
+    click_handler: string,
 }
 
 impl Button {
@@ -39,6 +40,7 @@ impl Button {
             variant: ButtonVariant::Primary,
             size: ButtonSize::Medium,
             disabled: false,
+            click_handler: "",
         }
     }
     
@@ -60,6 +62,12 @@ impl Button {
     // Compiler infers: mut self (owned, mutable)
     pub fn disabled(self, disabled: bool) -> Button {
         self.disabled = disabled
+        self
+    }
+    
+    /// Set click handler by name (looked up in event dispatcher at render time)
+    pub fn on_click(self, handler: string) -> Button {
+        self.click_handler = handler
         self
     }
     
@@ -116,13 +124,17 @@ impl Button {
 // Implement RenderableVNode for cross-platform rendering
 impl RenderableVNode for Button {
     fn to_vnode(&self) -> VNode {
-        VNode::button()
+        let node = VNode::button()
             .add_class("wj-button".to_string())
             .add_class(self.get_variant_class())
             .add_class(self.get_size_class())
             .add_style(self.get_style())
             .set_disabled(self.disabled)
             .add_text(self.label.clone())
+        if self.click_handler.len() > 0 {
+            node = node.on_click(self.click_handler.clone())
+        }
+        node
     }
 }
 

@@ -1,0 +1,163 @@
+{
+  "module_path": "filetree",
+  "functions": {
+    "FileNode::render": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"i32\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "FileNode",
+      "param_ownership": [
+        "Borrowed",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "FileTree::new": {
+      "params": [
+        "Custom(\"FileNode\")"
+      ],
+      "return_type": "Custom(\"FileTree\")",
+      "is_associated": true,
+      "parent_type": "FileTree",
+      "param_ownership": [
+        "Owned"
+      ],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "FileNode::expanded": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"FileNode\")",
+      "is_associated": true,
+      "parent_type": "FileNode",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "FileNode::child": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"FileNode\")"
+      ],
+      "return_type": "Custom(\"FileNode\")",
+      "is_associated": true,
+      "parent_type": "FileNode",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "FileNode::new": {
+      "params": [
+        "String",
+        "Bool"
+      ],
+      "return_type": "Custom(\"FileNode\")",
+      "is_associated": true,
+      "parent_type": "FileNode",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "main": {
+      "params": [],
+      "return_type": null,
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "FileTree::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "FileTree",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    }
+  },
+  "structs": {
+    "FileNode": {
+      "name": "String",
+      "is_directory": "Bool",
+      "children": "Vec(Custom(\"FileNode\"))",
+      "expanded": "Bool"
+    },
+    "FileTree": {
+      "root": "Custom(\"FileNode\")"
+    }
+  },
+  "trait_impls": {},
+  "copy_structs": [
+    "FlexDirection",
+    "NavbarPosition",
+    "RowAlign",
+    "ToastPosition",
+    "Pagination",
+    "DrawerPosition",
+    "DividerOrientation",
+    "Progress",
+    "EasingPreset",
+    "SkeletonVariant",
+    "PopoverPosition",
+    "ColumnJustify",
+    "SplitDirection",
+    "SelectSize",
+    "ColumnAlign",
+    "ModalSize",
+    "ChipSize",
+    "TooltipPosition",
+    "StackAlign",
+    "ScrollDirection",
+    "RowJustify",
+    "SwitchSize",
+    "CheckboxSize",
+    "LoadingSize",
+    "AlertVariant",
+    "TextWeight",
+    "AvatarShape",
+    "CurvePoint",
+    "ButtonSize",
+    "SpinnerSize",
+    "TextareaResize",
+    "StackDirection",
+    "SidebarPosition",
+    "VNode",
+    "ButtonVariant",
+    "BadgeSize",
+    "ToastVariant",
+    "RatingSize",
+    "ChipVariant",
+    "BadgeVariant",
+    "MessageRole",
+    "NodeCategory",
+    "StackJustify",
+    "TextSize",
+    "AvatarSize",
+    "PinType",
+    "ScrollDir",
+    "ProgressVariant"
+  ],
+  "version": "0.46.0"
+}

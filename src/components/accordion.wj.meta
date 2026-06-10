@@ -1,0 +1,159 @@
+{
+  "module_path": "accordion",
+  "functions": {
+    "Accordion::allow_multiple": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Accordion\")",
+      "is_associated": true,
+      "parent_type": "Accordion",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Accordion::new": {
+      "params": [],
+      "return_type": "Custom(\"Accordion\")",
+      "is_associated": true,
+      "parent_type": "Accordion",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Accordion::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Accordion",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "AccordionItem::new": {
+      "params": [
+        "String",
+        "String"
+      ],
+      "return_type": "Custom(\"AccordionItem\")",
+      "is_associated": true,
+      "parent_type": "AccordionItem",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Accordion::item": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"AccordionItem\")"
+      ],
+      "return_type": "Custom(\"Accordion\")",
+      "is_associated": true,
+      "parent_type": "Accordion",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "main": {
+      "params": [],
+      "return_type": null,
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "AccordionItem::open": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"AccordionItem\")",
+      "is_associated": true,
+      "parent_type": "AccordionItem",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    }
+  },
+  "structs": {
+    "AccordionItem": {
+      "content": "String",
+      "title": "String",
+      "open": "Bool"
+    },
+    "Accordion": {
+      "allow_multiple": "Bool",
+      "items": "Vec(Custom(\"AccordionItem\"))"
+    }
+  },
+  "trait_impls": {},
+  "copy_structs": [
+    "FlexDirection",
+    "NavbarPosition",
+    "RowAlign",
+    "ToastPosition",
+    "Pagination",
+    "DrawerPosition",
+    "DividerOrientation",
+    "Progress",
+    "EasingPreset",
+    "SkeletonVariant",
+    "PopoverPosition",
+    "ColumnJustify",
+    "SplitDirection",
+    "SelectSize",
+    "ColumnAlign",
+    "ModalSize",
+    "ChipSize",
+    "TooltipPosition",
+    "StackAlign",
+    "ScrollDirection",
+    "RowJustify",
+    "SwitchSize",
+    "CheckboxSize",
+    "LoadingSize",
+    "AlertVariant",
+    "TextWeight",
+    "AvatarShape",
+    "CurvePoint",
+    "ButtonSize",
+    "SpinnerSize",
+    "TextareaResize",
+    "StackDirection",
+    "SidebarPosition",
+    "VNode",
+    "ButtonVariant",
+    "BadgeSize",
+    "ToastVariant",
+    "RatingSize",
+    "ChipVariant",
+    "BadgeVariant",
+    "MessageRole",
+    "NodeCategory",
+    "StackJustify",
+    "TextSize",
+    "AvatarSize",
+    "PinType",
+    "ScrollDir",
+    "ProgressVariant"
+  ],
+  "version": "0.46.0"
+}

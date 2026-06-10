@@ -1,0 +1,136 @@
+{
+  "module_path": "codeblock",
+  "functions": {
+    "CodeBlock::show_line_numbers": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"CodeBlock\")",
+      "is_associated": true,
+      "parent_type": "CodeBlock",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "CodeBlock::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"CodeBlock\")",
+      "is_associated": true,
+      "parent_type": "CodeBlock",
+      "param_ownership": [
+        "Owned"
+      ],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CodeBlock::language": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"CodeBlock\")",
+      "is_associated": true,
+      "parent_type": "CodeBlock",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "CodeBlock::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "CodeBlock",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "CodeBlock::show_copy_button": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"CodeBlock\")",
+      "is_associated": true,
+      "parent_type": "CodeBlock",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    }
+  },
+  "structs": {
+    "CodeBlock": {
+      "show_line_numbers": "Bool",
+      "code": "String",
+      "show_copy_button": "Bool",
+      "language": "String"
+    }
+  },
+  "trait_impls": {},
+  "copy_structs": [
+    "FlexDirection",
+    "NavbarPosition",
+    "RowAlign",
+    "ToastPosition",
+    "Pagination",
+    "DrawerPosition",
+    "DividerOrientation",
+    "Progress",
+    "EasingPreset",
+    "SkeletonVariant",
+    "PopoverPosition",
+    "ColumnJustify",
+    "SplitDirection",
+    "SelectSize",
+    "ColumnAlign",
+    "ModalSize",
+    "ChipSize",
+    "TooltipPosition",
+    "StackAlign",
+    "ScrollDirection",
+    "RowJustify",
+    "SwitchSize",
+    "CheckboxSize",
+    "LoadingSize",
+    "AlertVariant",
+    "TextWeight",
+    "AvatarShape",
+    "CurvePoint",
+    "ButtonSize",
+    "SpinnerSize",
+    "TextareaResize",
+    "StackDirection",
+    "SidebarPosition",
+    "VNode",
+    "ButtonVariant",
+    "BadgeSize",
+    "ToastVariant",
+    "RatingSize",
+    "ChipVariant",
+    "BadgeVariant",
+    "MessageRole",
+    "NodeCategory",
+    "StackJustify",
+    "TextSize",
+    "AvatarSize",
+    "PinType",
+    "ScrollDir",
+    "ProgressVariant"
+  ],
+  "version": "0.46.0"
+}

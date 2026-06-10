@@ -11,7 +11,7 @@ impl CodeBlock {
     pub fn new(code: string) -> CodeBlock {
         CodeBlock {
             code: code,
-            language: String::from(""),
+            language: "",
             show_line_numbers: false,
             show_copy_button: true,
         }
@@ -40,7 +40,7 @@ pub fn render(self) -> string {
         let language_label = if self.language.len() > 0 {
             format!("<div class='wj-codeblock-language'>{}</div>", self.language)
         } else {
-            String::from("")
+            ""
         }
         
         let copy_button = if self.show_copy_button {
@@ -50,7 +50,7 @@ pub fn render(self) -> string {
                 </button>"
             )
         } else {
-            String::from("")
+            ""
         }
         
         let line_number_class = if self.show_line_numbers { " wj-codeblock-numbered" } else { "" }

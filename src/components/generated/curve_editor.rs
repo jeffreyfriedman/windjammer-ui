@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -77,7 +81,7 @@ impl CurveEditor {
             min_value: 0.0_f32,
             max_value: 1.0_f32,
             grid_enabled: true,
-            on_change: "".to_string().to_string(),
+            on_change: "".to_string(),
         }
     }
     #[inline]
@@ -186,11 +190,11 @@ impl Renderable for CurveEditor {
                 None => {}
             }
         }
-        let grid_html = {
+        let grid_html: String = {
             if self.grid_enabled {
-                format!("\n                <line x1='0' y1='{}' x2='{}' y2='{}' class='grid-line'/>\n                <line x1='0' y1='{}' x2='{}' y2='{}' class='grid-line'/>\n                <line x1='{}' y1='0' x2='{}' y2='{}' class='grid-line'/>\n                <line x1='{}' y1='0' x2='{}' y2='{}' class='grid-line'/>\n            ", self.height / 4, self.width, self.height / 4, self.height * 3 / 4, self.width, self.height * 3 / 4, self.width / 4, self.width / 4, self.height, self.width * 3 / 4, self.width * 3 / 4, self.height)
+                format!("\n                <line x1='0' y1='{}' x2='{}' y2='{}' class='grid-line'/>\n                <line x1='0' y1='{}' x2='{}' y2='{}' class='grid-line'/>\n                <line x1='{}' y1='0' x2='{}' y2='{}' class='grid-line'/>\n                <line x1='{}' y1='0' x2='{}' y2='{}' class='grid-line'/>\n            ", self.height / 4_i32, self.width, self.height / 4_i32, self.height * 3_i32 / 4_i32, self.width, self.height * 3_i32 / 4_i32, self.width / 4_i32, self.width / 4_i32, self.height, self.width * 3_i32 / 4_i32, self.width * 3_i32 / 4_i32, self.height)
             } else {
-                "".to_string().to_string()
+                "".to_string()
             }
         };
         format!("\n            <div class='curve-editor'>\n                <div class='curve-toolbar'>\n                    <button onclick='setCurvePreset(\"linear\")'>Linear</button>\n                    <button onclick='setCurvePreset(\"easeIn\")'>Ease In</button>\n                    <button onclick='setCurvePreset(\"easeOut\")'>Ease Out</button>\n                    <button onclick='setCurvePreset(\"easeInOut\")'>Ease In/Out</button>\n                </div>\n                <svg class='curve-canvas' width='{}' height='{}' viewBox='0 0 {} {}'>\n                    <rect class='curve-bg' width='100%' height='100%'/>\n                    {}\n                    <path d='{}' class='curve-line'/>\n                    {}\n                </svg>\n                <div class='curve-values'>\n                    <span>{:.2}</span>\n                    <span>{:.2}</span>\n                </div>\n            </div>\n        ", self.width, self.height, self.width, self.height, grid_html, path_d, points_html, self.max_value, self.min_value)
@@ -207,10 +211,7 @@ pub struct GradientStop {
 impl GradientStop {
     #[inline]
     pub fn new(position: f32, color: String) -> GradientStop {
-        GradientStop {
-            position,
-            color: color.to_string(),
-        }
+        GradientStop { position, color }
     }
 }
 
@@ -233,7 +234,7 @@ impl GradientEditor {
             width: 300_i32,
             height: 40_i32,
             stops,
-            on_change: "".to_string().to_string(),
+            on_change: "".to_string(),
         }
     }
     #[inline]
@@ -257,11 +258,11 @@ impl Renderable for GradientEditor {
             match s {
                 Some(stop) => {
                     if i > 0 {
-                        gradient_stops = format!("{}{}", gradient_stops, ", ".to_string());
+                        gradient_stops = format!("{}{}", gradient_stops, ", ");
                     }
                     gradient_stops = gradient_stops
                         + &stop.color.clone()
-                        + &" ".to_string()
+                        + &String::from(" ")
                         + &format!("{}%", (stop.position * 100.0_f32) as i32);
                 }
                 None => {}
@@ -284,5 +285,5 @@ impl Renderable for GradientEditor {
 
 #[inline]
 pub fn curve_editor_styles() -> String {
-    "\n    .curve-editor {\n        background: #16213e;\n        border-radius: 8px;\n        padding: 12px;\n    }\n    \n    .curve-toolbar {\n        display: flex;\n        gap: 4px;\n        margin-bottom: 12px;\n    }\n    \n    .curve-toolbar button {\n        padding: 4px 8px;\n        border: none;\n        border-radius: 4px;\n        background: #0f3460;\n        color: #888;\n        font-size: 11px;\n        cursor: pointer;\n    }\n    \n    .curve-toolbar button:hover {\n        background: #1a4a8a;\n        color: #e0e0e0;\n    }\n    \n    .curve-canvas {\n        display: block;\n        border-radius: 4px;\n        overflow: hidden;\n    }\n    \n    .curve-bg {\n        fill: #0a0a1a;\n    }\n    \n    .grid-line {\n        stroke: #1a1a3a;\n        stroke-width: 1;\n    }\n    \n    .curve-line {\n        fill: none;\n        stroke: #e94560;\n        stroke-width: 2;\n    }\n    \n    .curve-point {\n        fill: #e94560;\n        stroke: white;\n        stroke-width: 2;\n        cursor: move;\n    }\n    \n    .curve-point:hover {\n        fill: #ff6b8a;\n        r: 8;\n    }\n    \n    .curve-values {\n        display: flex;\n        justify-content: space-between;\n        margin-top: 4px;\n        font-size: 10px;\n        color: #666;\n    }\n    \n    /* Gradient editor */\n    .gradient-editor {\n        background: #16213e;\n        border-radius: 8px;\n        padding: 12px;\n    }\n    \n    .gradient-bar {\n        position: relative;\n        height: 32px;\n        border-radius: 4px;\n        cursor: crosshair;\n    }\n    \n    .gradient-stop {\n        position: absolute;\n        top: 100%;\n        width: 12px;\n        height: 12px;\n        margin-left: -6px;\n        margin-top: 4px;\n        border-radius: 50%;\n        border: 2px solid white;\n        cursor: move;\n        box-shadow: 0 2px 4px rgba(0,0,0,0.3);\n    }\n    \n    .gradient-controls {\n        margin-top: 16px;\n    }\n    \n    .gradient-controls button {\n        padding: 6px 12px;\n        border: 1px dashed #333;\n        border-radius: 4px;\n        background: transparent;\n        color: #888;\n        cursor: pointer;\n    }\n    \n    .gradient-controls button:hover {\n        border-color: #e94560;\n        color: #e94560;\n    }\n    ".to_string().to_string()
+    "\n    .curve-editor {\n        background: #16213e;\n        border-radius: 8px;\n        padding: 12px;\n    }\n    \n    .curve-toolbar {\n        display: flex;\n        gap: 4px;\n        margin-bottom: 12px;\n    }\n    \n    .curve-toolbar button {\n        padding: 4px 8px;\n        border: none;\n        border-radius: 4px;\n        background: #0f3460;\n        color: #888;\n        font-size: 11px;\n        cursor: pointer;\n    }\n    \n    .curve-toolbar button:hover {\n        background: #1a4a8a;\n        color: #e0e0e0;\n    }\n    \n    .curve-canvas {\n        display: block;\n        border-radius: 4px;\n        overflow: hidden;\n    }\n    \n    .curve-bg {\n        fill: #0a0a1a;\n    }\n    \n    .grid-line {\n        stroke: #1a1a3a;\n        stroke-width: 1;\n    }\n    \n    .curve-line {\n        fill: none;\n        stroke: #e94560;\n        stroke-width: 2;\n    }\n    \n    .curve-point {\n        fill: #e94560;\n        stroke: white;\n        stroke-width: 2;\n        cursor: move;\n    }\n    \n    .curve-point:hover {\n        fill: #ff6b8a;\n        r: 8;\n    }\n    \n    .curve-values {\n        display: flex;\n        justify-content: space-between;\n        margin-top: 4px;\n        font-size: 10px;\n        color: #666;\n    }\n    \n    /* Gradient editor */\n    .gradient-editor {\n        background: #16213e;\n        border-radius: 8px;\n        padding: 12px;\n    }\n    \n    .gradient-bar {\n        position: relative;\n        height: 32px;\n        border-radius: 4px;\n        cursor: crosshair;\n    }\n    \n    .gradient-stop {\n        position: absolute;\n        top: 100%;\n        width: 12px;\n        height: 12px;\n        margin-left: -6px;\n        margin-top: 4px;\n        border-radius: 50%;\n        border: 2px solid white;\n        cursor: move;\n        box-shadow: 0 2px 4px rgba(0,0,0,0.3);\n    }\n    \n    .gradient-controls {\n        margin-top: 16px;\n    }\n    \n    .gradient-controls button {\n        padding: 6px 12px;\n        border: 1px dashed #333;\n        border-radius: 4px;\n        background: transparent;\n        color: #888;\n        cursor: pointer;\n    }\n    \n    .gradient-controls button:hover {\n        border-color: #e94560;\n        color: #e94560;\n    }\n    ".to_string()
 }

@@ -24,11 +24,11 @@ impl Select {
     pub fn new() -> Select {
         Select {
             options: Vec::new(),
-            selected: String::new(),
+            selected: "",
             placeholder: "Select an option".to_string(),
             disabled: false,
             size: SelectSize::Medium,
-            class: String::new(),
+            class: "",
         }
     }
     
@@ -71,7 +71,7 @@ impl Select {
         
         let disabled_attr = if self.disabled { " disabled" } else { "" }
         
-        let mut html = String::new()
+        let mut html = ""
         html.push_str("<select class=\"wj-select ")
         html.push_str(self.class)
         html.push_str("\" style=\"")

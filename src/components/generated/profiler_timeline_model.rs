@@ -1,5 +1,7 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -54,12 +56,12 @@ impl LiveProfilerSnapshot {
     pub fn budget_band_class(&self) -> String {
         let util = self.budget_utilization_pct();
         if util > 100.0_f32 {
-            "wj-progress-danger".to_string()
+            String::from("wj-progress-danger")
         } else {
             if util > 85.0_f32 {
-                "wj-progress-warning".to_string()
+                String::from("wj-progress-warning")
             } else {
-                "wj-progress-success".to_string()
+                String::from("wj-progress-success")
             }
         }
     }
@@ -67,12 +69,12 @@ impl LiveProfilerSnapshot {
     pub fn budget_band_color(&self) -> String {
         let util = self.budget_utilization_pct();
         if util > 100.0_f32 {
-            "#e74c3c".to_string()
+            String::from("#e74c3c")
         } else {
             if util > 85.0_f32 {
-                "#f39c12".to_string()
+                String::from("#f39c12")
             } else {
-                "#2ecc71".to_string()
+                String::from("#2ecc71")
             }
         }
     }
@@ -85,7 +87,7 @@ impl LiveProfilerSnapshot {
     ) -> LiveProfilerSnapshot {
         let mut snap = LiveProfilerSnapshot::new(frame_index, frame_time_ms, budget_ms);
         for row in rows {
-            snap = snap.scope(row);
+            snap = snap.scope(row.clone());
         }
         snap
     }
@@ -96,7 +98,7 @@ impl LiveProfilerSnapshot {
         }
         let frame_index = frame_trace_ffi::live_frame_index();
         let frame_time_ms = frame_trace_ffi::live_frame_time_ms();
-        let mut snap = LiveProfilerSnapshot::new(frame_index, frame_time_ms, budget_ms);
+        let mut snap = LiveProfilerSnapshot::new(frame_index, frame_time_ms.clone(), budget_ms);
         let count = frame_trace_ffi::live_scope_count();
         let mut i = 0;
         while i < count {
@@ -118,10 +120,10 @@ impl LiveProfilerSnapshot {
                 }
             };
             snap = snap.scope(ProfilerScopeRow {
-                name: name.clone(),
-                duration_ms: duration_ms.clone(),
+                name,
+                duration_ms,
                 percentage: pct,
-                kind: kind.clone(),
+                kind,
             });
             i += 1;
         }
@@ -132,31 +134,31 @@ impl LiveProfilerSnapshot {
         let budget = 16.67_f32;
         let mut snap = LiveProfilerSnapshot::new(42_u64, 14.2_f32, budget);
         snap = snap.scope(ProfilerScopeRow {
-            name: "Update".to_string(),
+            name: String::from("Update"),
             duration_ms: 2.1_f32,
             percentage: 14.8_f32,
             kind: ProfilerScopeKind::Cpu,
         });
         snap = snap.scope(ProfilerScopeRow {
-            name: "Physics".to_string(),
+            name: String::from("Physics"),
             duration_ms: 1.4_f32,
             percentage: 9.9_f32,
             kind: ProfilerScopeKind::Cpu,
         });
         snap = snap.scope(ProfilerScopeRow {
-            name: "Render".to_string(),
+            name: String::from("Render"),
             duration_ms: 5.8_f32,
             percentage: 40.8_f32,
             kind: ProfilerScopeKind::Cpu,
         });
         snap = snap.scope(ProfilerScopeRow {
-            name: "raymarch".to_string(),
+            name: String::from("raymarch"),
             duration_ms: 3.2_f32,
             percentage: 22.5_f32,
             kind: ProfilerScopeKind::Gpu,
         });
         snap = snap.scope(ProfilerScopeRow {
-            name: "lighting".to_string(),
+            name: String::from("lighting"),
             duration_ms: 1.7_f32,
             percentage: 12.0_f32,
             kind: ProfilerScopeKind::Gpu,

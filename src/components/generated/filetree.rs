@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 use std::fmt::Write;
@@ -18,7 +22,7 @@ impl FileNode {
     #[inline]
     pub fn new(name: String, is_directory: bool) -> FileNode {
         FileNode {
-            name: name.to_string(),
+            name,
             is_directory,
             children: Vec::new(),
             expanded: false,
@@ -37,15 +41,15 @@ impl FileNode {
     #[inline]
     pub fn render(&self, depth: i32) -> String {
         let indent = "  ".repeat(depth as usize);
-        let icon = {
+        let icon: String = {
             if self.is_directory {
                 if self.expanded {
-                    "📂".to_string()
+                    String::from("📂")
                 } else {
-                    "📁".to_string()
+                    String::from("📁")
                 }
             } else {
-                "📄".to_string()
+                String::from("📄")
             }
         };
         let mut html = {
@@ -57,7 +61,7 @@ impl FileNode {
             let mut i = 0;
             while i < self.children.len() {
                 let child = &self.children[i];
-                html = format!("{}{}", html, child.render(depth + 1));
+                html = format!("{}{}", html, child.render(depth + 1_i32));
                 i += 1;
             }
         }

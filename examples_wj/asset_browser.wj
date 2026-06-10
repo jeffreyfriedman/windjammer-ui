@@ -230,9 +230,9 @@ fn AssetBrowser() -> UI {
 @component
 fn AssetGridItem(
     file: AssetFile,
-    selected: Signal<Option<String>>,
-    on_select: fn(String),
-    on_open: fn(String)
+    selected: Signal<Option<string>>,
+    on_select: fn(string),
+    on_open: fn(string)
 ) -> UI {
     let is_selected = selected.get() == Some(file.name)
     
@@ -268,9 +268,9 @@ fn AssetGridItem(
 @component
 fn AssetListItem(
     file: AssetFile,
-    selected: Signal<Option<String>>,
-    on_select: fn(String),
-    on_open: fn(String)
+    selected: Signal<Option<string>>,
+    on_select: fn(string),
+    on_open: fn(string)
 ) -> UI {
     let is_selected = selected.get() == Some(file.name)
     
@@ -379,7 +379,7 @@ fn AssetPreview(file: Option<AssetFile>) -> UI {
 }
 
 // Helper functions
-fn get_icon_for_type(type: String) -> String {
+fn get_icon_for_type(type: string) -> string {
     match type {
         "folder" => "📁",
         "image" => "🖼️",
@@ -391,7 +391,7 @@ fn get_icon_for_type(type: String) -> String {
     }
 }
 
-fn format_size(size: Option<i32>) -> String {
+fn format_size(size: Option<i32>) -> string {
     match size {
         Some(kb) if kb < 1024 => format!("{} KB", kb),
         Some(kb) => format!("{:.1} MB", kb as f32 / 1024.0),
@@ -401,8 +401,8 @@ fn format_size(size: Option<i32>) -> String {
 
 fn filter_and_sort_files(
     files: Vec<AssetFile>,
-    filter: String,
-    sort_by: String
+    filter: string,
+    sort_by: string
 ) -> Vec<AssetFile> {
     // Filter
     let mut filtered = if filter.is_empty() {
@@ -427,9 +427,9 @@ fn filter_and_sort_files(
 
 // Type definitions
 struct AssetFile {
-    name: String,
-    type: String,
+    name: string,
+    type: string,
     size: Option<i32>,
-    date: String
+    date: string
 }
 

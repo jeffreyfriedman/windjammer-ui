@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 use std::fmt::Write;
@@ -20,8 +24,8 @@ impl Grid {
         Grid {
             children: Vec::new(),
             columns,
-            gap: "16px".to_string().to_string(),
-            padding: "0".to_string().to_string(),
+            gap: "16px".to_string(),
+            padding: "0".to_string(),
         }
     }
     #[inline]

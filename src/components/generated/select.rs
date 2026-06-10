@@ -33,7 +33,7 @@ impl Select {
         Select {
             options: Vec::new(),
             selected: String::new(),
-            placeholder: "Select an option".to_string().to_string(),
+            placeholder: "Select an option".to_string(),
             disabled: false,
             size: SelectSize::Medium,
             class: String::new(),
@@ -41,10 +41,7 @@ impl Select {
     }
     #[inline]
     pub fn option(mut self, value: String, label: String) -> Select {
-        self.options.push(SelectOption {
-            value: value.to_string(),
-            label: label.to_string(),
-        });
+        self.options.push(SelectOption { value, label });
         self
     }
     #[inline]
@@ -74,16 +71,16 @@ impl Select {
     }
     #[inline]
     pub fn render(&self) -> String {
-        let size_style = match self.size {
-            SelectSize::Small => "padding: 4px 8px; font-size: 12px;".to_string(),
-            SelectSize::Medium => "padding: 8px 12px; font-size: 14px;".to_string(),
-            SelectSize::Large => "padding: 12px 16px; font-size: 16px;".to_string(),
+        let size_style: String = match self.size {
+            SelectSize::Small => String::from("padding: 4px 8px; font-size: 12px;"),
+            SelectSize::Medium => String::from("padding: 8px 12px; font-size: 14px;"),
+            SelectSize::Large => String::from("padding: 12px 16px; font-size: 16px;"),
         };
         let disabled_attr = {
             if self.disabled {
-                " disabled".to_string()
+                String::from(" disabled")
             } else {
-                "".to_string()
+                String::new()
             }
         };
         let mut html = String::new();

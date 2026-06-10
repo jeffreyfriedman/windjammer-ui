@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 use std::fmt::Write;
@@ -17,7 +21,7 @@ impl TreeItem {
     #[inline]
     pub fn new(label: String) -> TreeItem {
         TreeItem {
-            label: label.to_string(),
+            label,
             children: Vec::new(),
             expanded: false,
         }
@@ -34,16 +38,16 @@ impl TreeItem {
     }
     #[inline]
     pub fn render(&self, depth: i32) -> String {
-        let indent_px = depth * 20;
-        let icon = {
+        let indent_px = depth * 20_i32;
+        let icon: String = {
             if !self.children.is_empty() {
                 if self.expanded {
-                    "▼".to_string()
+                    String::from("▼")
                 } else {
-                    "▶".to_string()
+                    String::from("▶")
                 }
             } else {
-                "•".to_string()
+                String::from("•")
             }
         };
         let mut html = {
@@ -55,7 +59,7 @@ impl TreeItem {
             let mut i = 0;
             while i < self.children.len() {
                 let child = &self.children[i];
-                html = format!("{}{}", html, child.render(depth + 1));
+                html = format!("{}{}", html, child.render(depth + 1_i32));
                 i += 1;
             }
         }

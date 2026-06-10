@@ -1,0 +1,223 @@
+{
+  "module_path": "spacer",
+  "functions": {
+    "Spacer::horizontal": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [
+        "Owned"
+      ],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Spacer::height": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Spacer::md": {
+      "params": [],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::xxs": {
+      "params": [],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::sm": {
+      "params": [],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::xl": {
+      "params": [],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "main": {
+      "params": [],
+      "return_type": null,
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::width": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Spacer::new": {
+      "params": [],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::flexible": {
+      "params": [],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::xs": {
+      "params": [],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::vertical": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [
+        "Owned"
+      ],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::xxl": {
+      "params": [],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::lg": {
+      "params": [],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    }
+  },
+  "structs": {
+    "Spacer": {
+      "height": "String",
+      "width": "String",
+      "flex": "Bool"
+    }
+  },
+  "trait_impls": {},
+  "copy_structs": [
+    "FlexDirection",
+    "NavbarPosition",
+    "RowAlign",
+    "ToastPosition",
+    "Pagination",
+    "DrawerPosition",
+    "DividerOrientation",
+    "Progress",
+    "EasingPreset",
+    "SkeletonVariant",
+    "PopoverPosition",
+    "ColumnJustify",
+    "SplitDirection",
+    "SelectSize",
+    "ColumnAlign",
+    "ModalSize",
+    "ChipSize",
+    "TooltipPosition",
+    "StackAlign",
+    "ScrollDirection",
+    "RowJustify",
+    "SwitchSize",
+    "CheckboxSize",
+    "LoadingSize",
+    "AlertVariant",
+    "TextWeight",
+    "AvatarShape",
+    "CurvePoint",
+    "ButtonSize",
+    "SpinnerSize",
+    "TextareaResize",
+    "StackDirection",
+    "SidebarPosition",
+    "VNode",
+    "ButtonVariant",
+    "BadgeSize",
+    "ToastVariant",
+    "RatingSize",
+    "ChipVariant",
+    "BadgeVariant",
+    "MessageRole",
+    "NodeCategory",
+    "StackJustify",
+    "TextSize",
+    "AvatarSize",
+    "PinType",
+    "ScrollDir",
+    "ProgressVariant"
+  ],
+  "version": "0.46.0"
+}

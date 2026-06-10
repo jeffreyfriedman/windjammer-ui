@@ -58,9 +58,9 @@ impl FormField {
         FormField {
             label: label,
             input: input,
-            error: String::new(),
+            error: "",
             required: false,
-            help_text: String::new(),
+            help_text: "",
         }
     }
 
@@ -80,7 +80,7 @@ impl FormField {
     }
 
     pub fn render(self) -> string {
-        let mut html = String::new();
+        let mut html = "";
         html.push_str("<div style='margin-bottom: 16px;'>");
 
         // Label
@@ -115,7 +115,7 @@ impl FormField {
 
 impl Renderable for Form {
 pub fn render(self) -> string {
-        let mut html = String::new();
+        let mut html = "";
         html.push_str("<form id='");
         html.push_str(&self.id);
         html.push_str("' action='");

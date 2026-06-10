@@ -17,8 +17,8 @@ impl CodeBlock {
     #[inline]
     pub fn new(code: String) -> CodeBlock {
         CodeBlock {
-            code: code.to_string(),
-            language: String::from("".to_string()),
+            code,
+            language: String::new(),
             show_line_numbers: false,
             show_copy_button: true,
         }
@@ -47,21 +47,21 @@ impl Renderable for CodeBlock {
             if !self.language.is_empty() {
                 format!("<div class='wj-codeblock-language'>{}</div>", self.language)
             } else {
-                String::from("".to_string())
+                String::new()
             }
         };
         let copy_button = {
             if self.show_copy_button {
                 format!("<button class='wj-codeblock-copy' onclick='navigator.clipboard.writeText(this.parentElement.querySelector(\"code\").textContent); this.textContent=\"✓ Copied!\"; setTimeout(() => this.textContent=\"📋 Copy\", 2000)'>\n                    📋 Copy\n                </button>")
             } else {
-                String::from("".to_string())
+                String::new()
             }
         };
         let line_number_class = {
             if self.show_line_numbers {
-                " wj-codeblock-numbered".to_string()
+                String::from(" wj-codeblock-numbered")
             } else {
-                "".to_string()
+                String::new()
             }
         };
         format!("<div class='wj-codeblock{}'>\n                <div class='wj-codeblock-header'>\n                    {}\n                    {}\n                </div>\n                <pre class='wj-codeblock-pre'><code class='wj-codeblock-code'>{}</code></pre>\n            </div>", line_number_class, language_label, copy_button, self.code)

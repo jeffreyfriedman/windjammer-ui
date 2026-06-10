@@ -1,0 +1,152 @@
+{
+  "module_path": "rating",
+  "functions": {
+    "Rating::max": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"i32\")"
+      ],
+      "return_type": "Custom(\"Rating\")",
+      "is_associated": true,
+      "parent_type": "Rating",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Rating::readonly": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Rating\")",
+      "is_associated": true,
+      "parent_type": "Rating",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Rating::color": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Rating\")",
+      "is_associated": true,
+      "parent_type": "Rating",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Rating::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Rating",
+      "param_ownership": [
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Rating::new": {
+      "params": [
+        "Custom(\"f32\")"
+      ],
+      "return_type": "Custom(\"Rating\")",
+      "is_associated": true,
+      "parent_type": "Rating",
+      "param_ownership": [
+        "Owned"
+      ],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Rating::size": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"RatingSize\")"
+      ],
+      "return_type": "Custom(\"Rating\")",
+      "is_associated": true,
+      "parent_type": "Rating",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    }
+  },
+  "structs": {
+    "Rating": {
+      "color": "String",
+      "size": "Custom(\"RatingSize\")",
+      "max": "Custom(\"i32\")",
+      "value": "Custom(\"f32\")",
+      "readonly": "Bool"
+    }
+  },
+  "trait_impls": {},
+  "copy_structs": [
+    "FlexDirection",
+    "NavbarPosition",
+    "RowAlign",
+    "ToastPosition",
+    "Pagination",
+    "DrawerPosition",
+    "DividerOrientation",
+    "Progress",
+    "EasingPreset",
+    "SkeletonVariant",
+    "PopoverPosition",
+    "ColumnJustify",
+    "SplitDirection",
+    "SelectSize",
+    "ColumnAlign",
+    "ModalSize",
+    "ChipSize",
+    "TooltipPosition",
+    "StackAlign",
+    "ScrollDirection",
+    "RowJustify",
+    "SwitchSize",
+    "CheckboxSize",
+    "LoadingSize",
+    "AlertVariant",
+    "TextWeight",
+    "AvatarShape",
+    "CurvePoint",
+    "ButtonSize",
+    "SpinnerSize",
+    "TextareaResize",
+    "StackDirection",
+    "SidebarPosition",
+    "VNode",
+    "ButtonVariant",
+    "BadgeSize",
+    "ToastVariant",
+    "RatingSize",
+    "ChipVariant",
+    "BadgeVariant",
+    "MessageRole",
+    "NodeCategory",
+    "StackJustify",
+    "TextSize",
+    "AvatarSize",
+    "PinType",
+    "ScrollDir",
+    "ProgressVariant"
+  ],
+  "version": "0.46.0"
+}

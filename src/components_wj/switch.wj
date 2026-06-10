@@ -20,8 +20,8 @@ impl Switch {
             checked: false,
             disabled: false,
             size: SwitchSize::Medium,
-            label: String::new(),
-            class: String::new(),
+            label: "",
+            class: "",
         }
     }
     
@@ -69,7 +69,7 @@ impl Switch {
         let disabled_style = if self.disabled { " opacity: 0.5; cursor: not-allowed;" } else { " cursor: pointer;" }
         let disabled_attr = if self.disabled { " disabled" } else { "" }
         
-        let mut html = String::new()
+        let mut html = ""
         html.push_str("<label class=\"wj-switch ")
         html.push_str(self.class)
         html.push_str("\" style=\"display: inline-flex; align-items: center; gap: 8px;")

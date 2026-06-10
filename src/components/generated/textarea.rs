@@ -79,24 +79,24 @@ impl Textarea {
     }
     #[inline]
     pub fn render(&self) -> String {
-        let resize_style = match self.resize {
-            TextareaResize::None => "resize: none;".to_string(),
-            TextareaResize::Vertical => "resize: vertical;".to_string(),
-            TextareaResize::Horizontal => "resize: horizontal;".to_string(),
-            TextareaResize::Both => "resize: both;".to_string(),
+        let resize_style: String = match self.resize {
+            TextareaResize::None => String::from("resize: none;"),
+            TextareaResize::Vertical => String::from("resize: vertical;"),
+            TextareaResize::Horizontal => String::from("resize: horizontal;"),
+            TextareaResize::Both => String::from("resize: both;"),
         };
         let disabled_attr = {
             if self.disabled {
-                " disabled".to_string()
+                String::from(" disabled")
             } else {
-                "".to_string()
+                String::new()
             }
         };
         let readonly_attr = {
             if self.readonly {
-                " readonly".to_string()
+                String::from(" readonly")
             } else {
-                "".to_string()
+                String::new()
             }
         };
         let mut html = String::new();
@@ -110,7 +110,7 @@ impl Textarea {
             html.push_str(&self.placeholder.clone());
             html.push('"');
         }
-        if self.max_length > 0 {
+        if self.max_length > 0_i32 {
             html.push_str(" maxlength=\"");
             html.push_str(&self.max_length.to_string());
             html.push('"');
@@ -120,7 +120,7 @@ impl Textarea {
         html.push_str(" style=\"");
         html.push_str(&resize_style);
         html.push_str(" padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; font-family: inherit; width: 100%; box-sizing: border-box;\">");
-        html.push_str(&self.value);
+        html.push_str(&self.value.clone());
         html.push_str("</textarea>");
         html
     }

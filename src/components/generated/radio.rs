@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 use std::fmt::Write;
@@ -17,8 +21,8 @@ impl RadioOption {
     #[inline]
     pub fn new(value: String, label: String) -> RadioOption {
         RadioOption {
-            value: value.to_string(),
-            label: label.to_string(),
+            value,
+            label,
             disabled: false,
         }
     }
@@ -41,9 +45,9 @@ impl RadioGroup {
     #[inline]
     pub fn new(name: String) -> RadioGroup {
         RadioGroup {
-            name: name.to_string(),
+            name,
             options: Vec::new(),
-            selected: "".to_string().to_string(),
+            selected: "".to_string(),
         }
     }
     #[inline]
@@ -76,16 +80,16 @@ impl Renderable for RadioGroup {
             let opt = &self.options[i];
             let checked_attr = {
                 if opt.value == self.selected {
-                    " checked".to_string()
+                    String::from(" checked")
                 } else {
-                    "".to_string()
+                    String::new()
                 }
             };
             let disabled_attr = {
                 if opt.disabled {
-                    " disabled".to_string()
+                    String::from(" disabled")
                 } else {
-                    "".to_string()
+                    String::new()
                 }
             };
             html = format!("{}<label class='wj-radio'><input type='radio' name='{}' value='{}'{}{}><span>{}</span></label>", html, self.name, opt.value, checked_attr, disabled_attr, opt.label);

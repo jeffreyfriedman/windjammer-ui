@@ -15,7 +15,7 @@ impl Menu {
     pub fn new(trigger: String) -> Menu {
         Menu {
             items: Vec::new(),
-            trigger: trigger.to_string(),
+            trigger,
             class: String::new(),
         }
     }
@@ -38,7 +38,7 @@ impl Menu {
         html.push_str(&self.trigger.clone());
         html.push_str("<div class=\"wj-menu-items\" style=\"position: absolute; top: 100%; left: 0; margin-top: 4px; background: white; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); min-width: 200px; z-index: 1000; display: none;\">");
         for item in &self.items {
-            html.push_str(&item);
+            html.push_str(item);
         }
         html.push_str("</div>");
         html.push_str("</div>");
@@ -61,9 +61,9 @@ impl MenuItem {
     #[inline]
     pub fn new(label: String) -> MenuItem {
         MenuItem {
-            label: label.to_string(),
+            label,
             icon: String::new(),
-            href: "#".to_string().to_string(),
+            href: "#".to_string(),
             disabled: false,
             class: String::new(),
         }
@@ -90,11 +90,11 @@ impl MenuItem {
     }
     #[inline]
     pub fn render(&self) -> String {
-        let disabled_style = {
+        let disabled_style: String = {
             if self.disabled {
-                " opacity: 0.5; cursor: not-allowed;".to_string()
+                String::from(" opacity: 0.5; cursor: not-allowed;")
             } else {
-                " cursor: pointer;".to_string()
+                String::from(" cursor: pointer;")
             }
         };
         let mut html = String::new();
@@ -111,7 +111,7 @@ impl MenuItem {
             html.push_str("</span>");
         }
         html.push_str("<span>");
-        html.push_str(&self.label);
+        html.push_str(&self.label.clone());
         html.push_str("</span>");
         html.push_str("</a>");
         html.push_str("<style>.wj-menu-item:hover:not([style*='cursor: not-allowed']) { background-color: #f3f4f6; }</style>");

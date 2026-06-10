@@ -1,5 +1,7 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -73,18 +75,18 @@ impl FrameDebuggerPanel {
     pub fn inactive() -> FrameDebuggerPanel {
         FrameDebuggerPanel {
             state: FrameDebuggerViewState::empty(),
-            step_back_handler: "frame_debug_step_back()".to_string(),
-            step_forward_handler: "frame_debug_step_forward()".to_string(),
-            capture_handler: "frame_debug_capture()".to_string(),
+            step_back_handler: String::from("frame_debug_step_back()"),
+            step_forward_handler: String::from("frame_debug_step_forward()"),
+            capture_handler: String::from("frame_debug_capture()"),
         }
     }
     #[inline]
     pub fn from_mock() -> FrameDebuggerPanel {
         FrameDebuggerPanel {
             state: FrameDebuggerViewState::mock_captured(),
-            step_back_handler: "frame_debug_step_back()".to_string(),
-            step_forward_handler: "frame_debug_step_forward()".to_string(),
-            capture_handler: "frame_debug_capture()".to_string(),
+            step_back_handler: String::from("frame_debug_step_back()"),
+            step_forward_handler: String::from("frame_debug_step_forward()"),
+            capture_handler: String::from("frame_debug_capture()"),
         }
     }
     #[inline]
@@ -101,9 +103,9 @@ impl FrameDebuggerPanel {
         );
         FrameDebuggerPanel {
             state,
-            step_back_handler: "frame_debug_step_back()".to_string(),
-            step_forward_handler: "frame_debug_step_forward()".to_string(),
-            capture_handler: "frame_debug_capture()".to_string(),
+            step_back_handler: String::from("frame_debug_step_back()"),
+            step_forward_handler: String::from("frame_debug_step_forward()"),
+            capture_handler: String::from("frame_debug_capture()"),
         }
     }
     #[inline]
@@ -121,8 +123,8 @@ impl Renderable for FrameDebuggerPanel {
         let frame_time_ms = self.state.frame_time_ms;
         let can_step_back = self.state.can_step_back;
         let can_step_forward = self.state.can_step_forward;
-        let capture_handler = self.capture_handler;
-        let step_back_handler = self.step_back_handler;
+        let capture_handler = self.capture_handler.clone();
+        let step_back_handler = self.step_back_handler.clone();
         let step_forward_handler = self.step_forward_handler;
         let styles = frame_debugger_panel_styles();
         let position_label = frame_position_label(current_frame_index, total_frames, frame_time_ms);
@@ -135,16 +137,16 @@ impl Renderable for FrameDebuggerPanel {
 #[inline]
 pub fn step_button_class(enabled: bool) -> String {
     if enabled {
-        "".to_string()
+        String::new()
     } else {
-        "disabled".to_string()
+        String::from("disabled")
     }
 }
 
 #[inline]
 pub fn frame_position_label(current_index: u64, total_frames: usize, frame_time_ms: f32) -> String {
-    if total_frames == 0 {
-        "No frames captured".to_string()
+    if total_frames == 0_usize {
+        String::from("No frames captured")
     } else {
         format!(
             "Frame {} / {} ({:.2} ms)",
@@ -155,5 +157,5 @@ pub fn frame_position_label(current_index: u64, total_frames: usize, frame_time_
 
 #[inline]
 pub fn frame_debugger_panel_styles() -> String {
-    "\n.frame-debug-panel { background:#09090f; border-top:2px solid #60a5fa; color:#ecfdf5; padding:10px; font-family:monospace; }\n.frame-debug-panel header { display:flex; align-items:center; gap:10px; margin-bottom:8px; }\n.frame-debug-panel header h3 { margin:0; flex:1; color:#60a5fa; font-size:14px; }\n.frame-debug-panel header button { padding:6px 10px; border-radius:4px; border:none; background:#0f3460; color:#e5e7eb; cursor:pointer; }\n.frame-debug-transport { display:flex; align-items:center; gap:12px; margin-bottom:8px; }\n.frame-debug-transport button { padding:8px 14px; border-radius:4px; border:none; background:#16213e; color:#e5e7eb; cursor:pointer; }\n.frame-debug-transport button.disabled { opacity:0.4; cursor:not-allowed; }\n.frame-debug-position { flex:1; text-align:center; color:#e0e0e0; font-weight:600; }\n.frame-debug-hint { margin:0; color:#666; font-size:11px; }\n".to_string()
+    String::from("\n.frame-debug-panel { background:#09090f; border-top:2px solid #60a5fa; color:#ecfdf5; padding:10px; font-family:monospace; }\n.frame-debug-panel header { display:flex; align-items:center; gap:10px; margin-bottom:8px; }\n.frame-debug-panel header h3 { margin:0; flex:1; color:#60a5fa; font-size:14px; }\n.frame-debug-panel header button { padding:6px 10px; border-radius:4px; border:none; background:#0f3460; color:#e5e7eb; cursor:pointer; }\n.frame-debug-transport { display:flex; align-items:center; gap:12px; margin-bottom:8px; }\n.frame-debug-transport button { padding:8px 14px; border-radius:4px; border:none; background:#16213e; color:#e5e7eb; cursor:pointer; }\n.frame-debug-transport button.disabled { opacity:0.4; cursor:not-allowed; }\n.frame-debug-position { flex:1; text-align:center; color:#e0e0e0; font-weight:600; }\n.frame-debug-hint { margin:0; color:#666; font-size:11px; }\n")
 }

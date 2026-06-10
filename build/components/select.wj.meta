@@ -1,0 +1,185 @@
+{
+  "module_path": "select",
+  "functions": {
+    "Select::option": {
+      "params": [
+        "Custom(\"Select\")",
+        "String",
+        "String"
+      ],
+      "return_type": "Custom(\"Select\")",
+      "is_associated": true,
+      "parent_type": "Select",
+      "param_ownership": [
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Select::size": {
+      "params": [
+        "Custom(\"Select\")",
+        "Custom(\"SelectSize\")"
+      ],
+      "return_type": "Custom(\"Select\")",
+      "is_associated": true,
+      "parent_type": "Select",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Select::placeholder": {
+      "params": [
+        "Custom(\"Select\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Select\")",
+      "is_associated": true,
+      "parent_type": "Select",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Select::selected": {
+      "params": [
+        "Custom(\"Select\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Select\")",
+      "is_associated": true,
+      "parent_type": "Select",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Select::disabled": {
+      "params": [
+        "Custom(\"Select\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Select\")",
+      "is_associated": true,
+      "parent_type": "Select",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Select::class": {
+      "params": [
+        "Custom(\"Select\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Select\")",
+      "is_associated": true,
+      "parent_type": "Select",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Select::new": {
+      "params": [],
+      "return_type": "Custom(\"Select\")",
+      "is_associated": true,
+      "parent_type": "Select",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Select::render": {
+      "params": [
+        "Custom(\"Select\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Select",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    }
+  },
+  "structs": {
+    "Select": {
+      "class": "String",
+      "placeholder": "String",
+      "selected": "String",
+      "disabled": "Bool",
+      "options": "Vec(Custom(\"SelectOption\"))",
+      "size": "Custom(\"SelectSize\")"
+    },
+    "SelectOption": {
+      "label": "String",
+      "value": "String"
+    }
+  },
+  "trait_impls": {},
+  "copy_structs": [
+    "FlexDirection",
+    "NavbarPosition",
+    "RowAlign",
+    "ToastPosition",
+    "Pagination",
+    "DrawerPosition",
+    "DividerOrientation",
+    "Progress",
+    "EasingPreset",
+    "SkeletonVariant",
+    "PopoverPosition",
+    "ColumnJustify",
+    "SplitDirection",
+    "SelectSize",
+    "ColumnAlign",
+    "ModalSize",
+    "ChipSize",
+    "TooltipPosition",
+    "StackAlign",
+    "ScrollDirection",
+    "RowJustify",
+    "SwitchSize",
+    "CheckboxSize",
+    "LoadingSize",
+    "AlertVariant",
+    "TextWeight",
+    "AvatarShape",
+    "CurvePoint",
+    "ButtonSize",
+    "SpinnerSize",
+    "TextareaResize",
+    "StackDirection",
+    "SidebarPosition",
+    "VNode",
+    "ButtonVariant",
+    "BadgeSize",
+    "ToastVariant",
+    "RatingSize",
+    "ChipVariant",
+    "BadgeVariant",
+    "MessageRole",
+    "NodeCategory",
+    "StackJustify",
+    "TextSize",
+    "AvatarSize",
+    "PinType",
+    "ScrollDir",
+    "ProgressVariant"
+  ],
+  "version": "0.46.0"
+}

@@ -35,7 +35,7 @@ impl Chip {
     #[inline]
     pub fn new(label: String) -> Chip {
         Chip {
-            label: label.to_string(),
+            label,
             variant: ChipVariant::Default,
             size: ChipSize::Medium,
             removable: false,
@@ -67,39 +67,39 @@ impl Chip {
 impl Renderable for Chip {
     #[inline]
     fn render(self) -> String {
-        let bg_color = match self.variant {
-            ChipVariant::Default => "#e2e8f0".to_string(),
-            ChipVariant::Primary => "#3b82f6".to_string(),
-            ChipVariant::Success => "#10b981".to_string(),
-            ChipVariant::Warning => "#f59e0b".to_string(),
-            ChipVariant::Danger => "#ef4444".to_string(),
-            ChipVariant::Info => "#06b6d4".to_string(),
+        let bg_color: String = match self.variant {
+            ChipVariant::Default => String::from("#e2e8f0"),
+            ChipVariant::Primary => String::from("#3b82f6"),
+            ChipVariant::Success => String::from("#10b981"),
+            ChipVariant::Warning => String::from("#f59e0b"),
+            ChipVariant::Danger => String::from("#ef4444"),
+            ChipVariant::Info => String::from("#06b6d4"),
         };
-        let text_color = match self.variant {
-            ChipVariant::Default => "#2d3748".to_string(),
-            ChipVariant::Primary => "white".to_string(),
-            ChipVariant::Success => "white".to_string(),
-            ChipVariant::Warning => "white".to_string(),
-            ChipVariant::Danger => "white".to_string(),
-            ChipVariant::Info => "white".to_string(),
+        let text_color: String = match self.variant {
+            ChipVariant::Default => String::from("#2d3748"),
+            ChipVariant::Primary => String::from("white"),
+            ChipVariant::Success => String::from("white"),
+            ChipVariant::Warning => String::from("white"),
+            ChipVariant::Danger => String::from("white"),
+            ChipVariant::Info => String::from("white"),
         };
-        let border_color = match self.variant {
-            ChipVariant::Default => "#cbd5e0".to_string(),
-            ChipVariant::Primary => "#2563eb".to_string(),
-            ChipVariant::Success => "#059669".to_string(),
-            ChipVariant::Warning => "#d97706".to_string(),
-            ChipVariant::Danger => "#dc2626".to_string(),
-            ChipVariant::Info => "#0891b2".to_string(),
+        let border_color: String = match self.variant {
+            ChipVariant::Default => String::from("#cbd5e0"),
+            ChipVariant::Primary => String::from("#2563eb"),
+            ChipVariant::Success => String::from("#059669"),
+            ChipVariant::Warning => String::from("#d97706"),
+            ChipVariant::Danger => String::from("#dc2626"),
+            ChipVariant::Info => String::from("#0891b2"),
         };
-        let padding = match self.size {
-            ChipSize::Small => "4px 8px".to_string(),
-            ChipSize::Medium => "6px 12px".to_string(),
-            ChipSize::Large => "8px 16px".to_string(),
+        let padding: String = match self.size {
+            ChipSize::Small => String::from("4px 8px"),
+            ChipSize::Medium => String::from("6px 12px"),
+            ChipSize::Large => String::from("8px 16px"),
         };
-        let font_size = match self.size {
-            ChipSize::Small => "12px".to_string(),
-            ChipSize::Medium => "14px".to_string(),
-            ChipSize::Large => "16px".to_string(),
+        let font_size: String = match self.size {
+            ChipSize::Small => String::from("12px"),
+            ChipSize::Medium => String::from("14px"),
+            ChipSize::Large => String::from("16px"),
         };
         let mut html = String::new();
         html.push_str(

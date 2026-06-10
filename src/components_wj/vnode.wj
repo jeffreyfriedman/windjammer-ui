@@ -134,6 +134,28 @@ impl VNode {
     }
     
     // ========================================================================
+    // Event handler methods
+    // ========================================================================
+    
+    /// Attach a click handler by name (looked up in event dispatcher at render time)
+    pub fn on_click(self, handler_name: string) -> VNode {
+        vnode_ffi::vnode_on_click(self.handle, handler_name)
+        self
+    }
+    
+    /// Attach a change handler by name
+    pub fn on_change(self, handler_name: string) -> VNode {
+        vnode_ffi::vnode_on_change(self.handle, handler_name)
+        self
+    }
+    
+    /// Attach an input handler by name
+    pub fn on_input(self, handler_name: string) -> VNode {
+        vnode_ffi::vnode_on_input(self.handle, handler_name)
+        self
+    }
+    
+    // ========================================================================
     // Access to raw handle (for advanced usage)
     // ========================================================================
     

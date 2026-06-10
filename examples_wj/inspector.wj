@@ -147,7 +147,7 @@ fn Inspector() -> UI {
 
 // Property Row
 @component
-fn PropertyRow(label: String, value: UI) -> UI {
+fn PropertyRow(label: string, value: UI) -> UI {
     HStack {
         Text(label)
             .size(TextSize::Small)

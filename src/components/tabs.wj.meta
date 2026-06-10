@@ -1,0 +1,162 @@
+{
+  "module_path": "tabs",
+  "functions": {
+    "Tabs::active": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Tabs\")",
+      "is_associated": true,
+      "parent_type": "Tabs",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Tabs::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Tabs",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Tab::new": {
+      "params": [
+        "String",
+        "String",
+        "String"
+      ],
+      "return_type": "Custom(\"Tab\")",
+      "is_associated": true,
+      "parent_type": "Tab",
+      "param_ownership": [
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "main": {
+      "params": [],
+      "return_type": null,
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Tab::disabled": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Tab\")",
+      "is_associated": true,
+      "parent_type": "Tab",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Tabs::new": {
+      "params": [],
+      "return_type": "Custom(\"Tabs\")",
+      "is_associated": true,
+      "parent_type": "Tabs",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Tabs::tab": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"Tab\")"
+      ],
+      "return_type": "Custom(\"Tabs\")",
+      "is_associated": true,
+      "parent_type": "Tabs",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    }
+  },
+  "structs": {
+    "Tab": {
+      "id": "String",
+      "disabled": "Bool",
+      "content": "String",
+      "label": "String"
+    },
+    "Tabs": {
+      "active": "String",
+      "tabs": "Vec(Custom(\"Tab\"))"
+    }
+  },
+  "trait_impls": {},
+  "copy_structs": [
+    "FlexDirection",
+    "NavbarPosition",
+    "RowAlign",
+    "ToastPosition",
+    "Pagination",
+    "DrawerPosition",
+    "DividerOrientation",
+    "Progress",
+    "EasingPreset",
+    "SkeletonVariant",
+    "PopoverPosition",
+    "ColumnJustify",
+    "SplitDirection",
+    "SelectSize",
+    "ColumnAlign",
+    "ModalSize",
+    "ChipSize",
+    "TooltipPosition",
+    "StackAlign",
+    "ScrollDirection",
+    "RowJustify",
+    "SwitchSize",
+    "CheckboxSize",
+    "LoadingSize",
+    "AlertVariant",
+    "TextWeight",
+    "AvatarShape",
+    "CurvePoint",
+    "ButtonSize",
+    "SpinnerSize",
+    "TextareaResize",
+    "StackDirection",
+    "SidebarPosition",
+    "VNode",
+    "ButtonVariant",
+    "BadgeSize",
+    "ToastVariant",
+    "RatingSize",
+    "ChipVariant",
+    "BadgeVariant",
+    "MessageRole",
+    "NodeCategory",
+    "StackJustify",
+    "TextSize",
+    "AvatarSize",
+    "PinType",
+    "ScrollDir",
+    "ProgressVariant"
+  ],
+  "version": "0.46.0"
+}

@@ -24,7 +24,7 @@ impl Div {
         }
     }
     #[inline]
-    pub fn child<T: Renderable>(mut self, component: T) -> Div {
+    pub fn child<T: Renderable>(mut self, mut component: T) -> Div {
         self.children.push(component.render());
         self
     }
@@ -54,7 +54,7 @@ impl Div {
         html.push_str("<div");
         if !self.id.is_empty() {
             html.push_str(" id=\"");
-            html.push_str(&self.id);
+            html.push_str(&self.id.clone());
             html.push('"');
         }
         if !self.class.is_empty() {
@@ -69,7 +69,7 @@ impl Div {
         }
         html.push('>');
         for child in &self.children {
-            html.push_str(&child);
+            html.push_str(child);
         }
         html.push_str("</div>");
         html
@@ -94,7 +94,7 @@ impl Span {
         }
     }
     #[inline]
-    pub fn child<T: Renderable>(mut self, component: T) -> Span {
+    pub fn child<T: Renderable>(mut self, mut component: T) -> Span {
         self.children.push(component.render());
         self
     }
@@ -157,7 +157,7 @@ impl P {
         }
     }
     #[inline]
-    pub fn child<T: Renderable>(mut self, component: T) -> P {
+    pub fn child<T: Renderable>(mut self, mut component: T) -> P {
         self.children.push(component.render());
         self
     }
@@ -214,7 +214,7 @@ impl H1 {
     #[inline]
     pub fn new(text: String) -> H1 {
         H1 {
-            text: text.to_string(),
+            text,
             class: String::new(),
             style: String::new(),
         }
@@ -265,7 +265,7 @@ impl H2 {
     #[inline]
     pub fn new(text: String) -> H2 {
         H2 {
-            text: text.to_string(),
+            text,
             class: String::new(),
             style: String::new(),
         }
@@ -316,7 +316,7 @@ impl H3 {
     #[inline]
     pub fn new(text: String) -> H3 {
         H3 {
-            text: text.to_string(),
+            text,
             class: String::new(),
             style: String::new(),
         }

@@ -125,7 +125,7 @@ pub fn render(self) -> string {
             StackJustify::SpaceEvenly => "space-evenly",
         };
 
-        let mut html = String::new();
+        let mut html = "";
         html.push_str("<div style='display: flex; flex-direction: ");
         html.push_str(flex_direction);
         html.push_str("; gap: ");

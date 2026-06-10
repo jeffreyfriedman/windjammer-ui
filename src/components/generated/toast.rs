@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -36,7 +40,7 @@ impl Toast {
     #[inline]
     pub fn new(message: String) -> Toast {
         Toast {
-            message: message.to_string(),
+            message,
             variant: ToastVariant::Info,
             position: ToastPosition::TopRight,
             duration: 3000_i32,
@@ -68,31 +72,31 @@ impl Toast {
 impl Renderable for Toast {
     #[inline]
     fn render(self) -> String {
-        let variant_class = match self.variant {
-            ToastVariant::Success => "wj-toast-success".to_string(),
-            ToastVariant::Error => "wj-toast-error".to_string(),
-            ToastVariant::Warning => "wj-toast-warning".to_string(),
-            ToastVariant::Info => "wj-toast-info".to_string(),
+        let variant_class: String = match self.variant {
+            ToastVariant::Success => String::from("wj-toast-success"),
+            ToastVariant::Error => String::from("wj-toast-error"),
+            ToastVariant::Warning => String::from("wj-toast-warning"),
+            ToastVariant::Info => String::from("wj-toast-info"),
         };
-        let position_class = match self.position {
-            ToastPosition::TopRight => "wj-toast-top-right".to_string(),
-            ToastPosition::TopLeft => "wj-toast-top-left".to_string(),
-            ToastPosition::BottomRight => "wj-toast-bottom-right".to_string(),
-            ToastPosition::BottomLeft => "wj-toast-bottom-left".to_string(),
-            ToastPosition::TopCenter => "wj-toast-top-center".to_string(),
-            ToastPosition::BottomCenter => "wj-toast-bottom-center".to_string(),
+        let position_class: String = match self.position {
+            ToastPosition::TopRight => String::from("wj-toast-top-right"),
+            ToastPosition::TopLeft => String::from("wj-toast-top-left"),
+            ToastPosition::BottomRight => String::from("wj-toast-bottom-right"),
+            ToastPosition::BottomLeft => String::from("wj-toast-bottom-left"),
+            ToastPosition::TopCenter => String::from("wj-toast-top-center"),
+            ToastPosition::BottomCenter => String::from("wj-toast-bottom-center"),
         };
-        let icon = match self.variant {
-            ToastVariant::Success => "✓".to_string(),
-            ToastVariant::Error => "✗".to_string(),
-            ToastVariant::Warning => "⚠".to_string(),
-            ToastVariant::Info => "ℹ".to_string(),
+        let icon: String = match self.variant {
+            ToastVariant::Success => String::from("✓"),
+            ToastVariant::Error => String::from("✗"),
+            ToastVariant::Warning => String::from("⚠"),
+            ToastVariant::Info => String::from("ℹ"),
         };
         let close_button = {
             if self.show_close {
-                "<button class='wj-toast-close'>×</button>".to_string()
+                String::from("<button class='wj-toast-close'>×</button>")
             } else {
-                "".to_string()
+                String::new()
             }
         };
         format!("<div class='wj-toast {} {}' data-duration='{}'>\n  <span class='wj-toast-icon'>{}</span>\n  <span class='wj-toast-message'>{}</span>\n  {}\n</div>", variant_class, position_class, self.duration, icon, self.message, close_button)

@@ -23,8 +23,8 @@ impl Skeleton {
     pub fn new() -> Skeleton {
         Skeleton {
             variant: SkeletonVariant::Text,
-            width: "100%".to_string().to_string(),
-            height: "20px".to_string().to_string(),
+            width: "100%".to_string(),
+            height: "20px".to_string(),
             class: String::new(),
         }
     }
@@ -50,18 +50,18 @@ impl Skeleton {
     }
     #[inline]
     pub fn render(&self) -> String {
-        let border_radius = match self.variant {
-            SkeletonVariant::Text => "4px".to_string(),
-            SkeletonVariant::Circle => "50%".to_string(),
-            SkeletonVariant::Rectangle => "8px".to_string(),
+        let border_radius: String = match self.variant {
+            SkeletonVariant::Text => String::from("4px"),
+            SkeletonVariant::Circle => String::from("50%"),
+            SkeletonVariant::Rectangle => String::from("8px"),
         };
         let mut html = String::new();
         html.push_str("<div class=\"wj-skeleton ");
         html.push_str(&self.class.clone());
         html.push_str("\" style=\"width: ");
-        html.push_str(&self.width);
+        html.push_str(&self.width.clone());
         html.push_str("; height: ");
-        html.push_str(&self.height);
+        html.push_str(&self.height.clone());
         html.push_str("; border-radius: ");
         html.push_str(&border_radius);
         html.push_str("; background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: skeleton-loading 1.5s ease-in-out infinite;\"></div>");

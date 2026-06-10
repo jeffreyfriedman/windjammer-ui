@@ -7,7 +7,7 @@ pub struct TypingIndicator {
 impl TypingIndicator {
     pub fn new() -> TypingIndicator {
         TypingIndicator {
-            label: String::from("AI is typing"),
+            label: "AI is typing",
         }
     }
     

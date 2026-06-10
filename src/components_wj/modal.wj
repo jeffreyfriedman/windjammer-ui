@@ -24,8 +24,8 @@ impl Modal {
         Modal {
             id: id,
             title: title,
-            content: String::new(),
-            footer: String::new(),
+            content: "",
+            footer: "",
             size: ModalSize::Medium,
             closeable: true,
             visible: false,
@@ -80,7 +80,7 @@ pub fn render(self) -> string {
             "none"
         };
 
-        let mut html = String::new();
+        let mut html = "";
 
         // Backdrop
         html.push_str("<div id='");

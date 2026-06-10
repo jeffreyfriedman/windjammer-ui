@@ -11,7 +11,7 @@ impl Menu {
         Menu {
             items: Vec::new(),
             trigger,
-            class: String::new(),
+            class: "",
         }
     }
     
@@ -26,7 +26,7 @@ impl Menu {
     }
     
     pub fn render() -> string {
-        let mut html = String::new()
+        let mut html = ""
         html.push_str("<div class=\"wj-menu ")
         html.push_str(self.class)
         html.push_str("\" style=\"position: relative; display: inline-block;\">")
@@ -63,10 +63,10 @@ impl MenuItem {
     pub fn new(label: string) -> MenuItem {
         MenuItem {
             label,
-            icon: String::new(),
+            icon: "",
             href: "#".to_string(),
             disabled: false,
-            class: String::new(),
+            class: "",
         }
     }
     
@@ -97,7 +97,7 @@ impl MenuItem {
             " cursor: pointer;"
         }
         
-        let mut html = String::new()
+        let mut html = ""
         html.push_str("<a href=\"")
         html.push_str(self.href)
         html.push_str("\" class=\"wj-menu-item ")

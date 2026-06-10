@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -34,7 +38,7 @@ impl Badge {
     #[inline]
     pub fn new(text: String) -> Badge {
         Badge {
-            text: text.to_string(),
+            text,
             variant: BadgeVariant::Default,
             size: BadgeSize::Medium,
         }
@@ -54,19 +58,19 @@ impl Badge {
 impl Renderable for Badge {
     #[inline]
     fn render(self) -> String {
-        let variant_class = match self.variant {
-            BadgeVariant::Default => "wj-badge-default".to_string(),
-            BadgeVariant::Primary => "wj-badge-primary".to_string(),
-            BadgeVariant::Success => "wj-badge-success".to_string(),
-            BadgeVariant::Warning => "wj-badge-warning".to_string(),
-            BadgeVariant::Danger => "wj-badge-danger".to_string(),
-            BadgeVariant::Error => "wj-badge-danger".to_string(),
-            BadgeVariant::Info => "wj-badge-info".to_string(),
+        let variant_class: String = match self.variant {
+            BadgeVariant::Default => String::from("wj-badge-default"),
+            BadgeVariant::Primary => String::from("wj-badge-primary"),
+            BadgeVariant::Success => String::from("wj-badge-success"),
+            BadgeVariant::Warning => String::from("wj-badge-warning"),
+            BadgeVariant::Danger => String::from("wj-badge-danger"),
+            BadgeVariant::Error => String::from("wj-badge-danger"),
+            BadgeVariant::Info => String::from("wj-badge-info"),
         };
-        let size_class = match self.size {
-            BadgeSize::Small => "wj-badge-sm".to_string(),
-            BadgeSize::Medium => "wj-badge-md".to_string(),
-            BadgeSize::Large => "wj-badge-lg".to_string(),
+        let size_class: String = match self.size {
+            BadgeSize::Small => String::from("wj-badge-sm"),
+            BadgeSize::Medium => String::from("wj-badge-md"),
+            BadgeSize::Large => String::from("wj-badge-lg"),
         };
         format!(
             "<span class='wj-badge {} {}'>{}</span>",

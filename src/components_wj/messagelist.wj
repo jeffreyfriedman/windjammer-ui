@@ -1,7 +1,7 @@
 
 use super::traits::Renderable
 pub struct MessageList {
-    messages: Vec<String>,
+    messages: Vec<string>,
     height: string,
     auto_scroll: bool,
 }
@@ -10,7 +10,7 @@ impl MessageList {
     pub fn new() -> MessageList {
         MessageList {
             messages: Vec::new(),
-            height: String::from("600px"),
+            height: "600px",
             auto_scroll: true,
         }
     }

@@ -23,15 +23,15 @@ impl Breadcrumb {
     pub fn new() -> Breadcrumb {
         Breadcrumb {
             items: Vec::new(),
-            separator: "/".to_string().to_string(),
+            separator: "/".to_string(),
             class: String::new(),
         }
     }
     #[inline]
     pub fn item(mut self, label: String, href: String, active: bool) -> Breadcrumb {
         self.items.push(BreadcrumbItem {
-            label: label.to_string(),
-            href: href.to_string(),
+            label,
+            href,
             active,
         });
         self
@@ -60,7 +60,7 @@ impl Breadcrumb {
                 html.push_str(&self.separator.clone());
                 html.push_str("</span>");
             }
-            if item.active {
+            if item.active.clone() {
                 html.push_str("<span style=\"color: #3b82f6; font-weight: 500;\">");
                 html.push_str(&item.label.clone());
                 html.push_str("</span>")

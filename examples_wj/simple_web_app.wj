@@ -31,7 +31,7 @@ fn build_html_page() -> string {
 }
 
 fn build_styles() -> string {
-    String::from("<style>
+    "<style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .container { max-width: 600px; width: 100%; }
@@ -45,11 +45,11 @@ fn build_styles() -> string {
         .info { background: #dbeafe; border-left: 4px solid #3b82f6; padding: 16px; border-radius: 8px; margin-top: 24px; }
         .info-title { font-weight: 600; color: #1e40af; margin-bottom: 4px; }
         .info-text { color: #1e3a8a; font-size: 14px; line-height: 1.6; }
-    </style>")
+    </style>"
 }
 
 fn build_ui() -> string {
-    String::from("<div class='container'>
+    "<div class='container'>
         <div class='card'>
             <h1 class='title'>🎉 Windjammer Counter</h1>
             <p class='subtitle'>A simple web app written in pure Windjammer!</p>
@@ -76,11 +76,11 @@ fn build_ui() -> string {
                 </div>
             </div>
         </div>
-    </div>")
+    </div>"
 }
 
 fn build_scripts() -> string {
-    String::from("<script>
+    "<script>
         let count = 0;
         
         function updateDisplay() {
@@ -101,6 +101,6 @@ fn build_scripts() -> string {
             count = 0;
             updateDisplay();
         }
-    </script>")
+    </script>"
 }
 

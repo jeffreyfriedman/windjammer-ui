@@ -15,8 +15,8 @@ impl TableColumn {
     #[inline]
     pub fn new(header: String) -> TableColumn {
         TableColumn {
-            header: header.to_string(),
-            width: "auto".to_string().to_string(),
+            header,
+            width: "auto".to_string(),
         }
     }
     #[inline]
@@ -96,11 +96,11 @@ impl Renderable for Table {
     #[inline]
     fn render(self) -> String {
         let mut html = String::new();
-        let border_style = {
+        let border_style: String = {
             if self.bordered {
-                "border: 1px solid #e2e8f0; border-collapse: collapse;".to_string()
+                String::from("border: 1px solid #e2e8f0; border-collapse: collapse;")
             } else {
-                "border-collapse: collapse;".to_string()
+                String::from("border-collapse: collapse;")
             }
         };
         html.push_str("<table style='width: 100%; ");
@@ -122,25 +122,25 @@ impl Renderable for Table {
         html.push_str("</thead>");
         html.push_str("<tbody>");
         for (row_index, row) in self.rows.iter().enumerate() {
-            let bg_color = {
+            let bg_color: String = {
                 if self.striped && row_index % 2 == 1 {
-                    "background: #f7fafc;".to_string()
+                    String::from("background: #f7fafc;")
                 } else {
-                    "background: white;".to_string()
+                    String::from("background: white;")
                 }
             };
             let hover_style = {
                 if self.hoverable {
-                    " onmouseover='this.style.background=\"#edf2f7\"' onmouseout='this.style.background=\"".to_string()
+                    String::from(" onmouseover='this.style.background=\"#edf2f7\"' onmouseout='this.style.background=\"")
                 } else {
-                    "".to_string()
+                    String::new()
                 }
             };
             html.push_str("<tr style='");
-            html.push_str(&bg_color.clone());
+            html.push_str(&bg_color);
             html.push('\'');
             if self.hoverable {
-                html.push_str(&hover_style.clone());
+                html.push_str(&hover_style);
                 if self.striped && row_index % 2 == 1 {
                     html.push_str("#f7fafc");
                 } else {
@@ -155,7 +155,7 @@ impl Renderable for Table {
                     html.push_str(" border: 1px solid #e2e8f0;");
                 }
                 html.push_str("'>");
-                html.push_str(&cell);
+                html.push_str(cell);
                 html.push_str("</td>");
             }
             html.push_str("</tr>");

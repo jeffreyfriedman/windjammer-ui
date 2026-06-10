@@ -28,7 +28,7 @@ fn handle_request(req: ServerRequest) -> ServerResponse {
 }
 
 fn serve_home() -> ServerResponse {
-    let html = String::from("<!DOCTYPE html>
+    let html = "<!DOCTYPE html>
 <html>
 <head>
     <title>Windjammer Server</title>
@@ -94,18 +94,18 @@ fn serve_home() -> ServerResponse {
         </div>
     </div>
 </body>
-</html>")
+</html>"
     
     ServerResponse::html(html)
 }
 
 fn serve_api_status() -> ServerResponse {
-    let json = String::from("{\"status\": \"ok\", \"message\": \"Server is running!\", \"version\": \"1.0.0\"}")
+    let json = "{\"status\": \"ok\", \"message\": \"Server is running!\", \"version\": \"1.0.0\"}"
     ServerResponse::json(json)
 }
 
 fn serve_not_found() -> ServerResponse {
-    let html = String::from("<!DOCTYPE html>
+    let html = "<!DOCTYPE html>
 <html>
 <head>
     <title>404 - Not Found</title>
@@ -137,7 +137,7 @@ fn serve_not_found() -> ServerResponse {
         <a href='/'>Go home</a>
     </div>
 </body>
-</html>")
+</html>"
     
     ServerResponse::new(404, html)
         .header("Content-Type", "text/html")

@@ -13,7 +13,7 @@ impl Center {
             child,
             width: "100%".to_string(),
             height: "100%".to_string(),
-            class: String::new(),
+            class: "",
         }
     }
     
@@ -33,7 +33,7 @@ impl Center {
     }
     
     pub fn render() -> string {
-        let mut html = String::new()
+        let mut html = ""
         html.push_str("<div class=\"wj-center ")
         html.push_str(self.class)
         html.push_str("\" style=\"display: flex; align-items: center; justify-content: center; width: ")

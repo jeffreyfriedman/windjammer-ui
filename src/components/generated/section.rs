@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -20,13 +24,13 @@ impl Section {
     #[inline]
     pub fn new(title: String) -> Section {
         Section {
-            icon: "".to_string().to_string(),
-            title: title.to_string(),
+            icon: "".to_string(),
+            title,
             children: Vec::new(),
             collapsed: false,
-            accent_color: "".to_string().to_string(),
+            accent_color: "".to_string(),
             removable: false,
-            on_remove: "".to_string().to_string(),
+            on_remove: "".to_string(),
         }
     }
     #[inline]
@@ -65,42 +69,42 @@ impl Section {
 impl Renderable for Section {
     #[inline]
     fn render(self) -> String {
-        let collapse_icon = {
+        let collapse_icon: String = {
             if self.collapsed {
-                "▶".to_string()
+                String::from("▶")
             } else {
-                "▼".to_string()
+                String::from("▼")
             }
         };
-        let content_class = {
+        let content_class: String = {
             if self.collapsed {
-                "section-content collapsed".to_string()
+                String::from("section-content collapsed")
             } else {
-                "section-content".to_string()
+                String::from("section-content")
             }
         };
-        let icon_html = {
+        let icon_html: String = {
             if self.icon != "" {
                 format!("<span class='section-icon'>{}</span>", self.icon)
             } else {
-                "".to_string().to_string()
+                "".to_string()
             }
         };
-        let accent_style = {
+        let accent_style: String = {
             if self.accent_color != "" {
                 format!(" style='border-left: 3px solid {}'", self.accent_color)
             } else {
-                "".to_string().to_string()
+                "".to_string()
             }
         };
-        let remove_btn = {
+        let remove_btn: String = {
             if self.removable {
                 format!(
                     "<button class='section-remove' onclick='{}'>×</button>",
                     self.on_remove
                 )
             } else {
-                "".to_string().to_string()
+                "".to_string()
             }
         };
         let children_html = self.children.join("\n");
@@ -142,11 +146,11 @@ impl Renderable for SectionGroup {
         for s in self.sections {
             sections_html = format!("{}{}{}", sections_html, s.clone().render(), "\n");
         }
-        let class = {
+        let class: String = {
             if self.accordion {
-                "section-group accordion".to_string()
+                String::from("section-group accordion")
             } else {
-                "section-group".to_string()
+                String::from("section-group")
             }
         };
         format!("<div class='{}'>{}</div>", class, sections_html)
@@ -155,5 +159,5 @@ impl Renderable for SectionGroup {
 
 #[inline]
 pub fn section_styles() -> String {
-    "\n    .wj-section {\n        background: #16213e;\n        border-radius: 8px;\n        margin-bottom: 8px;\n        overflow: hidden;\n        border-left: 3px solid transparent;\n    }\n    \n    .section-header {\n        display: flex;\n        align-items: center;\n        gap: 8px;\n        padding: 12px 16px;\n        cursor: pointer;\n        user-select: none;\n        transition: background 0.15s;\n    }\n    \n    .section-header:hover {\n        background: rgba(255,255,255,0.05);\n    }\n    \n    .collapse-arrow {\n        font-size: 10px;\n        color: #666;\n        width: 12px;\n        transition: transform 0.2s;\n    }\n    \n    .section-icon {\n        font-size: 16px;\n    }\n    \n    .section-title {\n        flex: 1;\n        font-weight: 500;\n        font-size: 13px;\n        color: #e0e0e0;\n    }\n    \n    .section-remove {\n        width: 20px;\n        height: 20px;\n        border: none;\n        background: transparent;\n        color: #666;\n        font-size: 16px;\n        cursor: pointer;\n        border-radius: 4px;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n    }\n    \n    .section-remove:hover {\n        background: #e94560;\n        color: white;\n    }\n    \n    .section-content {\n        padding: 0 16px 16px 16px;\n        animation: section-expand 0.2s ease-out;\n    }\n    \n    .section-content.collapsed {\n        display: none;\n    }\n    \n    @keyframes section-expand {\n        from {\n            opacity: 0;\n            transform: translateY(-10px);\n        }\n        to {\n            opacity: 1;\n            transform: translateY(0);\n        }\n    }\n    \n    .section-group {\n        display: flex;\n        flex-direction: column;\n    }\n    \n    .section-group.accordion .wj-section:not(:first-child) {\n        margin-top: -1px;\n        border-radius: 0;\n    }\n    \n    .section-group.accordion .wj-section:first-child {\n        border-radius: 8px 8px 0 0;\n    }\n    \n    .section-group.accordion .wj-section:last-child {\n        border-radius: 0 0 8px 8px;\n    }\n    ".to_string().to_string()
+    "\n    .wj-section {\n        background: #16213e;\n        border-radius: 8px;\n        margin-bottom: 8px;\n        overflow: hidden;\n        border-left: 3px solid transparent;\n    }\n    \n    .section-header {\n        display: flex;\n        align-items: center;\n        gap: 8px;\n        padding: 12px 16px;\n        cursor: pointer;\n        user-select: none;\n        transition: background 0.15s;\n    }\n    \n    .section-header:hover {\n        background: rgba(255,255,255,0.05);\n    }\n    \n    .collapse-arrow {\n        font-size: 10px;\n        color: #666;\n        width: 12px;\n        transition: transform 0.2s;\n    }\n    \n    .section-icon {\n        font-size: 16px;\n    }\n    \n    .section-title {\n        flex: 1;\n        font-weight: 500;\n        font-size: 13px;\n        color: #e0e0e0;\n    }\n    \n    .section-remove {\n        width: 20px;\n        height: 20px;\n        border: none;\n        background: transparent;\n        color: #666;\n        font-size: 16px;\n        cursor: pointer;\n        border-radius: 4px;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n    }\n    \n    .section-remove:hover {\n        background: #e94560;\n        color: white;\n    }\n    \n    .section-content {\n        padding: 0 16px 16px 16px;\n        animation: section-expand 0.2s ease-out;\n    }\n    \n    .section-content.collapsed {\n        display: none;\n    }\n    \n    @keyframes section-expand {\n        from {\n            opacity: 0;\n            transform: translateY(-10px);\n        }\n        to {\n            opacity: 1;\n            transform: translateY(0);\n        }\n    }\n    \n    .section-group {\n        display: flex;\n        flex-direction: column;\n    }\n    \n    .section-group.accordion .wj-section:not(:first-child) {\n        margin-top: -1px;\n        border-radius: 0;\n    }\n    \n    .section-group.accordion .wj-section:first-child {\n        border-radius: 8px 8px 0 0;\n    }\n    \n    .section-group.accordion .wj-section:last-child {\n        border-radius: 0 0 8px 8px;\n    }\n    ".to_string()
 }

@@ -30,7 +30,7 @@ impl Column {
             gap: "8px".to_string(),
             align: ColumnAlign::Start,
             justify: ColumnJustify::Start,
-            class: String::new(),
+            class: "",
         }
     }
     
@@ -76,7 +76,7 @@ impl Column {
             ColumnJustify::SpaceEvenly => "space-evenly",
         }
         
-        let mut html = String::new()
+        let mut html = ""
         html.push_str("<div class=\"wj-column ")
         html.push_str(self.class)
         html.push_str("\" style=\"display: flex; flex-direction: column; gap: ")

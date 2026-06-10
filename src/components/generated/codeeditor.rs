@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -18,9 +22,9 @@ impl CodeEditor {
     #[inline]
     pub fn new(code: String) -> CodeEditor {
         CodeEditor {
-            code: code.to_string(),
-            language: "rust".to_string().to_string(),
-            theme: "dark".to_string().to_string(),
+            code,
+            language: "rust".to_string(),
+            theme: "dark".to_string(),
             line_numbers: true,
             readonly: false,
         }
@@ -52,16 +56,16 @@ impl Renderable for CodeEditor {
     fn render(self) -> String {
         let readonly_attr = {
             if self.readonly {
-                " readonly".to_string()
+                String::from(" readonly")
             } else {
-                "".to_string()
+                String::new()
             }
         };
         let line_numbers_class = {
             if self.line_numbers {
-                " wj-editor-with-lines".to_string()
+                String::from(" wj-editor-with-lines")
             } else {
-                "".to_string()
+                String::new()
             }
         };
         format!("<div class='wj-code-editor wj-editor-{} wj-editor-theme-{}{}'>\n  <textarea{}>\n{}</textarea>\n</div>", self.language, self.theme, line_numbers_class, readonly_attr, self.code)

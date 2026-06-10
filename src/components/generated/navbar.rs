@@ -20,10 +20,7 @@ pub struct NavbarItem {
 impl NavbarItem {
     #[inline]
     pub fn new(label: String, href: String) -> NavbarItem {
-        NavbarItem {
-            label: label.to_string(),
-            href: href.to_string(),
-        }
+        NavbarItem { label, href }
     }
 }
 
@@ -40,7 +37,7 @@ impl Navbar {
     #[inline]
     pub fn new() -> Navbar {
         Navbar {
-            brand: String::from("".to_string()),
+            brand: String::new(),
             items: Vec::new(),
             position: NavbarPosition::Top,
             sticky: false,
@@ -81,22 +78,22 @@ impl Renderable for Navbar {
                 items_html.push(_temp0)
             };
         }
-        let position_class = match self.position {
-            NavbarPosition::Top => "wj-navbar-top".to_string(),
-            NavbarPosition::Bottom => "wj-navbar-bottom".to_string(),
+        let position_class: String = match self.position {
+            NavbarPosition::Top => String::from("wj-navbar-top"),
+            NavbarPosition::Bottom => String::from("wj-navbar-bottom"),
         };
         let sticky_class = {
             if self.sticky {
-                " wj-navbar-sticky".to_string()
+                String::from(" wj-navbar-sticky")
             } else {
-                "".to_string()
+                String::new()
             }
         };
         let brand_html = {
             if !self.brand.is_empty() {
                 format!("<div class='wj-navbar-brand'>{}</div>", self.brand)
             } else {
-                String::from("".to_string())
+                String::new()
             }
         };
         format!(

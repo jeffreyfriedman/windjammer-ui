@@ -1,13 +1,18 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
 use super::traits::Renderable;
-#[derive(Debug, Clone, PartialEq, Eq, Default)]
+use super::traits::RenderableVNode;
+use super::vnode::VNode;
+#[derive(Debug, Clone, Default)]
 #[repr(C)]
 pub struct Container {
     children: Vec<String>,
+    vnode_children: Vec<VNode>,
     max_width: String,
     max_height: String,
     padding: String,
@@ -19,10 +24,11 @@ impl Container {
     pub fn new() -> Container {
         Container {
             children: Vec::new(),
-            max_width: "".to_string().to_string(),
-            max_height: "".to_string().to_string(),
-            padding: "16px".to_string().to_string(),
-            background_color: "".to_string().to_string(),
+            vnode_children: Vec::new(),
+            max_width: "".to_string(),
+            max_height: "".to_string(),
+            padding: "16px".to_string(),
+            background_color: "".to_string(),
         }
     }
     #[inline]
@@ -54,6 +60,42 @@ impl Container {
     pub fn background_color(mut self, color: String) -> Container {
         self.background_color = color;
         self
+    }
+    /// Add a VNode child for cross-platform rendering
+    #[inline]
+    pub fn add_child(mut self, child: VNode) -> Container {
+        self.vnode_children.push(child);
+        self
+    }
+}
+
+impl RenderableVNode for Container {
+    #[inline]
+    fn to_vnode(&self) -> VNode {
+        let mut style = "margin: 0 auto;".to_string();
+        if !self.max_width.is_empty() {
+            style = format!("{} max-width: {};", style, self.max_width.clone());
+        }
+        if !self.max_height.is_empty() {
+            style = format!("{} max-height: {};", style, self.max_height.clone());
+        }
+        if !self.padding.is_empty() {
+            style = format!("{} padding: {};", style, self.padding.clone());
+        }
+        if !self.background_color.is_empty() {
+            style = format!(
+                "{} background-color: {};",
+                style,
+                self.background_color.clone()
+            );
+        }
+        let mut node = VNode::div().add_class("wj-container").add_style(&style);
+        let mut i: u32 = 0_u32;
+        while i < (self.vnode_children.len() as u32) {
+            node = node.child(self.vnode_children[i as usize]);
+            i += 1_u32;
+        }
+        node
     }
 }
 

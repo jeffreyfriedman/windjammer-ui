@@ -4,8 +4,12 @@
 
 
 use super::traits::Renderable
+use super::traits::RenderableVNode
+use super::vnode::VNode
+
 pub struct Container {
     children: Vec<string>,
+    vnode_children: Vec<VNode>,
     max_width: string,
     max_height: string,
     padding: string,
@@ -17,6 +21,7 @@ impl Container {
     pub fn new() -> Container {
         Container {
             children: Vec::new(),
+            vnode_children: Vec::new(),
             max_width: "".to_string(),
             max_height: "".to_string(),
             padding: "16px".to_string(),
@@ -57,9 +62,38 @@ impl Container {
         self
     }
     
-    // TODO: Once external type bindings work, this will return VNode
-    // For now, return a string representation for testing
+    /// Add a VNode child for cross-platform rendering
+    pub fn add_child(self, child: VNode) -> Container {
+        self.vnode_children.push(child)
+        self
+    }
+}
 
+impl RenderableVNode for Container {
+    fn to_vnode(&self) -> VNode {
+        let mut style = "margin: 0 auto;".to_string()
+        if self.max_width.len() > 0 {
+            style = format!("{} max-width: {};", style, self.max_width)
+        }
+        if self.max_height.len() > 0 {
+            style = format!("{} max-height: {};", style, self.max_height)
+        }
+        if self.padding.len() > 0 {
+            style = format!("{} padding: {};", style, self.padding)
+        }
+        if self.background_color.len() > 0 {
+            style = format!("{} background-color: {};", style, self.background_color)
+        }
+        let mut node = VNode::div()
+            .add_class("wj-container".to_string())
+            .add_style(style)
+        let mut i: u32 = 0
+        while i < self.vnode_children.len() as u32 {
+            node = node.child(self.vnode_children[i as usize])
+            i = i + 1
+        }
+        node
+    }
 }
 
 // Test the Container component with Vec<string> children!

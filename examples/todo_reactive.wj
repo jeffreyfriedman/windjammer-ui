@@ -7,15 +7,15 @@ use windjammer_ui.reactivity.Signal
 
 struct Todo {
     id: int,
-    text: String,
+    text: string,
     completed: bool,
 }
 
 @component
 struct TodoApp {
     todos: Signal<Vec<Todo>>,
-    input: Signal<String>,
-    filter: Signal<String> // "all", "active", "completed",
+    input: Signal<string>,
+    filter: Signal<string> // "all", "active", "completed",
     next_id: Signal<int>,
 }
 
@@ -48,7 +48,7 @@ impl TodoApp {
     fn new() -> Self {
         Self {
             todos: Signal.new(Vec.new()),
-            input: Signal.new(String.new()),
+            input: Signal.new(string.new()),
             filter: Signal.new("all".to_string()),
             next_id: Signal.new(0),
         }
@@ -72,7 +72,7 @@ impl TodoApp {
                 list.push(Todo { id, text: text.clone(), completed: false })
             })
             next_id.update(|n| *n += 1)
-            input.set(String.new())
+            input.set(string.new())
         }
     }
     
@@ -84,7 +84,7 @@ impl TodoApp {
         todos.get().iter().filter(|t| !t.completed).count()
     }
     
-    fn update_input(value: String) {
+    fn update_input(value: string) {
         input.set(value)
     }
 }

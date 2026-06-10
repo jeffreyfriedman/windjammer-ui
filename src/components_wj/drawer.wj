@@ -22,7 +22,7 @@ impl Drawer {
             position: DrawerPosition::Right,
             width: "320px".to_string(),
             open: false,
-            class: String::new(),
+            class: "",
         }
     }
     
@@ -72,7 +72,7 @@ impl Drawer {
         
         let display = if self.open { "display: block;" } else { "display: none;" }
         
-        let mut html = String::new()
+        let mut html = ""
         
         // Backdrop
         html.push_str("<div class=\"wj-drawer-backdrop\" style=\"")

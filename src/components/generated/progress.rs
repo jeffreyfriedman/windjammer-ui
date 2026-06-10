@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -52,23 +56,23 @@ impl Renderable for Progress {
     #[inline]
     fn render(self) -> String {
         let percentage = (self.value / self.max * 100.0_f64).clamp(0.0_f64, 100.0_f64);
-        let variant_class = match self.variant {
-            ProgressVariant::Default => "wj-progress-default".to_string(),
-            ProgressVariant::Success => "wj-progress-success".to_string(),
-            ProgressVariant::Warning => "wj-progress-warning".to_string(),
-            ProgressVariant::Danger => "wj-progress-danger".to_string(),
+        let variant_class: String = match self.variant {
+            ProgressVariant::Default => String::from("wj-progress-default"),
+            ProgressVariant::Success => String::from("wj-progress-success"),
+            ProgressVariant::Warning => String::from("wj-progress-warning"),
+            ProgressVariant::Danger => String::from("wj-progress-danger"),
         };
-        let color = match self.variant {
-            ProgressVariant::Default => "#3498db".to_string(),
-            ProgressVariant::Success => "#2ecc71".to_string(),
-            ProgressVariant::Warning => "#f39c12".to_string(),
-            ProgressVariant::Danger => "#e74c3c".to_string(),
+        let color: String = match self.variant {
+            ProgressVariant::Default => String::from("#3498db"),
+            ProgressVariant::Success => String::from("#2ecc71"),
+            ProgressVariant::Warning => String::from("#f39c12"),
+            ProgressVariant::Danger => String::from("#e74c3c"),
         };
-        let label_html = {
+        let label_html: String = {
             if self.show_label {
                 format!("{:.0}%", percentage)
             } else {
-                "".to_string().to_string()
+                "".to_string()
             }
         };
         format!("<div class='wj-progress-container' style='width: 100%; background-color: #e0e0e0; border-radius: 4px; overflow: hidden;'>\n  <div class='wj-progress-bar {}' style='width: {}%; height: 24px; background-color: {}; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; transition: width 0.3s ease;'>\n    {}\n  </div>\n</div>", variant_class, percentage, color, label_html)

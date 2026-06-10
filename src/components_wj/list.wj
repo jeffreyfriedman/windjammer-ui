@@ -11,7 +11,7 @@ impl List {
         List {
             items: Vec::new(),
             ordered: false,
-            class: String::new(),
+            class: "",
         }
     }
     
@@ -33,7 +33,7 @@ impl List {
     pub fn render() -> string {
         let tag = if self.ordered { "ol" } else { "ul" }
         
-        let mut html = String::new()
+        let mut html = ""
         html.push('<')
         html.push_str(tag)
         html.push_str(" class=\"wj-list ")
@@ -62,7 +62,7 @@ impl ListItem {
     pub fn new(content: string) -> ListItem {
         ListItem {
             content,
-            class: String::new(),
+            class: "",
         }
     }
     
@@ -72,7 +72,7 @@ impl ListItem {
     }
     
     pub fn render() -> string {
-        let mut html = String::new()
+        let mut html = ""
         html.push_str("<li class=\"wj-list-item ")
         html.push_str(self.class)
         html.push_str("\" style=\"padding: 8px 0;\">")

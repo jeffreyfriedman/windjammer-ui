@@ -18,8 +18,8 @@ impl ChatInput {
     #[inline]
     pub fn new() -> ChatInput {
         ChatInput {
-            placeholder: String::from("Type a message...".to_string()),
-            value: String::from("".to_string()),
+            placeholder: String::from("Type a message..."),
+            value: String::new(),
             disabled: false,
             multiline: true,
             rows: 3_i32,
@@ -57,12 +57,12 @@ impl Renderable for ChatInput {
     fn render(self) -> String {
         let disabled_attr = {
             if self.disabled {
-                " disabled".to_string()
+                String::from(" disabled")
             } else {
-                "".to_string()
+                String::new()
             }
         };
-        let input_html = {
+        let input_html: String = {
             if self.multiline {
                 format!("<textarea class='wj-chat-input-field' placeholder='{}' rows='{}'{}>{}</textarea>", self.placeholder, self.rows, disabled_attr, self.value)
             } else {

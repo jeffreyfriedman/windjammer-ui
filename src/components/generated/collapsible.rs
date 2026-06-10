@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -16,8 +20,8 @@ impl CollapsibleSection {
     #[inline]
     pub fn new(title: String, content: String) -> CollapsibleSection {
         CollapsibleSection {
-            title: title.to_string(),
-            content: content.to_string(),
+            title,
+            content,
             open: false,
         }
     }
@@ -31,18 +35,18 @@ impl CollapsibleSection {
 impl Renderable for CollapsibleSection {
     #[inline]
     fn render(self) -> String {
-        let icon = {
+        let icon: String = {
             if self.open {
-                "▼".to_string()
+                String::from("▼")
             } else {
-                "▶".to_string()
+                String::from("▶")
             }
         };
-        let content_style = {
+        let content_style: String = {
             if self.open {
-                "display: block;".to_string()
+                String::from("display: block;")
             } else {
-                "display: none;".to_string()
+                String::from("display: none;")
             }
         };
         format!("<div class='wj-collapsible'>\n  <div class='wj-collapsible-header'>\n    <span class='wj-collapsible-icon'>{}</span>\n    <span>{}</span>\n  </div>\n  <div class='wj-collapsible-content' style='{}'>\n    {}\n  </div>\n</div>", icon, self.title, content_style, self.content)

@@ -14,7 +14,7 @@ impl TypingIndicator {
     #[inline]
     pub fn new() -> TypingIndicator {
         TypingIndicator {
-            label: String::from("AI is typing".to_string()),
+            label: String::from("AI is typing"),
         }
     }
     #[inline]
