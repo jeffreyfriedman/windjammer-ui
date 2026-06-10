@@ -2,6 +2,8 @@
 // NO `mut` keyword needed - compiler infers everything!
 
 use super::traits::Renderable
+use super::traits::RenderableVNode
+use super::vnode::VNode
 
 pub enum TextSize {
     Small,
@@ -55,7 +57,30 @@ impl Text {
     
 }
 
-// Implement Renderable trait for Text
+impl RenderableVNode for Text {
+    fn to_vnode(&self) -> VNode {
+        let size_class = match self.size {
+            TextSize::Small => "wj-text-sm",
+            TextSize::Medium => "wj-text-md",
+            TextSize::Large => "wj-text-lg",
+            TextSize::XLarge => "wj-text-xl",
+        }
+        let weight_class = match self.weight {
+            TextWeight::Normal => "wj-text-normal",
+            TextWeight::Bold => "wj-text-bold",
+        }
+        let node = VNode::span()
+            .add_class("wj-text".to_string())
+            .add_class(size_class.to_string())
+            .add_class(weight_class.to_string())
+            .add_text(self.content.clone())
+        if self.color.len() > 0 {
+            node = node.add_style(format!("color: {};", self.color))
+        }
+        node
+    }
+}
+
 impl Renderable for Text {
     // TODO: Once external type bindings work, this will return VNode
     // For now, return a string representation for testing

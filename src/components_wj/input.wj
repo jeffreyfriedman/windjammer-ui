@@ -1,11 +1,15 @@
 // Input component - Pure Windjammer implementation
 
 use super::traits::Renderable
+use super::traits::RenderableVNode
+use super::vnode::VNode
 
 pub struct Input {
     value: string,
     placeholder: string,
     input_type: string,
+    change_handler: string,
+    input_handler: string,
 }
 
 impl Input {
@@ -14,6 +18,8 @@ impl Input {
             value: "".to_string(),
             placeholder: "".to_string(),
             input_type: "text".to_string(),
+            change_handler: "",
+            input_handler: "",
         }
     }
     
@@ -30,6 +36,33 @@ impl Input {
     pub fn input_type(self, input_type: string) -> Input {
         self.input_type = input_type
         self
+    }
+    
+    pub fn on_change(self, handler: string) -> Input {
+        self.change_handler = handler
+        self
+    }
+    
+    pub fn on_input(self, handler: string) -> Input {
+        self.input_handler = handler
+        self
+    }
+}
+
+impl RenderableVNode for Input {
+    fn to_vnode(&self) -> VNode {
+        let node = VNode::input()
+            .add_class("wj-input".to_string())
+            .set_type(self.input_type.clone())
+            .set_value(self.value.clone())
+            .set_placeholder(self.placeholder.clone())
+        if self.change_handler.len() > 0 {
+            node = node.on_change(self.change_handler.clone())
+        }
+        if self.input_handler.len() > 0 {
+            node = node.on_input(self.input_handler.clone())
+        }
+        node
     }
 }
 

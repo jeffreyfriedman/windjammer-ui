@@ -1,5 +1,7 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 use std::fmt::Write;
@@ -21,16 +23,16 @@ impl EcsInspectorPanel {
     pub fn from_mock() -> EcsInspectorPanel {
         EcsInspectorPanel {
             snapshot: EcsInspectorSnapshot::mock_runtime_demo(),
-            refresh_handler: "ecs_inspector_refresh()".to_string().to_string(),
-            select_entity_handler: "ecs_inspector_select_entity".to_string().to_string(),
+            refresh_handler: "ecs_inspector_refresh()".to_string(),
+            select_entity_handler: "ecs_inspector_select_entity".to_string(),
         }
     }
     #[inline]
     pub fn empty() -> EcsInspectorPanel {
         EcsInspectorPanel {
             snapshot: EcsInspectorSnapshot::empty(),
-            refresh_handler: "ecs_inspector_refresh()".to_string().to_string(),
-            select_entity_handler: "ecs_inspector_select_entity".to_string().to_string(),
+            refresh_handler: "ecs_inspector_refresh()".to_string(),
+            select_entity_handler: "ecs_inspector_select_entity".to_string(),
         }
     }
     #[inline]
@@ -44,9 +46,9 @@ impl Renderable for EcsInspectorPanel {
     #[inline]
     fn render(self) -> String {
         let styles = ecs_inspector_panel_styles();
-        let entities: Vec<EcsEntityRow> = self.snapshot.entities;
+        let entities: Vec<EcsEntityRow> = self.snapshot.entities.clone();
         let selected_id = self.snapshot.selected_entity_id;
-        let components: Vec<EcsComponentSection> = self.snapshot.components;
+        let components: Vec<EcsComponentSection> = self.snapshot.components.clone();
         let selected_label = selected_entity_label_from_id(selected_id);
         let entity_count = entities.len();
         let entity_html = render_entity_list(entities, selected_id, &self.select_entity_handler);
@@ -62,7 +64,7 @@ pub fn entity_row_class(entity_id: i64, selected_id: Option<i64>) -> String {
             return "ecs-entity-row selected".to_string();
         }
     }
-    "ecs-entity-row".to_string().to_string()
+    "ecs-entity-row".to_string()
 }
 
 #[inline]
@@ -133,11 +135,11 @@ pub fn selected_entity_label_from_id(selected_id: Option<i64>) -> String {
     if let Some(id) = selected_id {
         format!("Entity #{}", id)
     } else {
-        "No entity selected".to_string().to_string()
+        "No entity selected".to_string()
     }
 }
 
 #[inline]
 pub fn ecs_inspector_panel_styles() -> String {
-    "\n.ecs-inspector-panel { background:#0f0f1a; color:#e5e7eb; padding:12px; font-family:monospace; font-size:12px; min-height:280px; }\n.ecs-inspector-header { display:flex; align-items:center; gap:12px; margin-bottom:12px; border-bottom:1px solid #333; padding-bottom:8px; }\n.ecs-inspector-header h3 { margin:0; flex:1; color:#a78bfa; }\n.ecs-inspector-header button { background:#0f3460; color:#e5e7eb; border:none; padding:6px 10px; border-radius:4px; cursor:pointer; }\n.ecs-entity-count { color:#888; font-size:11px; }\n.ecs-inspector-body { display:flex; gap:12px; min-height:220px; }\n.ecs-entity-list { flex:0 0 38%; background:#16213e; border-radius:6px; padding:8px; overflow-y:auto; max-height:320px; }\n.ecs-entity-list h4 { margin:0 0 8px 0; color:#888; font-size:11px; text-transform:uppercase; }\n.ecs-entity-row { display:flex; flex-direction:column; align-items:flex-start; width:100%; text-align:left; background:#1a1a2e; border:1px solid transparent; border-radius:4px; padding:8px; margin-bottom:6px; cursor:pointer; color:#e0e0e0; }\n.ecs-entity-row:hover { border-color:#60a5fa; }\n.ecs-entity-row.selected { border-color:#a78bfa; background:#1e1b4b; }\n.ecs-entity-id { font-weight:600; color:#a78bfa; margin-bottom:4px; }\n.ecs-entity-badges { display:flex; flex-wrap:wrap; gap:4px; }\n.ecs-comp-badge { background:#0f3460; color:#93c5fd; font-size:10px; padding:2px 6px; border-radius:3px; }\n.ecs-component-pane { flex:1; background:#16213e; border-radius:6px; padding:10px; overflow-y:auto; max-height:320px; }\n.ecs-detail-title { margin:0 0 10px 0; color:#a78bfa; font-weight:600; }\n.ecs-detail-hint { color:#666; margin:0; }\n.ecs-component-section { margin-bottom:10px; border:1px solid #333; border-radius:4px; padding:6px 8px; background:#1a1a2e; }\n.ecs-component-title { cursor:pointer; color:#60a5fa; font-weight:600; }\n.ecs-field-row { display:flex; align-items:center; gap:8px; margin:4px 0; }\n.ecs-field-name { flex:0 0 42%; color:#888; font-size:11px; }\n.ecs-field-value { flex:1; background:#09090f; border:1px solid #333; border-radius:3px; color:#e5e7eb; padding:4px 6px; font-family:inherit; font-size:11px; }\n.ecs-inspector-empty, .ecs-inspector-detail-empty { color:#666; padding:16px; text-align:center; }\n".to_string()
+    String::from("\n.ecs-inspector-panel { background:#0f0f1a; color:#e5e7eb; padding:12px; font-family:monospace; font-size:12px; min-height:280px; }\n.ecs-inspector-header { display:flex; align-items:center; gap:12px; margin-bottom:12px; border-bottom:1px solid #333; padding-bottom:8px; }\n.ecs-inspector-header h3 { margin:0; flex:1; color:#a78bfa; }\n.ecs-inspector-header button { background:#0f3460; color:#e5e7eb; border:none; padding:6px 10px; border-radius:4px; cursor:pointer; }\n.ecs-entity-count { color:#888; font-size:11px; }\n.ecs-inspector-body { display:flex; gap:12px; min-height:220px; }\n.ecs-entity-list { flex:0 0 38%; background:#16213e; border-radius:6px; padding:8px; overflow-y:auto; max-height:320px; }\n.ecs-entity-list h4 { margin:0 0 8px 0; color:#888; font-size:11px; text-transform:uppercase; }\n.ecs-entity-row { display:flex; flex-direction:column; align-items:flex-start; width:100%; text-align:left; background:#1a1a2e; border:1px solid transparent; border-radius:4px; padding:8px; margin-bottom:6px; cursor:pointer; color:#e0e0e0; }\n.ecs-entity-row:hover { border-color:#60a5fa; }\n.ecs-entity-row.selected { border-color:#a78bfa; background:#1e1b4b; }\n.ecs-entity-id { font-weight:600; color:#a78bfa; margin-bottom:4px; }\n.ecs-entity-badges { display:flex; flex-wrap:wrap; gap:4px; }\n.ecs-comp-badge { background:#0f3460; color:#93c5fd; font-size:10px; padding:2px 6px; border-radius:3px; }\n.ecs-component-pane { flex:1; background:#16213e; border-radius:6px; padding:10px; overflow-y:auto; max-height:320px; }\n.ecs-detail-title { margin:0 0 10px 0; color:#a78bfa; font-weight:600; }\n.ecs-detail-hint { color:#666; margin:0; }\n.ecs-component-section { margin-bottom:10px; border:1px solid #333; border-radius:4px; padding:6px 8px; background:#1a1a2e; }\n.ecs-component-title { cursor:pointer; color:#60a5fa; font-weight:600; }\n.ecs-field-row { display:flex; align-items:center; gap:8px; margin:4px 0; }\n.ecs-field-name { flex:0 0 42%; color:#888; font-size:11px; }\n.ecs-field-value { flex:1; background:#09090f; border:1px solid #333; border-radius:3px; color:#e5e7eb; padding:4px 6px; font-family:inherit; font-size:11px; }\n.ecs-inspector-empty, .ecs-inspector-detail-empty { color:#666; padding:16px; text-align:center; }\n")
 }

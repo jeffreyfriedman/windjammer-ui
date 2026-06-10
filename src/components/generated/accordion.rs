@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -16,8 +20,8 @@ impl AccordionItem {
     #[inline]
     pub fn new(title: String, content: String) -> AccordionItem {
         AccordionItem {
-            title: title.to_string(),
-            content: content.to_string(),
+            title,
+            content,
             open: false,
         }
     }
@@ -64,9 +68,9 @@ impl Renderable for Accordion {
             let item = &self.items[i];
             let open_attr = {
                 if item.open {
-                    " open".to_string()
+                    String::from(" open")
                 } else {
-                    "".to_string()
+                    String::new()
                 }
             };
             html = format!("{}<details class='wj-accordion-item'{}>\n  <summary class='wj-accordion-title'>{}</summary>\n  <div class='wj-accordion-content'>\n    {}\n  </div>\n</details>", html, open_attr, item.title, item.content);

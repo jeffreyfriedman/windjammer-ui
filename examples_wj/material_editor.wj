@@ -11,10 +11,10 @@ struct Material {
     emissive_color: Color,
     emissive_strength: f32,
     
-    albedo_texture: Option<String>,
-    metallic_texture: Option<String>,
-    roughness_texture: Option<String>,
-    normal_texture: Option<String>,
+    albedo_texture: Option<string>,
+    metallic_texture: Option<string>,
+    roughness_texture: Option<string>,
+    normal_texture: Option<string>,
 }
 
 @component
@@ -135,7 +135,7 @@ fn MaterialEditor() -> UI {
 }
 
 @component
-fn Section(title: String, children: UI) -> UI {
+fn Section(title: string, children: UI) -> UI {
     VStack(
         spacing: 8,
         padding: 12,
@@ -150,9 +150,9 @@ fn Section(title: String, children: UI) -> UI {
 
 @component
 fn TextureSlot(
-    label: String,
-    texture: Option<String>,
-    on_load: fn(String) -> void,
+    label: string,
+    texture: Option<string>,
+    on_load: fn(string) -> void,
     on_clear: fn() -> void
 ) -> UI {
     HStack(spacing: 8, align: "center") {

@@ -13,9 +13,9 @@ impl Div {
     pub fn new() -> Div {
         Div {
             children: Vec::new(),
-            class: String::new(),
-            style: String::new(),
-            id: String::new(),
+            class: "",
+            style: "",
+            id: "",
         }
     }
     
@@ -45,7 +45,7 @@ impl Div {
     }
     
     pub fn render() -> string {
-        let mut html = String::new()
+        let mut html = ""
         html.push_str("<div")
         
         if !self.id.is_empty() {
@@ -87,8 +87,8 @@ impl Span {
     pub fn new() -> Span {
         Span {
             children: Vec::new(),
-            class: String::new(),
-            style: String::new(),
+            class: "",
+            style: "",
         }
     }
     
@@ -117,7 +117,7 @@ impl Span {
 // Implement Renderable for Span
 impl Renderable for Span {
     fn render(self) -> string {
-        let mut html = String::new()
+        let mut html = ""
         html.push_str("<span")
         
         if !self.class.is_empty() {
@@ -153,8 +153,8 @@ impl P {
     pub fn new() -> P {
         P {
             children: Vec::new(),
-            class: String::new(),
-            style: String::new(),
+            class: "",
+            style: "",
         }
     }
     
@@ -183,7 +183,7 @@ impl P {
 // Implement Renderable for P
 impl Renderable for P {
     fn render(self) -> string {
-        let mut html = String::new()
+        let mut html = ""
         html.push_str("<p")
         
         if !self.class.is_empty() {
@@ -219,8 +219,8 @@ impl H1 {
     pub fn new(text: string) -> H1 {
         H1 {
             text,
-            class: String::new(),
-            style: String::new(),
+            class: "",
+            style: "",
         }
     }
     
@@ -239,7 +239,7 @@ impl H1 {
 // Implement Renderable for H1
 impl Renderable for H1 {
     fn render(self) -> string {
-        let mut html = String::new()
+        let mut html = ""
         html.push_str("<h1")
         
         if !self.class.is_empty() {
@@ -271,8 +271,8 @@ impl H2 {
     pub fn new(text: string) -> H2 {
         H2 {
             text,
-            class: String::new(),
-            style: String::new(),
+            class: "",
+            style: "",
         }
     }
     
@@ -291,7 +291,7 @@ impl H2 {
 // Implement Renderable for H2
 impl Renderable for H2 {
     fn render(self) -> string {
-        let mut html = String::new()
+        let mut html = ""
         html.push_str("<h2")
         
         if !self.class.is_empty() {
@@ -323,8 +323,8 @@ impl H3 {
     pub fn new(text: string) -> H3 {
         H3 {
             text,
-            class: String::new(),
-            style: String::new(),
+            class: "",
+            style: "",
         }
     }
     
@@ -343,7 +343,7 @@ impl H3 {
 // Implement Renderable for H3
 impl Renderable for H3 {
     fn render(self) -> string {
-        let mut html = String::new()
+        let mut html = ""
         html.push_str("<h3")
         
         if !self.class.is_empty() {

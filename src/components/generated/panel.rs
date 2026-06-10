@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -18,11 +22,11 @@ impl Panel {
     #[inline]
     pub fn new(title: String) -> Panel {
         Panel {
-            title: title.to_string(),
+            title,
             children: Vec::new(),
             collapsible: false,
             collapsed: false,
-            padding: "16px".to_string().to_string(),
+            padding: "16px".to_string(),
         }
     }
     #[inline]
@@ -50,29 +54,29 @@ impl Panel {
 impl Renderable for Panel {
     #[inline]
     fn render(self) -> String {
-        let header_class = {
+        let header_class: String = {
             if self.collapsible {
-                "wj-panel-header-collapsible".to_string()
+                String::from("wj-panel-header-collapsible")
             } else {
-                "wj-panel-header".to_string()
+                String::from("wj-panel-header")
             }
         };
         let icon = {
             if self.collapsible {
                 if self.collapsed {
-                    "▶".to_string()
+                    String::from("▶")
                 } else {
-                    "▼".to_string()
+                    String::from("▼")
                 }
             } else {
-                "".to_string()
+                String::new()
             }
         };
-        let content_style = {
+        let content_style: String = {
             if self.collapsed {
-                "display: none;".to_string()
+                String::from("display: none;")
             } else {
-                "display: block;".to_string()
+                String::from("display: block;")
             }
         };
         let children_html = self.children.join("\n");

@@ -267,7 +267,7 @@ fn PBRMaterialEditor() -> UI {
 
 // Helper component: Property row with label and value
 @component
-fn PropertyRow(label: String, value: UI) -> UI {
+fn PropertyRow(label: string, value: UI) -> UI {
     HStack {
         Text(label)
             .size(TextSize::Small)
@@ -283,7 +283,7 @@ fn PropertyRow(label: String, value: UI) -> UI {
 
 // Helper component: Texture selector
 @component
-fn TextureSelector(texture: Signal<Option<String>>, on_select: fn(String)) -> UI {
+fn TextureSelector(texture: Signal<Option<string>>, on_select: fn(string)) -> UI {
     HStack {
         if let Some(path) = texture.get() {
             // Show thumbnail if texture exists
@@ -368,7 +368,7 @@ fn MaterialPreview(
 
 // Helper component: Display property value
 @component
-fn PropertyValueDisplay(label: String, value: f32) -> UI {
+fn PropertyValueDisplay(label: string, value: f32) -> UI {
     HStack {
         Text(label)
             .size(TextSize::Tiny)

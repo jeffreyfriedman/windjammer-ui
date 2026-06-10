@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 use std::fmt::Write;
@@ -19,11 +23,11 @@ impl Card {
     #[inline]
     pub fn new() -> Card {
         Card {
-            title: "".to_string().to_string(),
+            title: "".to_string(),
             children: Vec::new(),
-            padding: "16px".to_string().to_string(),
-            background_color: "#fff".to_string().to_string(),
-            border_color: "#e0e0e0".to_string().to_string(),
+            padding: "16px".to_string(),
+            background_color: "#fff".to_string(),
+            border_color: "#e0e0e0".to_string(),
         }
     }
     #[inline]
@@ -71,11 +75,11 @@ impl Renderable for Card {
             .unwrap();
             __s
         };
-        let title_html = {
+        let title_html: String = {
             if self.title != "" {
                 format!("<div class='wj-card-title' style='font-weight: bold; margin-bottom: 12px; font-size: 1.25rem;'>{}</div>", self.title)
             } else {
-                "".to_string().to_string()
+                "".to_string()
             }
         };
         let children_html = self.children.join("\n");

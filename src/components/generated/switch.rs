@@ -58,40 +58,52 @@ impl Switch {
     #[inline]
     pub fn render(&self) -> String {
         let (width, height, thumb_size) = match self.size {
-            SwitchSize::Small => ("32px".to_string(), "18px".to_string(), "14px".to_string()),
-            SwitchSize::Medium => ("44px".to_string(), "24px".to_string(), "20px".to_string()),
-            SwitchSize::Large => ("56px".to_string(), "32px".to_string(), "28px".to_string()),
+            SwitchSize::Small => (
+                String::from("32px"),
+                String::from("18px"),
+                String::from("14px"),
+            ),
+            SwitchSize::Medium => (
+                String::from("44px"),
+                String::from("24px"),
+                String::from("20px"),
+            ),
+            SwitchSize::Large => (
+                String::from("56px"),
+                String::from("32px"),
+                String::from("28px"),
+            ),
         };
-        let bg_color = {
+        let bg_color: String = {
             if self.checked {
-                "#3b82f6".to_string()
+                String::from("#3b82f6")
             } else {
-                "#d1d5db".to_string()
+                String::from("#d1d5db")
             }
         };
         let thumb_pos = {
             if self.checked {
                 match self.size {
-                    SwitchSize::Small => "16px".to_string(),
-                    SwitchSize::Medium => "22px".to_string(),
-                    SwitchSize::Large => "26px".to_string(),
+                    SwitchSize::Small => String::from("16px"),
+                    SwitchSize::Medium => String::from("22px"),
+                    SwitchSize::Large => String::from("26px"),
                 }
             } else {
-                "2px".to_string()
+                String::from("2px")
             }
         };
-        let disabled_style = {
+        let disabled_style: String = {
             if self.disabled {
-                " opacity: 0.5; cursor: not-allowed;".to_string()
+                String::from(" opacity: 0.5; cursor: not-allowed;")
             } else {
-                " cursor: pointer;".to_string()
+                String::from(" cursor: pointer;")
             }
         };
         let disabled_attr = {
             if self.disabled {
-                " disabled".to_string()
+                String::from(" disabled")
             } else {
-                "".to_string()
+                String::new()
             }
         };
         let mut html = String::new();
@@ -123,7 +135,7 @@ impl Switch {
         html.push_str("</span>");
         if !self.label.is_empty() {
             html.push_str("<span style=\"font-size: 14px;\">");
-            html.push_str(&self.label);
+            html.push_str(&self.label.clone());
             html.push_str("</span>");
         }
         html.push_str("</label>");

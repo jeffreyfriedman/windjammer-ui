@@ -11,8 +11,8 @@ pub struct ChatInput {
 impl ChatInput {
     pub fn new() -> ChatInput {
         ChatInput {
-            placeholder: String::from("Type a message..."),
-            value: String::from(""),
+            placeholder: "Type a message...",
+            value: "",
             disabled: false,
             multiline: true,
             rows: 3,

@@ -175,7 +175,7 @@ fn SceneHierarchy() -> UI {
 }
 
 // Helper: Filter nodes by search
-fn filter_node(node: SceneNode, filter: String) -> bool {
+fn filter_node(node: SceneNode, filter: string) -> bool {
     if filter.is_empty() {
         return true
     }
@@ -188,10 +188,10 @@ fn filter_node(node: SceneNode, filter: String) -> bool {
 @component
 fn SceneNode(
     node: SceneNode,
-    selected: Signal<Option<String>>,
+    selected: Signal<Option<string>>,
     show_icons: Signal<bool>,
     show_components: Signal<bool>,
-    on_select: fn(String),
+    on_select: fn(string),
     depth: i32 = 0
 ) -> UI {
     let is_selected = selected.get() == Some(node.id)
@@ -270,7 +270,7 @@ fn SceneNode(
 }
 
 // Helper: Get icon for node type
-fn get_icon_for_type(type: String) -> String {
+fn get_icon_for_type(type: string) -> string {
     match type {
         "Scene" => "🌐",
         "Camera" => "📷",
@@ -286,9 +286,9 @@ fn get_icon_for_type(type: String) -> String {
 
 // Type definitions
 struct SceneNode {
-    id: String,
-    name: String,
-    type: String,
+    id: string,
+    name: string,
+    type: string,
     children: Vec<SceneNode>
 }
 

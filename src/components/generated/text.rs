@@ -1,9 +1,13 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
 use super::traits::Renderable;
+use super::traits::RenderableVNode;
+use super::vnode::VNode;
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum TextSize {
     Small,
@@ -31,10 +35,10 @@ impl Text {
     #[inline]
     pub fn new(content: String) -> Text {
         Text {
-            content: content.to_string(),
+            content,
             size: TextSize::Medium,
             weight: TextWeight::Normal,
-            color: "".to_string().to_string(),
+            color: "".to_string(),
         }
     }
     #[inline]
@@ -54,24 +58,52 @@ impl Text {
     }
 }
 
+impl RenderableVNode for Text {
+    #[inline]
+    fn to_vnode(&self) -> VNode {
+        let size_class: String = match self.size {
+            TextSize::Small => String::from("wj-text-sm"),
+            TextSize::Medium => String::from("wj-text-md"),
+            TextSize::Large => String::from("wj-text-lg"),
+            TextSize::XLarge => String::from("wj-text-xl"),
+        };
+        let weight_class: String = match self.weight {
+            TextWeight::Normal => String::from("wj-text-normal"),
+            TextWeight::Bold => String::from("wj-text-bold"),
+        };
+        let mut node = VNode::span()
+            .add_class("wj-text")
+            .add_class(size_class)
+            .add_class(weight_class)
+            .add_text(&self.content);
+        if !self.color.is_empty() {
+            node = {
+                let _temp0 = format!("color: {};", self.color.clone());
+                node.add_style(&_temp0)
+            };
+        }
+        node
+    }
+}
+
 impl Renderable for Text {
     #[inline]
     fn render(self) -> String {
-        let size_class = match self.size {
-            TextSize::Small => "sm".to_string(),
-            TextSize::Medium => "md".to_string(),
-            TextSize::Large => "lg".to_string(),
-            TextSize::XLarge => "xl".to_string(),
+        let size_class: String = match self.size {
+            TextSize::Small => String::from("sm"),
+            TextSize::Medium => String::from("md"),
+            TextSize::Large => String::from("lg"),
+            TextSize::XLarge => String::from("xl"),
         };
-        let weight_class = match self.weight {
-            TextWeight::Normal => "normal".to_string(),
-            TextWeight::Bold => "bold".to_string(),
+        let weight_class: String = match self.weight {
+            TextWeight::Normal => String::from("normal"),
+            TextWeight::Bold => String::from("bold"),
         };
-        let style = {
+        let style: String = {
             if self.color != "" {
                 format!(" style='color: {};'", self.color)
             } else {
-                "".to_string().to_string()
+                "".to_string()
             }
         };
         format!(

@@ -46,13 +46,13 @@ impl Stack {
     pub fn new() -> Stack {
         Stack {
             direction: StackDirection::Vertical,
-            gap: "8px".to_string().to_string(),
+            gap: "8px".to_string(),
             align: StackAlign::Stretch,
             justify: StackJustify::Start,
             children: Vec::new(),
-            padding: "0".to_string().to_string(),
-            width: "auto".to_string().to_string(),
-            height: "auto".to_string().to_string(),
+            padding: "0".to_string(),
+            width: "auto".to_string(),
+            height: "auto".to_string(),
         }
     }
     #[inline]
@@ -110,23 +110,23 @@ impl Stack {
 impl Renderable for Stack {
     #[inline]
     fn render(self) -> String {
-        let flex_direction = match self.direction {
-            StackDirection::Vertical => "column".to_string(),
-            StackDirection::Horizontal => "row".to_string(),
+        let flex_direction: String = match self.direction {
+            StackDirection::Vertical => String::from("column"),
+            StackDirection::Horizontal => String::from("row"),
         };
-        let align_items = match self.align {
-            StackAlign::Start => "flex-start".to_string(),
-            StackAlign::Center => "center".to_string(),
-            StackAlign::End => "flex-end".to_string(),
-            StackAlign::Stretch => "stretch".to_string(),
+        let align_items: String = match self.align {
+            StackAlign::Start => String::from("flex-start"),
+            StackAlign::Center => String::from("center"),
+            StackAlign::End => String::from("flex-end"),
+            StackAlign::Stretch => String::from("stretch"),
         };
-        let justify_content = match self.justify {
-            StackJustify::Start => "flex-start".to_string(),
-            StackJustify::Center => "center".to_string(),
-            StackJustify::End => "flex-end".to_string(),
-            StackJustify::SpaceBetween => "space-between".to_string(),
-            StackJustify::SpaceAround => "space-around".to_string(),
-            StackJustify::SpaceEvenly => "space-evenly".to_string(),
+        let justify_content: String = match self.justify {
+            StackJustify::Start => String::from("flex-start"),
+            StackJustify::Center => String::from("center"),
+            StackJustify::End => String::from("flex-end"),
+            StackJustify::SpaceBetween => String::from("space-between"),
+            StackJustify::SpaceAround => String::from("space-around"),
+            StackJustify::SpaceEvenly => String::from("space-evenly"),
         };
         let mut html = String::new();
         html.push_str("<div style='display: flex; flex-direction: ");

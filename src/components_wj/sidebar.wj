@@ -15,8 +15,8 @@ impl SidebarItem {
     pub fn new(label: string) -> SidebarItem {
         SidebarItem {
             label: label,
-            icon: String::from(""),
-            href: String::from("#"),
+            icon: "",
+            href: "#",
         }
     }
     
@@ -43,7 +43,7 @@ impl Sidebar {
         Sidebar {
             items: Vec::new(),
             position: SidebarPosition::Left,
-            width: String::from("250px"),
+            width: "250px",
             collapsed: false,
         }
     }
@@ -78,7 +78,7 @@ fn render(self) -> string {
             let icon_html = if item.icon.len() > 0 {
                 format!("<span class='wj-sidebar-icon'>{}</span>", item.icon)
             } else {
-                String::from("")
+                ""
             }
             
             items_html.push(format!(

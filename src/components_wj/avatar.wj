@@ -29,8 +29,8 @@ impl Avatar {
             alt: "Avatar".to_string(),
             size: AvatarSize::Medium,
             shape: AvatarShape::Circle,
-            fallback: String::new(),
-            class: String::new(),
+            fallback: "",
+            class: "",
         }
     }
     
@@ -73,7 +73,7 @@ impl Avatar {
             AvatarShape::Rounded => "8px",
         }
         
-        let mut html = String::new()
+        let mut html = ""
         
         if self.src.is_empty() && !self.fallback.is_empty() {
             // Render fallback (initials or icon)

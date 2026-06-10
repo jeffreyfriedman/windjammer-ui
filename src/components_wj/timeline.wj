@@ -14,7 +14,7 @@ impl TimelineEvent {
     pub fn new(title: string, timestamp: string) -> TimelineEvent {
         TimelineEvent {
             title: title,
-            description: String::new(),
+            description: "",
             timestamp: timestamp,
             icon: "●".to_string(),
             color: "#3b82f6".to_string(),
@@ -57,7 +57,7 @@ impl Timeline {
 
 impl Renderable for Timeline {
 fn render(self) -> string {
-        let mut html = String::new();
+        let mut html = "";
 
         html.push_str("<div style='position: relative; padding-left: 32px;'>");
 

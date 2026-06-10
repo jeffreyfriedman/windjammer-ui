@@ -2,6 +2,9 @@
 
 
 use super::traits::Renderable
+use super::traits::RenderableVNode
+use super::vnode::VNode
+
 pub enum CheckboxSize {
     Small,
     Medium,
@@ -13,6 +16,7 @@ pub struct Checkbox {
     checked: bool,
     disabled: bool,
     size: CheckboxSize,
+    change_handler: string,
 }
 
 impl Checkbox {
@@ -22,6 +26,7 @@ impl Checkbox {
             checked: false,
             disabled: false,
             size: CheckboxSize::Medium,
+            change_handler: "",
         }
     }
     
@@ -40,7 +45,37 @@ impl Checkbox {
         self
     }
     
+    pub fn on_change(self, handler: string) -> Checkbox {
+        self.change_handler = handler
+        self
+    }
+}
 
+impl RenderableVNode for Checkbox {
+    fn to_vnode(&self) -> VNode {
+        let size_class = match self.size {
+            CheckboxSize::Small => "wj-checkbox-sm",
+            CheckboxSize::Medium => "wj-checkbox-md",
+            CheckboxSize::Large => "wj-checkbox-lg",
+        }
+        let label_node = VNode::element("label".to_string())
+            .add_class("wj-checkbox".to_string())
+            .add_class(size_class.to_string())
+            .child(
+                VNode::input()
+                    .set_type("checkbox".to_string())
+                    .add_attr("checked".to_string(), if self.checked { "true" } else { "false" }.to_string())
+                    .set_disabled(self.disabled)
+            )
+            .child(
+                VNode::span()
+                    .add_text(self.label.clone())
+            )
+        if self.change_handler.len() > 0 {
+            label_node = label_node.on_change(self.change_handler.clone())
+        }
+        label_node
+    }
 }
 
 impl Renderable for Checkbox {

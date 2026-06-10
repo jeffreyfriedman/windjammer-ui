@@ -86,7 +86,7 @@ impl Table {
 
 impl Renderable for Table {
 fn render(self) -> string {
-        let mut html = String::new();
+        let mut html = "";
 
         let border_style = if self.bordered {
             "border: 1px solid #e2e8f0; border-collapse: collapse;"

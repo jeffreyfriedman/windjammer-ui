@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -17,10 +21,10 @@ impl Dialog {
     #[inline]
     pub fn new(title: String, content: String) -> Dialog {
         Dialog {
-            title: title.to_string(),
-            content: content.to_string(),
+            title,
+            content,
             open: false,
-            width: "500px".to_string().to_string(),
+            width: "500px".to_string(),
         }
     }
     #[inline]
@@ -38,11 +42,11 @@ impl Dialog {
 impl Renderable for Dialog {
     #[inline]
     fn render(self) -> String {
-        let display_style = {
+        let display_style: String = {
             if self.open {
-                "display: flex;".to_string()
+                String::from("display: flex;")
             } else {
-                "display: none;".to_string()
+                String::from("display: none;")
             }
         };
         format!("<div class='wj-dialog-overlay' style='{}'>\n  <div class='wj-dialog' style='max-width: {}; width: 90%;'>\n    <div class='wj-dialog-header'>\n      <h2>{}</h2>\n      <button class='wj-dialog-close'>×</button>\n    </div>\n    <div class='wj-dialog-content'>\n      {}\n    </div>\n  </div>\n</div>", display_style, self.width, self.title, self.content)

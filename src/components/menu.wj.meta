@@ -1,0 +1,213 @@
+{
+  "module_path": "menu",
+  "functions": {
+    "MenuItem::class": {
+      "params": [
+        "Custom(\"MenuItem\")",
+        "String"
+      ],
+      "return_type": "Custom(\"MenuItem\")",
+      "is_associated": true,
+      "parent_type": "MenuItem",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "MenuItem::render": {
+      "params": [
+        "Custom(\"MenuItem\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "MenuItem",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Menu::class": {
+      "params": [
+        "Custom(\"Menu\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Menu\")",
+      "is_associated": true,
+      "parent_type": "Menu",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Menu::item": {
+      "params": [
+        "Custom(\"Menu\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Menu\")",
+      "is_associated": true,
+      "parent_type": "Menu",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "MenuItem::href": {
+      "params": [
+        "Custom(\"MenuItem\")",
+        "String"
+      ],
+      "return_type": "Custom(\"MenuItem\")",
+      "is_associated": true,
+      "parent_type": "MenuItem",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "MenuItem::icon": {
+      "params": [
+        "Custom(\"MenuItem\")",
+        "String"
+      ],
+      "return_type": "Custom(\"MenuItem\")",
+      "is_associated": true,
+      "parent_type": "MenuItem",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "MenuItem::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"MenuItem\")",
+      "is_associated": true,
+      "parent_type": "MenuItem",
+      "param_ownership": [
+        "Owned"
+      ],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "MenuItem::disabled": {
+      "params": [
+        "Custom(\"MenuItem\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"MenuItem\")",
+      "is_associated": true,
+      "parent_type": "MenuItem",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Menu::new": {
+      "params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Menu\")",
+      "is_associated": true,
+      "parent_type": "Menu",
+      "param_ownership": [
+        "Owned"
+      ],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Menu::render": {
+      "params": [
+        "Custom(\"Menu\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Menu",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    }
+  },
+  "structs": {
+    "MenuItem": {
+      "label": "String",
+      "icon": "String",
+      "disabled": "Bool",
+      "class": "String",
+      "href": "String"
+    },
+    "Menu": {
+      "class": "String",
+      "trigger": "String",
+      "items": "Vec(String)"
+    }
+  },
+  "trait_impls": {},
+  "copy_structs": [
+    "FlexDirection",
+    "NavbarPosition",
+    "RowAlign",
+    "ToastPosition",
+    "Pagination",
+    "DrawerPosition",
+    "DividerOrientation",
+    "Progress",
+    "EasingPreset",
+    "SkeletonVariant",
+    "PopoverPosition",
+    "ColumnJustify",
+    "SplitDirection",
+    "SelectSize",
+    "ColumnAlign",
+    "ModalSize",
+    "ChipSize",
+    "TooltipPosition",
+    "StackAlign",
+    "ScrollDirection",
+    "RowJustify",
+    "SwitchSize",
+    "CheckboxSize",
+    "LoadingSize",
+    "AlertVariant",
+    "TextWeight",
+    "AvatarShape",
+    "CurvePoint",
+    "ButtonSize",
+    "SpinnerSize",
+    "TextareaResize",
+    "StackDirection",
+    "SidebarPosition",
+    "VNode",
+    "ButtonVariant",
+    "BadgeSize",
+    "ToastVariant",
+    "RatingSize",
+    "ChipVariant",
+    "BadgeVariant",
+    "MessageRole",
+    "NodeCategory",
+    "StackJustify",
+    "TextSize",
+    "AvatarSize",
+    "PinType",
+    "ScrollDir",
+    "ProgressVariant"
+  ],
+  "version": "0.46.0"
+}

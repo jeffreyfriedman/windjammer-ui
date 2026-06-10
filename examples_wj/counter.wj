@@ -1,50 +1,56 @@
 // Counter Example - Simple Interactive Counter
-// Demonstrates: Signal-based state, event handlers, reactive updates
+// Demonstrates: VNode tree construction, event handler wiring, component composition
 
-use windjammer_ui::*
+use crate::components_wj::vnode::VNode
+use crate::components_wj::button::Button
+use crate::components_wj::button::ButtonVariant
+use crate::components_wj::button::ButtonSize
+use crate::components_wj::traits::RenderableVNode
 
-@export
-fn start() {
-    println!("🎉 Starting Windjammer Counter")
-    
-    // Create reactive state
-    let count = Signal::new(0)
-    
-    // Clone signals for closures
-    let count_inc = count.clone()
-    let count_display = count.clone()
-    
-    // Build UI
-    let ui = Container::new()
-        .max_width("400px")
+/// Build the counter UI as a VNode tree.
+/// Event handlers are referenced by name; the renderer dispatches them.
+pub fn build_counter_ui() -> VNode {
+    VNode::div()
+        .add_class("counter-app")
+        .add_style("max-width: 400px; margin: 0 auto; padding: 32px; text-align: center;")
         .child(
-            Flex::new()
-                .direction(FlexDirection::Column)
-                .gap("20px")
+            VNode::element("h1")
+                .add_style("font-size: 24px; margin-bottom: 16px;")
+                .add_text("Windjammer Counter")
+        )
+        .child(
+            VNode::div()
+                .set_id("counter-display")
+                .add_style("font-size: 48px; font-weight: bold; margin: 24px 0;")
+                .add_text("0")
+        )
+        .child(
+            VNode::div()
+                .add_style("display: flex; gap: 12px; justify-content: center;")
                 .child(
-                    Text::new("🎉 Windjammer Counter")
-                        .size(TextSize::Large)
-                        .bold()
+                    Button::new("- Decrement")
+                        .variant(ButtonVariant::Danger)
+                        .size(ButtonSize::Large)
+                        .on_click("decrement")
+                        .to_vnode()
                 )
                 .child(
-                    Text::new(format!("Count: {}", count_display.get()))
-                        .size(TextSize::XLarge)
-                        .bold()
-                )
-                .child(
-                    Button::new("Increment")
+                    Button::new("+ Increment")
                         .variant(ButtonVariant::Primary)
-                        .on_click(move || {
-                            let current = count_inc.get()
-                            count_inc.set(current + 1)
-                            println!("Count: {}", current + 1)
-                        })
+                        .size(ButtonSize::Large)
+                        .on_click("increment")
+                        .to_vnode()
+                )
+                .child(
+                    Button::new("Reset")
+                        .variant(ButtonVariant::Secondary)
+                        .on_click("reset")
+                        .to_vnode()
                 )
         )
-    
-    App::new("Counter Example", ui.to_vnode()).run()
 }
 
 fn main() {
-    start()
+    let ui = build_counter_ui()
+    println!("Counter UI built, VNode handle: {}", ui.raw_handle())
 }

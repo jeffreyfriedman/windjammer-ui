@@ -17,7 +17,7 @@ impl MessageList {
     pub fn new() -> MessageList {
         MessageList {
             messages: Vec::new(),
-            height: String::from("600px".to_string()),
+            height: String::from("600px"),
             auto_scroll: true,
         }
     }
@@ -43,9 +43,9 @@ impl Renderable for MessageList {
     fn render(self) -> String {
         let scroll_script = {
             if self.auto_scroll {
-                "onload='this.scrollTop = this.scrollHeight'".to_string()
+                String::from("onload='this.scrollTop = this.scrollHeight'")
             } else {
-                "".to_string()
+                String::new()
             }
         };
         format!("<div class='wj-message-list' style='height: {}' {}>\n                {}\n            </div>", self.height, scroll_script, self.messages.join(""))

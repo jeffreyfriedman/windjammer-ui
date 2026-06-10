@@ -18,8 +18,8 @@ impl ChatMessage {
         ChatMessage {
             role: MessageRole::User,
             content: content,
-            avatar: String::from(""),
-            timestamp: String::from(""),
+            avatar: "",
+            timestamp: "",
         }
     }
     
@@ -63,7 +63,7 @@ pub fn render(self) -> string {
         let timestamp_html = if self.timestamp.len() > 0 {
             format!("<div class='wj-message-timestamp'>{}</div>", self.timestamp)
         } else {
-            String::from("")
+            ""
         }
         
         format!(

@@ -36,22 +36,22 @@ impl List {
     }
     #[inline]
     pub fn render(&self) -> String {
-        let tag = {
+        let tag: String = {
             if self.ordered {
-                "ol".to_string()
+                String::from("ol")
             } else {
-                "ul".to_string()
+                String::from("ul")
             }
         };
         let mut html = String::new();
         html.push('<');
-        html.push_str(&tag.clone());
+        html.push_str(&tag);
         html.push_str(" class=\"wj-list ");
         html.push_str(&self.class.clone());
         html.push_str("\" style=\"list-style-position: inside; padding-left: 0;\">");
         for item in &self.items {
             html.push_str("<li style=\"padding: 8px 0;\">");
-            html.push_str(&item);
+            html.push_str(item);
             html.push_str("</li>");
         }
         html.push_str("</");
@@ -72,7 +72,7 @@ impl ListItem {
     #[inline]
     pub fn new(content: String) -> ListItem {
         ListItem {
-            content: content.to_string(),
+            content,
             class: String::new(),
         }
     }
@@ -87,7 +87,7 @@ impl ListItem {
         html.push_str("<li class=\"wj-list-item ");
         html.push_str(&self.class.clone());
         html.push_str("\" style=\"padding: 8px 0;\">");
-        html.push_str(&self.content);
+        html.push_str(&self.content.clone());
         html.push_str("</li>");
         html
     }

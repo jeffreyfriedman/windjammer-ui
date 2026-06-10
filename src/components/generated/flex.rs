@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -26,9 +30,9 @@ impl Flex {
         Flex {
             children: Vec::new(),
             direction: FlexDirection::Row,
-            gap: "8px".to_string().to_string(),
-            padding: "".to_string().to_string(),
-            background_color: "".to_string().to_string(),
+            gap: "8px".to_string(),
+            padding: "".to_string(),
+            background_color: "".to_string(),
         }
     }
     #[inline]
@@ -71,9 +75,9 @@ impl Flex {
 impl Renderable for Flex {
     #[inline]
     fn render(self) -> String {
-        let direction_str = match self.direction {
-            FlexDirection::Row => "row".to_string(),
-            FlexDirection::Column => "column".to_string(),
+        let direction_str: String = match self.direction {
+            FlexDirection::Row => String::from("row"),
+            FlexDirection::Column => String::from("column"),
         };
         let mut style = "display: flex; flex-direction: ".to_string()
             + &direction_str.to_string()

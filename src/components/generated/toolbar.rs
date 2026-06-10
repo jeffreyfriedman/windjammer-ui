@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -16,7 +20,7 @@ impl Toolbar {
     pub fn new() -> Toolbar {
         Toolbar {
             items: Vec::new(),
-            position: "top".to_string().to_string(),
+            position: "top".to_string(),
         }
     }
     #[inline]

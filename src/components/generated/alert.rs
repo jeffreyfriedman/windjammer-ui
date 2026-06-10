@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -23,28 +27,28 @@ impl Alert {
     #[inline]
     pub fn error(message: String) -> Alert {
         Alert {
-            message: message.to_string(),
+            message,
             variant: AlertVariant::Error,
         }
     }
     #[inline]
     pub fn warning(message: String) -> Alert {
         Alert {
-            message: message.to_string(),
+            message,
             variant: AlertVariant::Warning,
         }
     }
     #[inline]
     pub fn info(message: String) -> Alert {
         Alert {
-            message: message.to_string(),
+            message,
             variant: AlertVariant::Info,
         }
     }
     #[inline]
     pub fn success(message: String) -> Alert {
         Alert {
-            message: message.to_string(),
+            message,
             variant: AlertVariant::Success,
         }
     }
@@ -53,17 +57,17 @@ impl Alert {
 impl Renderable for Alert {
     #[inline]
     fn render(self) -> String {
-        let variant_class = match self.variant {
-            AlertVariant::Error => "wj-alert-error".to_string(),
-            AlertVariant::Warning => "wj-alert-warning".to_string(),
-            AlertVariant::Info => "wj-alert-info".to_string(),
-            AlertVariant::Success => "wj-alert-success".to_string(),
+        let variant_class: String = match self.variant {
+            AlertVariant::Error => String::from("wj-alert-error"),
+            AlertVariant::Warning => String::from("wj-alert-warning"),
+            AlertVariant::Info => String::from("wj-alert-info"),
+            AlertVariant::Success => String::from("wj-alert-success"),
         };
-        let icon = match self.variant {
-            AlertVariant::Error => "❌".to_string(),
-            AlertVariant::Warning => "⚠️".to_string(),
-            AlertVariant::Info => "ℹ️".to_string(),
-            AlertVariant::Success => "✅".to_string(),
+        let icon: String = match self.variant {
+            AlertVariant::Error => String::from("❌"),
+            AlertVariant::Warning => String::from("⚠️"),
+            AlertVariant::Info => String::from("ℹ️"),
+            AlertVariant::Success => String::from("✅"),
         };
         format!(
             "<div class='wj-alert {}'>{} {}</div>",

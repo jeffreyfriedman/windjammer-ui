@@ -1,5 +1,7 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
@@ -49,7 +51,7 @@ impl EcsInspectorSnapshot {
         if let Some(id) = self.selected_entity_id {
             format!("Entity #{}", id)
         } else {
-            "No entity selected".to_string().to_string()
+            "No entity selected".to_string()
         }
     }
     #[inline]
@@ -73,60 +75,60 @@ impl EcsInspectorSnapshot {
         });
         let mut components: Vec<EcsComponentSection> = Vec::new();
         components.push(EcsComponentSection {
-            name: "Transform".to_string().to_string(),
+            name: "Transform".to_string(),
             fields: vec![
                 EcsInspectorField {
-                    name: "position.x".to_string().to_string(),
-                    display_value: "1.0".to_string().to_string(),
+                    name: "position.x".to_string(),
+                    display_value: "1.0".to_string(),
                 },
                 EcsInspectorField {
-                    name: "position.y".to_string().to_string(),
-                    display_value: "0.0".to_string().to_string(),
+                    name: "position.y".to_string(),
+                    display_value: "0.0".to_string(),
                 },
                 EcsInspectorField {
-                    name: "position.z".to_string().to_string(),
-                    display_value: "0.0".to_string().to_string(),
+                    name: "position.z".to_string(),
+                    display_value: "0.0".to_string(),
                 },
                 EcsInspectorField {
-                    name: "rotation.x".to_string().to_string(),
-                    display_value: "0.0".to_string().to_string(),
+                    name: "rotation.x".to_string(),
+                    display_value: "0.0".to_string(),
                 },
                 EcsInspectorField {
-                    name: "rotation.y".to_string().to_string(),
-                    display_value: "0.0".to_string().to_string(),
+                    name: "rotation.y".to_string(),
+                    display_value: "0.0".to_string(),
                 },
                 EcsInspectorField {
-                    name: "rotation.z".to_string().to_string(),
-                    display_value: "0.0".to_string().to_string(),
+                    name: "rotation.z".to_string(),
+                    display_value: "0.0".to_string(),
                 },
                 EcsInspectorField {
-                    name: "scale.x".to_string().to_string(),
-                    display_value: "1.0".to_string().to_string(),
+                    name: "scale.x".to_string(),
+                    display_value: "1.0".to_string(),
                 },
                 EcsInspectorField {
-                    name: "scale.y".to_string().to_string(),
-                    display_value: "1.0".to_string().to_string(),
+                    name: "scale.y".to_string(),
+                    display_value: "1.0".to_string(),
                 },
                 EcsInspectorField {
-                    name: "scale.z".to_string().to_string(),
-                    display_value: "1.0".to_string().to_string(),
+                    name: "scale.z".to_string(),
+                    display_value: "1.0".to_string(),
                 },
             ],
         });
         components.push(EcsComponentSection {
-            name: "Velocity".to_string().to_string(),
+            name: "Velocity".to_string(),
             fields: vec![
                 EcsInspectorField {
-                    name: "value.x".to_string().to_string(),
-                    display_value: "0.0".to_string().to_string(),
+                    name: "value.x".to_string(),
+                    display_value: "0.0".to_string(),
                 },
                 EcsInspectorField {
-                    name: "value.y".to_string().to_string(),
-                    display_value: "1.0".to_string().to_string(),
+                    name: "value.y".to_string(),
+                    display_value: "1.0".to_string(),
                 },
                 EcsInspectorField {
-                    name: "value.z".to_string().to_string(),
-                    display_value: "0.0".to_string().to_string(),
+                    name: "value.z".to_string(),
+                    display_value: "0.0".to_string(),
                 },
             ],
         });

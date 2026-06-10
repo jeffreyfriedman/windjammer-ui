@@ -35,7 +35,7 @@ impl Column {
     pub fn new() -> Column {
         Column {
             children: Vec::new(),
-            gap: "8px".to_string().to_string(),
+            gap: "8px".to_string(),
             align: ColumnAlign::Start,
             justify: ColumnJustify::Start,
             class: String::new(),
@@ -68,19 +68,19 @@ impl Column {
     }
     #[inline]
     pub fn render(&self) -> String {
-        let align_str = match self.align {
-            ColumnAlign::Start => "flex-start".to_string(),
-            ColumnAlign::Center => "center".to_string(),
-            ColumnAlign::End => "flex-end".to_string(),
-            ColumnAlign::Stretch => "stretch".to_string(),
+        let align_str: String = match self.align {
+            ColumnAlign::Start => String::from("flex-start"),
+            ColumnAlign::Center => String::from("center"),
+            ColumnAlign::End => String::from("flex-end"),
+            ColumnAlign::Stretch => String::from("stretch"),
         };
-        let justify_str = match self.justify {
-            ColumnJustify::Start => "flex-start".to_string(),
-            ColumnJustify::Center => "center".to_string(),
-            ColumnJustify::End => "flex-end".to_string(),
-            ColumnJustify::SpaceBetween => "space-between".to_string(),
-            ColumnJustify::SpaceAround => "space-around".to_string(),
-            ColumnJustify::SpaceEvenly => "space-evenly".to_string(),
+        let justify_str: String = match self.justify {
+            ColumnJustify::Start => String::from("flex-start"),
+            ColumnJustify::Center => String::from("center"),
+            ColumnJustify::End => String::from("flex-end"),
+            ColumnJustify::SpaceBetween => String::from("space-between"),
+            ColumnJustify::SpaceAround => String::from("space-around"),
+            ColumnJustify::SpaceEvenly => String::from("space-evenly"),
         };
         let mut html = String::new();
         html.push_str("<div class=\"wj-column ");
@@ -93,7 +93,7 @@ impl Column {
         html.push_str(&justify_str);
         html.push_str(";\">");
         for child in &self.children {
-            html.push_str(&child);
+            html.push_str(child);
         }
         html.push_str("</div>");
         html

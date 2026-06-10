@@ -391,21 +391,21 @@ fn KeyframeTrack(
 
 // Type definitions
 struct Animation {
-    name: String,
+    name: string,
     duration: f32,
     fps: i32,
     tracks: Vec<AnimationTrack>
 }
 
 struct AnimationTrack {
-    name: String,
-    type: String,
+    name: string,
+    type: string,
     keyframes: Vec<Keyframe>
 }
 
 struct Keyframe {
     time: f32,
     value: f32,
-    interpolation: String
+    interpolation: string
 }
 

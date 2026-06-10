@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -17,9 +21,9 @@ impl Tab {
     #[inline]
     pub fn new(id: String, label: String, content: String) -> Tab {
         Tab {
-            id: id.to_string(),
-            label: label.to_string(),
-            content: content.to_string(),
+            id,
+            label,
+            content,
             disabled: false,
         }
     }
@@ -42,7 +46,7 @@ impl Tabs {
     pub fn new() -> Tabs {
         Tabs {
             tabs: Vec::new(),
-            active: "".to_string().to_string(),
+            active: "".to_string(),
         }
     }
     #[inline]
@@ -66,16 +70,16 @@ impl Renderable for Tabs {
             let tab = &self.tabs[i];
             let active_class = {
                 if tab.id == self.active {
-                    " wj-tab-active".to_string()
+                    String::from(" wj-tab-active")
                 } else {
-                    "".to_string()
+                    String::new()
                 }
             };
             let disabled_class = {
                 if tab.disabled {
-                    " wj-tab-disabled".to_string()
+                    String::from(" wj-tab-disabled")
                 } else {
-                    "".to_string()
+                    String::new()
                 }
             };
             tabs_html = format!(
@@ -89,11 +93,11 @@ impl Renderable for Tabs {
         let mut j = 0;
         while j < self.tabs.len() {
             let tab = &self.tabs[j];
-            let display_style = {
+            let display_style: String = {
                 if tab.id == self.active {
-                    "display: block;".to_string()
+                    String::from("display: block;")
                 } else {
-                    "display: none;".to_string()
+                    String::from("display: none;")
                 }
             };
             content_html = format!(

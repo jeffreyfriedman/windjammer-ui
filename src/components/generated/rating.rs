@@ -29,7 +29,7 @@ impl Rating {
             max: 5_i32,
             size: RatingSize::Medium,
             readonly: true,
-            color: "#fbbf24".to_string().to_string(),
+            color: "#fbbf24".to_string(),
         }
     }
     #[inline]
@@ -57,10 +57,10 @@ impl Rating {
 impl Renderable for Rating {
     #[inline]
     fn render(self) -> String {
-        let star_size = match self.size {
-            RatingSize::Small => "16px".to_string(),
-            RatingSize::Medium => "24px".to_string(),
-            RatingSize::Large => "32px".to_string(),
+        let star_size: String = match self.size {
+            RatingSize::Small => String::from("16px"),
+            RatingSize::Medium => String::from("24px"),
+            RatingSize::Large => String::from("32px"),
         };
         let mut html = String::new();
         html.push_str("<div style='display: inline-flex; gap: 4px;'>");
@@ -72,22 +72,22 @@ impl Renderable for Rating {
                 if filled || half_filled {
                     self.color.clone()
                 } else {
-                    "#e2e8f0".to_string()
+                    String::from("#e2e8f0")
                 }
             };
-            let cursor = {
+            let cursor: String = {
                 if self.readonly {
-                    "default".to_string()
+                    String::from("default")
                 } else {
-                    "pointer".to_string()
+                    String::from("pointer")
                 }
             };
             html.push_str("<span style='font-size: ");
             html.push_str(&star_size);
             html.push_str("; color: ");
-            html.push_str(&star_color.clone());
+            html.push_str(&star_color);
             html.push_str("; cursor: ");
-            html.push_str(&cursor.clone());
+            html.push_str(&cursor);
             html.push_str(";'>");
             if half_filled {
                 html.push('⯨')

@@ -20,7 +20,7 @@ impl Popover {
             trigger,
             content,
             position: PopoverPosition::Bottom,
-            class: String::new(),
+            class: "",
         }
     }
     
@@ -42,7 +42,7 @@ impl Popover {
             PopoverPosition::Right => "left: 100%; top: 50%; transform: translateY(-50%); margin-left: 8px;",
         }
         
-        let mut html = String::new()
+        let mut html = ""
         html.push_str("<div class=\"wj-popover ")
         html.push_str(self.class)
         html.push_str("\" style=\"position: relative; display: inline-block;\">")

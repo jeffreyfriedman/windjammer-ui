@@ -21,14 +21,14 @@ pub enum TextareaResize {
 impl Textarea {
     pub fn new() -> Textarea {
         Textarea {
-            value: String::new(),
-            placeholder: String::new(),
+            value: "",
+            placeholder: "",
             rows: 4,
             disabled: false,
             readonly: false,
             max_length: 0,
             resize: TextareaResize::Vertical,
-            class: String::new(),
+            class: "",
         }
     }
     
@@ -83,7 +83,7 @@ impl Textarea {
         let disabled_attr = if self.disabled { " disabled" } else { "" }
         let readonly_attr = if self.readonly { " readonly" } else { "" }
         
-        let mut html = String::new()
+        let mut html = ""
         html.push_str("<textarea class=\"wj-textarea ")
         html.push_str(self.class)
         html.push_str("\" rows=\"")

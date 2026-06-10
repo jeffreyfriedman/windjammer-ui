@@ -29,7 +29,7 @@ pub struct Navbar {
 impl Navbar {
     pub fn new() -> Navbar {
         Navbar {
-            brand: String::from(""),
+            brand: "",
             items: Vec::new(),
             position: NavbarPosition::Top,
             sticky: false,
@@ -76,7 +76,7 @@ fn render(self) -> string {
         let brand_html = if self.brand.len() > 0 {
             format!("<div class='wj-navbar-brand'>{}</div>", self.brand)
         } else {
-            String::from("")
+            ""
         }
         
         format!(

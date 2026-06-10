@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -24,9 +28,9 @@ impl Tooltip {
     #[inline]
     pub fn new(text: String, child: String) -> Tooltip {
         Tooltip {
-            text: text.to_string(),
+            text,
             position: TooltipPosition::Top,
-            child: child.to_string(),
+            child,
         }
     }
     #[inline]
@@ -39,11 +43,11 @@ impl Tooltip {
 impl Renderable for Tooltip {
     #[inline]
     fn render(self) -> String {
-        let position_class = match self.position {
-            TooltipPosition::Top => "wj-tooltip-top".to_string(),
-            TooltipPosition::Bottom => "wj-tooltip-bottom".to_string(),
-            TooltipPosition::Left => "wj-tooltip-left".to_string(),
-            TooltipPosition::Right => "wj-tooltip-right".to_string(),
+        let position_class: String = match self.position {
+            TooltipPosition::Top => String::from("wj-tooltip-top"),
+            TooltipPosition::Bottom => String::from("wj-tooltip-bottom"),
+            TooltipPosition::Left => String::from("wj-tooltip-left"),
+            TooltipPosition::Right => String::from("wj-tooltip-right"),
         };
         format!(
             "<div class='wj-tooltip-container {}'>{}<span class='wj-tooltip-text'>{}</span></div>",

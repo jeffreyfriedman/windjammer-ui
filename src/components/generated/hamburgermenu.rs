@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -14,10 +18,7 @@ pub struct HamburgerMenuItem {
 impl HamburgerMenuItem {
     #[inline]
     pub fn new(label: String, href: String) -> HamburgerMenuItem {
-        HamburgerMenuItem {
-            label: label.to_string(),
-            href: href.to_string(),
-        }
+        HamburgerMenuItem { label, href }
     }
 }
 
@@ -63,9 +64,9 @@ impl Renderable for HamburgerMenu {
         }
         let open_class = {
             if self.open {
-                " wj-hamburger-open".to_string()
+                String::from(" wj-hamburger-open")
             } else {
-                "".to_string()
+                String::new()
             }
         };
         format!("<div class='wj-hamburger-menu{}'>\n                <button class='wj-hamburger-button' onclick='this.parentElement.classList.toggle(\"wj-hamburger-open\")'>\n                    <span></span>\n                    <span></span>\n                    <span></span>\n                </button>\n                <div class='wj-hamburger-drawer'>\n                    {}\n                </div>\n            </div>", open_class, items_html.join(""))

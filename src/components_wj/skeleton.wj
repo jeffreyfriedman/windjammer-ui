@@ -19,7 +19,7 @@ impl Skeleton {
             variant: SkeletonVariant::Text,
             width: "100%".to_string(),
             height: "20px".to_string(),
-            class: String::new(),
+            class: "",
         }
     }
     
@@ -50,7 +50,7 @@ impl Skeleton {
             SkeletonVariant::Rectangle => "8px",
         }
         
-        let mut html = String::new()
+        let mut html = ""
         html.push_str("<div class=\"wj-skeleton ")
         html.push_str(self.class)
         html.push_str("\" style=\"width: ")

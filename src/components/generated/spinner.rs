@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 use std::fmt::Write;
@@ -24,7 +28,7 @@ impl Spinner {
     pub fn new() -> Spinner {
         Spinner {
             size: SpinnerSize::Medium,
-            label: "".to_string().to_string(),
+            label: "".to_string(),
         }
     }
     #[inline]
@@ -42,10 +46,10 @@ impl Spinner {
 impl Renderable for Spinner {
     #[inline]
     fn render(self) -> String {
-        let size_class = match self.size {
-            SpinnerSize::Small => "wj-spinner-sm".to_string(),
-            SpinnerSize::Medium => "wj-spinner-md".to_string(),
-            SpinnerSize::Large => "wj-spinner-lg".to_string(),
+        let size_class: String = match self.size {
+            SpinnerSize::Small => String::from("wj-spinner-sm"),
+            SpinnerSize::Medium => String::from("wj-spinner-md"),
+            SpinnerSize::Large => String::from("wj-spinner-lg"),
         };
         let spinner_html = {
             let mut __s = String::with_capacity(64);

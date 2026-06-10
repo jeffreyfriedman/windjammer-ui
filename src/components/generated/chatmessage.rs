@@ -25,9 +25,9 @@ impl ChatMessage {
     pub fn new(content: String) -> ChatMessage {
         ChatMessage {
             role: MessageRole::User,
-            content: content.to_string(),
-            avatar: String::from("".to_string()),
-            timestamp: String::from("".to_string()),
+            content,
+            avatar: String::new(),
+            timestamp: String::new(),
         }
     }
     #[inline]
@@ -50,22 +50,22 @@ impl ChatMessage {
 impl Renderable for ChatMessage {
     #[inline]
     fn render(self) -> String {
-        let role_class = match self.role {
-            MessageRole::User => "wj-message-user".to_string(),
-            MessageRole::Assistant => "wj-message-assistant".to_string(),
-            MessageRole::System => "wj-message-system".to_string(),
+        let role_class: String = match self.role {
+            MessageRole::User => String::from("wj-message-user"),
+            MessageRole::Assistant => String::from("wj-message-assistant"),
+            MessageRole::System => String::from("wj-message-system"),
         };
-        let avatar_html = {
+        let avatar_html: String = {
             if !self.avatar.is_empty() {
                 format!(
                     "<div class='wj-message-avatar'><img src='{}' alt='avatar'/></div>",
                     self.avatar
                 )
             } else {
-                let default_icon = match self.role {
-                    MessageRole::User => "👤".to_string(),
-                    MessageRole::Assistant => "🤖".to_string(),
-                    MessageRole::System => "⚙️".to_string(),
+                let default_icon: String = match self.role {
+                    MessageRole::User => String::from("👤"),
+                    MessageRole::Assistant => String::from("🤖"),
+                    MessageRole::System => String::from("⚙️"),
                 };
                 format!("<div class='wj-message-avatar'>{}</div>", default_icon)
             }
@@ -74,7 +74,7 @@ impl Renderable for ChatMessage {
             if !self.timestamp.is_empty() {
                 format!("<div class='wj-message-timestamp'>{}</div>", self.timestamp)
             } else {
-                String::from("".to_string())
+                String::new()
             }
         };
         format!("<div class='wj-chat-message {}'>\n                {}\n                <div class='wj-message-content-wrapper'>\n                    <div class='wj-message-content'>{}</div>\n                    {}\n                </div>\n            </div>", role_class, avatar_html, self.content, timestamp_html)

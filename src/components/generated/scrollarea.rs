@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -26,8 +30,8 @@ impl ScrollArea {
         ScrollArea {
             children: Vec::new(),
             direction: ScrollDirection::Vertical,
-            height: "300px".to_string().to_string(),
-            width: "100%".to_string().to_string(),
+            height: "300px".to_string(),
+            width: "100%".to_string(),
         }
     }
     #[inline]
@@ -55,10 +59,10 @@ impl ScrollArea {
 impl Renderable for ScrollArea {
     #[inline]
     fn render(self) -> String {
-        let overflow_style = match self.direction {
-            ScrollDirection::Vertical => "overflow-y: auto; overflow-x: hidden;".to_string(),
-            ScrollDirection::Horizontal => "overflow-x: auto; overflow-y: hidden;".to_string(),
-            ScrollDirection::Both => "overflow: auto;".to_string(),
+        let overflow_style: String = match self.direction {
+            ScrollDirection::Vertical => String::from("overflow-y: auto; overflow-x: hidden;"),
+            ScrollDirection::Horizontal => String::from("overflow-x: auto; overflow-y: hidden;"),
+            ScrollDirection::Both => String::from("overflow: auto;"),
         };
         let children_html = self.children.join("\n");
         format!(

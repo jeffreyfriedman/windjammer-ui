@@ -26,7 +26,7 @@ impl Drawer {
         Drawer {
             children: Vec::new(),
             position: DrawerPosition::Right,
-            width: "320px".to_string().to_string(),
+            width: "320px".to_string(),
             open: false,
             class: String::new(),
         }
@@ -60,39 +60,39 @@ impl Drawer {
     pub fn render(&self) -> String {
         let (position_style, size_prop) = match self.position {
             DrawerPosition::Left => (
-                "left: 0; top: 0; bottom: 0;".to_string(),
+                String::from("left: 0; top: 0; bottom: 0;"),
                 format!("width: {};", self.width.clone()),
             ),
             DrawerPosition::Right => (
-                "right: 0; top: 0; bottom: 0;".to_string(),
+                String::from("right: 0; top: 0; bottom: 0;"),
                 format!("width: {};", self.width.clone()),
             ),
             DrawerPosition::Top => (
-                "top: 0; left: 0; right: 0;".to_string(),
+                String::from("top: 0; left: 0; right: 0;"),
                 format!("height: {};", self.width.clone()),
             ),
             DrawerPosition::Bottom => (
-                "bottom: 0; left: 0; right: 0;".to_string(),
+                String::from("bottom: 0; left: 0; right: 0;"),
                 format!("height: {};", self.width.clone()),
             ),
         };
         let transform = {
             if self.open {
-                "transform: translateX(0);".to_string()
+                String::from("transform: translateX(0);")
             } else {
                 match self.position {
-                    DrawerPosition::Left => "transform: translateX(-100%);".to_string(),
-                    DrawerPosition::Right => "transform: translateX(100%);".to_string(),
-                    DrawerPosition::Top => "transform: translateY(-100%);".to_string(),
-                    DrawerPosition::Bottom => "transform: translateY(100%);".to_string(),
+                    DrawerPosition::Left => String::from("transform: translateX(-100%);"),
+                    DrawerPosition::Right => String::from("transform: translateX(100%);"),
+                    DrawerPosition::Top => String::from("transform: translateY(-100%);"),
+                    DrawerPosition::Bottom => String::from("transform: translateY(100%);"),
                 }
             }
         };
-        let display = {
+        let display: String = {
             if self.open {
-                "display: block;".to_string()
+                String::from("display: block;")
             } else {
-                "display: none;".to_string()
+                String::from("display: none;")
             }
         };
         let mut html = String::new();
@@ -109,7 +109,7 @@ impl Drawer {
         html.push_str(&transform);
         html.push_str(" background: white; box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); z-index: 1000; transition: transform 0.3s ease; overflow-y: auto; padding: 24px;\">");
         for child in &self.children {
-            html.push_str(&child);
+            html.push_str(child);
         }
         html.push_str("</div>");
         html

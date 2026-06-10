@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -24,9 +28,9 @@ impl Divider {
     pub fn new() -> Divider {
         Divider {
             orientation: DividerOrientation::Horizontal,
-            color: "#3E3E3E".to_string().to_string(),
-            thickness: "1px".to_string().to_string(),
-            margin: "0".to_string().to_string(),
+            color: "#3E3E3E".to_string(),
+            thickness: "1px".to_string(),
+            margin: "0".to_string(),
         }
     }
     #[inline]
@@ -37,9 +41,9 @@ impl Divider {
     pub fn vertical() -> Divider {
         Divider {
             orientation: DividerOrientation::Vertical,
-            color: "#3E3E3E".to_string().to_string(),
-            thickness: "1px".to_string().to_string(),
-            margin: "0".to_string().to_string(),
+            color: "#3E3E3E".to_string(),
+            thickness: "1px".to_string(),
+            margin: "0".to_string(),
         }
     }
     #[inline]
@@ -62,11 +66,11 @@ impl Divider {
 impl Renderable for Divider {
     #[inline]
     fn render(self) -> String {
-        let orientation_class = match self.orientation {
-            DividerOrientation::Horizontal => "wj-divider-horizontal".to_string(),
-            DividerOrientation::Vertical => "wj-divider-vertical".to_string(),
+        let orientation_class: String = match self.orientation {
+            DividerOrientation::Horizontal => String::from("wj-divider-horizontal"),
+            DividerOrientation::Vertical => String::from("wj-divider-vertical"),
         };
-        let style = match self.orientation {
+        let style: String = match self.orientation {
             DividerOrientation::Horizontal => {
                 format!(
                     "width: 100%; height: {}; background: {}; margin: {} 0;",

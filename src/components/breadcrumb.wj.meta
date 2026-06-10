@@ -1,0 +1,140 @@
+{
+  "module_path": "breadcrumb",
+  "functions": {
+    "Breadcrumb::render": {
+      "params": [
+        "Custom(\"Breadcrumb\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Breadcrumb",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Breadcrumb::class": {
+      "params": [
+        "Custom(\"Breadcrumb\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Breadcrumb\")",
+      "is_associated": true,
+      "parent_type": "Breadcrumb",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Breadcrumb::item": {
+      "params": [
+        "Custom(\"Breadcrumb\")",
+        "String",
+        "String",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Breadcrumb\")",
+      "is_associated": true,
+      "parent_type": "Breadcrumb",
+      "param_ownership": [
+        "Owned",
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Breadcrumb::separator": {
+      "params": [
+        "Custom(\"Breadcrumb\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Breadcrumb\")",
+      "is_associated": true,
+      "parent_type": "Breadcrumb",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Breadcrumb::new": {
+      "params": [],
+      "return_type": "Custom(\"Breadcrumb\")",
+      "is_associated": true,
+      "parent_type": "Breadcrumb",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    }
+  },
+  "structs": {
+    "BreadcrumbItem": {
+      "active": "Bool",
+      "label": "String",
+      "href": "String"
+    },
+    "Breadcrumb": {
+      "class": "String",
+      "items": "Vec(Custom(\"BreadcrumbItem\"))",
+      "separator": "String"
+    }
+  },
+  "trait_impls": {},
+  "copy_structs": [
+    "FlexDirection",
+    "NavbarPosition",
+    "RowAlign",
+    "ToastPosition",
+    "Pagination",
+    "DrawerPosition",
+    "DividerOrientation",
+    "Progress",
+    "EasingPreset",
+    "SkeletonVariant",
+    "PopoverPosition",
+    "ColumnJustify",
+    "SplitDirection",
+    "SelectSize",
+    "ColumnAlign",
+    "ModalSize",
+    "ChipSize",
+    "TooltipPosition",
+    "StackAlign",
+    "ScrollDirection",
+    "RowJustify",
+    "SwitchSize",
+    "CheckboxSize",
+    "LoadingSize",
+    "AlertVariant",
+    "TextWeight",
+    "AvatarShape",
+    "CurvePoint",
+    "ButtonSize",
+    "SpinnerSize",
+    "TextareaResize",
+    "StackDirection",
+    "SidebarPosition",
+    "VNode",
+    "ButtonVariant",
+    "BadgeSize",
+    "ToastVariant",
+    "RatingSize",
+    "ChipVariant",
+    "BadgeVariant",
+    "MessageRole",
+    "NodeCategory",
+    "StackJustify",
+    "TextSize",
+    "AvatarSize",
+    "PinType",
+    "ScrollDir",
+    "ProgressVariant"
+  ],
+  "version": "0.46.0"
+}

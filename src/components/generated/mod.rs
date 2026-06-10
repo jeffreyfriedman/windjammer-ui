@@ -28,6 +28,12 @@
 #![allow(noop_method_call)]
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 // Auto-generated mod.rs by Windjammer CLI
 // This file declares all generated Windjammer modules
 
@@ -218,6 +224,9 @@ pub mod bt_visual_palette;
 pub use bt_visual_palette::*;
 pub mod bt_visual_properties;
 pub use bt_visual_properties::*;
+
+
+
 
 
 

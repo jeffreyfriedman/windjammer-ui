@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 use std::fmt::Write;
@@ -16,11 +20,7 @@ pub struct TabPanelTab {
 impl TabPanelTab {
     #[inline]
     pub fn new(id: String, title: String, content: String) -> TabPanelTab {
-        TabPanelTab {
-            id: id.to_string(),
-            title: title.to_string(),
-            content: content.to_string(),
-        }
+        TabPanelTab { id, title, content }
     }
 }
 
@@ -37,8 +37,8 @@ impl TabPanel {
     pub fn new() -> TabPanel {
         TabPanel {
             tabs: Vec::new(),
-            active: "".to_string().to_string(),
-            orientation: "horizontal".to_string().to_string(),
+            active: "".to_string(),
+            orientation: "horizontal".to_string(),
         }
     }
     #[inline]
@@ -61,11 +61,11 @@ impl TabPanel {
 impl Renderable for TabPanel {
     #[inline]
     fn render(self) -> String {
-        let flex_direction = {
+        let flex_direction: String = {
             if self.orientation == "vertical" {
-                "row".to_string()
+                String::from("row")
             } else {
-                "column".to_string()
+                String::from("column")
             }
         };
         let mut tabs_html = {
@@ -83,9 +83,9 @@ impl Renderable for TabPanel {
             let tab = &self.tabs[i];
             let active_class = {
                 if tab.id == self.active {
-                    " wj-tab-active".to_string()
+                    String::from(" wj-tab-active")
                 } else {
-                    "".to_string()
+                    String::new()
                 }
             };
             tabs_html = format!(
@@ -99,11 +99,11 @@ impl Renderable for TabPanel {
         let mut j = 0;
         while j < self.tabs.len() {
             let tab = &self.tabs[j];
-            let display = {
+            let display: String = {
                 if tab.id == self.active {
-                    "block".to_string()
+                    String::from("block")
                 } else {
-                    "none".to_string()
+                    String::from("none")
                 }
             };
             content_html = format!("{}  <div class='wj-tab-panel-pane' data-id='{}' style='display: {};'>\n    {}\n  </div>\n", content_html, tab.id, display, tab.content);

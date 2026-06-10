@@ -16,7 +16,7 @@ impl StepperStep {
     #[inline]
     pub fn new(label: String) -> StepperStep {
         StepperStep {
-            label: label.to_string(),
+            label,
             description: String::new(),
             completed: false,
         }
@@ -69,32 +69,32 @@ impl Renderable for Stepper {
         for (step_index, step) in self.steps.iter().enumerate() {
             let step_index = step_index as i32;
             let is_current = step_index == self.current_step;
-            let is_completed = step.completed || step_index < self.current_step;
+            let is_completed = step.completed.clone() || step_index < self.current_step;
             html.push_str("<div style='display: flex; flex-direction: column; align-items: center; flex: 1;'>");
-            let bg_color = {
+            let bg_color: String = {
                 if is_completed {
-                    "#10b981".to_string()
+                    String::from("#10b981")
                 } else {
                     if is_current {
-                        "#3b82f6".to_string()
+                        String::from("#3b82f6")
                     } else {
-                        "#e2e8f0".to_string()
+                        String::from("#e2e8f0")
                     }
                 }
             };
-            let text_color = {
+            let text_color: String = {
                 if is_completed || is_current {
-                    "white".to_string()
+                    String::from("white")
                 } else {
-                    "#718096".to_string()
+                    String::from("#718096")
                 }
             };
             html.push_str(
                 "<div style='width: 40px; height: 40px; border-radius: 50%; background: ",
             );
-            html.push_str(&bg_color.clone());
+            html.push_str(&bg_color);
             html.push_str("; color: ");
-            html.push_str(&text_color.clone());
+            html.push_str(&text_color);
             html.push_str("; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 16px; margin-bottom: 8px;'>");
             if is_completed {
                 html.push('✓')
@@ -122,16 +122,16 @@ impl Renderable for Stepper {
             }
             html.push_str("</div>");
             html.push_str("</div>");
-            if step_index < total_steps - 1 {
-                let line_color = {
+            if step_index < total_steps - 1_i32 {
+                let line_color: String = {
                     if is_completed {
-                        "#10b981".to_string()
+                        String::from("#10b981")
                     } else {
-                        "#e2e8f0".to_string()
+                        String::from("#e2e8f0")
                     }
                 };
                 html.push_str("<div style='flex: 1; height: 2px; background: ");
-                html.push_str(&line_color.clone());
+                html.push_str(&line_color);
                 html.push_str("; margin: 0 8px; margin-bottom: 48px;'></div>");
             }
         }

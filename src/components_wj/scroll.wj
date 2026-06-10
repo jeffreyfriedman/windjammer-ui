@@ -22,7 +22,7 @@ impl Scroll {
             direction: ScrollDir::Vertical,
             height: "400px".to_string(),
             width: "100%".to_string(),
-            class: String::new(),
+            class: "",
         }
     }
     
@@ -59,7 +59,7 @@ impl Scroll {
             ScrollDir::None => "overflow: hidden",
         }
         
-        let mut html = String::new()
+        let mut html = ""
         html.push_str("<div class=\"wj-scroll ")
         html.push_str(self.class)
         html.push_str("\" style=\"")

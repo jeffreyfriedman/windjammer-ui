@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -57,10 +61,10 @@ impl Renderable for Pagination {
         }
         if self.show_prev_next {
             let prev_disabled = {
-                if self.current_page == 1 {
-                    " disabled".to_string()
+                if self.current_page == 1_i32 {
+                    String::from(" disabled")
                 } else {
-                    "".to_string()
+                    String::new()
                 }
             };
             html = format!(
@@ -72,9 +76,9 @@ impl Renderable for Pagination {
         while page <= self.total_pages {
             let active = {
                 if page == self.current_page {
-                    " active".to_string()
+                    String::from(" active")
                 } else {
-                    "".to_string()
+                    String::new()
                 }
             };
             html = format!(
@@ -86,9 +90,9 @@ impl Renderable for Pagination {
         if self.show_prev_next {
             let next_disabled = {
                 if self.current_page == self.total_pages {
-                    " disabled".to_string()
+                    String::from(" disabled")
                 } else {
-                    "".to_string()
+                    String::new()
                 }
             };
             html = format!(

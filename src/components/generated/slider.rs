@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -24,7 +28,7 @@ impl Slider {
             step: 1.0_f64,
             value: 50.0_f64,
             disabled: false,
-            label: "".to_string().to_string(),
+            label: "".to_string(),
         }
     }
     #[inline]
@@ -64,16 +68,16 @@ impl Renderable for Slider {
     fn render(self) -> String {
         let disabled_attr = {
             if self.disabled {
-                " disabled".to_string()
+                String::from(" disabled")
             } else {
-                "".to_string()
+                String::new()
             }
         };
         let label_html = {
             if self.label != "" {
-                "<label>".to_string().to_string() + &self.label + &"</label>".to_string()
+                "<label>".to_string() + &self.label + &String::from("</label>")
             } else {
-                "".to_string().to_string()
+                "".to_string()
             }
         };
         format!(

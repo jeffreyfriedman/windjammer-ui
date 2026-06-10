@@ -17,9 +17,9 @@ impl ContextMenuItem {
     #[inline]
     pub fn new(label: String) -> ContextMenuItem {
         ContextMenuItem {
-            label: label.to_string(),
-            icon: String::from("".to_string()),
-            action: String::from("".to_string()),
+            label,
+            icon: String::new(),
+            action: String::new(),
             disabled: false,
         }
     }
@@ -52,7 +52,7 @@ impl ContextMenu {
     pub fn new(trigger_id: String) -> ContextMenu {
         ContextMenu {
             items: Vec::new(),
-            trigger_id: trigger_id.to_string(),
+            trigger_id,
         }
     }
     #[inline]
@@ -71,21 +71,21 @@ impl Renderable for ContextMenu {
                 if item.icon.len() > 0 {
                     format!("<span class='wj-context-icon'>{}</span>", item.icon)
                 } else {
-                    String::from("".to_string())
+                    String::new()
                 }
             };
             let disabled_class = {
                 if item.disabled {
-                    " wj-context-item-disabled".to_string()
+                    String::from(" wj-context-item-disabled")
                 } else {
-                    "".to_string()
+                    String::new()
                 }
             };
             let disabled_attr = {
                 if item.disabled {
-                    " disabled".to_string()
+                    String::from(" disabled")
                 } else {
-                    "".to_string()
+                    String::new()
                 }
             };
             {

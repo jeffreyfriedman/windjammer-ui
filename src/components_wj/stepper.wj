@@ -12,7 +12,7 @@ impl StepperStep {
     pub fn new(label: string) -> StepperStep {
         StepperStep {
             label: label,
-            description: String::new(),
+            description: "",
             completed: false,
         }
     }
@@ -55,7 +55,7 @@ impl Stepper {
 
 impl Renderable for Stepper {
 fn render(self) -> string {
-        let mut html = String::new();
+        let mut html = "";
 
         html.push_str("<div style='display: flex; align-items: center; justify-content: space-between; padding: 24px 0;'>");
 

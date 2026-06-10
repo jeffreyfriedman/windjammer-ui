@@ -11,9 +11,9 @@ impl Label {
     pub fn new(text: string) -> Label {
         Label {
             text,
-            for_id: String::new(),
+            for_id: "",
             required: false,
-            class: String::new(),
+            class: "",
         }
     }
     
@@ -33,7 +33,7 @@ impl Label {
     }
     
     pub fn render() -> string {
-        let mut html = String::new()
+        let mut html = ""
         html.push_str("<label class=\"wj-label ")
         html.push_str(self.class)
         html.push_str("\" style=\"font-weight: 500; font-size: 14px; color: #374151; display: block; margin-bottom: 4px;\"")

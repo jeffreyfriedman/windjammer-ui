@@ -1,5 +1,9 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -16,8 +20,8 @@ impl DropdownItem {
     #[inline]
     pub fn new(label: String, value: String) -> DropdownItem {
         DropdownItem {
-            label: label.to_string(),
-            value: value.to_string(),
+            label,
+            value,
             disabled: false,
         }
     }
@@ -39,7 +43,7 @@ impl Dropdown {
     #[inline]
     pub fn new(label: String) -> Dropdown {
         Dropdown {
-            label: label.to_string(),
+            label,
             items: Vec::new(),
         }
     }
@@ -59,9 +63,9 @@ impl Renderable for Dropdown {
             let item = &self.items[i];
             let disabled_class = {
                 if item.disabled {
-                    " wj-dropdown-item-disabled".to_string()
+                    String::from(" wj-dropdown-item-disabled")
                 } else {
-                    "".to_string()
+                    String::new()
                 }
             };
             items_html = format!(

@@ -266,7 +266,7 @@ impl Style {
     }
     
     pub fn to_string() -> string {
-        let mut result = String::new()
+        let mut result = ""
         
         for (i, prop) in self.properties.iter().enumerate() {
             if i > 0 {

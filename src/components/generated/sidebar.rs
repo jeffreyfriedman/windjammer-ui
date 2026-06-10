@@ -22,9 +22,9 @@ impl SidebarItem {
     #[inline]
     pub fn new(label: String) -> SidebarItem {
         SidebarItem {
-            label: label.to_string(),
-            icon: String::from("".to_string()),
-            href: String::from("#".to_string()),
+            label,
+            icon: String::new(),
+            href: String::from("#"),
         }
     }
     #[inline]
@@ -54,7 +54,7 @@ impl Sidebar {
         Sidebar {
             items: Vec::new(),
             position: SidebarPosition::Left,
-            width: String::from("250px".to_string()),
+            width: String::from("250px"),
             collapsed: false,
         }
     }
@@ -89,7 +89,7 @@ impl Renderable for Sidebar {
                 if item.icon.len() > 0 {
                     format!("<span class='wj-sidebar-icon'>{}</span>", item.icon)
                 } else {
-                    String::from("".to_string())
+                    String::new()
                 }
             };
             {
@@ -97,15 +97,15 @@ impl Renderable for Sidebar {
                 items_html.push(_temp0)
             };
         }
-        let position_class = match self.position {
-            SidebarPosition::Left => "wj-sidebar-left".to_string(),
-            SidebarPosition::Right => "wj-sidebar-right".to_string(),
+        let position_class: String = match self.position {
+            SidebarPosition::Left => String::from("wj-sidebar-left"),
+            SidebarPosition::Right => String::from("wj-sidebar-right"),
         };
         let collapsed_class = {
             if self.collapsed {
-                " wj-sidebar-collapsed".to_string()
+                String::from(" wj-sidebar-collapsed")
             } else {
-                "".to_string()
+                String::new()
             }
         };
         format!("<aside class='wj-sidebar {} {}' style='width: {}'>\n                <div class='wj-sidebar-toggle' onclick='this.parentElement.classList.toggle(\"wj-sidebar-collapsed\")'>\n                    <span class='wj-sidebar-toggle-icon'>☰</span>\n                </div>\n                <nav class='wj-sidebar-nav'>{}</nav>\n            </aside>", position_class, collapsed_class, self.width, items_html.join(""))
