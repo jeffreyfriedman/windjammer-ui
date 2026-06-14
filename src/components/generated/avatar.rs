@@ -1,16 +1,14 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 #[derive(Debug, Clone, PartialEq)]
 #[repr(C)]
 pub struct Avatar {
-    src: String,
-    alt: String,
-    size: AvatarSize,
-    shape: AvatarShape,
-    fallback: String,
-    class: String,
+    pub src: String,
+    pub alt: String,
+    pub size: AvatarSize,
+    pub shape: AvatarShape,
+    pub fallback: String,
+    pub class: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -29,44 +27,37 @@ pub enum AvatarShape {
 }
 
 impl Avatar {
-    #[inline]
-    pub fn new(src: String) -> Avatar {
-        Avatar {
-            src,
-            alt: "Avatar".to_string(),
-            size: AvatarSize::Medium,
-            shape: AvatarShape::Circle,
-            fallback: String::new(),
-            class: String::new(),
-        }
-    }
-    #[inline]
-    pub fn alt(mut self, alt: String) -> Avatar {
+#[inline]
+pub fn new(src: String) -> Avatar {
+        Avatar { src, alt: "Avatar".to_string(), size: AvatarSize::Medium, shape: AvatarShape::Circle, fallback: String::new(), class: String::new() }
+}
+#[inline]
+pub fn alt(mut self, alt: String) -> Avatar {
         self.alt = alt;
         self
-    }
-    #[inline]
-    pub fn size(mut self, size: AvatarSize) -> Avatar {
+}
+#[inline]
+pub fn size(mut self, size: AvatarSize) -> Avatar {
         self.size = size;
         self
-    }
-    #[inline]
-    pub fn shape(mut self, shape: AvatarShape) -> Avatar {
+}
+#[inline]
+pub fn shape(mut self, shape: AvatarShape) -> Avatar {
         self.shape = shape;
         self
-    }
-    #[inline]
-    pub fn fallback(mut self, fallback: String) -> Avatar {
+}
+#[inline]
+pub fn fallback(mut self, fallback: String) -> Avatar {
         self.fallback = fallback;
         self
-    }
-    #[inline]
-    pub fn class(mut self, class: String) -> Avatar {
+}
+#[inline]
+pub fn class(mut self, class: String) -> Avatar {
         self.class = class;
         self
-    }
-    #[inline]
-    pub fn render(&self) -> String {
+}
+#[inline]
+pub fn render(&self) -> String {
         let size_px: String = match self.size {
             AvatarSize::Small => String::from("32px"),
             AvatarSize::Medium => String::from("48px"),
@@ -115,5 +106,6 @@ impl Avatar {
             html.push_str("; object-fit: cover;\">")
         }
         html
-    }
 }
+}
+

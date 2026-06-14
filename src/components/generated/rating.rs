@@ -1,5 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -14,49 +12,43 @@ pub enum RatingSize {
 #[derive(Debug, Clone, PartialEq)]
 #[repr(C)]
 pub struct Rating {
-    value: f32,
-    max: i32,
-    size: RatingSize,
-    readonly: bool,
-    color: String,
+    pub value: f32,
+    pub max: i32,
+    pub size: RatingSize,
+    pub readonly: bool,
+    pub color: String,
 }
 
 impl Rating {
-    #[inline]
-    pub fn new(value: f32) -> Rating {
-        Rating {
-            value,
-            max: 5_i32,
-            size: RatingSize::Medium,
-            readonly: true,
-            color: "#fbbf24".to_string(),
-        }
-    }
-    #[inline]
-    pub fn max(mut self, max: i32) -> Rating {
+#[inline]
+pub fn new(value: f32) -> Rating {
+        Rating { value, max: 5_i32, size: RatingSize::Medium, readonly: true, color: "#fbbf24".to_string() }
+}
+#[inline]
+pub fn max(mut self, max: i32) -> Rating {
         self.max = max;
         self
-    }
-    #[inline]
-    pub fn size(mut self, size: RatingSize) -> Rating {
+}
+#[inline]
+pub fn size(mut self, size: RatingSize) -> Rating {
         self.size = size;
         self
-    }
-    #[inline]
-    pub fn readonly(mut self, readonly: bool) -> Rating {
+}
+#[inline]
+pub fn readonly(mut self, readonly: bool) -> Rating {
         self.readonly = readonly;
         self
-    }
-    #[inline]
-    pub fn color(mut self, color: String) -> Rating {
+}
+#[inline]
+pub fn color(mut self, color: String) -> Rating {
         self.color = color;
         self
-    }
+}
 }
 
 impl Renderable for Rating {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(self) -> String {
         let star_size: String = match self.size {
             RatingSize::Small => String::from("16px"),
             RatingSize::Medium => String::from("24px"),
@@ -99,5 +91,6 @@ impl Renderable for Rating {
         }
         html.push_str("</div>");
         html
-    }
 }
+}
+

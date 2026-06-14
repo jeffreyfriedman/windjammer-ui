@@ -1,9 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -11,56 +5,49 @@ use super::traits::Renderable;
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 #[repr(C)]
 pub struct AdvancedCodeEditor {
-    code: String,
-    language: String,
-    theme: String,
-    line_numbers: bool,
-    minimap: bool,
-    autocomplete: bool,
+    pub code: String,
+    pub language: String,
+    pub theme: String,
+    pub line_numbers: bool,
+    pub minimap: bool,
+    pub autocomplete: bool,
 }
 
 impl AdvancedCodeEditor {
-    #[inline]
-    pub fn new(code: String) -> AdvancedCodeEditor {
-        AdvancedCodeEditor {
-            code,
-            language: "rust".to_string(),
-            theme: "monokai".to_string(),
-            line_numbers: true,
-            minimap: true,
-            autocomplete: true,
-        }
-    }
-    #[inline]
-    pub fn language(mut self, language: String) -> AdvancedCodeEditor {
+#[inline]
+pub fn new(code: String) -> AdvancedCodeEditor {
+        AdvancedCodeEditor { code, language: "rust".to_string(), theme: "monokai".to_string(), line_numbers: true, minimap: true, autocomplete: true }
+}
+#[inline]
+pub fn language(mut self, language: String) -> AdvancedCodeEditor {
         self.language = language;
         self
-    }
-    #[inline]
-    pub fn theme(mut self, theme: String) -> AdvancedCodeEditor {
+}
+#[inline]
+pub fn theme(mut self, theme: String) -> AdvancedCodeEditor {
         self.theme = theme;
         self
-    }
-    #[inline]
-    pub fn line_numbers(mut self, show: bool) -> AdvancedCodeEditor {
+}
+#[inline]
+pub fn line_numbers(mut self, show: bool) -> AdvancedCodeEditor {
         self.line_numbers = show;
         self
-    }
-    #[inline]
-    pub fn minimap(mut self, show: bool) -> AdvancedCodeEditor {
+}
+#[inline]
+pub fn minimap(mut self, show: bool) -> AdvancedCodeEditor {
         self.minimap = show;
         self
-    }
-    #[inline]
-    pub fn autocomplete(mut self, enable: bool) -> AdvancedCodeEditor {
+}
+#[inline]
+pub fn autocomplete(mut self, enable: bool) -> AdvancedCodeEditor {
         self.autocomplete = enable;
         self
-    }
+}
 }
 
 impl Renderable for AdvancedCodeEditor {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(self) -> String {
         let features_class = {
             if self.minimap {
                 String::from(" wj-editor-with-minimap")
@@ -82,5 +69,6 @@ impl Renderable for AdvancedCodeEditor {
                 ""
             }
         })
-    }
 }
+}
+

@@ -1,9 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -11,37 +5,32 @@ use super::traits::Renderable;
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 #[repr(C)]
 pub struct Toolbar {
-    items: Vec<String>,
-    position: String,
+    pub items: Vec<String>,
+    pub position: String,
 }
 
 impl Toolbar {
-    #[inline]
-    pub fn new() -> Toolbar {
-        Toolbar {
-            items: Vec::new(),
-            position: "top".to_string(),
-        }
-    }
-    #[inline]
-    pub fn item(mut self, item: String) -> Toolbar {
+#[inline]
+pub fn new() -> Toolbar {
+        Toolbar { items: Vec::new(), position: "top".to_string() }
+}
+#[inline]
+pub fn item(mut self, item: String) -> Toolbar {
         self.items.push(item);
         self
-    }
-    #[inline]
-    pub fn position(mut self, position: String) -> Toolbar {
+}
+#[inline]
+pub fn position(mut self, position: String) -> Toolbar {
         self.position = position;
         self
-    }
+}
 }
 
 impl Renderable for Toolbar {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(self) -> String {
         let items_html = self.items.join("\n");
-        format!(
-            "<div class='wj-toolbar wj-toolbar-{}'>\n  {}\n</div>",
-            self.position, items_html
-        )
-    }
+        format!("<div class='wj-toolbar wj-toolbar-{}'>\n  {}\n</div>", self.position, items_html)
 }
+}
+

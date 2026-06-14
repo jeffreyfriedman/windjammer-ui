@@ -1,9 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -29,49 +23,43 @@ pub enum ToastPosition {
 #[derive(Debug, Clone, PartialEq)]
 #[repr(C)]
 pub struct Toast {
-    message: String,
-    variant: ToastVariant,
-    position: ToastPosition,
-    duration: i32,
-    show_close: bool,
+    pub message: String,
+    pub variant: ToastVariant,
+    pub position: ToastPosition,
+    pub duration: i32,
+    pub show_close: bool,
 }
 
 impl Toast {
-    #[inline]
-    pub fn new(message: String) -> Toast {
-        Toast {
-            message,
-            variant: ToastVariant::Info,
-            position: ToastPosition::TopRight,
-            duration: 3000_i32,
-            show_close: true,
-        }
-    }
-    #[inline]
-    pub fn variant(mut self, variant: ToastVariant) -> Toast {
+#[inline]
+pub fn new(message: String) -> Toast {
+        Toast { message, variant: ToastVariant::Info, position: ToastPosition::TopRight, duration: 3000_i32, show_close: true }
+}
+#[inline]
+pub fn variant(mut self, variant: ToastVariant) -> Toast {
         self.variant = variant;
         self
-    }
-    #[inline]
-    pub fn position(mut self, position: ToastPosition) -> Toast {
+}
+#[inline]
+pub fn position(mut self, position: ToastPosition) -> Toast {
         self.position = position;
         self
-    }
-    #[inline]
-    pub fn duration(mut self, duration: i32) -> Toast {
+}
+#[inline]
+pub fn duration(mut self, duration: i32) -> Toast {
         self.duration = duration;
         self
-    }
-    #[inline]
-    pub fn show_close(mut self, show: bool) -> Toast {
+}
+#[inline]
+pub fn show_close(mut self, show: bool) -> Toast {
         self.show_close = show;
         self
-    }
+}
 }
 
 impl Renderable for Toast {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(self) -> String {
         let variant_class: String = match self.variant {
             ToastVariant::Success => String::from("wj-toast-success"),
             ToastVariant::Error => String::from("wj-toast-error"),
@@ -100,5 +88,6 @@ impl Renderable for Toast {
             }
         };
         format!("<div class='wj-toast {} {}' data-duration='{}'>\n  <span class='wj-toast-icon'>{}</span>\n  <span class='wj-toast-message'>{}</span>\n  {}\n</div>", variant_class, position_class, self.duration, icon, self.message, close_button)
-    }
 }
+}
+

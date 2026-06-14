@@ -106,6 +106,8 @@ pub struct GraphNode {
     pub outputs: Vec<NodePin>,
     pub collapsed: bool,
     pub preview_enabled: bool,
+    pub trace_active: bool,
+    pub pin_watch_text: string,
 }
 
 impl GraphNode {
@@ -120,7 +122,19 @@ impl GraphNode {
             outputs: Vec::new(),
             collapsed: false,
             preview_enabled: false,
+            trace_active: false,
+            pin_watch_text: "".to_string(),
         }
+    }
+    
+    pub fn trace_highlight(self, active: bool) -> GraphNode {
+        self.trace_active = active
+        self
+    }
+    
+    pub fn pin_watch(self, label: string) -> GraphNode {
+        self.pin_watch_text = label
+        self
     }
     
     pub fn position(self, x: f32, y: f32) -> GraphNode {
@@ -206,8 +220,15 @@ impl Renderable for GraphNode {
             ""
         }
         
+        let trace_class = if self.trace_active { " trace-active" } else { "" }
+        let watch_html = if self.pin_watch_text.len() > 0 {
+            format!("<div class='pin-watch'>{}</div>", self.pin_watch_text)
+        } else {
+            "".to_string()
+        }
+        
         format!("
-            <div class='graph-node' id='{}' style='left: {}px; top: {}px;'>
+            <div class='graph-node{}' id='{}' style='left: {}px; top: {}px;'>
                 <div class='node-header' style='background: {};'>
                     <span class='node-title'>{}</span>
                     <div class='node-actions'>
@@ -224,8 +245,9 @@ impl Renderable for GraphNode {
                     </div>
                 </div>
                 {}
+                {}
             </div>
-        ", self.id, self.x, self.y, header_color, self.title, inputs_html, outputs_html, preview_html)
+        ", trace_class, self.id, self.x, self.y, header_color, self.title, inputs_html, outputs_html, preview_html, watch_html)
     }
 }
 
@@ -250,6 +272,7 @@ pub struct NodeGraph {
     pub pan_y: f32,
     pub show_grid: bool,
     pub on_change: string,
+    pub trace_node_ids: Vec<string>,
 }
 
 impl NodeGraph {
@@ -264,7 +287,14 @@ impl NodeGraph {
             pan_y: 0.0,
             show_grid: true,
             on_change: "".to_string(),
+            trace_node_ids: Vec::new(),
         }
+    }
+    
+    /// Highlight nodes on the active execution path (from graph_trace runtime).
+    pub fn apply_execution_trace(self, node_ids: Vec<string>) -> NodeGraph {
+        self.trace_node_ids = node_ids
+        self
     }
     
     pub fn size(self, width: i32, height: i32) -> NodeGraph {
@@ -304,7 +334,13 @@ impl Renderable for NodeGraph {
     pub fn render(self) -> string {
         let mut nodes_html = "".to_string()
         for n in self.nodes {
-            nodes_html = nodes_html + n.clone().render() + "\n"
+            let mut node = n.clone()
+            for tid in self.trace_node_ids {
+                if node.id == tid {
+                    node = node.trace_highlight(true)
+                }
+            }
+            nodes_html = nodes_html + node.render() + "\n"
         }
         
         // Generate SVG connections
@@ -555,6 +591,18 @@ pub fn node_graph_styles() -> string {
         position: absolute;
         border: 2px solid #e94560;
         background: rgba(233, 69, 96, 0.1);
+    }
+
+    .graph-node.trace-active {
+        outline: 2px solid #e94560;
+        box-shadow: 0 0 16px rgba(233, 69, 96, 0.55);
+    }
+
+    .pin-watch {
+        font-size: 10px;
+        color: #fbbf24;
+        padding: 4px 8px;
+        border-top: 1px solid rgba(251, 191, 36, 0.25);
     }
     ".to_string()
 }

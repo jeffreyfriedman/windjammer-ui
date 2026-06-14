@@ -1,0 +1,10 @@
+// Visual script debugger panel — live_link trace snapshot formatting.
+
+use super::visual_script_debugger::VisualScriptDebuggerPanel
+
+pub fn test_with_trace_updates_callstack_and_watches() {
+    let panel = VisualScriptDebuggerPanel::inactive()
+        .with_trace("spawn_wave", "[{\"pin\":\"count\",\"value\":3.0}]")
+    assert_str_contains(panel.callstack_text, "spawn_wave")
+    assert_str_contains(panel.watches_text, "count")
+}

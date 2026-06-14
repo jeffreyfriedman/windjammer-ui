@@ -1,15 +1,13 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 #[derive(Debug, Clone, PartialEq)]
 #[repr(C)]
 pub struct Switch {
-    checked: bool,
-    disabled: bool,
-    size: SwitchSize,
-    label: String,
-    class: String,
+    pub checked: bool,
+    pub disabled: bool,
+    pub size: SwitchSize,
+    pub label: String,
+    pub class: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -20,59 +18,41 @@ pub enum SwitchSize {
 }
 
 impl Switch {
-    #[inline]
-    pub fn new() -> Switch {
-        Switch {
-            checked: false,
-            disabled: false,
-            size: SwitchSize::Medium,
-            label: String::new(),
-            class: String::new(),
-        }
-    }
-    #[inline]
-    pub fn checked(mut self, checked: bool) -> Switch {
+#[inline]
+pub fn new() -> Switch {
+        Switch { checked: false, disabled: false, size: SwitchSize::Medium, label: String::new(), class: String::new() }
+}
+#[inline]
+pub fn checked(mut self, checked: bool) -> Switch {
         self.checked = checked;
         self
-    }
-    #[inline]
-    pub fn disabled(mut self, disabled: bool) -> Switch {
+}
+#[inline]
+pub fn disabled(mut self, disabled: bool) -> Switch {
         self.disabled = disabled;
         self
-    }
-    #[inline]
-    pub fn size(mut self, size: SwitchSize) -> Switch {
+}
+#[inline]
+pub fn size(mut self, size: SwitchSize) -> Switch {
         self.size = size;
         self
-    }
-    #[inline]
-    pub fn label(mut self, label: String) -> Switch {
+}
+#[inline]
+pub fn label(mut self, label: String) -> Switch {
         self.label = label;
         self
-    }
-    #[inline]
-    pub fn class(mut self, class: String) -> Switch {
+}
+#[inline]
+pub fn class(mut self, class: String) -> Switch {
         self.class = class;
         self
-    }
-    #[inline]
-    pub fn render(&self) -> String {
+}
+#[inline]
+pub fn render(&self) -> String {
         let (width, height, thumb_size) = match self.size {
-            SwitchSize::Small => (
-                String::from("32px"),
-                String::from("18px"),
-                String::from("14px"),
-            ),
-            SwitchSize::Medium => (
-                String::from("44px"),
-                String::from("24px"),
-                String::from("20px"),
-            ),
-            SwitchSize::Large => (
-                String::from("56px"),
-                String::from("32px"),
-                String::from("28px"),
-            ),
+            SwitchSize::Small => (String::from("32px"), String::from("18px"), String::from("14px")),
+            SwitchSize::Medium => (String::from("44px"), String::from("24px"), String::from("20px")),
+            SwitchSize::Large => (String::from("56px"), String::from("32px"), String::from("28px")),
         };
         let bg_color: String = {
             if self.checked {
@@ -140,5 +120,6 @@ impl Switch {
         }
         html.push_str("</label>");
         html
-    }
 }
+}
+
