@@ -1,14 +1,12 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 #[derive(Debug, Clone, PartialEq)]
 #[repr(C)]
 pub struct Popover {
-    trigger: String,
-    content: String,
-    position: PopoverPosition,
-    class: String,
+    pub trigger: String,
+    pub content: String,
+    pub position: PopoverPosition,
+    pub class: String,
 }
 
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -20,40 +18,27 @@ pub enum PopoverPosition {
 }
 
 impl Popover {
-    #[inline]
-    pub fn new(trigger: String, content: String) -> Popover {
-        Popover {
-            trigger,
-            content,
-            position: PopoverPosition::Bottom,
-            class: String::new(),
-        }
-    }
-    #[inline]
-    pub fn position(mut self, position: PopoverPosition) -> Popover {
+#[inline]
+pub fn new(trigger: String, content: String) -> Popover {
+        Popover { trigger, content, position: PopoverPosition::Bottom, class: String::new() }
+}
+#[inline]
+pub fn position(mut self, position: PopoverPosition) -> Popover {
         self.position = position;
         self
-    }
-    #[inline]
-    pub fn class(mut self, class: String) -> Popover {
+}
+#[inline]
+pub fn class(mut self, class: String) -> Popover {
         self.class = class;
         self
-    }
-    #[inline]
-    pub fn render(&self) -> String {
+}
+#[inline]
+pub fn render(&self) -> String {
         let position_style: String = match self.position {
-            PopoverPosition::Top => String::from(
-                "bottom: 100%; left: 50%; transform: translateX(-50%); margin-bottom: 8px;",
-            ),
-            PopoverPosition::Bottom => {
-                String::from("top: 100%; left: 50%; transform: translateX(-50%); margin-top: 8px;")
-            }
-            PopoverPosition::Left => String::from(
-                "right: 100%; top: 50%; transform: translateY(-50%); margin-right: 8px;",
-            ),
-            PopoverPosition::Right => {
-                String::from("left: 100%; top: 50%; transform: translateY(-50%); margin-left: 8px;")
-            }
+            PopoverPosition::Top => String::from("bottom: 100%; left: 50%; transform: translateX(-50%); margin-bottom: 8px;"),
+            PopoverPosition::Bottom => String::from("top: 100%; left: 50%; transform: translateX(-50%); margin-top: 8px;"),
+            PopoverPosition::Left => String::from("right: 100%; top: 50%; transform: translateY(-50%); margin-right: 8px;"),
+            PopoverPosition::Right => String::from("left: 100%; top: 50%; transform: translateY(-50%); margin-left: 8px;"),
         };
         let mut html = String::new();
         html.push_str("<div class=\"wj-popover ");
@@ -68,5 +53,6 @@ impl Popover {
         html.push_str("</div>");
         html.push_str("<style>.wj-popover:hover .wj-popover-content { display: block; }</style>");
         html
-    }
 }
+}
+

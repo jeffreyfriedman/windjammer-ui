@@ -1,9 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -11,57 +5,50 @@ use super::traits::Renderable;
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 #[repr(C)]
 pub struct AccordionItem {
-    title: String,
-    content: String,
-    open: bool,
+    pub title: String,
+    pub content: String,
+    pub open: bool,
 }
 
 impl AccordionItem {
-    #[inline]
-    pub fn new(title: String, content: String) -> AccordionItem {
-        AccordionItem {
-            title,
-            content,
-            open: false,
-        }
-    }
-    #[inline]
-    pub fn open(mut self, open: bool) -> AccordionItem {
+#[inline]
+pub fn new(title: String, content: String) -> AccordionItem {
+        AccordionItem { title, content, open: false }
+}
+#[inline]
+pub fn open(mut self, open: bool) -> AccordionItem {
         self.open = open;
         self
-    }
+}
 }
 
 #[derive(Debug, Clone, PartialEq, Default)]
 #[repr(C)]
 pub struct Accordion {
-    items: Vec<AccordionItem>,
-    allow_multiple: bool,
+    pub items: Vec<AccordionItem>,
+    pub allow_multiple: bool,
 }
 
 impl Accordion {
-    #[inline]
-    pub fn new() -> Accordion {
-        Accordion {
-            items: Vec::new(),
-            allow_multiple: false,
-        }
-    }
-    #[inline]
-    pub fn item(mut self, item: AccordionItem) -> Accordion {
+#[inline]
+pub fn new() -> Accordion {
+        Accordion { items: Vec::new(), allow_multiple: false }
+}
+#[inline]
+pub fn item(mut self, item: AccordionItem) -> Accordion {
         self.items.push(item);
         self
-    }
-    #[inline]
-    pub fn allow_multiple(mut self, allow: bool) -> Accordion {
+}
+#[inline]
+pub fn allow_multiple(mut self, allow: bool) -> Accordion {
         self.allow_multiple = allow;
         self
-    }
+}
 }
 
 impl Renderable for Accordion {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(self) -> String {
         let mut html = "<div class='wj-accordion'>".to_string();
         let mut i = 0;
         while i < self.items.len() {
@@ -77,5 +64,6 @@ impl Renderable for Accordion {
             i += 1;
         }
         format!("{}</div>", html)
-    }
 }
+}
+

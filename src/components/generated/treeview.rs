@@ -1,43 +1,33 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
+use std::fmt::Write;
 #[allow(unused_imports)]
 use super::*;
-use std::fmt::Write;
 
 use super::traits::Renderable;
 #[derive(Debug, Clone, Default)]
 #[repr(C)]
 pub struct TreeItem {
-    label: String,
-    children: Vec<TreeItem>,
-    expanded: bool,
+    pub label: String,
+    pub children: Vec<TreeItem>,
+    pub expanded: bool,
 }
 
 impl TreeItem {
-    #[inline]
-    pub fn new(label: String) -> TreeItem {
-        TreeItem {
-            label,
-            children: Vec::new(),
-            expanded: false,
-        }
-    }
-    #[inline]
-    pub fn child(mut self, item: TreeItem) -> TreeItem {
+#[inline]
+pub fn new(label: String) -> TreeItem {
+        TreeItem { label, children: Vec::new(), expanded: false }
+}
+#[inline]
+pub fn child(mut self, item: TreeItem) -> TreeItem {
         self.children.push(item);
         self
-    }
-    #[inline]
-    pub fn expanded(mut self, expanded: bool) -> TreeItem {
+}
+#[inline]
+pub fn expanded(mut self, expanded: bool) -> TreeItem {
         self.expanded = expanded;
         self
-    }
-    #[inline]
-    pub fn render(&self, depth: i32) -> String {
+}
+#[inline]
+pub fn render(&self, depth: i32) -> String {
         let indent_px = depth * 20_i32;
         let icon: String = {
             if !self.children.is_empty() {
@@ -64,30 +54,30 @@ impl TreeItem {
             }
         }
         html
-    }
+}
 }
 
 #[derive(Debug, Clone, Default)]
 #[repr(C)]
 pub struct TreeView {
-    items: Vec<TreeItem>,
+    pub items: Vec<TreeItem>,
 }
 
 impl TreeView {
-    #[inline]
-    pub fn new() -> TreeView {
+#[inline]
+pub fn new() -> TreeView {
         TreeView { items: Vec::new() }
-    }
-    #[inline]
-    pub fn item(mut self, item: TreeItem) -> TreeView {
+}
+#[inline]
+pub fn item(mut self, item: TreeItem) -> TreeView {
         self.items.push(item);
         self
-    }
+}
 }
 
 impl Renderable for TreeView {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(self) -> String {
         let mut html = "<div class='wj-tree-view'>\n".to_string();
         let mut i = 0;
         while i < self.items.len() {
@@ -96,5 +86,6 @@ impl Renderable for TreeView {
             i += 1;
         }
         format!("{}</div>", html)
-    }
 }
+}
+

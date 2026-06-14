@@ -1,41 +1,35 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 #[repr(C)]
 pub struct List {
-    items: Vec<String>,
-    ordered: bool,
-    class: String,
+    pub items: Vec<String>,
+    pub ordered: bool,
+    pub class: String,
 }
 
 impl List {
-    #[inline]
-    pub fn new() -> List {
-        List {
-            items: Vec::new(),
-            ordered: false,
-            class: String::new(),
-        }
-    }
-    #[inline]
-    pub fn item(mut self, item: String) -> List {
+#[inline]
+pub fn new() -> List {
+        List { items: Vec::new(), ordered: false, class: String::new() }
+}
+#[inline]
+pub fn item(mut self, item: String) -> List {
         self.items.push(item);
         self
-    }
-    #[inline]
-    pub fn ordered(mut self, ordered: bool) -> List {
+}
+#[inline]
+pub fn ordered(mut self, ordered: bool) -> List {
         self.ordered = ordered;
         self
-    }
-    #[inline]
-    pub fn class(mut self, class: String) -> List {
+}
+#[inline]
+pub fn class(mut self, class: String) -> List {
         self.class = class;
         self
-    }
-    #[inline]
-    pub fn render(&self) -> String {
+}
+#[inline]
+pub fn render(&self) -> String {
         let tag: String = {
             if self.ordered {
                 String::from("ol")
@@ -58,31 +52,28 @@ impl List {
         html.push_str(&tag);
         html.push('>');
         html
-    }
+}
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 #[repr(C)]
 pub struct ListItem {
-    content: String,
-    class: String,
+    pub content: String,
+    pub class: String,
 }
 
 impl ListItem {
-    #[inline]
-    pub fn new(content: String) -> ListItem {
-        ListItem {
-            content,
-            class: String::new(),
-        }
-    }
-    #[inline]
-    pub fn class(mut self, class: String) -> ListItem {
+#[inline]
+pub fn new(content: String) -> ListItem {
+        ListItem { content, class: String::new() }
+}
+#[inline]
+pub fn class(mut self, class: String) -> ListItem {
         self.class = class;
         self
-    }
-    #[inline]
-    pub fn render(&self) -> String {
+}
+#[inline]
+pub fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<li class=\"wj-list-item ");
         html.push_str(&self.class.clone());
@@ -90,5 +81,6 @@ impl ListItem {
         html.push_str(&self.content.clone());
         html.push_str("</li>");
         html
-    }
 }
+}
+

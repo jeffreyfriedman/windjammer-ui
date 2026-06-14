@@ -1,12 +1,6 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
+use std::fmt::Write;
 #[allow(unused_imports)]
 use super::*;
-use std::fmt::Write;
 
 use super::traits::Renderable;
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -19,33 +13,30 @@ pub enum SpinnerSize {
 #[derive(Debug, Clone, PartialEq)]
 #[repr(C)]
 pub struct Spinner {
-    size: SpinnerSize,
-    label: String,
+    pub size: SpinnerSize,
+    pub label: String,
 }
 
 impl Spinner {
-    #[inline]
-    pub fn new() -> Spinner {
-        Spinner {
-            size: SpinnerSize::Medium,
-            label: "".to_string(),
-        }
-    }
-    #[inline]
-    pub fn size(mut self, size: SpinnerSize) -> Spinner {
+#[inline]
+pub fn new() -> Spinner {
+        Spinner { size: SpinnerSize::Medium, label: "".to_string() }
+}
+#[inline]
+pub fn size(mut self, size: SpinnerSize) -> Spinner {
         self.size = size;
         self
-    }
-    #[inline]
-    pub fn label(mut self, label: String) -> Spinner {
+}
+#[inline]
+pub fn label(mut self, label: String) -> Spinner {
         self.label = label;
         self
-    }
+}
 }
 
 impl Renderable for Spinner {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(self) -> String {
         let size_class: String = match self.size {
             SpinnerSize::Small => String::from("wj-spinner-sm"),
             SpinnerSize::Medium => String::from("wj-spinner-md"),
@@ -61,5 +52,6 @@ impl Renderable for Spinner {
         } else {
             spinner_html
         }
-    }
 }
+}
+

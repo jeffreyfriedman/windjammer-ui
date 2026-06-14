@@ -1,5 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -15,58 +13,50 @@ pub enum ModalSize {
 #[derive(Debug, Clone, PartialEq)]
 #[repr(C)]
 pub struct Modal {
-    id: String,
-    title: String,
-    content: String,
-    footer: String,
-    size: ModalSize,
-    closeable: bool,
-    visible: bool,
+    pub id: String,
+    pub title: String,
+    pub content: String,
+    pub footer: String,
+    pub size: ModalSize,
+    pub closeable: bool,
+    pub visible: bool,
 }
 
 impl Modal {
-    #[inline]
-    pub fn new(id: String, title: String) -> Modal {
-        Modal {
-            id,
-            title,
-            content: String::new(),
-            footer: String::new(),
-            size: ModalSize::Medium,
-            closeable: true,
-            visible: false,
-        }
-    }
-    #[inline]
-    pub fn content(mut self, content: String) -> Modal {
+#[inline]
+pub fn new(id: String, title: String) -> Modal {
+        Modal { id, title, content: String::new(), footer: String::new(), size: ModalSize::Medium, closeable: true, visible: false }
+}
+#[inline]
+pub fn content(mut self, content: String) -> Modal {
         self.content = content;
         self
-    }
-    #[inline]
-    pub fn footer(mut self, footer: String) -> Modal {
+}
+#[inline]
+pub fn footer(mut self, footer: String) -> Modal {
         self.footer = footer;
         self
-    }
-    #[inline]
-    pub fn size(mut self, size: ModalSize) -> Modal {
+}
+#[inline]
+pub fn size(mut self, size: ModalSize) -> Modal {
         self.size = size;
         self
-    }
-    #[inline]
-    pub fn closeable(mut self, closeable: bool) -> Modal {
+}
+#[inline]
+pub fn closeable(mut self, closeable: bool) -> Modal {
         self.closeable = closeable;
         self
-    }
-    #[inline]
-    pub fn visible(mut self, visible: bool) -> Modal {
+}
+#[inline]
+pub fn visible(mut self, visible: bool) -> Modal {
         self.visible = visible;
         self
-    }
+}
 }
 
 impl Renderable for Modal {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(self) -> String {
         let width: String = match self.size {
             ModalSize::Small => String::from("400px"),
             ModalSize::Medium => String::from("600px"),
@@ -118,5 +108,6 @@ impl Renderable for Modal {
         html.push_str("</div>");
         html.push_str("</div>");
         html
-    }
 }
+}
+

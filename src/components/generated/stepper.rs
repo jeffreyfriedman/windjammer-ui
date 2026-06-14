@@ -1,5 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -7,62 +5,55 @@ use super::traits::Renderable;
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 #[repr(C)]
 pub struct StepperStep {
-    label: String,
-    description: String,
-    completed: bool,
+    pub label: String,
+    pub description: String,
+    pub completed: bool,
 }
 
 impl StepperStep {
-    #[inline]
-    pub fn new(label: String) -> StepperStep {
-        StepperStep {
-            label,
-            description: String::new(),
-            completed: false,
-        }
-    }
-    #[inline]
-    pub fn description(mut self, desc: String) -> StepperStep {
+#[inline]
+pub fn new(label: String) -> StepperStep {
+        StepperStep { label, description: String::new(), completed: false }
+}
+#[inline]
+pub fn description(mut self, desc: String) -> StepperStep {
         self.description = desc;
         self
-    }
-    #[inline]
-    pub fn completed(mut self, completed: bool) -> StepperStep {
+}
+#[inline]
+pub fn completed(mut self, completed: bool) -> StepperStep {
         self.completed = completed;
         self
-    }
+}
 }
 
 #[derive(Debug, Clone, PartialEq, Default)]
 #[repr(C)]
 pub struct Stepper {
-    steps: Vec<StepperStep>,
-    current_step: i32,
+    pub steps: Vec<StepperStep>,
+    pub current_step: i32,
 }
 
 impl Stepper {
-    #[inline]
-    pub fn new() -> Stepper {
-        Stepper {
-            steps: Vec::new(),
-            current_step: 0_i32,
-        }
-    }
-    #[inline]
-    pub fn step(mut self, step: StepperStep) -> Stepper {
+#[inline]
+pub fn new() -> Stepper {
+        Stepper { steps: Vec::new(), current_step: 0_i32 }
+}
+#[inline]
+pub fn step(mut self, step: StepperStep) -> Stepper {
         self.steps.push(step);
         self
-    }
-    #[inline]
-    pub fn current_step(mut self, index: i32) -> Stepper {
+}
+#[inline]
+pub fn current_step(mut self, index: i32) -> Stepper {
         self.current_step = index;
         self
-    }
+}
 }
 
 impl Renderable for Stepper {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(self) -> String {
         let mut html = String::new();
         html.push_str("<div style='display: flex; align-items: center; justify-content: space-between; padding: 24px 0;'>");
         let total_steps = self.steps.len() as i32;
@@ -89,9 +80,7 @@ impl Renderable for Stepper {
                     String::from("#718096")
                 }
             };
-            html.push_str(
-                "<div style='width: 40px; height: 40px; border-radius: 50%; background: ",
-            );
+            html.push_str("<div style='width: 40px; height: 40px; border-radius: 50%; background: ");
             html.push_str(&bg_color);
             html.push_str("; color: ");
             html.push_str(&text_color);
@@ -99,10 +88,7 @@ impl Renderable for Stepper {
             if is_completed {
                 html.push('✓')
             } else {
-                {
-                    let _temp0 = format!("{}", step_index + 1);
-                    html.push_str(&_temp0)
-                }
+                { let _temp0 = format!("{}", step_index + 1); html.push_str(&_temp0) }
             }
             html.push_str("</div>");
             html.push_str("<div style='text-align: center;'>");
@@ -137,5 +123,6 @@ impl Renderable for Stepper {
         }
         html.push_str("</div>");
         html
-    }
 }
+}
+

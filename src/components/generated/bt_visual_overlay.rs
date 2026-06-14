@@ -1,36 +1,24 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
+use super::traits::Renderable;
 use super::bt_visual_canvas::bt_visual_canvas_styles;
 use super::bt_visual_palette::bt_visual_palette_styles;
 use super::bt_visual_properties::bt_visual_properties_styles;
-use super::traits::Renderable;
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
 #[repr(C)]
 pub struct BtDebuggerOverlay;
 
 impl Renderable for BtDebuggerOverlay {
-    #[inline]
-    fn render(self) -> String {
-        let legend = "".to_string()
-            + &"<ul class=\"bt-legend\">"
-            + &"<li><span class=\"swatch bt-visual-running\"></span> Running</li>"
-            + &"<li><span class=\"swatch bt-visual-success\"></span> Success</li>"
-            + &"<li><span class=\"swatch bt-visual-failure\"></span> Failure</li>"
-            + &"<li><span class=\"swatch bt-visual-idle\"></span> Idle</li>"
-            + &"</ul>";
+#[inline]
+fn render(self) -> String {
+        let legend = "".to_string() + &"<ul class=\"bt-legend\">" + &"<li><span class=\"swatch bt-visual-running\"></span> Running</li>" + &"<li><span class=\"swatch bt-visual-success\"></span> Success</li>" + &"<li><span class=\"swatch bt-visual-failure\"></span> Failure</li>" + &"<li><span class=\"swatch bt-visual-idle\"></span> Idle</li>" + &"</ul>";
         let mut dbg = "".to_string();
         dbg = format!("{}{}", dbg, "<aside class=\"bt-debug-pane\">");
         dbg = format!("{}{}", dbg, "<strong>Visualizer</strong><p class=\"muted\">Shares color tokens with windjammer-game-core bt_visual_debug snapshots.</p>");
         dbg = format!("{}{}", dbg, legend);
         format!("{}{}", dbg, "</aside>")
-    }
+}
 }
 
 #[inline]
@@ -51,3 +39,4 @@ pub fn bt_behavior_editor_styles() -> String {
 pub fn bt_editor_layout_stub() -> String {
     "".to_string() + &String::from("<div class=\"bt-shell\">") + &String::from("<header style=\"padding:14px;border-bottom:1px solid rgba(255,255,255,0.08)\">Windjammer · Visual Behavior Tree Shell</header>") + &String::from("<div class=\"bt-shell-body\">{{PALETTE}}</div>") + &String::from("{{DEBUG}}") + &String::from("</div>")
 }
+

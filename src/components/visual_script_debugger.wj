@@ -7,6 +7,7 @@ pub struct VisualScriptDebuggerPanel {
     pub breakpoint_toggle_handler: string,
     pub callstack_text: string,
     pub watches_text: string,
+    pub active_node_id: string,
 }
 
 impl VisualScriptDebuggerPanel {
@@ -16,7 +17,20 @@ impl VisualScriptDebuggerPanel {
             breakpoint_toggle_handler: "vs_toggle_break()",
             callstack_text: "(empty)",
             watches_text: "(empty)",
+            active_node_id: "",
         }
+    }
+
+    /// Apply runtime graph trace snapshot (from graph_trace / live_link FFI poll).
+    pub fn with_trace(self, active_node: string, pin_watches_json: string) -> VisualScriptDebuggerPanel {
+        self.active_node_id = active_node
+        if active_node.len() > 0 {
+            self.callstack_text = format!("> {}", active_node)
+        }
+        if pin_watches_json.len() > 0 {
+            self.watches_text = pin_watches_json
+        }
+        self
     }
 }
 

@@ -1,9 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -11,49 +5,43 @@ use super::traits::Renderable;
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 #[repr(C)]
 pub struct CodeEditor {
-    code: String,
-    language: String,
-    theme: String,
-    line_numbers: bool,
-    readonly: bool,
+    pub code: String,
+    pub language: String,
+    pub theme: String,
+    pub line_numbers: bool,
+    pub readonly: bool,
 }
 
 impl CodeEditor {
-    #[inline]
-    pub fn new(code: String) -> CodeEditor {
-        CodeEditor {
-            code,
-            language: "rust".to_string(),
-            theme: "dark".to_string(),
-            line_numbers: true,
-            readonly: false,
-        }
-    }
-    #[inline]
-    pub fn language(mut self, language: String) -> CodeEditor {
+#[inline]
+pub fn new(code: String) -> CodeEditor {
+        CodeEditor { code, language: "rust".to_string(), theme: "dark".to_string(), line_numbers: true, readonly: false }
+}
+#[inline]
+pub fn language(mut self, language: String) -> CodeEditor {
         self.language = language;
         self
-    }
-    #[inline]
-    pub fn theme(mut self, theme: String) -> CodeEditor {
+}
+#[inline]
+pub fn theme(mut self, theme: String) -> CodeEditor {
         self.theme = theme;
         self
-    }
-    #[inline]
-    pub fn line_numbers(mut self, show: bool) -> CodeEditor {
+}
+#[inline]
+pub fn line_numbers(mut self, show: bool) -> CodeEditor {
         self.line_numbers = show;
         self
-    }
-    #[inline]
-    pub fn readonly(mut self, readonly: bool) -> CodeEditor {
+}
+#[inline]
+pub fn readonly(mut self, readonly: bool) -> CodeEditor {
         self.readonly = readonly;
         self
-    }
+}
 }
 
 impl Renderable for CodeEditor {
-    #[inline]
-    fn render(self) -> String {
+#[inline]
+fn render(self) -> String {
         let readonly_attr = {
             if self.readonly {
                 String::from(" readonly")
@@ -69,5 +57,6 @@ impl Renderable for CodeEditor {
             }
         };
         format!("<div class='wj-code-editor wj-editor-{} wj-editor-theme-{}{}'>\n  <textarea{}>\n{}</textarea>\n</div>", self.language, self.theme, line_numbers_class, readonly_attr, self.code)
-    }
 }
+}
+

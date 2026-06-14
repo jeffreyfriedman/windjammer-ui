@@ -34,6 +34,8 @@
 #![allow(noop_method_call)]
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 // Auto-generated mod.rs by Windjammer CLI
 // This file declares all generated Windjammer modules
 
@@ -231,3 +233,13 @@ pub use bt_visual_properties::*;
 
 
 
+
+
+pub mod components;
+pub use components::*;
+pub mod components_wj;
+pub use components_wj::*;
+#[cfg(test)]
+pub mod graph_trace_test;
+pub mod vnode.stable;
+pub use vnode.stable::*;
