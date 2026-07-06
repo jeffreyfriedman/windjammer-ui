@@ -7,11 +7,9 @@ Cargo.lock
 # Generated Windjammer code
 # Note: src/components/generated/ is now committed to support cargo publish
 # (Cargo doesn't allow build.rs to modify source directory during packaging)
+build/
 build_components/
 build_*/
-build/*.rs
-build/*.rs.map
-build/Cargo.toml
 
 # Exclude nested directories created by disabled lib.rs
 src/components/generated/components/
