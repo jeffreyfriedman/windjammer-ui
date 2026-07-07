@@ -1,0 +1,8 @@
+[package]
+name = "windjammer-ui"
+version = "0.3.6"
+edition = "2025"
+
+[app_capabilities]
+allow = []
+deny = ["fs_read", "fs_write", "net_egress", "net_ingress", "process_spawn"]

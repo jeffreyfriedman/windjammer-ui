@@ -36,6 +36,8 @@
 #![allow(noop_method_call)]
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 // Auto-generated mod.rs by Windjammer CLI
 // This file declares all generated Windjammer modules
 
@@ -212,12 +214,6 @@ pub use ecs_inspector_model::*;
 pub mod ecs_inspector_panel;
 pub use ecs_inspector_panel::*;
 
-
-
-
-
-
-
 pub mod bt_visual_canvas;
 pub use bt_visual_canvas::*;
 pub mod bt_visual_overlay;
@@ -227,19 +223,66 @@ pub use bt_visual_palette::*;
 pub mod bt_visual_properties;
 pub use bt_visual_properties::*;
 
-
-
-
-
-
-
-
-
-pub mod components;
-pub use components::*;
-pub mod components_wj;
-pub use components_wj::*;
 #[cfg(test)]
 pub mod graph_trace_test;
-pub mod vnode.stable;
-pub use vnode.stable::*;
+
+pub mod app;
+pub use app::*;
+pub mod app_docking;
+pub use app_docking::*;
+pub mod app_reactive;
+pub use app_reactive::*;
+#[cfg(feature = "desktop")]
+pub mod app_reactive_eframe;
+#[cfg(feature = "desktop")]
+pub use app_reactive_eframe::*;
+pub mod component;
+pub use component::*;
+pub mod component_runtime;
+pub use component_runtime::*;
+#[cfg(feature = "desktop")]
+pub mod desktop_app_context;
+#[cfg(feature = "desktop")]
+pub use desktop_app_context::*;
+#[cfg(feature = "desktop")]
+pub mod desktop_renderer;
+#[cfg(feature = "desktop")]
+pub use desktop_renderer::*;
+#[cfg(feature = "desktop")]
+pub mod desktop_renderer_v2;
+#[cfg(feature = "desktop")]
+pub use desktop_renderer_v2::*;
+pub mod event_handler;
+pub use event_handler::*;
+pub mod frame_trace_ffi;
+pub use frame_trace_ffi::*;
+pub mod reactivity;
+pub use reactivity::*;
+pub mod reactivity_optimized;
+pub use reactivity_optimized::*;
+pub mod renderer;
+pub use renderer::*;
+pub mod routing;
+pub use routing::*;
+pub mod runtime;
+pub use runtime::*;
+pub mod signal;
+pub use signal::*;
+pub mod signal_ffi;
+pub use signal_ffi::*;
+pub mod simple_renderer;
+pub use simple_renderer::*;
+pub mod simple_vnode;
+pub use simple_vnode::*;
+pub mod ssr;
+pub use ssr::*;
+pub mod to_vnode;
+pub use to_vnode::*;
+pub mod undo_redo;
+pub use undo_redo::*;
+pub mod vdom;
+pub use vdom::*;
+pub mod vnode_ffi;
+pub use vnode_ffi::*;
+pub mod wasm_events;
+pub use wasm_events::*;

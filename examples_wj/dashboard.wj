@@ -13,11 +13,10 @@ fn start() {
     let revenue = Signal::new(45678)
     let growth = Signal::new(12)
     
-    // Clone signals for display
-    let total_display = total_users.clone()
-    let active_display = active_users.clone()
-    let revenue_display = revenue.clone()
-    let growth_display = growth.clone()
+    let total_display = total_users
+    let active_display = active_users
+    let revenue_display = revenue
+    let growth_display = growth
     
     // Build UI
     let ui = Container::new()
@@ -48,7 +47,7 @@ fn start() {
                                         .gap("8px")
                                         .child(Text::new("👥 Total Users").size(TextSize::Small))
                                         .child(
-                                            Text::new(format!("{}", total_display.get()))
+                                            Text::new("${total_display.get()}")
                                                 .size(TextSize::XLarge)
                                                 .bold()
                                         )
@@ -62,7 +61,7 @@ fn start() {
                                         .gap("8px")
                                         .child(Text::new("✓ Active Users").size(TextSize::Small))
                                         .child(
-                                            Text::new(format!("{}", active_display.get()))
+                                            Text::new("${active_display.get()}")
                                                 .size(TextSize::XLarge)
                                                 .bold()
                                         )
@@ -76,7 +75,7 @@ fn start() {
                                         .gap("8px")
                                         .child(Text::new("💰 Revenue").size(TextSize::Small))
                                         .child(
-                                            Text::new(format!("{}", revenue_display.get()))
+                                            Text::new("${revenue_display.get()}")
                                                 .size(TextSize::XLarge)
                                                 .bold()
                                         )
@@ -90,7 +89,7 @@ fn start() {
                                         .gap("8px")
                                         .child(Text::new("📈 Growth").size(TextSize::Small))
                                         .child(
-                                            Text::new(format!("{}", growth_display.get()) + "%")
+                                            Text::new("${growth_display.get()}%")
                                                 .size(TextSize::XLarge)
                                                 .bold()
                                         )

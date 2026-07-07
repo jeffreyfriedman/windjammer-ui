@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -19,30 +21,35 @@ pub struct ChatMessage {
 }
 
 impl ChatMessage {
-#[inline]
-pub fn new(content: String) -> ChatMessage {
-        ChatMessage { role: MessageRole::User, content, avatar: String::new(), timestamp: String::new() }
-}
-#[inline]
-pub fn role(mut self, role: MessageRole) -> ChatMessage {
+    #[inline]
+    pub fn new(content: String) -> ChatMessage {
+        ChatMessage {
+            role: MessageRole::User,
+            content,
+            avatar: String::new(),
+            timestamp: String::new(),
+        }
+    }
+    #[inline]
+    pub fn role(mut self, role: MessageRole) -> ChatMessage {
         self.role = role;
         self
-}
-#[inline]
-pub fn avatar(mut self, avatar: String) -> ChatMessage {
+    }
+    #[inline]
+    pub fn avatar(mut self, avatar: String) -> ChatMessage {
         self.avatar = avatar;
         self
-}
-#[inline]
-pub fn timestamp(mut self, timestamp: String) -> ChatMessage {
+    }
+    #[inline]
+    pub fn timestamp(mut self, timestamp: String) -> ChatMessage {
         self.timestamp = timestamp;
         self
-}
+    }
 }
 
 impl Renderable for ChatMessage {
-#[inline]
-fn render(self) -> String {
+    #[inline]
+    fn render(&mut self) -> String {
         let role_class: String = match self.role {
             MessageRole::User => String::from("wj-message-user"),
             MessageRole::Assistant => String::from("wj-message-assistant"),
@@ -50,7 +57,10 @@ fn render(self) -> String {
         };
         let avatar_html: String = {
             if !self.avatar.is_empty() {
-                format!("<div class='wj-message-avatar'><img src='{}' alt='avatar'/></div>", self.avatar)
+                format!(
+                    "<div class='wj-message-avatar'><img src='{}' alt='avatar'/></div>",
+                    self.avatar
+                )
             } else {
                 let default_icon: String = match self.role {
                     MessageRole::User => String::from("👤"),
@@ -68,6 +78,5 @@ fn render(self) -> String {
             }
         };
         format!("<div class='wj-chat-message {}'>\n                {}\n                <div class='wj-message-content-wrapper'>\n                    <div class='wj-message-content'>{}</div>\n                    {}\n                </div>\n            </div>", role_class, avatar_html, self.content, timestamp_html)
+    }
 }
-}
-

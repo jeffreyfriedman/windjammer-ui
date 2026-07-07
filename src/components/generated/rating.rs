@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -20,35 +22,41 @@ pub struct Rating {
 }
 
 impl Rating {
-#[inline]
-pub fn new(value: f32) -> Rating {
-        Rating { value, max: 5_i32, size: RatingSize::Medium, readonly: true, color: "#fbbf24".to_string() }
-}
-#[inline]
-pub fn max(mut self, max: i32) -> Rating {
+    #[inline]
+    pub fn new(value: f32) -> Rating {
+        Rating {
+            value,
+            max: 5_i32,
+            size: RatingSize::Medium,
+            readonly: true,
+            color: "#fbbf24".to_string(),
+        }
+    }
+    #[inline]
+    pub fn max(mut self, max: i32) -> Rating {
         self.max = max;
         self
-}
-#[inline]
-pub fn size(mut self, size: RatingSize) -> Rating {
+    }
+    #[inline]
+    pub fn size(mut self, size: RatingSize) -> Rating {
         self.size = size;
         self
-}
-#[inline]
-pub fn readonly(mut self, readonly: bool) -> Rating {
+    }
+    #[inline]
+    pub fn readonly(mut self, readonly: bool) -> Rating {
         self.readonly = readonly;
         self
-}
-#[inline]
-pub fn color(mut self, color: String) -> Rating {
+    }
+    #[inline]
+    pub fn color(mut self, color: String) -> Rating {
         self.color = color;
         self
-}
+    }
 }
 
 impl Renderable for Rating {
-#[inline]
-fn render(self) -> String {
+    #[inline]
+    fn render(&mut self) -> String {
         let star_size: String = match self.size {
             RatingSize::Small => String::from("16px"),
             RatingSize::Medium => String::from("24px"),
@@ -82,15 +90,14 @@ fn render(self) -> String {
             html.push_str(&cursor);
             html.push_str(";'>");
             if half_filled {
-                html.push('⯨')
+                html.push('⯨');
             } else {
-                html.push('★')
+                html.push('★');
             }
             html.push_str("</span>");
             i += 1;
         }
         html.push_str("</div>");
         html
+    }
 }
-}
-

@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -16,10 +18,10 @@ pub struct NavbarItem {
 }
 
 impl NavbarItem {
-#[inline]
-pub fn new(label: String, href: String) -> NavbarItem {
+    #[inline]
+    pub fn new(label: String, href: String) -> NavbarItem {
         NavbarItem { label, href }
-}
+    }
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -32,38 +34,50 @@ pub struct Navbar {
 }
 
 impl Navbar {
-#[inline]
-pub fn new() -> Navbar {
-        Navbar { brand: String::new(), items: Vec::new(), position: NavbarPosition::Top, sticky: false }
-}
-#[inline]
-pub fn brand(mut self, brand: String) -> Navbar {
+    #[inline]
+    pub fn new() -> Navbar {
+        Navbar {
+            brand: String::new(),
+            items: Vec::new(),
+            position: NavbarPosition::Top,
+            sticky: false,
+        }
+    }
+    #[inline]
+    pub fn brand(mut self, brand: String) -> Navbar {
         self.brand = brand;
         self
-}
-#[inline]
-pub fn item(mut self, item: NavbarItem) -> Navbar {
-        self.items.push(item);
+    }
+    #[inline]
+    pub fn item(mut self, item: NavbarItem) -> Navbar {
+        self.items.push(item.clone());
         self
-}
-#[inline]
-pub fn position(mut self, pos: NavbarPosition) -> Navbar {
+    }
+    #[inline]
+    pub fn position(mut self, pos: NavbarPosition) -> Navbar {
         self.position = pos;
         self
-}
-#[inline]
-pub fn sticky(mut self, sticky: bool) -> Navbar {
+    }
+    #[inline]
+    pub fn sticky(mut self, sticky: bool) -> Navbar {
         self.sticky = sticky;
         self
-}
+    }
 }
 
 impl Renderable for Navbar {
-#[inline]
-fn render(self) -> String {
+    #[inline]
+    fn render(&mut self) -> String {
         let mut items_html: Vec<String> = Vec::new();
-        for item in self.items {
-            { let _temp0 = format!("<a href='{}' class='wj-navbar-item'>{}</a>", item.href, item.label); items_html.push(_temp0) };
+        for item in &self.items {
+            {
+                let _temp0 = format!(
+                    "<a href='{}' class='wj-navbar-item'>{}</a>",
+                    item.href.clone(),
+                    item.label.clone()
+                );
+                items_html.push(_temp0)
+            };
         }
         let position_class: String = match self.position {
             NavbarPosition::Top => String::from("wj-navbar-top"),
@@ -83,7 +97,12 @@ fn render(self) -> String {
                 String::new()
             }
         };
-        format!("<nav class='wj-navbar {} {}'>{}<div class='wj-navbar-items'>{}</div></nav>", position_class, sticky_class, brand_html, items_html.join(""))
+        format!(
+            "<nav class='wj-navbar {} {}'>{}<div class='wj-navbar-items'>{}</div></nav>",
+            position_class,
+            sticky_class,
+            brand_html,
+            items_html.join("")
+        )
+    }
 }
-}
-

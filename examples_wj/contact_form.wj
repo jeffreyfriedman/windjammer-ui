@@ -21,18 +21,17 @@ fn start() {
     let is_submitting = Signal::new(false)
     let submit_success = Signal::new(false)
     
-    // Clone signals for closures
-    let name_display = name.clone()
-    let email_display = email.clone()
-    let message_display = message.clone()
-    let name_submit = name.clone()
-    let email_submit = email.clone()
-    let message_submit = message.clone()
-    let name_error_display = name_error.clone()
-    let email_error_display = email_error.clone()
-    let message_error_display = message_error.clone()
-    let is_submitting_display = is_submitting.clone()
-    let submit_success_display = submit_success.clone()
+    let name_display = name
+    let email_display = email
+    let message_display = message
+    let name_submit = name
+    let email_submit = email
+    let message_submit = message
+    let name_error_display = name_error
+    let email_error_display = email_error
+    let message_error_display = message_error
+    let is_submitting_display = is_submitting
+    let submit_success_display = submit_success
     
     // Build UI
     let ui = Container::new()

@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -27,24 +29,29 @@ pub struct LiveProfilerSnapshot {
 }
 
 impl LiveProfilerSnapshot {
-#[inline]
-pub fn new(frame_index: u64, frame_time_ms: f32, budget_ms: f32) -> LiveProfilerSnapshot {
-        LiveProfilerSnapshot { frame_index, frame_time_ms, budget_ms, scopes: Vec::new() }
-}
-#[inline]
-pub fn scope(mut self, row: ProfilerScopeRow) -> LiveProfilerSnapshot {
-        self.scopes.push(row);
+    #[inline]
+    pub fn new(frame_index: u64, frame_time_ms: f32, budget_ms: f32) -> LiveProfilerSnapshot {
+        LiveProfilerSnapshot {
+            frame_index,
+            frame_time_ms,
+            budget_ms,
+            scopes: Vec::new(),
+        }
+    }
+    #[inline]
+    pub fn scope(mut self, row: ProfilerScopeRow) -> LiveProfilerSnapshot {
+        self.scopes.push(row.clone());
         self
-}
-#[inline]
-pub fn budget_utilization_pct(&self) -> f32 {
+    }
+    #[inline]
+    pub fn budget_utilization_pct(&self) -> f32 {
         if self.budget_ms <= 0.0_f32 {
             return 0.0_f32;
         }
         self.frame_time_ms / self.budget_ms * 100.0_f32
-}
-#[inline]
-pub fn budget_band_class(&self) -> String {
+    }
+    #[inline]
+    pub fn budget_band_class(&self) -> String {
         let util = self.budget_utilization_pct();
         if util > 100.0_f32 {
             String::from("wj-progress-danger")
@@ -55,9 +62,9 @@ pub fn budget_band_class(&self) -> String {
                 String::from("wj-progress-success")
             }
         }
-}
-#[inline]
-pub fn budget_band_color(&self) -> String {
+    }
+    #[inline]
+    pub fn budget_band_color(&self) -> String {
         let util = self.budget_utilization_pct();
         if util > 100.0_f32 {
             String::from("#e74c3c")
@@ -68,17 +75,22 @@ pub fn budget_band_color(&self) -> String {
                 String::from("#2ecc71")
             }
         }
-}
-#[inline]
-pub fn from_scope_rows(frame_index: u64, frame_time_ms: f32, budget_ms: f32, rows: Vec<ProfilerScopeRow>) -> LiveProfilerSnapshot {
+    }
+    #[inline]
+    pub fn from_scope_rows(
+        frame_index: u64,
+        frame_time_ms: f32,
+        budget_ms: f32,
+        rows: Vec<ProfilerScopeRow>,
+    ) -> LiveProfilerSnapshot {
         let mut snap = LiveProfilerSnapshot::new(frame_index, frame_time_ms, budget_ms);
         for row in rows {
             snap = snap.scope(row.clone());
         }
         snap
-}
-#[inline]
-pub fn from_engine_live(budget_ms: f32) -> LiveProfilerSnapshot {
+    }
+    #[inline]
+    pub fn from_engine_live(budget_ms: f32) -> LiveProfilerSnapshot {
         if !frame_trace_ffi::has_live_data() {
             return LiveProfilerSnapshot::new(0_u64, 0.0_f32, budget_ms);
         }
@@ -93,9 +105,9 @@ pub fn from_engine_live(budget_ms: f32) -> LiveProfilerSnapshot {
             let is_gpu = frame_trace_ffi::live_scope_is_gpu(i);
             let kind = {
                 if is_gpu {
-                    ProfilerScopeKind::Gpu
+                    ProfilerScopeKind::Gpu.clone()
                 } else {
-                    ProfilerScopeKind::Cpu
+                    ProfilerScopeKind::Cpu.clone()
                 }
             };
             let pct = {
@@ -105,21 +117,50 @@ pub fn from_engine_live(budget_ms: f32) -> LiveProfilerSnapshot {
                     0.0_f32
                 }
             };
-            snap = snap.scope(ProfilerScopeRow { name, duration_ms, percentage: pct, kind });
+            snap = snap.scope(ProfilerScopeRow {
+                name,
+                duration_ms: duration_ms.clone(),
+                percentage: pct,
+                kind,
+            });
             i += 1;
         }
         snap
-}
-#[inline]
-pub fn mock_runtime_demo() -> LiveProfilerSnapshot {
+    }
+    #[inline]
+    pub fn mock_runtime_demo() -> LiveProfilerSnapshot {
         let budget = 16.67_f32;
         let mut snap = LiveProfilerSnapshot::new(42_u64, 14.2_f32, budget);
-        snap = snap.scope(ProfilerScopeRow { name: String::from("Update"), duration_ms: 2.1_f32, percentage: 14.8_f32, kind: ProfilerScopeKind::Cpu });
-        snap = snap.scope(ProfilerScopeRow { name: String::from("Physics"), duration_ms: 1.4_f32, percentage: 9.9_f32, kind: ProfilerScopeKind::Cpu });
-        snap = snap.scope(ProfilerScopeRow { name: String::from("Render"), duration_ms: 5.8_f32, percentage: 40.8_f32, kind: ProfilerScopeKind::Cpu });
-        snap = snap.scope(ProfilerScopeRow { name: String::from("raymarch"), duration_ms: 3.2_f32, percentage: 22.5_f32, kind: ProfilerScopeKind::Gpu });
-        snap = snap.scope(ProfilerScopeRow { name: String::from("lighting"), duration_ms: 1.7_f32, percentage: 12.0_f32, kind: ProfilerScopeKind::Gpu });
+        snap = snap.scope(ProfilerScopeRow {
+            name: String::from("Update"),
+            duration_ms: 2.1_f32,
+            percentage: 14.8_f32,
+            kind: ProfilerScopeKind::Cpu.clone(),
+        });
+        snap = snap.scope(ProfilerScopeRow {
+            name: String::from("Physics"),
+            duration_ms: 1.4_f32,
+            percentage: 9.9_f32,
+            kind: ProfilerScopeKind::Cpu.clone(),
+        });
+        snap = snap.scope(ProfilerScopeRow {
+            name: String::from("Render"),
+            duration_ms: 5.8_f32,
+            percentage: 40.8_f32,
+            kind: ProfilerScopeKind::Cpu.clone(),
+        });
+        snap = snap.scope(ProfilerScopeRow {
+            name: String::from("raymarch"),
+            duration_ms: 3.2_f32,
+            percentage: 22.5_f32,
+            kind: ProfilerScopeKind::Gpu.clone(),
+        });
+        snap = snap.scope(ProfilerScopeRow {
+            name: String::from("lighting"),
+            duration_ms: 1.7_f32,
+            percentage: 12.0_f32,
+            kind: ProfilerScopeKind::Gpu.clone(),
+        });
         snap
+    }
 }
-}
-

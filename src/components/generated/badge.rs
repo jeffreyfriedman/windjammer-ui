@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -29,25 +31,29 @@ pub struct Badge {
 }
 
 impl Badge {
-#[inline]
-pub fn new(text: String) -> Badge {
-        Badge { text, variant: BadgeVariant::Default, size: BadgeSize::Medium }
-}
-#[inline]
-pub fn variant(mut self, variant: BadgeVariant) -> Badge {
+    #[inline]
+    pub fn new(text: String) -> Badge {
+        Badge {
+            text,
+            variant: BadgeVariant::Default,
+            size: BadgeSize::Medium,
+        }
+    }
+    #[inline]
+    pub fn variant(mut self, variant: BadgeVariant) -> Badge {
         self.variant = variant;
         self
-}
-#[inline]
-pub fn size(mut self, size: BadgeSize) -> Badge {
+    }
+    #[inline]
+    pub fn size(mut self, size: BadgeSize) -> Badge {
         self.size = size;
         self
-}
+    }
 }
 
 impl Renderable for Badge {
-#[inline]
-fn render(self) -> String {
+    #[inline]
+    fn render(&mut self) -> String {
         let variant_class: String = match self.variant {
             BadgeVariant::Default => String::from("wj-badge-default"),
             BadgeVariant::Primary => String::from("wj-badge-primary"),
@@ -62,7 +68,9 @@ fn render(self) -> String {
             BadgeSize::Medium => String::from("wj-badge-md"),
             BadgeSize::Large => String::from("wj-badge-lg"),
         };
-        format!("<span class='wj-badge {} {}'>{}</span>", variant_class, size_class, self.text)
+        format!(
+            "<span class='wj-badge {} {}'>{}</span>",
+            variant_class, size_class, self.text
+        )
+    }
 }
-}
-

@@ -1,6 +1,8 @@
-use std::fmt::Write;
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
+use std::fmt::Write;
 
 use super::traits::Renderable;
 #[derive(Clone, Debug, PartialEq, Copy)]
@@ -18,25 +20,28 @@ pub struct Spinner {
 }
 
 impl Spinner {
-#[inline]
-pub fn new() -> Spinner {
-        Spinner { size: SpinnerSize::Medium, label: "".to_string() }
-}
-#[inline]
-pub fn size(mut self, size: SpinnerSize) -> Spinner {
+    #[inline]
+    pub fn new() -> Spinner {
+        Spinner {
+            size: SpinnerSize::Medium,
+            label: "".to_string(),
+        }
+    }
+    #[inline]
+    pub fn size(mut self, size: SpinnerSize) -> Spinner {
         self.size = size;
         self
-}
-#[inline]
-pub fn label(mut self, label: String) -> Spinner {
+    }
+    #[inline]
+    pub fn label(mut self, label: String) -> Spinner {
         self.label = label;
         self
-}
+    }
 }
 
 impl Renderable for Spinner {
-#[inline]
-fn render(self) -> String {
+    #[inline]
+    fn render(&mut self) -> String {
         let size_class: String = match self.size {
             SpinnerSize::Small => String::from("wj-spinner-sm"),
             SpinnerSize::Medium => String::from("wj-spinner-md"),
@@ -52,6 +57,5 @@ fn render(self) -> String {
         } else {
             spinner_html
         }
+    }
 }
-}
-
