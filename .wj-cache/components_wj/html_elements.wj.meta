@@ -1,8 +1,31 @@
 {
   "module_path": "html_elements",
   "functions": {
+    "Span::child": {
+      "params": [
+        "Custom(\"Span\")",
+        "Custom(\"T\")"
+      ],
+      "formal_params": [
+        "Custom(\"Span\")",
+        "Custom(\"T\")"
+      ],
+      "return_type": "Custom(\"Span\")",
+      "is_associated": true,
+      "parent_type": "Span",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
     "P::child": {
       "params": [
+        "Custom(\"P\")",
+        "Custom(\"T\")"
+      ],
+      "formal_params": [
         "Custom(\"P\")",
         "Custom(\"T\")"
       ],
@@ -16,49 +39,12 @@
       "has_self_receiver": true,
       "is_extern": false
     },
-    "P::render": {
-      "params": [
-        "Custom(\"Self\")"
-      ],
-      "return_type": "String",
-      "is_associated": true,
-      "parent_type": "P",
-      "param_ownership": [
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Div::class": {
-      "params": [
-        "Custom(\"Div\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Div\")",
-      "is_associated": true,
-      "parent_type": "Div",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Span::render": {
-      "params": [
-        "Custom(\"Self\")"
-      ],
-      "return_type": "String",
-      "is_associated": true,
-      "parent_type": "Span",
-      "param_ownership": [
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
     "H2::class": {
       "params": [
+        "Custom(\"H2\")",
+        "String"
+      ],
+      "formal_params": [
         "Custom(\"H2\")",
         "String"
       ],
@@ -72,8 +58,146 @@
       "has_self_receiver": true,
       "is_extern": false
     },
+    "Div::style": {
+      "params": [
+        "Custom(\"Div\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Div\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Div\")",
+      "is_associated": true,
+      "parent_type": "Div",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "H3::new": {
+      "params": [
+        "String"
+      ],
+      "formal_params": [
+        "String"
+      ],
+      "return_type": "Custom(\"H3\")",
+      "is_associated": true,
+      "parent_type": "H3",
+      "param_ownership": [
+        "Owned"
+      ],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Div::id": {
+      "params": [
+        "Custom(\"Div\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Div\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Div\")",
+      "is_associated": true,
+      "parent_type": "Div",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Div::new": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "Custom(\"Div\")",
+      "is_associated": true,
+      "parent_type": "Div",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Div::class": {
+      "params": [
+        "Custom(\"Div\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Div\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Div\")",
+      "is_associated": true,
+      "parent_type": "Div",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "P::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "P",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "P::style": {
+      "params": [
+        "Custom(\"P\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"P\")",
+        "String"
+      ],
+      "return_type": "Custom(\"P\")",
+      "is_associated": true,
+      "parent_type": "P",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "H1::style": {
+      "params": [
+        "Custom(\"H1\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"H1\")",
+        "String"
+      ],
+      "return_type": "Custom(\"H1\")",
+      "is_associated": true,
+      "parent_type": "H1",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
     "Span::new": {
       "params": [],
+      "formal_params": [],
       "return_type": "Custom(\"Span\")",
       "is_associated": true,
       "parent_type": "Span",
@@ -81,8 +205,289 @@
       "has_self_receiver": false,
       "is_extern": false
     },
+    "H1::class": {
+      "params": [
+        "Custom(\"H1\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"H1\")",
+        "String"
+      ],
+      "return_type": "Custom(\"H1\")",
+      "is_associated": true,
+      "parent_type": "H1",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "H2::new": {
+      "params": [
+        "String"
+      ],
+      "formal_params": [
+        "String"
+      ],
+      "return_type": "Custom(\"H2\")",
+      "is_associated": true,
+      "parent_type": "H2",
+      "param_ownership": [
+        "Owned"
+      ],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "H1::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "H1",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "H2::style": {
+      "params": [
+        "Custom(\"H2\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"H2\")",
+        "String"
+      ],
+      "return_type": "Custom(\"H2\")",
+      "is_associated": true,
+      "parent_type": "H2",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Span::style": {
+      "params": [
+        "Custom(\"Span\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Span\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Span\")",
+      "is_associated": true,
+      "parent_type": "Span",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "H3::style": {
+      "params": [
+        "Custom(\"H3\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"H3\")",
+        "String"
+      ],
+      "return_type": "Custom(\"H3\")",
+      "is_associated": true,
+      "parent_type": "H3",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "P::new": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "Custom(\"P\")",
+      "is_associated": true,
+      "parent_type": "P",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "H2::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "H2",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Div::render": {
+      "params": [
+        "Custom(\"Div\")"
+      ],
+      "formal_params": [
+        "Custom(\"Div\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Div",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Div::text": {
+      "params": [
+        "Custom(\"Div\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Div\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Div\")",
+      "is_associated": true,
+      "parent_type": "Div",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "H3::class": {
+      "params": [
+        "Custom(\"H3\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"H3\")",
+        "String"
+      ],
+      "return_type": "Custom(\"H3\")",
+      "is_associated": true,
+      "parent_type": "H3",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Span::text": {
+      "params": [
+        "Custom(\"Span\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Span\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Span\")",
+      "is_associated": true,
+      "parent_type": "Span",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Span::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Span",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "P::class": {
+      "params": [
+        "Custom(\"P\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"P\")",
+        "String"
+      ],
+      "return_type": "Custom(\"P\")",
+      "is_associated": true,
+      "parent_type": "P",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "H3::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "H3",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Div::child": {
+      "params": [
+        "Custom(\"Div\")",
+        "Custom(\"T\")"
+      ],
+      "formal_params": [
+        "Custom(\"Div\")",
+        "Custom(\"T\")"
+      ],
+      "return_type": "Custom(\"Div\")",
+      "is_associated": true,
+      "parent_type": "Div",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
     "P::text": {
       "params": [
+        "Custom(\"P\")",
+        "String"
+      ],
+      "formal_params": [
         "Custom(\"P\")",
         "String"
       ],
@@ -101,93 +506,7 @@
         "Custom(\"Span\")",
         "String"
       ],
-      "return_type": "Custom(\"Span\")",
-      "is_associated": true,
-      "parent_type": "Span",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "H1::class": {
-      "params": [
-        "Custom(\"H1\")",
-        "String"
-      ],
-      "return_type": "Custom(\"H1\")",
-      "is_associated": true,
-      "parent_type": "H1",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "H3::style": {
-      "params": [
-        "Custom(\"H3\")",
-        "String"
-      ],
-      "return_type": "Custom(\"H3\")",
-      "is_associated": true,
-      "parent_type": "H3",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Span::child": {
-      "params": [
-        "Custom(\"Span\")",
-        "Custom(\"T\")"
-      ],
-      "return_type": "Custom(\"Span\")",
-      "is_associated": true,
-      "parent_type": "Span",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Div::text": {
-      "params": [
-        "Custom(\"Div\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Div\")",
-      "is_associated": true,
-      "parent_type": "Div",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "H1::style": {
-      "params": [
-        "Custom(\"H1\")",
-        "String"
-      ],
-      "return_type": "Custom(\"H1\")",
-      "is_associated": true,
-      "parent_type": "H1",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Span::style": {
-      "params": [
+      "formal_params": [
         "Custom(\"Span\")",
         "String"
       ],
@@ -196,58 +515,6 @@
       "parent_type": "Span",
       "param_ownership": [
         "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "P::new": {
-      "params": [],
-      "return_type": "Custom(\"P\")",
-      "is_associated": true,
-      "parent_type": "P",
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
-    "Div::id": {
-      "params": [
-        "Custom(\"Div\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Div\")",
-      "is_associated": true,
-      "parent_type": "Div",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Div::child": {
-      "params": [
-        "Custom(\"Div\")",
-        "Custom(\"T\")"
-      ],
-      "return_type": "Custom(\"Div\")",
-      "is_associated": true,
-      "parent_type": "Div",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "H1::render": {
-      "params": [
-        "Custom(\"Self\")"
-      ],
-      "return_type": "String",
-      "is_associated": true,
-      "parent_type": "H1",
-      "param_ownership": [
         "Owned"
       ],
       "has_self_receiver": true,
@@ -257,6 +524,9 @@
       "params": [
         "String"
       ],
+      "formal_params": [
+        "String"
+      ],
       "return_type": "Custom(\"H1\")",
       "is_associated": true,
       "parent_type": "H1",
@@ -265,176 +535,12 @@
       ],
       "has_self_receiver": false,
       "is_extern": false
-    },
-    "H2::render": {
-      "params": [
-        "Custom(\"Self\")"
-      ],
-      "return_type": "String",
-      "is_associated": true,
-      "parent_type": "H2",
-      "param_ownership": [
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "H2::style": {
-      "params": [
-        "Custom(\"H2\")",
-        "String"
-      ],
-      "return_type": "Custom(\"H2\")",
-      "is_associated": true,
-      "parent_type": "H2",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "H3::render": {
-      "params": [
-        "Custom(\"Self\")"
-      ],
-      "return_type": "String",
-      "is_associated": true,
-      "parent_type": "H3",
-      "param_ownership": [
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "H2::new": {
-      "params": [
-        "String"
-      ],
-      "return_type": "Custom(\"H2\")",
-      "is_associated": true,
-      "parent_type": "H2",
-      "param_ownership": [
-        "Owned"
-      ],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
-    "P::style": {
-      "params": [
-        "Custom(\"P\")",
-        "String"
-      ],
-      "return_type": "Custom(\"P\")",
-      "is_associated": true,
-      "parent_type": "P",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Div::new": {
-      "params": [],
-      "return_type": "Custom(\"Div\")",
-      "is_associated": true,
-      "parent_type": "Div",
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
-    "H3::class": {
-      "params": [
-        "Custom(\"H3\")",
-        "String"
-      ],
-      "return_type": "Custom(\"H3\")",
-      "is_associated": true,
-      "parent_type": "H3",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Div::render": {
-      "params": [
-        "Custom(\"Div\")"
-      ],
-      "return_type": "String",
-      "is_associated": true,
-      "parent_type": "Div",
-      "param_ownership": [
-        "Borrowed"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Div::style": {
-      "params": [
-        "Custom(\"Div\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Div\")",
-      "is_associated": true,
-      "parent_type": "Div",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "P::class": {
-      "params": [
-        "Custom(\"P\")",
-        "String"
-      ],
-      "return_type": "Custom(\"P\")",
-      "is_associated": true,
-      "parent_type": "P",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "H3::new": {
-      "params": [
-        "String"
-      ],
-      "return_type": "Custom(\"H3\")",
-      "is_associated": true,
-      "parent_type": "H3",
-      "param_ownership": [
-        "Owned"
-      ],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
-    "Span::text": {
-      "params": [
-        "Custom(\"Span\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Span\")",
-      "is_associated": true,
-      "parent_type": "Span",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
     }
   },
   "structs": {
-    "Span": {
-      "class": "String",
+    "P": {
       "style": "String",
+      "class": "String",
       "children": "Vec(String)"
     },
     "H2": {
@@ -442,741 +548,90 @@
       "style": "String",
       "class": "String"
     },
-    "H3": {
-      "class": "String",
-      "style": "String",
-      "text": "String"
-    },
     "Div": {
-      "style": "String",
       "children": "Vec(String)",
       "class": "String",
+      "style": "String",
       "id": "String"
     },
-    "P": {
-      "class": "String",
-      "style": "String",
-      "children": "Vec(String)"
-    },
-    "H1": {
+    "H3": {
       "class": "String",
       "text": "String",
+      "style": "String"
+    },
+    "H1": {
+      "text": "String",
+      "class": "String",
+      "style": "String"
+    },
+    "Span": {
+      "class": "String",
+      "children": "Vec(String)",
       "style": "String"
     }
   },
   "trait_impls": {},
   "copy_structs": [
-    "PostProcessingPanel",
-    "PackedRect",
-    "Local",
-    "PathNode",
-    "GizmoRenderer",
-    "SavedVoxel",
-    "ThumbnailState",
-    "PlaytestContext",
-    "RayAABBResult",
-    "WireframeConfig",
-    "BloomBlurUniforms",
-    "Key",
-    "GridSettings",
-    "CloudPreset",
-    "PlaybackController",
-    "ColorGradingSettings",
-    "StatusEffect",
-    "Quat4f",
-    "HFace",
-    "PlaceholderVertex",
-    "Waypoint",
-    "GizmoType",
-    "LightId",
-    "ComparisonMethod",
-    "LocomotionState",
-    "MissingProducer",
-    "PixelColor",
-    "MockAudioPort",
-    "HudLayout",
-    "MeshId",
-    "Visible",
-    "HiZUniforms",
-    "TransitionType",
-    "BloomBlurParams",
-    "TangentVec4",
-    "PassId",
-    "EditorTool",
-    "PrivateHelper",
-    "WeakPoint",
-    "Vec4",
-    "RenderingPlugin",
-    "ParticlePreset",
-    "GizmoAxis",
-    "LightData",
-    "CurvePoint",
-    "PerceptionState",
-    "CharacterAttributes",
-    "QuestCategory",
-    "VoxVoxel",
-    "CollisionEvent",
-    "Vec3f",
-    "RigidBodyId",
-    "EnemyHealthBar",
-    "SceneSerializer",
-    "RowJustify",
-    "LightingParams",
-    "SwitchSize",
-    "Point",
-    "SubgroupEmulation",
-    "WaveType",
-    "Particle",
-    "StreamingZone",
-    "ToneMapping",
-    "HudTimingGroup",
-    "LODLevel",
-    "LightType",
-    "DamageNumber",
-    "PropertyType",
-    "PropertyValidation",
-    "ToastPosition",
-    "HeatSource",
-    "DebugLine",
-    "SSGIUniforms",
-    "FireMode",
-    "TourState",
-    "MusicSystem",
-    "CoverPoint",
-    "ForceField",
-    "BrushMode",
-    "ViewFrustum",
-    "Vec3Copy",
-    "ReloadStrategy",
-    "CameraValidator",
-    "RenderDocCapture",
-    "WaterUniforms",
-    "Collision",
-    "DockPosition",
-    "DamageEvent",
-    "DrawCommand",
-    "Enemy",
-    "GameData",
-    "HitResult",
-    "ConnectionState",
-    "HierarchyTree",
-    "TimerId",
-    "MessageRole",
-    "NodeType",
-    "TwoBoneIK",
-    "AudioSource3D",
-    "CharacterController",
-    "ReverbPreset",
-    "Data",
-    "StreamingLoadJob",
-    "HairParams",
-    "Node",
-    "RaycastHit",
-    "EquipmentSlot",
-    "SceneMode",
-    "MemoryProfiler",
-    "AvatarShape",
-    "SvoNode",
-    "Health",
     "SidebarPosition",
-    "TooltipPosition",
-    "Blend1DClip",
-    "Decal",
-    "MotionVectorState",
-    "FireResult",
-    "MaterialId",
-    "SSAOBlurParams",
-    "SetVoxelCommand",
-    "EngineCache",
-    "GamePhysics",
-    "WeaponType",
-    "WireframeEdge",
-    "ItemRarity",
-    "MeshLightUniforms",
-    "GizmoHandle",
-    "ButtonSize",
-    "OctreeEntry",
-    "DebugContact",
-    "SoundCategory",
-    "PlatformTarget",
-    "ChipSize",
-    "LODGroupLevel",
-    "ProfilerScopeKind",
-    "VoxelMaterial",
-    "ShaderId",
-    "SubprocessHandle",
-    "HeatControlParams",
-    "DenoiseParams",
-    "SquadRole",
-    "State",
-    "FrustumPlane",
-    "Light3D",
-    "ViewportCamera",
-    "WaterParams",
-    "AmbientLight",
-    "BodyType",
-    "BtDebuggerOverlay",
-    "ShaderFile",
-    "BotFsm",
-    "HudState",
-    "Random",
-    "BrushConfig",
-    "DebugVisualizationMode",
-    "TileType",
-    "SearchNode",
-    "Transform",
-    "Quad",
-    "TransformGizmoPanel",
-    "GroundState",
-    "RigidBodyConfig3D",
-    "Justify",
-    "Player",
-    "DOFUniforms",
-    "SelectSize",
-    "BuildOptimizer",
-    "AssetFormat",
-    "KeyBindings",
-    "PlayerInput",
-    "AtmosphereParams",
-    "RenderContext",
-    "ParticleSimUniforms",
-    "BtWire",
-    "KeyCode",
-    "NPCBehavior",
-    "EffectType",
-    "BloomCombineParams",
-    "AudioListener",
-    "VoxelColor",
-    "EdgeType",
-    "Item2D",
-    "ParticleEmitterParams",
-    "TextareaResize",
-    "AbilityType",
-    "CameraFollowMode",
-    "Align",
-    "ScaleBias",
-    "SpatialAudioSource",
-    "HVertex",
-    "AgentPlaytestDriver",
-    "GamePanelState",
-    "NpcRole",
-    "LightingConfig",
-    "FlexDirection",
-    "AttachmentType",
-    "ChunkCoord",
-    "BadgeSize",
-    "ScenePreset",
-    "GridNode",
-    "Progress",
-    "TestStruct",
-    "AStarPathfinder",
-    "CharacterProgression",
-    "ClothComponent",
-    "Collider3D",
-    "PbrMaterial",
-    "BoneEnvelope",
-    "KeyModifier",
-    "ComponentType",
-    "FrameDebuggerViewState",
-    "GameConfig",
-    "AtmosphereEffect",
-    "TriUvPack",
-    "DebugCube",
-    "ToastVariant",
-    "Camera2D",
-    "MyGame",
-    "GridCoord",
-    "DirectionalLight",
-    "AmbientSounds",
-    "TestGame",
-    "UpscaleBackend",
-    "ContextMenuType",
-    "AlphaMode",
-    "SplitDirection",
-    "DebugVisualizer",
-    "ItemId",
-    "HudParams",
-    "EquipSlot",
-    "Vec3",
-    "Item",
-    "StreamState",
-    "CascadeConfig",
-    "SelectionMode",
-    "FresnelNodeParams",
-    "PostProcessingData",
-    "DebugOverlay",
-    "MeshInstance",
-    "FaceDirection",
-    "ScaleVec",
-    "SpinnerSize",
-    "BloomSettings",
-    "Renderable",
-    "UpscaleParams",
-    "VoxelBrush",
-    "LightPassParams",
-    "FogVolume",
-    "SkyModel",
-    "ComparisonResult",
-    "MerchantType",
-    "BatchRunSummary",
-    "SkeletonVariant",
-    "PlaytestCommand",
-    "SpriteFrame",
-    "TextureSlot",
-    "MockRenderer",
-    "StuckReason",
-    "LightingUniforms",
-    "Emitter",
-    "IKBone",
-    "UpscaleQuality",
-    "Dog",
-    "LodLevelDef",
-    "ItemStats",
-    "WaterProperties",
-    "Vec2f",
-    "PredictionState",
-    "AssetCompressor",
-    "ParticleEffectConfig",
-    "Scene",
-    "OrbitCamera",
-    "Transform3D",
-    "VoxelCloudBackend",
-    "BloomEffect",
-    "ParticleSimParams",
-    "BudgetBand",
-    "MeshVertex",
-    "CompositeParams",
-    "CullResult",
-    "MaterialNodeKind",
-    "AStarTriNode",
-    "ColumnAlign",
-    "VerificationReport",
-    "GpuVertex",
-    "VertexWeight",
-    "ItemDatabase",
-    "SceneLighting",
-    "ParticleRenderParams",
-    "ScrollDir",
-    "ScreenSizeUniforms",
-    "StationZone",
-    "AlertLevel",
-    "StationType",
-    "LightingPreset",
-    "GenerationSettings",
-    "Gizmo",
-    "MaterialPalette",
-    "NoiseNodeParams",
-    "AISystem",
-    "VoxColor",
-    "TradeType",
-    "PhysicsBody",
-    "SmokeEffect",
-    "JoltWorld",
-    "QuestState",
-    "PackRect",
-    "Entity",
-    "FoliageInstance",
-    "RatingSize",
-    "Camera3D",
-    "Velocity",
-    "DoorDef",
-    "PlaybackState",
-    "CollisionResponse",
-    "WeaponStats",
-    "MeshStrategy",
-    "ZonePostFx",
-    "VegetationInstance",
-    "WeaponSystem",
-    "GizmoState",
-    "InputAction",
-    "VerticalSlider",
-    "Tile",
-    "FrameTimer",
-    "BuiltinEvaluator",
-    "AABB",
-    "ListenerId",
-    "MouseButton",
-    "ChoiceType",
-    "GreyboxRamp",
-    "MusicTrack",
-    "Shelf",
-    "AlertIndicator",
-    "GameRendererConfig",
-    "CompositeUniforms",
-    "Renderer",
-    "Mat4",
-    "VNode",
-    "StuckDetector",
-    "NpcDialogResult",
-    "ModalSize",
-    "SimpleCalc",
-    "UVRect",
-    "LODGenerator",
-    "AudioSource",
-    "BuildConfig",
-    "AbilityState",
-    "RaymarchUniforms",
-    "QuestType",
-    "Pagination",
-    "Buffer",
-    "Ability",
-    "ComponentId",
-    "DrawerPosition",
-    "ParticleEmitterUniforms",
-    "DateTime",
-    "PhysicsQuery",
-    "Cascade",
-    "HeatControlUniforms",
-    "StackAlign",
-    "MoveEntityCommand",
-    "TransformGizmo",
-    "HeightFogParams",
-    "PerformanceOverlay",
-    "HalfEdge",
-    "StealthModifiers",
-    "WeatherSystem",
-    "Material",
-    "AtmosphereLutSettings",
-    "MuzzleFlash",
-    "SoundEffect",
-    "MaterialType",
-    "PhysicsSystem",
-    "GridFloorConfig",
-    "HudUniforms",
-    "HitscanResult",
-    "VendorUpscaler",
-    "LocomotionConfig",
-    "Manager",
-    "WeatherLutPreset",
-    "GpuCameraState",
-    "AvatarSize",
-    "MemoryTracker",
-    "WaterEffect",
-    "AtmosphereConfig",
-    "BotIntent",
-    "UpscaleUniforms",
-    "Lighting",
-    "Plane",
-    "Chunk",
-    "SkylineNode",
-    "AchievementCategory",
-    "EcsInspector",
-    "KeyboardShortcut",
-    "Wind",
-    "TestDatabase",
-    "SteeringObstacle",
-    "TextureHandle",
-    "GizmoMode",
-    "HudRect",
-    "AtmospherePassInput",
-    "WorldCell",
-    "VoxelFace",
-    "SquadMember",
-    "Objective",
-    "CombatStats",
-    "BloomExtractUniforms",
-    "RenderPass",
-    "CompressionLevel",
-    "GamepadAxes",
-    "PersonalityTrait",
-    "ColliderShape",
-    "GameObject",
-    "GiSettings",
-    "DebugRaycast",
-    "RowAlign",
-    "MaterialNode",
-    "EntitySnapshot",
-    "ScreenSizeParams",
-    "Light2D",
-    "SightConfig",
-    "Counter",
-    "MemorySnapshot",
-    "PlayState",
-    "PhysicsMaterial3D",
-    "CharacterConfig",
-    "SpawnShape",
-    "PickupData",
-    "StreamEntry",
-    "MemoryDiff",
-    "MotionVectorParams",
-    "AStarCell",
-    "BindingType",
-    "PerceptionType",
-    "Texture",
-    "PopoverPosition",
-    "Cat",
-    "RenderConfig",
-    "Vertex",
-    "ColumnJustify",
-    "SoundConfig",
-    "SoundEffectId",
-    "Color",
-    "ReverbParams",
-    "InputEventKind",
-    "WaterConfig",
-    "BadgeVariant",
-    "Clip",
-    "CollisionLayer",
-    "Sphere",
-    "GameRenderer",
-    "HumanoidProps",
-    "ColorGrading",
-    "HeightFogSettings",
-    "PostFxConfig",
-    "AdaptiveQualityConfig",
-    "PostProcessEffect",
-    "StackDirection",
-    "Terrain",
-    "Sprite",
-    "AudioSystem",
-    "ActionResult",
-    "MaterialPresets",
-    "VoxelRenderer",
-    "Event",
-    "LodFrameMetrics",
-    "Vec2",
-    "LoadingSize",
-    "Metadata",
-    "DeterministicStream",
-    "HierarchyHelpers",
-    "TrackId",
-    "ScenarioExecutor",
-    "GridRenderer",
-    "DeadWrite",
-    "PriceModifiers",
-    "CoverType",
-    "HudAbilityInfo",
-    "MeshRenderer",
-    "BotFsmState",
-    "EditorMode",
-    "AnimationFrame",
-    "StackJustify",
-    "SoundSource",
-    "Duration",
-    "EnemyType",
-    "FireEffect",
-    "CrossfadeState",
-    "SmokeUniforms",
-    "BoneTransform",
-    "Keyframe",
-    "AlertVariant",
-    "AStarNode",
-    "ActivePanel",
-    "AnimationMode",
-    "PhysicsSettings",
-    "CompiledPass",
-    "FormationType",
-    "HiZCullingConfig",
-    "StepKind",
-    "VGSRasterizer",
-    "RayHit",
-    "SpaceStationPalette",
-    "TriggerData",
-    "ButtonVariant",
-    "MaterialData",
-    "BehaviorStatus",
-    "OcclusionFallback",
-    "MeshPipelineStats",
-    "AudioEngine",
-    "DialogueLineId",
-    "InputEvent",
-    "InvestigationState",
-    "PinType",
-    "GamepadAxis",
-    "TerrainBrush",
-    "Camera",
-    "Material3D",
-    "GizmoHandleType",
-    "WangTile",
-    "ErrorSeverity",
-    "MaterialSlot",
-    "TerrainConfig",
-    "ScriptStatus",
-    "TimeNodeParams",
-    "HiZParams",
-    "BodyType3D",
-    "SmokeParams",
-    "VoxelCloudVolumeSettings",
-    "BtPalettePanel",
-    "SceneTransition",
-    "WeaponSlot",
-    "Dirty",
-    "RenderSystem",
-    "PoolId",
-    "ScreenShake",
-    "Rect",
-    "HostType",
-    "InputBinding",
-    "MaterialEdit",
-    "TileId",
-    "RelationshipStatus",
-    "CollisionResult",
-    "PatrolPattern",
-    "DividerOrientation",
-    "GpuResources",
-    "EntityKind",
-    "InspectorLayout",
-    "ForceFieldType",
-    "BufferLifetime",
-    "DebugSphere",
-    "ParameterType",
-    "VGSPipeline",
-    "Language",
-    "CloudParams",
-    "ReplicatedState",
-    "Foo",
-    "AchievementId",
-    "BloomCombineUniforms",
-    "Game",
-    "Circle",
-    "VegetationType",
-    "LoadConfig",
-    "VoxelType",
-    "BuiltinFn",
-    "BVHNode",
-    "PlaytestSession",
-    "Value",
-    "CameraComponent",
-    "ChunkId",
-    "MeshImportSettings",
-    "Direction",
-    "StreamingMetrics",
-    "AudioEffect",
-    "StateId",
-    "NetworkRole",
-    "GameState",
-    "GreyboxPillar",
-    "TexCoord2",
-    "SpatialQuery",
-    "BlenderLinkConfig",
-    "SmokeEffectConfig",
-    "CameraUniforms",
-    "HotReload",
-    "PhysicsDebugConfig",
-    "SSAOParams",
-    "Triangle",
-    "AudioPlugin",
-    "GameAction",
-    "EditorAction",
-    "ScrollDirection",
-    "DialogNodeType",
-    "Bounds3",
-    "EditMode",
-    "ParticleRenderUniforms",
-    "SceneNode",
-    "CircleCollider",
-    "CloudParamsStub",
-    "MyType",
-    "SettingsSz",
-    "BoneTransformDelta",
-    "CathedralMaterials",
-    "AudioImportSettings",
-    "Quat",
-    "BlendMode",
-    "GridFloor",
-    "WeatherType",
-    "CorePlugin",
-    "LightingData",
-    "CameraState",
+    "RowJustify",
+    "AvatarShape",
     "TextWeight",
-    "CombatState",
-    "Priority",
-    "LogLevel",
-    "EmissionShape",
-    "VoxelChange",
-    "HeatEffectConfig",
-    "FpsCamera",
-    "LayerMask",
-    "RifterQuarterMaterials",
-    "AIState",
-    "RadianceProbe",
-    "AssertionResult",
-    "EquipmentStats",
-    "AnomalyKind",
-    "AssetStatus",
-    "HudDrillTarget",
-    "PointLight",
-    "UsdMaterial",
-    "LightingState",
-    "MeshPrimitiveDef",
-    "EnemySpawnData",
-    "Particle3D",
-    "ProgressVariant",
-    "WaveState",
-    "ShaderType",
-    "OffMeshLink",
-    "ChunkState",
-    "Connection",
-    "RayHit3D",
-    "MetricsHudConfig",
-    "ItemType",
-    "NodeId",
-    "FlexItem",
-    "MaterialBuilder",
-    "ChipVariant",
-    "SpotLight",
-    "WaterSurface",
-    "AssetThumbnail",
-    "BrushShape",
-    "CheckboxSize",
-    "StatusEffectType",
-    "NodeCategory",
-    "WeaponForm",
-    "AtmosphereUniforms",
-    "App",
+    "ScrollDirection",
+    "ToastPosition",
+    "StackJustify",
     "EasingPreset",
-    "ChunkLifecycleState",
-    "WireframeMode",
-    "BloomExtractParams",
-    "AtmospherePassOutput",
-    "AssetType",
-    "QuestStatus",
-    "CameraValidationReport",
-    "Binding",
-    "DamageFlash",
-    "MyRenderer",
-    "Ray",
-    "Stats",
-    "Vertex3D",
-    "ParticleConfig",
-    "LodCameraContext",
-    "ParticleCollider",
-    "EdgeMoveKind",
-    "RigidBodyType",
-    "PlayerState",
-    "BindlessCapabilities",
-    "Square",
-    "UvCoord",
-    "NavbarPosition",
-    "WaveConfig",
-    "LODObjectId",
-    "QualityTier",
-    "MannequinConfig",
-    "GamepadButton",
-    "TileCollision",
+    "ColumnJustify",
+    "CurvePoint",
+    "Pagination",
+    "BadgeVariant",
+    "RatingSize",
+    "BtWire",
+    "ButtonSize",
+    "ProgressVariant",
+    "SplitDirection",
+    "BadgeSize",
+    "TooltipPosition",
+    "LoadingSize",
+    "StackDirection",
+    "PinType",
+    "FrameDebuggerViewState",
+    "FlexDirection",
+    "TextareaResize",
+    "ChipSize",
+    "SpinnerSize",
     "TextSize",
-    "BriefingResult",
-    "Transition",
-    "PoolStats",
-    "CameraData",
-    "CombatConfig",
-    "PlaytestRunner",
-    "GBufferInspector",
-    "WeatherIntensity",
-    "AssetKind",
-    "HitMarker",
-    "AABB3",
-    "RaymarchParams",
-    "ParticleEffect",
-    "TpsCamera",
-    "ScreenStub",
-    "DeleteEntityCommand"
+    "SwitchSize",
+    "MessageRole",
+    "Progress",
+    "ModalSize",
+    "ColumnAlign",
+    "ChipVariant",
+    "SkeletonVariant",
+    "NavbarPosition",
+    "StackAlign",
+    "NodeCategory",
+    "CheckboxSize",
+    "AvatarSize",
+    "PopoverPosition",
+    "BtDebuggerOverlay",
+    "RowAlign",
+    "VNode",
+    "ToastVariant",
+    "ButtonVariant",
+    "DrawerPosition",
+    "DividerOrientation",
+    "SelectSize",
+    "AlertVariant",
+    "BtPalettePanel",
+    "ScrollDir",
+    "ProfilerScopeKind"
   ],
   "non_copy_structs": [],
-  "version": "0.47.0",
+  "version": "0.50.0",
   "analysis_fingerprint": {
     "content_hash": 6421896884451501337,
-    "compiler_version": "0.47.0:03188de51168ef52",
-    "dep_metadata_epoch": 14298954751602706147
+    "compiler_version": "0.50.0:efa412e4570d8b42",
+    "dep_metadata_epoch": 2435999049025295583,
+    "output_hash": 6544854562018838544
   }
 }

@@ -111,6 +111,9 @@ jni = { version = "0.21", optional = true }
 # WASM utilities
 console_error_panic_hook = { version = "0.1", optional = true }
 
+# Windjammer runtime (FFI string helpers used by generated code)
+windjammer-runtime = { path = "../windjammer/crates/windjammer-runtime", default-features = false }
+
 [dev-dependencies]
 tokio-test = "0.4"
 criterion = "0.5"

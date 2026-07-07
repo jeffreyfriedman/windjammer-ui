@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -18,27 +20,39 @@ pub struct Alert {
 }
 
 impl Alert {
-#[inline]
-pub fn error(message: String) -> Alert {
-        Alert { message, variant: AlertVariant::Error }
-}
-#[inline]
-pub fn warning(message: String) -> Alert {
-        Alert { message, variant: AlertVariant::Warning }
-}
-#[inline]
-pub fn info(message: String) -> Alert {
-        Alert { message, variant: AlertVariant::Info }
-}
-#[inline]
-pub fn success(message: String) -> Alert {
-        Alert { message, variant: AlertVariant::Success }
-}
+    #[inline]
+    pub fn error(message: String) -> Alert {
+        Alert {
+            message,
+            variant: AlertVariant::Error,
+        }
+    }
+    #[inline]
+    pub fn warning(message: String) -> Alert {
+        Alert {
+            message,
+            variant: AlertVariant::Warning,
+        }
+    }
+    #[inline]
+    pub fn info(message: String) -> Alert {
+        Alert {
+            message,
+            variant: AlertVariant::Info,
+        }
+    }
+    #[inline]
+    pub fn success(message: String) -> Alert {
+        Alert {
+            message,
+            variant: AlertVariant::Success,
+        }
+    }
 }
 
 impl Renderable for Alert {
-#[inline]
-fn render(self) -> String {
+    #[inline]
+    fn render(&mut self) -> String {
         let variant_class: String = match self.variant {
             AlertVariant::Error => String::from("wj-alert-error"),
             AlertVariant::Warning => String::from("wj-alert-warning"),
@@ -51,7 +65,9 @@ fn render(self) -> String {
             AlertVariant::Info => String::from("ℹ️"),
             AlertVariant::Success => String::from("✅"),
         };
-        format!("<div class='wj-alert {}'>{} {}</div>", variant_class, icon, self.message)
+        format!(
+            "<div class='wj-alert {}'>{} {}</div>",
+            variant_class, icon, self.message
+        )
+    }
 }
-}
-

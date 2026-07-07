@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 use windjammer_runtime::test::*;
@@ -16,8 +18,11 @@ pub fn test_apply_execution_trace_highlights_nodes() {
 #[test]
 #[inline]
 pub fn test_trace_highlight_sets_active_class() {
-    let mut node = super::node_graph::GraphNode::new("n1".to_string(), "Spawn".to_string(), super::node_graph::NodeCategory::Event);
+    let mut node = super::node_graph::GraphNode::new(
+        String::from("n1"),
+        String::from("Spawn"),
+        super::node_graph::NodeCategory::Event,
+    );
     node = node.trace_highlight(true);
     assert!(node.trace_active, "trace highlight flag set");
 }
-

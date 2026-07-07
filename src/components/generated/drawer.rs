@@ -1,3 +1,5 @@
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 #[derive(Debug, Clone, PartialEq)]
@@ -19,42 +21,60 @@ pub enum DrawerPosition {
 }
 
 impl Drawer {
-#[inline]
-pub fn new() -> Drawer {
-        Drawer { children: Vec::new(), position: DrawerPosition::Right, width: "320px".to_string(), open: false, class: String::new() }
-}
-#[inline]
-pub fn child(mut self, child: String) -> Drawer {
+    #[inline]
+    pub fn new() -> Drawer {
+        Drawer {
+            children: Vec::new(),
+            position: DrawerPosition::Right,
+            width: "320px".to_string(),
+            open: false,
+            class: String::new(),
+        }
+    }
+    #[inline]
+    pub fn child(mut self, child: String) -> Drawer {
         self.children.push(child);
         self
-}
-#[inline]
-pub fn position(mut self, position: DrawerPosition) -> Drawer {
+    }
+    #[inline]
+    pub fn position(mut self, position: DrawerPosition) -> Drawer {
         self.position = position;
         self
-}
-#[inline]
-pub fn width(mut self, width: String) -> Drawer {
+    }
+    #[inline]
+    pub fn width(mut self, width: String) -> Drawer {
         self.width = width;
         self
-}
-#[inline]
-pub fn open(mut self, open: bool) -> Drawer {
+    }
+    #[inline]
+    pub fn open(mut self, open: bool) -> Drawer {
         self.open = open;
         self
-}
-#[inline]
-pub fn class(mut self, class: String) -> Drawer {
+    }
+    #[inline]
+    pub fn class(mut self, class: String) -> Drawer {
         self.class = class;
         self
-}
-#[inline]
-pub fn render(&self) -> String {
+    }
+    #[inline]
+    pub fn render(&self) -> String {
         let (position_style, size_prop) = match self.position {
-            DrawerPosition::Left => (String::from("left: 0; top: 0; bottom: 0;"), format!("width: {};", self.width.clone())),
-            DrawerPosition::Right => (String::from("right: 0; top: 0; bottom: 0;"), format!("width: {};", self.width.clone())),
-            DrawerPosition::Top => (String::from("top: 0; left: 0; right: 0;"), format!("height: {};", self.width.clone())),
-            DrawerPosition::Bottom => (String::from("bottom: 0; left: 0; right: 0;"), format!("height: {};", self.width.clone())),
+            DrawerPosition::Left => (
+                String::from("left: 0; top: 0; bottom: 0;"),
+                format!("width: {};", self.width.clone()),
+            ),
+            DrawerPosition::Right => (
+                String::from("right: 0; top: 0; bottom: 0;"),
+                format!("width: {};", self.width.clone()),
+            ),
+            DrawerPosition::Top => (
+                String::from("top: 0; left: 0; right: 0;"),
+                format!("height: {};", self.width.clone()),
+            ),
+            DrawerPosition::Bottom => (
+                String::from("bottom: 0; left: 0; right: 0;"),
+                format!("height: {};", self.width.clone()),
+            ),
         };
         let transform = {
             if self.open {
@@ -80,7 +100,7 @@ pub fn render(&self) -> String {
         html.push_str(&display);
         html.push_str(" position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5); z-index: 999;\"></div>");
         html.push_str("<div class=\"wj-drawer ");
-        html.push_str(&self.class.clone());
+        html.push_str(&self.class);
         html.push_str("\" style=\"position: fixed; ");
         html.push_str(&position_style);
         html.push(' ');
@@ -89,10 +109,9 @@ pub fn render(&self) -> String {
         html.push_str(&transform);
         html.push_str(" background: white; box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); z-index: 1000; transition: transform 0.3s ease; overflow-y: auto; padding: 24px;\">");
         for child in &self.children {
-            html.push_str(child);
+            html.push_str(&child);
         }
         html.push_str("</div>");
         html
+    }
 }
-}
-
