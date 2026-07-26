@@ -1,0 +1,173 @@
+{
+  "module_path": "icon",
+  "functions": {
+    "Icon::size": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"i32\")"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "Custom(\"i32\")"
+      ],
+      "return_type": "Custom(\"Icon\")",
+      "is_associated": true,
+      "parent_type": "Icon",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Icon::new": {
+      "params": [
+        "Custom(\"IconName\")"
+      ],
+      "formal_params": [
+        "Custom(\"IconName\")"
+      ],
+      "return_type": "Custom(\"Icon\")",
+      "is_associated": true,
+      "parent_type": "Icon",
+      "param_ownership": [
+        "Owned"
+      ],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Icon::label": {
+      "params": [
+        "Custom(\"Self\")",
+        "Reference(String)"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Icon\")",
+      "is_associated": true,
+      "parent_type": "Icon",
+      "param_ownership": [
+        "Owned",
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Icon::render": {
+      "params": [
+        "Reference(Custom(\"Self\"))"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Icon",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "path_for": {
+      "params": [
+        "Custom(\"IconName\")"
+      ],
+      "formal_params": [
+        "Custom(\"IconName\")"
+      ],
+      "return_type": "String",
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [
+        "Owned"
+      ],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "main": {
+      "params": [],
+      "formal_params": [],
+      "return_type": null,
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    }
+  },
+  "structs": {
+    "Icon": {
+      "label": "String",
+      "name": "Custom(\"IconName\")",
+      "size": "Custom(\"i32\")"
+    }
+  },
+  "trait_impls": {},
+  "copy_structs": [
+    "StackAlign",
+    "PinType",
+    "RatingSize",
+    "BtPalettePanel",
+    "NodeCategory",
+    "ChipVariant",
+    "TextWeight",
+    "StackDirection",
+    "SelectSize",
+    "AvatarSize",
+    "SidebarPosition",
+    "Progress",
+    "RowAlign",
+    "AlertVariant",
+    "ToastPosition",
+    "CurvePoint",
+    "ChipSize",
+    "EasingPreset",
+    "IconName",
+    "RowJustify",
+    "BadgeVariant",
+    "TooltipPosition",
+    "SpinnerSize",
+    "ScrollDir",
+    "ModalSize",
+    "StackJustify",
+    "ProfilerScopeKind",
+    "BadgeSize",
+    "ToastVariant",
+    "MessageRole",
+    "NavbarPosition",
+    "CheckboxSize",
+    "FrameDebuggerViewState",
+    "SwitchSize",
+    "SkeletonVariant",
+    "DrawerPosition",
+    "ButtonVariant",
+    "PopoverPosition",
+    "LoadingSize",
+    "BtDebuggerOverlay",
+    "ProgressVariant",
+    "Pagination",
+    "ButtonSize",
+    "BtWire",
+    "ScrollDirection",
+    "TextareaResize",
+    "ColumnAlign",
+    "VNode",
+    "FlexDirection",
+    "TextSize",
+    "DividerOrientation",
+    "AvatarShape",
+    "ColumnJustify",
+    "SplitDirection"
+  ],
+  "non_copy_structs": [],
+  "version": "0.50.0",
+  "analysis_fingerprint": {
+    "content_hash": 16113595405814244028,
+    "compiler_version": "0.50.0:13b93fffad2f0a9a",
+    "dep_metadata_epoch": 2435999049025295583,
+    "output_hash": 4991256131657001062
+  }
+}

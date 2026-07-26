@@ -1,7 +1,7 @@
-// Alert Component - Display messages and notifications
-
+// Alert — calm status banners (finance dogfood: no emoji marks)
 
 use super::traits::Renderable
+
 pub enum AlertVariant {
     Error,
     Warning,
@@ -12,6 +12,7 @@ pub enum AlertVariant {
 pub struct Alert {
     message: string,
     variant: AlertVariant,
+    title: string,
 }
 
 impl Alert {
@@ -19,6 +20,7 @@ impl Alert {
         Alert {
             message: message,
             variant: AlertVariant::Error,
+            title: "".to_string(),
         }
     }
 
@@ -26,6 +28,7 @@ impl Alert {
         Alert {
             message: message,
             variant: AlertVariant::Warning,
+            title: "".to_string(),
         }
     }
 
@@ -33,6 +36,7 @@ impl Alert {
         Alert {
             message: message,
             variant: AlertVariant::Info,
+            title: "".to_string(),
         }
     }
 
@@ -40,43 +44,50 @@ impl Alert {
         Alert {
             message: message,
             variant: AlertVariant::Success,
+            title: "".to_string(),
         }
     }
 
+    pub fn title(self, title: string) -> Alert {
+        self.title = title
+        self
+    }
+}
 
+fn mark_for(variant: AlertVariant) -> string {
+    match variant {
+        AlertVariant::Error => "Error",
+        AlertVariant::Warning => "Warning",
+        AlertVariant::Info => "Note",
+        AlertVariant::Success => "Done",
+    }
 }
 
 impl Renderable for Alert {
-pub fn render(self) -> string {
+    fn render(self) -> string {
         let variant_class = match self.variant {
             AlertVariant::Error => "wj-alert-error",
             AlertVariant::Warning => "wj-alert-warning",
             AlertVariant::Info => "wj-alert-info",
             AlertVariant::Success => "wj-alert-success",
         }
-
-        let icon = match self.variant {
-            AlertVariant::Error => "❌",
-            AlertVariant::Warning => "⚠️",
-            AlertVariant::Info => "ℹ️",
-            AlertVariant::Success => "✅",
+        let mark = mark_for(self.variant)
+        let heading = if self.title.len() == 0 {
+            "".to_string()
+        } else {
+            format!("<strong class='wj-alert-title'>{}</strong>", self.title)
         }
-
-        format!("<div class='wj-alert {}'>{} {}</div>", variant_class, icon, self.message)
+        format!(
+            "<div class='wj-alert {}' role='status'><span class='wj-alert-mark'>{}</span>{} <span class='wj-alert-msg'>{}</span></div>",
+            variant_class,
+            mark,
+            heading,
+            self.message
+        )
     }
 }
 
 fn main() {
-    let alert1 = Alert::error("Something went wrong!".to_string())
-    println!("Error: {}", alert1.render())
-
-    let alert2 = Alert::success("Operation completed successfully".to_string())
-    println!("Success: {}", alert2.render())
-
-    let alert3 = Alert::warning("Please review your input".to_string())
-    println!("Warning: {}", alert3.render())
-
-    let alert4 = Alert::info("Did you know...".to_string())
-    println!("Info: {}", alert4.render())
+    let html = Alert::warning("Review open items".to_string()).title("Today".to_string()).render()
+    println!("{}", html)
 }
-
