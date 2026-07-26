@@ -1,4 +1,4 @@
-//! WriteCheckForm — Business write-check fields + JE sync (ADR-002 / R1.3).
+//! WriteCheckForm — Business write-check fields + JE sync (ADR-002 / R1.3 / R2.2).
 //! Hand-maintained. Always SKIP_WJ_REGEN=1.
 
 use super::traits::Renderable;
@@ -41,8 +41,27 @@ impl Default for WriteCheckForm {
     }
 }
 
+fn expense_option(code: &str, label: &str, selected: &str) -> String {
+    let sel = if code == selected { " selected" } else { "" };
+    format!(
+        r#"<option value="{code}"{sel}>{code} · {label}</option>"#,
+        code = code,
+        label = label,
+        sel = sel
+    )
+}
+
 impl Renderable for WriteCheckForm {
     fn render(&self) -> String {
+        let expense = self.expense_code.as_str();
+        let options = [
+            expense_option("5000", "Payroll Expense", expense),
+            expense_option("5100", "Office Supplies", expense),
+            expense_option("5200", "Equipment Expense", expense),
+            expense_option("5300", "Software & SaaS", expense),
+            expense_option("5400", "Bank Fees", expense),
+        ]
+        .join("");
         format!(
             r##"<div class="wj-write-check-form" data-wj-write-check data-wj-bank-code="{bank}" data-wj-expense-code="{expense}">
 <p class="hub-kicker">Write check</p>
@@ -52,6 +71,8 @@ impl Renderable for WriteCheckForm {
 <input id="checkAmount" name="amount" type="text" inputmode="decimal" placeholder="0.00" data-wj-write-check-amount/>
 <label for="checkNum">Check number</label>
 <input id="checkNum" name="check_number" type="text" value="1001" data-wj-write-check-num/>
+<label for="checkExpense">Expense account</label>
+<select id="checkExpense" name="expense_account" data-wj-write-check-expense>{options}</select>
 <label for="checkMemo">Memo</label>
 <input id="checkMemo" name="memo" type="text" placeholder="Optional memo" data-wj-write-check-memo/>
 <details class="bw-advanced"><summary>Journal body (advanced)</summary>
@@ -63,6 +84,7 @@ impl Renderable for WriteCheckForm {
 </div>"##,
             bank = self.bank_code,
             expense = self.expense_code,
+            options = options,
             sample = self.sample_body,
         )
     }
@@ -95,13 +117,21 @@ pub fn write_check_form_runtime_js() -> &'static str {
     if (rail && rail.getAttribute('data-code')) return rail.getAttribute('data-code');
     return (root && root.getAttribute('data-wj-bank-code')) || '1000';
   }
+  function expenseCode(root) {
+    var sel = root.querySelector('[data-wj-write-check-expense]');
+    if (sel && sel.value) {
+      root.setAttribute('data-wj-expense-code', sel.value);
+      return sel.value;
+    }
+    return (root.getAttribute('data-wj-expense-code')) || '5000';
+  }
   function buildBody(root) {
     var payee = (root.querySelector('[data-wj-write-check-payee]') || {}).value || '';
     var amount = (root.querySelector('[data-wj-write-check-amount]') || {}).value || '';
     var num = (root.querySelector('[data-wj-write-check-num]') || {}).value || '1001';
     var memo = (root.querySelector('[data-wj-write-check-memo]') || {}).value || '';
     var bank = activeBankCode(root);
-    var expense = (root.getAttribute('data-wj-expense-code')) || '5000';
+    var expense = expenseCode(root);
     var cents = centsFromAmount(amount);
     if (!cents) throw new Error('Enter an amount greater than zero.');
     if (!payee.trim()) throw new Error('Enter a payee.');
@@ -119,6 +149,13 @@ pub fn write_check_form_runtime_js() -> &'static str {
     var body = buildBody(root);
     ta.value = body;
     return body;
+  }
+  function bumpCheckNum(root) {
+    var el = root.querySelector('[data-wj-write-check-num]');
+    if (!el) return;
+    var n = parseInt(String(el.value || '1001').replace(/[^0-9]/g, ''), 10);
+    if (!isFinite(n)) n = 1001;
+    el.value = String(n + 1);
   }
 
   document.addEventListener('click', function (ev) {
@@ -145,6 +182,7 @@ pub fn write_check_form_runtime_js() -> &'static str {
       }).then(function (res) {
         if (!res.ok) { out.classList.add('is-error'); out.textContent = 'Could not post (' + res.status + ')'; return; }
         out.textContent = 'Check posted — register refreshing…';
+        bumpCheckNum(root);
         var load = document.getElementById('loadCheckbook')
           || document.querySelector('[data-wj-render-kind="checkbook"]');
         if (load) { try { load.click(); } catch (e) {} }
@@ -161,7 +199,15 @@ pub fn write_check_form_runtime_js() -> &'static str {
     if (!t || !t.closest) return;
     var root = t.closest('[data-wj-write-check]');
     if (!root) return;
-    if (!t.matches('[data-wj-write-check-payee],[data-wj-write-check-amount],[data-wj-write-check-num],[data-wj-write-check-memo]')) return;
+    if (!t.matches('[data-wj-write-check-payee],[data-wj-write-check-amount],[data-wj-write-check-num],[data-wj-write-check-memo],[data-wj-write-check-expense]')) return;
+    try { syncBody(root); } catch (e) {}
+  });
+  document.addEventListener('change', function (ev) {
+    var t = ev.target;
+    if (!t || !t.closest) return;
+    var root = t.closest('[data-wj-write-check]');
+    if (!root) return;
+    if (!t.matches('[data-wj-write-check-expense]')) return;
     try { syncBody(root); } catch (e) {}
   });
 })();
@@ -176,10 +222,14 @@ mod tests {
     fn renders_fields_and_hooks() {
         let html = WriteCheckForm::new()
             .sample_body(r#"{"reference":"CHK-1001"}"#)
+            .expense_code("5100")
             .render();
         assert!(html.contains("wj-write-check-form"));
         assert!(html.contains("data-wj-write-check-payee"));
         assert!(html.contains("data-wj-write-check-post"));
+        assert!(html.contains("data-wj-write-check-expense"));
+        assert!(html.contains("checkExpense"));
+        assert!(html.contains("value=\"5100\" selected") || html.contains("5100 · Office"));
         assert!(html.contains("checkJeBody"));
     }
 }

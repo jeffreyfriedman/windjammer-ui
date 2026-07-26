@@ -60,13 +60,16 @@ impl Renderable for MemorizedList {
         format!(
             r##"<div class="wj-memorized-list" data-wj-memorized-list>
   <ul class="hub-list" id="memorizedList">{list}</ul>
-  <div class="panel-filters">
-    <label for="memTitle">Title</label>
-    <input id="memTitle" type="text" placeholder="e.g. Monthly rent"/>
-    <label for="memBody">Journal JSON</label>
-    <textarea id="memBody" rows="4" placeholder="Paste balanced journal body"></textarea>
-    <div class="row"><button type="button" class="btn-secondary" data-wj-memorized-save>Save memorized</button></div>
-  </div>
+  <details class="bw-advanced">
+    <summary>Save memorized (advanced)</summary>
+    <div class="panel-filters">
+      <label for="memTitle">Title</label>
+      <input id="memTitle" type="text" placeholder="e.g. Monthly rent"/>
+      <label for="memBody">Journal JSON</label>
+      <textarea id="memBody" rows="4" placeholder="Paste balanced journal body"></textarea>
+      <div class="row"><button type="button" class="btn-secondary" data-wj-memorized-save>Save memorized</button></div>
+    </div>
+  </details>
 </div>"##,
             list = list
         )
