@@ -48,18 +48,20 @@ impl Grid {
 
 impl Renderable for Grid {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let style = {
             let mut __s = String::with_capacity(64);
             write!(
                 &mut __s,
                 "display: grid; grid-template-columns: repeat({}, 1fr); gap: {}; padding: {};",
-                self.columns, self.gap, self.padding
+                self.columns,
+                self.gap.clone(),
+                self.padding.clone()
             )
             .unwrap();
             __s
         };
-        let children_html = self.children.join("\n");
+        let children_html = self.children.join(&"\n");
         format!(
             "<div class='wj-grid' style='{}'>\n{}\n</div>",
             style, children_html

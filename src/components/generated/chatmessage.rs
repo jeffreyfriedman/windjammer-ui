@@ -49,7 +49,7 @@ impl ChatMessage {
 
 impl Renderable for ChatMessage {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let role_class: String = match self.role {
             MessageRole::User => String::from("wj-message-user"),
             MessageRole::Assistant => String::from("wj-message-assistant"),
@@ -59,7 +59,7 @@ impl Renderable for ChatMessage {
             if !self.avatar.is_empty() {
                 format!(
                     "<div class='wj-message-avatar'><img src='{}' alt='avatar'/></div>",
-                    self.avatar
+                    self.avatar.clone()
                 )
             } else {
                 let default_icon: String = match self.role {
@@ -72,11 +72,14 @@ impl Renderable for ChatMessage {
         };
         let timestamp_html = {
             if !self.timestamp.is_empty() {
-                format!("<div class='wj-message-timestamp'>{}</div>", self.timestamp)
+                format!(
+                    "<div class='wj-message-timestamp'>{}</div>",
+                    self.timestamp.clone()
+                )
             } else {
                 String::new()
             }
         };
-        format!("<div class='wj-chat-message {}'>\n                {}\n                <div class='wj-message-content-wrapper'>\n                    <div class='wj-message-content'>{}</div>\n                    {}\n                </div>\n            </div>", role_class, avatar_html, self.content, timestamp_html)
+        format!("<div class='wj-chat-message {}'>\n                {}\n                <div class='wj-message-content-wrapper'>\n                    <div class='wj-message-content'>{}</div>\n                    {}\n                </div>\n            </div>", role_class, avatar_html, self.content.clone(), timestamp_html)
     }
 }

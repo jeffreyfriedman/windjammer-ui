@@ -50,7 +50,7 @@ impl Progress {
 
 impl Renderable for Progress {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let percentage = (self.value / self.max * 100.0_f64).clamp(0.0_f64, 100.0_f64);
         let variant_class: String = match self.variant {
             ProgressVariant::Default => String::from("wj-progress-default"),

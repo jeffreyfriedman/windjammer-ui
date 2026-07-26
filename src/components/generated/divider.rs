@@ -61,7 +61,7 @@ impl Divider {
 
 impl Renderable for Divider {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let orientation_class: String = match self.orientation {
             DividerOrientation::Horizontal => String::from("wj-divider-horizontal"),
             DividerOrientation::Vertical => String::from("wj-divider-vertical"),
@@ -70,13 +70,17 @@ impl Renderable for Divider {
             DividerOrientation::Horizontal => {
                 format!(
                     "width: 100%; height: {}; background: {}; margin: {} 0;",
-                    self.thickness, self.color, self.margin
+                    self.thickness.clone(),
+                    self.color.clone(),
+                    self.margin.clone()
                 )
             }
             DividerOrientation::Vertical => {
                 format!(
                     "width: {}; height: 100%; background: {}; margin: 0 {};",
-                    self.thickness, self.color, self.margin
+                    self.thickness.clone(),
+                    self.color.clone(),
+                    self.margin.clone()
                 )
             }
         };

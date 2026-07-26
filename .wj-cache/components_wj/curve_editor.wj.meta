@@ -1,39 +1,55 @@
 {
   "module_path": "curve_editor",
   "functions": {
-    "CurveEditor::points": {
+    "CurvePoint::new": {
+      "params": [
+        "Custom(\"f32\")",
+        "Custom(\"f32\")"
+      ],
+      "formal_params": [
+        "Custom(\"f32\")",
+        "Custom(\"f32\")"
+      ],
+      "return_type": "Custom(\"CurvePoint\")",
+      "is_associated": true,
+      "parent_type": "CurvePoint",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CurveEditor::range": {
       "params": [
         "Custom(\"Self\")",
-        "Vec(Custom(\"CurvePoint\"))"
+        "Custom(\"f32\")",
+        "Custom(\"f32\")"
       ],
       "formal_params": [
         "Custom(\"Self\")",
-        "Vec(Custom(\"CurvePoint\"))"
+        "Custom(\"f32\")",
+        "Custom(\"f32\")"
       ],
       "return_type": "Custom(\"CurveEditor\")",
       "is_associated": true,
       "parent_type": "CurveEditor",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
       "is_extern": false
     },
-    "CurveEditor::render": {
-      "params": [
-        "Custom(\"Self\")"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")"
-      ],
-      "return_type": "String",
+    "CurveEditor::new": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "Custom(\"CurveEditor\")",
       "is_associated": true,
       "parent_type": "CurveEditor",
-      "param_ownership": [
-        "Borrowed"
-      ],
-      "has_self_receiver": true,
+      "param_ownership": [],
+      "has_self_receiver": false,
       "is_extern": false
     },
     "GradientStop::new": {
@@ -55,6 +71,25 @@
       "has_self_receiver": false,
       "is_extern": false
     },
+    "CurveEditor::apply_preset": {
+      "params": [
+        "MutableReference(Custom(\"Self\"))",
+        "Custom(\"EasingPreset\")"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "Custom(\"EasingPreset\")"
+      ],
+      "return_type": null,
+      "is_associated": true,
+      "parent_type": "CurveEditor",
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
     "CurvePoint::tangents": {
       "params": [
         "Custom(\"Self\")",
@@ -70,7 +105,26 @@
       "is_associated": true,
       "parent_type": "CurvePoint",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "CurveEditor::add_point": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"CurvePoint\")"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "Custom(\"CurvePoint\")"
+      ],
+      "return_type": "Custom(\"CurveEditor\")",
+      "is_associated": true,
+      "parent_type": "CurveEditor",
+      "param_ownership": [
         "Owned",
         "Owned"
       ],
@@ -90,7 +144,26 @@
       "is_associated": true,
       "parent_type": "CurveEditor",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "GradientEditor::add_stop": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"GradientStop\")"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "Custom(\"GradientStop\")"
+      ],
+      "return_type": "Custom(\"GradientEditor\")",
+      "is_associated": true,
+      "parent_type": "GradientEditor",
+      "param_ownership": [
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
@@ -109,7 +182,87 @@
       "is_associated": true,
       "parent_type": "GradientEditor",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "curve_editor_styles": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "String",
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "CurveEditor::points": {
+      "params": [
+        "Custom(\"Self\")",
+        "Vec(Custom(\"CurvePoint\"))"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "Vec(Custom(\"CurvePoint\"))"
+      ],
+      "return_type": "Custom(\"CurveEditor\")",
+      "is_associated": true,
+      "parent_type": "CurveEditor",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "GradientEditor::render": {
+      "params": [
+        "Reference(Custom(\"Self\"))"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "GradientEditor",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "CurveEditor::render": {
+      "params": [
+        "Reference(Custom(\"Self\"))"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "CurveEditor",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "CurveEditor::on_change": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"CurveEditor\")",
+      "is_associated": true,
+      "parent_type": "CurveEditor",
+      "param_ownership": [
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
@@ -130,40 +283,11 @@
       "is_associated": true,
       "parent_type": "CurveEditor",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
         "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
-      "is_extern": false
-    },
-    "CurveEditor::new": {
-      "params": [],
-      "formal_params": [],
-      "return_type": "Custom(\"CurveEditor\")",
-      "is_associated": true,
-      "parent_type": "CurveEditor",
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
-    "CurvePoint::new": {
-      "params": [
-        "Custom(\"f32\")",
-        "Custom(\"f32\")"
-      ],
-      "formal_params": [
-        "Custom(\"f32\")",
-        "Custom(\"f32\")"
-      ],
-      "return_type": "Custom(\"CurvePoint\")",
-      "is_associated": true,
-      "parent_type": "CurvePoint",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": false,
       "is_extern": false
     },
     "GradientEditor::new": {
@@ -175,221 +299,97 @@
       "param_ownership": [],
       "has_self_receiver": false,
       "is_extern": false
-    },
-    "CurveEditor::apply_preset": {
-      "params": [
-        "Custom(\"Self\")",
-        "Custom(\"EasingPreset\")"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "Custom(\"EasingPreset\")"
-      ],
-      "return_type": null,
-      "is_associated": true,
-      "parent_type": "CurveEditor",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "CurveEditor::range": {
-      "params": [
-        "Custom(\"Self\")",
-        "Custom(\"f32\")",
-        "Custom(\"f32\")"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "Custom(\"f32\")",
-        "Custom(\"f32\")"
-      ],
-      "return_type": "Custom(\"CurveEditor\")",
-      "is_associated": true,
-      "parent_type": "CurveEditor",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "CurveEditor::add_point": {
-      "params": [
-        "Custom(\"Self\")",
-        "Custom(\"CurvePoint\")"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "Custom(\"CurvePoint\")"
-      ],
-      "return_type": "Custom(\"CurveEditor\")",
-      "is_associated": true,
-      "parent_type": "CurveEditor",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "curve_editor_styles": {
-      "params": [],
-      "formal_params": [],
-      "return_type": "String",
-      "is_associated": false,
-      "parent_type": null,
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
-    "CurveEditor::on_change": {
-      "params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "return_type": "Custom(\"CurveEditor\")",
-      "is_associated": true,
-      "parent_type": "CurveEditor",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "GradientEditor::add_stop": {
-      "params": [
-        "Custom(\"Self\")",
-        "Custom(\"GradientStop\")"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "Custom(\"GradientStop\")"
-      ],
-      "return_type": "Custom(\"GradientEditor\")",
-      "is_associated": true,
-      "parent_type": "GradientEditor",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "GradientEditor::render": {
-      "params": [
-        "Custom(\"Self\")"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")"
-      ],
-      "return_type": "String",
-      "is_associated": true,
-      "parent_type": "GradientEditor",
-      "param_ownership": [
-        "Borrowed"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
     }
   },
   "structs": {
-    "CurveEditor": {
-      "height": "Custom(\"i32\")",
-      "width": "Custom(\"i32\")",
-      "max_value": "Custom(\"f32\")",
-      "min_value": "Custom(\"f32\")",
-      "grid_enabled": "Bool",
-      "on_change": "String",
-      "points": "Vec(Custom(\"CurvePoint\"))"
-    },
     "GradientStop": {
-      "color": "String",
-      "position": "Custom(\"f32\")"
+      "position": "Custom(\"f32\")",
+      "color": "String"
     },
-    "CurvePoint": {
-      "out_tangent": "Custom(\"f32\")",
-      "value": "Custom(\"f32\")",
-      "time": "Custom(\"f32\")",
-      "in_tangent": "Custom(\"f32\")"
+    "CurveEditor": {
+      "points": "Vec(Custom(\"CurvePoint\"))",
+      "min_value": "Custom(\"f32\")",
+      "max_value": "Custom(\"f32\")",
+      "grid_enabled": "Bool",
+      "width": "Custom(\"i32\")",
+      "height": "Custom(\"i32\")",
+      "on_change": "String"
     },
     "GradientEditor": {
-      "stops": "Vec(Custom(\"GradientStop\"))",
       "height": "Custom(\"i32\")",
+      "stops": "Vec(Custom(\"GradientStop\"))",
       "on_change": "String",
       "width": "Custom(\"i32\")"
+    },
+    "CurvePoint": {
+      "time": "Custom(\"f32\")",
+      "value": "Custom(\"f32\")",
+      "out_tangent": "Custom(\"f32\")",
+      "in_tangent": "Custom(\"f32\")"
     }
   },
   "trait_impls": {},
   "copy_structs": [
-    "SidebarPosition",
-    "RowJustify",
-    "AvatarShape",
-    "TextWeight",
-    "ScrollDirection",
-    "ToastPosition",
-    "StackJustify",
-    "EasingPreset",
-    "ColumnJustify",
     "CurvePoint",
-    "Pagination",
-    "BadgeVariant",
-    "RatingSize",
+    "StackAlign",
+    "AlertVariant",
+    "TextareaResize",
+    "PopoverPosition",
     "BtWire",
+    "TextWeight",
+    "FlexDirection",
+    "StackDirection",
+    "RowAlign",
+    "TextSize",
+    "ToastPosition",
+    "DividerOrientation",
+    "ColumnAlign",
+    "NodeCategory",
+    "ScrollDir",
+    "BadgeVariant",
+    "EasingPreset",
+    "FrameDebuggerViewState",
+    "SidebarPosition",
+    "BtPalettePanel",
+    "TooltipPosition",
+    "Pagination",
+    "RowJustify",
+    "ChipVariant",
+    "VNode",
+    "StackJustify",
+    "MessageRole",
+    "AvatarShape",
+    "SwitchSize",
     "ButtonSize",
+    "LoadingSize",
+    "ChipSize",
     "ProgressVariant",
+    "NavbarPosition",
+    "ButtonVariant",
+    "SkeletonVariant",
+    "ScrollDirection",
+    "ToastVariant",
     "SplitDirection",
     "BadgeSize",
-    "TooltipPosition",
-    "LoadingSize",
-    "StackDirection",
-    "PinType",
-    "FrameDebuggerViewState",
-    "FlexDirection",
-    "TextareaResize",
-    "ChipSize",
-    "SpinnerSize",
-    "TextSize",
-    "SwitchSize",
-    "MessageRole",
-    "Progress",
-    "ModalSize",
-    "ColumnAlign",
-    "ChipVariant",
-    "SkeletonVariant",
-    "NavbarPosition",
-    "StackAlign",
-    "NodeCategory",
-    "CheckboxSize",
-    "AvatarSize",
-    "PopoverPosition",
-    "BtDebuggerOverlay",
-    "RowAlign",
-    "VNode",
-    "ToastVariant",
-    "ButtonVariant",
-    "DrawerPosition",
-    "DividerOrientation",
+    "ColumnJustify",
+    "RatingSize",
     "SelectSize",
-    "AlertVariant",
-    "BtPalettePanel",
-    "ScrollDir",
-    "ProfilerScopeKind"
+    "CheckboxSize",
+    "BtDebuggerOverlay",
+    "ModalSize",
+    "ProfilerScopeKind",
+    "SpinnerSize",
+    "PinType",
+    "DrawerPosition",
+    "AvatarSize",
+    "Progress"
   ],
   "non_copy_structs": [],
   "version": "0.50.0",
   "analysis_fingerprint": {
     "content_hash": 5468123102738847185,
-    "compiler_version": "0.50.0:efa412e4570d8b42",
+    "compiler_version": "0.50.0:94a5f44528a82cdf",
     "dep_metadata_epoch": 2435999049025295583,
-    "output_hash": 8237464069850965821
+    "output_hash": 17640398939290033490
   }
 }

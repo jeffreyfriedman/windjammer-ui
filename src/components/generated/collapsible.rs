@@ -30,7 +30,7 @@ impl CollapsibleSection {
 
 impl Renderable for CollapsibleSection {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let icon: String = {
             if self.open {
                 String::from("▼")
@@ -45,6 +45,6 @@ impl Renderable for CollapsibleSection {
                 String::from("display: none;")
             }
         };
-        format!("<div class='wj-collapsible'>\n  <div class='wj-collapsible-header'>\n    <span class='wj-collapsible-icon'>{}</span>\n    <span>{}</span>\n  </div>\n  <div class='wj-collapsible-content' style='{}'>\n    {}\n  </div>\n</div>", icon, self.title, content_style, self.content)
+        format!("<div class='wj-collapsible'>\n  <div class='wj-collapsible-header'>\n    <span class='wj-collapsible-icon'>{}</span>\n    <span>{}</span>\n  </div>\n  <div class='wj-collapsible-content' style='{}'>\n    {}\n  </div>\n</div>", icon, self.title.clone(), content_style, self.content.clone())
     }
 }

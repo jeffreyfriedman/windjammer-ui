@@ -46,15 +46,15 @@ impl List {
         let mut html = String::new();
         html.push('<');
         html.push_str(&tag);
-        html.push_str(" class=\"wj-list ");
+        html.push_str(&" class=\"wj-list ");
         html.push_str(&self.class);
-        html.push_str("\" style=\"list-style-position: inside; padding-left: 0;\">");
+        html.push_str(&"\" style=\"list-style-position: inside; padding-left: 0;\">");
         for item in &self.items {
-            html.push_str("<li style=\"padding: 8px 0;\">");
-            html.push_str(&item);
-            html.push_str("</li>");
+            html.push_str(&"<li style=\"padding: 8px 0;\">");
+            html.push_str(item);
+            html.push_str(&"</li>");
         }
-        html.push_str("</");
+        html.push_str(&"</");
         html.push_str(&tag);
         html.push('>');
         html
@@ -84,11 +84,11 @@ impl ListItem {
     #[inline]
     pub fn render(&self) -> String {
         let mut html = String::new();
-        html.push_str("<li class=\"wj-list-item ");
+        html.push_str(&"<li class=\"wj-list-item ");
         html.push_str(&self.class);
-        html.push_str("\" style=\"padding: 8px 0;\">");
+        html.push_str(&"\" style=\"padding: 8px 0;\">");
         html.push_str(&self.content);
-        html.push_str("</li>");
+        html.push_str(&"</li>");
         html
     }
 }

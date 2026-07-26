@@ -64,7 +64,7 @@ impl Section {
 
 impl Renderable for Section {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let collapse_icon: String = {
             if self.collapsed {
                 String::from("▶")
@@ -81,14 +81,17 @@ impl Renderable for Section {
         };
         let icon_html: String = {
             if self.icon != "" {
-                format!("<span class='section-icon'>{}</span>", self.icon)
+                format!("<span class='section-icon'>{}</span>", self.icon.clone())
             } else {
                 "".to_string()
             }
         };
         let accent_style: String = {
             if self.accent_color != "" {
-                format!(" style='border-left: 3px solid {}'", self.accent_color)
+                format!(
+                    " style='border-left: 3px solid {}'",
+                    self.accent_color.clone()
+                )
             } else {
                 "".to_string()
             }
@@ -97,14 +100,14 @@ impl Renderable for Section {
             if self.removable {
                 format!(
                     "<button class='section-remove' onclick='{}'>×</button>",
-                    self.on_remove
+                    self.on_remove.clone()
                 )
             } else {
                 "".to_string()
             }
         };
-        let children_html = self.children.join("\n");
-        format!("\n            <div class='wj-section'{}>\n                <div class='section-header'>\n                    <span class='collapse-arrow'>{}</span>\n                    {}\n                    <span class='section-title'>{}</span>\n                    {}\n                </div>\n                <div class='{}'>\n                    {}\n                </div>\n            </div>\n        ", accent_style, collapse_icon, icon_html, self.title, remove_btn, content_class, children_html)
+        let children_html = self.children.join(&"\n");
+        format!("\n            <div class='wj-section'{}>\n                <div class='section-header'>\n                    <span class='collapse-arrow'>{}</span>\n                    {}\n                    <span class='section-title'>{}</span>\n                    {}\n                </div>\n                <div class='{}'>\n                    {}\n                </div>\n            </div>\n        ", accent_style, collapse_icon, icon_html, self.title.clone(), remove_btn, content_class, children_html)
     }
 }
 
@@ -125,7 +128,7 @@ impl SectionGroup {
     }
     #[inline]
     pub fn section(mut self, section: Section) -> SectionGroup {
-        self.sections.push(section.clone());
+        self.sections.push(section);
         self
     }
     #[inline]
@@ -137,7 +140,7 @@ impl SectionGroup {
 
 impl Renderable for SectionGroup {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut sections_html = "".to_string();
         for s in &self.sections {
             sections_html = format!("{}{}{}", sections_html, s.clone().render(), "\n");

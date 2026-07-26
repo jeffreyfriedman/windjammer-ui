@@ -119,7 +119,7 @@ impl BtCanvasModel {
 
 impl Renderable for BtCanvasModel {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut body = "".to_string();
         let mut i = 0;
         while i < self.nodes.len() {

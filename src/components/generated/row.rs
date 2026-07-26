@@ -97,21 +97,21 @@ impl Row {
             }
         };
         let mut html = String::new();
-        html.push_str("<div class=\"wj-row ");
+        html.push_str(&"<div class=\"wj-row ");
         html.push_str(&self.class);
-        html.push_str("\" style=\"display: flex; flex-direction: row; gap: ");
+        html.push_str(&"\" style=\"display: flex; flex-direction: row; gap: ");
         html.push_str(&self.gap);
-        html.push_str("; align-items: ");
+        html.push_str(&"; align-items: ");
         html.push_str(&align_str);
-        html.push_str("; justify-content: ");
+        html.push_str(&"; justify-content: ");
         html.push_str(&justify_str);
-        html.push_str("; flex-wrap: ");
+        html.push_str(&"; flex-wrap: ");
         html.push_str(&wrap_str);
-        html.push_str(";\">");
+        html.push_str(&";\">");
         for child in &self.children {
-            html.push_str(&child);
+            html.push_str(child);
         }
-        html.push_str("</div>");
+        html.push_str(&"</div>");
         html
     }
 }

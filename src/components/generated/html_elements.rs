@@ -24,7 +24,7 @@ impl Div {
         }
     }
     #[inline]
-    pub fn child<T: Renderable>(mut self, mut component: T) -> Div {
+    pub fn child<T: Renderable>(mut self, component: &T) -> Div {
         self.children.push(component.render());
         self
     }
@@ -51,27 +51,27 @@ impl Div {
     #[inline]
     pub fn render(&self) -> String {
         let mut html = String::new();
-        html.push_str("<div");
+        html.push_str(&"<div");
         if !self.id.is_empty() {
-            html.push_str(" id=\"");
+            html.push_str(&" id=\"");
             html.push_str(&self.id);
             html.push('"');
         }
         if !self.class.is_empty() {
-            html.push_str(" class=\"");
+            html.push_str(&" class=\"");
             html.push_str(&self.class);
             html.push('"');
         }
         if !self.style.is_empty() {
-            html.push_str(" style=\"");
+            html.push_str(&" style=\"");
             html.push_str(&self.style);
             html.push('"');
         }
         html.push('>');
         for child in &self.children {
-            html.push_str(&child);
+            html.push_str(child);
         }
-        html.push_str("</div>");
+        html.push_str(&"</div>");
         html
     }
 }
@@ -94,7 +94,7 @@ impl Span {
         }
     }
     #[inline]
-    pub fn child<T: Renderable>(mut self, mut component: T) -> Span {
+    pub fn child<T: Renderable>(mut self, component: &T) -> Span {
         self.children.push(component.render());
         self
     }
@@ -117,24 +117,24 @@ impl Span {
 
 impl Renderable for Span {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut html = String::new();
-        html.push_str("<span");
+        html.push_str(&"<span");
         if !self.class.is_empty() {
-            html.push_str(" class=\"");
+            html.push_str(&" class=\"");
             html.push_str(&self.class);
             html.push('"');
         }
         if !self.style.is_empty() {
-            html.push_str(" style=\"");
+            html.push_str(&" style=\"");
             html.push_str(&self.style);
             html.push('"');
         }
         html.push('>');
         for child in &self.children {
-            html.push_str(&child);
+            html.push_str(child);
         }
-        html.push_str("</span>");
+        html.push_str(&"</span>");
         html
     }
 }
@@ -157,7 +157,7 @@ impl P {
         }
     }
     #[inline]
-    pub fn child<T: Renderable>(mut self, mut component: T) -> P {
+    pub fn child<T: Renderable>(mut self, component: &T) -> P {
         self.children.push(component.render());
         self
     }
@@ -180,24 +180,24 @@ impl P {
 
 impl Renderable for P {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut html = String::new();
-        html.push_str("<p");
+        html.push_str(&"<p");
         if !self.class.is_empty() {
-            html.push_str(" class=\"");
+            html.push_str(&" class=\"");
             html.push_str(&self.class);
             html.push('"');
         }
         if !self.style.is_empty() {
-            html.push_str(" style=\"");
+            html.push_str(&" style=\"");
             html.push_str(&self.style);
             html.push('"');
         }
         html.push('>');
         for child in &self.children {
-            html.push_str(&child);
+            html.push_str(child);
         }
-        html.push_str("</p>");
+        html.push_str(&"</p>");
         html
     }
 }
@@ -233,22 +233,22 @@ impl H1 {
 
 impl Renderable for H1 {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut html = String::new();
-        html.push_str("<h1");
+        html.push_str(&"<h1");
         if !self.class.is_empty() {
-            html.push_str(" class=\"");
+            html.push_str(&" class=\"");
             html.push_str(&self.class);
             html.push('"');
         }
         if !self.style.is_empty() {
-            html.push_str(" style=\"");
+            html.push_str(&" style=\"");
             html.push_str(&self.style);
             html.push('"');
         }
         html.push('>');
         html.push_str(&self.text);
-        html.push_str("</h1>");
+        html.push_str(&"</h1>");
         html
     }
 }
@@ -284,22 +284,22 @@ impl H2 {
 
 impl Renderable for H2 {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut html = String::new();
-        html.push_str("<h2");
+        html.push_str(&"<h2");
         if !self.class.is_empty() {
-            html.push_str(" class=\"");
+            html.push_str(&" class=\"");
             html.push_str(&self.class);
             html.push('"');
         }
         if !self.style.is_empty() {
-            html.push_str(" style=\"");
+            html.push_str(&" style=\"");
             html.push_str(&self.style);
             html.push('"');
         }
         html.push('>');
         html.push_str(&self.text);
-        html.push_str("</h2>");
+        html.push_str(&"</h2>");
         html
     }
 }
@@ -335,22 +335,22 @@ impl H3 {
 
 impl Renderable for H3 {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut html = String::new();
-        html.push_str("<h3");
+        html.push_str(&"<h3");
         if !self.class.is_empty() {
-            html.push_str(" class=\"");
+            html.push_str(&" class=\"");
             html.push_str(&self.class);
             html.push('"');
         }
         if !self.style.is_empty() {
-            html.push_str(" style=\"");
+            html.push_str(&" style=\"");
             html.push_str(&self.style);
             html.push('"');
         }
         html.push('>');
         html.push_str(&self.text);
-        html.push_str("</h3>");
+        html.push_str(&"</h3>");
         html
     }
 }

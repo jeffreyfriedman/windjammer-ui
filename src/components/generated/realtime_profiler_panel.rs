@@ -40,7 +40,7 @@ impl RealtimeProfilerPanel {
 
 impl Renderable for RealtimeProfilerPanel {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let styles = realtime_profiler_styles();
         let frame_index = self.snapshot.frame_index;
         let frame_time_ms = self.snapshot.frame_time_ms;
@@ -48,7 +48,7 @@ impl Renderable for RealtimeProfilerPanel {
         let scopes: Vec<ProfilerScopeRow> = self.snapshot.scopes.clone();
         let budget_html = render_budget_bar(frame_time_ms, budget_ms);
         let scopes_html = render_scope_list(scopes);
-        format!("<style>{}</style>\n<div class='rt-profiler-panel'>\n  <header class='rt-profiler-header'>\n    <h3>Realtime Profiler</h3>\n    <button type='button' onclick='{}'>Refresh</button>\n    <span class='rt-profiler-frame-tag'>Frame #{}</span>\n  </header>\n  {}\n  <section class='rt-profiler-scopes'>\n    <h4>Scopes</h4>\n    {}\n  </section>\n</div>", styles, self.refresh_handler, frame_index, budget_html, scopes_html)
+        format!("<style>{}</style>\n<div class='rt-profiler-panel'>\n  <header class='rt-profiler-header'>\n    <h3>Realtime Profiler</h3>\n    <button type='button' onclick='{}'>Refresh</button>\n    <span class='rt-profiler-frame-tag'>Frame #{}</span>\n  </header>\n  {}\n  <section class='rt-profiler-scopes'>\n    <h4>Scopes</h4>\n    {}\n  </section>\n</div>", styles, self.refresh_handler.clone(), frame_index, budget_html, scopes_html)
     }
 }
 

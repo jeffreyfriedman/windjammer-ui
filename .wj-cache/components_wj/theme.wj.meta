@@ -1,12 +1,58 @@
 {
   "module_path": "theme",
   "functions": {
+    "ThemeSwitcher::new": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "Custom(\"ThemeSwitcher\")",
+      "is_associated": true,
+      "parent_type": "ThemeSwitcher",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ColorPalette::dark": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "Custom(\"ColorPalette\")",
+      "is_associated": true,
+      "parent_type": "ColorPalette",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
     "ColorPalette::light": {
       "params": [],
       "formal_params": [],
       "return_type": "Custom(\"ColorPalette\")",
       "is_associated": true,
       "parent_type": "ColorPalette",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ThemeSwitcher::render": {
+      "params": [
+        "Reference(Custom(\"Self\"))"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "ThemeSwitcher",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "EditorTheme::default": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "Custom(\"EditorTheme\")",
+      "is_associated": true,
+      "parent_type": "EditorTheme",
       "param_ownership": [],
       "has_self_receiver": false,
       "is_extern": false
@@ -21,12 +67,12 @@
       "has_self_receiver": false,
       "is_extern": false
     },
-    "EditorTheme::default": {
+    "ColorPalette::monokai": {
       "params": [],
       "formal_params": [],
-      "return_type": "Custom(\"EditorTheme\")",
+      "return_type": "Custom(\"ColorPalette\")",
       "is_associated": true,
-      "parent_type": "EditorTheme",
+      "parent_type": "ColorPalette",
       "param_ownership": [],
       "has_self_receiver": false,
       "is_extern": false
@@ -41,22 +87,28 @@
       "has_self_receiver": false,
       "is_extern": false
     },
+    "EditorTheme::render": {
+      "params": [
+        "Reference(Custom(\"Self\"))"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "EditorTheme",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
     "EditorTheme::monokai": {
       "params": [],
       "formal_params": [],
       "return_type": "Custom(\"EditorTheme\")",
       "is_associated": true,
       "parent_type": "EditorTheme",
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
-    "ColorPalette::monokai": {
-      "params": [],
-      "formal_params": [],
-      "return_type": "Custom(\"ColorPalette\")",
-      "is_associated": true,
-      "parent_type": "ColorPalette",
       "param_ownership": [],
       "has_self_receiver": false,
       "is_extern": false
@@ -71,7 +123,7 @@
       "has_self_receiver": false,
       "is_extern": false
     },
-    "ColorPalette::dark": {
+    "ColorPalette::high_contrast": {
       "params": [],
       "formal_params": [],
       "return_type": "Custom(\"ColorPalette\")",
@@ -94,162 +146,110 @@
       "is_associated": true,
       "parent_type": "ThemeSwitcher",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
       "is_extern": false
-    },
-    "ThemeSwitcher::render": {
-      "params": [
-        "Custom(\"Self\")"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")"
-      ],
-      "return_type": "String",
-      "is_associated": true,
-      "parent_type": "ThemeSwitcher",
-      "param_ownership": [
-        "Borrowed"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "EditorTheme::render": {
-      "params": [
-        "Custom(\"Self\")"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")"
-      ],
-      "return_type": "String",
-      "is_associated": true,
-      "parent_type": "EditorTheme",
-      "param_ownership": [
-        "Borrowed"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "ThemeSwitcher::new": {
-      "params": [],
-      "formal_params": [],
-      "return_type": "Custom(\"ThemeSwitcher\")",
-      "is_associated": true,
-      "parent_type": "ThemeSwitcher",
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
-    "ColorPalette::high_contrast": {
-      "params": [],
-      "formal_params": [],
-      "return_type": "Custom(\"ColorPalette\")",
-      "is_associated": true,
-      "parent_type": "ColorPalette",
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
     }
   },
   "structs": {
-    "EditorTheme": {
-      "name": "String",
-      "font_family": "String",
-      "spacing_unit": "Custom(\"i32\")",
-      "border_radius": "Custom(\"i32\")",
-      "animation_duration": "Custom(\"i32\")",
-      "font_size_base": "Custom(\"i32\")",
-      "palette": "Custom(\"ColorPalette\")"
-    },
-    "ThemeSwitcher": {
-      "themes": "Vec(String)",
-      "on_change": "String",
-      "current_theme": "String"
-    },
     "ColorPalette": {
-      "axis_z": "String",
-      "axis_y": "String",
-      "text_muted": "String",
+      "text_primary": "String",
       "bg_secondary": "String",
+      "accent_warning": "String",
+      "axis_y": "String",
+      "accent_error": "String",
       "bg_primary": "String",
-      "accent_success": "String",
+      "bg_tertiary": "String",
       "bg_elevated": "String",
-      "accent_secondary": "String",
+      "accent_primary": "String",
+      "accent_success": "String",
       "axis_x": "String",
       "text_secondary": "String",
-      "accent_primary": "String",
-      "accent_warning": "String",
-      "text_primary": "String",
-      "bg_tertiary": "String",
+      "text_muted": "String",
+      "axis_z": "String",
       "border_subtle": "String",
       "border_default": "String",
-      "accent_error": "String"
+      "accent_secondary": "String"
+    },
+    "EditorTheme": {
+      "name": "String",
+      "font_size_base": "Custom(\"i32\")",
+      "spacing_unit": "Custom(\"i32\")",
+      "animation_duration": "Custom(\"i32\")",
+      "border_radius": "Custom(\"i32\")",
+      "palette": "Custom(\"ColorPalette\")",
+      "font_family": "String"
+    },
+    "ThemeSwitcher": {
+      "on_change": "String",
+      "themes": "Vec(String)",
+      "current_theme": "String"
     }
   },
   "trait_impls": {},
   "copy_structs": [
-    "SidebarPosition",
-    "RowJustify",
-    "AvatarShape",
-    "TextWeight",
-    "ScrollDirection",
-    "ToastPosition",
-    "StackJustify",
-    "EasingPreset",
-    "ColumnJustify",
     "CurvePoint",
-    "Pagination",
-    "BadgeVariant",
-    "RatingSize",
+    "StackAlign",
+    "AlertVariant",
+    "TextareaResize",
+    "PopoverPosition",
     "BtWire",
+    "TextWeight",
+    "FlexDirection",
+    "StackDirection",
+    "RowAlign",
+    "TextSize",
+    "ToastPosition",
+    "DividerOrientation",
+    "ColumnAlign",
+    "NodeCategory",
+    "ScrollDir",
+    "BadgeVariant",
+    "EasingPreset",
+    "FrameDebuggerViewState",
+    "SidebarPosition",
+    "BtPalettePanel",
+    "TooltipPosition",
+    "Pagination",
+    "RowJustify",
+    "ChipVariant",
+    "VNode",
+    "StackJustify",
+    "MessageRole",
+    "AvatarShape",
+    "SwitchSize",
     "ButtonSize",
+    "LoadingSize",
+    "ChipSize",
     "ProgressVariant",
+    "NavbarPosition",
+    "ButtonVariant",
+    "SkeletonVariant",
+    "ScrollDirection",
+    "ToastVariant",
     "SplitDirection",
     "BadgeSize",
-    "TooltipPosition",
-    "LoadingSize",
-    "StackDirection",
-    "PinType",
-    "FrameDebuggerViewState",
-    "FlexDirection",
-    "TextareaResize",
-    "ChipSize",
-    "SpinnerSize",
-    "TextSize",
-    "SwitchSize",
-    "MessageRole",
-    "Progress",
-    "ModalSize",
-    "ColumnAlign",
-    "ChipVariant",
-    "SkeletonVariant",
-    "NavbarPosition",
-    "StackAlign",
-    "NodeCategory",
-    "CheckboxSize",
-    "AvatarSize",
-    "PopoverPosition",
-    "BtDebuggerOverlay",
-    "RowAlign",
-    "VNode",
-    "ToastVariant",
-    "ButtonVariant",
-    "DrawerPosition",
-    "DividerOrientation",
+    "ColumnJustify",
+    "RatingSize",
     "SelectSize",
-    "AlertVariant",
-    "BtPalettePanel",
-    "ScrollDir",
-    "ProfilerScopeKind"
+    "CheckboxSize",
+    "BtDebuggerOverlay",
+    "ModalSize",
+    "ProfilerScopeKind",
+    "SpinnerSize",
+    "PinType",
+    "DrawerPosition",
+    "AvatarSize",
+    "Progress"
   ],
   "non_copy_structs": [],
   "version": "0.50.0",
   "analysis_fingerprint": {
     "content_hash": 12406740436230490707,
-    "compiler_version": "0.50.0:efa412e4570d8b42",
+    "compiler_version": "0.50.0:94a5f44528a82cdf",
     "dep_metadata_epoch": 2435999049025295583,
-    "output_hash": 5728294275674568352
+    "output_hash": 8686469684922378807
   }
 }

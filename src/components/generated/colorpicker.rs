@@ -33,14 +33,14 @@ impl ColorPicker {
 
 impl Renderable for ColorPicker {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let label_html: String = {
             if self.label != "" {
-                format!("<label>{}</label>", self.label)
+                format!("<label>{}</label>", self.label.clone())
             } else {
                 "".to_string()
             }
         };
-        format!("<div class='wj-color-picker'>\n  {}\n  <input type='color' value='{}' class='wj-color-input'>\n  <span class='wj-color-value'>{}</span>\n</div>", label_html, self.value, self.value)
+        format!("<div class='wj-color-picker'>\n  {}\n  <input type='color' value='{}' class='wj-color-input'>\n  <span class='wj-color-value'>{}</span>\n</div>", label_html, self.value.clone(), self.value.clone())
     }
 }

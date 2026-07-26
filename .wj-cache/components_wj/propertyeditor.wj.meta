@@ -1,6 +1,16 @@
 {
   "module_path": "propertyeditor",
   "functions": {
+    "property_editor_styles": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "String",
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
     "Property::integer": {
       "params": [
         "String",
@@ -26,7 +36,26 @@
       "has_self_receiver": false,
       "is_extern": false
     },
-    "Property::number": {
+    "Property::text": {
+      "params": [
+        "String",
+        "String"
+      ],
+      "formal_params": [
+        "String",
+        "String"
+      ],
+      "return_type": "Custom(\"Property\")",
+      "is_associated": true,
+      "parent_type": "Property",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Vec3Editor::new": {
       "params": [
         "String",
         "Custom(\"f32\")",
@@ -39,9 +68,9 @@
         "Custom(\"f32\")",
         "Custom(\"f32\")"
       ],
-      "return_type": "Custom(\"Property\")",
+      "return_type": "Custom(\"Vec3Editor\")",
       "is_associated": true,
-      "parent_type": "Property",
+      "parent_type": "Vec3Editor",
       "param_ownership": [
         "Owned",
         "Owned",
@@ -49,6 +78,44 @@
         "Owned"
       ],
       "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Property::boolean": {
+      "params": [
+        "String",
+        "Bool"
+      ],
+      "formal_params": [
+        "String",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Property\")",
+      "is_associated": true,
+      "parent_type": "Property",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Property::tooltip": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Property\")",
+      "is_associated": true,
+      "parent_type": "Property",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
       "is_extern": false
     },
     "Property::color": {
@@ -83,13 +150,48 @@
       "is_associated": true,
       "parent_type": "Property",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
       "is_extern": false
     },
-    "Vec3Editor::new": {
+    "Property::render": {
+      "params": [
+        "Reference(Custom(\"Self\"))"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Property",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Property::on_change": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Property\")",
+      "is_associated": true,
+      "parent_type": "Property",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Property::number": {
       "params": [
         "String",
         "Custom(\"f32\")",
@@ -102,9 +204,9 @@
         "Custom(\"f32\")",
         "Custom(\"f32\")"
       ],
-      "return_type": "Custom(\"Vec3Editor\")",
+      "return_type": "Custom(\"Property\")",
       "is_associated": true,
-      "parent_type": "Vec3Editor",
+      "parent_type": "Property",
       "param_ownership": [
         "Owned",
         "Owned",
@@ -127,109 +229,7 @@
       "is_associated": true,
       "parent_type": "Vec3Editor",
       "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Property::boolean": {
-      "params": [
-        "String",
-        "Bool"
-      ],
-      "formal_params": [
-        "String",
-        "Bool"
-      ],
-      "return_type": "Custom(\"Property\")",
-      "is_associated": true,
-      "parent_type": "Property",
-      "param_ownership": [
         "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
-    "property_editor_styles": {
-      "params": [],
-      "formal_params": [],
-      "return_type": "String",
-      "is_associated": false,
-      "parent_type": null,
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
-    "Property::render": {
-      "params": [
-        "Custom(\"Self\")"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")"
-      ],
-      "return_type": "String",
-      "is_associated": true,
-      "parent_type": "Property",
-      "param_ownership": [
-        "Borrowed"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Property::tooltip": {
-      "params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Property\")",
-      "is_associated": true,
-      "parent_type": "Property",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Property::text": {
-      "params": [
-        "String",
-        "String"
-      ],
-      "formal_params": [
-        "String",
-        "String"
-      ],
-      "return_type": "Custom(\"Property\")",
-      "is_associated": true,
-      "parent_type": "Property",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
-    "Property::on_change": {
-      "params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Property\")",
-      "is_associated": true,
-      "parent_type": "Property",
-      "param_ownership": [
-        "MutBorrowed",
         "Owned"
       ],
       "has_self_receiver": true,
@@ -237,7 +237,7 @@
     },
     "Vec3Editor::render": {
       "params": [
-        "Custom(\"Self\")"
+        "Reference(Custom(\"Self\"))"
       ],
       "formal_params": [
         "Custom(\"Self\")"
@@ -253,84 +253,84 @@
     }
   },
   "structs": {
-    "Vec3Editor": {
-      "on_change": "String",
-      "label": "String",
-      "x": "Custom(\"f32\")",
-      "y": "Custom(\"f32\")",
-      "z": "Custom(\"f32\")"
-    },
     "Property": {
-      "value": "String",
+      "name": "String",
       "unit": "String",
-      "property_type": "Custom(\"PropertyType\")",
       "tooltip": "String",
+      "value": "String",
       "on_change": "String",
-      "name": "String"
+      "property_type": "Custom(\"PropertyType\")"
+    },
+    "Vec3Editor": {
+      "z": "Custom(\"f32\")",
+      "label": "String",
+      "on_change": "String",
+      "x": "Custom(\"f32\")",
+      "y": "Custom(\"f32\")"
     }
   },
   "trait_impls": {},
   "copy_structs": [
-    "SidebarPosition",
-    "RowJustify",
-    "AvatarShape",
-    "TextWeight",
-    "ScrollDirection",
-    "ToastPosition",
-    "StackJustify",
-    "EasingPreset",
-    "ColumnJustify",
     "CurvePoint",
-    "Pagination",
-    "BadgeVariant",
-    "RatingSize",
+    "StackAlign",
+    "AlertVariant",
+    "TextareaResize",
+    "PopoverPosition",
     "BtWire",
+    "TextWeight",
+    "FlexDirection",
+    "StackDirection",
+    "RowAlign",
+    "TextSize",
+    "ToastPosition",
+    "DividerOrientation",
+    "ColumnAlign",
+    "NodeCategory",
+    "ScrollDir",
+    "BadgeVariant",
+    "EasingPreset",
+    "FrameDebuggerViewState",
+    "SidebarPosition",
+    "BtPalettePanel",
+    "TooltipPosition",
+    "Pagination",
+    "RowJustify",
+    "ChipVariant",
+    "VNode",
+    "StackJustify",
+    "MessageRole",
+    "AvatarShape",
+    "SwitchSize",
     "ButtonSize",
+    "LoadingSize",
+    "ChipSize",
     "ProgressVariant",
+    "NavbarPosition",
+    "ButtonVariant",
+    "SkeletonVariant",
+    "ScrollDirection",
+    "ToastVariant",
     "SplitDirection",
     "BadgeSize",
-    "TooltipPosition",
-    "LoadingSize",
-    "StackDirection",
-    "PinType",
-    "FrameDebuggerViewState",
-    "FlexDirection",
-    "TextareaResize",
-    "ChipSize",
-    "SpinnerSize",
-    "TextSize",
-    "SwitchSize",
-    "MessageRole",
-    "Progress",
-    "ModalSize",
-    "ColumnAlign",
-    "ChipVariant",
-    "SkeletonVariant",
-    "NavbarPosition",
-    "StackAlign",
-    "NodeCategory",
-    "CheckboxSize",
-    "AvatarSize",
-    "PopoverPosition",
-    "BtDebuggerOverlay",
-    "RowAlign",
-    "VNode",
-    "ToastVariant",
-    "ButtonVariant",
-    "DrawerPosition",
-    "DividerOrientation",
+    "ColumnJustify",
+    "RatingSize",
     "SelectSize",
-    "AlertVariant",
-    "BtPalettePanel",
-    "ScrollDir",
-    "ProfilerScopeKind"
+    "CheckboxSize",
+    "BtDebuggerOverlay",
+    "ModalSize",
+    "ProfilerScopeKind",
+    "SpinnerSize",
+    "PinType",
+    "DrawerPosition",
+    "AvatarSize",
+    "Progress"
   ],
   "non_copy_structs": [],
   "version": "0.50.0",
   "analysis_fingerprint": {
     "content_hash": 18037407811166008403,
-    "compiler_version": "0.50.0:efa412e4570d8b42",
+    "compiler_version": "0.50.0:94a5f44528a82cdf",
     "dep_metadata_epoch": 2435999049025295583,
-    "output_hash": 5619790754811310275
+    "output_hash": 1766799087892937700
   }
 }

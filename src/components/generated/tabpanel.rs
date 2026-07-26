@@ -39,7 +39,7 @@ impl TabPanel {
     }
     #[inline]
     pub fn tab(mut self, tab: TabPanelTab) -> TabPanel {
-        self.tabs.push(tab.clone());
+        self.tabs.push(tab);
         self
     }
     #[inline]
@@ -56,7 +56,7 @@ impl TabPanel {
 
 impl Renderable for TabPanel {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let flex_direction: String = {
             if self.orientation == "vertical" {
                 String::from("row")
@@ -69,7 +69,7 @@ impl Renderable for TabPanel {
             write!(
                 &mut __s,
                 "<div class='wj-tab-panel-tabs wj-tab-panel-{}'>\n",
-                self.orientation
+                self.orientation.clone()
             )
             .unwrap();
             __s

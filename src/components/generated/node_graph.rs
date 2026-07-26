@@ -145,12 +145,12 @@ impl GraphNode {
     }
     #[inline]
     pub fn input(mut self, pin: NodePin) -> GraphNode {
-        self.inputs.push(pin.clone());
+        self.inputs.push(pin);
         self
     }
     #[inline]
     pub fn output(mut self, pin: NodePin) -> GraphNode {
-        self.outputs.push(pin.clone());
+        self.outputs.push(pin);
         self
     }
     #[inline]
@@ -181,7 +181,7 @@ impl GraphNode {
 
 impl Renderable for GraphNode {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let header_color = self.get_category_color();
         let mut inputs_html = "".to_string();
         for pin in &self.inputs {
@@ -219,12 +219,15 @@ impl Renderable for GraphNode {
         };
         let watch_html: String = {
             if !self.pin_watch_text.is_empty() {
-                format!("<div class='pin-watch'>{}</div>", self.pin_watch_text)
+                format!(
+                    "<div class='pin-watch'>{}</div>",
+                    self.pin_watch_text.clone()
+                )
             } else {
                 "".to_string()
             }
         };
-        format!("\n            <div class='graph-node{}' id='{}' style='left: {}px; top: {}px;'>\n                <div class='node-header' style='background: {};'>\n                    <span class='node-title'>{}</span>\n                    <div class='node-actions'>\n                        <button class='node-btn preview' title='Preview'>👁</button>\n                        <button class='node-btn collapse' title='Collapse'>−</button>\n                    </div>\n                </div>\n                <div class='node-body'>\n                    <div class='node-inputs'>\n                        {}\n                    </div>\n                    <div class='node-outputs'>\n                        {}\n                    </div>\n                </div>\n                {}\n                {}\n            </div>\n        ", trace_class, self.id, self.x, self.y, header_color, self.title, inputs_html, outputs_html, preview_html, watch_html)
+        format!("\n            <div class='graph-node{}' id='{}' style='left: {}px; top: {}px;'>\n                <div class='node-header' style='background: {};'>\n                    <span class='node-title'>{}</span>\n                    <div class='node-actions'>\n                        <button class='node-btn preview' title='Preview'>👁</button>\n                        <button class='node-btn collapse' title='Collapse'>−</button>\n                    </div>\n                </div>\n                <div class='node-body'>\n                    <div class='node-inputs'>\n                        {}\n                    </div>\n                    <div class='node-outputs'>\n                        {}\n                    </div>\n                </div>\n                {}\n                {}\n            </div>\n        ", trace_class, self.id.clone(), self.x, self.y, header_color, self.title.clone(), inputs_html, outputs_html, preview_html, watch_html)
     }
 }
 
@@ -282,7 +285,7 @@ impl NodeGraph {
     }
     #[inline]
     pub fn node(mut self, node: GraphNode) -> NodeGraph {
-        self.nodes.push(node.clone());
+        self.nodes.push(node);
         self
     }
     #[inline]
@@ -316,9 +319,9 @@ impl NodeGraph {
 
 impl Renderable for NodeGraph {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut nodes_html = "".to_string();
-        for n in self.nodes.clone() {
+        for n in &self.nodes {
             let mut node = n.clone();
             for tid in &self.trace_node_ids {
                 if node.id == *tid {

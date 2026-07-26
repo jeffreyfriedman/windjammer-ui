@@ -124,7 +124,7 @@ impl RenderableVNode for Button {
             .set_disabled(self.disabled)
             .add_text(self.label.clone());
         if !self.click_handler.is_empty() {
-            node = node.on_click(self.click_handler.clone());
+            node = node.on_click(self.click_handler.as_str());
         }
         node
     }
@@ -132,7 +132,7 @@ impl RenderableVNode for Button {
 
 impl Renderable for Button {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let variant_class: String = match self.variant {
             ButtonVariant::Primary => String::from("wj-button-primary"),
             ButtonVariant::Secondary => String::from("wj-button-secondary"),
@@ -159,7 +159,7 @@ impl Renderable for Button {
             size_class,
             self.get_style(),
             disabled_attr,
-            self.label
+            self.label.clone()
         )
     }
 }

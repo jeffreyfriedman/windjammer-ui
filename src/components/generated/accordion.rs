@@ -45,7 +45,7 @@ impl Accordion {
     }
     #[inline]
     pub fn item(mut self, item: AccordionItem) -> Accordion {
-        self.items.push(item.clone());
+        self.items.push(item);
         self
     }
     #[inline]
@@ -57,7 +57,7 @@ impl Accordion {
 
 impl Renderable for Accordion {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut html = "<div class='wj-accordion'>".to_string();
         let mut i = 0;
         while i < self.items.len() {

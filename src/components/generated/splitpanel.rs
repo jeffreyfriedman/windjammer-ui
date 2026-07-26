@@ -43,11 +43,11 @@ impl SplitPanel {
 
 impl Renderable for SplitPanel {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let flex_direction: String = match self.direction {
             SplitDirection::Horizontal => String::from("column"),
             SplitDirection::Vertical => String::from("row"),
         };
-        format!("<div class='wj-split-panel' style='display: flex; flex-direction: {}; height: 100%;'>\n  <div class='wj-split-pane' style='flex: {}%;'>\n    {}\n  </div>\n  <div class='wj-split-divider'></div>\n  <div class='wj-split-pane' style='flex: {}%;'>\n    {}\n  </div>\n</div>", flex_direction, self.initial_size, self.left, 100_i32 - self.initial_size, self.right)
+        format!("<div class='wj-split-panel' style='display: flex; flex-direction: {}; height: 100%;'>\n  <div class='wj-split-pane' style='flex: {}%;'>\n    {}\n  </div>\n  <div class='wj-split-divider'></div>\n  <div class='wj-split-pane' style='flex: {}%;'>\n    {}\n  </div>\n</div>", flex_direction, self.initial_size, self.left.clone(), 100_i32 - self.initial_size, self.right.clone())
     }
 }

@@ -50,7 +50,7 @@ impl Stepper {
     }
     #[inline]
     pub fn step(mut self, step: StepperStep) -> Stepper {
-        self.steps.push(step.clone());
+        self.steps.push(step);
         self
     }
     #[inline]
@@ -62,15 +62,15 @@ impl Stepper {
 
 impl Renderable for Stepper {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut html = String::new();
-        html.push_str("<div style='display: flex; align-items: center; justify-content: space-between; padding: 24px 0;'>");
+        html.push_str(&"<div style='display: flex; align-items: center; justify-content: space-between; padding: 24px 0;'>");
         let total_steps = self.steps.len() as i32;
         for (step_index, step) in self.steps.iter().enumerate() {
             let step_index = step_index as i32;
             let is_current = step_index == self.current_step;
             let is_completed = step.completed.clone() || step_index < self.current_step;
-            html.push_str("<div style='display: flex; flex-direction: column; align-items: center; flex: 1;'>");
+            html.push_str(&"<div style='display: flex; flex-direction: column; align-items: center; flex: 1;'>");
             let bg_color: String = {
                 if is_completed {
                     String::from("#10b981")
@@ -90,12 +90,12 @@ impl Renderable for Stepper {
                 }
             };
             html.push_str(
-                "<div style='width: 40px; height: 40px; border-radius: 50%; background: ",
+                &"<div style='width: 40px; height: 40px; border-radius: 50%; background: ",
             );
             html.push_str(&bg_color);
-            html.push_str("; color: ");
+            html.push_str(&"; color: ");
             html.push_str(&text_color);
-            html.push_str("; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 16px; margin-bottom: 8px;'>");
+            html.push_str(&"; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 16px; margin-bottom: 8px;'>");
             if is_completed {
                 html.push('✓')
             } else {
@@ -104,24 +104,24 @@ impl Renderable for Stepper {
                     html.push_str(&_temp0)
                 }
             }
-            html.push_str("</div>");
-            html.push_str("<div style='text-align: center;'>");
-            html.push_str("<div style='font-weight: 600; font-size: 14px; color: ");
+            html.push_str(&"</div>");
+            html.push_str(&"<div style='text-align: center;'>");
+            html.push_str(&"<div style='font-weight: 600; font-size: 14px; color: ");
             if is_current {
-                html.push_str("#1a202c")
+                html.push_str(&"#1a202c")
             } else {
-                html.push_str("#718096")
+                html.push_str(&"#718096")
             }
-            html.push_str("; margin-bottom: 4px;'>");
+            html.push_str(&"; margin-bottom: 4px;'>");
             html.push_str(&step.label);
-            html.push_str("</div>");
+            html.push_str(&"</div>");
             if !step.description.is_empty() {
-                html.push_str("<div style='font-size: 12px; color: #a0aec0;'>");
+                html.push_str(&"<div style='font-size: 12px; color: #a0aec0;'>");
                 html.push_str(&step.description);
-                html.push_str("</div>");
+                html.push_str(&"</div>");
             }
-            html.push_str("</div>");
-            html.push_str("</div>");
+            html.push_str(&"</div>");
+            html.push_str(&"</div>");
             if step_index < total_steps - 1_i32 {
                 let line_color: String = {
                     if is_completed {
@@ -130,12 +130,12 @@ impl Renderable for Stepper {
                         String::from("#e2e8f0")
                     }
                 };
-                html.push_str("<div style='flex: 1; height: 2px; background: ");
+                html.push_str(&"<div style='flex: 1; height: 2px; background: ");
                 html.push_str(&line_color);
-                html.push_str("; margin: 0 8px; margin-bottom: 48px;'></div>");
+                html.push_str(&"; margin: 0 8px; margin-bottom: 48px;'></div>");
             }
         }
-        html.push_str("</div>");
+        html.push_str(&"</div>");
         html
     }
 }

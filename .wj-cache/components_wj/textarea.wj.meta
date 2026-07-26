@@ -1,6 +1,79 @@
 {
   "module_path": "textarea",
   "functions": {
+    "Textarea::rows": {
+      "params": [
+        "Custom(\"Textarea\")",
+        "Custom(\"i32\")"
+      ],
+      "formal_params": [
+        "Custom(\"Textarea\")",
+        "Custom(\"i32\")"
+      ],
+      "return_type": "Custom(\"Textarea\")",
+      "is_associated": true,
+      "parent_type": "Textarea",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Textarea::disabled": {
+      "params": [
+        "Custom(\"Textarea\")",
+        "Bool"
+      ],
+      "formal_params": [
+        "Custom(\"Textarea\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Textarea\")",
+      "is_associated": true,
+      "parent_type": "Textarea",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Textarea::render": {
+      "params": [
+        "Custom(\"Textarea\")"
+      ],
+      "formal_params": [
+        "Custom(\"Textarea\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Textarea",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Textarea::readonly": {
+      "params": [
+        "Custom(\"Textarea\")",
+        "Bool"
+      ],
+      "formal_params": [
+        "Custom(\"Textarea\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Textarea\")",
+      "is_associated": true,
+      "parent_type": "Textarea",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
     "Textarea::resize": {
       "params": [
         "Custom(\"Textarea\")",
@@ -9,6 +82,35 @@
       "formal_params": [
         "Custom(\"Textarea\")",
         "Custom(\"TextareaResize\")"
+      ],
+      "return_type": "Custom(\"Textarea\")",
+      "is_associated": true,
+      "parent_type": "Textarea",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Textarea::new": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "Custom(\"Textarea\")",
+      "is_associated": true,
+      "parent_type": "Textarea",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Textarea::max_length": {
+      "params": [
+        "Custom(\"Textarea\")",
+        "Custom(\"i32\")"
+      ],
+      "formal_params": [
+        "Custom(\"Textarea\")",
+        "Custom(\"i32\")"
       ],
       "return_type": "Custom(\"Textarea\")",
       "is_associated": true,
@@ -39,70 +141,6 @@
       "has_self_receiver": true,
       "is_extern": false
     },
-    "Textarea::render": {
-      "params": [
-        "Custom(\"Textarea\")"
-      ],
-      "formal_params": [
-        "Custom(\"Textarea\")"
-      ],
-      "return_type": "String",
-      "is_associated": true,
-      "parent_type": "Textarea",
-      "param_ownership": [
-        "Borrowed"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Textarea::disabled": {
-      "params": [
-        "Custom(\"Textarea\")",
-        "Bool"
-      ],
-      "formal_params": [
-        "Custom(\"Textarea\")",
-        "Bool"
-      ],
-      "return_type": "Custom(\"Textarea\")",
-      "is_associated": true,
-      "parent_type": "Textarea",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Textarea::readonly": {
-      "params": [
-        "Custom(\"Textarea\")",
-        "Bool"
-      ],
-      "formal_params": [
-        "Custom(\"Textarea\")",
-        "Bool"
-      ],
-      "return_type": "Custom(\"Textarea\")",
-      "is_associated": true,
-      "parent_type": "Textarea",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Textarea::new": {
-      "params": [],
-      "formal_params": [],
-      "return_type": "Custom(\"Textarea\")",
-      "is_associated": true,
-      "parent_type": "Textarea",
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
     "Textarea::class": {
       "params": [
         "Custom(\"Textarea\")",
@@ -111,44 +149,6 @@
       "formal_params": [
         "Custom(\"Textarea\")",
         "String"
-      ],
-      "return_type": "Custom(\"Textarea\")",
-      "is_associated": true,
-      "parent_type": "Textarea",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Textarea::max_length": {
-      "params": [
-        "Custom(\"Textarea\")",
-        "Custom(\"i32\")"
-      ],
-      "formal_params": [
-        "Custom(\"Textarea\")",
-        "Custom(\"i32\")"
-      ],
-      "return_type": "Custom(\"Textarea\")",
-      "is_associated": true,
-      "parent_type": "Textarea",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Textarea::rows": {
-      "params": [
-        "Custom(\"Textarea\")",
-        "Custom(\"i32\")"
-      ],
-      "formal_params": [
-        "Custom(\"Textarea\")",
-        "Custom(\"i32\")"
       ],
       "return_type": "Custom(\"Textarea\")",
       "is_associated": true,
@@ -182,78 +182,78 @@
   },
   "structs": {
     "Textarea": {
-      "readonly": "Bool",
-      "value": "String",
-      "disabled": "Bool",
-      "resize": "Custom(\"TextareaResize\")",
-      "max_length": "Custom(\"i32\")",
       "class": "String",
+      "readonly": "Bool",
       "placeholder": "String",
-      "rows": "Custom(\"i32\")"
+      "disabled": "Bool",
+      "max_length": "Custom(\"i32\")",
+      "value": "String",
+      "rows": "Custom(\"i32\")",
+      "resize": "Custom(\"TextareaResize\")"
     }
   },
   "trait_impls": {},
   "copy_structs": [
-    "SidebarPosition",
-    "RowJustify",
-    "AvatarShape",
-    "TextWeight",
-    "ScrollDirection",
-    "ToastPosition",
-    "StackJustify",
-    "EasingPreset",
-    "ColumnJustify",
     "CurvePoint",
-    "Pagination",
-    "BadgeVariant",
-    "RatingSize",
+    "StackAlign",
+    "AlertVariant",
+    "TextareaResize",
+    "PopoverPosition",
     "BtWire",
+    "TextWeight",
+    "FlexDirection",
+    "StackDirection",
+    "RowAlign",
+    "TextSize",
+    "ToastPosition",
+    "DividerOrientation",
+    "ColumnAlign",
+    "NodeCategory",
+    "ScrollDir",
+    "BadgeVariant",
+    "EasingPreset",
+    "FrameDebuggerViewState",
+    "SidebarPosition",
+    "BtPalettePanel",
+    "TooltipPosition",
+    "Pagination",
+    "RowJustify",
+    "ChipVariant",
+    "VNode",
+    "StackJustify",
+    "MessageRole",
+    "AvatarShape",
+    "SwitchSize",
     "ButtonSize",
+    "LoadingSize",
+    "ChipSize",
     "ProgressVariant",
+    "NavbarPosition",
+    "ButtonVariant",
+    "SkeletonVariant",
+    "ScrollDirection",
+    "ToastVariant",
     "SplitDirection",
     "BadgeSize",
-    "TooltipPosition",
-    "LoadingSize",
-    "StackDirection",
-    "PinType",
-    "FrameDebuggerViewState",
-    "FlexDirection",
-    "TextareaResize",
-    "ChipSize",
-    "SpinnerSize",
-    "TextSize",
-    "SwitchSize",
-    "MessageRole",
-    "Progress",
-    "ModalSize",
-    "ColumnAlign",
-    "ChipVariant",
-    "SkeletonVariant",
-    "NavbarPosition",
-    "StackAlign",
-    "NodeCategory",
-    "CheckboxSize",
-    "AvatarSize",
-    "PopoverPosition",
-    "BtDebuggerOverlay",
-    "RowAlign",
-    "VNode",
-    "ToastVariant",
-    "ButtonVariant",
-    "DrawerPosition",
-    "DividerOrientation",
+    "ColumnJustify",
+    "RatingSize",
     "SelectSize",
-    "AlertVariant",
-    "BtPalettePanel",
-    "ScrollDir",
-    "ProfilerScopeKind"
+    "CheckboxSize",
+    "BtDebuggerOverlay",
+    "ModalSize",
+    "ProfilerScopeKind",
+    "SpinnerSize",
+    "PinType",
+    "DrawerPosition",
+    "AvatarSize",
+    "Progress"
   ],
   "non_copy_structs": [],
   "version": "0.50.0",
   "analysis_fingerprint": {
     "content_hash": 14753909442778522968,
-    "compiler_version": "0.50.0:efa412e4570d8b42",
+    "compiler_version": "0.50.0:94a5f44528a82cdf",
     "dep_metadata_epoch": 2435999049025295583,
-    "output_hash": 9574400304927141478
+    "output_hash": 934070710128453134
   }
 }

@@ -38,7 +38,7 @@ impl Tooltip {
 
 impl Renderable for Tooltip {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let position_class: String = match self.position {
             TooltipPosition::Top => String::from("wj-tooltip-top"),
             TooltipPosition::Bottom => String::from("wj-tooltip-bottom"),
@@ -47,7 +47,9 @@ impl Renderable for Tooltip {
         };
         format!(
             "<div class='wj-tooltip-container {}'>{}<span class='wj-tooltip-text'>{}</span></div>",
-            position_class, self.child, self.text
+            position_class,
+            self.child.clone(),
+            self.text.clone()
         )
     }
 }

@@ -64,14 +64,14 @@ impl RenderableVNode for Checkbox {
             CheckboxSize::Medium => String::from("wj-checkbox-md"),
             CheckboxSize::Large => String::from("wj-checkbox-lg"),
         };
-        let mut label_node = VNode::element("label".to_string())
+        let mut label_node = VNode::element(&"label".to_string())
             .add_class("wj-checkbox")
-            .add_class(&size_class.to_string())
+            .add_class(size_class.to_string().as_str())
             .child(
                 VNode::input()
                     .set_type("checkbox")
                     .add_attr(
-                        "checked",
+                        &"checked".to_string(),
                         &{
                             if self.checked {
                                 String::from("true")
@@ -85,7 +85,7 @@ impl RenderableVNode for Checkbox {
             )
             .child(VNode::span().add_text(self.label.clone()));
         if !self.change_handler.is_empty() {
-            label_node = label_node.on_change(self.change_handler.clone());
+            label_node = label_node.on_change(self.change_handler.as_str());
         }
         label_node
     }
@@ -93,7 +93,7 @@ impl RenderableVNode for Checkbox {
 
 impl Renderable for Checkbox {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let size_class: String = match self.size {
             CheckboxSize::Small => String::from("sm"),
             CheckboxSize::Medium => String::from("md"),
@@ -113,6 +113,6 @@ impl Renderable for Checkbox {
                 String::new()
             }
         };
-        format!("<label class='wj-checkbox wj-checkbox-{}'><input type='checkbox'{}{}/><span>{}</span></label>", size_class, checked_attr, disabled_attr, self.label)
+        format!("<label class='wj-checkbox wj-checkbox-{}'><input type='checkbox'{}{}/><span>{}</span></label>", size_class, checked_attr, disabled_attr, self.label.clone())
     }
 }

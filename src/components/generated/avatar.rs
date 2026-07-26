@@ -80,15 +80,15 @@ impl Avatar {
         };
         let mut html = String::new();
         if self.src.is_empty() && !self.fallback.is_empty() {
-            html.push_str("<div class=\"wj-avatar wj-avatar-fallback ");
+            html.push_str(&"<div class=\"wj-avatar wj-avatar-fallback ");
             html.push_str(&self.class);
-            html.push_str("\" style=\"width: ");
+            html.push_str(&"\" style=\"width: ");
             html.push_str(&size_px);
-            html.push_str("; height: ");
+            html.push_str(&"; height: ");
             html.push_str(&size_px);
-            html.push_str("; border-radius: ");
+            html.push_str(&"; border-radius: ");
             html.push_str(&border_radius);
-            html.push_str("; background-color: #3b82f6; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: ");
+            html.push_str(&"; background-color: #3b82f6; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: ");
             let font_size: String = match self.size {
                 AvatarSize::Small => String::from("12px"),
                 AvatarSize::Medium => String::from("16px"),
@@ -96,23 +96,23 @@ impl Avatar {
                 AvatarSize::XLarge => String::from("28px"),
             };
             html.push_str(&font_size);
-            html.push_str(";\">");
+            html.push_str(&";\">");
             html.push_str(&self.fallback);
-            html.push_str("</div>")
+            html.push_str(&"</div>")
         } else {
-            html.push_str("<img class=\"wj-avatar ");
+            html.push_str(&"<img class=\"wj-avatar ");
             html.push_str(&self.class);
-            html.push_str("\" src=\"");
+            html.push_str(&"\" src=\"");
             html.push_str(&self.src);
-            html.push_str("\" alt=\"");
+            html.push_str(&"\" alt=\"");
             html.push_str(&self.alt);
-            html.push_str("\" style=\"width: ");
+            html.push_str(&"\" style=\"width: ");
             html.push_str(&size_px);
-            html.push_str("; height: ");
+            html.push_str(&"; height: ");
             html.push_str(&size_px);
-            html.push_str("; border-radius: ");
+            html.push_str(&"; border-radius: ");
             html.push_str(&border_radius);
-            html.push_str("; object-fit: cover;\">")
+            html.push_str(&"; object-fit: cover;\">")
         }
         html
     }

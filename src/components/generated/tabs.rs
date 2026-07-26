@@ -47,7 +47,7 @@ impl Tabs {
     }
     #[inline]
     pub fn tab(mut self, tab: Tab) -> Tabs {
-        self.tabs.push(tab.clone());
+        self.tabs.push(tab);
         self
     }
     #[inline]
@@ -59,7 +59,7 @@ impl Tabs {
 
 impl Renderable for Tabs {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut tabs_html = "<div class='wj-tabs-header'>".to_string();
         let mut i = 0;
         while i < self.tabs.len() {

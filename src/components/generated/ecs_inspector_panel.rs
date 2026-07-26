@@ -49,8 +49,7 @@ impl Renderable for EcsInspectorPanel {
         let components: Vec<EcsComponentSection> = self.snapshot.components.clone();
         let selected_label = selected_entity_label_from_id(selected_id);
         let entity_count = entities.len();
-        let entity_html =
-            render_entity_list(entities, selected_id, &self.select_entity_handler);
+        let entity_html = render_entity_list(entities, selected_id, &self.select_entity_handler);
         let component_html = render_component_pane(components, &selected_label);
         format!("<style>{}</style>\n<div class='ecs-inspector-panel'>\n  <header class='ecs-inspector-header'>\n    <h3>ECS Inspector</h3>\n    <button type='button' onclick='{}'>Refresh</button>\n    <span class='ecs-entity-count'>{} entities</span>\n  </header>\n  <div class='ecs-inspector-body'>\n    <aside class='ecs-entity-list'>\n      <h4>Entities</h4>\n      {}\n    </aside>\n    <section class='ecs-component-pane'>\n      {}\n    </section>\n  </div>\n</div>", styles, self.refresh_handler.clone(), entity_count, entity_html, component_html)
     }

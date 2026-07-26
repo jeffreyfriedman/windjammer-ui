@@ -14,7 +14,26 @@
       "is_associated": true,
       "parent_type": "CodeBlock",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "CodeBlock::show_copy_button": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"CodeBlock\")",
+      "is_associated": true,
+      "parent_type": "CodeBlock",
+      "param_ownership": [
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
@@ -33,42 +52,7 @@
       "is_associated": true,
       "parent_type": "CodeBlock",
       "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "CodeBlock::render": {
-      "params": [
-        "Custom(\"Self\")"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")"
-      ],
-      "return_type": "String",
-      "is_associated": true,
-      "parent_type": "CodeBlock",
-      "param_ownership": [
-        "Borrowed"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "CodeBlock::show_copy_button": {
-      "params": [
-        "Custom(\"Self\")",
-        "Bool"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "Bool"
-      ],
-      "return_type": "Custom(\"CodeBlock\")",
-      "is_associated": true,
-      "parent_type": "CodeBlock",
-      "param_ownership": [
-        "MutBorrowed",
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
@@ -89,78 +73,94 @@
       ],
       "has_self_receiver": false,
       "is_extern": false
+    },
+    "CodeBlock::render": {
+      "params": [
+        "Reference(Custom(\"Self\"))"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "CodeBlock",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
     }
   },
   "structs": {
     "CodeBlock": {
-      "code": "String",
+      "language": "String",
       "show_copy_button": "Bool",
       "show_line_numbers": "Bool",
-      "language": "String"
+      "code": "String"
     }
   },
   "trait_impls": {},
   "copy_structs": [
-    "SidebarPosition",
-    "RowJustify",
-    "AvatarShape",
-    "TextWeight",
-    "ScrollDirection",
-    "ToastPosition",
-    "StackJustify",
-    "EasingPreset",
-    "ColumnJustify",
     "CurvePoint",
-    "Pagination",
-    "BadgeVariant",
-    "RatingSize",
+    "StackAlign",
+    "AlertVariant",
+    "TextareaResize",
+    "PopoverPosition",
     "BtWire",
+    "TextWeight",
+    "FlexDirection",
+    "StackDirection",
+    "RowAlign",
+    "TextSize",
+    "ToastPosition",
+    "DividerOrientation",
+    "ColumnAlign",
+    "NodeCategory",
+    "ScrollDir",
+    "BadgeVariant",
+    "EasingPreset",
+    "FrameDebuggerViewState",
+    "SidebarPosition",
+    "BtPalettePanel",
+    "TooltipPosition",
+    "Pagination",
+    "RowJustify",
+    "ChipVariant",
+    "VNode",
+    "StackJustify",
+    "MessageRole",
+    "AvatarShape",
+    "SwitchSize",
     "ButtonSize",
+    "LoadingSize",
+    "ChipSize",
     "ProgressVariant",
+    "NavbarPosition",
+    "ButtonVariant",
+    "SkeletonVariant",
+    "ScrollDirection",
+    "ToastVariant",
     "SplitDirection",
     "BadgeSize",
-    "TooltipPosition",
-    "LoadingSize",
-    "StackDirection",
-    "PinType",
-    "FrameDebuggerViewState",
-    "FlexDirection",
-    "TextareaResize",
-    "ChipSize",
-    "SpinnerSize",
-    "TextSize",
-    "SwitchSize",
-    "MessageRole",
-    "Progress",
-    "ModalSize",
-    "ColumnAlign",
-    "ChipVariant",
-    "SkeletonVariant",
-    "NavbarPosition",
-    "StackAlign",
-    "NodeCategory",
-    "CheckboxSize",
-    "AvatarSize",
-    "PopoverPosition",
-    "BtDebuggerOverlay",
-    "RowAlign",
-    "VNode",
-    "ToastVariant",
-    "ButtonVariant",
-    "DrawerPosition",
-    "DividerOrientation",
+    "ColumnJustify",
+    "RatingSize",
     "SelectSize",
-    "AlertVariant",
-    "BtPalettePanel",
-    "ScrollDir",
-    "ProfilerScopeKind"
+    "CheckboxSize",
+    "BtDebuggerOverlay",
+    "ModalSize",
+    "ProfilerScopeKind",
+    "SpinnerSize",
+    "PinType",
+    "DrawerPosition",
+    "AvatarSize",
+    "Progress"
   ],
   "non_copy_structs": [],
   "version": "0.50.0",
   "analysis_fingerprint": {
     "content_hash": 16774912271778223416,
-    "compiler_version": "0.50.0:efa412e4570d8b42",
+    "compiler_version": "0.50.0:94a5f44528a82cdf",
     "dep_metadata_epoch": 2435999049025295583,
-    "output_hash": 14761846335121599063
+    "output_hash": 9135221130511457774
   }
 }

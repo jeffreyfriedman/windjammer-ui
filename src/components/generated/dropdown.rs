@@ -45,14 +45,14 @@ impl Dropdown {
     }
     #[inline]
     pub fn item(mut self, item: DropdownItem) -> Dropdown {
-        self.items.push(item.clone());
+        self.items.push(item);
         self
     }
 }
 
 impl Renderable for Dropdown {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut items_html = "".to_string();
         let mut i = 0;
         while i < self.items.len() {
@@ -70,6 +70,6 @@ impl Renderable for Dropdown {
             );
             i += 1;
         }
-        format!("<div class='wj-dropdown'>\n  <button class='wj-dropdown-toggle'>{} ▼</button>\n  <div class='wj-dropdown-menu'>\n    {}\n  </div>\n</div>", self.label, items_html)
+        format!("<div class='wj-dropdown'>\n  <button class='wj-dropdown-toggle'>{} ▼</button>\n  <div class='wj-dropdown-menu'>\n    {}\n  </div>\n</div>", self.label.clone(), items_html)
     }
 }

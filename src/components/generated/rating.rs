@@ -56,14 +56,14 @@ impl Rating {
 
 impl Renderable for Rating {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let star_size: String = match self.size {
             RatingSize::Small => String::from("16px"),
             RatingSize::Medium => String::from("24px"),
             RatingSize::Large => String::from("32px"),
         };
         let mut html = String::new();
-        html.push_str("<div style='display: inline-flex; gap: 4px;'>");
+        html.push_str(&"<div style='display: inline-flex; gap: 4px;'>");
         let mut i = 1;
         while i <= self.max {
             let filled = i as f32 <= self.value;
@@ -82,22 +82,22 @@ impl Renderable for Rating {
                     String::from("pointer")
                 }
             };
-            html.push_str("<span style='font-size: ");
+            html.push_str(&"<span style='font-size: ");
             html.push_str(&star_size);
-            html.push_str("; color: ");
+            html.push_str(&"; color: ");
             html.push_str(&star_color);
-            html.push_str("; cursor: ");
+            html.push_str(&"; cursor: ");
             html.push_str(&cursor);
-            html.push_str(";'>");
+            html.push_str(&";'>");
             if half_filled {
                 html.push('⯨');
             } else {
                 html.push('★');
             }
-            html.push_str("</span>");
+            html.push_str(&"</span>");
             i += 1;
         }
-        html.push_str("</div>");
+        html.push_str(&"</div>");
         html
     }
 }

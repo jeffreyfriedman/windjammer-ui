@@ -11,60 +11,6 @@
       "has_self_receiver": false,
       "is_extern": false
     },
-    "Breadcrumb::separator": {
-      "params": [
-        "Custom(\"Breadcrumb\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Breadcrumb\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Breadcrumb\")",
-      "is_associated": true,
-      "parent_type": "Breadcrumb",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Breadcrumb::render": {
-      "params": [
-        "Custom(\"Breadcrumb\")"
-      ],
-      "formal_params": [
-        "Custom(\"Breadcrumb\")"
-      ],
-      "return_type": "String",
-      "is_associated": true,
-      "parent_type": "Breadcrumb",
-      "param_ownership": [
-        "Borrowed"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Breadcrumb::class": {
-      "params": [
-        "Custom(\"Breadcrumb\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Breadcrumb\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Breadcrumb\")",
-      "is_associated": true,
-      "parent_type": "Breadcrumb",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
     "Breadcrumb::item": {
       "params": [
         "Custom(\"Breadcrumb\")",
@@ -89,82 +35,136 @@
       ],
       "has_self_receiver": true,
       "is_extern": false
+    },
+    "Breadcrumb::render": {
+      "params": [
+        "Custom(\"Breadcrumb\")"
+      ],
+      "formal_params": [
+        "Custom(\"Breadcrumb\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Breadcrumb",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Breadcrumb::separator": {
+      "params": [
+        "Custom(\"Breadcrumb\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Breadcrumb\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Breadcrumb\")",
+      "is_associated": true,
+      "parent_type": "Breadcrumb",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Breadcrumb::class": {
+      "params": [
+        "Custom(\"Breadcrumb\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Breadcrumb\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Breadcrumb\")",
+      "is_associated": true,
+      "parent_type": "Breadcrumb",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
     }
   },
   "structs": {
     "Breadcrumb": {
-      "class": "String",
       "items": "Vec(Custom(\"BreadcrumbItem\"))",
-      "separator": "String"
+      "separator": "String",
+      "class": "String"
     },
     "BreadcrumbItem": {
-      "active": "Bool",
       "label": "String",
+      "active": "Bool",
       "href": "String"
     }
   },
   "trait_impls": {},
   "copy_structs": [
-    "SidebarPosition",
-    "RowJustify",
-    "AvatarShape",
-    "TextWeight",
-    "ScrollDirection",
-    "ToastPosition",
-    "StackJustify",
-    "EasingPreset",
-    "ColumnJustify",
     "CurvePoint",
-    "Pagination",
-    "BadgeVariant",
-    "RatingSize",
+    "StackAlign",
+    "AlertVariant",
+    "TextareaResize",
+    "PopoverPosition",
     "BtWire",
+    "TextWeight",
+    "FlexDirection",
+    "StackDirection",
+    "RowAlign",
+    "TextSize",
+    "ToastPosition",
+    "DividerOrientation",
+    "ColumnAlign",
+    "NodeCategory",
+    "ScrollDir",
+    "BadgeVariant",
+    "EasingPreset",
+    "FrameDebuggerViewState",
+    "SidebarPosition",
+    "BtPalettePanel",
+    "TooltipPosition",
+    "Pagination",
+    "RowJustify",
+    "ChipVariant",
+    "VNode",
+    "StackJustify",
+    "MessageRole",
+    "AvatarShape",
+    "SwitchSize",
     "ButtonSize",
+    "LoadingSize",
+    "ChipSize",
     "ProgressVariant",
+    "NavbarPosition",
+    "ButtonVariant",
+    "SkeletonVariant",
+    "ScrollDirection",
+    "ToastVariant",
     "SplitDirection",
     "BadgeSize",
-    "TooltipPosition",
-    "LoadingSize",
-    "StackDirection",
-    "PinType",
-    "FrameDebuggerViewState",
-    "FlexDirection",
-    "TextareaResize",
-    "ChipSize",
-    "SpinnerSize",
-    "TextSize",
-    "SwitchSize",
-    "MessageRole",
-    "Progress",
-    "ModalSize",
-    "ColumnAlign",
-    "ChipVariant",
-    "SkeletonVariant",
-    "NavbarPosition",
-    "StackAlign",
-    "NodeCategory",
-    "CheckboxSize",
-    "AvatarSize",
-    "PopoverPosition",
-    "BtDebuggerOverlay",
-    "RowAlign",
-    "VNode",
-    "ToastVariant",
-    "ButtonVariant",
-    "DrawerPosition",
-    "DividerOrientation",
+    "ColumnJustify",
+    "RatingSize",
     "SelectSize",
-    "AlertVariant",
-    "BtPalettePanel",
-    "ScrollDir",
-    "ProfilerScopeKind"
+    "CheckboxSize",
+    "BtDebuggerOverlay",
+    "ModalSize",
+    "ProfilerScopeKind",
+    "SpinnerSize",
+    "PinType",
+    "DrawerPosition",
+    "AvatarSize",
+    "Progress"
   ],
   "non_copy_structs": [],
   "version": "0.50.0",
   "analysis_fingerprint": {
     "content_hash": 9578923708010442088,
-    "compiler_version": "0.50.0:efa412e4570d8b42",
+    "compiler_version": "0.50.0:94a5f44528a82cdf",
     "dep_metadata_epoch": 2435999049025295583,
-    "output_hash": 2116536753591701906
+    "output_hash": 8497108287795639053
   }
 }

@@ -26,7 +26,7 @@ impl FileNode {
     }
     #[inline]
     pub fn child(mut self, node: FileNode) -> FileNode {
-        self.children.push(node.clone());
+        self.children.push(node);
         self
     }
     #[inline]
@@ -80,7 +80,7 @@ impl FileTree {
 
 impl Renderable for FileTree {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         format!(
             "<div class='wj-file-tree'>\n{}</div>",
             self.root.render(0_i32)

@@ -1,7 +1,7 @@
 {
   "module_path": "scroll",
   "functions": {
-    "Scroll::class": {
+    "Scroll::height": {
       "params": [
         "Custom(\"Scroll\")",
         "String"
@@ -39,6 +39,51 @@
       "has_self_receiver": true,
       "is_extern": false
     },
+    "Scroll::class": {
+      "params": [
+        "Custom(\"Scroll\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Scroll\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Scroll\")",
+      "is_associated": true,
+      "parent_type": "Scroll",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Scroll::new": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "Custom(\"Scroll\")",
+      "is_associated": true,
+      "parent_type": "Scroll",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Scroll::render": {
+      "params": [
+        "Custom(\"Scroll\")"
+      ],
+      "formal_params": [
+        "Custom(\"Scroll\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Scroll",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
     "Scroll::direction": {
       "params": [
         "Custom(\"Scroll\")",
@@ -58,54 +103,9 @@
       "has_self_receiver": true,
       "is_extern": false
     },
-    "Scroll::height": {
-      "params": [
-        "Custom(\"Scroll\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Scroll\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Scroll\")",
-      "is_associated": true,
-      "parent_type": "Scroll",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Scroll::render": {
-      "params": [
-        "Custom(\"Scroll\")"
-      ],
-      "formal_params": [
-        "Custom(\"Scroll\")"
-      ],
-      "return_type": "String",
-      "is_associated": true,
-      "parent_type": "Scroll",
-      "param_ownership": [
-        "Borrowed"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Scroll::new": {
-      "params": [],
-      "formal_params": [],
-      "return_type": "Custom(\"Scroll\")",
-      "is_associated": true,
-      "parent_type": "Scroll",
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
     "Scroll::child": {
       "params": [
-        "Custom(\"Scroll\")",
+        "String",
         "String"
       ],
       "formal_params": [
@@ -125,75 +125,75 @@
   },
   "structs": {
     "Scroll": {
-      "children": "Vec(String)",
-      "height": "String",
-      "width": "String",
       "class": "String",
-      "direction": "Custom(\"ScrollDir\")"
+      "children": "Vec(String)",
+      "direction": "Custom(\"ScrollDir\")",
+      "height": "String",
+      "width": "String"
     }
   },
   "trait_impls": {},
   "copy_structs": [
-    "SidebarPosition",
-    "RowJustify",
-    "AvatarShape",
-    "TextWeight",
-    "ScrollDirection",
-    "ToastPosition",
-    "StackJustify",
-    "EasingPreset",
-    "ColumnJustify",
     "CurvePoint",
-    "Pagination",
-    "BadgeVariant",
-    "RatingSize",
+    "StackAlign",
+    "AlertVariant",
+    "TextareaResize",
+    "PopoverPosition",
     "BtWire",
+    "TextWeight",
+    "FlexDirection",
+    "StackDirection",
+    "RowAlign",
+    "TextSize",
+    "ToastPosition",
+    "DividerOrientation",
+    "ColumnAlign",
+    "NodeCategory",
+    "ScrollDir",
+    "BadgeVariant",
+    "EasingPreset",
+    "FrameDebuggerViewState",
+    "SidebarPosition",
+    "BtPalettePanel",
+    "TooltipPosition",
+    "Pagination",
+    "RowJustify",
+    "ChipVariant",
+    "VNode",
+    "StackJustify",
+    "MessageRole",
+    "AvatarShape",
+    "SwitchSize",
     "ButtonSize",
+    "LoadingSize",
+    "ChipSize",
     "ProgressVariant",
+    "NavbarPosition",
+    "ButtonVariant",
+    "SkeletonVariant",
+    "ScrollDirection",
+    "ToastVariant",
     "SplitDirection",
     "BadgeSize",
-    "TooltipPosition",
-    "LoadingSize",
-    "StackDirection",
-    "PinType",
-    "FrameDebuggerViewState",
-    "FlexDirection",
-    "TextareaResize",
-    "ChipSize",
-    "SpinnerSize",
-    "TextSize",
-    "SwitchSize",
-    "MessageRole",
-    "Progress",
-    "ModalSize",
-    "ColumnAlign",
-    "ChipVariant",
-    "SkeletonVariant",
-    "NavbarPosition",
-    "StackAlign",
-    "NodeCategory",
-    "CheckboxSize",
-    "AvatarSize",
-    "PopoverPosition",
-    "BtDebuggerOverlay",
-    "RowAlign",
-    "VNode",
-    "ToastVariant",
-    "ButtonVariant",
-    "DrawerPosition",
-    "DividerOrientation",
+    "ColumnJustify",
+    "RatingSize",
     "SelectSize",
-    "AlertVariant",
-    "BtPalettePanel",
-    "ScrollDir",
-    "ProfilerScopeKind"
+    "CheckboxSize",
+    "BtDebuggerOverlay",
+    "ModalSize",
+    "ProfilerScopeKind",
+    "SpinnerSize",
+    "PinType",
+    "DrawerPosition",
+    "AvatarSize",
+    "Progress"
   ],
   "non_copy_structs": [],
   "version": "0.50.0",
   "analysis_fingerprint": {
     "content_hash": 6190523807022904772,
-    "compiler_version": "0.50.0:efa412e4570d8b42",
+    "compiler_version": "0.50.0:94a5f44528a82cdf",
     "dep_metadata_epoch": 2435999049025295583,
-    "output_hash": 12106739119377170281
+    "output_hash": 9229613933448018790
   }
 }

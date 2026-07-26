@@ -49,7 +49,7 @@ impl CodeEditor {
 
 impl Renderable for CodeEditor {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let readonly_attr = {
             if self.readonly {
                 String::from(" readonly")
@@ -64,6 +64,6 @@ impl Renderable for CodeEditor {
                 String::new()
             }
         };
-        format!("<div class='wj-code-editor wj-editor-{} wj-editor-theme-{}{}'>\n  <textarea{}>\n{}</textarea>\n</div>", self.language, self.theme, line_numbers_class, readonly_attr, self.code)
+        format!("<div class='wj-code-editor wj-editor-{} wj-editor-theme-{}{}'>\n  <textarea{}>\n{}</textarea>\n</div>", self.language.clone(), self.theme.clone(), line_numbers_class, readonly_attr, self.code.clone())
     }
 }

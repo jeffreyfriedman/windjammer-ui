@@ -50,7 +50,7 @@ impl Navbar {
     }
     #[inline]
     pub fn item(mut self, item: NavbarItem) -> Navbar {
-        self.items.push(item.clone());
+        self.items.push(item);
         self
     }
     #[inline]
@@ -67,7 +67,7 @@ impl Navbar {
 
 impl Renderable for Navbar {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut items_html: Vec<String> = Vec::new();
         for item in &self.items {
             {
@@ -92,7 +92,7 @@ impl Renderable for Navbar {
         };
         let brand_html = {
             if !self.brand.is_empty() {
-                format!("<div class='wj-navbar-brand'>{}</div>", self.brand)
+                format!("<div class='wj-navbar-brand'>{}</div>", self.brand.clone())
             } else {
                 String::new()
             }
@@ -102,7 +102,7 @@ impl Renderable for Navbar {
             position_class,
             sticky_class,
             brand_html,
-            items_html.join("")
+            items_html.join(&"")
         )
     }
 }

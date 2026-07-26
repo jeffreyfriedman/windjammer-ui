@@ -24,7 +24,7 @@ impl TreeItem {
     }
     #[inline]
     pub fn child(mut self, item: TreeItem) -> TreeItem {
-        self.children.push(item.clone());
+        self.children.push(item);
         self
     }
     #[inline]
@@ -76,14 +76,14 @@ impl TreeView {
     }
     #[inline]
     pub fn item(mut self, item: TreeItem) -> TreeView {
-        self.items.push(item.clone());
+        self.items.push(item);
         self
     }
 }
 
 impl Renderable for TreeView {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut html = "<div class='wj-tree-view'>\n".to_string();
         let mut i = 0;
         while i < self.items.len() {

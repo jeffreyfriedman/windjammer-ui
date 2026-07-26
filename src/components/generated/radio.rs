@@ -48,7 +48,7 @@ impl RadioGroup {
     }
     #[inline]
     pub fn option(mut self, option: RadioOption) -> RadioGroup {
-        self.options.push(option.clone());
+        self.options.push(option);
         self
     }
     #[inline]
@@ -60,13 +60,13 @@ impl RadioGroup {
 
 impl Renderable for RadioGroup {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut html = {
             let mut __s = String::with_capacity(64);
             write!(
                 &mut __s,
                 "<div class='wj-radio-group' data-name='{}'>",
-                self.name
+                self.name.clone()
             )
             .unwrap();
             __s
@@ -88,7 +88,7 @@ impl Renderable for RadioGroup {
                     String::new()
                 }
             };
-            html = format!("{}<label class='wj-radio'><input type='radio' name='{}' value='{}'{}{}><span>{}</span></label>", html, self.name, opt.value, checked_attr, disabled_attr, opt.label);
+            html = format!("{}<label class='wj-radio'><input type='radio' name='{}' value='{}'{}{}><span>{}</span></label>", html, self.name.clone(), opt.value, checked_attr, disabled_attr, opt.label);
             i += 1;
         }
         format!("{}</div>", html)

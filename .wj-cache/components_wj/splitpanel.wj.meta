@@ -1,6 +1,51 @@
 {
   "module_path": "splitpanel",
   "functions": {
+    "SplitPanel::render": {
+      "params": [
+        "Reference(Custom(\"Self\"))"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "SplitPanel",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "main": {
+      "params": [],
+      "formal_params": [],
+      "return_type": null,
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "SplitPanel::initial_size": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"i32\")"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "Custom(\"i32\")"
+      ],
+      "return_type": "Custom(\"SplitPanel\")",
+      "is_associated": true,
+      "parent_type": "SplitPanel",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
     "SplitPanel::new": {
       "params": [
         "String",
@@ -33,53 +78,8 @@
       "is_associated": true,
       "parent_type": "SplitPanel",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
         "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "SplitPanel::initial_size": {
-      "params": [
-        "Custom(\"Self\")",
-        "Custom(\"i32\")"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "Custom(\"i32\")"
-      ],
-      "return_type": "Custom(\"SplitPanel\")",
-      "is_associated": true,
-      "parent_type": "SplitPanel",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "main": {
-      "params": [],
-      "formal_params": [],
-      "return_type": null,
-      "is_associated": false,
-      "parent_type": null,
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
-    "SplitPanel::render": {
-      "params": [
-        "Custom(\"Self\")"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")"
-      ],
-      "return_type": "String",
-      "is_associated": true,
-      "parent_type": "SplitPanel",
-      "param_ownership": [
-        "Borrowed"
       ],
       "has_self_receiver": true,
       "is_extern": false
@@ -87,74 +87,74 @@
   },
   "structs": {
     "SplitPanel": {
+      "initial_size": "Custom(\"i32\")",
       "left": "String",
       "right": "String",
-      "initial_size": "Custom(\"i32\")",
       "direction": "Custom(\"SplitDirection\")"
     }
   },
   "trait_impls": {},
   "copy_structs": [
-    "SidebarPosition",
-    "RowJustify",
-    "AvatarShape",
-    "TextWeight",
-    "ScrollDirection",
-    "ToastPosition",
-    "StackJustify",
-    "EasingPreset",
-    "ColumnJustify",
     "CurvePoint",
-    "Pagination",
-    "BadgeVariant",
-    "RatingSize",
+    "StackAlign",
+    "AlertVariant",
+    "TextareaResize",
+    "PopoverPosition",
     "BtWire",
+    "TextWeight",
+    "FlexDirection",
+    "StackDirection",
+    "RowAlign",
+    "TextSize",
+    "ToastPosition",
+    "DividerOrientation",
+    "ColumnAlign",
+    "NodeCategory",
+    "ScrollDir",
+    "BadgeVariant",
+    "EasingPreset",
+    "FrameDebuggerViewState",
+    "SidebarPosition",
+    "BtPalettePanel",
+    "TooltipPosition",
+    "Pagination",
+    "RowJustify",
+    "ChipVariant",
+    "VNode",
+    "StackJustify",
+    "MessageRole",
+    "AvatarShape",
+    "SwitchSize",
     "ButtonSize",
+    "LoadingSize",
+    "ChipSize",
     "ProgressVariant",
+    "NavbarPosition",
+    "ButtonVariant",
+    "SkeletonVariant",
+    "ScrollDirection",
+    "ToastVariant",
     "SplitDirection",
     "BadgeSize",
-    "TooltipPosition",
-    "LoadingSize",
-    "StackDirection",
-    "PinType",
-    "FrameDebuggerViewState",
-    "FlexDirection",
-    "TextareaResize",
-    "ChipSize",
-    "SpinnerSize",
-    "TextSize",
-    "SwitchSize",
-    "MessageRole",
-    "Progress",
-    "ModalSize",
-    "ColumnAlign",
-    "ChipVariant",
-    "SkeletonVariant",
-    "NavbarPosition",
-    "StackAlign",
-    "NodeCategory",
-    "CheckboxSize",
-    "AvatarSize",
-    "PopoverPosition",
-    "BtDebuggerOverlay",
-    "RowAlign",
-    "VNode",
-    "ToastVariant",
-    "ButtonVariant",
-    "DrawerPosition",
-    "DividerOrientation",
+    "ColumnJustify",
+    "RatingSize",
     "SelectSize",
-    "AlertVariant",
-    "BtPalettePanel",
-    "ScrollDir",
-    "ProfilerScopeKind"
+    "CheckboxSize",
+    "BtDebuggerOverlay",
+    "ModalSize",
+    "ProfilerScopeKind",
+    "SpinnerSize",
+    "PinType",
+    "DrawerPosition",
+    "AvatarSize",
+    "Progress"
   ],
   "non_copy_structs": [],
   "version": "0.50.0",
   "analysis_fingerprint": {
     "content_hash": 14683984352925037287,
-    "compiler_version": "0.50.0:efa412e4570d8b42",
+    "compiler_version": "0.50.0:94a5f44528a82cdf",
     "dep_metadata_epoch": 2435999049025295583,
-    "output_hash": 8502718482593946384
+    "output_hash": 7710887537198499898
   }
 }

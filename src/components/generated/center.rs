@@ -39,17 +39,17 @@ impl Center {
     #[inline]
     pub fn render(&self) -> String {
         let mut html = String::new();
-        html.push_str("<div class=\"wj-center ");
+        html.push_str(&"<div class=\"wj-center ");
         html.push_str(&self.class);
         html.push_str(
-            "\" style=\"display: flex; align-items: center; justify-content: center; width: ",
+            &"\" style=\"display: flex; align-items: center; justify-content: center; width: ",
         );
         html.push_str(&self.width);
-        html.push_str("; height: ");
+        html.push_str(&"; height: ");
         html.push_str(&self.height);
-        html.push_str(";\">");
+        html.push_str(&";\">");
         html.push_str(&self.child);
-        html.push_str("</div>");
+        html.push_str(&"</div>");
         html
     }
 }

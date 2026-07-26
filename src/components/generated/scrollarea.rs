@@ -54,16 +54,19 @@ impl ScrollArea {
 
 impl Renderable for ScrollArea {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let overflow_style: String = match self.direction {
             ScrollDirection::Vertical => String::from("overflow-y: auto; overflow-x: hidden;"),
             ScrollDirection::Horizontal => String::from("overflow-x: auto; overflow-y: hidden;"),
             ScrollDirection::Both => String::from("overflow: auto;"),
         };
-        let children_html = self.children.join("\n");
+        let children_html = self.children.join(&"\n");
         format!(
             "<div class='wj-scroll-area' style='height: {}; width: {}; {}'>\n  {}\n</div>",
-            self.height, self.width, overflow_style, children_html
+            self.height.clone(),
+            self.width.clone(),
+            overflow_style,
+            children_html
         )
     }
 }

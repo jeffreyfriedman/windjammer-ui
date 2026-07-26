@@ -29,17 +29,17 @@ impl BtInspectorModel {
 
 impl Renderable for BtInspectorModel {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut bp = "".to_string();
         if self.breakpoint {
             bp = "checked".to_string();
         }
         let mut panel = "".to_string();
         panel = format!("{}{}", panel, "<div class=\"bt-inspector-title\">");
-        panel = format!("{}{}", panel, self.title);
+        panel = format!("{}{}", panel, self.title.clone());
         panel = format!("{}{}", panel, "</div>");
         panel = format!("{}{}", panel, "<div class=\"bt-inspector-sub\">");
-        panel = format!("{}{}", panel, self.subtitle);
+        panel = format!("{}{}", panel, self.subtitle.clone());
         panel = format!("{}{}", panel, "</div>");
         panel = format!(
             "{}{}",
@@ -47,14 +47,14 @@ impl Renderable for BtInspectorModel {
         );
         panel = format!("{}{}", panel, bp);
         panel = format!("{}{}", panel, " /> Breakpoint · ");
-        panel = format!("{}{}", panel, self.hotspot);
+        panel = format!("{}{}", panel, self.hotspot.clone());
         panel = format!("{}{}", panel, "</label>");
         panel = format!(
             "{}{}",
             panel, "<label class=\"bt-field\"><span>Payload</span>"
         );
         panel = format!("{}{}", panel, "<textarea rows=\"6\">");
-        panel = format!("{}{}", panel, self.params_json);
+        panel = format!("{}{}", panel, self.params_json.clone());
         panel = format!("{}{}", panel, "</textarea></label>");
         let mut wrapped = "".to_string();
         wrapped = format!("{}{}", wrapped, "<section class=\"bt-properties-pane\">");

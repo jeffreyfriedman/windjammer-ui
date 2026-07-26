@@ -59,14 +59,14 @@ impl RenderableVNode for Input {
     fn to_vnode(&self) -> VNode {
         let mut node = VNode::input()
             .add_class("wj-input")
-            .set_type(&self.input_type)
-            .set_value(&self.value)
-            .set_placeholder(&self.placeholder);
+            .set_type(self.input_type.as_str())
+            .set_value(self.value.as_str())
+            .set_placeholder(self.placeholder.as_str());
         if !self.change_handler.is_empty() {
-            node = node.on_change(self.change_handler.clone());
+            node = node.on_change(self.change_handler.as_str());
         }
         if !self.input_handler.is_empty() {
-            node = node.on_input(self.input_handler.clone());
+            node = node.on_input(self.input_handler.as_str());
         }
         node
     }
@@ -74,10 +74,12 @@ impl RenderableVNode for Input {
 
 impl Renderable for Input {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         format!(
             "<input class='wj-input' type='{}' value='{}' placeholder='{}'/>",
-            self.input_type, self.value, self.placeholder
+            self.input_type.clone(),
+            self.value.clone(),
+            self.placeholder.clone()
         )
     }
 }

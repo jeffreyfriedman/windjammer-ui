@@ -1,232 +1,26 @@
 {
   "module_path": "style",
   "functions": {
-    "Style::border": {
-      "params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Style\")",
-      "is_associated": true,
-      "parent_type": "Style",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Style::to_string": {
-      "params": [
-        "Custom(\"Style\")"
-      ],
-      "formal_params": [
-        "Custom(\"Style\")"
-      ],
-      "return_type": "String",
-      "is_associated": true,
-      "parent_type": "Style",
-      "param_ownership": [
-        "Borrowed"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Style::opacity": {
-      "params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Style\")",
-      "is_associated": true,
-      "parent_type": "Style",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Style::right": {
-      "params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Style\")",
-      "is_associated": true,
-      "parent_type": "Style",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Style::top": {
-      "params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Style\")",
-      "is_associated": true,
-      "parent_type": "Style",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Style::text_align": {
-      "params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Style\")",
-      "is_associated": true,
-      "parent_type": "Style",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Style::gap": {
-      "params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Style\")",
-      "is_associated": true,
-      "parent_type": "Style",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Style::height": {
-      "params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Style\")",
-      "is_associated": true,
-      "parent_type": "Style",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Style::overflow_y": {
-      "params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Style\")",
-      "is_associated": true,
-      "parent_type": "Style",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Style::padding": {
-      "params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Style\")",
-      "is_associated": true,
-      "parent_type": "Style",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Style::font_weight": {
-      "params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Style\")",
-      "is_associated": true,
-      "parent_type": "Style",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Style::cursor": {
-      "params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Style\")",
-      "is_associated": true,
-      "parent_type": "Style",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
     "Style::color": {
+      "params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Style::position": {
       "params": [
         "Custom(\"Style\")",
         "String"
@@ -264,14 +58,61 @@
       "has_self_receiver": true,
       "is_extern": false
     },
-    "Style::new": {
-      "params": [],
-      "formal_params": [],
+    "Style::overflow": {
+      "params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
       "return_type": "Custom(\"Style\")",
       "is_associated": true,
       "parent_type": "Style",
-      "param_ownership": [],
-      "has_self_receiver": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Style::bottom": {
+      "params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Style::gap": {
+      "params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
       "is_extern": false
     },
     "Style::background_color": {
@@ -293,7 +134,7 @@
       "has_self_receiver": true,
       "is_extern": false
     },
-    "Style::border_radius": {
+    "Style::font_size": {
       "params": [
         "Custom(\"Style\")",
         "String"
@@ -312,7 +153,64 @@
       "has_self_receiver": true,
       "is_extern": false
     },
-    "Style::justify_content": {
+    "Style::display": {
+      "params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Style::font_weight": {
+      "params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Style::padding": {
+      "params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Style::overflow_y": {
       "params": [
         "Custom(\"Style\")",
         "String"
@@ -350,6 +248,82 @@
       "has_self_receiver": true,
       "is_extern": false
     },
+    "Style::opacity": {
+      "params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Style::border_radius": {
+      "params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Style::overflow_x": {
+      "params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Style::right": {
+      "params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
     "Style::margin": {
       "params": [
         "Custom(\"Style\")",
@@ -369,7 +343,7 @@
       "has_self_receiver": true,
       "is_extern": false
     },
-    "Style::overflow": {
+    "Style::box_shadow": {
       "params": [
         "Custom(\"Style\")",
         "String"
@@ -426,82 +400,6 @@
       "has_self_receiver": true,
       "is_extern": false
     },
-    "Style::display": {
-      "params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Style\")",
-      "is_associated": true,
-      "parent_type": "Style",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Style::font_size": {
-      "params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Style\")",
-      "is_associated": true,
-      "parent_type": "Style",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Style::bottom": {
-      "params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Style\")",
-      "is_associated": true,
-      "parent_type": "Style",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Style::box_shadow": {
-      "params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Style\")",
-      "is_associated": true,
-      "parent_type": "Style",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
     "Style::min_width": {
       "params": [
         "Custom(\"Style\")",
@@ -521,7 +419,128 @@
       "has_self_receiver": true,
       "is_extern": false
     },
-    "Style::overflow_x": {
+    "Style::max_width": {
+      "params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Style::new": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Style::justify_content": {
+      "params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Style::height": {
+      "params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Style::border": {
+      "params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Style::text_align": {
+      "params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Style\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Style\")",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Style::to_string": {
+      "params": [
+        "Custom(\"Style\")"
+      ],
+      "formal_params": [
+        "Custom(\"Style\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Style",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Style::cursor": {
       "params": [
         "Custom(\"Style\")",
         "String"
@@ -559,26 +578,7 @@
       "has_self_receiver": true,
       "is_extern": false
     },
-    "Style::position": {
-      "params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Style\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Style\")",
-      "is_associated": true,
-      "parent_type": "Style",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Style::max_width": {
+    "Style::top": {
       "params": [
         "Custom(\"Style\")",
         "String"
@@ -599,76 +599,76 @@
     }
   },
   "structs": {
+    "StyleProperty": {
+      "name": "String",
+      "value": "String"
+    },
     "Style": {
       "properties": "Vec(Custom(\"StyleProperty\"))"
-    },
-    "StyleProperty": {
-      "value": "String",
-      "name": "String"
     }
   },
   "trait_impls": {},
   "copy_structs": [
-    "SidebarPosition",
-    "RowJustify",
-    "AvatarShape",
-    "TextWeight",
-    "ScrollDirection",
-    "ToastPosition",
-    "StackJustify",
-    "EasingPreset",
-    "ColumnJustify",
     "CurvePoint",
-    "Pagination",
-    "BadgeVariant",
-    "RatingSize",
+    "StackAlign",
+    "AlertVariant",
+    "TextareaResize",
+    "PopoverPosition",
     "BtWire",
+    "TextWeight",
+    "FlexDirection",
+    "StackDirection",
+    "RowAlign",
+    "TextSize",
+    "ToastPosition",
+    "DividerOrientation",
+    "ColumnAlign",
+    "NodeCategory",
+    "ScrollDir",
+    "BadgeVariant",
+    "EasingPreset",
+    "FrameDebuggerViewState",
+    "SidebarPosition",
+    "BtPalettePanel",
+    "TooltipPosition",
+    "Pagination",
+    "RowJustify",
+    "ChipVariant",
+    "VNode",
+    "StackJustify",
+    "MessageRole",
+    "AvatarShape",
+    "SwitchSize",
     "ButtonSize",
+    "LoadingSize",
+    "ChipSize",
     "ProgressVariant",
+    "NavbarPosition",
+    "ButtonVariant",
+    "SkeletonVariant",
+    "ScrollDirection",
+    "ToastVariant",
     "SplitDirection",
     "BadgeSize",
-    "TooltipPosition",
-    "LoadingSize",
-    "StackDirection",
-    "PinType",
-    "FrameDebuggerViewState",
-    "FlexDirection",
-    "TextareaResize",
-    "ChipSize",
-    "SpinnerSize",
-    "TextSize",
-    "SwitchSize",
-    "MessageRole",
-    "Progress",
-    "ModalSize",
-    "ColumnAlign",
-    "ChipVariant",
-    "SkeletonVariant",
-    "NavbarPosition",
-    "StackAlign",
-    "NodeCategory",
-    "CheckboxSize",
-    "AvatarSize",
-    "PopoverPosition",
-    "BtDebuggerOverlay",
-    "RowAlign",
-    "VNode",
-    "ToastVariant",
-    "ButtonVariant",
-    "DrawerPosition",
-    "DividerOrientation",
+    "ColumnJustify",
+    "RatingSize",
     "SelectSize",
-    "AlertVariant",
-    "BtPalettePanel",
-    "ScrollDir",
-    "ProfilerScopeKind"
+    "CheckboxSize",
+    "BtDebuggerOverlay",
+    "ModalSize",
+    "ProfilerScopeKind",
+    "SpinnerSize",
+    "PinType",
+    "DrawerPosition",
+    "AvatarSize",
+    "Progress"
   ],
   "non_copy_structs": [],
   "version": "0.50.0",
   "analysis_fingerprint": {
     "content_hash": 9623402427626926094,
-    "compiler_version": "0.50.0:efa412e4570d8b42",
+    "compiler_version": "0.50.0:94a5f44528a82cdf",
     "dep_metadata_epoch": 2435999049025295583,
-    "output_hash": 1660894227234154283
+    "output_hash": 12791124136524512498
   }
 }

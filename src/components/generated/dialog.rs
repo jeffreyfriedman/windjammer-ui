@@ -37,7 +37,7 @@ impl Dialog {
 
 impl Renderable for Dialog {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let display_style: String = {
             if self.open {
                 String::from("display: flex;")
@@ -45,6 +45,6 @@ impl Renderable for Dialog {
                 String::from("display: none;")
             }
         };
-        format!("<div class='wj-dialog-overlay' style='{}'>\n  <div class='wj-dialog' style='max-width: {}; width: 90%;'>\n    <div class='wj-dialog-header'>\n      <h2>{}</h2>\n      <button class='wj-dialog-close'>×</button>\n    </div>\n    <div class='wj-dialog-content'>\n      {}\n    </div>\n  </div>\n</div>", display_style, self.width, self.title, self.content)
+        format!("<div class='wj-dialog-overlay' style='{}'>\n  <div class='wj-dialog' style='max-width: {}; width: 90%;'>\n    <div class='wj-dialog-header'>\n      <h2>{}</h2>\n      <button class='wj-dialog-close'>×</button>\n    </div>\n    <div class='wj-dialog-content'>\n      {}\n    </div>\n  </div>\n</div>", display_style, self.width.clone(), self.title.clone(), self.content.clone())
     }
 }

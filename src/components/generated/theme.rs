@@ -204,8 +204,8 @@ impl EditorTheme {
 
 impl Renderable for EditorTheme {
     #[inline]
-    fn render(&mut self) -> String {
-        let css = format!("{}{}{}{}{}{}{}{}{}{}{}", ":root { \n            --bg-primary: ", self.palette.bg_primary, ";\n            --bg-secondary: ", self.palette.bg_secondary, ";\n            --accent-primary: ", self.palette.accent_primary, ";\n            --text-primary: ", self.palette.text_primary, ";\n        }\n        body {\n            font-family: ", self.font_family, ";\n            color: var(--text-primary);\n            background: var(--bg-primary);\n        }");
+    fn render(&self) -> String {
+        let css = format!("{}{}{}{}{}{}{}{}{}{}{}", ":root { \n            --bg-primary: ", self.palette.bg_primary, ";\n            --bg-secondary: ", self.palette.bg_secondary, ";\n            --accent-primary: ", self.palette.accent_primary, ";\n            --text-primary: ", self.palette.text_primary, ";\n        }\n        body {\n            font-family: ", self.font_family.clone(), ";\n            color: var(--text-primary);\n            background: var(--bg-primary);\n        }");
         css
     }
 }
@@ -242,11 +242,11 @@ impl ThemeSwitcher {
 
 impl Renderable for ThemeSwitcher {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut options = "".to_string();
-        for t in self.themes.clone() {
+        for t in &self.themes {
             let selected = {
-                if t == self.current_theme {
+                if *t == self.current_theme {
                     String::from("selected")
                 } else {
                     String::new()
@@ -254,6 +254,6 @@ impl Renderable for ThemeSwitcher {
             };
             options = options + &format!("<option value='{}' {}>{}</option>", t, selected, t);
         }
-        format!("\n            <div class='theme-switcher'>\n                <label>🎨 Theme</label>\n                <select onchange='{}(this.value)'>\n                    {}\n                </select>\n            </div>\n        ", self.on_change, options)
+        format!("\n            <div class='theme-switcher'>\n                <label>🎨 Theme</label>\n                <select onchange='{}(this.value)'>\n                    {}\n                </select>\n            </div>\n        ", self.on_change.clone(), options)
     }
 }
