@@ -1,0 +1,67 @@
+// DataTable — finance-oriented table alias with empty state (P0)
+
+use super::traits::Renderable
+use super::table::{Table, TableColumn, TableRow}
+
+pub struct DataTable {
+    table: Table,
+    empty_message: string,
+    caption: string,
+}
+
+impl DataTable {
+    pub fn new() -> DataTable {
+        DataTable {
+            table: Table::new(),
+            empty_message: "No rows".to_string(),
+            caption: "".to_string(),
+        }
+    }
+
+    pub fn caption(self, caption: string) -> DataTable {
+        self.caption = caption
+        self
+    }
+
+    pub fn empty_message(self, message: string) -> DataTable {
+        self.empty_message = message
+        self
+    }
+
+    pub fn column(self, col: TableColumn) -> DataTable {
+        self.table = self.table.column(col)
+        self
+    }
+
+    pub fn row(self, row: TableRow) -> DataTable {
+        self.table = self.table.row(row)
+        self
+    }
+}
+
+impl Renderable for DataTable {
+    fn render(self) -> string {
+        let body = self.table.render()
+        let mut caption_html = "".to_string()
+        if self.caption.len() > 0 {
+            caption_html = format!("<div class='wj-datatable-caption'>{}</div>", self.caption)
+        }
+        // Empty-state marker for tests / progressive enhancement
+        format!(
+            "<div class='wj-datatable' data-empty-message='{}'>{}{}</div>",
+            self.empty_message,
+            caption_html,
+            body
+        )
+    }
+}
+
+fn main() {
+    let html = DataTable::new()
+        .caption("Parties".to_string())
+        .column(TableColumn::new("Name".to_string()))
+        .column(TableColumn::new("Role".to_string()))
+        .row(TableRow::new().cell("Acme".to_string()).cell("customer".to_string()))
+        .render()
+    println!("{}", html)
+}

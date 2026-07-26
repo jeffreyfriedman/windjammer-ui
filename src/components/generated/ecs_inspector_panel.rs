@@ -42,16 +42,17 @@ impl EcsInspectorPanel {
 
 impl Renderable for EcsInspectorPanel {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let styles = ecs_inspector_panel_styles();
         let entities: Vec<EcsEntityRow> = self.snapshot.entities.clone();
         let selected_id = self.snapshot.selected_entity_id;
         let components: Vec<EcsComponentSection> = self.snapshot.components.clone();
         let selected_label = selected_entity_label_from_id(selected_id);
         let entity_count = entities.len();
-        let entity_html = render_entity_list(entities, selected_id, &self.select_entity_handler);
+        let entity_html =
+            render_entity_list(entities, selected_id, &self.select_entity_handler);
         let component_html = render_component_pane(components, &selected_label);
-        format!("<style>{}</style>\n<div class='ecs-inspector-panel'>\n  <header class='ecs-inspector-header'>\n    <h3>ECS Inspector</h3>\n    <button type='button' onclick='{}'>Refresh</button>\n    <span class='ecs-entity-count'>{} entities</span>\n  </header>\n  <div class='ecs-inspector-body'>\n    <aside class='ecs-entity-list'>\n      <h4>Entities</h4>\n      {}\n    </aside>\n    <section class='ecs-component-pane'>\n      {}\n    </section>\n  </div>\n</div>", styles, self.refresh_handler, entity_count, entity_html, component_html)
+        format!("<style>{}</style>\n<div class='ecs-inspector-panel'>\n  <header class='ecs-inspector-header'>\n    <h3>ECS Inspector</h3>\n    <button type='button' onclick='{}'>Refresh</button>\n    <span class='ecs-entity-count'>{} entities</span>\n  </header>\n  <div class='ecs-inspector-body'>\n    <aside class='ecs-entity-list'>\n      <h4>Entities</h4>\n      {}\n    </aside>\n    <section class='ecs-component-pane'>\n      {}\n    </section>\n  </div>\n</div>", styles, self.refresh_handler.clone(), entity_count, entity_html, component_html)
     }
 }
 
@@ -67,7 +68,7 @@ pub fn entity_row_class(entity_id: i64, selected_id: Option<i64>) -> String {
 
 #[inline]
 pub fn render_entity_row(
-    row: &EcsEntityRow,
+    row: EcsEntityRow,
     selected_id: Option<i64>,
     select_handler: &str,
 ) -> String {
@@ -93,7 +94,7 @@ pub fn render_entity_list(
     }
     let mut html = String::new();
     for row in entities {
-        html = html + &render_entity_row(&row, selected_id, &select_handler);
+        html = html + &render_entity_row(row, selected_id, select_handler);
     }
     html
 }
@@ -104,12 +105,12 @@ pub fn render_field_row(field: &EcsInspectorField) -> String {
 }
 
 #[inline]
-pub fn render_component_section(section: &EcsComponentSection) -> String {
+pub fn render_component_section(section: EcsComponentSection) -> String {
     let mut fields_html = String::new();
-    for field in &section.fields {
-        fields_html = fields_html + &render_field_row(field);
+    for field in section.fields {
+        fields_html = fields_html + &render_field_row(&field);
     }
-    format!("<details class='ecs-component-section' open>\n  <summary class='ecs-component-title'>{}</summary>\n  <div class='ecs-component-fields'>{}</div>\n</details>", section.name.clone(), fields_html)
+    format!("<details class='ecs-component-section' open>\n  <summary class='ecs-component-title'>{}</summary>\n  <div class='ecs-component-fields'>{}</div>\n</details>", section.name, fields_html)
 }
 
 #[inline]
@@ -123,7 +124,7 @@ pub fn render_component_pane(components: Vec<EcsComponentSection>, selected_labe
     }
     let mut html = format!("<p class='ecs-detail-title'>{}</p>", selected_label);
     for section in components {
-        html = html + &render_component_section(&section);
+        html = html + &render_component_section(section);
     }
     html
 }

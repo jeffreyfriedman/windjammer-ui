@@ -1,0 +1,97 @@
+// Chart — simple SVG bar chart for aging / TB snapshots (P0)
+
+use super::traits::Renderable
+
+pub struct ChartBar {
+    label: string,
+    value: int,
+}
+
+impl ChartBar {
+    pub fn new(label: string, value: int) -> ChartBar {
+        ChartBar {
+            label: label,
+            value: value,
+        }
+    }
+}
+
+pub struct Chart {
+    title: string,
+    bars: Vec<ChartBar>,
+    width: int,
+    height: int,
+}
+
+impl Chart {
+    pub fn new() -> Chart {
+        Chart {
+            title: "".to_string(),
+            bars: Vec::new(),
+            width: 320,
+            height: 160,
+        }
+    }
+
+    pub fn title(self, title: string) -> Chart {
+        self.title = title
+        self
+    }
+
+    pub fn bar(self, bar: ChartBar) -> Chart {
+        self.bars.push(bar)
+        self
+    }
+
+    pub fn size(self, width: int, height: int) -> Chart {
+        self.width = width
+        self.height = height
+        self
+    }
+}
+
+impl Renderable for Chart {
+    fn render(self) -> string {
+        let mut max_v = 1
+        let mut i = 0
+        while i < self.bars.len() {
+            let v = self.bars[i].value
+            if v > max_v {
+                max_v = v
+            }
+            i = i + 1
+        }
+        let mut bars_html = "".to_string()
+        let mut bi = 0
+        let segment = 40
+        while bi < self.bars.len() {
+            let bar = self.bars[bi]
+            let h = if max_v == 0 { 0 } else { (bar.value * (self.height - 40)) / max_v }
+            let x = 20 + bi * segment
+            let y = self.height - 20 - h
+            bars_html = format!(
+                "{}<rect class='wj-chart-bar' x='{}' y='{}' width='24' height='{}' data-label='{}' data-value='{}'/>",
+                bars_html, x, y, h, bar.label, bar.value
+            )
+            bi = bi + 1
+        }
+        let title_html = if self.title.len() > 0 {
+            format!("<text class='wj-chart-title' x='12' y='16'>{}</text>", self.title)
+        } else {
+            "".to_string()
+        }
+        format!(
+            "<div class='wj-chart'><svg class='wj-chart-svg' width='{}' height='{}' viewBox='0 0 {} {}' role='img'>{}{}</svg></div>",
+            self.width, self.height, self.width, self.height, title_html, bars_html
+        )
+    }
+}
+
+fn main() {
+    let html = Chart::new()
+        .title("Aging".to_string())
+        .bar(ChartBar::new("Current".to_string(), 100))
+        .bar(ChartBar::new("30+".to_string(), 40))
+        .render()
+    println!("{}", html)
+}

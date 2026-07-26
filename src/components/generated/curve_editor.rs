@@ -149,7 +149,7 @@ impl CurveEditor {
 
 impl Renderable for CurveEditor {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut path_d = "".to_string();
         let range = self.max_value - self.min_value;
         for i in 0_usize..self.points.len() {
@@ -235,7 +235,7 @@ impl GradientEditor {
     }
     #[inline]
     pub fn add_stop(mut self, stop: GradientStop) -> GradientEditor {
-        self.stops.push(stop.clone());
+        self.stops.push(stop);
         self
     }
     #[inline]
@@ -247,7 +247,7 @@ impl GradientEditor {
 
 impl Renderable for GradientEditor {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut gradient_stops = "".to_string();
         for i in 0_usize..self.stops.len() {
             let s = self.stops.get(i);

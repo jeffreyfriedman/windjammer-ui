@@ -1,0 +1,70 @@
+// DatePicker — HTML date input for finance forms (P0)
+
+use super::traits::Renderable
+
+pub struct DatePicker {
+    value: string,
+    label: string,
+    name: string,
+    required: bool,
+}
+
+impl DatePicker {
+    pub fn new() -> DatePicker {
+        DatePicker {
+            value: "".to_string(),
+            label: "".to_string(),
+            name: "date".to_string(),
+            required: false,
+        }
+    }
+
+    pub fn value(self, value: string) -> DatePicker {
+        self.value = value
+        self
+    }
+
+    pub fn label(self, label: string) -> DatePicker {
+        self.label = label
+        self
+    }
+
+    pub fn name(self, name: string) -> DatePicker {
+        self.name = name
+        self
+    }
+
+    pub fn required(self, required: bool) -> DatePicker {
+        self.required = required
+        self
+    }
+}
+
+impl Renderable for DatePicker {
+    fn render(self) -> string {
+        let req = if self.required { " required" } else { "" }
+        let label_html = if self.label.len() > 0 {
+            format!("<label class='wj-datepicker-label' for='{}'>{}</label>", self.name, self.label)
+        } else {
+            "".to_string()
+        }
+        format!(
+            "<div class='wj-datepicker'>{}<input class='wj-datepicker-input' type='date' id='{}' name='{}' value='{}'{}/></div>",
+            label_html,
+            self.name,
+            self.name,
+            self.value,
+            req
+        )
+    }
+}
+
+fn main() {
+    let html = DatePicker::new()
+        .label("Issue date".to_string())
+        .name("issue_date".to_string())
+        .value("2026-07-25".to_string())
+        .required(true)
+        .render()
+    println!("{}", html)
+}
