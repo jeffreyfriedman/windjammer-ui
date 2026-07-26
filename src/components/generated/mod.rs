@@ -58,6 +58,7 @@
 // This file declares all generated Windjammer modules
 
 pub mod accordion;
+pub mod accountrail;
 pub mod advancedcodeeditor;
 pub mod alert;
 pub mod appshell;
@@ -150,6 +151,7 @@ pub mod vnode;
 
 // Re-export all public items
 pub use accordion::*;
+pub use accountrail::*;
 pub use advancedcodeeditor::*;
 pub use alert::*;
 pub use appshell::*;
