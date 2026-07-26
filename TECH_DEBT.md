@@ -298,7 +298,7 @@ Priority order:
 **LedgerKit dogfood ownership (hand patches until green):**
 - `codegen_string_param_to_owned_method_test.rs` (KpiTile `value_html(&str)` vs `String`)
 - `codegen_statuschip_badge_compose_test.rs` / `codegen_owned_reuse_after_helper_test.rs` (StatusChip→Badge)
-- `codegen_owned_string_param_test.rs` (`&String` into owned param)
+- `codegen_appshell_retained_chrome_test.rs` / `codegen_shellnav_active_test.rs` / `codegen_command_palette_test.rs` / `codegen_auth_fetch_test.rs` (LedgerKit F0–F3 dogfood)
 
 ### Phase 3: Validation
 For each bug fix:

@@ -1,0 +1,65 @@
+// AuthFetch — load button that fetches with Bearer token and renders via window.lkRender.
+// LedgerKit F3 / ADR-001: product pages bake path+kind; framework runtime does fetch.
+// NOTE: `impl Into<String>` on builders is Rust-only until owned-string codegen is green.
+
+use super::traits::Renderable
+
+pub struct AuthFetch {
+    id: string,
+    label: string,
+    path: string,
+    kind: string,
+    mount: string,
+    class_name: string,
+}
+
+impl AuthFetch {
+    pub fn new(path: string, kind: string) -> AuthFetch {
+        AuthFetch {
+            id: "authFetch".to_string(),
+            label: "Load".to_string(),
+            path: path,
+            kind: kind,
+            mount: "#tableMount".to_string(),
+            class_name: "btn-secondary".to_string(),
+        }
+    }
+
+    pub fn id(self, id: string) -> AuthFetch {
+        self.id = id
+        self
+    }
+
+    pub fn label(self, label: string) -> AuthFetch {
+        self.label = label
+        self
+    }
+
+    pub fn mount(self, mount: string) -> AuthFetch {
+        self.mount = mount
+        self
+    }
+
+    pub fn class_name(self, class_name: string) -> AuthFetch {
+        self.class_name = class_name
+        self
+    }
+}
+
+impl Renderable for AuthFetch {
+    fn render(self) -> string {
+        "<button type=\"button\" id=\"".to_string()
+            + self.id
+            + "\" class=\""
+            + self.class_name
+            + " wj-auth-fetch\" data-wj-auth-fetch data-wj-fetch-path=\""
+            + self.path
+            + "\" data-wj-render-kind=\""
+            + self.kind
+            + "\" data-wj-mount=\""
+            + self.mount
+            + "\">"
+            + self.label
+            + "</button>"
+    }
+}
