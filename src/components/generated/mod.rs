@@ -72,6 +72,7 @@ pub mod chart;
 pub mod chatinput;
 pub mod chatmessage;
 pub mod checkbox;
+pub mod checkbookregister;
 pub mod chip;
 pub mod codeblock;
 pub mod codeeditor;
@@ -161,6 +162,7 @@ pub use chart::*;
 pub use chatinput::*;
 pub use chatmessage::*;
 pub use checkbox::*;
+pub use checkbookregister::*;
 pub use chip::*;
 pub use codeblock::*;
 pub use codeeditor::*;
@@ -333,4 +335,3 @@ pub use wasm_events::*;
 // pub mod examples_wasm;
 // #[cfg(target_arch = "wasm32")]
 // pub use examples_wasm::*;
-
