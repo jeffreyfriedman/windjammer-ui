@@ -1,0 +1,99 @@
+// CommandPalette — ⌘K jump dialog (LedgerKit F2 / ADR-001).
+// Items are baked into HTML; framework runtime filters by data-label (no product JS).
+
+use super::traits::Renderable
+
+pub struct CommandPaletteItem {
+    label: string,
+    href: string,
+}
+
+impl CommandPaletteItem {
+    pub fn new(label: string, href: string) -> CommandPaletteItem {
+        CommandPaletteItem {
+            label: label,
+            href: href,
+        }
+    }
+}
+
+pub struct CommandPalette {
+    id: string,
+    items: Vec<CommandPaletteItem>,
+    tip: string,
+    open: bool,
+}
+
+impl CommandPalette {
+    pub fn new() -> CommandPalette {
+        CommandPalette {
+            id: "cmdPalette".to_string(),
+            items: Vec::new(),
+            tip: "Tip: ⌘K / Ctrl+K · Esc to close".to_string(),
+            open: false,
+        }
+    }
+
+    pub fn id(self, id: string) -> CommandPalette {
+        self.id = id
+        self
+    }
+
+    pub fn tip(self, tip: string) -> CommandPalette {
+        self.tip = tip
+        self
+    }
+
+    pub fn open(self, open: bool) -> CommandPalette {
+        self.open = open
+        self
+    }
+
+    pub fn item(self, item: CommandPaletteItem) -> CommandPalette {
+        self.items.push(item)
+        self
+    }
+}
+
+impl Renderable for CommandPalette {
+    fn render(self) -> string {
+        let mut list = "".to_string()
+        for item in self.items {
+            list = list
+                + "<button type=\"button\" class=\"cmd-item\" data-href=\""
+                + item.href
+                + "\" data-label=\""
+                + item.label
+                + "\">"
+                + item.label
+                + "</button>"
+        }
+        let hidden = if self.open {
+            "".to_string()
+        } else {
+            " hidden".to_string()
+        }
+        "<div id=\"".to_string()
+            + self.id
+            + "\" class=\"cmd-palette wj-command-palette\""
+            + hidden
+            + " role=\"dialog\" aria-modal=\"true\" aria-label=\"Command palette\">"
+            + "<div class=\"cmd-backdrop\" data-wj-cmd-close></div>"
+            + "<div class=\"cmd-panel\">"
+            + "<input id=\"cmdInput\" type=\"search\" placeholder=\"Jump to… (Esc to close)\" autocomplete=\"off\" data-wj-cmd-filter/>"
+            + "<div id=\"cmdList\" class=\"cmd-list\">"
+            + list
+            + "</div>"
+            + "<p class=\"cmd-hint muted\">"
+            + self.tip
+            + "</p>"
+            + "</div></div>"
+    }
+}
+
+fn main() {
+    let html = CommandPalette::new()
+        .item(CommandPaletteItem::new("Go to Home".to_string(), "#/".to_string()))
+        .render()
+    println!("{}", html)
+}

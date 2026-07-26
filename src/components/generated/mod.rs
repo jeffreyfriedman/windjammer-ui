@@ -50,6 +50,8 @@
 #![allow(noop_method_call)]
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 // Auto-generated mod.rs by Windjammer CLI
 // This file declares all generated Windjammer modules
 
@@ -73,6 +75,7 @@ pub mod codeeditor;
 pub mod collapsible;
 pub mod colorpicker;
 pub mod column;
+pub mod commandpalette;
 pub mod container;
 pub mod contextmenu;
 pub mod curve_editor;
@@ -160,6 +163,7 @@ pub use codeeditor::*;
 pub use collapsible::*;
 pub use colorpicker::*;
 pub use column::*;
+pub use commandpalette::*;
 pub use container::*;
 pub use contextmenu::*;
 pub use curve_editor::*;
