@@ -1,4 +1,4 @@
-//! CheckbookRegister — spent/received register (LedgerKit R0+ / ADR-002 Business mode).
+//! CheckbookRegister — spent/received register (LedgerKit ADR-002 / R2.5).
 //! Hand-maintained. Always SKIP_WJ_REGEN=1.
 
 use super::traits::Renderable;
@@ -11,6 +11,8 @@ pub struct CheckbookRow {
     pub spent_html: String,
     pub received_html: String,
     pub balance_html: String,
+    pub line_id: String,
+    pub unmatched: bool,
 }
 
 impl CheckbookRow {
@@ -29,7 +31,19 @@ impl CheckbookRow {
             spent_html: spent_html.into(),
             received_html: received_html.into(),
             balance_html: balance_html.into(),
+            line_id: String::new(),
+            unmatched: false,
         }
+    }
+
+    pub fn line_id(mut self, id: impl Into<String>) -> Self {
+        self.line_id = id.into();
+        self
+    }
+
+    pub fn unmatched(mut self, unmatched: bool) -> Self {
+        self.unmatched = unmatched;
+        self
     }
 }
 
@@ -89,9 +103,24 @@ impl Renderable for CheckbookRegister {
             self.rows
                 .iter()
                 .map(|r| {
+                    let payee = if r.unmatched && !r.line_id.is_empty() {
+                        format!(
+                            r#"{} <button type="button" class="btn-link" data-wj-register-match data-line-id="{id}">Match</button>"#,
+                            r.payee,
+                            id = r.line_id
+                        )
+                    } else {
+                        r.payee.clone()
+                    };
                     format!(
-                        r#"<tr class="wj-checkbook-row"><td>{}</td><td>{}</td><td>{}</td><td class="lk-num">{}</td><td class="lk-num">{}</td><td class="lk-num">{}</td></tr>"#,
-                        r.date, r.num, r.payee, r.spent_html, r.received_html, r.balance_html
+                        r#"<tr class="wj-checkbook-row" data-line-id="{line}"><td>{date}</td><td>{num}</td><td>{payee}</td><td class="lk-num">{spent}</td><td class="lk-num">{recv}</td><td class="lk-num">{bal}</td></tr>"#,
+                        line = r.line_id,
+                        date = r.date,
+                        num = r.num,
+                        payee = payee,
+                        spent = r.spent_html,
+                        recv = r.received_html,
+                        bal = r.balance_html
                     )
                 })
                 .collect::<Vec<_>>()
@@ -128,6 +157,44 @@ impl Renderable for CheckbookRegister {
     }
 }
 
+/// Register → bank Match deep-link (R2.5). Scrolls/focuses the bank Match cell for the line.
+pub fn checkbook_register_runtime_js() -> &'static str {
+    r##"
+(function () {
+  if (window.__wjCheckbookMatchLinkBound) return;
+  window.__wjCheckbookMatchLinkBound = true;
+
+  document.addEventListener('click', function (ev) {
+    var t = ev.target;
+    if (!t || !t.closest) return;
+    var btn = t.closest('[data-wj-register-match]');
+    if (!btn) return;
+    ev.preventDefault();
+    var lineId = btn.getAttribute('data-line-id') || '';
+    if (!lineId) return;
+    var bank = document.querySelector('.wj-bw-bank');
+    if (bank && bank.scrollIntoView) {
+      try { bank.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (e) { bank.scrollIntoView(); }
+    }
+    var matchBtn = null;
+    document.querySelectorAll('[data-wj-bank-match]').forEach(function (el) {
+      if (!matchBtn && el.getAttribute('data-line-id') === lineId) matchBtn = el;
+    });
+    var cell = matchBtn ? (matchBtn.closest('[data-wj-bank-match-cell]') || matchBtn.parentElement) : null;
+    document.querySelectorAll('.wj-bank-match-action.is-focus').forEach(function (el) {
+      el.classList.remove('is-focus');
+    });
+    if (cell) {
+      cell.classList.add('is-focus');
+      var sel = cell.querySelector('[data-wj-bank-match-je]');
+      if (sel && sel.focus) { try { sel.focus(); } catch (e) {} }
+      if (matchBtn && matchBtn.focus) { try { matchBtn.focus(); } catch (e) {} }
+    }
+  });
+})();
+"##
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -148,5 +215,27 @@ mod tests {
         assert!(html.contains("wj-checkbook-row"));
         assert!(html.contains("FEE"));
         assert!(!html.contains("lk-empty-row"));
+    }
+
+    #[test]
+    fn unmatched_row_emits_register_match_link() {
+        let html = CheckbookRegister::new()
+            .row(
+                CheckbookRow::new("2026-07-01", "", "OFFICE DEPOT", "$45.00", "", "$45.00")
+                    .line_id("bank~1000~demo-fit-01")
+                    .unmatched(true),
+            )
+            .render();
+        assert!(html.contains("data-wj-register-match"));
+        assert!(html.contains("data-line-id=\"bank~1000~demo-fit-01\""));
+        assert!(html.contains("Match"));
+    }
+
+    #[test]
+    fn runtime_focuses_bank_match_cell() {
+        let js = checkbook_register_runtime_js();
+        assert!(js.contains("data-wj-register-match"));
+        assert!(js.contains("data-wj-bank-match"));
+        assert!(js.contains("scrollIntoView") || js.contains("is-focus"));
     }
 }
