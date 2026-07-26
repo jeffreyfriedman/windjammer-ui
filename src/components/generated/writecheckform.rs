@@ -183,6 +183,13 @@ pub fn write_check_form_runtime_js() -> &'static str {
         if (!res.ok) { out.classList.add('is-error'); out.textContent = 'Could not post (' + res.status + ')'; return; }
         out.textContent = 'Check posted — register refreshing…';
         bumpCheckNum(root);
+        var payee = root.querySelector('[data-wj-write-check-payee]');
+        var amount = root.querySelector('[data-wj-write-check-amount]');
+        var memo = root.querySelector('[data-wj-write-check-memo]');
+        if (payee) payee.value = '';
+        if (amount) amount.value = '';
+        if (memo) memo.value = '';
+        try { syncBody(root); } catch (e) {}
         var load = document.getElementById('loadCheckbook')
           || document.querySelector('[data-wj-render-kind="checkbook"]');
         if (load) { try { load.click(); } catch (e) {} }
@@ -231,5 +238,14 @@ mod tests {
         assert!(html.contains("checkExpense"));
         assert!(html.contains("value=\"5100\" selected") || html.contains("5100 · Office"));
         assert!(html.contains("checkJeBody"));
+    }
+
+    #[test]
+    fn runtime_clears_payee_amount_memo_after_post() {
+        let js = write_check_form_runtime_js();
+        assert!(js.contains("payee.value = ''"));
+        assert!(js.contains("amount.value = ''"));
+        assert!(js.contains("memo.value = ''"));
+        assert!(js.contains("bumpCheckNum"));
     }
 }

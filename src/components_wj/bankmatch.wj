@@ -1,0 +1,30 @@
+// BankMatchRow — Match action for unmatched bank lines (ADR-002 / R2.3).
+// Runtime is Rust-only until codegen supports framework JS helpers.
+
+use super::traits::Renderable
+
+pub struct BankMatchRow {
+    line_id: string,
+    unmatched: bool,
+}
+
+impl BankMatchRow {
+    pub fn new(line_id: string, unmatched: bool) -> BankMatchRow {
+        BankMatchRow {
+            line_id: line_id,
+            unmatched: unmatched,
+        }
+    }
+}
+
+impl Renderable for BankMatchRow {
+    fn render(self) -> string {
+        if self.unmatched {
+            "<button type=\"button\" class=\"btn-secondary\" data-wj-bank-match data-line-id=\"".to_string()
+                + self.line_id
+                + "\">Match</button>"
+        } else {
+            "<span class=\"muted\">Matched</span>".to_string()
+        }
+    }
+}
