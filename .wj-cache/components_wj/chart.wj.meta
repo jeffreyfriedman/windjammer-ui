@@ -1,0 +1,196 @@
+{
+  "module_path": "chart",
+  "functions": {
+    "Chart::title": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Chart\")",
+      "is_associated": true,
+      "parent_type": "Chart",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Chart::bar": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"ChartBar\")"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "Custom(\"ChartBar\")"
+      ],
+      "return_type": "Custom(\"Chart\")",
+      "is_associated": true,
+      "parent_type": "Chart",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "main": {
+      "params": [],
+      "formal_params": [],
+      "return_type": null,
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "ChartBar::new": {
+      "params": [
+        "String",
+        "Int"
+      ],
+      "formal_params": [
+        "String",
+        "Int"
+      ],
+      "return_type": "Custom(\"ChartBar\")",
+      "is_associated": true,
+      "parent_type": "ChartBar",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Chart::new": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "Custom(\"Chart\")",
+      "is_associated": true,
+      "parent_type": "Chart",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Chart::size": {
+      "params": [
+        "Custom(\"Self\")",
+        "Int",
+        "Int"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "Int",
+        "Int"
+      ],
+      "return_type": "Custom(\"Chart\")",
+      "is_associated": true,
+      "parent_type": "Chart",
+      "param_ownership": [
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Chart::render": {
+      "params": [
+        "Reference(Custom(\"Self\"))"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Chart",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    }
+  },
+  "structs": {
+    "Chart": {
+      "height": "Int",
+      "title": "String",
+      "bars": "Vec(Custom(\"ChartBar\"))",
+      "width": "Int"
+    },
+    "ChartBar": {
+      "value": "Int",
+      "label": "String"
+    }
+  },
+  "trait_impls": {},
+  "copy_structs": [
+    "CurvePoint",
+    "StackAlign",
+    "AlertVariant",
+    "TextareaResize",
+    "PopoverPosition",
+    "BtWire",
+    "TextWeight",
+    "FlexDirection",
+    "StackDirection",
+    "RowAlign",
+    "TextSize",
+    "ToastPosition",
+    "DividerOrientation",
+    "ColumnAlign",
+    "NodeCategory",
+    "ScrollDir",
+    "BadgeVariant",
+    "EasingPreset",
+    "FrameDebuggerViewState",
+    "SidebarPosition",
+    "BtPalettePanel",
+    "TooltipPosition",
+    "Pagination",
+    "RowJustify",
+    "ChipVariant",
+    "VNode",
+    "StackJustify",
+    "MessageRole",
+    "AvatarShape",
+    "SwitchSize",
+    "ButtonSize",
+    "LoadingSize",
+    "ChipSize",
+    "ProgressVariant",
+    "NavbarPosition",
+    "ButtonVariant",
+    "SkeletonVariant",
+    "ScrollDirection",
+    "ToastVariant",
+    "SplitDirection",
+    "BadgeSize",
+    "ColumnJustify",
+    "RatingSize",
+    "SelectSize",
+    "CheckboxSize",
+    "BtDebuggerOverlay",
+    "ModalSize",
+    "ProfilerScopeKind",
+    "SpinnerSize",
+    "PinType",
+    "DrawerPosition",
+    "AvatarSize",
+    "Progress"
+  ],
+  "non_copy_structs": [],
+  "version": "0.50.0",
+  "analysis_fingerprint": {
+    "content_hash": 456977991552546996,
+    "compiler_version": "0.50.0:94a5f44528a82cdf",
+    "dep_metadata_epoch": 2435999049025295583,
+    "output_hash": 1574496222093670653
+  }
+}
