@@ -20,6 +20,8 @@ pub enum VNode {
         children: Vec<VNode>,
     },
     Text(String),
+    /// Trusted HTML fragment (LedgerKit Home pilot: finance-ui body into `#main`).
+    RawHtml(String),
 }
 
 /// Attribute value
@@ -43,6 +45,11 @@ impl VNode {
     /// Create a text node
     pub fn text(content: &str) -> Self {
         VNode::Text(content.to_string())
+    }
+
+    /// Trusted HTML island (scripts/markup already sanitized by the adapter).
+    pub fn raw_html(html: impl Into<String>) -> Self {
+        VNode::RawHtml(html.into())
     }
 
     /// Render this VNode to the DOM
@@ -98,6 +105,11 @@ impl VNode {
                 let text_node = document.create_text_node(content);
                 Ok(text_node.into())
             }
+            VNode::RawHtml(html) => {
+                let wrap = document.create_element("div")?;
+                wrap.set_inner_html(html);
+                Ok(wrap.into())
+            }
         }
     }
 
@@ -130,6 +142,19 @@ impl VNode {
                 Ok(html)
             }
             VNode::Text(content) => Ok(content.clone()),
+            VNode::RawHtml(html) => Ok(html.clone()),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn raw_html_preserves_trusted_fragment() {
+        let vnode = VNode::raw_html("<section class=\"kpi\">42</section>");
+        let html = vnode.render().expect("host render");
+        assert_eq!(html, "<section class=\"kpi\">42</section>");
     }
 }

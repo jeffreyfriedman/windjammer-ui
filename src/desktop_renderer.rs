@@ -64,6 +64,9 @@ impl DesktopRenderer {
             VNode::Text(text) => {
                 ui.label(text);
             }
+            VNode::RawHtml(html) => {
+                ui.label(RichText::new(html).monospace());
+            }
         }
     }
 
@@ -670,6 +673,9 @@ impl DesktopRenderer {
             VNode::Text(text) => {
                 ui.label(RichText::new(text).color(Color32::from_rgb(212, 212, 212)));
             }
+            VNode::RawHtml(html) => {
+                ui.label(RichText::new(html).monospace());
+            }
         }
     }
 
@@ -682,6 +688,9 @@ impl DesktopRenderer {
             }
             VNode::Text(text) => {
                 ui.label(RichText::new(text).color(Color32::from_rgb(212, 212, 212)));
+            }
+            VNode::RawHtml(html) => {
+                ui.label(RichText::new(html).monospace());
             }
         }
     }

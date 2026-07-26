@@ -130,8 +130,7 @@ mod tests {
     }
 }
 
-/// Render a VNode to an HTML string (for WASM/web rendering)
-#[cfg(target_arch = "wasm32")]
+/// Render a VNode to an HTML string (WASM remount + host tests).
 pub fn render_to_html(vnode: &crate::simple_vnode::VNode) -> String {
     use crate::simple_vnode::{VAttr, VNode};
 
@@ -160,5 +159,30 @@ pub fn render_to_html(vnode: &crate::simple_vnode::VNode) -> String {
             html
         }
         VNode::Text(text) => text.clone(),
+        VNode::RawHtml(html) => html.clone(),
+    }
+}
+
+#[cfg(test)]
+mod render_to_html_tests {
+    use super::render_to_html;
+    use crate::simple_vnode::{VAttr, VNode};
+
+    #[test]
+    fn render_to_html_emits_raw_html_unchanged() {
+        let vnode = VNode::raw_html("<div id=\"taskMount\">ok</div>");
+        assert_eq!(render_to_html(&vnode), "<div id=\"taskMount\">ok</div>");
+    }
+
+    #[test]
+    fn render_to_html_wraps_element_children() {
+        let vnode = VNode::element(
+            "div",
+            vec![("class", VAttr::Static("panel".into()))],
+            vec![VNode::raw_html("<span>kpi</span>")],
+        );
+        let html = render_to_html(&vnode);
+        assert!(html.contains("class=\"panel\""));
+        assert!(html.contains("<span>kpi</span>"));
     }
 }

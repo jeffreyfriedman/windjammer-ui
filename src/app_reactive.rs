@@ -60,6 +60,29 @@ impl ReactiveApp {
         self.mount.selector()
     }
 
+    /// HTML that would be written by [`Self::paint_once`] (host-testable via render).
+    pub fn paint_html(&self) -> String {
+        crate::reactive_mount::paint_once_html(&(self.render_fn)())
+    }
+
+    /// One-shot remount into `mount_target` without starting the RAF loop.
+    /// LedgerKit Home pilot: hash changes call this instead of stacking `run()` loops.
+    #[cfg(target_arch = "wasm32")]
+    pub fn paint_once(self) {
+        use wasm_bindgen::JsCast;
+        use web_sys::{window, HtmlElement};
+
+        let document = window().unwrap().document().unwrap();
+        let selector = self.mount.selector().to_string();
+        let root = document
+            .query_selector(&selector)
+            .expect("query_selector failed")
+            .unwrap_or_else(|| panic!("Failed to find mount target '{}'", selector))
+            .dyn_into::<HtmlElement>()
+            .unwrap();
+        root.set_inner_html(&self.paint_html());
+    }
+
     #[cfg(target_arch = "wasm32")]
     pub fn run(self) {
         use wasm_bindgen::JsCast;

@@ -142,8 +142,7 @@ mod tests {
     }
 }
 
-/// Render a VNode to an HTML string (for WASM/web rendering)
-#[cfg(target_arch = "wasm32")]
+/// Render a VNode to an HTML string (WASM remount + host tests).
 pub fn render_to_html(vnode: &crate::simple_vnode::VNode) -> String {
     use crate::simple_vnode::{VAttr, VNode};
 
@@ -172,5 +171,6 @@ pub fn render_to_html(vnode: &crate::simple_vnode::VNode) -> String {
             html
         }
         VNode::Text(text) => text.clone(),
+        VNode::RawHtml(html) => html.clone(),
     }
 }
