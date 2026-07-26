@@ -1,0 +1,42 @@
+// StatusChip — maps ledger document/bank statuses to Badge variants (finance dogfood).
+
+use super::traits::Renderable
+use super::badge::{Badge, BadgeVariant, BadgeSize}
+
+pub struct StatusChip {
+    status: string,
+}
+
+impl StatusChip {
+    pub fn new(status: string) -> StatusChip {
+        StatusChip { status: status }
+    }
+}
+
+fn variant_for(status: string) -> BadgeVariant {
+    let s = status.to_lowercase()
+    if s == "paid" || s == "matched" || s == "posted" || s == "balanced" {
+        BadgeVariant::Success
+    } else if s == "open" || s == "partial" || s == "suggested" {
+        BadgeVariant::Warning
+    } else if s == "unmatched" || s == "overdue" || s == "void" || s == "failed" {
+        BadgeVariant::Danger
+    } else if s == "draft" {
+        BadgeVariant::Info
+    } else {
+        BadgeVariant::Default
+    }
+}
+
+impl Renderable for StatusChip {
+    fn render(self) -> string {
+        let status = self.status
+        let v = variant_for(status)
+        Badge::new(status).variant(v).size(BadgeSize::Small).render()
+    }
+}
+
+fn main() {
+    let html = StatusChip::new("paid".to_string()).render()
+    println!("{}", html)
+}
