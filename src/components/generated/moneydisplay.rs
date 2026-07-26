@@ -67,12 +67,14 @@ pub fn format_cents(amount_cents: i64) -> String {
     }
     let dollars = cents as i64 / 100_i64;
     let rem = cents as i64 % 100_i64;
-    let mut rem_s = "".to_string();
-    if (rem as i64) < 10_i64 {
-        rem_s = format!("0{}", rem);
-    } else {
-        rem_s = format!("{}", rem);
-    }
+    // Prefer if-expression to avoid unused_assignments on dead "" init (WJ codegen debt).
+    let rem_s: String = {
+        if (rem as i64) < 10_i64 {
+            format!("0{}", rem)
+        } else {
+            format!("{}", rem)
+        }
+    };
     let body = format!("{}.{}", dollars, rem_s);
     if negative {
         format!("-{}", body)

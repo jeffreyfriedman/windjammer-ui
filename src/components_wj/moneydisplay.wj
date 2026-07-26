@@ -36,11 +36,10 @@ pub fn format_cents(amount_cents: int) -> string {
     }
     let dollars = cents / 100
     let rem = cents % 100
-    let mut rem_s = "".to_string()
-    if rem < 10 {
-        rem_s = format!("0{}", rem)
+    let rem_s = if rem < 10 {
+        format!("0{}", rem)
     } else {
-        rem_s = format!("{}", rem)
+        format!("{}", rem)
     }
     let body = format!("{}.{}", dollars, rem_s)
     if negative {

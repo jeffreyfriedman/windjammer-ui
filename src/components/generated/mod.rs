@@ -208,7 +208,7 @@ pub use tooltip::*;
 pub use traits::*;
 pub use treeview::*;
 pub use typingindicator::*;
-pub use vnode::*;
+// vnode::* overlaps vdom::VNode — use `vnode::` paths or vdom re-exports below.
 
 // bt_visual_* omitted until Renderable trait impl codegen matches object-safe &self (E0053)
 pub mod profiler_timeline_model;
@@ -242,7 +242,9 @@ pub mod graph_trace_test;
 
 pub mod app;
 pub use app::*;
+#[cfg(feature = "desktop")]
 pub mod app_docking;
+#[cfg(feature = "desktop")]
 pub use app_docking::*;
 pub mod app_reactive;
 pub use app_reactive::*;
@@ -273,7 +275,7 @@ pub use frame_trace_ffi::*;
 pub mod reactivity;
 pub use reactivity::*;
 pub mod reactivity_optimized;
-pub use reactivity_optimized::*;
+// Do not glob-reexport: overlaps Signal/Effect/create_* with reactivity (ambiguous glob warnings).
 pub mod renderer;
 pub use renderer::*;
 pub mod routing;
@@ -281,7 +283,7 @@ pub use routing::*;
 pub mod runtime;
 pub use runtime::*;
 pub mod signal;
-pub use signal::*;
+// signal::* overlaps reactivity::* — keep module available without glob re-export.
 pub mod signal_ffi;
 pub use signal_ffi::*;
 pub mod simple_renderer;
@@ -295,7 +297,8 @@ pub use to_vnode::*;
 pub mod undo_redo;
 pub use undo_redo::*;
 pub mod vdom;
-pub use vdom::*;
+// Prefer vdom::VNode in public API — do not also glob-export vnode::* (ambiguous VNode).
+pub use vdom::{VElement, VNode, VText};
 pub mod vnode_ffi;
 pub use vnode_ffi::*;
 pub mod wasm_events;
