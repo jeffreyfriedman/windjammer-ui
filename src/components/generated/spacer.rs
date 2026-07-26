@@ -87,16 +87,16 @@ impl Spacer {
 
 impl Renderable for Spacer {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut style = "".to_string();
         if self.flex {
             style = "flex: 1; ".to_string();
         }
         if self.width != "" {
-            style = format!("{}width: {}; ", style, self.width);
+            style = format!("{}width: {}; ", style, self.width.clone());
         }
         if self.height != "" {
-            style = format!("{}height: {}; ", style, self.height);
+            style = format!("{}height: {}; ", style, self.height.clone());
         }
         format!("<div class='wj-spacer' style='{}'></div>", style)
     }

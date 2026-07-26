@@ -1,0 +1,72 @@
+// MoneyDisplay — format integer cents for finance UI (P0)
+
+use super::traits::Renderable
+
+pub struct MoneyDisplay {
+    amount_cents: int,
+    currency: string,
+    show_currency: bool,
+}
+
+impl MoneyDisplay {
+    pub fn new(amount_cents: int) -> MoneyDisplay {
+        MoneyDisplay {
+            amount_cents: amount_cents,
+            currency: "USD".to_string(),
+            show_currency: true,
+        }
+    }
+
+    pub fn currency(self, currency: string) -> MoneyDisplay {
+        self.currency = currency
+        self
+    }
+
+    pub fn show_currency(self, show: bool) -> MoneyDisplay {
+        self.show_currency = show
+        self
+    }
+}
+
+pub fn format_cents(amount_cents: int) -> string {
+    let negative = amount_cents < 0
+    let mut cents = amount_cents
+    if negative {
+        cents = -cents
+    }
+    let dollars = cents / 100
+    let rem = cents % 100
+    let mut rem_s = "".to_string()
+    if rem < 10 {
+        rem_s = format!("0{}", rem)
+    } else {
+        rem_s = format!("{}", rem)
+    }
+    let body = format!("{}.{}", dollars, rem_s)
+    if negative {
+        format!("-{}", body)
+    } else {
+        body
+    }
+}
+
+impl Renderable for MoneyDisplay {
+    fn render(self) -> string {
+        let formatted = format_cents(self.amount_cents)
+        let class = if self.amount_cents < 0 {
+            "wj-money wj-money-negative"
+        } else {
+            "wj-money"
+        }
+        if self.show_currency {
+            format!("<span class='{}' data-currency='{}'>{} {}</span>", class, self.currency, self.currency, formatted)
+        } else {
+            format!("<span class='{}'>{}</span>", class, formatted)
+        }
+    }
+}
+
+fn main() {
+    let html = MoneyDisplay::new(12345).currency("USD".to_string()).render()
+    println!("{}", html)
+}

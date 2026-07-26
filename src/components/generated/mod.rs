@@ -38,6 +38,8 @@
 #![allow(noop_method_call)]
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 // Auto-generated mod.rs by Windjammer CLI
 // This file declares all generated Windjammer modules
 
@@ -50,6 +52,7 @@ pub mod breadcrumb;
 pub mod button;
 pub mod card;
 pub mod center;
+pub mod chart;
 pub mod chatinput;
 pub mod chatmessage;
 pub mod checkbox;
@@ -62,6 +65,8 @@ pub mod column;
 pub mod container;
 pub mod contextmenu;
 pub mod curve_editor;
+pub mod datatable;
+pub mod datepicker;
 pub mod dialog;
 pub mod divider;
 pub mod drawer;
@@ -79,6 +84,7 @@ pub mod loading;
 pub mod menu;
 pub mod messagelist;
 pub mod modal;
+pub mod moneydisplay;
 pub mod navbar;
 pub mod node_graph;
 pub mod pagination;
@@ -128,6 +134,7 @@ pub use breadcrumb::*;
 pub use button::*;
 pub use card::*;
 pub use center::*;
+pub use chart::*;
 pub use chatinput::*;
 pub use chatmessage::*;
 pub use checkbox::*;
@@ -140,6 +147,8 @@ pub use column::*;
 pub use container::*;
 pub use contextmenu::*;
 pub use curve_editor::*;
+pub use datatable::*;
+pub use datepicker::*;
 pub use dialog::*;
 pub use divider::*;
 pub use drawer::*;
@@ -157,6 +166,7 @@ pub use loading::*;
 pub use menu::*;
 pub use messagelist::*;
 pub use modal::*;
+pub use moneydisplay::*;
 pub use navbar::*;
 pub use node_graph::*;
 pub use pagination::*;
@@ -286,3 +296,7 @@ pub mod vnode_ffi;
 pub use vnode_ffi::*;
 pub mod wasm_events;
 pub use wasm_events::*;
+
+pub mod examples_wasm;
+#[cfg(target_arch = "wasm32")]
+pub use examples_wasm::*;

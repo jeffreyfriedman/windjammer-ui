@@ -86,48 +86,46 @@ impl FormField {
     #[inline]
     pub fn render(&self) -> String {
         let mut html = String::new();
-        html.push_str("<div style='margin-bottom: 16px;'>");
-        html.push_str(
-            "<label style='display: block; margin-bottom: 4px; font-weight: 500; color: #333;'>",
-        );
+        html.push_str(&"<div class='wj-form-field' style='margin-bottom: 16px;'>");
+        html.push_str(&"<label class='wj-form-field-label' style='display: block; margin-bottom: 4px; font-weight: 500; color: #333;'>");
         html.push_str(&self.label);
         if self.required {
-            html.push_str(" <span style='color: #e53e3e;'>*</span>");
+            html.push_str(&" <span style='color: #e53e3e;'>*</span>");
         }
-        html.push_str("</label>");
+        html.push_str(&"</label>");
         html.push_str(&self.input);
         if !self.help_text.is_empty() {
-            html.push_str("<div style='margin-top: 4px; font-size: 12px; color: #718096;'>");
+            html.push_str(&"<div class='wj-form-field-hint' style='margin-top: 4px; font-size: 12px; color: #718096;'>");
             html.push_str(&self.help_text);
-            html.push_str("</div>");
+            html.push_str(&"</div>");
         }
         if !self.error.is_empty() {
-            html.push_str("<div style='margin-top: 4px; font-size: 12px; color: #e53e3e;'>");
+            html.push_str(&"<div class='wj-form-field-error' role='alert' style='margin-top: 4px; font-size: 12px; color: #e53e3e;'>");
             html.push_str(&self.error);
-            html.push_str("</div>");
+            html.push_str(&"</div>");
         }
-        html.push_str("</div>");
+        html.push_str(&"</div>");
         html
     }
 }
 
 impl Renderable for Form {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut html = String::new();
-        html.push_str("<form id='");
+        html.push_str(&"<form id='");
         html.push_str(&self.id);
-        html.push_str("' action='");
+        html.push_str(&"' action='");
         html.push_str(&self.action);
-        html.push_str("' method='");
+        html.push_str(&"' method='");
         html.push_str(&self.method);
-        html.push_str("' onsubmit='");
+        html.push_str(&"' onsubmit='");
         html.push_str(&self.on_submit);
-        html.push_str("'>");
+        html.push_str(&"'>");
         for child in &self.children {
-            html.push_str(&child);
+            html.push_str(child);
         }
-        html.push_str("</form>");
+        html.push_str(&"</form>");
         html
     }
 }
