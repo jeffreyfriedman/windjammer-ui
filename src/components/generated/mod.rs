@@ -40,6 +40,10 @@
 #![allow(noop_method_call)]
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 // Auto-generated mod.rs by Windjammer CLI
 // This file declares all generated Windjammer modules
 
@@ -297,6 +301,9 @@ pub use vnode_ffi::*;
 pub mod wasm_events;
 pub use wasm_events::*;
 
-pub mod examples_wasm;
-#[cfg(target_arch = "wasm32")]
-pub use examples_wasm::*;
+// examples_wasm lives at crate root (`src/examples_wasm.rs`) — do not also
+// compile the generated copy or wasm_bindgen symbols collide.
+// pub mod examples_wasm;
+// #[cfg(target_arch = "wasm32")]
+// pub use examples_wasm::*;
+

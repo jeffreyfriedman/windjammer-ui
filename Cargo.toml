@@ -111,12 +111,13 @@ jni = { version = "0.21", optional = true }
 # WASM utilities
 console_error_panic_hook = { version = "0.1", optional = true }
 
-# Windjammer runtime (FFI string helpers used by generated code)
-windjammer-runtime = { path = "../windjammer/crates/windjammer-runtime", default-features = false }
+# NOTE: do not depend on windjammer-runtime on the normal path — it pulls axum/tokio/mio
+# and breaks wasm32. Tests that need it use the dev-dependency below.
 
 [dev-dependencies]
 tokio-test = "0.4"
 criterion = "0.5"
+windjammer-runtime = { path = "../windjammer/crates/windjammer-runtime", default-features = false }
 # egui_kittest = "0.29"  # Disabled due to version conflicts
 
 [[bench]]
