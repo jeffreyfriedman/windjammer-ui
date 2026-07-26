@@ -56,6 +56,7 @@ pub mod app_docking;
 pub mod app_reactive;
 #[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
 pub mod app_reactive_eframe;
+pub mod reactive_mount;
 pub mod event_handler;
 #[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
 // pub mod scene_gizmos; // TODO: Implement scene gizmos module
