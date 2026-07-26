@@ -1,5 +1,7 @@
+// SplitPanel — two-pane layout (register rail + detail dogfood)
 
 use super::traits::Renderable
+
 pub enum SplitDirection {
     Horizontal,
     Vertical,
@@ -10,15 +12,17 @@ pub struct SplitPanel {
     right: string,
     direction: SplitDirection,
     initial_size: i32,
+    class_name: string,
 }
 
 impl SplitPanel {
     pub fn new(left: string, right: string) -> SplitPanel {
         SplitPanel {
-            left,
-            right,
+            left: left,
+            right: right,
             direction: SplitDirection::Vertical,
             initial_size: 50,
+            class_name: "wj-split-panel".to_string(),
         }
     }
 
@@ -32,33 +36,34 @@ impl SplitPanel {
         self
     }
 
-
+    pub fn class_name(self, class_name: string) -> SplitPanel {
+        self.class_name = class_name
+        self
+    }
 }
 
 impl Renderable for SplitPanel {
-pub fn render(self) -> string {
+    fn render(self) -> string {
         let flex_direction = match self.direction {
             SplitDirection::Horizontal => "column",
             SplitDirection::Vertical => "row",
         }
-
-        format!("<div class='wj-split-panel' style='display: flex; flex-direction: {}; height: 100%;'>
-  <div class='wj-split-pane' style='flex: {}%;'>
-    {}
-  </div>
-  <div class='wj-split-divider'></div>
-  <div class='wj-split-pane' style='flex: {}%;'>
-    {}
-  </div>
-</div>", flex_direction, self.initial_size, self.left, 100 - self.initial_size, self.right)
+        let right_flex = 100 - self.initial_size
+        format!(
+            "<div class='{}' style='display: flex; flex-direction: {}; height: 100%;'><div class='wj-split-pane' style='flex: {}%;'>{}</div><div class='wj-split-divider'></div><div class='wj-split-pane' style='flex: {}%;'>{}</div></div>",
+            self.class_name,
+            flex_direction,
+            self.initial_size,
+            self.left,
+            right_flex,
+            self.right
+        )
     }
 }
 
 fn main() {
-    let split = SplitPanel::new("<p>Left pane</p>".to_string(), "<p>Right pane</p>".to_string())
-        .initial_size(40)
-
+    let split = SplitPanel::new("<p>Left</p>".to_string(), "<p>Right</p>".to_string())
+        .initial_size(28)
+        .class_name("wj-split-panel lk-register-split".to_string())
     println!("{}", split.render())
 }
-
-
