@@ -42,6 +42,45 @@ fn data_table_wraps_table() {
 }
 
 #[test]
+fn data_table_scrollable_wraps_lk_table_scroll() {
+    let html = datatable::DataTable::new()
+        .scrollable(true)
+        .caption("Parties".to_string())
+        .column(table::TableColumn::new("Name".to_string()))
+        .row(table::TableRow::new().cell("Acme".to_string()))
+        .render();
+    assert!(html.contains("lk-table-scroll"));
+    assert!(html.contains("wj-datatable"));
+}
+
+#[test]
+fn kpi_tile_renders_label_and_money() {
+    use windjammer_ui::components::generated::kpitile;
+    let html = kpitile::KpiTile::new("Cash".to_string())
+        .value_html(
+            moneydisplay::MoneyDisplay::new(250000)
+                .currency("USD".to_string())
+                .render(),
+        )
+        .render();
+    assert!(html.contains("wj-kpi-tile"));
+    assert!(html.contains("Cash"));
+    assert!(html.contains("wj-money"));
+}
+
+#[test]
+fn kpi_grid_wraps_tiles() {
+    use windjammer_ui::components::generated::kpitile;
+    let tile = kpitile::KpiTile::new("AR open".to_string())
+        .value_html("<strong>3</strong>".to_string())
+        .render();
+    let html = kpitile::KpiGrid::new().tile(tile).render();
+    assert!(html.contains("wj-kpi-grid"));
+    assert!(html.contains("kpi-grid"));
+    assert!(html.contains("AR open"));
+}
+
+#[test]
 fn form_field_has_finance_classes() {
     let html = form::FormField::new(
         "Email".to_string(),

@@ -1,0 +1,65 @@
+// KpiTile / KpiGrid — Home finance KPI dogfood (P0)
+
+use super::traits::Renderable
+
+pub struct KpiTile {
+    label: string,
+    value_html: string,
+}
+
+impl KpiTile {
+    pub fn new(label: string) -> KpiTile {
+        KpiTile {
+            label: label,
+            value_html: "".to_string(),
+        }
+    }
+
+    pub fn value_html(self, html: string) -> KpiTile {
+        self.value_html = html
+        self
+    }
+}
+
+impl Renderable for KpiTile {
+    fn render(self) -> string {
+        format!(
+            "<div class='wj-kpi-tile kpi'><span class='kpi-label'>{}</span><div class='kpi-value'>{}</div></div>",
+            self.label,
+            self.value_html
+        )
+    }
+}
+
+pub struct KpiGrid {
+    tiles: Vec<string>,
+}
+
+impl KpiGrid {
+    pub fn new() -> KpiGrid {
+        KpiGrid {
+            tiles: Vec::new(),
+        }
+    }
+
+    pub fn tile(self, html: string) -> KpiGrid {
+        self.tiles.push(html)
+        self
+    }
+}
+
+impl Renderable for KpiGrid {
+    fn render(self) -> string {
+        let mut body = "".to_string()
+        for t in &self.tiles {
+            body.push_str(t)
+        }
+        format!("<div class='kpi-grid wj-kpi-grid'>{}</div>", body)
+    }
+}
+
+fn main() {
+    let tile = KpiTile::new("Cash".to_string()).value_html("<span class='wj-money'>$10.00</span>".to_string()).render()
+    let html = KpiGrid::new().tile(tile).render()
+    println!("{}", html)
+}

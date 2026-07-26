@@ -1,0 +1,185 @@
+{
+  "module_path": "kpitile",
+  "functions": {
+    "KpiTile::value_html": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"KpiTile\")",
+      "is_associated": true,
+      "parent_type": "KpiTile",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "KpiTile::new": {
+      "params": [
+        "String"
+      ],
+      "formal_params": [
+        "String"
+      ],
+      "return_type": "Custom(\"KpiTile\")",
+      "is_associated": true,
+      "parent_type": "KpiTile",
+      "param_ownership": [
+        "Owned"
+      ],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "KpiTile::render": {
+      "params": [
+        "Reference(Custom(\"Self\"))"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "KpiTile",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "KpiGrid::tile": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"KpiGrid\")",
+      "is_associated": true,
+      "parent_type": "KpiGrid",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "KpiGrid::new": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "Custom(\"KpiGrid\")",
+      "is_associated": true,
+      "parent_type": "KpiGrid",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "KpiGrid::render": {
+      "params": [
+        "Reference(Custom(\"Self\"))"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "KpiGrid",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "main": {
+      "params": [],
+      "formal_params": [],
+      "return_type": null,
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    }
+  },
+  "structs": {
+    "KpiGrid": {
+      "tiles": "Vec(String)"
+    },
+    "KpiTile": {
+      "label": "String",
+      "value_html": "String"
+    }
+  },
+  "trait_impls": {},
+  "copy_structs": [
+    "ChipSize",
+    "SpinnerSize",
+    "BadgeVariant",
+    "SwitchSize",
+    "ProgressVariant",
+    "PopoverPosition",
+    "AvatarShape",
+    "ChipVariant",
+    "Progress",
+    "LoadingSize",
+    "CheckboxSize",
+    "EasingPreset",
+    "BtDebuggerOverlay",
+    "StackDirection",
+    "PinType",
+    "IconName",
+    "ProfilerScopeKind",
+    "TextWeight",
+    "SelectSize",
+    "NodeCategory",
+    "SidebarPosition",
+    "SkeletonVariant",
+    "TextareaResize",
+    "BtWire",
+    "SplitDirection",
+    "RatingSize",
+    "FlexDirection",
+    "StackJustify",
+    "ScrollDir",
+    "CurvePoint",
+    "ButtonVariant",
+    "RowAlign",
+    "DrawerPosition",
+    "FrameDebuggerViewState",
+    "ModalSize",
+    "NavbarPosition",
+    "ScrollDirection",
+    "TextSize",
+    "StackAlign",
+    "VNode",
+    "DividerOrientation",
+    "BtPalettePanel",
+    "Pagination",
+    "BadgeSize",
+    "ButtonSize",
+    "ToastPosition",
+    "ToastVariant",
+    "AlertVariant",
+    "AvatarSize",
+    "ColumnJustify",
+    "MessageRole",
+    "ColumnAlign",
+    "RowJustify",
+    "TooltipPosition"
+  ],
+  "non_copy_structs": [],
+  "version": "0.50.0",
+  "analysis_fingerprint": {
+    "content_hash": 590705425123839335,
+    "compiler_version": "0.50.0:af8cf104cba4f027",
+    "dep_metadata_epoch": 2435999049025295583,
+    "output_hash": 268720138392093164
+  }
+}

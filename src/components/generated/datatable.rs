@@ -11,6 +11,7 @@ pub struct DataTable {
     pub table: Table,
     pub empty_message: String,
     pub caption: String,
+    pub scrollable: bool,
 }
 
 impl DataTable {
@@ -20,6 +21,7 @@ impl DataTable {
             table: Table::new(),
             empty_message: "No rows".to_string(),
             caption: "".to_string(),
+            scrollable: false,
         }
     }
     #[inline]
@@ -30,6 +32,11 @@ impl DataTable {
     #[inline]
     pub fn empty_message(mut self, message: String) -> DataTable {
         self.empty_message = message;
+        self
+    }
+    #[inline]
+    pub fn scrollable(mut self, on: bool) -> DataTable {
+        self.scrollable = on;
         self
     }
     #[inline]
@@ -55,11 +62,16 @@ impl Renderable for DataTable {
                 self.caption.clone()
             );
         }
+        let table_block = if self.scrollable {
+            format!("<div class='lk-table-scroll'>{}</div>", body)
+        } else {
+            body
+        };
         format!(
             "<div class='wj-datatable' data-empty-message='{}'>{}{}</div>",
             self.empty_message.clone(),
             caption_html,
-            body
+            table_block
         )
     }
 }
