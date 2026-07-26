@@ -1,23 +1,53 @@
-//! CheckbookRegister — spent/received register shell (LedgerKit R0 / ADR-002).
-//! Hand-maintained until Windjammer compose codegen is green.
-//! Source: `src/components_wj/checkbookregister.wj`. Always SKIP_WJ_REGEN=1.
+//! CheckbookRegister — spent/received register (LedgerKit R0+ / ADR-002 Business mode).
+//! Hand-maintained. Always SKIP_WJ_REGEN=1.
 
 use super::traits::Renderable;
+
+#[derive(Clone, Debug)]
+pub struct CheckbookRow {
+    pub date: String,
+    pub num: String,
+    pub payee: String,
+    pub spent_html: String,
+    pub received_html: String,
+    pub balance_html: String,
+}
+
+impl CheckbookRow {
+    pub fn new(
+        date: impl Into<String>,
+        num: impl Into<String>,
+        payee: impl Into<String>,
+        spent_html: impl Into<String>,
+        received_html: impl Into<String>,
+        balance_html: impl Into<String>,
+    ) -> Self {
+        Self {
+            date: date.into(),
+            num: num.into(),
+            payee: payee.into(),
+            spent_html: spent_html.into(),
+            received_html: received_html.into(),
+            balance_html: balance_html.into(),
+        }
+    }
+}
 
 #[derive(Clone, Debug)]
 pub struct CheckbookRegister {
     pub account_label: String,
     pub empty_message: String,
     pub mount_id: String,
+    pub rows: Vec<CheckbookRow>,
 }
 
 impl CheckbookRegister {
     pub fn new() -> Self {
         Self {
             account_label: "Operating cash".to_string(),
-            empty_message: "No register lines yet — write a check or import bank lines."
-                .to_string(),
+            empty_message: "No register lines yet — write a check or import bank lines.".to_string(),
             mount_id: "registerMount".to_string(),
+            rows: Vec::new(),
         }
     }
 
@@ -35,6 +65,11 @@ impl CheckbookRegister {
         self.mount_id = id.into();
         self
     }
+
+    pub fn row(mut self, row: CheckbookRow) -> Self {
+        self.rows.push(row);
+        self
+    }
 }
 
 impl Default for CheckbookRegister {
@@ -45,6 +80,23 @@ impl Default for CheckbookRegister {
 
 impl Renderable for CheckbookRegister {
     fn render(&self) -> String {
+        let body = if self.rows.is_empty() {
+            format!(
+                r#"<tr class="lk-empty-row"><td colspan="6" class="muted">{}</td></tr>"#,
+                self.empty_message
+            )
+        } else {
+            self.rows
+                .iter()
+                .map(|r| {
+                    format!(
+                        r#"<tr class="wj-checkbook-row"><td>{}</td><td>{}</td><td>{}</td><td class="lk-num">{}</td><td class="lk-num">{}</td><td class="lk-num">{}</td></tr>"#,
+                        r.date, r.num, r.payee, r.spent_html, r.received_html, r.balance_html
+                    )
+                })
+                .collect::<Vec<_>>()
+                .join("")
+        };
         format!(
             r##"<div class="wj-checkbook-register" data-wj-checkbook-register>
   <div class="checkbook-head">
@@ -64,14 +116,14 @@ impl Renderable for CheckbookRegister {
         </tr>
       </thead>
       <tbody id="{mount}">
-        <tr class="lk-empty-row"><td colspan="6" class="muted">{empty}</td></tr>
+        {body}
       </tbody>
     </table>
   </div>
 </div>"##,
             account = self.account_label,
             mount = self.mount_id,
-            empty = self.empty_message
+            body = body
         )
     }
 }
@@ -82,12 +134,19 @@ mod tests {
 
     #[test]
     fn checkbook_register_has_spent_received_columns() {
-        let html = CheckbookRegister::new()
-            .account_label("1000 · Cash")
-            .render();
+        let html = CheckbookRegister::new().account_label("1000 · Cash").render();
         assert!(html.contains("wj-checkbook-register"));
         assert!(html.contains("Spent"));
         assert!(html.contains("Received"));
-        assert!(html.contains("1000 · Cash"));
+    }
+
+    #[test]
+    fn checkbook_register_renders_rows() {
+        let html = CheckbookRegister::new()
+            .row(CheckbookRow::new("2026-07-01", "", "FEE", "$45.00", "", ""))
+            .render();
+        assert!(html.contains("wj-checkbook-row"));
+        assert!(html.contains("FEE"));
+        assert!(!html.contains("lk-empty-row"));
     }
 }

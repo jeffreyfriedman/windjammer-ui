@@ -1,13 +1,42 @@
-// CheckbookRegister — classic checkbook shell (LedgerKit R0 / ADR-002).
-// Spent / Received columns (not signed amount only).
-// NOTE: Into<String> builders are Rust-only until owned-string codegen is green.
+// CheckbookRegister — spent/received register (Business mode / ADR-002).
+// NOTE: Into<String> / row helpers are Rust-only until owned-string codegen is green.
 
 use super::traits::Renderable
+
+pub struct CheckbookRow {
+    date: string,
+    num: string,
+    payee: string,
+    spent_html: string,
+    received_html: string,
+    balance_html: string,
+}
+
+impl CheckbookRow {
+    pub fn new(
+        date: string,
+        num: string,
+        payee: string,
+        spent_html: string,
+        received_html: string,
+        balance_html: string,
+    ) -> CheckbookRow {
+        CheckbookRow {
+            date: date,
+            num: num,
+            payee: payee,
+            spent_html: spent_html,
+            received_html: received_html,
+            balance_html: balance_html,
+        }
+    }
+}
 
 pub struct CheckbookRegister {
     account_label: string,
     empty_message: string,
     mount_id: string,
+    rows: Vec<CheckbookRow>,
 }
 
 impl CheckbookRegister {
@@ -16,6 +45,7 @@ impl CheckbookRegister {
             account_label: "Operating cash".to_string(),
             empty_message: "No register lines yet — write a check or import bank lines.".to_string(),
             mount_id: "registerMount".to_string(),
+            rows: Vec::new(),
         }
     }
 
@@ -33,10 +63,38 @@ impl CheckbookRegister {
         self.mount_id = id
         self
     }
+
+    pub fn row(self, row: CheckbookRow) -> CheckbookRegister {
+        self.rows.push(row)
+        self
+    }
 }
 
 impl Renderable for CheckbookRegister {
     fn render(self) -> string {
+        let mut body = "".to_string()
+        if self.rows.len() == 0 {
+            body = "<tr class=\"lk-empty-row\"><td colspan=\"6\" class=\"muted\">".to_string()
+                + self.empty_message
+                + "</td></tr>"
+        } else {
+            for r in self.rows {
+                body = body
+                    + "<tr class=\"wj-checkbook-row\"><td>"
+                    + r.date
+                    + "</td><td>"
+                    + r.num
+                    + "</td><td>"
+                    + r.payee
+                    + "</td><td class=\"lk-num\">"
+                    + r.spent_html
+                    + "</td><td class=\"lk-num\">"
+                    + r.received_html
+                    + "</td><td class=\"lk-num\">"
+                    + r.balance_html
+                    + "</td></tr>"
+            }
+        }
         "<div class=\"wj-checkbook-register\" data-wj-checkbook-register>".to_string()
             + "<div class=\"checkbook-head\"><p class=\"hub-kicker\">Checkbook</p><h3 class=\"checkbook-account\">"
             + self.account_label
@@ -46,8 +104,8 @@ impl Renderable for CheckbookRegister {
             + "<th class=\"lk-num\">Spent</th><th class=\"lk-num\">Received</th><th class=\"lk-num\">Balance</th></tr></thead>"
             + "<tbody id=\""
             + self.mount_id
-            + "\"><tr class=\"lk-empty-row\"><td colspan=\"6\" class=\"muted\">"
-            + self.empty_message
-            + "</td></tr></tbody></table></div></div>"
+            + "\">"
+            + body
+            + "</tbody></table></div></div>"
     }
 }

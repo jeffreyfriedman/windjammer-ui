@@ -1,0 +1,67 @@
+// MemorizedList — Business-mode memorized transactions (ADR-002).
+// Runtime (save/run) is Rust-only until codegen supports framework JS helpers.
+
+use super::traits::Renderable
+
+pub struct MemorizedItem {
+    id: string,
+    title: string,
+    body: string,
+}
+
+impl MemorizedItem {
+    pub fn new(id: string, title: string, body: string) -> MemorizedItem {
+        MemorizedItem {
+            id: id,
+            title: title,
+            body: body,
+        }
+    }
+}
+
+pub struct MemorizedList {
+    items: Vec<MemorizedItem>,
+    empty_message: string,
+}
+
+impl MemorizedList {
+    pub fn new() -> MemorizedList {
+        MemorizedList {
+            items: Vec::new(),
+            empty_message: "No memorized transactions yet — save one below.".to_string(),
+        }
+    }
+
+    pub fn empty_message(self, message: string) -> MemorizedList {
+        self.empty_message = message
+        self
+    }
+
+    pub fn item(self, item: MemorizedItem) -> MemorizedList {
+        self.items.push(item)
+        self
+    }
+}
+
+impl Renderable for MemorizedList {
+    fn render(self) -> string {
+        let mut list = "".to_string()
+        if self.items.len() == 0 {
+            list = "<li class=\"muted lk-empty\">".to_string() + self.empty_message + "</li>"
+        } else {
+            for i in self.items {
+                list = list
+                    + "<li class=\"wj-memorized-item\" data-wj-memorized-id=\""
+                    + i.id
+                    + "\"><span class=\"wj-memorized-title\">"
+                    + i.title
+                    + "</span></li>"
+            }
+        }
+        "<div class=\"wj-memorized-list\" data-wj-memorized-list>".to_string()
+            + "<ul class=\"hub-list\" id=\"memorizedList\">"
+            + list
+            + "</ul>"
+            + "<button type=\"button\" data-wj-memorized-save>Save memorized</button></div>"
+    }
+}
