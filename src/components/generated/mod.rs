@@ -341,3 +341,7 @@ pub use wasm_events::*;
 // pub mod examples_wasm;
 // #[cfg(target_arch = "wasm32")]
 // pub use examples_wasm::*;
+
+// Hand-maintained (LedgerKit R1.3) — keep SKIP_WJ_REGEN=1; tracked by codegen_write_check_form_test.
+pub mod writecheckform;
+pub use writecheckform::*;

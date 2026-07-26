@@ -98,12 +98,50 @@ impl Renderable for AccountRail {
     }
 }
 
-/// Click rail item → mark active, update checkbook title, reload register.
+/// Click rail item → mark active, scope checkbook/bank fetch to account, reload register.
+/// Also re-syncs title after AuthFetch replaces the checkbook host (R1.3 / R2).
 pub fn account_rail_runtime_js() -> &'static str {
     r##"
 (function () {
   if (window.__wjAccountRailBound) return;
   window.__wjAccountRailBound = true;
+
+  window.lkSyncCheckbookTitle = function () {
+    var active = document.querySelector('[data-wj-account-rail-item].is-active .wj-account-rail-label');
+    if (!active) return;
+    var label = active.textContent.trim();
+    if (!label) return;
+    document.querySelectorAll('.checkbook-account, [data-wj-checkbook-account]').forEach(function (el) {
+      el.textContent = label;
+    });
+  };
+
+  /** R2: rewrite checkbook/bank AuthFetch paths + write-check bank code for selected account. */
+  window.lkScopeRegisterAccount = function (code) {
+    var acct = String(code || '').trim() || '1000';
+    document.querySelectorAll('[data-wj-auth-fetch][data-wj-render-kind="checkbook"],[data-wj-auth-fetch][data-wj-render-kind="bank"]').forEach(function (btn) {
+      var path = btn.getAttribute('data-wj-fetch-path') || '';
+      if (!path) return;
+      if (/[?&]account=/.test(path)) {
+        path = path.replace(/([?&]account=)[^&]*/, '$1' + encodeURIComponent(acct));
+      } else {
+        path += (path.indexOf('?') >= 0 ? '&' : '?') + 'account=' + encodeURIComponent(acct);
+      }
+      btn.setAttribute('data-wj-fetch-path', path);
+    });
+    document.querySelectorAll('[data-wj-write-check]').forEach(function (root) {
+      root.setAttribute('data-wj-bank-code', acct);
+    });
+  };
+
+  var prevAfter = window.lkAfterAuthFetch;
+  window.lkAfterAuthFetch = function (kind, mount) {
+    if (typeof prevAfter === 'function') {
+      try { prevAfter(kind, mount); } catch (e) {}
+    }
+    if (kind === 'checkbook') window.lkSyncCheckbookTitle();
+  };
+
   document.addEventListener('click', function (ev) {
     var t = ev.target;
     if (!t || !t.closest) return;
@@ -114,15 +152,15 @@ pub fn account_rail_runtime_js() -> &'static str {
     root.querySelectorAll('[data-wj-account-rail-item]').forEach(function (b) {
       b.classList.toggle('is-active', b === btn);
     });
-    var code = btn.getAttribute('data-code') || '';
-    var labelEl = btn.querySelector('.wj-account-rail-label');
-    var label = labelEl ? labelEl.textContent.trim() : code;
-    document.querySelectorAll('.checkbook-account, [data-wj-checkbook-account]').forEach(function (el) {
-      el.textContent = label;
-    });
+    var code = btn.getAttribute('data-code') || '1000';
+    window.lkScopeRegisterAccount(code);
+    window.lkSyncCheckbookTitle();
     var load = document.getElementById('loadCheckbook')
       || document.querySelector('[data-wj-render-kind="checkbook"]');
     if (load) { try { load.click(); } catch (e) {} }
+    var loadBank = document.getElementById('loadBank')
+      || document.querySelector('[data-wj-render-kind="bank"]');
+    if (loadBank) { try { loadBank.click(); } catch (e) {} }
   });
 })();
 "##
@@ -145,5 +183,16 @@ mod tests {
         assert!(html.contains("$9,802.00"));
         assert!(html.contains("is-active"));
         assert!(html.contains("data-code=\"1000\""));
+    }
+
+    #[test]
+    fn runtime_scopes_register_fetch_to_account() {
+        let js = account_rail_runtime_js();
+        assert!(js.contains("lkScopeRegisterAccount"));
+        assert!(js.contains("data-wj-fetch-path"));
+        assert!(js.contains("account="));
+        assert!(js.contains("data-wj-bank-code"));
+        assert!(js.contains("checkbook"));
+        assert!(js.contains("bank"));
     }
 }

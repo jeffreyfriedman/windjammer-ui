@@ -1,0 +1,62 @@
+// WriteCheckForm — Business write-check fields + JE sync (ADR-002 / R1.3).
+// Post/sync runtime is Rust-only until codegen supports framework JS helpers.
+
+use super::traits::Renderable
+
+pub struct WriteCheckForm {
+    sample_body: string,
+    bank_code: string,
+    expense_code: string,
+}
+
+impl WriteCheckForm {
+    pub fn new() -> WriteCheckForm {
+        WriteCheckForm {
+            sample_body: "{}".to_string(),
+            bank_code: "1000".to_string(),
+            expense_code: "5000".to_string(),
+        }
+    }
+
+    pub fn sample_body(self, body: string) -> WriteCheckForm {
+        self.sample_body = body
+        self
+    }
+
+    pub fn bank_code(self, code: string) -> WriteCheckForm {
+        self.bank_code = code
+        self
+    }
+
+    pub fn expense_code(self, code: string) -> WriteCheckForm {
+        self.expense_code = code
+        self
+    }
+}
+
+impl Renderable for WriteCheckForm {
+    fn render(self) -> string {
+        "<div class=\"wj-write-check-form\" data-wj-write-check data-wj-bank-code=\"".to_string()
+            + self.bank_code
+            + "\" data-wj-expense-code=\""
+            + self.expense_code
+            + "\">"
+            + "<p class=\"hub-kicker\">Write check</p>"
+            + "<label for=\"checkPayee\">Payee</label>"
+            + "<input id=\"checkPayee\" name=\"payee\" type=\"text\" placeholder=\"Vendor or payee\" data-wj-write-check-payee/>"
+            + "<label for=\"checkAmount\">Amount</label>"
+            + "<input id=\"checkAmount\" name=\"amount\" type=\"text\" inputmode=\"decimal\" placeholder=\"0.00\" data-wj-write-check-amount/>"
+            + "<label for=\"checkNum\">Check number</label>"
+            + "<input id=\"checkNum\" name=\"check_number\" type=\"text\" value=\"1001\" data-wj-write-check-num/>"
+            + "<label for=\"checkMemo\">Memo</label>"
+            + "<input id=\"checkMemo\" name=\"memo\" type=\"text\" placeholder=\"Optional memo\" data-wj-write-check-memo/>"
+            + "<details class=\"bw-advanced\"><summary>Journal body (advanced)</summary>"
+            + "<label for=\"checkJeBody\">Journal body (editable)</label>"
+            + "<textarea id=\"checkJeBody\" rows=\"6\" data-wj-write-check-body>"
+            + self.sample_body
+            + "</textarea></details>"
+            + "<div class=\"row\"><button type=\"button\" class=\"btn-secondary\" id=\"postCheck\" data-wj-write-check-post>Post check</button></div>"
+            + "<p id=\"out\" class=\"lk-status\" role=\"status\" hidden></p>"
+            + "</div>"
+    }
+}
