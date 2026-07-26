@@ -4,6 +4,7 @@
 use super::*;
 
 use super::traits::Renderable;
+
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum SplitDirection {
     Horizontal,
@@ -17,6 +18,7 @@ pub struct SplitPanel {
     pub right: String,
     pub direction: SplitDirection,
     pub initial_size: i32,
+    pub class_name: String,
 }
 
 impl SplitPanel {
@@ -27,6 +29,7 @@ impl SplitPanel {
             right,
             direction: SplitDirection::Vertical,
             initial_size: 50_i32,
+            class_name: "wj-split-panel".to_string(),
         }
     }
     #[inline]
@@ -39,6 +42,11 @@ impl SplitPanel {
         self.initial_size = size;
         self
     }
+    #[inline]
+    pub fn class_name(mut self, class_name: String) -> SplitPanel {
+        self.class_name = class_name;
+        self
+    }
 }
 
 impl Renderable for SplitPanel {
@@ -48,6 +56,15 @@ impl Renderable for SplitPanel {
             SplitDirection::Horizontal => String::from("column"),
             SplitDirection::Vertical => String::from("row"),
         };
-        format!("<div class='wj-split-panel' style='display: flex; flex-direction: {}; height: 100%;'>\n  <div class='wj-split-pane' style='flex: {}%;'>\n    {}\n  </div>\n  <div class='wj-split-divider'></div>\n  <div class='wj-split-pane' style='flex: {}%;'>\n    {}\n  </div>\n</div>", flex_direction, self.initial_size, self.left.clone(), 100_i32 - self.initial_size, self.right.clone())
+        let right_flex = 100_i32 - self.initial_size;
+        format!(
+            "<div class='{}' style='display: flex; flex-direction: {}; height: 100%;'><div class='wj-split-pane' style='flex: {}%;'>{}</div><div class='wj-split-divider'></div><div class='wj-split-pane' style='flex: {}%;'>{}</div></div>",
+            self.class_name.clone(),
+            flex_direction,
+            self.initial_size,
+            self.left.clone(),
+            right_flex,
+            self.right.clone()
+        )
     }
 }
