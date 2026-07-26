@@ -95,73 +95,38 @@ impl Table {
 impl Renderable for Table {
     #[inline]
     fn render(&self) -> String {
-        let mut html = String::new();
-        let border_style: String = {
-            if self.bordered {
-                String::from("border: 1px solid #e2e8f0; border-collapse: collapse;")
-            } else {
-                String::from("border-collapse: collapse;")
-            }
-        };
-        html.push_str(&"<table style='width: 100%; ");
-        html.push_str(&border_style);
-        html.push_str(&"'>");
-        html.push_str(&"<thead style='background: #f7fafc; border-bottom: 2px solid #e2e8f0;'>");
-        html.push_str(&"<tr>");
+        let mut classes = String::from("wj-table");
+        if self.striped {
+            classes.push_str(" wj-table-striped");
+        }
+        if self.bordered {
+            classes.push_str(" wj-table-bordered");
+        }
+        if self.hoverable {
+            classes.push_str(" wj-table-hover");
+        }
+        let mut html = format!("<table class='{}'>", classes);
+        html.push_str("<thead><tr>");
         for col in &self.columns {
-            html.push_str(&"<th style='padding: 12px; text-align: left; font-weight: 600; color: #2d3748; width: ");
-            html.push_str(&col.width);
-            if self.bordered {
-                html.push_str(&"; border: 1px solid #e2e8f0;");
+            if col.width == "auto" {
+                html.push_str("<th>");
+            } else {
+                html.push_str(&format!("<th style='width: {}'>", col.width));
             }
-            html.push_str(&"'>");
             html.push_str(&col.header);
-            html.push_str(&"</th>");
+            html.push_str("</th>");
         }
-        html.push_str(&"</tr>");
-        html.push_str(&"</thead>");
-        html.push_str(&"<tbody>");
-        for (row_index, row) in self.rows.iter().enumerate() {
-            let bg_color: String = {
-                if self.striped && row_index % 2 == 1 {
-                    String::from("background: #f7fafc;")
-                } else {
-                    String::from("background: white;")
-                }
-            };
-            let hover_style = {
-                if self.hoverable {
-                    String::from(" onmouseover='this.style.background=\"#edf2f7\"' onmouseout='this.style.background=\"")
-                } else {
-                    String::new()
-                }
-            };
-            html.push_str(&"<tr style='");
-            html.push_str(&bg_color);
-            html.push('\'');
-            if self.hoverable {
-                html.push_str(&hover_style);
-                if self.striped && row_index % 2 == 1 {
-                    html.push_str(&"#f7fafc");
-                } else {
-                    html.push_str(&"white");
-                }
-                html.push_str(&"\"'");
-            }
-            html.push('>');
+        html.push_str("</tr></thead><tbody>");
+        for row in &self.rows {
+            html.push_str("<tr>");
             for cell in &row.cells {
-                html.push_str(&"<td style='padding: 12px; color: #4a5568;");
-                if self.bordered {
-                    html.push_str(&" border: 1px solid #e2e8f0;");
-                }
-                html.push_str(&"'>");
+                html.push_str("<td>");
                 html.push_str(cell);
-                html.push_str(&"</td>");
+                html.push_str("</td>");
             }
-            html.push_str(&"</tr>");
+            html.push_str("</tr>");
         }
-        html.push_str(&"</tbody>");
-        html.push_str(&"</table>");
+        html.push_str("</tbody></table>");
         html
     }
 }
