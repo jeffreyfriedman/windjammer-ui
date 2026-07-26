@@ -17,6 +17,7 @@ pub enum AlertVariant {
 pub struct Alert {
     pub message: String,
     pub variant: AlertVariant,
+    pub title: String,
 }
 
 impl Alert {
@@ -25,6 +26,7 @@ impl Alert {
         Alert {
             message,
             variant: AlertVariant::Error,
+            title: "".to_string(),
         }
     }
     #[inline]
@@ -32,6 +34,7 @@ impl Alert {
         Alert {
             message,
             variant: AlertVariant::Warning,
+            title: "".to_string(),
         }
     }
     #[inline]
@@ -39,6 +42,7 @@ impl Alert {
         Alert {
             message,
             variant: AlertVariant::Info,
+            title: "".to_string(),
         }
     }
     #[inline]
@@ -46,7 +50,13 @@ impl Alert {
         Alert {
             message,
             variant: AlertVariant::Success,
+            title: "".to_string(),
         }
+    }
+    #[inline]
+    pub fn title(mut self, title: String) -> Alert {
+        self.title = title;
+        self
     }
 }
 
@@ -59,17 +69,31 @@ impl Renderable for Alert {
             AlertVariant::Info => String::from("wj-alert-info"),
             AlertVariant::Success => String::from("wj-alert-success"),
         };
-        let icon: String = match self.variant {
-            AlertVariant::Error => String::from("❌"),
-            AlertVariant::Warning => String::from("⚠️"),
-            AlertVariant::Info => String::from("ℹ️"),
-            AlertVariant::Success => String::from("✅"),
+        let mark = mark_for(self.variant);
+        let heading: String = if self.title.is_empty() {
+            "".to_string()
+        } else {
+            format!(
+                "<strong class='wj-alert-title'>{}</strong>",
+                self.title
+            )
         };
         format!(
-            "<div class='wj-alert {}'>{} {}</div>",
+            "<div class='wj-alert {}' role='status'><span class='wj-alert-mark'>{}</span>{} <span class='wj-alert-msg'>{}</span></div>",
             variant_class,
-            icon,
-            self.message.clone()
+            mark,
+            heading,
+            self.message
         )
+    }
+}
+
+#[inline]
+pub fn mark_for(variant: AlertVariant) -> String {
+    match variant {
+        AlertVariant::Error => String::from("Error"),
+        AlertVariant::Warning => String::from("Warning"),
+        AlertVariant::Info => String::from("Note"),
+        AlertVariant::Success => String::from("Done"),
     }
 }
