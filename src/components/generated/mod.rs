@@ -44,16 +44,17 @@
 #![allow(noop_method_call)]
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 // Auto-generated mod.rs by Windjammer CLI
 // This file declares all generated Windjammer modules
 
 pub mod accordion;
 pub mod advancedcodeeditor;
 pub mod alert;
+pub mod appshell;
 pub mod avatar;
 pub mod badge;
-pub mod icon;
-pub mod statuschip;
 pub mod breadcrumb;
 pub mod button;
 pub mod card;
@@ -83,7 +84,9 @@ pub mod form;
 pub mod grid;
 pub mod hamburgermenu;
 pub mod html_elements;
+pub mod icon;
 pub mod input;
+pub mod kpitile;
 pub mod label;
 pub mod list;
 pub mod loading;
@@ -91,7 +94,6 @@ pub mod menu;
 pub mod messagelist;
 pub mod modal;
 pub mod moneydisplay;
-pub mod kpitile;
 pub mod navbar;
 pub mod node_graph;
 pub mod pagination;
@@ -113,6 +115,7 @@ pub mod spacer;
 pub mod spinner;
 pub mod splitpanel;
 pub mod stack;
+pub mod statuschip;
 pub mod stepper;
 pub mod style;
 pub mod switch;
@@ -135,10 +138,9 @@ pub mod vnode;
 pub use accordion::*;
 pub use advancedcodeeditor::*;
 pub use alert::*;
+pub use appshell::*;
 pub use avatar::*;
 pub use badge::*;
-pub use icon::*;
-pub use statuschip::*;
 pub use breadcrumb::*;
 pub use button::*;
 pub use card::*;
@@ -168,7 +170,9 @@ pub use form::*;
 pub use grid::*;
 pub use hamburgermenu::*;
 pub use html_elements::*;
+pub use icon::*;
 pub use input::*;
+pub use kpitile::*;
 pub use label::*;
 pub use list::*;
 pub use loading::*;
@@ -176,7 +180,6 @@ pub use menu::*;
 pub use messagelist::*;
 pub use modal::*;
 pub use moneydisplay::*;
-pub use kpitile::*;
 pub use navbar::*;
 pub use node_graph::*;
 pub use pagination::*;
@@ -198,6 +201,7 @@ pub use spacer::*;
 pub use spinner::*;
 pub use splitpanel::*;
 pub use stack::*;
+pub use statuschip::*;
 pub use stepper::*;
 pub use style::*;
 pub use switch::*;
