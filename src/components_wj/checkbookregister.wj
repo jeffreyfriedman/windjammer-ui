@@ -1,0 +1,53 @@
+// CheckbookRegister — classic checkbook shell (LedgerKit R0 / ADR-002).
+// Spent / Received columns (not signed amount only).
+// NOTE: Into<String> builders are Rust-only until owned-string codegen is green.
+
+use super::traits::Renderable
+
+pub struct CheckbookRegister {
+    account_label: string,
+    empty_message: string,
+    mount_id: string,
+}
+
+impl CheckbookRegister {
+    pub fn new() -> CheckbookRegister {
+        CheckbookRegister {
+            account_label: "Operating cash".to_string(),
+            empty_message: "No register lines yet — write a check or import bank lines.".to_string(),
+            mount_id: "registerMount".to_string(),
+        }
+    }
+
+    pub fn account_label(self, label: string) -> CheckbookRegister {
+        self.account_label = label
+        self
+    }
+
+    pub fn empty_message(self, message: string) -> CheckbookRegister {
+        self.empty_message = message
+        self
+    }
+
+    pub fn mount_id(self, id: string) -> CheckbookRegister {
+        self.mount_id = id
+        self
+    }
+}
+
+impl Renderable for CheckbookRegister {
+    fn render(self) -> string {
+        "<div class=\"wj-checkbook-register\" data-wj-checkbook-register>".to_string()
+            + "<div class=\"checkbook-head\"><p class=\"hub-kicker\">Checkbook</p><h3 class=\"checkbook-account\">"
+            + self.account_label
+            + "</h3></div>"
+            + "<div class=\"lk-table-scroll\"><table class=\"lk-table wj-checkbook-table\" aria-label=\"Checkbook register\">"
+            + "<thead><tr><th>Date</th><th>Num</th><th>Payee / memo</th>"
+            + "<th class=\"lk-num\">Spent</th><th class=\"lk-num\">Received</th><th class=\"lk-num\">Balance</th></tr></thead>"
+            + "<tbody id=\""
+            + self.mount_id
+            + "\"><tr class=\"lk-empty-row\"><td colspan=\"6\" class=\"muted\">"
+            + self.empty_message
+            + "</td></tr></tbody></table></div></div>"
+    }
+}
