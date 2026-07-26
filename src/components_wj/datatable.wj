@@ -7,6 +7,7 @@ pub struct DataTable {
     table: Table,
     empty_message: string,
     caption: string,
+    scrollable: bool,
 }
 
 impl DataTable {
@@ -15,6 +16,7 @@ impl DataTable {
             table: Table::new(),
             empty_message: "No rows".to_string(),
             caption: "".to_string(),
+            scrollable: false,
         }
     }
 
@@ -25,6 +27,11 @@ impl DataTable {
 
     pub fn empty_message(self, message: string) -> DataTable {
         self.empty_message = message
+        self
+    }
+
+    pub fn scrollable(self, on: bool) -> DataTable {
+        self.scrollable = on
         self
     }
 
@@ -46,12 +53,16 @@ impl Renderable for DataTable {
         if self.caption.len() > 0 {
             caption_html = format!("<div class='wj-datatable-caption'>{}</div>", self.caption)
         }
-        // Empty-state marker for tests / progressive enhancement
+        let table_block = if self.scrollable {
+            format!("<div class='lk-table-scroll'>{}</div>", body)
+        } else {
+            body
+        }
         format!(
             "<div class='wj-datatable' data-empty-message='{}'>{}{}</div>",
             self.empty_message,
             caption_html,
-            body
+            table_block
         )
     }
 }
@@ -59,6 +70,7 @@ impl Renderable for DataTable {
 fn main() {
     let html = DataTable::new()
         .caption("Parties".to_string())
+        .scrollable(true)
         .column(TableColumn::new("Name".to_string()))
         .column(TableColumn::new("Role".to_string()))
         .row(TableRow::new().cell("Acme".to_string()).cell("customer".to_string()))
