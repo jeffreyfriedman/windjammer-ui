@@ -84,6 +84,9 @@ impl DesktopRendererV2 {
             VNode::Text(text) => {
                 ui.label(text);
             }
+            VNode::RawHtml(html) => {
+                ui.label(egui::RichText::new(html).monospace());
+            }
         }
     }
 

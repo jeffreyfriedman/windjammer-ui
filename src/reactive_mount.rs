@@ -1,5 +1,7 @@
 //! Mount-target helpers for ReactiveApp (host-testable; used by WASM hybrid shell).
 
+use crate::simple_vnode::VNode;
+
 /// Default DOM mount when no `.mount_target(...)` is set (legacy full-page shell).
 pub fn default_mount_selector() -> &'static str {
     "#app"
@@ -34,6 +36,11 @@ impl MountTarget {
     }
 }
 
+/// One-shot HTML for a VNode (Home pilot — no RAF loop).
+pub fn paint_once_html(vnode: &VNode) -> String {
+    crate::simple_renderer::render_to_html(vnode)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -48,5 +55,14 @@ mod tests {
     fn mount_target_main_overrides_default() {
         let m = MountTarget::new().mount_target("#main");
         assert_eq!(m.selector(), "#main");
+    }
+
+    #[test]
+    fn paint_once_html_uses_raw_html_for_main_pilot() {
+        let html = paint_once_html(&VNode::raw_html(
+            "<div class=\"panel home-hero\"><div class=\"kpi-grid\"></div></div>",
+        ));
+        assert!(html.contains("home-hero"));
+        assert!(html.contains("kpi-grid"));
     }
 }
