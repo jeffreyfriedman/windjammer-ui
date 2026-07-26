@@ -22,8 +22,8 @@ impl KpiTile {
     }
 
     #[inline]
-    pub fn value_html(mut self, html: String) -> KpiTile {
-        self.value_html = html;
+    pub fn value_html(mut self, html: impl Into<String>) -> KpiTile {
+        self.value_html = html.into();
         self
     }
 }
