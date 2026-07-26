@@ -46,6 +46,10 @@
 #![allow(noop_method_call)]
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 // Auto-generated mod.rs by Windjammer CLI
 // This file declares all generated Windjammer modules
 
@@ -108,6 +112,7 @@ pub mod scroll;
 pub mod scrollarea;
 pub mod section;
 pub mod select;
+pub mod shellnav;
 pub mod sidebar;
 pub mod skeleton;
 pub mod slider;
@@ -194,6 +199,7 @@ pub use scroll::*;
 pub use scrollarea::*;
 pub use section::*;
 pub use select::*;
+pub use shellnav::*;
 pub use sidebar::*;
 pub use skeleton::*;
 pub use slider::*;

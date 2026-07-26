@@ -1,5 +1,10 @@
 // AppShell — retained chrome for WASM-first hybrid (LedgerKit ADR-001).
-// Brand + header meta + primary nav + main; no hand-authored host JS required for structure.
+// Brand + header meta + primary nav + main.
+//
+// NOTE: Until codegen_string_param_to_owned_method_test is green, generated Rust
+// may temporarily use `impl Into<String>` on builders. After the compiler fix,
+// regen will emit `string` → `String`; call sites must pass owned strings
+// (e.g. `"LedgerKit".to_string()`), not rely on Into forever.
 
 use super::traits::Renderable
 

@@ -1,0 +1,88 @@
+// ShellNav — primary nav with active hub already set (LedgerKit F1 / ADR-001).
+// Host supplies links; active is baked into HTML so hash routing can swap whole nav
+// without lkMarkActiveNav class toggling.
+
+use super::traits::Renderable
+
+pub struct ShellNavLink {
+    label: string,
+    href: string,
+    active: bool,
+    personas: string,
+}
+
+impl ShellNavLink {
+    pub fn new(label: string, href: string) -> ShellNavLink {
+        ShellNavLink {
+            label: label,
+            href: href,
+            active: false,
+            personas: "".to_string(),
+        }
+    }
+
+    pub fn active(self, active: bool) -> ShellNavLink {
+        self.active = active
+        self
+    }
+
+    pub fn personas(self, personas: string) -> ShellNavLink {
+        self.personas = personas
+        self
+    }
+}
+
+pub struct ShellNav {
+    links: Vec<ShellNavLink>,
+}
+
+impl ShellNav {
+    pub fn new() -> ShellNav {
+        ShellNav {
+            links: Vec::new(),
+        }
+    }
+
+    pub fn link(self, link: ShellNavLink) -> ShellNav {
+        self.links.push(link)
+        self
+    }
+}
+
+impl Renderable for ShellNav {
+    fn render(self) -> string {
+        let mut items = "".to_string()
+        for link in self.links {
+            let cls = if link.active {
+                " class=\"is-active\"".to_string()
+            } else {
+                "".to_string()
+            }
+            let personas_attr = if link.personas.len() > 0 {
+                " data-personas=\"" + link.personas + "\""
+            } else {
+                "".to_string()
+            }
+            items = items
+                + "<a href=\""
+                + link.href
+                + "\""
+                + personas_attr
+                + cls
+                + ">"
+                + link.label
+                + "</a>\n"
+        }
+        "<nav class=\"shell-nav\" id=\"shellNav\" aria-label=\"Primary\">".to_string()
+            + items
+            + "</nav>"
+    }
+}
+
+fn main() {
+    let html = ShellNav::new()
+        .link(ShellNavLink::new("Home".to_string(), "#/".to_string()).active(true))
+        .link(ShellNavLink::new("Money".to_string(), "#/money".to_string()))
+        .render()
+    println!("{}", html)
+}

@@ -1,4 +1,6 @@
 // StatusChip — maps ledger document/bank statuses to Badge variants (finance dogfood).
+// Explicit clone: variant_for consumes string; Badge::new needs the same value
+// (codegen_statuschip_badge_compose_test.rs / owned_reuse_after_helper).
 
 use super::traits::Renderable
 use super::badge::{Badge, BadgeVariant, BadgeSize}
@@ -17,11 +19,11 @@ fn variant_for(status: string) -> BadgeVariant {
     let s = status.to_lowercase()
     if s == "paid" || s == "matched" || s == "posted" || s == "balanced" {
         BadgeVariant::Success
-    } else if s == "open" || s == "partial" || s == "suggested" {
+    } else if s == "open" || s == "partial" || s == "suggested" || s == "customer" {
         BadgeVariant::Warning
     } else if s == "unmatched" || s == "overdue" || s == "void" || s == "failed" {
         BadgeVariant::Danger
-    } else if s == "draft" {
+    } else if s == "draft" || s == "vendor" || s == "employee" {
         BadgeVariant::Info
     } else {
         BadgeVariant::Default
@@ -31,7 +33,7 @@ fn variant_for(status: string) -> BadgeVariant {
 impl Renderable for StatusChip {
     fn render(self) -> string {
         let status = self.status
-        let v = variant_for(status)
+        let v = variant_for(status.clone())
         Badge::new(status).variant(v).size(BadgeSize::Small).render()
     }
 }

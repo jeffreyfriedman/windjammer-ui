@@ -4,11 +4,7 @@
 use super::*;
 
 use super::traits::Renderable;
-
-/// Retained application chrome (ADR-001 WASM-first hybrid).
-/// Hand-tuned `impl Into<String>` builders until WJ emits owned String params
-/// (`codegen_string_param_to_owned_method_test.rs`). Source of truth: `components_wj/appshell.wj`.
-#[derive(Debug, Clone, PartialEq, Eq, Default)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 #[repr(C)]
 pub struct AppShell {
     pub brand: String,
@@ -24,47 +20,41 @@ impl AppShell {
     pub fn new() -> AppShell {
         AppShell {
             brand: "App".to_string(),
-            title: String::new(),
-            header_meta_html: String::new(),
-            nav_html: String::new(),
-            main_html: String::new(),
+            title: "".to_string(),
+            header_meta_html: "".to_string(),
+            nav_html: "".to_string(),
+            main_html: "".to_string(),
             main_id: "main".to_string(),
         }
     }
-
     #[inline]
-    pub fn brand(mut self, brand: impl Into<String>) -> AppShell {
-        self.brand = brand.into();
+    pub fn brand(mut self, brand: String) -> AppShell {
+        self.brand = brand;
         self
     }
-
     #[inline]
-    pub fn title(mut self, title: impl Into<String>) -> AppShell {
-        self.title = title.into();
+    pub fn title(mut self, title: String) -> AppShell {
+        self.title = title;
         self
     }
-
     #[inline]
-    pub fn header_meta_html(mut self, html: impl Into<String>) -> AppShell {
-        self.header_meta_html = html.into();
+    pub fn header_meta_html(mut self, html: String) -> AppShell {
+        self.header_meta_html = html;
         self
     }
-
     #[inline]
-    pub fn nav_html(mut self, html: impl Into<String>) -> AppShell {
-        self.nav_html = html.into();
+    pub fn nav_html(mut self, html: String) -> AppShell {
+        self.nav_html = html;
         self
     }
-
     #[inline]
-    pub fn main_html(mut self, html: impl Into<String>) -> AppShell {
-        self.main_html = html.into();
+    pub fn main_html(mut self, html: String) -> AppShell {
+        self.main_html = html;
         self
     }
-
     #[inline]
-    pub fn main_id(mut self, id: impl Into<String>) -> AppShell {
-        self.main_id = id.into();
+    pub fn main_id(mut self, id: String) -> AppShell {
+        self.main_id = id;
         self
     }
 }
@@ -72,46 +62,37 @@ impl AppShell {
 impl Renderable for AppShell {
     #[inline]
     fn render(&self) -> String {
-        let title_block = if self.title.is_empty() {
-            String::new()
-        } else {
-            format!("<div class='shell-title'>{}</div>", self.title)
+        let title_block = {
+            if !self.title.is_empty() {
+                format!(
+                    "{}{}{}",
+                    "<div class='shell-title'>",
+                    self.title.clone(),
+                    "</div>"
+                )
+            } else {
+                "".to_string()
+            }
         };
         format!(
-            "<div id=\"app\" class=\"wj-app-shell\"><header class=\"shell-header\"><div class=\"shell-brand\"><strong>{}</strong></div><div class=\"shell-header-meta\">{}{}</div></header>{}<main class=\"shell-main\" id=\"{}\">{}</main></div>",
-            self.brand,
-            self.header_meta_html,
+            "{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
+            "<div id=\"app\" class=\"wj-app-shell\">",
+            "<header class=\"shell-header\">",
+            "<div class=\"shell-brand\"><strong>",
+            self.brand.clone(),
+            "</strong></div>",
+            "<div class=\"shell-header-meta\">",
+            self.header_meta_html.clone(),
             title_block,
-            self.nav_html,
-            self.main_id,
-            self.main_html
+            "</div>",
+            "</header>",
+            self.nav_html.clone(),
+            "<main class=\"shell-main\" id=\"",
+            self.main_id.clone(),
+            "\">",
+            self.main_html.clone(),
+            "</main>",
+            "</div>"
         )
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn appshell_renders_retained_chrome_slots() {
-        let html = AppShell::new()
-            .brand("LedgerKit")
-            .title("Home")
-            .header_meta_html("<button type='button' class='cmd-trigger'>Search</button>")
-            .nav_html("<nav class='shell-nav' id='shellNav'><a href='#/'>Home</a></nav>")
-            .main_html("<div class='panel home-hero'>body</div>")
-            .main_id("main")
-            .render();
-        assert!(html.contains("wj-app-shell"));
-        assert!(html.contains("id=\"app\""));
-        assert!(html.contains("LedgerKit"));
-        assert!(html.contains("shell-header"));
-        assert!(html.contains("shell-nav"));
-        assert!(html.contains("id=\"main\""));
-        assert!(html.contains("home-hero"));
-        let app = html.find("id=\"app\"").expect("app");
-        let main = html.find("id=\"main\"").expect("main");
-        assert!(app < main);
     }
 }
