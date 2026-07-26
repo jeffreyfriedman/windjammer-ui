@@ -1,0 +1,84 @@
+// AccountRail — Business workspace account list with balances (ADR-002 / R1.2).
+// Selection runtime is Rust-only until codegen supports framework JS helpers.
+
+use super::traits::Renderable
+
+pub struct AccountRailItem {
+    code: string,
+    label: string,
+    balance_html: string,
+    active: bool,
+}
+
+impl AccountRailItem {
+    pub fn new(code: string, label: string, balance_html: string) -> AccountRailItem {
+        AccountRailItem {
+            code: code,
+            label: label,
+            balance_html: balance_html,
+            active: false,
+        }
+    }
+
+    pub fn active(self, active: bool) -> AccountRailItem {
+        self.active = active
+        self
+    }
+}
+
+pub struct AccountRail {
+    items: Vec<AccountRailItem>,
+    hint: string,
+}
+
+impl AccountRail {
+    pub fn new() -> AccountRail {
+        AccountRail {
+            items: Vec::new(),
+            hint: "Select an account to load its register.".to_string(),
+        }
+    }
+
+    pub fn hint(self, hint: string) -> AccountRail {
+        self.hint = hint
+        self
+    }
+
+    pub fn item(self, item: AccountRailItem) -> AccountRail {
+        self.items.push(item)
+        self
+    }
+}
+
+impl Renderable for AccountRail {
+    fn render(self) -> string {
+        let mut body = "".to_string()
+        if self.items.len() == 0 {
+            body = "<li class=\"muted lk-empty\">Load accounts to see balances.</li>".to_string()
+        } else {
+            for i in self.items {
+                let cls = if i.active {
+                    "wj-account-rail-item rail-item is-active"
+                } else {
+                    "wj-account-rail-item rail-item"
+                }
+                body = body
+                    + "<li><button type=\"button\" class=\""
+                    + cls
+                    + "\" data-code=\""
+                    + i.code
+                    + "\" data-wj-account-rail-item><span class=\"wj-account-rail-label\">"
+                    + i.label
+                    + "</span><span class=\"wj-account-rail-bal lk-num\">"
+                    + i.balance_html
+                    + "</span></button></li>"
+            }
+        }
+        "<div class=\"wj-account-rail\" data-wj-account-rail>".to_string()
+            + "<ul class=\"rail-list\" id=\"accountRailList\">"
+            + body
+            + "</ul><p class=\"muted wj-account-rail-hint\">"
+            + self.hint
+            + "</p></div>"
+    }
+}
