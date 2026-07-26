@@ -1,4 +1,8 @@
 // KpiTile / KpiGrid — Home finance KPI dogfood (P0)
+//
+// NOTE: Generated Rust may use `impl Into<String>` on builders until
+// codegen_string_param_to_owned_method_test is green. After fix, regen emits
+// owned `String` params — callers must pass owned strings.
 
 use super::traits::Renderable
 
