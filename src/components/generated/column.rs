@@ -83,19 +83,19 @@ impl Column {
             ColumnJustify::SpaceEvenly => String::from("space-evenly"),
         };
         let mut html = String::new();
-        html.push_str("<div class=\"wj-column ");
+        html.push_str(&"<div class=\"wj-column ");
         html.push_str(&self.class);
-        html.push_str("\" style=\"display: flex; flex-direction: column; gap: ");
+        html.push_str(&"\" style=\"display: flex; flex-direction: column; gap: ");
         html.push_str(&self.gap);
-        html.push_str("; align-items: ");
+        html.push_str(&"; align-items: ");
         html.push_str(&align_str);
-        html.push_str("; justify-content: ");
+        html.push_str(&"; justify-content: ");
         html.push_str(&justify_str);
-        html.push_str(";\">");
+        html.push_str(&";\">");
         for child in &self.children {
-            html.push_str(&child);
+            html.push_str(child);
         }
-        html.push_str("</div>");
+        html.push_str(&"</div>");
         html
     }
 }

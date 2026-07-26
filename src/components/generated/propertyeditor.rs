@@ -110,31 +110,31 @@ impl Property {
 
 impl Renderable for Property {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let tooltip_attr: String = {
             if self.tooltip != "" {
-                format!(" title='{}'", self.tooltip)
+                format!(" title='{}'", self.tooltip.clone())
             } else {
                 "".to_string()
             }
         };
         let unit_html: String = {
             if self.unit != "" {
-                format!("<span class='prop-unit'>{}</span>", self.unit)
+                format!("<span class='prop-unit'>{}</span>", self.unit.clone())
             } else {
                 "".to_string()
             }
         };
-        let input_html: String = match &self.property_type {
+        let input_html: String = match self.property_type.clone() {
             PropertyType::Number {
                 min: mn,
                 max: mx,
                 step: st,
             } => {
-                format!("\n                    <div class='prop-number'>\n                        <input type='number' class='prop-input' \n                               value='{}' min='{}' max='{}' step='{}'\n                               onchange='{}(this.value)'/>\n                        {}\n                    </div>\n                ", self.value, mn, mx, st, self.on_change, unit_html)
+                format!("\n                    <div class='prop-number'>\n                        <input type='number' class='prop-input' \n                               value='{}' min='{}' max='{}' step='{}'\n                               onchange='{}(this.value)'/>\n                        {}\n                    </div>\n                ", self.value.clone(), mn, mx, st, self.on_change.clone(), unit_html)
             }
             PropertyType::Integer { min: mn, max: mx } => {
-                format!("\n                    <div class='prop-number'>\n                        <input type='number' class='prop-input' \n                               value='{}' min='{}' max='{}' step='1'\n                               onchange='{}(this.value)'/>\n                        {}\n                    </div>\n                ", self.value, mn, mx, self.on_change, unit_html)
+                format!("\n                    <div class='prop-number'>\n                        <input type='number' class='prop-input' \n                               value='{}' min='{}' max='{}' step='1'\n                               onchange='{}(this.value)'/>\n                        {}\n                    </div>\n                ", self.value.clone(), mn, mx, self.on_change.clone(), unit_html)
             }
             PropertyType::Boolean => {
                 let checked = {
@@ -144,13 +144,13 @@ impl Renderable for Property {
                         String::new()
                     }
                 };
-                format!("\n                    <label class='prop-toggle'>\n                        <input type='checkbox' {} onchange='{}(this.checked)'/>\n                        <span class='toggle-slider'></span>\n                    </label>\n                ", checked, self.on_change)
+                format!("\n                    <label class='prop-toggle'>\n                        <input type='checkbox' {} onchange='{}(this.checked)'/>\n                        <span class='toggle-slider'></span>\n                    </label>\n                ", checked, self.on_change.clone())
             }
             PropertyType::Text => {
-                format!("\n                    <input type='text' class='prop-input prop-text' \n                           value='{}' onchange='{}(this.value)'/>\n                ", self.value, self.on_change)
+                format!("\n                    <input type='text' class='prop-input prop-text' \n                           value='{}' onchange='{}(this.value)'/>\n                ", self.value.clone(), self.on_change.clone())
             }
             PropertyType::Color => {
-                format!("\n                    <div class='prop-color'>\n                        <input type='color' class='color-swatch' \n                               value='{}' onchange='{}(this.value)'/>\n                        <input type='text' class='color-hex' \n                               value='{}' onchange='{}(this.value)'/>\n                    </div>\n                ", self.value, self.on_change, self.value, self.on_change)
+                format!("\n                    <div class='prop-color'>\n                        <input type='color' class='color-swatch' \n                               value='{}' onchange='{}(this.value)'/>\n                        <input type='text' class='color-hex' \n                               value='{}' onchange='{}(this.value)'/>\n                    </div>\n                ", self.value.clone(), self.on_change.clone(), self.value.clone(), self.on_change.clone())
             }
             PropertyType::Dropdown { options: opts } => {
                 let mut options_html = String::new().to_string();
@@ -165,10 +165,10 @@ impl Renderable for Property {
                     options_html = options_html
                         + &format!("<option value='{}' {}>{}</option>", o, selected, o);
                 }
-                format!("\n                    <select class='prop-select' onchange='{}(this.value)'>\n                        {}\n                    </select>\n                ", self.on_change, options_html)
+                format!("\n                    <select class='prop-select' onchange='{}(this.value)'>\n                        {}\n                    </select>\n                ", self.on_change.clone(), options_html)
             }
         };
-        format!("\n            <div class='prop-row'{}>\n                <label class='prop-label'>{}</label>\n                <div class='prop-value'>\n                    {}\n                </div>\n            </div>\n        ", tooltip_attr, self.name, input_html)
+        format!("\n            <div class='prop-row'{}>\n                <label class='prop-label'>{}</label>\n                <div class='prop-value'>\n                    {}\n                </div>\n            </div>\n        ", tooltip_attr, self.name.clone(), input_html)
     }
 }
 
@@ -202,8 +202,8 @@ impl Vec3Editor {
 
 impl Renderable for Vec3Editor {
     #[inline]
-    fn render(&mut self) -> String {
-        format!("\n            <div class='vec3-editor'>\n                <label class='prop-label'>{}</label>\n                <div class='vec3-inputs'>\n                    <div class='vec3-axis'>\n                        <span class='axis-label x'>X</span>\n                        <input type='number' step='0.1' value='{:.3}' \n                               onchange='{}(\"x\", this.value)'/>\n                    </div>\n                    <div class='vec3-axis'>\n                        <span class='axis-label y'>Y</span>\n                        <input type='number' step='0.1' value='{:.3}' \n                               onchange='{}(\"y\", this.value)'/>\n                    </div>\n                    <div class='vec3-axis'>\n                        <span class='axis-label z'>Z</span>\n                        <input type='number' step='0.1' value='{:.3}' \n                               onchange='{}(\"z\", this.value)'/>\n                    </div>\n                </div>\n            </div>\n        ", self.label, self.x, self.on_change, self.y, self.on_change, self.z, self.on_change)
+    fn render(&self) -> String {
+        format!("\n            <div class='vec3-editor'>\n                <label class='prop-label'>{}</label>\n                <div class='vec3-inputs'>\n                    <div class='vec3-axis'>\n                        <span class='axis-label x'>X</span>\n                        <input type='number' step='0.1' value='{:.3}' \n                               onchange='{}(\"x\", this.value)'/>\n                    </div>\n                    <div class='vec3-axis'>\n                        <span class='axis-label y'>Y</span>\n                        <input type='number' step='0.1' value='{:.3}' \n                               onchange='{}(\"y\", this.value)'/>\n                    </div>\n                    <div class='vec3-axis'>\n                        <span class='axis-label z'>Z</span>\n                        <input type='number' step='0.1' value='{:.3}' \n                               onchange='{}(\"z\", this.value)'/>\n                    </div>\n                </div>\n            </div>\n        ", self.label.clone(), self.x, self.on_change.clone(), self.y, self.on_change.clone(), self.z, self.on_change.clone())
     }
 }
 

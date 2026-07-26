@@ -2,6 +2,14 @@
 #![allow(noop_method_call)]
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 //! Read-side bridge for live engine frame trace snapshots (profiler / frame debugger UI).
 //!
 //! Standalone tests inject snapshots via `test_set_live_snapshot`. The game editor /

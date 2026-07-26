@@ -53,7 +53,7 @@ impl Badge {
 
 impl Renderable for Badge {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let variant_class: String = match self.variant {
             BadgeVariant::Default => String::from("wj-badge-default"),
             BadgeVariant::Primary => String::from("wj-badge-primary"),
@@ -70,7 +70,9 @@ impl Renderable for Badge {
         };
         format!(
             "<span class='wj-badge {} {}'>{}</span>",
-            variant_class, size_class, self.text
+            variant_class,
+            size_class,
+            self.text.clone()
         )
     }
 }

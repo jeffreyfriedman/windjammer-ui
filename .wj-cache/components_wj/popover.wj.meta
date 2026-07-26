@@ -1,40 +1,18 @@
 {
   "module_path": "popover",
   "functions": {
-    "Popover::position": {
+    "Popover::render": {
       "params": [
-        "Custom(\"Popover\")",
-        "Custom(\"PopoverPosition\")"
+        "Custom(\"Popover\")"
       ],
       "formal_params": [
-        "Custom(\"Popover\")",
-        "Custom(\"PopoverPosition\")"
+        "Custom(\"Popover\")"
       ],
-      "return_type": "Custom(\"Popover\")",
+      "return_type": "String",
       "is_associated": true,
       "parent_type": "Popover",
       "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Popover::class": {
-      "params": [
-        "Custom(\"Popover\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Popover\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Popover\")",
-      "is_associated": true,
-      "parent_type": "Popover",
-      "param_ownership": [
-        "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "has_self_receiver": true,
       "is_extern": false
@@ -58,18 +36,40 @@
       "has_self_receiver": false,
       "is_extern": false
     },
-    "Popover::render": {
+    "Popover::class": {
       "params": [
-        "Custom(\"Popover\")"
+        "Custom(\"Popover\")",
+        "String"
       ],
       "formal_params": [
-        "Custom(\"Popover\")"
+        "Custom(\"Popover\")",
+        "String"
       ],
-      "return_type": "String",
+      "return_type": "Custom(\"Popover\")",
       "is_associated": true,
       "parent_type": "Popover",
       "param_ownership": [
-        "Borrowed"
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Popover::position": {
+      "params": [
+        "Custom(\"Popover\")",
+        "Custom(\"PopoverPosition\")"
+      ],
+      "formal_params": [
+        "Custom(\"Popover\")",
+        "Custom(\"PopoverPosition\")"
+      ],
+      "return_type": "Custom(\"Popover\")",
+      "is_associated": true,
+      "parent_type": "Popover",
+      "param_ownership": [
+        "Owned",
+        "Owned"
       ],
       "has_self_receiver": true,
       "is_extern": false
@@ -78,73 +78,73 @@
   "structs": {
     "Popover": {
       "content": "String",
-      "position": "Custom(\"PopoverPosition\")",
       "trigger": "String",
+      "position": "Custom(\"PopoverPosition\")",
       "class": "String"
     }
   },
   "trait_impls": {},
   "copy_structs": [
-    "SidebarPosition",
-    "RowJustify",
-    "AvatarShape",
-    "TextWeight",
-    "ScrollDirection",
-    "ToastPosition",
-    "StackJustify",
-    "EasingPreset",
-    "ColumnJustify",
     "CurvePoint",
-    "Pagination",
-    "BadgeVariant",
-    "RatingSize",
+    "StackAlign",
+    "AlertVariant",
+    "TextareaResize",
+    "PopoverPosition",
     "BtWire",
+    "TextWeight",
+    "FlexDirection",
+    "StackDirection",
+    "RowAlign",
+    "TextSize",
+    "ToastPosition",
+    "DividerOrientation",
+    "ColumnAlign",
+    "NodeCategory",
+    "ScrollDir",
+    "BadgeVariant",
+    "EasingPreset",
+    "FrameDebuggerViewState",
+    "SidebarPosition",
+    "BtPalettePanel",
+    "TooltipPosition",
+    "Pagination",
+    "RowJustify",
+    "ChipVariant",
+    "VNode",
+    "StackJustify",
+    "MessageRole",
+    "AvatarShape",
+    "SwitchSize",
     "ButtonSize",
+    "LoadingSize",
+    "ChipSize",
     "ProgressVariant",
+    "NavbarPosition",
+    "ButtonVariant",
+    "SkeletonVariant",
+    "ScrollDirection",
+    "ToastVariant",
     "SplitDirection",
     "BadgeSize",
-    "TooltipPosition",
-    "LoadingSize",
-    "StackDirection",
-    "PinType",
-    "FrameDebuggerViewState",
-    "FlexDirection",
-    "TextareaResize",
-    "ChipSize",
-    "SpinnerSize",
-    "TextSize",
-    "SwitchSize",
-    "MessageRole",
-    "Progress",
-    "ModalSize",
-    "ColumnAlign",
-    "ChipVariant",
-    "SkeletonVariant",
-    "NavbarPosition",
-    "StackAlign",
-    "NodeCategory",
-    "CheckboxSize",
-    "AvatarSize",
-    "PopoverPosition",
-    "BtDebuggerOverlay",
-    "RowAlign",
-    "VNode",
-    "ToastVariant",
-    "ButtonVariant",
-    "DrawerPosition",
-    "DividerOrientation",
+    "ColumnJustify",
+    "RatingSize",
     "SelectSize",
-    "AlertVariant",
-    "BtPalettePanel",
-    "ScrollDir",
-    "ProfilerScopeKind"
+    "CheckboxSize",
+    "BtDebuggerOverlay",
+    "ModalSize",
+    "ProfilerScopeKind",
+    "SpinnerSize",
+    "PinType",
+    "DrawerPosition",
+    "AvatarSize",
+    "Progress"
   ],
   "non_copy_structs": [],
   "version": "0.50.0",
   "analysis_fingerprint": {
     "content_hash": 4096017548252372613,
-    "compiler_version": "0.50.0:efa412e4570d8b42",
+    "compiler_version": "0.50.0:94a5f44528a82cdf",
     "dep_metadata_epoch": 2435999049025295583,
-    "output_hash": 15420969184817656523
+    "output_hash": 8724423850299942058
   }
 }

@@ -84,36 +84,34 @@ impl Select {
             }
         };
         let mut html = String::new();
-        html.push_str("<select class=\"wj-select ");
+        html.push_str(&"<select class=\"wj-select ");
         html.push_str(&self.class);
-        html.push_str("\" style=\"");
+        html.push_str(&"\" style=\"");
         html.push_str(&size_style);
-        html.push_str(
-            " border: 1px solid #d1d5db; border-radius: 6px; background: white; cursor: pointer;\"",
-        );
+        html.push_str(&" border: 1px solid #d1d5db; border-radius: 6px; background: white; cursor: pointer;\"");
         html.push_str(&disabled_attr);
         html.push('>');
         if !self.placeholder.is_empty() {
-            html.push_str("<option value=\"\" disabled");
+            html.push_str(&"<option value=\"\" disabled");
             if self.selected.is_empty() {
-                html.push_str(" selected");
+                html.push_str(&" selected");
             }
-            html.push_str(">");
+            html.push_str(&">");
             html.push_str(&self.placeholder);
-            html.push_str("</option>");
+            html.push_str(&"</option>");
         }
         for opt in &self.options {
-            html.push_str("<option value=\"");
+            html.push_str(&"<option value=\"");
             html.push_str(&opt.value);
             html.push('"');
             if opt.value == self.selected {
-                html.push_str(" selected");
+                html.push_str(&" selected");
             }
             html.push('>');
             html.push_str(&opt.label);
-            html.push_str("</option>");
+            html.push_str(&"</option>");
         }
-        html.push_str("</select>");
+        html.push_str(&"</select>");
         html
     }
 }

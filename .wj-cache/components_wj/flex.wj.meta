@@ -1,20 +1,78 @@
 {
   "module_path": "flex",
   "functions": {
-    "Flex::gap_px": {
+    "main": {
+      "params": [],
+      "formal_params": [],
+      "return_type": null,
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Flex::gap": {
       "params": [
         "Custom(\"Self\")",
-        "Custom(\"i32\")"
+        "String"
       ],
       "formal_params": [
         "Custom(\"Self\")",
-        "Custom(\"i32\")"
+        "String"
       ],
       "return_type": "Custom(\"Flex\")",
       "is_associated": true,
       "parent_type": "Flex",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Flex::new": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "Custom(\"Flex\")",
+      "is_associated": true,
+      "parent_type": "Flex",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Flex::padding": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Flex\")",
+      "is_associated": true,
+      "parent_type": "Flex",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Flex::child": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Flex\")",
+      "is_associated": true,
+      "parent_type": "Flex",
+      "param_ownership": [
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
@@ -33,26 +91,26 @@
       "is_associated": true,
       "parent_type": "Flex",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
       "is_extern": false
     },
-    "Flex::gap": {
+    "Flex::gap_px": {
       "params": [
         "Custom(\"Self\")",
-        "String"
+        "Custom(\"i32\")"
       ],
       "formal_params": [
         "Custom(\"Self\")",
-        "String"
+        "Custom(\"i32\")"
       ],
       "return_type": "Custom(\"Flex\")",
       "is_associated": true,
       "parent_type": "Flex",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
@@ -60,7 +118,7 @@
     },
     "Flex::render": {
       "params": [
-        "Custom(\"Self\")"
+        "Reference(Custom(\"Self\"))"
       ],
       "formal_params": [
         "Custom(\"Self\")"
@@ -74,30 +132,20 @@
       "has_self_receiver": true,
       "is_extern": false
     },
-    "main": {
-      "params": [],
-      "formal_params": [],
-      "return_type": null,
-      "is_associated": false,
-      "parent_type": null,
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
-    "Flex::child": {
+    "Flex::children": {
       "params": [
         "Custom(\"Self\")",
-        "String"
+        "Vec(String)"
       ],
       "formal_params": [
         "Custom(\"Self\")",
-        "String"
+        "Vec(String)"
       ],
       "return_type": "Custom(\"Flex\")",
       "is_associated": true,
       "parent_type": "Flex",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
@@ -116,132 +164,84 @@
       "is_associated": true,
       "parent_type": "Flex",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Flex::padding": {
-      "params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Flex\")",
-      "is_associated": true,
-      "parent_type": "Flex",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Flex::children": {
-      "params": [
-        "Custom(\"Self\")",
-        "Vec(String)"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "Vec(String)"
-      ],
-      "return_type": "Custom(\"Flex\")",
-      "is_associated": true,
-      "parent_type": "Flex",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Flex::new": {
-      "params": [],
-      "formal_params": [],
-      "return_type": "Custom(\"Flex\")",
-      "is_associated": true,
-      "parent_type": "Flex",
-      "param_ownership": [],
-      "has_self_receiver": false,
       "is_extern": false
     }
   },
   "structs": {
     "Flex": {
-      "gap": "String",
       "children": "Vec(String)",
-      "background_color": "String",
+      "padding": "String",
       "direction": "Custom(\"FlexDirection\")",
-      "padding": "String"
+      "background_color": "String",
+      "gap": "String"
     }
   },
   "trait_impls": {},
   "copy_structs": [
-    "SidebarPosition",
-    "RowJustify",
-    "AvatarShape",
-    "TextWeight",
-    "ScrollDirection",
-    "ToastPosition",
-    "StackJustify",
-    "EasingPreset",
-    "ColumnJustify",
     "CurvePoint",
-    "Pagination",
-    "BadgeVariant",
-    "RatingSize",
+    "StackAlign",
+    "AlertVariant",
+    "TextareaResize",
+    "PopoverPosition",
     "BtWire",
+    "TextWeight",
+    "FlexDirection",
+    "StackDirection",
+    "RowAlign",
+    "TextSize",
+    "ToastPosition",
+    "DividerOrientation",
+    "ColumnAlign",
+    "NodeCategory",
+    "ScrollDir",
+    "BadgeVariant",
+    "EasingPreset",
+    "FrameDebuggerViewState",
+    "SidebarPosition",
+    "BtPalettePanel",
+    "TooltipPosition",
+    "Pagination",
+    "RowJustify",
+    "ChipVariant",
+    "VNode",
+    "StackJustify",
+    "MessageRole",
+    "AvatarShape",
+    "SwitchSize",
     "ButtonSize",
+    "LoadingSize",
+    "ChipSize",
     "ProgressVariant",
+    "NavbarPosition",
+    "ButtonVariant",
+    "SkeletonVariant",
+    "ScrollDirection",
+    "ToastVariant",
     "SplitDirection",
     "BadgeSize",
-    "TooltipPosition",
-    "LoadingSize",
-    "StackDirection",
-    "PinType",
-    "FrameDebuggerViewState",
-    "FlexDirection",
-    "TextareaResize",
-    "ChipSize",
-    "SpinnerSize",
-    "TextSize",
-    "SwitchSize",
-    "MessageRole",
-    "Progress",
-    "ModalSize",
-    "ColumnAlign",
-    "ChipVariant",
-    "SkeletonVariant",
-    "NavbarPosition",
-    "StackAlign",
-    "NodeCategory",
-    "CheckboxSize",
-    "AvatarSize",
-    "PopoverPosition",
-    "BtDebuggerOverlay",
-    "RowAlign",
-    "VNode",
-    "ToastVariant",
-    "ButtonVariant",
-    "DrawerPosition",
-    "DividerOrientation",
+    "ColumnJustify",
+    "RatingSize",
     "SelectSize",
-    "AlertVariant",
-    "BtPalettePanel",
-    "ScrollDir",
-    "ProfilerScopeKind"
+    "CheckboxSize",
+    "BtDebuggerOverlay",
+    "ModalSize",
+    "ProfilerScopeKind",
+    "SpinnerSize",
+    "PinType",
+    "DrawerPosition",
+    "AvatarSize",
+    "Progress"
   ],
   "non_copy_structs": [],
   "version": "0.50.0",
   "analysis_fingerprint": {
     "content_hash": 17978577699754486587,
-    "compiler_version": "0.50.0:efa412e4570d8b42",
+    "compiler_version": "0.50.0:94a5f44528a82cdf",
     "dep_metadata_epoch": 2435999049025295583,
-    "output_hash": 7904455412326597901
+    "output_hash": 2713575798967863685
   }
 }

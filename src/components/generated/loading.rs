@@ -62,36 +62,36 @@ impl Loading {
         };
         let mut html = String::new();
         if self.overlay {
-            html.push_str("<div class=\"wj-loading-overlay\" style=\"position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; z-index: 9999;\">");
+            html.push_str(&"<div class=\"wj-loading-overlay\" style=\"position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; z-index: 9999;\">");
         }
-        html.push_str("<div class=\"wj-loading ");
+        html.push_str(&"<div class=\"wj-loading ");
         html.push_str(&self.class);
         html.push_str(
-            "\" style=\"display: flex; flex-direction: column; align-items: center; gap: 12px;\">",
+            &"\" style=\"display: flex; flex-direction: column; align-items: center; gap: 12px;\">",
         );
-        html.push_str("<div style=\"width: ");
+        html.push_str(&"<div style=\"width: ");
         html.push_str(&spinner_size);
-        html.push_str("; height: ");
+        html.push_str(&"; height: ");
         html.push_str(&spinner_size);
-        html.push_str("; border: ");
+        html.push_str(&"; border: ");
         html.push_str(&border_width);
-        html.push_str(" solid #f3f4f6; border-top-color: #3b82f6; border-radius: 50%; animation: spin 0.8s linear infinite;\"></div>");
+        html.push_str(&" solid #f3f4f6; border-top-color: #3b82f6; border-radius: 50%; animation: spin 0.8s linear infinite;\"></div>");
         if !self.text.is_empty() {
-            html.push_str("<span style=\"color: ");
+            html.push_str(&"<span style=\"color: ");
             if self.overlay {
-                html.push_str("white");
+                html.push_str(&"white");
             } else {
-                html.push_str("#6b7280");
+                html.push_str(&"#6b7280");
             }
-            html.push_str("; font-size: 14px;\">");
+            html.push_str(&"; font-size: 14px;\">");
             html.push_str(&self.text);
-            html.push_str("</span>");
+            html.push_str(&"</span>");
         }
-        html.push_str("</div>");
+        html.push_str(&"</div>");
         if self.overlay {
-            html.push_str("</div>");
+            html.push_str(&"</div>");
         }
-        html.push_str("<style>@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>");
+        html.push_str(&"<style>@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>");
         html
     }
 }

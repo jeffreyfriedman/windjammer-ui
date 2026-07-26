@@ -115,7 +115,7 @@ impl FrameDebuggerPanel {
 
 impl Renderable for FrameDebuggerPanel {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let current_frame_index = self.state.current_frame_index;
         let total_frames = self.state.total_frames;
         let frame_time_ms = self.state.frame_time_ms;

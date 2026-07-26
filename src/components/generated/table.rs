@@ -67,12 +67,12 @@ impl Table {
     }
     #[inline]
     pub fn column(mut self, col: TableColumn) -> Table {
-        self.columns.push(col.clone());
+        self.columns.push(col);
         self
     }
     #[inline]
     pub fn row(mut self, row: TableRow) -> Table {
-        self.rows.push(row.clone());
+        self.rows.push(row);
         self
     }
     #[inline]
@@ -94,7 +94,7 @@ impl Table {
 
 impl Renderable for Table {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut html = String::new();
         let border_style: String = {
             if self.bordered {
@@ -103,24 +103,24 @@ impl Renderable for Table {
                 String::from("border-collapse: collapse;")
             }
         };
-        html.push_str("<table style='width: 100%; ");
+        html.push_str(&"<table style='width: 100%; ");
         html.push_str(&border_style);
-        html.push_str("'>");
-        html.push_str("<thead style='background: #f7fafc; border-bottom: 2px solid #e2e8f0;'>");
-        html.push_str("<tr>");
+        html.push_str(&"'>");
+        html.push_str(&"<thead style='background: #f7fafc; border-bottom: 2px solid #e2e8f0;'>");
+        html.push_str(&"<tr>");
         for col in &self.columns {
-            html.push_str("<th style='padding: 12px; text-align: left; font-weight: 600; color: #2d3748; width: ");
+            html.push_str(&"<th style='padding: 12px; text-align: left; font-weight: 600; color: #2d3748; width: ");
             html.push_str(&col.width);
             if self.bordered {
-                html.push_str("; border: 1px solid #e2e8f0;");
+                html.push_str(&"; border: 1px solid #e2e8f0;");
             }
-            html.push_str("'>");
+            html.push_str(&"'>");
             html.push_str(&col.header);
-            html.push_str("</th>");
+            html.push_str(&"</th>");
         }
-        html.push_str("</tr>");
-        html.push_str("</thead>");
-        html.push_str("<tbody>");
+        html.push_str(&"</tr>");
+        html.push_str(&"</thead>");
+        html.push_str(&"<tbody>");
         for (row_index, row) in self.rows.iter().enumerate() {
             let bg_color: String = {
                 if self.striped && row_index % 2 == 1 {
@@ -136,32 +136,32 @@ impl Renderable for Table {
                     String::new()
                 }
             };
-            html.push_str("<tr style='");
+            html.push_str(&"<tr style='");
             html.push_str(&bg_color);
             html.push('\'');
             if self.hoverable {
                 html.push_str(&hover_style);
                 if self.striped && row_index % 2 == 1 {
-                    html.push_str("#f7fafc");
+                    html.push_str(&"#f7fafc");
                 } else {
-                    html.push_str("white");
+                    html.push_str(&"white");
                 }
-                html.push_str("\"'");
+                html.push_str(&"\"'");
             }
             html.push('>');
             for cell in &row.cells {
-                html.push_str("<td style='padding: 12px; color: #4a5568;");
+                html.push_str(&"<td style='padding: 12px; color: #4a5568;");
                 if self.bordered {
-                    html.push_str(" border: 1px solid #e2e8f0;");
+                    html.push_str(&" border: 1px solid #e2e8f0;");
                 }
-                html.push_str("'>");
-                html.push_str(&cell);
-                html.push_str("</td>");
+                html.push_str(&"'>");
+                html.push_str(cell);
+                html.push_str(&"</td>");
             }
-            html.push_str("</tr>");
+            html.push_str(&"</tr>");
         }
-        html.push_str("</tbody>");
-        html.push_str("</table>");
+        html.push_str(&"</tbody>");
+        html.push_str(&"</table>");
         html
     }
 }

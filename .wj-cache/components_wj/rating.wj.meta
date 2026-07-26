@@ -1,78 +1,18 @@
 {
   "module_path": "rating",
   "functions": {
-    "Rating::max": {
+    "Rating::render": {
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"i32\")"
+        "Reference(Custom(\"Self\"))"
       ],
       "formal_params": [
-        "Custom(\"Self\")",
-        "Custom(\"i32\")"
+        "Custom(\"Self\")"
       ],
-      "return_type": "Custom(\"Rating\")",
+      "return_type": "String",
       "is_associated": true,
       "parent_type": "Rating",
       "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Rating::size": {
-      "params": [
-        "Custom(\"Self\")",
-        "Custom(\"RatingSize\")"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "Custom(\"RatingSize\")"
-      ],
-      "return_type": "Custom(\"Rating\")",
-      "is_associated": true,
-      "parent_type": "Rating",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Rating::readonly": {
-      "params": [
-        "Custom(\"Self\")",
-        "Bool"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "Bool"
-      ],
-      "return_type": "Custom(\"Rating\")",
-      "is_associated": true,
-      "parent_type": "Rating",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Rating::color": {
-      "params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Rating\")",
-      "is_associated": true,
-      "parent_type": "Rating",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned"
+        "Borrowed"
       ],
       "has_self_receiver": true,
       "is_extern": false
@@ -93,18 +33,78 @@
       "has_self_receiver": false,
       "is_extern": false
     },
-    "Rating::render": {
+    "Rating::size": {
       "params": [
-        "Custom(\"Self\")"
+        "Custom(\"Self\")",
+        "Custom(\"RatingSize\")"
       ],
       "formal_params": [
-        "Custom(\"Self\")"
+        "Custom(\"Self\")",
+        "Custom(\"RatingSize\")"
       ],
-      "return_type": "String",
+      "return_type": "Custom(\"Rating\")",
       "is_associated": true,
       "parent_type": "Rating",
       "param_ownership": [
-        "Borrowed"
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Rating::max": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"i32\")"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "Custom(\"i32\")"
+      ],
+      "return_type": "Custom(\"Rating\")",
+      "is_associated": true,
+      "parent_type": "Rating",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Rating::readonly": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"Rating\")",
+      "is_associated": true,
+      "parent_type": "Rating",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Rating::color": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Rating\")",
+      "is_associated": true,
+      "parent_type": "Rating",
+      "param_ownership": [
+        "Owned",
+        "Owned"
       ],
       "has_self_receiver": true,
       "is_extern": false
@@ -112,75 +112,75 @@
   },
   "structs": {
     "Rating": {
+      "readonly": "Bool",
       "color": "String",
-      "max": "Custom(\"i32\")",
-      "size": "Custom(\"RatingSize\")",
       "value": "Custom(\"f32\")",
-      "readonly": "Bool"
+      "max": "Custom(\"i32\")",
+      "size": "Custom(\"RatingSize\")"
     }
   },
   "trait_impls": {},
   "copy_structs": [
-    "SidebarPosition",
-    "RowJustify",
-    "AvatarShape",
-    "TextWeight",
-    "ScrollDirection",
-    "ToastPosition",
-    "StackJustify",
-    "EasingPreset",
-    "ColumnJustify",
     "CurvePoint",
-    "Pagination",
-    "BadgeVariant",
-    "RatingSize",
+    "StackAlign",
+    "AlertVariant",
+    "TextareaResize",
+    "PopoverPosition",
     "BtWire",
+    "TextWeight",
+    "FlexDirection",
+    "StackDirection",
+    "RowAlign",
+    "TextSize",
+    "ToastPosition",
+    "DividerOrientation",
+    "ColumnAlign",
+    "NodeCategory",
+    "ScrollDir",
+    "BadgeVariant",
+    "EasingPreset",
+    "FrameDebuggerViewState",
+    "SidebarPosition",
+    "BtPalettePanel",
+    "TooltipPosition",
+    "Pagination",
+    "RowJustify",
+    "ChipVariant",
+    "VNode",
+    "StackJustify",
+    "MessageRole",
+    "AvatarShape",
+    "SwitchSize",
     "ButtonSize",
+    "LoadingSize",
+    "ChipSize",
     "ProgressVariant",
+    "NavbarPosition",
+    "ButtonVariant",
+    "SkeletonVariant",
+    "ScrollDirection",
+    "ToastVariant",
     "SplitDirection",
     "BadgeSize",
-    "TooltipPosition",
-    "LoadingSize",
-    "StackDirection",
-    "PinType",
-    "FrameDebuggerViewState",
-    "FlexDirection",
-    "TextareaResize",
-    "ChipSize",
-    "SpinnerSize",
-    "TextSize",
-    "SwitchSize",
-    "MessageRole",
-    "Progress",
-    "ModalSize",
-    "ColumnAlign",
-    "ChipVariant",
-    "SkeletonVariant",
-    "NavbarPosition",
-    "StackAlign",
-    "NodeCategory",
-    "CheckboxSize",
-    "AvatarSize",
-    "PopoverPosition",
-    "BtDebuggerOverlay",
-    "RowAlign",
-    "VNode",
-    "ToastVariant",
-    "ButtonVariant",
-    "DrawerPosition",
-    "DividerOrientation",
+    "ColumnJustify",
+    "RatingSize",
     "SelectSize",
-    "AlertVariant",
-    "BtPalettePanel",
-    "ScrollDir",
-    "ProfilerScopeKind"
+    "CheckboxSize",
+    "BtDebuggerOverlay",
+    "ModalSize",
+    "ProfilerScopeKind",
+    "SpinnerSize",
+    "PinType",
+    "DrawerPosition",
+    "AvatarSize",
+    "Progress"
   ],
   "non_copy_structs": [],
   "version": "0.50.0",
   "analysis_fingerprint": {
     "content_hash": 9755935367089051673,
-    "compiler_version": "0.50.0:efa412e4570d8b42",
+    "compiler_version": "0.50.0:94a5f44528a82cdf",
     "dep_metadata_epoch": 2435999049025295583,
-    "output_hash": 12490552677024641650
+    "output_hash": 7279516909619859083
   }
 }

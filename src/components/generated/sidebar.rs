@@ -60,7 +60,7 @@ impl Sidebar {
     }
     #[inline]
     pub fn item(mut self, item: SidebarItem) -> Sidebar {
-        self.items.push(item.clone());
+        self.items.push(item);
         self
     }
     #[inline]
@@ -82,7 +82,7 @@ impl Sidebar {
 
 impl Renderable for Sidebar {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut items_html: Vec<String> = Vec::new();
         for item in &self.items {
             let icon_html = {
@@ -108,6 +108,6 @@ impl Renderable for Sidebar {
                 String::new()
             }
         };
-        format!("<aside class='wj-sidebar {} {}' style='width: {}'>\n                <div class='wj-sidebar-toggle' onclick='this.parentElement.classList.toggle(\"wj-sidebar-collapsed\")'>\n                    <span class='wj-sidebar-toggle-icon'>☰</span>\n                </div>\n                <nav class='wj-sidebar-nav'>{}</nav>\n            </aside>", position_class, collapsed_class, self.width, items_html.join(""))
+        format!("<aside class='wj-sidebar {} {}' style='width: {}'>\n                <div class='wj-sidebar-toggle' onclick='this.parentElement.classList.toggle(\"wj-sidebar-collapsed\")'>\n                    <span class='wj-sidebar-toggle-icon'>☰</span>\n                </div>\n                <nav class='wj-sidebar-nav'>{}</nav>\n            </aside>", position_class, collapsed_class, self.width.clone(), items_html.join(&""))
     }
 }

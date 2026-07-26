@@ -1,19 +1,9 @@
 {
   "module_path": "treeview",
   "functions": {
-    "TreeView::new": {
-      "params": [],
-      "formal_params": [],
-      "return_type": "Custom(\"TreeView\")",
-      "is_associated": true,
-      "parent_type": "TreeView",
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
     "TreeView::render": {
       "params": [
-        "Custom(\"Self\")"
+        "Reference(Custom(\"Self\"))"
       ],
       "formal_params": [
         "Custom(\"Self\")"
@@ -27,20 +17,20 @@
       "has_self_receiver": true,
       "is_extern": false
     },
-    "TreeItem::child": {
+    "TreeItem::render": {
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"TreeItem\")"
+        "Reference(Custom(\"Self\"))",
+        "Custom(\"i32\")"
       ],
       "formal_params": [
         "Custom(\"Self\")",
-        "Custom(\"TreeItem\")"
+        "Custom(\"i32\")"
       ],
-      "return_type": "Custom(\"TreeItem\")",
+      "return_type": "String",
       "is_associated": true,
       "parent_type": "TreeItem",
       "param_ownership": [
-        "MutBorrowed",
+        "Borrowed",
         "Owned"
       ],
       "has_self_receiver": true,
@@ -59,37 +49,18 @@
       "is_associated": true,
       "parent_type": "TreeView",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
       "is_extern": false
     },
-    "TreeItem::expanded": {
-      "params": [
-        "Custom(\"Self\")",
-        "Bool"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "Bool"
-      ],
-      "return_type": "Custom(\"TreeItem\")",
-      "is_associated": true,
-      "parent_type": "TreeItem",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "main": {
+    "TreeView::new": {
       "params": [],
       "formal_params": [],
-      "return_type": null,
-      "is_associated": false,
-      "parent_type": null,
+      "return_type": "Custom(\"TreeView\")",
+      "is_associated": true,
+      "parent_type": "TreeView",
       "param_ownership": [],
       "has_self_receiver": false,
       "is_extern": false
@@ -110,20 +81,49 @@
       "has_self_receiver": false,
       "is_extern": false
     },
-    "TreeItem::render": {
+    "TreeItem::child": {
       "params": [
         "Custom(\"Self\")",
-        "Custom(\"i32\")"
+        "Custom(\"TreeItem\")"
       ],
       "formal_params": [
         "Custom(\"Self\")",
-        "Custom(\"i32\")"
+        "Custom(\"TreeItem\")"
       ],
-      "return_type": "String",
+      "return_type": "Custom(\"TreeItem\")",
       "is_associated": true,
       "parent_type": "TreeItem",
       "param_ownership": [
-        "Borrowed",
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "main": {
+      "params": [],
+      "formal_params": [],
+      "return_type": null,
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "TreeItem::expanded": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"TreeItem\")",
+      "is_associated": true,
+      "parent_type": "TreeItem",
+      "param_ownership": [
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
@@ -131,77 +131,77 @@
     }
   },
   "structs": {
+    "TreeItem": {
+      "children": "Vec(Custom(\"TreeItem\"))",
+      "expanded": "Bool",
+      "label": "String"
+    },
     "TreeView": {
       "items": "Vec(Custom(\"TreeItem\"))"
-    },
-    "TreeItem": {
-      "label": "String",
-      "expanded": "Bool",
-      "children": "Vec(Custom(\"TreeItem\"))"
     }
   },
   "trait_impls": {},
   "copy_structs": [
-    "SidebarPosition",
-    "RowJustify",
-    "AvatarShape",
-    "TextWeight",
-    "ScrollDirection",
-    "ToastPosition",
-    "StackJustify",
-    "EasingPreset",
-    "ColumnJustify",
     "CurvePoint",
-    "Pagination",
-    "BadgeVariant",
-    "RatingSize",
+    "StackAlign",
+    "AlertVariant",
+    "TextareaResize",
+    "PopoverPosition",
     "BtWire",
+    "TextWeight",
+    "FlexDirection",
+    "StackDirection",
+    "RowAlign",
+    "TextSize",
+    "ToastPosition",
+    "DividerOrientation",
+    "ColumnAlign",
+    "NodeCategory",
+    "ScrollDir",
+    "BadgeVariant",
+    "EasingPreset",
+    "FrameDebuggerViewState",
+    "SidebarPosition",
+    "BtPalettePanel",
+    "TooltipPosition",
+    "Pagination",
+    "RowJustify",
+    "ChipVariant",
+    "VNode",
+    "StackJustify",
+    "MessageRole",
+    "AvatarShape",
+    "SwitchSize",
     "ButtonSize",
+    "LoadingSize",
+    "ChipSize",
     "ProgressVariant",
+    "NavbarPosition",
+    "ButtonVariant",
+    "SkeletonVariant",
+    "ScrollDirection",
+    "ToastVariant",
     "SplitDirection",
     "BadgeSize",
-    "TooltipPosition",
-    "LoadingSize",
-    "StackDirection",
-    "PinType",
-    "FrameDebuggerViewState",
-    "FlexDirection",
-    "TextareaResize",
-    "ChipSize",
-    "SpinnerSize",
-    "TextSize",
-    "SwitchSize",
-    "MessageRole",
-    "Progress",
-    "ModalSize",
-    "ColumnAlign",
-    "ChipVariant",
-    "SkeletonVariant",
-    "NavbarPosition",
-    "StackAlign",
-    "NodeCategory",
-    "CheckboxSize",
-    "AvatarSize",
-    "PopoverPosition",
-    "BtDebuggerOverlay",
-    "RowAlign",
-    "VNode",
-    "ToastVariant",
-    "ButtonVariant",
-    "DrawerPosition",
-    "DividerOrientation",
+    "ColumnJustify",
+    "RatingSize",
     "SelectSize",
-    "AlertVariant",
-    "BtPalettePanel",
-    "ScrollDir",
-    "ProfilerScopeKind"
+    "CheckboxSize",
+    "BtDebuggerOverlay",
+    "ModalSize",
+    "ProfilerScopeKind",
+    "SpinnerSize",
+    "PinType",
+    "DrawerPosition",
+    "AvatarSize",
+    "Progress"
   ],
   "non_copy_structs": [],
   "version": "0.50.0",
   "analysis_fingerprint": {
     "content_hash": 4674600552298218955,
-    "compiler_version": "0.50.0:efa412e4570d8b42",
+    "compiler_version": "0.50.0:94a5f44528a82cdf",
     "dep_metadata_epoch": 2435999049025295583,
-    "output_hash": 11407760502729656484
+    "output_hash": 16322519560900558954
   }
 }

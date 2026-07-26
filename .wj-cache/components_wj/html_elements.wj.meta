@@ -1,14 +1,68 @@
 {
   "module_path": "html_elements",
   "functions": {
-    "Span::child": {
+    "Div::class": {
+      "params": [
+        "Custom(\"Div\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Div\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Div\")",
+      "is_associated": true,
+      "parent_type": "Div",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Div::text": {
+      "params": [
+        "String",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Div\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Div\")",
+      "is_associated": true,
+      "parent_type": "Div",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Div::render": {
+      "params": [
+        "Custom(\"Div\")"
+      ],
+      "formal_params": [
+        "Custom(\"Div\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Div",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Span::style": {
       "params": [
         "Custom(\"Span\")",
-        "Custom(\"T\")"
+        "String"
       ],
       "formal_params": [
         "Custom(\"Span\")",
-        "Custom(\"T\")"
+        "String"
       ],
       "return_type": "Custom(\"Span\")",
       "is_associated": true,
@@ -20,14 +74,14 @@
       "has_self_receiver": true,
       "is_extern": false
     },
-    "P::child": {
+    "P::class": {
       "params": [
         "Custom(\"P\")",
-        "Custom(\"T\")"
+        "String"
       ],
       "formal_params": [
         "Custom(\"P\")",
-        "Custom(\"T\")"
+        "String"
       ],
       "return_type": "Custom(\"P\")",
       "is_associated": true,
@@ -39,7 +93,141 @@
       "has_self_receiver": true,
       "is_extern": false
     },
-    "H2::class": {
+    "Span::child": {
+      "params": [
+        "Reference(Custom(\"T\"))",
+        "Custom(\"T\")"
+      ],
+      "formal_params": [
+        "Custom(\"Span\")",
+        "Custom(\"T\")"
+      ],
+      "return_type": "Custom(\"Span\")",
+      "is_associated": true,
+      "parent_type": "Span",
+      "param_ownership": [
+        "Borrowed",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "H3::class": {
+      "params": [
+        "Custom(\"H3\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"H3\")",
+        "String"
+      ],
+      "return_type": "Custom(\"H3\")",
+      "is_associated": true,
+      "parent_type": "H3",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "P::child": {
+      "params": [
+        "Reference(Custom(\"T\"))",
+        "Custom(\"T\")"
+      ],
+      "formal_params": [
+        "Custom(\"P\")",
+        "Custom(\"T\")"
+      ],
+      "return_type": "Custom(\"P\")",
+      "is_associated": true,
+      "parent_type": "P",
+      "param_ownership": [
+        "Borrowed",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Div::new": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "Custom(\"Div\")",
+      "is_associated": true,
+      "parent_type": "Div",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "H1::render": {
+      "params": [
+        "Reference(Custom(\"Self\"))"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "H1",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "H1::style": {
+      "params": [
+        "Custom(\"H1\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"H1\")",
+        "String"
+      ],
+      "return_type": "Custom(\"H1\")",
+      "is_associated": true,
+      "parent_type": "H1",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "H2::new": {
+      "params": [
+        "String"
+      ],
+      "formal_params": [
+        "String"
+      ],
+      "return_type": "Custom(\"H2\")",
+      "is_associated": true,
+      "parent_type": "H2",
+      "param_ownership": [
+        "Owned"
+      ],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "H2::render": {
+      "params": [
+        "Reference(Custom(\"Self\"))"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "H2",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "H2::style": {
       "params": [
         "Custom(\"H2\")",
         "String"
@@ -51,6 +239,117 @@
       "return_type": "Custom(\"H2\")",
       "is_associated": true,
       "parent_type": "H2",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Span::class": {
+      "params": [
+        "Custom(\"Span\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Span\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Span\")",
+      "is_associated": true,
+      "parent_type": "Span",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "H1::new": {
+      "params": [
+        "String"
+      ],
+      "formal_params": [
+        "String"
+      ],
+      "return_type": "Custom(\"H1\")",
+      "is_associated": true,
+      "parent_type": "H1",
+      "param_ownership": [
+        "Owned"
+      ],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "P::style": {
+      "params": [
+        "Custom(\"P\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"P\")",
+        "String"
+      ],
+      "return_type": "Custom(\"P\")",
+      "is_associated": true,
+      "parent_type": "P",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Span::text": {
+      "params": [
+        "String",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Span\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Span\")",
+      "is_associated": true,
+      "parent_type": "Span",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "H1::class": {
+      "params": [
+        "Custom(\"H1\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"H1\")",
+        "String"
+      ],
+      "return_type": "Custom(\"H1\")",
+      "is_associated": true,
+      "parent_type": "H1",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "H3::style": {
+      "params": [
+        "Custom(\"H3\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"H3\")",
+        "String"
+      ],
+      "return_type": "Custom(\"H3\")",
+      "is_associated": true,
+      "parent_type": "H3",
       "param_ownership": [
         "Owned",
         "Owned"
@@ -112,84 +411,20 @@
       "has_self_receiver": true,
       "is_extern": false
     },
-    "Div::new": {
-      "params": [],
-      "formal_params": [],
-      "return_type": "Custom(\"Div\")",
-      "is_associated": true,
-      "parent_type": "Div",
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
-    "Div::class": {
+    "Div::child": {
       "params": [
-        "Custom(\"Div\")",
-        "String"
+        "Reference(Custom(\"T\"))",
+        "Custom(\"T\")"
       ],
       "formal_params": [
         "Custom(\"Div\")",
-        "String"
+        "Custom(\"T\")"
       ],
       "return_type": "Custom(\"Div\")",
       "is_associated": true,
       "parent_type": "Div",
       "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "P::render": {
-      "params": [
-        "Custom(\"Self\")"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")"
-      ],
-      "return_type": "String",
-      "is_associated": true,
-      "parent_type": "P",
-      "param_ownership": [
-        "Borrowed"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "P::style": {
-      "params": [
-        "Custom(\"P\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"P\")",
-        "String"
-      ],
-      "return_type": "Custom(\"P\")",
-      "is_associated": true,
-      "parent_type": "P",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "H1::style": {
-      "params": [
-        "Custom(\"H1\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"H1\")",
-        "String"
-      ],
-      "return_type": "Custom(\"H1\")",
-      "is_associated": true,
-      "parent_type": "H1",
-      "param_ownership": [
-        "Owned",
+        "Borrowed",
         "Owned"
       ],
       "has_self_receiver": true,
@@ -205,110 +440,18 @@
       "has_self_receiver": false,
       "is_extern": false
     },
-    "H1::class": {
+    "Span::render": {
       "params": [
-        "Custom(\"H1\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"H1\")",
-        "String"
-      ],
-      "return_type": "Custom(\"H1\")",
-      "is_associated": true,
-      "parent_type": "H1",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "H2::new": {
-      "params": [
-        "String"
-      ],
-      "formal_params": [
-        "String"
-      ],
-      "return_type": "Custom(\"H2\")",
-      "is_associated": true,
-      "parent_type": "H2",
-      "param_ownership": [
-        "Owned"
-      ],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
-    "H1::render": {
-      "params": [
-        "Custom(\"Self\")"
+        "Reference(Custom(\"Self\"))"
       ],
       "formal_params": [
         "Custom(\"Self\")"
       ],
       "return_type": "String",
       "is_associated": true,
-      "parent_type": "H1",
-      "param_ownership": [
-        "Borrowed"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "H2::style": {
-      "params": [
-        "Custom(\"H2\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"H2\")",
-        "String"
-      ],
-      "return_type": "Custom(\"H2\")",
-      "is_associated": true,
-      "parent_type": "H2",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Span::style": {
-      "params": [
-        "Custom(\"Span\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Span\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Span\")",
-      "is_associated": true,
       "parent_type": "Span",
       "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "H3::style": {
-      "params": [
-        "Custom(\"H3\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"H3\")",
-        "String"
-      ],
-      "return_type": "Custom(\"H3\")",
-      "is_associated": true,
-      "parent_type": "H3",
-      "param_ownership": [
-        "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "has_self_receiver": true,
       "is_extern": false
@@ -323,114 +466,25 @@
       "has_self_receiver": false,
       "is_extern": false
     },
-    "H2::render": {
+    "P::render": {
       "params": [
-        "Custom(\"Self\")"
+        "Reference(Custom(\"Self\"))"
       ],
       "formal_params": [
         "Custom(\"Self\")"
       ],
       "return_type": "String",
       "is_associated": true,
-      "parent_type": "H2",
+      "parent_type": "P",
       "param_ownership": [
         "Borrowed"
       ],
       "has_self_receiver": true,
       "is_extern": false
     },
-    "Div::render": {
+    "P::text": {
       "params": [
-        "Custom(\"Div\")"
-      ],
-      "formal_params": [
-        "Custom(\"Div\")"
-      ],
-      "return_type": "String",
-      "is_associated": true,
-      "parent_type": "Div",
-      "param_ownership": [
-        "Borrowed"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Div::text": {
-      "params": [
-        "Custom(\"Div\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Div\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Div\")",
-      "is_associated": true,
-      "parent_type": "Div",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "H3::class": {
-      "params": [
-        "Custom(\"H3\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"H3\")",
-        "String"
-      ],
-      "return_type": "Custom(\"H3\")",
-      "is_associated": true,
-      "parent_type": "H3",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Span::text": {
-      "params": [
-        "Custom(\"Span\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Span\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Span\")",
-      "is_associated": true,
-      "parent_type": "Span",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Span::render": {
-      "params": [
-        "Custom(\"Self\")"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")"
-      ],
-      "return_type": "String",
-      "is_associated": true,
-      "parent_type": "Span",
-      "param_ownership": [
-        "Borrowed"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "P::class": {
-      "params": [
-        "Custom(\"P\")",
+        "String",
         "String"
       ],
       "formal_params": [
@@ -449,7 +503,7 @@
     },
     "H3::render": {
       "params": [
-        "Custom(\"Self\")"
+        "Reference(Custom(\"Self\"))"
       ],
       "formal_params": [
         "Custom(\"Self\")"
@@ -463,175 +517,121 @@
       "has_self_receiver": true,
       "is_extern": false
     },
-    "Div::child": {
+    "H2::class": {
       "params": [
-        "Custom(\"Div\")",
-        "Custom(\"T\")"
+        "Custom(\"H2\")",
+        "String"
       ],
       "formal_params": [
-        "Custom(\"Div\")",
-        "Custom(\"T\")"
+        "Custom(\"H2\")",
+        "String"
       ],
-      "return_type": "Custom(\"Div\")",
+      "return_type": "Custom(\"H2\")",
       "is_associated": true,
-      "parent_type": "Div",
+      "parent_type": "H2",
       "param_ownership": [
         "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
-      "is_extern": false
-    },
-    "P::text": {
-      "params": [
-        "Custom(\"P\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"P\")",
-        "String"
-      ],
-      "return_type": "Custom(\"P\")",
-      "is_associated": true,
-      "parent_type": "P",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Span::class": {
-      "params": [
-        "Custom(\"Span\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Span\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Span\")",
-      "is_associated": true,
-      "parent_type": "Span",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "H1::new": {
-      "params": [
-        "String"
-      ],
-      "formal_params": [
-        "String"
-      ],
-      "return_type": "Custom(\"H1\")",
-      "is_associated": true,
-      "parent_type": "H1",
-      "param_ownership": [
-        "Owned"
-      ],
-      "has_self_receiver": false,
       "is_extern": false
     }
   },
   "structs": {
-    "P": {
-      "style": "String",
+    "H3": {
       "class": "String",
-      "children": "Vec(String)"
-    },
-    "H2": {
-      "text": "String",
       "style": "String",
-      "class": "String"
+      "text": "String"
+    },
+    "Span": {
+      "class": "String",
+      "children": "Vec(String)",
+      "style": "String"
     },
     "Div": {
       "children": "Vec(String)",
-      "class": "String",
       "style": "String",
-      "id": "String"
-    },
-    "H3": {
       "class": "String",
-      "text": "String",
-      "style": "String"
+      "id": "String"
     },
     "H1": {
       "text": "String",
       "class": "String",
       "style": "String"
     },
-    "Span": {
+    "H2": {
       "class": "String",
+      "style": "String",
+      "text": "String"
+    },
+    "P": {
       "children": "Vec(String)",
-      "style": "String"
+      "style": "String",
+      "class": "String"
     }
   },
   "trait_impls": {},
   "copy_structs": [
-    "SidebarPosition",
-    "RowJustify",
-    "AvatarShape",
-    "TextWeight",
-    "ScrollDirection",
-    "ToastPosition",
-    "StackJustify",
-    "EasingPreset",
-    "ColumnJustify",
     "CurvePoint",
-    "Pagination",
-    "BadgeVariant",
-    "RatingSize",
+    "StackAlign",
+    "AlertVariant",
+    "TextareaResize",
+    "PopoverPosition",
     "BtWire",
+    "TextWeight",
+    "FlexDirection",
+    "StackDirection",
+    "RowAlign",
+    "TextSize",
+    "ToastPosition",
+    "DividerOrientation",
+    "ColumnAlign",
+    "NodeCategory",
+    "ScrollDir",
+    "BadgeVariant",
+    "EasingPreset",
+    "FrameDebuggerViewState",
+    "SidebarPosition",
+    "BtPalettePanel",
+    "TooltipPosition",
+    "Pagination",
+    "RowJustify",
+    "ChipVariant",
+    "VNode",
+    "StackJustify",
+    "MessageRole",
+    "AvatarShape",
+    "SwitchSize",
     "ButtonSize",
+    "LoadingSize",
+    "ChipSize",
     "ProgressVariant",
+    "NavbarPosition",
+    "ButtonVariant",
+    "SkeletonVariant",
+    "ScrollDirection",
+    "ToastVariant",
     "SplitDirection",
     "BadgeSize",
-    "TooltipPosition",
-    "LoadingSize",
-    "StackDirection",
-    "PinType",
-    "FrameDebuggerViewState",
-    "FlexDirection",
-    "TextareaResize",
-    "ChipSize",
-    "SpinnerSize",
-    "TextSize",
-    "SwitchSize",
-    "MessageRole",
-    "Progress",
-    "ModalSize",
-    "ColumnAlign",
-    "ChipVariant",
-    "SkeletonVariant",
-    "NavbarPosition",
-    "StackAlign",
-    "NodeCategory",
-    "CheckboxSize",
-    "AvatarSize",
-    "PopoverPosition",
-    "BtDebuggerOverlay",
-    "RowAlign",
-    "VNode",
-    "ToastVariant",
-    "ButtonVariant",
-    "DrawerPosition",
-    "DividerOrientation",
+    "ColumnJustify",
+    "RatingSize",
     "SelectSize",
-    "AlertVariant",
-    "BtPalettePanel",
-    "ScrollDir",
-    "ProfilerScopeKind"
+    "CheckboxSize",
+    "BtDebuggerOverlay",
+    "ModalSize",
+    "ProfilerScopeKind",
+    "SpinnerSize",
+    "PinType",
+    "DrawerPosition",
+    "AvatarSize",
+    "Progress"
   ],
   "non_copy_structs": [],
   "version": "0.50.0",
   "analysis_fingerprint": {
     "content_hash": 6421896884451501337,
-    "compiler_version": "0.50.0:efa412e4570d8b42",
+    "compiler_version": "0.50.0:94a5f44528a82cdf",
     "dep_metadata_epoch": 2435999049025295583,
-    "output_hash": 6544854562018838544
+    "output_hash": 5155705850061613575
   }
 }

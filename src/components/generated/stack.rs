@@ -109,7 +109,7 @@ impl Stack {
 
 impl Renderable for Stack {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let flex_direction: String = match self.direction {
             StackDirection::Vertical => String::from("column"),
             StackDirection::Horizontal => String::from("row"),
@@ -129,25 +129,25 @@ impl Renderable for Stack {
             StackJustify::SpaceEvenly => String::from("space-evenly"),
         };
         let mut html = String::new();
-        html.push_str("<div style='display: flex; flex-direction: ");
+        html.push_str(&"<div style='display: flex; flex-direction: ");
         html.push_str(&flex_direction);
-        html.push_str("; gap: ");
+        html.push_str(&"; gap: ");
         html.push_str(&self.gap);
-        html.push_str("; align-items: ");
+        html.push_str(&"; align-items: ");
         html.push_str(&align_items);
-        html.push_str("; justify-content: ");
+        html.push_str(&"; justify-content: ");
         html.push_str(&justify_content);
-        html.push_str("; padding: ");
+        html.push_str(&"; padding: ");
         html.push_str(&self.padding);
-        html.push_str("; width: ");
+        html.push_str(&"; width: ");
         html.push_str(&self.width);
-        html.push_str("; height: ");
+        html.push_str(&"; height: ");
         html.push_str(&self.height);
-        html.push_str(";'>");
+        html.push_str(&";'>");
         for child in &self.children {
-            html.push_str(&child);
+            html.push_str(child);
         }
-        html.push_str("</div>");
+        html.push_str(&"</div>");
         html
     }
 }

@@ -35,7 +35,7 @@ impl HamburgerMenu {
     }
     #[inline]
     pub fn item(mut self, item: HamburgerMenuItem) -> HamburgerMenu {
-        self.items.push(item.clone());
+        self.items.push(item);
         self
     }
     #[inline]
@@ -47,7 +47,7 @@ impl HamburgerMenu {
 
 impl Renderable for HamburgerMenu {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut items_html: Vec<String> = Vec::new();
         for item in &self.items {
             {
@@ -66,6 +66,6 @@ impl Renderable for HamburgerMenu {
                 String::new()
             }
         };
-        format!("<div class='wj-hamburger-menu{}'>\n                <button class='wj-hamburger-button' onclick='this.parentElement.classList.toggle(\"wj-hamburger-open\")'>\n                    <span></span>\n                    <span></span>\n                    <span></span>\n                </button>\n                <div class='wj-hamburger-drawer'>\n                    {}\n                </div>\n            </div>", open_class, items_html.join(""))
+        format!("<div class='wj-hamburger-menu{}'>\n                <button class='wj-hamburger-button' onclick='this.parentElement.classList.toggle(\"wj-hamburger-open\")'>\n                    <span></span>\n                    <span></span>\n                    <span></span>\n                </button>\n                <div class='wj-hamburger-drawer'>\n                    {}\n                </div>\n            </div>", open_class, items_html.join(&""))
     }
 }

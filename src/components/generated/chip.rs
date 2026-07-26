@@ -66,7 +66,7 @@ impl Chip {
 
 impl Renderable for Chip {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let bg_color: String = match self.variant {
             ChipVariant::Default => String::from("#e2e8f0"),
             ChipVariant::Primary => String::from("#3b82f6"),
@@ -103,32 +103,32 @@ impl Renderable for Chip {
         };
         let mut html = String::new();
         html.push_str(
-            "<span style='display: inline-flex; align-items: center; gap: 6px; padding: ",
+            &"<span style='display: inline-flex; align-items: center; gap: 6px; padding: ",
         );
         html.push_str(&padding);
-        html.push_str("; font-size: ");
+        html.push_str(&"; font-size: ");
         html.push_str(&font_size);
-        html.push_str("; font-weight: 500; border-radius: 16px; background: ");
+        html.push_str(&"; font-weight: 500; border-radius: 16px; background: ");
         html.push_str(&bg_color);
-        html.push_str("; color: ");
+        html.push_str(&"; color: ");
         html.push_str(&text_color);
-        html.push_str("; border: 1px solid ");
+        html.push_str(&"; border: 1px solid ");
         html.push_str(&border_color);
-        html.push_str(";'>");
+        html.push_str(&";'>");
         if !self.icon.is_empty() {
-            html.push_str("<span>");
+            html.push_str(&"<span>");
             html.push_str(&self.icon);
-            html.push_str("</span>");
+            html.push_str(&"</span>");
         }
-        html.push_str("<span>");
+        html.push_str(&"<span>");
         html.push_str(&self.label);
-        html.push_str("</span>");
+        html.push_str(&"</span>");
         if self.removable {
-            html.push_str("<button onclick='this.parentElement.remove()' style='background: none; border: none; cursor: pointer; padding: 0; margin: 0; display: flex; align-items: center; color: ");
+            html.push_str(&"<button onclick='this.parentElement.remove()' style='background: none; border: none; cursor: pointer; padding: 0; margin: 0; display: flex; align-items: center; color: ");
             html.push_str(&text_color);
-            html.push_str("; opacity: 0.7; font-size: 18px; line-height: 1;' onmouseover='this.style.opacity=\"1\"' onmouseout='this.style.opacity=\"0.7\"'>&times;</button>");
+            html.push_str(&"; opacity: 0.7; font-size: 18px; line-height: 1;' onmouseover='this.style.opacity=\"1\"' onmouseout='this.style.opacity=\"0.7\"'>&times;</button>");
         }
-        html.push_str("</span>");
+        html.push_str(&"</span>");
         html
     }
 }

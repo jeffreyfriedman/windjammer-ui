@@ -5,7 +5,7 @@ use super::*;
 
 use super::vnode::VNode;
 pub trait Renderable {
-    fn render(&mut self) -> String;
+    fn render(&self) -> String;
 }
 
 pub trait RenderableVNode {

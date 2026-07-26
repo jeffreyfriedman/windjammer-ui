@@ -56,7 +56,7 @@ impl AdvancedCodeEditor {
 
 impl Renderable for AdvancedCodeEditor {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let features_class = {
             if self.minimap {
                 String::from(" wj-editor-with-minimap")
@@ -71,7 +71,7 @@ impl Renderable for AdvancedCodeEditor {
                 String::new()
             }
         };
-        format!("<div class='wj-advanced-editor wj-editor-{} wj-editor-theme-{}{}{}'>\n  <div class='wj-editor-toolbar'>\n    <span>Language: {}</span>\n    <span>Theme: {}</span>\n  </div>\n  <div class='wj-editor-main'>\n    <textarea class='wj-editor-textarea'>\n{}</textarea>\n    {}\n  </div>\n</div>", self.language, self.theme, features_class, line_class, self.language, self.theme, self.code, {
+        format!("<div class='wj-advanced-editor wj-editor-{} wj-editor-theme-{}{}{}'>\n  <div class='wj-editor-toolbar'>\n    <span>Language: {}</span>\n    <span>Theme: {}</span>\n  </div>\n  <div class='wj-editor-main'>\n    <textarea class='wj-editor-textarea'>\n{}</textarea>\n    {}\n  </div>\n</div>", self.language.clone(), self.theme.clone(), features_class, line_class, self.language.clone(), self.theme.clone(), self.code.clone(), {
             if self.minimap {
                 "<div class='wj-editor-minimap'></div>"
             } else {

@@ -33,11 +33,12 @@ impl Toolbar {
 
 impl Renderable for Toolbar {
     #[inline]
-    fn render(&mut self) -> String {
-        let items_html = self.items.join("\n");
+    fn render(&self) -> String {
+        let items_html = self.items.join(&"\n");
         format!(
             "<div class='wj-toolbar wj-toolbar-{}'>\n  {}\n</div>",
-            self.position, items_html
+            self.position.clone(),
+            items_html
         )
     }
 }

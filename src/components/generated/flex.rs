@@ -70,7 +70,7 @@ impl Flex {
 
 impl Renderable for Flex {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let direction_str: String = match self.direction {
             FlexDirection::Row => String::from("row"),
             FlexDirection::Column => String::from("column"),
@@ -78,18 +78,21 @@ impl Renderable for Flex {
         let mut style = "display: flex; flex-direction: ".to_string()
             + &direction_str.to_string()
             + &"; gap: "
-            + &self.gap
+            + &self.gap.clone()
             + &";";
         if self.padding != "" {
-            style = format!("{}{}{}{}", style, " padding: ", self.padding, ";");
+            style = format!("{}{}{}{}", style, " padding: ", self.padding.clone(), ";");
         }
         if self.background_color != "" {
             style = format!(
                 "{}{}{}{}",
-                style, " background-color: ", self.background_color, ";"
+                style,
+                " background-color: ",
+                self.background_color.clone(),
+                ";"
             );
         }
-        let children_html = self.children.join("\n  ");
+        let children_html = self.children.join(&"\n  ");
         format!(
             "<div class='wj-flex' style='{}'>\n  {}\n</div>",
             style, children_html

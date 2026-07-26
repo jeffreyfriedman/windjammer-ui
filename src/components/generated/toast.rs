@@ -67,7 +67,7 @@ impl Toast {
 
 impl Renderable for Toast {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let variant_class: String = match self.variant {
             ToastVariant::Success => String::from("wj-toast-success"),
             ToastVariant::Error => String::from("wj-toast-error"),
@@ -95,6 +95,6 @@ impl Renderable for Toast {
                 String::new()
             }
         };
-        format!("<div class='wj-toast {} {}' data-duration='{}'>\n  <span class='wj-toast-icon'>{}</span>\n  <span class='wj-toast-message'>{}</span>\n  {}\n</div>", variant_class, position_class, self.duration, icon, self.message, close_button)
+        format!("<div class='wj-toast {} {}' data-duration='{}'>\n  <span class='wj-toast-icon'>{}</span>\n  <span class='wj-toast-message'>{}</span>\n  {}\n</div>", variant_class, position_class, self.duration, icon, self.message.clone(), close_button)
     }
 }

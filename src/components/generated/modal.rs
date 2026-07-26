@@ -66,7 +66,7 @@ impl Modal {
 
 impl Renderable for Modal {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let width: String = match self.size {
             ModalSize::Small => String::from("400px"),
             ModalSize::Medium => String::from("600px"),
@@ -85,38 +85,40 @@ impl Renderable for Modal {
             }
         };
         let mut html = String::new();
-        html.push_str("<div id='");
+        html.push_str(&"<div id='");
         html.push_str(&self.id);
-        html.push_str("-backdrop' style='position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); display: ");
+        html.push_str(&"-backdrop' style='position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); display: ");
         html.push_str(&display);
-        html.push_str("; align-items: center; justify-content: center; z-index: 1000;'>");
-        html.push_str("<div id='");
+        html.push_str(&"; align-items: center; justify-content: center; z-index: 1000;'>");
+        html.push_str(&"<div id='");
         html.push_str(&self.id);
-        html.push_str("' style='background: white; border-radius: 8px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); max-width: ");
+        html.push_str(&"' style='background: white; border-radius: 8px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); max-width: ");
         html.push_str(&width);
-        html.push_str("; width: 100%; max-height: ");
+        html.push_str(&"; width: 100%; max-height: ");
         html.push_str(&height);
-        html.push_str("; display: flex; flex-direction: column; margin: 16px;'>");
-        html.push_str("<div style='padding: 16px 24px; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between;'>");
-        html.push_str("<h2 style='margin: 0; font-size: 18px; font-weight: 600; color: #1a202c;'>");
+        html.push_str(&"; display: flex; flex-direction: column; margin: 16px;'>");
+        html.push_str(&"<div style='padding: 16px 24px; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between;'>");
+        html.push_str(
+            &"<h2 style='margin: 0; font-size: 18px; font-weight: 600; color: #1a202c;'>",
+        );
         html.push_str(&self.title);
-        html.push_str("</h2>");
+        html.push_str(&"</h2>");
         if self.closeable {
-            html.push_str("<button onclick='document.getElementById(\"");
+            html.push_str(&"<button onclick='document.getElementById(\"");
             html.push_str(&self.id);
-            html.push_str("-backdrop\").style.display=\"none\"' style='background: none; border: none; font-size: 24px; cursor: pointer; color: #718096; padding: 0; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;'>&times;</button>");
+            html.push_str(&"-backdrop\").style.display=\"none\"' style='background: none; border: none; font-size: 24px; cursor: pointer; color: #718096; padding: 0; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;'>&times;</button>");
         }
-        html.push_str("</div>");
-        html.push_str("<div style='padding: 24px; flex: 1; overflow-y: auto;'>");
+        html.push_str(&"</div>");
+        html.push_str(&"<div style='padding: 24px; flex: 1; overflow-y: auto;'>");
         html.push_str(&self.content);
-        html.push_str("</div>");
+        html.push_str(&"</div>");
         if !self.footer.is_empty() {
-            html.push_str("<div style='padding: 16px 24px; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 8px;'>");
+            html.push_str(&"<div style='padding: 16px 24px; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 8px;'>");
             html.push_str(&self.footer);
-            html.push_str("</div>");
+            html.push_str(&"</div>");
         }
-        html.push_str("</div>");
-        html.push_str("</div>");
+        html.push_str(&"</div>");
+        html.push_str(&"</div>");
         html
     }
 }

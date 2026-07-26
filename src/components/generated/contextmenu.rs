@@ -57,14 +57,14 @@ impl ContextMenu {
     }
     #[inline]
     pub fn item(mut self, item: ContextMenuItem) -> ContextMenu {
-        self.items.push(item.clone());
+        self.items.push(item);
         self
     }
 }
 
 impl Renderable for ContextMenu {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut items_html: Vec<String> = Vec::new();
         for item in &self.items {
             let icon_html = {
@@ -93,6 +93,6 @@ impl Renderable for ContextMenu {
                 items_html.push(_temp0)
             };
         }
-        format!("<div class='wj-context-menu' id='context-{}' style='display: none'>\n                {}\n            </div>", self.trigger_id, items_html.join(""))
+        format!("<div class='wj-context-menu' id='context-{}' style='display: none'>\n                {}\n            </div>", self.trigger_id.clone(), items_html.join(&""))
     }
 }

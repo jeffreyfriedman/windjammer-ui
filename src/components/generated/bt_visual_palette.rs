@@ -10,7 +10,7 @@ pub struct BtPalettePanel;
 
 impl Renderable for BtPalettePanel {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut mk = "".to_string();
         mk = format!("{}{}", mk, "<div class=\"bt-pane-label\">Compositor</div>");
         mk = format!("{}{}", mk, "<button class=\"bt-drag-chip\" draggable=\"true\" data-bt-kind=\"sequence\">Sequence</button>");

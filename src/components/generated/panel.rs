@@ -49,7 +49,7 @@ impl Panel {
 
 impl Renderable for Panel {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let header_class: String = {
             if self.collapsible {
                 String::from("wj-panel-header-collapsible")
@@ -75,7 +75,7 @@ impl Renderable for Panel {
                 String::from("display: block;")
             }
         };
-        let children_html = self.children.join("\n");
-        format!("<div class='wj-panel'>\n  <div class='{}'>\n    <span>{}</span>\n    <h3>{}</h3>\n  </div>\n  <div class='wj-panel-content' style='{}padding: {};'>\n    {}\n  </div>\n</div>", header_class, icon, self.title, content_style, self.padding, children_html)
+        let children_html = self.children.join(&"\n");
+        format!("<div class='wj-panel'>\n  <div class='{}'>\n    <span>{}</span>\n    <h3>{}</h3>\n  </div>\n  <div class='wj-panel-content' style='{}padding: {};'>\n    {}\n  </div>\n</div>", header_class, icon, self.title.clone(), content_style, self.padding.clone(), children_html)
     }
 }

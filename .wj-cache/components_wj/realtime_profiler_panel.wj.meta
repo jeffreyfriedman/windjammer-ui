@@ -1,35 +1,6 @@
 {
   "module_path": "realtime_profiler_panel",
   "functions": {
-    "RealtimeProfilerPanel::snapshot": {
-      "params": [
-        "Custom(\"Self\")",
-        "Custom(\"LiveProfilerSnapshot\")"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "Custom(\"LiveProfilerSnapshot\")"
-      ],
-      "return_type": "Custom(\"RealtimeProfilerPanel\")",
-      "is_associated": true,
-      "parent_type": "RealtimeProfilerPanel",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "realtime_profiler_styles": {
-      "params": [],
-      "formal_params": [],
-      "return_type": "String",
-      "is_associated": false,
-      "parent_type": null,
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
     "RealtimeProfilerPanel::from_live": {
       "params": [
         "Custom(\"f32\")"
@@ -46,20 +17,40 @@
       "has_self_receiver": false,
       "is_extern": false
     },
-    "render_scope_row": {
-      "params": [
-        "Custom(\"ProfilerScopeRow\")"
-      ],
-      "formal_params": [
-        "Custom(\"ProfilerScopeRow\")"
-      ],
+    "realtime_profiler_styles": {
+      "params": [],
+      "formal_params": [],
       "return_type": "String",
       "is_associated": false,
       "parent_type": null,
-      "param_ownership": [
-        "Owned"
-      ],
+      "param_ownership": [],
       "has_self_receiver": false,
+      "is_extern": false
+    },
+    "RealtimeProfilerPanel::from_mock": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "Custom(\"RealtimeProfilerPanel\")",
+      "is_associated": true,
+      "parent_type": "RealtimeProfilerPanel",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "RealtimeProfilerPanel::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "RealtimeProfilerPanel",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
       "is_extern": false
     },
     "render_scope_list": {
@@ -78,17 +69,20 @@
       "has_self_receiver": false,
       "is_extern": false
     },
-    "RealtimeProfilerPanel::render": {
+    "RealtimeProfilerPanel::snapshot": {
       "params": [
-        "Custom(\"Self\")"
+        "Custom(\"Self\")",
+        "Custom(\"LiveProfilerSnapshot\")"
       ],
       "formal_params": [
-        "Custom(\"Self\")"
+        "Custom(\"Self\")",
+        "Custom(\"LiveProfilerSnapshot\")"
       ],
-      "return_type": "String",
+      "return_type": "Custom(\"RealtimeProfilerPanel\")",
       "is_associated": true,
       "parent_type": "RealtimeProfilerPanel",
       "param_ownership": [
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
@@ -113,13 +107,19 @@
       "has_self_receiver": false,
       "is_extern": false
     },
-    "RealtimeProfilerPanel::from_mock": {
-      "params": [],
-      "formal_params": [],
-      "return_type": "Custom(\"RealtimeProfilerPanel\")",
-      "is_associated": true,
-      "parent_type": "RealtimeProfilerPanel",
-      "param_ownership": [],
+    "render_scope_row": {
+      "params": [
+        "Custom(\"ProfilerScopeRow\")"
+      ],
+      "formal_params": [
+        "Custom(\"ProfilerScopeRow\")"
+      ],
+      "return_type": "String",
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [
+        "Owned"
+      ],
       "has_self_receiver": false,
       "is_extern": false
     }
@@ -132,66 +132,66 @@
   },
   "trait_impls": {},
   "copy_structs": [
-    "SidebarPosition",
-    "RowJustify",
-    "AvatarShape",
-    "TextWeight",
-    "ScrollDirection",
-    "ToastPosition",
-    "StackJustify",
-    "EasingPreset",
-    "ColumnJustify",
     "CurvePoint",
-    "Pagination",
-    "BadgeVariant",
-    "RatingSize",
+    "StackAlign",
+    "AlertVariant",
+    "TextareaResize",
+    "PopoverPosition",
     "BtWire",
+    "TextWeight",
+    "FlexDirection",
+    "StackDirection",
+    "RowAlign",
+    "TextSize",
+    "ToastPosition",
+    "DividerOrientation",
+    "ColumnAlign",
+    "NodeCategory",
+    "ScrollDir",
+    "BadgeVariant",
+    "EasingPreset",
+    "FrameDebuggerViewState",
+    "SidebarPosition",
+    "BtPalettePanel",
+    "TooltipPosition",
+    "Pagination",
+    "RowJustify",
+    "ChipVariant",
+    "VNode",
+    "StackJustify",
+    "MessageRole",
+    "AvatarShape",
+    "SwitchSize",
     "ButtonSize",
+    "LoadingSize",
+    "ChipSize",
     "ProgressVariant",
+    "NavbarPosition",
+    "ButtonVariant",
+    "SkeletonVariant",
+    "ScrollDirection",
+    "ToastVariant",
     "SplitDirection",
     "BadgeSize",
-    "TooltipPosition",
-    "LoadingSize",
-    "StackDirection",
-    "PinType",
-    "FrameDebuggerViewState",
-    "FlexDirection",
-    "TextareaResize",
-    "ChipSize",
-    "SpinnerSize",
-    "TextSize",
-    "SwitchSize",
-    "MessageRole",
-    "Progress",
-    "ModalSize",
-    "ColumnAlign",
-    "ChipVariant",
-    "SkeletonVariant",
-    "NavbarPosition",
-    "StackAlign",
-    "NodeCategory",
-    "CheckboxSize",
-    "AvatarSize",
-    "PopoverPosition",
-    "BtDebuggerOverlay",
-    "RowAlign",
-    "VNode",
-    "ToastVariant",
-    "ButtonVariant",
-    "DrawerPosition",
-    "DividerOrientation",
+    "ColumnJustify",
+    "RatingSize",
     "SelectSize",
-    "AlertVariant",
-    "BtPalettePanel",
-    "ScrollDir",
-    "ProfilerScopeKind"
+    "CheckboxSize",
+    "BtDebuggerOverlay",
+    "ModalSize",
+    "ProfilerScopeKind",
+    "SpinnerSize",
+    "PinType",
+    "DrawerPosition",
+    "AvatarSize",
+    "Progress"
   ],
   "non_copy_structs": [],
   "version": "0.50.0",
   "analysis_fingerprint": {
     "content_hash": 16009409964790356288,
-    "compiler_version": "0.50.0:efa412e4570d8b42",
+    "compiler_version": "0.50.0:94a5f44528a82cdf",
     "dep_metadata_epoch": 2435999049025295583,
-    "output_hash": 16392352734751479733
+    "output_hash": 2107377617435140653
   }
 }

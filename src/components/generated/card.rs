@@ -60,25 +60,27 @@ impl Card {
 
 impl Renderable for Card {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let style = {
             let mut __s = String::with_capacity(64);
             write!(
                 &mut __s,
                 "padding: {}; background-color: {}; border: 1px solid {}; border-radius: 8px;",
-                self.padding, self.background_color, self.border_color
+                self.padding.clone(),
+                self.background_color.clone(),
+                self.border_color.clone()
             )
             .unwrap();
             __s
         };
         let title_html: String = {
             if self.title != "" {
-                format!("<div class='wj-card-title' style='font-weight: bold; margin-bottom: 12px; font-size: 1.25rem;'>{}</div>", self.title)
+                format!("<div class='wj-card-title' style='font-weight: bold; margin-bottom: 12px; font-size: 1.25rem;'>{}</div>", self.title.clone())
             } else {
                 "".to_string()
             }
         };
-        let children_html = self.children.join("\n");
+        let children_html = self.children.join(&"\n");
         format!(
             "<div class='wj-card' style='{}'>\n{}{}\n</div>",
             style, title_html, children_html

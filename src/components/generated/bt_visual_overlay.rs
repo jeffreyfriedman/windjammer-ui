@@ -13,7 +13,7 @@ pub struct BtDebuggerOverlay;
 
 impl Renderable for BtDebuggerOverlay {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let legend = "".to_string()
             + &"<ul class=\"bt-legend\">"
             + &"<li><span class=\"swatch bt-visual-running\"></span> Running</li>"

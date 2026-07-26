@@ -42,10 +42,13 @@ impl CodeBlock {
 
 impl Renderable for CodeBlock {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let language_label = {
             if !self.language.is_empty() {
-                format!("<div class='wj-codeblock-language'>{}</div>", self.language)
+                format!(
+                    "<div class='wj-codeblock-language'>{}</div>",
+                    self.language.clone()
+                )
             } else {
                 String::new()
             }
@@ -64,6 +67,6 @@ impl Renderable for CodeBlock {
                 String::new()
             }
         };
-        format!("<div class='wj-codeblock{}'>\n                <div class='wj-codeblock-header'>\n                    {}\n                    {}\n                </div>\n                <pre class='wj-codeblock-pre'><code class='wj-codeblock-code'>{}</code></pre>\n            </div>", line_number_class, language_label, copy_button, self.code)
+        format!("<div class='wj-codeblock{}'>\n                <div class='wj-codeblock-header'>\n                    {}\n                    {}\n                </div>\n                <pre class='wj-codeblock-pre'><code class='wj-codeblock-code'>{}</code></pre>\n            </div>", line_number_class, language_label, copy_button, self.code.clone())
     }
 }

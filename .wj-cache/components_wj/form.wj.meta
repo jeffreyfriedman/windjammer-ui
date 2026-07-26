@@ -1,79 +1,6 @@
 {
   "module_path": "form",
   "functions": {
-    "FormField::error": {
-      "params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "return_type": "Custom(\"FormField\")",
-      "is_associated": true,
-      "parent_type": "FormField",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Form::method": {
-      "params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Form\")",
-      "is_associated": true,
-      "parent_type": "Form",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Form::on_submit": {
-      "params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Form\")",
-      "is_associated": true,
-      "parent_type": "Form",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Form::new": {
-      "params": [
-        "String"
-      ],
-      "formal_params": [
-        "String"
-      ],
-      "return_type": "Custom(\"Form\")",
-      "is_associated": true,
-      "parent_type": "Form",
-      "param_ownership": [
-        "Owned"
-      ],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
     "Form::child": {
       "params": [
         "Custom(\"Self\")",
@@ -87,78 +14,8 @@
       "is_associated": true,
       "parent_type": "Form",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
         "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "FormField::help_text": {
-      "params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "return_type": "Custom(\"FormField\")",
-      "is_associated": true,
-      "parent_type": "FormField",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Form::action": {
-      "params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Form\")",
-      "is_associated": true,
-      "parent_type": "Form",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "FormField::render": {
-      "params": [
-        "Custom(\"Self\")"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")"
-      ],
-      "return_type": "String",
-      "is_associated": true,
-      "parent_type": "FormField",
-      "param_ownership": [
-        "Borrowed"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Form::render": {
-      "params": [
-        "Custom(\"Self\")"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")"
-      ],
-      "return_type": "String",
-      "is_associated": true,
-      "parent_type": "Form",
-      "param_ownership": [
-        "Borrowed"
       ],
       "has_self_receiver": true,
       "is_extern": false
@@ -176,8 +33,24 @@
       "is_associated": true,
       "parent_type": "FormField",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
         "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Form::render": {
+      "params": [
+        "Reference(Custom(\"Self\"))"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Form",
+      "param_ownership": [
+        "Borrowed"
       ],
       "has_self_receiver": true,
       "is_extern": false
@@ -200,86 +73,213 @@
       ],
       "has_self_receiver": false,
       "is_extern": false
+    },
+    "FormField::help_text": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"FormField\")",
+      "is_associated": true,
+      "parent_type": "FormField",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "FormField::render": {
+      "params": [
+        "Reference(Custom(\"Self\"))"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "FormField",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Form::action": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Form\")",
+      "is_associated": true,
+      "parent_type": "Form",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Form::on_submit": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Form\")",
+      "is_associated": true,
+      "parent_type": "Form",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Form::new": {
+      "params": [
+        "String"
+      ],
+      "formal_params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Form\")",
+      "is_associated": true,
+      "parent_type": "Form",
+      "param_ownership": [
+        "Owned"
+      ],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Form::method": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Form\")",
+      "is_associated": true,
+      "parent_type": "Form",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "FormField::error": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"FormField\")",
+      "is_associated": true,
+      "parent_type": "FormField",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
     }
   },
   "structs": {
-    "Form": {
-      "method": "String",
-      "children": "Vec(String)",
-      "on_submit": "String",
-      "action": "String",
-      "id": "String"
-    },
     "FormField": {
-      "required": "Bool",
+      "error": "String",
       "help_text": "String",
-      "label": "String",
       "input": "String",
-      "error": "String"
+      "required": "Bool",
+      "label": "String"
+    },
+    "Form": {
+      "id": "String",
+      "children": "Vec(String)",
+      "action": "String",
+      "method": "String",
+      "on_submit": "String"
     }
   },
   "trait_impls": {},
   "copy_structs": [
-    "SidebarPosition",
-    "RowJustify",
-    "AvatarShape",
-    "TextWeight",
-    "ScrollDirection",
-    "ToastPosition",
-    "StackJustify",
-    "EasingPreset",
-    "ColumnJustify",
     "CurvePoint",
-    "Pagination",
-    "BadgeVariant",
-    "RatingSize",
+    "StackAlign",
+    "AlertVariant",
+    "TextareaResize",
+    "PopoverPosition",
     "BtWire",
+    "TextWeight",
+    "FlexDirection",
+    "StackDirection",
+    "RowAlign",
+    "TextSize",
+    "ToastPosition",
+    "DividerOrientation",
+    "ColumnAlign",
+    "NodeCategory",
+    "ScrollDir",
+    "BadgeVariant",
+    "EasingPreset",
+    "FrameDebuggerViewState",
+    "SidebarPosition",
+    "BtPalettePanel",
+    "TooltipPosition",
+    "Pagination",
+    "RowJustify",
+    "ChipVariant",
+    "VNode",
+    "StackJustify",
+    "MessageRole",
+    "AvatarShape",
+    "SwitchSize",
     "ButtonSize",
+    "LoadingSize",
+    "ChipSize",
     "ProgressVariant",
+    "NavbarPosition",
+    "ButtonVariant",
+    "SkeletonVariant",
+    "ScrollDirection",
+    "ToastVariant",
     "SplitDirection",
     "BadgeSize",
-    "TooltipPosition",
-    "LoadingSize",
-    "StackDirection",
-    "PinType",
-    "FrameDebuggerViewState",
-    "FlexDirection",
-    "TextareaResize",
-    "ChipSize",
-    "SpinnerSize",
-    "TextSize",
-    "SwitchSize",
-    "MessageRole",
-    "Progress",
-    "ModalSize",
-    "ColumnAlign",
-    "ChipVariant",
-    "SkeletonVariant",
-    "NavbarPosition",
-    "StackAlign",
-    "NodeCategory",
-    "CheckboxSize",
-    "AvatarSize",
-    "PopoverPosition",
-    "BtDebuggerOverlay",
-    "RowAlign",
-    "VNode",
-    "ToastVariant",
-    "ButtonVariant",
-    "DrawerPosition",
-    "DividerOrientation",
+    "ColumnJustify",
+    "RatingSize",
     "SelectSize",
-    "AlertVariant",
-    "BtPalettePanel",
-    "ScrollDir",
-    "ProfilerScopeKind"
+    "CheckboxSize",
+    "BtDebuggerOverlay",
+    "ModalSize",
+    "ProfilerScopeKind",
+    "SpinnerSize",
+    "PinType",
+    "DrawerPosition",
+    "AvatarSize",
+    "Progress"
   ],
   "non_copy_structs": [],
   "version": "0.50.0",
   "analysis_fingerprint": {
-    "content_hash": 14656157740206450660,
-    "compiler_version": "0.50.0:efa412e4570d8b42",
+    "content_hash": 3338955329281958305,
+    "compiler_version": "0.50.0:94a5f44528a82cdf",
     "dep_metadata_epoch": 2435999049025295583,
-    "output_hash": 10099454679480682684
+    "output_hash": 3051986185331749254
   }
 }

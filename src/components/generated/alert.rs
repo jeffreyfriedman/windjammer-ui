@@ -52,7 +52,7 @@ impl Alert {
 
 impl Renderable for Alert {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let variant_class: String = match self.variant {
             AlertVariant::Error => String::from("wj-alert-error"),
             AlertVariant::Warning => String::from("wj-alert-warning"),
@@ -67,7 +67,9 @@ impl Renderable for Alert {
         };
         format!(
             "<div class='wj-alert {}'>{} {}</div>",
-            variant_class, icon, self.message
+            variant_class,
+            icon,
+            self.message.clone()
         )
     }
 }

@@ -99,7 +99,7 @@ impl RenderableVNode for Container {
 
 impl Renderable for Container {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let mut style = "margin: 0 auto; ".to_string();
         if self.max_width != "" {
             style = format!("{}{}{}{}", style, "max-width: ", self.max_width, "; ");
@@ -116,7 +116,7 @@ impl Renderable for Container {
                 style, "background-color: ", self.background_color, "; "
             );
         }
-        let children_html = self.children.join("\n  ");
+        let children_html = self.children.join(&"\n  ");
         format!(
             "<div class='wj-container' style='{}'>\n  {}\n</div>",
             style, children_html

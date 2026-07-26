@@ -1,7 +1,7 @@
 {
   "module_path": "section",
   "functions": {
-    "Section::child": {
+    "Section::icon": {
       "params": [
         "Custom(\"Self\")",
         "String"
@@ -14,7 +14,64 @@
       "is_associated": true,
       "parent_type": "Section",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Section::children": {
+      "params": [
+        "Custom(\"Self\")",
+        "Vec(String)"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "Vec(String)"
+      ],
+      "return_type": "Custom(\"Section\")",
+      "is_associated": true,
+      "parent_type": "Section",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Section::removable": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Section\")",
+      "is_associated": true,
+      "parent_type": "Section",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Section::accent": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Section\")",
+      "is_associated": true,
+      "parent_type": "Section",
+      "param_ownership": [
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
@@ -22,7 +79,7 @@
     },
     "Section::render": {
       "params": [
-        "Custom(\"Self\")"
+        "Reference(Custom(\"Self\"))"
       ],
       "formal_params": [
         "Custom(\"Self\")"
@@ -52,35 +109,6 @@
       "has_self_receiver": false,
       "is_extern": false
     },
-    "SectionGroup::new": {
-      "params": [],
-      "formal_params": [],
-      "return_type": "Custom(\"SectionGroup\")",
-      "is_associated": true,
-      "parent_type": "SectionGroup",
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
-    "SectionGroup::accordion": {
-      "params": [
-        "Custom(\"Self\")",
-        "Bool"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "Bool"
-      ],
-      "return_type": "Custom(\"SectionGroup\")",
-      "is_associated": true,
-      "parent_type": "SectionGroup",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
     "Section::collapsed": {
       "params": [
         "Custom(\"Self\")",
@@ -94,34 +122,18 @@
       "is_associated": true,
       "parent_type": "Section",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
       "is_extern": false
     },
-    "SectionGroup::render": {
-      "params": [
-        "Custom(\"Self\")"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")"
-      ],
-      "return_type": "String",
-      "is_associated": true,
-      "parent_type": "SectionGroup",
-      "param_ownership": [
-        "Borrowed"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "section_styles": {
+    "SectionGroup::new": {
       "params": [],
       "formal_params": [],
-      "return_type": "String",
-      "is_associated": false,
-      "parent_type": null,
+      "return_type": "Custom(\"SectionGroup\")",
+      "is_associated": true,
+      "parent_type": "SectionGroup",
       "param_ownership": [],
       "has_self_receiver": false,
       "is_extern": false
@@ -139,13 +151,29 @@
       "is_associated": true,
       "parent_type": "SectionGroup",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
       "is_extern": false
     },
-    "Section::accent": {
+    "SectionGroup::render": {
+      "params": [
+        "Reference(Custom(\"Self\"))"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "SectionGroup",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Section::child": {
       "params": [
         "Custom(\"Self\")",
         "String"
@@ -158,147 +186,119 @@
       "is_associated": true,
       "parent_type": "Section",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
       "is_extern": false
     },
-    "Section::icon": {
+    "SectionGroup::accordion": {
       "params": [
         "Custom(\"Self\")",
-        "String"
+        "Bool"
       ],
       "formal_params": [
         "Custom(\"Self\")",
-        "String"
+        "Bool"
       ],
-      "return_type": "Custom(\"Section\")",
+      "return_type": "Custom(\"SectionGroup\")",
       "is_associated": true,
-      "parent_type": "Section",
+      "parent_type": "SectionGroup",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
       "is_extern": false
     },
-    "Section::children": {
-      "params": [
-        "Custom(\"Self\")",
-        "Vec(String)"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "Vec(String)"
-      ],
-      "return_type": "Custom(\"Section\")",
-      "is_associated": true,
-      "parent_type": "Section",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Section::removable": {
-      "params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Section\")",
-      "is_associated": true,
-      "parent_type": "Section",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
+    "section_styles": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "String",
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [],
+      "has_self_receiver": false,
       "is_extern": false
     }
   },
   "structs": {
     "Section": {
-      "accent_color": "String",
-      "removable": "Bool",
       "icon": "String",
-      "on_remove": "String",
-      "children": "Vec(String)",
       "title": "String",
-      "collapsed": "Bool"
+      "on_remove": "String",
+      "accent_color": "String",
+      "children": "Vec(String)",
+      "collapsed": "Bool",
+      "removable": "Bool"
     },
     "SectionGroup": {
-      "accordion": "Bool",
-      "sections": "Vec(Custom(\"Section\"))"
+      "sections": "Vec(Custom(\"Section\"))",
+      "accordion": "Bool"
     }
   },
   "trait_impls": {},
   "copy_structs": [
-    "SidebarPosition",
-    "RowJustify",
-    "AvatarShape",
-    "TextWeight",
-    "ScrollDirection",
-    "ToastPosition",
-    "StackJustify",
-    "EasingPreset",
-    "ColumnJustify",
     "CurvePoint",
-    "Pagination",
-    "BadgeVariant",
-    "RatingSize",
+    "StackAlign",
+    "AlertVariant",
+    "TextareaResize",
+    "PopoverPosition",
     "BtWire",
+    "TextWeight",
+    "FlexDirection",
+    "StackDirection",
+    "RowAlign",
+    "TextSize",
+    "ToastPosition",
+    "DividerOrientation",
+    "ColumnAlign",
+    "NodeCategory",
+    "ScrollDir",
+    "BadgeVariant",
+    "EasingPreset",
+    "FrameDebuggerViewState",
+    "SidebarPosition",
+    "BtPalettePanel",
+    "TooltipPosition",
+    "Pagination",
+    "RowJustify",
+    "ChipVariant",
+    "VNode",
+    "StackJustify",
+    "MessageRole",
+    "AvatarShape",
+    "SwitchSize",
     "ButtonSize",
+    "LoadingSize",
+    "ChipSize",
     "ProgressVariant",
+    "NavbarPosition",
+    "ButtonVariant",
+    "SkeletonVariant",
+    "ScrollDirection",
+    "ToastVariant",
     "SplitDirection",
     "BadgeSize",
-    "TooltipPosition",
-    "LoadingSize",
-    "StackDirection",
-    "PinType",
-    "FrameDebuggerViewState",
-    "FlexDirection",
-    "TextareaResize",
-    "ChipSize",
-    "SpinnerSize",
-    "TextSize",
-    "SwitchSize",
-    "MessageRole",
-    "Progress",
-    "ModalSize",
-    "ColumnAlign",
-    "ChipVariant",
-    "SkeletonVariant",
-    "NavbarPosition",
-    "StackAlign",
-    "NodeCategory",
-    "CheckboxSize",
-    "AvatarSize",
-    "PopoverPosition",
-    "BtDebuggerOverlay",
-    "RowAlign",
-    "VNode",
-    "ToastVariant",
-    "ButtonVariant",
-    "DrawerPosition",
-    "DividerOrientation",
+    "ColumnJustify",
+    "RatingSize",
     "SelectSize",
-    "AlertVariant",
-    "BtPalettePanel",
-    "ScrollDir",
-    "ProfilerScopeKind"
+    "CheckboxSize",
+    "BtDebuggerOverlay",
+    "ModalSize",
+    "ProfilerScopeKind",
+    "SpinnerSize",
+    "PinType",
+    "DrawerPosition",
+    "AvatarSize",
+    "Progress"
   ],
   "non_copy_structs": [],
   "version": "0.50.0",
   "analysis_fingerprint": {
     "content_hash": 3074266253646482593,
-    "compiler_version": "0.50.0:efa412e4570d8b42",
+    "compiler_version": "0.50.0:94a5f44528a82cdf",
     "dep_metadata_epoch": 2435999049025295583,
-    "output_hash": 14274862699957790382
+    "output_hash": 1554931875975074546
   }
 }

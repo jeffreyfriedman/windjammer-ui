@@ -40,7 +40,7 @@ impl MessageList {
 
 impl Renderable for MessageList {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let scroll_script = {
             if self.auto_scroll {
                 String::from("onload='this.scrollTop = this.scrollHeight'")
@@ -48,6 +48,6 @@ impl Renderable for MessageList {
                 String::new()
             }
         };
-        format!("<div class='wj-message-list' style='height: {}' {}>\n                {}\n            </div>", self.height, scroll_script, self.messages.join(""))
+        format!("<div class='wj-message-list' style='height: {}' {}>\n                {}\n            </div>", self.height.clone(), scroll_script, self.messages.join(&""))
     }
 }

@@ -71,13 +71,13 @@ impl RenderableVNode for Text {
         };
         let mut node = VNode::span()
             .add_class("wj-text")
-            .add_class(&size_class.to_string())
-            .add_class(&weight_class.to_string())
+            .add_class(size_class.to_string().as_str())
+            .add_class(weight_class.to_string().as_str())
             .add_text(self.content.clone());
         if !self.color.is_empty() {
             node = {
                 let _temp0 = format!("color: {};", self.color.clone());
-                node.add_style(&_temp0)
+                node.add_style(_temp0)
             };
         }
         node
@@ -86,7 +86,7 @@ impl RenderableVNode for Text {
 
 impl Renderable for Text {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let size_class: String = match self.size {
             TextSize::Small => String::from("sm"),
             TextSize::Medium => String::from("md"),
@@ -99,14 +99,17 @@ impl Renderable for Text {
         };
         let style: String = {
             if self.color != "" {
-                format!(" style='color: {};'", self.color)
+                format!(" style='color: {};'", self.color.clone())
             } else {
                 "".to_string()
             }
         };
         format!(
             "<span class='wj-text {} {}'{}>{}</span>",
-            size_class, weight_class, style, self.content
+            size_class,
+            weight_class,
+            style,
+            self.content.clone()
         )
     }
 }

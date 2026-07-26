@@ -1,26 +1,6 @@
 {
   "module_path": "frame_debugger_panel",
   "functions": {
-    "FrameDebuggerViewState::mock_captured": {
-      "params": [],
-      "formal_params": [],
-      "return_type": "Custom(\"FrameDebuggerViewState\")",
-      "is_associated": true,
-      "parent_type": "FrameDebuggerViewState",
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
-    "FrameDebuggerPanel::inactive": {
-      "params": [],
-      "formal_params": [],
-      "return_type": "Custom(\"FrameDebuggerPanel\")",
-      "is_associated": true,
-      "parent_type": "FrameDebuggerPanel",
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
     "FrameDebuggerViewState::from_trace": {
       "params": [
         "Custom(\"u64\")",
@@ -49,23 +29,7 @@
       "has_self_receiver": false,
       "is_extern": false
     },
-    "step_button_class": {
-      "params": [
-        "Bool"
-      ],
-      "formal_params": [
-        "Bool"
-      ],
-      "return_type": "String",
-      "is_associated": false,
-      "parent_type": null,
-      "param_ownership": [
-        "Owned"
-      ],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
-    "FrameDebuggerViewState::empty": {
+    "FrameDebuggerViewState::mock_captured": {
       "params": [],
       "formal_params": [],
       "return_type": "Custom(\"FrameDebuggerViewState\")",
@@ -85,12 +49,74 @@
       "has_self_receiver": false,
       "is_extern": false
     },
+    "FrameDebuggerPanel::inactive": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "Custom(\"FrameDebuggerPanel\")",
+      "is_associated": true,
+      "parent_type": "FrameDebuggerPanel",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "FrameDebuggerPanel::from_mock": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "Custom(\"FrameDebuggerPanel\")",
+      "is_associated": true,
+      "parent_type": "FrameDebuggerPanel",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "step_button_class": {
+      "params": [
+        "Bool"
+      ],
+      "formal_params": [
+        "Bool"
+      ],
+      "return_type": "String",
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [
+        "Owned"
+      ],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
     "frame_debugger_panel_styles": {
       "params": [],
       "formal_params": [],
       "return_type": "String",
       "is_associated": false,
       "parent_type": null,
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "FrameDebuggerPanel::render": {
+      "params": [
+        "Custom(\"Self\")"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "FrameDebuggerPanel",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "FrameDebuggerViewState::empty": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "Custom(\"FrameDebuggerViewState\")",
+      "is_associated": true,
+      "parent_type": "FrameDebuggerViewState",
       "param_ownership": [],
       "has_self_receiver": false,
       "is_extern": false
@@ -117,22 +143,6 @@
       "has_self_receiver": false,
       "is_extern": false
     },
-    "FrameDebuggerPanel::render": {
-      "params": [
-        "Custom(\"Self\")"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")"
-      ],
-      "return_type": "String",
-      "is_associated": true,
-      "parent_type": "FrameDebuggerPanel",
-      "param_ownership": [
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
     "FrameDebuggerPanel::state": {
       "params": [
         "Custom(\"Self\")",
@@ -146,100 +156,90 @@
       "is_associated": true,
       "parent_type": "FrameDebuggerPanel",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
       "is_extern": false
-    },
-    "FrameDebuggerPanel::from_mock": {
-      "params": [],
-      "formal_params": [],
-      "return_type": "Custom(\"FrameDebuggerPanel\")",
-      "is_associated": true,
-      "parent_type": "FrameDebuggerPanel",
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
     }
   },
   "structs": {
-    "FrameDebuggerViewState": {
-      "total_frames": "Custom(\"usize\")",
-      "can_step_forward": "Bool",
-      "frame_time_ms": "Custom(\"f32\")",
-      "current_frame_index": "Custom(\"u64\")",
-      "can_step_back": "Bool"
-    },
     "FrameDebuggerPanel": {
-      "capture_handler": "String",
-      "state": "Custom(\"FrameDebuggerViewState\")",
       "step_back_handler": "String",
-      "step_forward_handler": "String"
+      "step_forward_handler": "String",
+      "state": "Custom(\"FrameDebuggerViewState\")",
+      "capture_handler": "String"
+    },
+    "FrameDebuggerViewState": {
+      "frame_time_ms": "Custom(\"f32\")",
+      "can_step_forward": "Bool",
+      "current_frame_index": "Custom(\"u64\")",
+      "can_step_back": "Bool",
+      "total_frames": "Custom(\"usize\")"
     }
   },
   "trait_impls": {},
   "copy_structs": [
-    "SidebarPosition",
-    "RowJustify",
-    "AvatarShape",
-    "TextWeight",
-    "ScrollDirection",
-    "ToastPosition",
-    "StackJustify",
-    "EasingPreset",
-    "ColumnJustify",
     "CurvePoint",
-    "Pagination",
-    "BadgeVariant",
-    "RatingSize",
+    "StackAlign",
+    "AlertVariant",
+    "TextareaResize",
+    "PopoverPosition",
     "BtWire",
+    "TextWeight",
+    "FlexDirection",
+    "StackDirection",
+    "RowAlign",
+    "TextSize",
+    "ToastPosition",
+    "DividerOrientation",
+    "ColumnAlign",
+    "NodeCategory",
+    "ScrollDir",
+    "BadgeVariant",
+    "EasingPreset",
+    "FrameDebuggerViewState",
+    "SidebarPosition",
+    "BtPalettePanel",
+    "TooltipPosition",
+    "Pagination",
+    "RowJustify",
+    "ChipVariant",
+    "VNode",
+    "StackJustify",
+    "MessageRole",
+    "AvatarShape",
+    "SwitchSize",
     "ButtonSize",
+    "LoadingSize",
+    "ChipSize",
     "ProgressVariant",
+    "NavbarPosition",
+    "ButtonVariant",
+    "SkeletonVariant",
+    "ScrollDirection",
+    "ToastVariant",
     "SplitDirection",
     "BadgeSize",
-    "TooltipPosition",
-    "LoadingSize",
-    "StackDirection",
-    "PinType",
-    "FrameDebuggerViewState",
-    "FlexDirection",
-    "TextareaResize",
-    "ChipSize",
-    "SpinnerSize",
-    "TextSize",
-    "SwitchSize",
-    "MessageRole",
-    "Progress",
-    "ModalSize",
-    "ColumnAlign",
-    "ChipVariant",
-    "SkeletonVariant",
-    "NavbarPosition",
-    "StackAlign",
-    "NodeCategory",
-    "CheckboxSize",
-    "AvatarSize",
-    "PopoverPosition",
-    "BtDebuggerOverlay",
-    "RowAlign",
-    "VNode",
-    "ToastVariant",
-    "ButtonVariant",
-    "DrawerPosition",
-    "DividerOrientation",
+    "ColumnJustify",
+    "RatingSize",
     "SelectSize",
-    "AlertVariant",
-    "BtPalettePanel",
-    "ScrollDir",
-    "ProfilerScopeKind"
+    "CheckboxSize",
+    "BtDebuggerOverlay",
+    "ModalSize",
+    "ProfilerScopeKind",
+    "SpinnerSize",
+    "PinType",
+    "DrawerPosition",
+    "AvatarSize",
+    "Progress"
   ],
   "non_copy_structs": [],
   "version": "0.50.0",
   "analysis_fingerprint": {
     "content_hash": 6703879937286606522,
-    "compiler_version": "0.50.0:efa412e4570d8b42",
+    "compiler_version": "0.50.0:94a5f44528a82cdf",
     "dep_metadata_epoch": 2435999049025295583,
-    "output_hash": 12528433495653755814
+    "output_hash": 6359594809507753701
   }
 }

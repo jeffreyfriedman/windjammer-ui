@@ -1,16 +1,6 @@
 {
   "module_path": "spacer",
   "functions": {
-    "Spacer::xxl": {
-      "params": [],
-      "formal_params": [],
-      "return_type": "Custom(\"Spacer\")",
-      "is_associated": true,
-      "parent_type": "Spacer",
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
     "main": {
       "params": [],
       "formal_params": [],
@@ -21,20 +11,24 @@
       "has_self_receiver": false,
       "is_extern": false
     },
-    "Spacer::render": {
-      "params": [
-        "Custom(\"Self\")"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")"
-      ],
-      "return_type": "String",
+    "Spacer::sm": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "Custom(\"Spacer\")",
       "is_associated": true,
       "parent_type": "Spacer",
-      "param_ownership": [
-        "Borrowed"
-      ],
-      "has_self_receiver": true,
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::new": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
       "is_extern": false
     },
     "Spacer::width": {
@@ -50,20 +44,10 @@
       "is_associated": true,
       "parent_type": "Spacer",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Spacer::xs": {
-      "params": [],
-      "formal_params": [],
-      "return_type": "Custom(\"Spacer\")",
-      "is_associated": true,
-      "parent_type": "Spacer",
-      "param_ownership": [],
-      "has_self_receiver": false,
       "is_extern": false
     },
     "Spacer::xxs": {
@@ -86,79 +70,20 @@
       "has_self_receiver": false,
       "is_extern": false
     },
-    "Spacer::sm": {
-      "params": [],
-      "formal_params": [],
-      "return_type": "Custom(\"Spacer\")",
-      "is_associated": true,
-      "parent_type": "Spacer",
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
-    "Spacer::height": {
+    "Spacer::render": {
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Reference(Custom(\"Self\"))"
       ],
       "formal_params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Self\")"
       ],
-      "return_type": "Custom(\"Spacer\")",
+      "return_type": "String",
       "is_associated": true,
       "parent_type": "Spacer",
       "param_ownership": [
-        "MutBorrowed",
-        "Owned"
+        "Borrowed"
       ],
       "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Spacer::vertical": {
-      "params": [
-        "String"
-      ],
-      "formal_params": [
-        "String"
-      ],
-      "return_type": "Custom(\"Spacer\")",
-      "is_associated": true,
-      "parent_type": "Spacer",
-      "param_ownership": [
-        "Owned"
-      ],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
-    "Spacer::flexible": {
-      "params": [],
-      "formal_params": [],
-      "return_type": "Custom(\"Spacer\")",
-      "is_associated": true,
-      "parent_type": "Spacer",
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
-    "Spacer::new": {
-      "params": [],
-      "formal_params": [],
-      "return_type": "Custom(\"Spacer\")",
-      "is_associated": true,
-      "parent_type": "Spacer",
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
-    "Spacer::lg": {
-      "params": [],
-      "formal_params": [],
-      "return_type": "Custom(\"Spacer\")",
-      "is_associated": true,
-      "parent_type": "Spacer",
-      "param_ownership": [],
-      "has_self_receiver": false,
       "is_extern": false
     },
     "Spacer::horizontal": {
@@ -177,6 +102,81 @@
       "has_self_receiver": false,
       "is_extern": false
     },
+    "Spacer::xxl": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::vertical": {
+      "params": [
+        "String"
+      ],
+      "formal_params": [
+        "String"
+      ],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [
+        "Owned"
+      ],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::height": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Spacer::lg": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::flexible": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Spacer::xs": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "Custom(\"Spacer\")",
+      "is_associated": true,
+      "parent_type": "Spacer",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
     "Spacer::md": {
       "params": [],
       "formal_params": [],
@@ -190,73 +190,73 @@
   },
   "structs": {
     "Spacer": {
-      "flex": "Bool",
       "height": "String",
-      "width": "String"
+      "width": "String",
+      "flex": "Bool"
     }
   },
   "trait_impls": {},
   "copy_structs": [
-    "SidebarPosition",
-    "RowJustify",
-    "AvatarShape",
-    "TextWeight",
-    "ScrollDirection",
-    "ToastPosition",
-    "StackJustify",
-    "EasingPreset",
-    "ColumnJustify",
     "CurvePoint",
-    "Pagination",
-    "BadgeVariant",
-    "RatingSize",
+    "StackAlign",
+    "AlertVariant",
+    "TextareaResize",
+    "PopoverPosition",
     "BtWire",
+    "TextWeight",
+    "FlexDirection",
+    "StackDirection",
+    "RowAlign",
+    "TextSize",
+    "ToastPosition",
+    "DividerOrientation",
+    "ColumnAlign",
+    "NodeCategory",
+    "ScrollDir",
+    "BadgeVariant",
+    "EasingPreset",
+    "FrameDebuggerViewState",
+    "SidebarPosition",
+    "BtPalettePanel",
+    "TooltipPosition",
+    "Pagination",
+    "RowJustify",
+    "ChipVariant",
+    "VNode",
+    "StackJustify",
+    "MessageRole",
+    "AvatarShape",
+    "SwitchSize",
     "ButtonSize",
+    "LoadingSize",
+    "ChipSize",
     "ProgressVariant",
+    "NavbarPosition",
+    "ButtonVariant",
+    "SkeletonVariant",
+    "ScrollDirection",
+    "ToastVariant",
     "SplitDirection",
     "BadgeSize",
-    "TooltipPosition",
-    "LoadingSize",
-    "StackDirection",
-    "PinType",
-    "FrameDebuggerViewState",
-    "FlexDirection",
-    "TextareaResize",
-    "ChipSize",
-    "SpinnerSize",
-    "TextSize",
-    "SwitchSize",
-    "MessageRole",
-    "Progress",
-    "ModalSize",
-    "ColumnAlign",
-    "ChipVariant",
-    "SkeletonVariant",
-    "NavbarPosition",
-    "StackAlign",
-    "NodeCategory",
-    "CheckboxSize",
-    "AvatarSize",
-    "PopoverPosition",
-    "BtDebuggerOverlay",
-    "RowAlign",
-    "VNode",
-    "ToastVariant",
-    "ButtonVariant",
-    "DrawerPosition",
-    "DividerOrientation",
+    "ColumnJustify",
+    "RatingSize",
     "SelectSize",
-    "AlertVariant",
-    "BtPalettePanel",
-    "ScrollDir",
-    "ProfilerScopeKind"
+    "CheckboxSize",
+    "BtDebuggerOverlay",
+    "ModalSize",
+    "ProfilerScopeKind",
+    "SpinnerSize",
+    "PinType",
+    "DrawerPosition",
+    "AvatarSize",
+    "Progress"
   ],
   "non_copy_structs": [],
   "version": "0.50.0",
   "analysis_fingerprint": {
     "content_hash": 14591556914664496164,
-    "compiler_version": "0.50.0:efa412e4570d8b42",
+    "compiler_version": "0.50.0:94a5f44528a82cdf",
     "dep_metadata_epoch": 2435999049025295583,
-    "output_hash": 3839540359015914744
+    "output_hash": 14944344609643392291
   }
 }

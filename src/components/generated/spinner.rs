@@ -41,7 +41,7 @@ impl Spinner {
 
 impl Renderable for Spinner {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let size_class: String = match self.size {
             SpinnerSize::Small => String::from("wj-spinner-sm"),
             SpinnerSize::Medium => String::from("wj-spinner-md"),
@@ -53,7 +53,7 @@ impl Renderable for Spinner {
             __s
         };
         if self.label != "" {
-            format!("<div class='wj-spinner-container'>{}<span class='wj-spinner-label'>{}</span></div>", spinner_html, self.label)
+            format!("<div class='wj-spinner-container'>{}<span class='wj-spinner-label'>{}</span></div>", spinner_html, self.label.clone())
         } else {
             spinner_html
         }

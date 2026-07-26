@@ -1,23 +1,68 @@
 {
   "module_path": "radio",
   "functions": {
-    "RadioOption::disabled": {
+    "RadioGroup::option": {
       "params": [
         "Custom(\"Self\")",
-        "Bool"
+        "Custom(\"RadioOption\")"
       ],
       "formal_params": [
         "Custom(\"Self\")",
-        "Bool"
+        "Custom(\"RadioOption\")"
       ],
-      "return_type": "Custom(\"RadioOption\")",
+      "return_type": "Custom(\"RadioGroup\")",
       "is_associated": true,
-      "parent_type": "RadioOption",
+      "parent_type": "RadioGroup",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
+      "is_extern": false
+    },
+    "RadioGroup::selected": {
+      "params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "String"
+      ],
+      "return_type": "Custom(\"RadioGroup\")",
+      "is_associated": true,
+      "parent_type": "RadioGroup",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "RadioGroup::render": {
+      "params": [
+        "Reference(Custom(\"Self\"))"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "RadioGroup",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "main": {
+      "params": [],
+      "formal_params": [],
+      "return_type": null,
+      "is_associated": false,
+      "parent_type": null,
+      "param_ownership": [],
+      "has_self_receiver": false,
       "is_extern": false
     },
     "RadioOption::new": {
@@ -39,6 +84,25 @@
       "has_self_receiver": false,
       "is_extern": false
     },
+    "RadioOption::disabled": {
+      "params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "Bool"
+      ],
+      "return_type": "Custom(\"RadioOption\")",
+      "is_associated": true,
+      "parent_type": "RadioOption",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
     "RadioGroup::new": {
       "params": [
         "String"
@@ -54,77 +118,13 @@
       ],
       "has_self_receiver": false,
       "is_extern": false
-    },
-    "RadioGroup::selected": {
-      "params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "return_type": "Custom(\"RadioGroup\")",
-      "is_associated": true,
-      "parent_type": "RadioGroup",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "RadioGroup::render": {
-      "params": [
-        "Custom(\"Self\")"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")"
-      ],
-      "return_type": "String",
-      "is_associated": true,
-      "parent_type": "RadioGroup",
-      "param_ownership": [
-        "Borrowed"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "RadioGroup::option": {
-      "params": [
-        "Custom(\"Self\")",
-        "Custom(\"RadioOption\")"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "Custom(\"RadioOption\")"
-      ],
-      "return_type": "Custom(\"RadioGroup\")",
-      "is_associated": true,
-      "parent_type": "RadioGroup",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "main": {
-      "params": [],
-      "formal_params": [],
-      "return_type": null,
-      "is_associated": false,
-      "parent_type": null,
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
     }
   },
   "structs": {
     "RadioGroup": {
       "name": "String",
-      "selected": "String",
-      "options": "Vec(Custom(\"RadioOption\"))"
+      "options": "Vec(Custom(\"RadioOption\"))",
+      "selected": "String"
     },
     "RadioOption": {
       "label": "String",
@@ -134,66 +134,66 @@
   },
   "trait_impls": {},
   "copy_structs": [
-    "SidebarPosition",
-    "RowJustify",
-    "AvatarShape",
-    "TextWeight",
-    "ScrollDirection",
-    "ToastPosition",
-    "StackJustify",
-    "EasingPreset",
-    "ColumnJustify",
     "CurvePoint",
-    "Pagination",
-    "BadgeVariant",
-    "RatingSize",
+    "StackAlign",
+    "AlertVariant",
+    "TextareaResize",
+    "PopoverPosition",
     "BtWire",
+    "TextWeight",
+    "FlexDirection",
+    "StackDirection",
+    "RowAlign",
+    "TextSize",
+    "ToastPosition",
+    "DividerOrientation",
+    "ColumnAlign",
+    "NodeCategory",
+    "ScrollDir",
+    "BadgeVariant",
+    "EasingPreset",
+    "FrameDebuggerViewState",
+    "SidebarPosition",
+    "BtPalettePanel",
+    "TooltipPosition",
+    "Pagination",
+    "RowJustify",
+    "ChipVariant",
+    "VNode",
+    "StackJustify",
+    "MessageRole",
+    "AvatarShape",
+    "SwitchSize",
     "ButtonSize",
+    "LoadingSize",
+    "ChipSize",
     "ProgressVariant",
+    "NavbarPosition",
+    "ButtonVariant",
+    "SkeletonVariant",
+    "ScrollDirection",
+    "ToastVariant",
     "SplitDirection",
     "BadgeSize",
-    "TooltipPosition",
-    "LoadingSize",
-    "StackDirection",
-    "PinType",
-    "FrameDebuggerViewState",
-    "FlexDirection",
-    "TextareaResize",
-    "ChipSize",
-    "SpinnerSize",
-    "TextSize",
-    "SwitchSize",
-    "MessageRole",
-    "Progress",
-    "ModalSize",
-    "ColumnAlign",
-    "ChipVariant",
-    "SkeletonVariant",
-    "NavbarPosition",
-    "StackAlign",
-    "NodeCategory",
-    "CheckboxSize",
-    "AvatarSize",
-    "PopoverPosition",
-    "BtDebuggerOverlay",
-    "RowAlign",
-    "VNode",
-    "ToastVariant",
-    "ButtonVariant",
-    "DrawerPosition",
-    "DividerOrientation",
+    "ColumnJustify",
+    "RatingSize",
     "SelectSize",
-    "AlertVariant",
-    "BtPalettePanel",
-    "ScrollDir",
-    "ProfilerScopeKind"
+    "CheckboxSize",
+    "BtDebuggerOverlay",
+    "ModalSize",
+    "ProfilerScopeKind",
+    "SpinnerSize",
+    "PinType",
+    "DrawerPosition",
+    "AvatarSize",
+    "Progress"
   ],
   "non_copy_structs": [],
   "version": "0.50.0",
   "analysis_fingerprint": {
     "content_hash": 4050421940719399270,
-    "compiler_version": "0.50.0:efa412e4570d8b42",
+    "compiler_version": "0.50.0:94a5f44528a82cdf",
     "dep_metadata_epoch": 2435999049025295583,
-    "output_hash": 11427422675865315916
+    "output_hash": 4956263846245996345
   }
 }

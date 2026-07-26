@@ -1,64 +1,6 @@
 {
   "module_path": "stack",
   "functions": {
-    "Stack::height": {
-      "params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Stack\")",
-      "is_associated": true,
-      "parent_type": "Stack",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Stack::vertical": {
-      "params": [],
-      "formal_params": [],
-      "return_type": "Custom(\"Stack\")",
-      "is_associated": true,
-      "parent_type": "Stack",
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
-    "Stack::gap": {
-      "params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "String"
-      ],
-      "return_type": "Custom(\"Stack\")",
-      "is_associated": true,
-      "parent_type": "Stack",
-      "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Stack::new": {
-      "params": [],
-      "formal_params": [],
-      "return_type": "Custom(\"Stack\")",
-      "is_associated": true,
-      "parent_type": "Stack",
-      "param_ownership": [],
-      "has_self_receiver": false,
-      "is_extern": false
-    },
     "Stack::horizontal": {
       "params": [],
       "formal_params": [],
@@ -69,39 +11,20 @@
       "has_self_receiver": false,
       "is_extern": false
     },
-    "Stack::justify": {
+    "Stack::width": {
       "params": [
         "Custom(\"Self\")",
-        "Custom(\"StackJustify\")"
+        "String"
       ],
       "formal_params": [
         "Custom(\"Self\")",
-        "Custom(\"StackJustify\")"
+        "String"
       ],
       "return_type": "Custom(\"Stack\")",
       "is_associated": true,
       "parent_type": "Stack",
       "param_ownership": [
-        "MutBorrowed",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "Stack::align": {
-      "params": [
-        "Custom(\"Self\")",
-        "Custom(\"StackAlign\")"
-      ],
-      "formal_params": [
-        "Custom(\"Self\")",
-        "Custom(\"StackAlign\")"
-      ],
-      "return_type": "Custom(\"Stack\")",
-      "is_associated": true,
-      "parent_type": "Stack",
-      "param_ownership": [
-        "MutBorrowed",
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
@@ -120,24 +43,27 @@
       "is_associated": true,
       "parent_type": "Stack",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
       "is_extern": false
     },
-    "Stack::render": {
+    "Stack::gap": {
       "params": [
-        "Custom(\"Self\")"
+        "Custom(\"Self\")",
+        "String"
       ],
       "formal_params": [
-        "Custom(\"Self\")"
+        "Custom(\"Self\")",
+        "String"
       ],
-      "return_type": "String",
+      "return_type": "Custom(\"Stack\")",
       "is_associated": true,
       "parent_type": "Stack",
       "param_ownership": [
-        "Borrowed"
+        "Owned",
+        "Owned"
       ],
       "has_self_receiver": true,
       "is_extern": false
@@ -155,13 +81,13 @@
       "is_associated": true,
       "parent_type": "Stack",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
       "is_extern": false
     },
-    "Stack::width": {
+    "Stack::height": {
       "params": [
         "Custom(\"Self\")",
         "String"
@@ -174,7 +100,45 @@
       "is_associated": true,
       "parent_type": "Stack",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Stack::justify": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"StackJustify\")"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "Custom(\"StackJustify\")"
+      ],
+      "return_type": "Custom(\"Stack\")",
+      "is_associated": true,
+      "parent_type": "Stack",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Stack::align": {
+      "params": [
+        "Custom(\"Self\")",
+        "Custom(\"StackAlign\")"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")",
+        "Custom(\"StackAlign\")"
+      ],
+      "return_type": "Custom(\"Stack\")",
+      "is_associated": true,
+      "parent_type": "Stack",
+      "param_ownership": [
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
@@ -193,87 +157,123 @@
       "is_associated": true,
       "parent_type": "Stack",
       "param_ownership": [
-        "MutBorrowed",
+        "Owned",
         "Owned"
       ],
       "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Stack::render": {
+      "params": [
+        "Reference(Custom(\"Self\"))"
+      ],
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Stack",
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Stack::new": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "Custom(\"Stack\")",
+      "is_associated": true,
+      "parent_type": "Stack",
+      "param_ownership": [],
+      "has_self_receiver": false,
+      "is_extern": false
+    },
+    "Stack::vertical": {
+      "params": [],
+      "formal_params": [],
+      "return_type": "Custom(\"Stack\")",
+      "is_associated": true,
+      "parent_type": "Stack",
+      "param_ownership": [],
+      "has_self_receiver": false,
       "is_extern": false
     }
   },
   "structs": {
     "Stack": {
-      "gap": "String",
-      "children": "Vec(String)",
-      "padding": "String",
-      "align": "Custom(\"StackAlign\")",
       "width": "String",
+      "padding": "String",
       "direction": "Custom(\"StackDirection\")",
+      "gap": "String",
+      "height": "String",
+      "children": "Vec(String)",
       "justify": "Custom(\"StackJustify\")",
-      "height": "String"
+      "align": "Custom(\"StackAlign\")"
     }
   },
   "trait_impls": {},
   "copy_structs": [
-    "SidebarPosition",
-    "RowJustify",
-    "AvatarShape",
-    "TextWeight",
-    "ScrollDirection",
-    "ToastPosition",
-    "StackJustify",
-    "EasingPreset",
-    "ColumnJustify",
     "CurvePoint",
-    "Pagination",
-    "BadgeVariant",
-    "RatingSize",
+    "StackAlign",
+    "AlertVariant",
+    "TextareaResize",
+    "PopoverPosition",
     "BtWire",
+    "TextWeight",
+    "FlexDirection",
+    "StackDirection",
+    "RowAlign",
+    "TextSize",
+    "ToastPosition",
+    "DividerOrientation",
+    "ColumnAlign",
+    "NodeCategory",
+    "ScrollDir",
+    "BadgeVariant",
+    "EasingPreset",
+    "FrameDebuggerViewState",
+    "SidebarPosition",
+    "BtPalettePanel",
+    "TooltipPosition",
+    "Pagination",
+    "RowJustify",
+    "ChipVariant",
+    "VNode",
+    "StackJustify",
+    "MessageRole",
+    "AvatarShape",
+    "SwitchSize",
     "ButtonSize",
+    "LoadingSize",
+    "ChipSize",
     "ProgressVariant",
+    "NavbarPosition",
+    "ButtonVariant",
+    "SkeletonVariant",
+    "ScrollDirection",
+    "ToastVariant",
     "SplitDirection",
     "BadgeSize",
-    "TooltipPosition",
-    "LoadingSize",
-    "StackDirection",
-    "PinType",
-    "FrameDebuggerViewState",
-    "FlexDirection",
-    "TextareaResize",
-    "ChipSize",
-    "SpinnerSize",
-    "TextSize",
-    "SwitchSize",
-    "MessageRole",
-    "Progress",
-    "ModalSize",
-    "ColumnAlign",
-    "ChipVariant",
-    "SkeletonVariant",
-    "NavbarPosition",
-    "StackAlign",
-    "NodeCategory",
-    "CheckboxSize",
-    "AvatarSize",
-    "PopoverPosition",
-    "BtDebuggerOverlay",
-    "RowAlign",
-    "VNode",
-    "ToastVariant",
-    "ButtonVariant",
-    "DrawerPosition",
-    "DividerOrientation",
+    "ColumnJustify",
+    "RatingSize",
     "SelectSize",
-    "AlertVariant",
-    "BtPalettePanel",
-    "ScrollDir",
-    "ProfilerScopeKind"
+    "CheckboxSize",
+    "BtDebuggerOverlay",
+    "ModalSize",
+    "ProfilerScopeKind",
+    "SpinnerSize",
+    "PinType",
+    "DrawerPosition",
+    "AvatarSize",
+    "Progress"
   ],
   "non_copy_structs": [],
   "version": "0.50.0",
   "analysis_fingerprint": {
     "content_hash": 11140284764015202816,
-    "compiler_version": "0.50.0:efa412e4570d8b42",
+    "compiler_version": "0.50.0:94a5f44528a82cdf",
     "dep_metadata_epoch": 2435999049025295583,
-    "output_hash": 6816712301472092090
+    "output_hash": 5441414389200169422
   }
 }

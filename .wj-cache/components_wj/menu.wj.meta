@@ -1,9 +1,28 @@
 {
   "module_path": "menu",
   "functions": {
+    "MenuItem::icon": {
+      "params": [
+        "Custom(\"MenuItem\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"MenuItem\")",
+        "String"
+      ],
+      "return_type": "Custom(\"MenuItem\")",
+      "is_associated": true,
+      "parent_type": "MenuItem",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
     "Menu::item": {
       "params": [
-        "Custom(\"Menu\")",
+        "String",
         "String"
       ],
       "formal_params": [
@@ -18,22 +37,6 @@
         "Owned"
       ],
       "has_self_receiver": true,
-      "is_extern": false
-    },
-    "MenuItem::new": {
-      "params": [
-        "String"
-      ],
-      "formal_params": [
-        "String"
-      ],
-      "return_type": "Custom(\"MenuItem\")",
-      "is_associated": true,
-      "parent_type": "MenuItem",
-      "param_ownership": [
-        "Owned"
-      ],
-      "has_self_receiver": false,
       "is_extern": false
     },
     "Menu::new": {
@@ -52,20 +55,20 @@
       "has_self_receiver": false,
       "is_extern": false
     },
-    "Menu::render": {
+    "MenuItem::new": {
       "params": [
-        "Custom(\"Menu\")"
+        "String"
       ],
       "formal_params": [
-        "Custom(\"Menu\")"
+        "String"
       ],
-      "return_type": "String",
+      "return_type": "Custom(\"MenuItem\")",
       "is_associated": true,
-      "parent_type": "Menu",
+      "parent_type": "MenuItem",
       "param_ownership": [
-        "Borrowed"
+        "Owned"
       ],
-      "has_self_receiver": true,
+      "has_self_receiver": false,
       "is_extern": false
     },
     "MenuItem::disabled": {
@@ -83,6 +86,41 @@
       "param_ownership": [
         "Owned",
         "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "MenuItem::class": {
+      "params": [
+        "Custom(\"MenuItem\")",
+        "String"
+      ],
+      "formal_params": [
+        "Custom(\"MenuItem\")",
+        "String"
+      ],
+      "return_type": "Custom(\"MenuItem\")",
+      "is_associated": true,
+      "parent_type": "MenuItem",
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "has_self_receiver": true,
+      "is_extern": false
+    },
+    "Menu::render": {
+      "params": [
+        "Custom(\"Menu\")"
+      ],
+      "formal_params": [
+        "Custom(\"Menu\")"
+      ],
+      "return_type": "String",
+      "is_associated": true,
+      "parent_type": "Menu",
+      "param_ownership": [
+        "Borrowed"
       ],
       "has_self_receiver": true,
       "is_extern": false
@@ -140,122 +178,84 @@
       ],
       "has_self_receiver": true,
       "is_extern": false
-    },
-    "MenuItem::icon": {
-      "params": [
-        "Custom(\"MenuItem\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"MenuItem\")",
-        "String"
-      ],
-      "return_type": "Custom(\"MenuItem\")",
-      "is_associated": true,
-      "parent_type": "MenuItem",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
-    },
-    "MenuItem::class": {
-      "params": [
-        "Custom(\"MenuItem\")",
-        "String"
-      ],
-      "formal_params": [
-        "Custom(\"MenuItem\")",
-        "String"
-      ],
-      "return_type": "Custom(\"MenuItem\")",
-      "is_associated": true,
-      "parent_type": "MenuItem",
-      "param_ownership": [
-        "Owned",
-        "Owned"
-      ],
-      "has_self_receiver": true,
-      "is_extern": false
     }
   },
   "structs": {
     "Menu": {
-      "class": "String",
       "items": "Vec(String)",
-      "trigger": "String"
+      "trigger": "String",
+      "class": "String"
     },
     "MenuItem": {
+      "icon": "String",
       "class": "String",
-      "href": "String",
       "label": "String",
-      "disabled": "Bool",
-      "icon": "String"
+      "href": "String",
+      "disabled": "Bool"
     }
   },
   "trait_impls": {},
   "copy_structs": [
-    "SidebarPosition",
-    "RowJustify",
-    "AvatarShape",
-    "TextWeight",
-    "ScrollDirection",
-    "ToastPosition",
-    "StackJustify",
-    "EasingPreset",
-    "ColumnJustify",
     "CurvePoint",
-    "Pagination",
-    "BadgeVariant",
-    "RatingSize",
+    "StackAlign",
+    "AlertVariant",
+    "TextareaResize",
+    "PopoverPosition",
     "BtWire",
+    "TextWeight",
+    "FlexDirection",
+    "StackDirection",
+    "RowAlign",
+    "TextSize",
+    "ToastPosition",
+    "DividerOrientation",
+    "ColumnAlign",
+    "NodeCategory",
+    "ScrollDir",
+    "BadgeVariant",
+    "EasingPreset",
+    "FrameDebuggerViewState",
+    "SidebarPosition",
+    "BtPalettePanel",
+    "TooltipPosition",
+    "Pagination",
+    "RowJustify",
+    "ChipVariant",
+    "VNode",
+    "StackJustify",
+    "MessageRole",
+    "AvatarShape",
+    "SwitchSize",
     "ButtonSize",
+    "LoadingSize",
+    "ChipSize",
     "ProgressVariant",
+    "NavbarPosition",
+    "ButtonVariant",
+    "SkeletonVariant",
+    "ScrollDirection",
+    "ToastVariant",
     "SplitDirection",
     "BadgeSize",
-    "TooltipPosition",
-    "LoadingSize",
-    "StackDirection",
-    "PinType",
-    "FrameDebuggerViewState",
-    "FlexDirection",
-    "TextareaResize",
-    "ChipSize",
-    "SpinnerSize",
-    "TextSize",
-    "SwitchSize",
-    "MessageRole",
-    "Progress",
-    "ModalSize",
-    "ColumnAlign",
-    "ChipVariant",
-    "SkeletonVariant",
-    "NavbarPosition",
-    "StackAlign",
-    "NodeCategory",
-    "CheckboxSize",
-    "AvatarSize",
-    "PopoverPosition",
-    "BtDebuggerOverlay",
-    "RowAlign",
-    "VNode",
-    "ToastVariant",
-    "ButtonVariant",
-    "DrawerPosition",
-    "DividerOrientation",
+    "ColumnJustify",
+    "RatingSize",
     "SelectSize",
-    "AlertVariant",
-    "BtPalettePanel",
-    "ScrollDir",
-    "ProfilerScopeKind"
+    "CheckboxSize",
+    "BtDebuggerOverlay",
+    "ModalSize",
+    "ProfilerScopeKind",
+    "SpinnerSize",
+    "PinType",
+    "DrawerPosition",
+    "AvatarSize",
+    "Progress"
   ],
   "non_copy_structs": [],
   "version": "0.50.0",
   "analysis_fingerprint": {
     "content_hash": 13571300811804110271,
-    "compiler_version": "0.50.0:efa412e4570d8b42",
+    "compiler_version": "0.50.0:94a5f44528a82cdf",
     "dep_metadata_epoch": 2435999049025295583,
-    "output_hash": 14145378087111068686
+    "output_hash": 4195719115856186372
   }
 }

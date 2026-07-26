@@ -54,7 +54,7 @@ impl ChatInput {
 
 impl Renderable for ChatInput {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let disabled_attr = {
             if self.disabled {
                 String::from(" disabled")
@@ -64,9 +64,9 @@ impl Renderable for ChatInput {
         };
         let input_html: String = {
             if self.multiline {
-                format!("<textarea class='wj-chat-input-field' placeholder='{}' rows='{}'{}>{}</textarea>", self.placeholder, self.rows, disabled_attr, self.value)
+                format!("<textarea class='wj-chat-input-field' placeholder='{}' rows='{}'{}>{}</textarea>", self.placeholder.clone(), self.rows, disabled_attr, self.value.clone())
             } else {
-                format!("<input type='text' class='wj-chat-input-field' placeholder='{}' value='{}'{}/>", self.placeholder, self.value, disabled_attr)
+                format!("<input type='text' class='wj-chat-input-field' placeholder='{}' value='{}'{}/>", self.placeholder.clone(), self.value.clone(), disabled_attr)
             }
         };
         format!("<div class='wj-chat-input'>\n                {}\n                <button class='wj-chat-send-button'{}>\n                    <span>➤</span>\n                </button>\n            </div>", input_html, disabled_attr)

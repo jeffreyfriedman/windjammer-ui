@@ -61,7 +61,7 @@ impl Slider {
 
 impl Renderable for Slider {
     #[inline]
-    fn render(&mut self) -> String {
+    fn render(&self) -> String {
         let disabled_attr = {
             if self.disabled {
                 String::from(" disabled")
@@ -71,7 +71,7 @@ impl Renderable for Slider {
         };
         let label_html = {
             if self.label != "" {
-                "<label>".to_string() + &self.label + &String::from("</label>")
+                "<label>".to_string() + &self.label.clone() + &String::from("</label>")
             } else {
                 "".to_string()
             }

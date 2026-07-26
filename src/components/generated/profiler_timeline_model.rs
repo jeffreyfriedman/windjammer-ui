@@ -40,7 +40,7 @@ impl LiveProfilerSnapshot {
     }
     #[inline]
     pub fn scope(mut self, row: ProfilerScopeRow) -> LiveProfilerSnapshot {
-        self.scopes.push(row.clone());
+        self.scopes.push(row);
         self
     }
     #[inline]
@@ -51,32 +51,6 @@ impl LiveProfilerSnapshot {
         self.frame_time_ms / self.budget_ms * 100.0_f32
     }
     #[inline]
-    pub fn budget_band_class(&self) -> String {
-        let util = self.budget_utilization_pct();
-        if util > 100.0_f32 {
-            String::from("wj-progress-danger")
-        } else {
-            if util > 85.0_f32 {
-                String::from("wj-progress-warning")
-            } else {
-                String::from("wj-progress-success")
-            }
-        }
-    }
-    #[inline]
-    pub fn budget_band_color(&self) -> String {
-        let util = self.budget_utilization_pct();
-        if util > 100.0_f32 {
-            String::from("#e74c3c")
-        } else {
-            if util > 85.0_f32 {
-                String::from("#f39c12")
-            } else {
-                String::from("#2ecc71")
-            }
-        }
-    }
-    #[inline]
     pub fn from_scope_rows(
         frame_index: u64,
         frame_time_ms: f32,
@@ -85,7 +59,7 @@ impl LiveProfilerSnapshot {
     ) -> LiveProfilerSnapshot {
         let mut snap = LiveProfilerSnapshot::new(frame_index, frame_time_ms, budget_ms);
         for row in rows {
-            snap = snap.scope(row.clone());
+            snap = snap.scope(row);
         }
         snap
     }
@@ -96,7 +70,7 @@ impl LiveProfilerSnapshot {
         }
         let frame_index = frame_trace_ffi::live_frame_index();
         let frame_time_ms = frame_trace_ffi::live_frame_time_ms();
-        let mut snap = LiveProfilerSnapshot::new(frame_index, frame_time_ms.clone(), budget_ms);
+        let mut snap = LiveProfilerSnapshot::new(frame_index, frame_time_ms, budget_ms);
         let count = frame_trace_ffi::live_scope_count();
         let mut i = 0;
         while i < count {
@@ -162,5 +136,31 @@ impl LiveProfilerSnapshot {
             kind: ProfilerScopeKind::Gpu.clone(),
         });
         snap
+    }
+    #[inline]
+    pub fn budget_band_class(&self) -> String {
+        let util = self.budget_utilization_pct();
+        if util > 100.0_f32 {
+            String::from("wj-progress-danger")
+        } else {
+            if util > 85.0_f32 {
+                String::from("wj-progress-warning")
+            } else {
+                String::from("wj-progress-success")
+            }
+        }
+    }
+    #[inline]
+    pub fn budget_band_color(&self) -> String {
+        let util = self.budget_utilization_pct();
+        if util > 100.0_f32 {
+            String::from("#e74c3c")
+        } else {
+            if util > 85.0_f32 {
+                String::from("#f39c12")
+            } else {
+                String::from("#2ecc71")
+            }
+        }
     }
 }

@@ -26,7 +26,7 @@ impl TypingIndicator {
 
 impl Renderable for TypingIndicator {
     #[inline]
-    fn render(&mut self) -> String {
-        format!("<div class='wj-typing-indicator'>\n                <div class='wj-typing-dots'>\n                    <span class='wj-typing-dot'></span>\n                    <span class='wj-typing-dot'></span>\n                    <span class='wj-typing-dot'></span>\n                </div>\n                <span class='wj-typing-label'>{}</span>\n            </div>", self.label)
+    fn render(&self) -> String {
+        format!("<div class='wj-typing-indicator'>\n                <div class='wj-typing-dots'>\n                    <span class='wj-typing-dot'></span>\n                    <span class='wj-typing-dot'></span>\n                    <span class='wj-typing-dot'></span>\n                </div>\n                <span class='wj-typing-label'>{}</span>\n            </div>", self.label.clone())
     }
 }

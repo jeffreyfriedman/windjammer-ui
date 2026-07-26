@@ -96,22 +96,22 @@ impl Drawer {
             }
         };
         let mut html = String::new();
-        html.push_str("<div class=\"wj-drawer-backdrop\" style=\"");
+        html.push_str(&"<div class=\"wj-drawer-backdrop\" style=\"");
         html.push_str(&display);
-        html.push_str(" position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5); z-index: 999;\"></div>");
-        html.push_str("<div class=\"wj-drawer ");
+        html.push_str(&" position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5); z-index: 999;\"></div>");
+        html.push_str(&"<div class=\"wj-drawer ");
         html.push_str(&self.class);
-        html.push_str("\" style=\"position: fixed; ");
+        html.push_str(&"\" style=\"position: fixed; ");
         html.push_str(&position_style);
         html.push(' ');
         html.push_str(&size_prop);
         html.push(' ');
         html.push_str(&transform);
-        html.push_str(" background: white; box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); z-index: 1000; transition: transform 0.3s ease; overflow-y: auto; padding: 24px;\">");
+        html.push_str(&" background: white; box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); z-index: 1000; transition: transform 0.3s ease; overflow-y: auto; padding: 24px;\">");
         for child in &self.children {
-            html.push_str(&child);
+            html.push_str(child);
         }
-        html.push_str("</div>");
+        html.push_str(&"</div>");
         html
     }
 }
