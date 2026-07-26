@@ -72,6 +72,28 @@ impl ColorPalette {
         }
     }
     #[inline]
+    pub fn fintech_light() -> ColorPalette {
+        ColorPalette {
+            bg_primary: "#e6ecf1".to_string(),
+            bg_secondary: "#fafcfd".to_string(),
+            bg_tertiary: "#d4e4dc".to_string(),
+            bg_elevated: "#ffffff".to_string(),
+            text_primary: "#14222e".to_string(),
+            text_secondary: "#5a6b7a".to_string(),
+            text_muted: "#5a6b7a".to_string(),
+            accent_primary: "#1a6b57".to_string(),
+            accent_secondary: "#0e4a3c".to_string(),
+            accent_success: "#1f7a4d".to_string(),
+            accent_warning: "#b47a12".to_string(),
+            accent_error: "#b42a22".to_string(),
+            border_subtle: "rgba(20,34,46,0.06)".to_string(),
+            border_default: "#c5d0da".to_string(),
+            axis_x: "#b42a22".to_string(),
+            axis_y: "#1a6b57".to_string(),
+            axis_z: "#3b6ea5".to_string(),
+        }
+    }
+    #[inline]
     pub fn high_contrast() -> ColorPalette {
         ColorPalette {
             bg_primary: "#000000".to_string(),
@@ -174,6 +196,18 @@ impl EditorTheme {
             border_radius: 6_i32,
             spacing_unit: 8_i32,
             animation_duration: 150_i32,
+        }
+    }
+    #[inline]
+    pub fn fintech_light() -> EditorTheme {
+        EditorTheme {
+            name: "LedgerKit Fintech Light".to_string(),
+            palette: ColorPalette::fintech_light(),
+            font_family: "'Sora', 'IBM Plex Sans', sans-serif".to_string(),
+            font_size_base: 14_i32,
+            border_radius: 10_i32,
+            spacing_unit: 8_i32,
+            animation_duration: 160_i32,
         }
     }
     #[inline]
