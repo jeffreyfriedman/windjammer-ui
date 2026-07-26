@@ -79,13 +79,31 @@ pub fn memorized_list_runtime_js() -> &'static str {
   if (window.__wjMemorizedBound) return;
   window.__wjMemorizedBound = true;
   const KEY = 'ledgerkit_memorized';
+  const DEMO = [
+    {
+      id: 'mem-rent',
+      title: 'Office rent',
+      body: '{"reference":"MEM-RENT","transaction_date":"2026-07-01","memo":"Office rent","lines":[{"account_code":"5000","amount_cents":250000,"description":"rent"},{"account_code":"1000","amount_cents":-250000,"description":"cash"}]}'
+    },
+    {
+      id: 'mem-payroll',
+      title: 'Biweekly payroll',
+      body: '{"reference":"MEM-PAY","transaction_date":"2026-07-15","memo":"Biweekly payroll","lines":[{"account_code":"5000","amount_cents":320000,"description":"payroll"},{"account_code":"1000","amount_cents":-320000,"description":"cash"}]}'
+    }
+  ];
   function load() {
     try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (_) { return []; }
   }
   function save(items) { localStorage.setItem(KEY, JSON.stringify(items)); }
+  function ensureSeed() {
+    if (localStorage.getItem(KEY + '_seeded') === '1') return;
+    if (!load().length) save(DEMO.slice());
+    localStorage.setItem(KEY + '_seeded', '1');
+  }
   function renderList() {
     const ul = document.getElementById('memorizedList');
     if (!ul) return;
+    ensureSeed();
     const items = load();
     if (!items.length) {
       ul.innerHTML = '<li class="muted lk-empty">No memorized transactions yet — save one below.</li>';
@@ -140,14 +158,19 @@ pub fn memorized_list_runtime_js() -> &'static str {
         });
         if (out) {
           if (!res.ok) { out.classList.add('is-error'); out.textContent = 'Could not post (' + res.status + ')'; }
-          else { out.textContent = 'Memorized transaction posted.'; }
+          else {
+            out.textContent = 'Memorized transaction posted — register refreshing…';
+            var load = document.getElementById('loadCheckbook')
+              || document.querySelector('[data-wj-render-kind="checkbook"]');
+            if (load) { try { load.click(); } catch (err) {} }
+          }
         }
       } catch (err) {
         if (out) { out.classList.add('is-error'); out.textContent = String(err); }
       }
     }
   });
-  if (document.getElementById('memorizedList')) renderList();
+  renderList();
 })();
 "##
 }
@@ -164,9 +187,19 @@ mod tests {
     }
 
     #[test]
+    fn memorized_list_renders_seed_items() {
+        let html = MemorizedList::new()
+            .item(MemorizedItem::new("mem-rent", "Office rent", "{}"))
+            .render();
+        assert!(html.contains("data-wj-memorized-id=\"mem-rent\""));
+        assert!(html.contains("Office rent"));
+    }
+
+    #[test]
     fn memorized_runtime_uses_storage_key() {
         let js = memorized_list_runtime_js();
         assert!(js.contains("ledgerkit_memorized"));
         assert!(js.contains("data-wj-memorized-run"));
+        assert!(js.contains("ensureSeed") || js.contains("mem-rent"));
     }
 }
