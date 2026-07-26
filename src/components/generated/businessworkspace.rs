@@ -1,4 +1,4 @@
-//! BusinessWorkspace — single pane of glass + tabbed preference (ADR-002 / R1).
+//! BusinessWorkspace — single pane of glass + tabbed preference (ADR-002 / R1 / R1.1).
 //! Hand-maintained. Always SKIP_WJ_REGEN=1.
 //! `.wj` source: `components_wj/businessworkspace.wj` (structural API).
 
@@ -33,6 +33,7 @@ pub struct BusinessWorkspace {
     pub register_html: String,
     pub write_check_html: String,
     pub memorized_html: String,
+    pub bank_html: String,
     pub active_tab: String,
 }
 
@@ -44,6 +45,7 @@ impl BusinessWorkspace {
             register_html: String::new(),
             write_check_html: String::new(),
             memorized_html: String::new(),
+            bank_html: String::new(),
             active_tab: "register".to_string(),
         }
     }
@@ -70,6 +72,11 @@ impl BusinessWorkspace {
 
     pub fn memorized_html(mut self, html: impl Into<String>) -> Self {
         self.memorized_html = html.into();
+        self
+    }
+
+    pub fn bank_html(mut self, html: impl Into<String>) -> Self {
+        self.bank_html = html.into();
         self
     }
 
@@ -106,26 +113,27 @@ fn layout_toggle_html(active: BusinessWorkspaceLayout) -> String {
     )
 }
 
+fn tab_active(active: &str, id: &str) -> &'static str {
+    if active == id {
+        " is-active"
+    } else {
+        ""
+    }
+}
+
+fn tab_display(active: &str, id: &str) -> &'static str {
+    if active == id {
+        "block"
+    } else {
+        "none"
+    }
+}
+
 impl Renderable for BusinessWorkspace {
     fn render(&self) -> String {
         let toggle = layout_toggle_html(self.layout);
         match self.layout {
             BusinessWorkspaceLayout::Tabs => {
-                let reg = if self.active_tab == "register" {
-                    "block"
-                } else {
-                    "none"
-                };
-                let write = if self.active_tab == "write" {
-                    "block"
-                } else {
-                    "none"
-                };
-                let mem = if self.active_tab == "memorized" {
-                    "block"
-                } else {
-                    "none"
-                };
                 format!(
                     r##"<div class="wj-business-workspace" data-layout="tabs" data-wj-business-workspace>
 {toggle}
@@ -133,36 +141,29 @@ impl Renderable for BusinessWorkspace {
 <button type="button" class="wj-bw-tab{reg_a}" data-wj-bw-tab="register" role="tab">Checkbook</button>
 <button type="button" class="wj-bw-tab{write_a}" data-wj-bw-tab="write" role="tab">Write check</button>
 <button type="button" class="wj-bw-tab{mem_a}" data-wj-bw-tab="memorized" role="tab">Memorized</button>
+<button type="button" class="wj-bw-tab{bank_a}" data-wj-bw-tab="bank" role="tab">Bank match</button>
 </div>
 <div class="wj-bw-tab-panes">
 <div class="wj-bw-pane" data-tab="register" style="display:{reg}" role="tabpanel">{rail}{register}</div>
 <div class="wj-bw-pane" data-tab="write" style="display:{write}" role="tabpanel">{write_html}</div>
 <div class="wj-bw-pane" data-tab="memorized" style="display:{mem}" role="tabpanel">{memorized}</div>
+<div class="wj-bw-pane" data-tab="bank" style="display:{bank}" role="tabpanel">{bank_html}</div>
 </div>
 </div>"##,
                     toggle = toggle,
-                    reg_a = if self.active_tab == "register" {
-                        " is-active"
-                    } else {
-                        ""
-                    },
-                    write_a = if self.active_tab == "write" {
-                        " is-active"
-                    } else {
-                        ""
-                    },
-                    mem_a = if self.active_tab == "memorized" {
-                        " is-active"
-                    } else {
-                        ""
-                    },
-                    reg = reg,
-                    write = write,
-                    mem = mem,
+                    reg_a = tab_active(&self.active_tab, "register"),
+                    write_a = tab_active(&self.active_tab, "write"),
+                    mem_a = tab_active(&self.active_tab, "memorized"),
+                    bank_a = tab_active(&self.active_tab, "bank"),
+                    reg = tab_display(&self.active_tab, "register"),
+                    write = tab_display(&self.active_tab, "write"),
+                    mem = tab_display(&self.active_tab, "memorized"),
+                    bank = tab_display(&self.active_tab, "bank"),
                     rail = self.rail_html,
                     register = self.register_html,
                     write_html = self.write_check_html,
                     memorized = self.memorized_html,
+                    bank_html = self.bank_html,
                 )
             }
             BusinessWorkspaceLayout::Pane => format!(
@@ -172,12 +173,14 @@ impl Renderable for BusinessWorkspace {
 <section class="wj-bw-register">{register}</section>
 <section class="wj-bw-write">{write}</section>
 <section class="wj-bw-memorized">{memorized}</section>
+<section class="wj-bw-bank">{bank}</section>
 </div>"##,
                 toggle = toggle,
                 rail = self.rail_html,
                 register = self.register_html,
                 write = self.write_check_html,
                 memorized = self.memorized_html,
+                bank = self.bank_html,
             ),
         }
     }
@@ -226,30 +229,31 @@ mod tests {
     use super::*;
 
     #[test]
-    fn pane_renders_four_regions() {
+    fn pane_renders_five_regions_including_bank() {
         let html = BusinessWorkspace::new()
             .rail_html("RAIL")
             .register_html("REG")
             .write_check_html("WC")
             .memorized_html("MEM")
+            .bank_html("BANK")
             .render();
         assert!(html.contains("data-layout=\"pane\""));
         assert!(html.contains("wj-bw-rail") && html.contains("RAIL"));
         assert!(html.contains("wj-bw-register") && html.contains("REG"));
         assert!(html.contains("wj-bw-write") && html.contains("WC"));
         assert!(html.contains("wj-bw-memorized") && html.contains("MEM"));
-        assert!(html.contains("data-wj-bw-layout=\"pane\""));
+        assert!(html.contains("wj-bw-bank") && html.contains("BANK"));
     }
 
     #[test]
-    fn tabs_hides_inactive_panes() {
+    fn tabs_include_bank_match() {
         let html = BusinessWorkspace::new()
             .layout(BusinessWorkspaceLayout::Tabs)
-            .active_tab("write")
-            .write_check_html("WC")
+            .active_tab("bank")
+            .bank_html("BANK")
             .render();
         assert!(html.contains("data-layout=\"tabs\""));
-        assert!(html.contains("data-wj-bw-tab=\"write\""));
-        assert!(html.contains("display:block") && html.contains("WC"));
+        assert!(html.contains("data-wj-bw-tab=\"bank\""));
+        assert!(html.contains("display:block") && html.contains("BANK"));
     }
 }

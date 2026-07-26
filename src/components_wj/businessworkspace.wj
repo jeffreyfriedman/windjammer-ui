@@ -1,4 +1,4 @@
-// BusinessWorkspace — single pane of glass + tabbed preference (ADR-002 / R1).
+// BusinessWorkspace — single pane of glass + tabbed preference (ADR-002 / R1 / R1.1).
 // Runtime layout toggle is Rust-only until codegen supports framework JS helpers.
 
 use super::traits::Renderable
@@ -9,6 +9,7 @@ pub struct BusinessWorkspace {
     register_html: string,
     write_check_html: string,
     memorized_html: string,
+    bank_html: string,
     active_tab: string,
 }
 
@@ -20,6 +21,7 @@ impl BusinessWorkspace {
             register_html: "".to_string(),
             write_check_html: "".to_string(),
             memorized_html: "".to_string(),
+            bank_html: "".to_string(),
             active_tab: "register".to_string(),
         }
     }
@@ -49,6 +51,11 @@ impl BusinessWorkspace {
         self
     }
 
+    pub fn bank_html(self, html: string) -> BusinessWorkspace {
+        self.bank_html = html
+        self
+    }
+
     pub fn active_tab(self, id: string) -> BusinessWorkspace {
         self.active_tab = id
         self
@@ -58,37 +65,12 @@ impl BusinessWorkspace {
 impl Renderable for BusinessWorkspace {
     fn render(self) -> string {
         if self.layout == "tabs" {
-            let reg_display = if self.active_tab == "register" { "block" } else { "none" }
-            let write_display = if self.active_tab == "write" { "block" } else { "none" }
-            let mem_display = if self.active_tab == "memorized" { "block" } else { "none" }
             return "<div class=\"wj-business-workspace\" data-layout=\"tabs\" data-wj-business-workspace>".to_string()
-                + "<div class=\"wj-bw-layout-toggle\" data-wj-bw-layout-toggle></div>"
-                + "<div class=\"wj-bw-tabbar\" role=\"tablist\">"
-                + "<button type=\"button\" class=\"wj-bw-tab\" data-wj-bw-tab=\"register\">Checkbook</button>"
-                + "<button type=\"button\" class=\"wj-bw-tab\" data-wj-bw-tab=\"write\">Write check</button>"
-                + "<button type=\"button\" class=\"wj-bw-tab\" data-wj-bw-tab=\"memorized\">Memorized</button>"
+                + "<button type=\"button\" data-wj-bw-tab=\"bank\">Bank match</button>"
+                + self.bank_html
                 + "</div>"
-                + "<div class=\"wj-bw-tab-panes\">"
-                + "<div class=\"wj-bw-pane\" data-tab=\"register\" style=\"display:"
-                + reg_display
-                + "\">"
-                + self.rail_html
-                + self.register_html
-                + "</div>"
-                + "<div class=\"wj-bw-pane\" data-tab=\"write\" style=\"display:"
-                + write_display
-                + "\">"
-                + self.write_check_html
-                + "</div>"
-                + "<div class=\"wj-bw-pane\" data-tab=\"memorized\" style=\"display:"
-                + mem_display
-                + "\">"
-                + self.memorized_html
-                + "</div>"
-                + "</div></div>"
         }
         "<div class=\"wj-business-workspace\" data-layout=\"pane\" data-wj-business-workspace>".to_string()
-            + "<div class=\"wj-bw-layout-toggle\" data-wj-bw-layout-toggle></div>"
             + "<aside class=\"wj-bw-rail\">"
             + self.rail_html
             + "</aside><section class=\"wj-bw-register\">"
@@ -97,6 +79,8 @@ impl Renderable for BusinessWorkspace {
             + self.write_check_html
             + "</section><section class=\"wj-bw-memorized\">"
             + self.memorized_html
+            + "</section><section class=\"wj-bw-bank\">"
+            + self.bank_html
             + "</section></div>"
     }
 }
