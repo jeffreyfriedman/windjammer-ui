@@ -52,6 +52,8 @@
 #![allow(noop_method_call)]
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 // Auto-generated mod.rs by Windjammer CLI
 // This file declares all generated Windjammer modules
 
@@ -59,6 +61,7 @@ pub mod accordion;
 pub mod advancedcodeeditor;
 pub mod alert;
 pub mod appshell;
+pub mod authfetch;
 pub mod avatar;
 pub mod badge;
 pub mod breadcrumb;
@@ -147,6 +150,7 @@ pub use accordion::*;
 pub use advancedcodeeditor::*;
 pub use alert::*;
 pub use appshell::*;
+pub use authfetch::*;
 pub use avatar::*;
 pub use badge::*;
 pub use breadcrumb::*;
