@@ -32,9 +32,9 @@ pub struct Badge {
 
 impl Badge {
     #[inline]
-    pub fn new(text: String) -> Badge {
+    pub fn new(text: impl Into<String>) -> Badge {
         Badge {
-            text,
+            text: text.into(),
             variant: BadgeVariant::Default,
             size: BadgeSize::Medium,
         }

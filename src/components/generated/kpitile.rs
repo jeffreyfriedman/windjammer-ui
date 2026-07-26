@@ -4,8 +4,7 @@
 use super::*;
 
 use super::traits::Renderable;
-
-#[derive(Debug, Clone, PartialEq, Eq, Default)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 #[repr(C)]
 pub struct KpiTile {
     pub label: String,
@@ -14,13 +13,12 @@ pub struct KpiTile {
 
 impl KpiTile {
     #[inline]
-    pub fn new(label: String) -> KpiTile {
+    pub fn new(label: impl Into<String>) -> KpiTile {
         KpiTile {
-            label,
+            label: label.into(),
             value_html: "".to_string(),
         }
     }
-
     #[inline]
     pub fn value_html(mut self, html: impl Into<String>) -> KpiTile {
         self.value_html = html.into();
@@ -31,11 +29,7 @@ impl KpiTile {
 impl Renderable for KpiTile {
     #[inline]
     fn render(&self) -> String {
-        format!(
-            "<div class='wj-kpi-tile kpi'><span class='kpi-label'>{}</span><div class='kpi-value'>{}</div></div>",
-            self.label,
-            self.value_html
-        )
+        format!("<div class='wj-kpi-tile kpi'><span class='kpi-label'>{}</span><div class='kpi-value'>{}</div></div>", self.label.clone(), self.value_html.clone())
     }
 }
 
@@ -48,11 +42,8 @@ pub struct KpiGrid {
 impl KpiGrid {
     #[inline]
     pub fn new() -> KpiGrid {
-        KpiGrid {
-            tiles: Vec::new(),
-        }
+        KpiGrid { tiles: Vec::new() }
     }
-
     #[inline]
     pub fn tile(mut self, html: String) -> KpiGrid {
         self.tiles.push(html);
@@ -63,9 +54,9 @@ impl KpiGrid {
 impl Renderable for KpiGrid {
     #[inline]
     fn render(&self) -> String {
-        let mut body = String::new();
+        let mut body = "".to_string();
         for t in &self.tiles {
-            body.push_str(t);
+            body.push_str(&t);
         }
         format!("<div class='kpi-grid wj-kpi-grid'>{}</div>", body)
     }

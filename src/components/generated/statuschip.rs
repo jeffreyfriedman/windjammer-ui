@@ -5,8 +5,7 @@ use super::*;
 
 use super::badge::{Badge, BadgeSize, BadgeVariant};
 use super::traits::Renderable;
-
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 #[repr(C)]
 pub struct StatusChip {
     pub status: String,
@@ -19,28 +18,36 @@ impl StatusChip {
     }
 }
 
-#[inline]
-fn variant_for(status: &str) -> BadgeVariant {
-    let s = status.to_lowercase();
-    if s == "paid" || s == "matched" || s == "posted" || s == "balanced" {
-        BadgeVariant::Success
-    } else if s == "open" || s == "partial" || s == "suggested" {
-        BadgeVariant::Warning
-    } else if s == "unmatched" || s == "overdue" || s == "void" || s == "failed" {
-        BadgeVariant::Danger
-    } else if s == "draft" {
-        BadgeVariant::Info
-    } else {
-        BadgeVariant::Default
-    }
-}
-
 impl Renderable for StatusChip {
     #[inline]
     fn render(&self) -> String {
-        Badge::new(self.status.clone())
-            .variant(variant_for(&self.status))
+        let status = self.status.clone();
+        let v = variant_for(&status);
+        Badge::new(status)
+            .variant(v)
             .size(BadgeSize::Small)
             .render()
+    }
+}
+
+#[inline]
+pub fn variant_for(status: &str) -> BadgeVariant {
+    let s = status.to_lowercase();
+    if s == "paid" || s == "matched" || s == "posted" || s == "balanced" {
+        BadgeVariant::Success
+    } else {
+        if s == "open" || s == "partial" || s == "suggested" {
+            BadgeVariant::Warning
+        } else {
+            if s == "unmatched" || s == "overdue" || s == "void" || s == "failed" {
+                BadgeVariant::Danger
+            } else {
+                if s == "draft" {
+                    BadgeVariant::Info
+                } else {
+                    BadgeVariant::Default
+                }
+            }
+        }
     }
 }

@@ -1,0 +1,93 @@
+// AppShell — retained chrome for WASM-first hybrid (LedgerKit ADR-001).
+// Brand + header meta + primary nav + main; no hand-authored host JS required for structure.
+
+use super::traits::Renderable
+
+pub struct AppShell {
+    brand: string,
+    title: string,
+    header_meta_html: string,
+    nav_html: string,
+    main_html: string,
+    main_id: string,
+}
+
+impl AppShell {
+    pub fn new() -> AppShell {
+        AppShell {
+            brand: "App".to_string(),
+            title: "".to_string(),
+            header_meta_html: "".to_string(),
+            nav_html: "".to_string(),
+            main_html: "".to_string(),
+            main_id: "main".to_string(),
+        }
+    }
+
+    pub fn brand(self, brand: string) -> AppShell {
+        self.brand = brand
+        self
+    }
+
+    pub fn title(self, title: string) -> AppShell {
+        self.title = title
+        self
+    }
+
+    pub fn header_meta_html(self, html: string) -> AppShell {
+        self.header_meta_html = html
+        self
+    }
+
+    pub fn nav_html(self, html: string) -> AppShell {
+        self.nav_html = html
+        self
+    }
+
+    pub fn main_html(self, html: string) -> AppShell {
+        self.main_html = html
+        self
+    }
+
+    pub fn main_id(self, id: string) -> AppShell {
+        self.main_id = id
+        self
+    }
+}
+
+impl Renderable for AppShell {
+    fn render(self) -> string {
+        let title_block = if self.title.len() > 0 {
+            "<div class='shell-title'>" + self.title + "</div>"
+        } else {
+            "".to_string()
+        }
+        "<div id=\"app\" class=\"wj-app-shell\">"
+            + "<header class=\"shell-header\">"
+            + "<div class=\"shell-brand\"><strong>"
+            + self.brand
+            + "</strong></div>"
+            + "<div class=\"shell-header-meta\">"
+            + self.header_meta_html
+            + title_block
+            + "</div>"
+            + "</header>"
+            + self.nav_html
+            + "<main class=\"shell-main\" id=\""
+            + self.main_id
+            + "\">"
+            + self.main_html
+            + "</main>"
+            + "</div>"
+    }
+}
+
+fn main() {
+    let html = AppShell::new()
+        .brand("LedgerKit".to_string())
+        .title("Home".to_string())
+        .nav_html("<nav class='shell-nav'></nav>".to_string())
+        .main_html("<p>hi</p>".to_string())
+        .render()
+    println!("{}", html)
+}

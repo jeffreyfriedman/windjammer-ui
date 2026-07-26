@@ -287,13 +287,18 @@ Compiler doesn't track variable usage within function bodies.
 
 ### Phase 2: Compiler Fixes (IN PROGRESS)
 Priority order:
-1. **Bug #1:** Feature gates (HIGH, breaking)
-2. **Bug #2:** Module existence checks (HIGH, breaking)
-3. **Bug #4:** Rc<F> coercion (HIGH, breaking)
-4. **Bug #3:** Ambiguous re-exports (MEDIUM, clippy warning)
-5. **Bug #6:** Dead code attributes (LOW, warning)
-6. **Bug #7:** Unused variable prefixes (LOW, warning)
-7. **Bug #5:** Doc comments vs regular comments (LOW, warning)
+1. **Bug #1:** Feature gates (HIGH, breaking) — repro: `windjammer/tests/codegen_windjammer_ui_fix_generated_debt_test.rs`
+2. **Bug #2:** Module existence checks (HIGH, breaking) — same file
+3. **Bug #4:** Rc<F> coercion (HIGH, breaking) — same file
+4. **Bug #3:** Ambiguous re-exports (MEDIUM) — `codegen_ambiguous_vnode_reexport_test.rs`
+5. **Bug #6:** Dead code attributes (LOW) — related unused analysis
+6. **Bug #7:** Unused variable prefixes (LOW) — `codegen_unused_variable_prefix_test.rs`
+7. **Bug #5:** Doc comments vs regular comments (LOW) — `codegen_windjammer_ui_fix_generated_debt_test.rs`
+
+**LedgerKit dogfood ownership (hand patches until green):**
+- `codegen_string_param_to_owned_method_test.rs` (KpiTile `value_html(&str)` vs `String`)
+- `codegen_statuschip_badge_compose_test.rs` / `codegen_owned_reuse_after_helper_test.rs` (StatusChip→Badge)
+- `codegen_owned_string_param_test.rs` (`&String` into owned param)
 
 ### Phase 3: Validation
 For each bug fix:
