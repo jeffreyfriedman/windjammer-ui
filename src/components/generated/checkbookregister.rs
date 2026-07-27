@@ -172,7 +172,7 @@ pub fn checkbook_register_runtime_js() -> &'static str {
       try { bank.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (e) { bank.scrollIntoView(); }
     }
     var matchBtn = null;
-    document.querySelectorAll('[data-wj-bank-match]').forEach(function (el) {
+    document.querySelectorAll('[data-wj-bank-match][data-line-id]').forEach(function (el) {
       if (!matchBtn && el.getAttribute('data-line-id') === lineId) matchBtn = el;
     });
     var cell = matchBtn ? (matchBtn.closest('[data-wj-bank-match-cell]') || matchBtn.parentElement) : null;

@@ -46,7 +46,7 @@ impl Renderable for BankMatchRow {
     }
 }
 
-/// Click Match → read JE select → POST match → optimistic Matched UI.
+/// Click Match → read JE select → POST match → Matched label + AuthFetch reload (R2.7).
 /// Also applies list-JE AuthFetch options into Match selects (R2.6).
 pub fn bank_match_runtime_js() -> &'static str {
     r##"
@@ -67,6 +67,23 @@ pub fn bank_match_runtime_js() -> &'static str {
     });
   };
 
+  function refreshBankAndRegister() {
+    var loadBank = document.getElementById('loadBank')
+      || document.querySelector('[data-wj-auth-fetch][data-wj-render-kind="bank"]');
+    if (loadBank && typeof window.wjAuthFetch === 'function') {
+      try { window.wjAuthFetch(loadBank); } catch (e) {}
+    } else if (loadBank) {
+      try { loadBank.click(); } catch (e) {}
+    }
+    var loadReg = document.getElementById('loadCheckbook')
+      || document.querySelector('[data-wj-auth-fetch][data-wj-render-kind="checkbook"]');
+    if (loadReg && typeof window.wjAuthFetch === 'function') {
+      try { window.wjAuthFetch(loadReg); } catch (e) {}
+    } else if (loadReg) {
+      try { loadReg.click(); } catch (e) {}
+    }
+  }
+
   var prevAfter = window.lkAfterAuthFetch;
   window.lkAfterAuthFetch = function (kind, mount) {
     if (typeof prevAfter === 'function') {
@@ -83,7 +100,8 @@ pub fn bank_match_runtime_js() -> &'static str {
   document.addEventListener('click', function (ev) {
     var t = ev.target;
     if (!t || !t.closest) return;
-    var btn = t.closest('[data-wj-bank-match]');
+    // Require data-line-id — panel wrapper must not steal Match clicks.
+    var btn = t.closest('[data-wj-bank-match][data-line-id]');
     if (!btn) return;
     ev.preventDefault();
     var lineId = btn.getAttribute('data-line-id') || '';
@@ -109,16 +127,9 @@ pub fn bank_match_runtime_js() -> &'static str {
         btn.textContent = 'Retry';
         return;
       }
-      // Seed adapter match is ephemeral (no WJ static mut) — keep optimistic Matched UI.
-      if (cell) {
-        cell.outerHTML = '<span class="muted">Matched</span>';
-      } else {
-        btn.removeAttribute('data-wj-bank-match');
-        btn.outerHTML = '<span class="muted">Matched</span>';
-      }
-      var loadReg = document.getElementById('loadCheckbook')
-        || document.querySelector('[data-wj-render-kind="checkbook"]');
-      if (loadReg) { try { loadReg.click(); } catch (e) {} }
+      // Immediate feedback; seed overlay + AuthFetch prove persistence on reload.
+      if (cell) cell.innerHTML = '<span class="muted">Matched</span>';
+      refreshBankAndRegister();
     }).catch(function () {
       btn.disabled = false;
       btn.textContent = 'Retry';
@@ -162,6 +173,10 @@ mod tests {
         assert!(js.contains("data-wj-bank-match-je"));
         assert!(js.contains("journal_entry_id"));
         assert!(js.contains("loadCheckbook"));
+        assert!(js.contains("loadBank"), "R2.7 reload bank after persist");
+        assert!(js.contains("wjAuthFetch"), "R2.7 call AuthFetch directly");
+        assert!(js.contains("[data-wj-bank-match][data-line-id]"));
+        assert!(js.contains("Matched"));
         assert!(js.contains("lkApplyJournalOptions"));
         assert!(js.contains("journal-options"));
         assert!(!js.contains("journal_entry_id: 'seed-je-ops'"));
