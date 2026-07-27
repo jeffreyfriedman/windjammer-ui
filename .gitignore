@@ -42,3 +42,6 @@ tmp/
 /serve_*
 /simple_*
 /test_*
+
+# Windjammer local codegen cache
+.wj-cache/
