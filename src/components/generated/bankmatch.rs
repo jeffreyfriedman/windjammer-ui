@@ -47,11 +47,38 @@ impl Renderable for BankMatchRow {
 }
 
 /// Click Match → read JE select → POST match → optimistic Matched UI.
+/// Also applies list-JE AuthFetch options into Match selects (R2.6).
 pub fn bank_match_runtime_js() -> &'static str {
     r##"
 (function () {
   if (window.__wjBankMatchBound) return;
   window.__wjBankMatchBound = true;
+
+  window.lkApplyJournalOptions = function (html) {
+    if (html) window.__lkJeOptionsHtml = html;
+    var opts = window.__lkJeOptionsHtml;
+    if (!opts) return;
+    document.querySelectorAll('[data-wj-bank-match-je]').forEach(function (sel) {
+      var prev = sel.value;
+      sel.innerHTML = opts;
+      if (prev) {
+        try { sel.value = prev; } catch (e) {}
+      }
+    });
+  };
+
+  var prevAfter = window.lkAfterAuthFetch;
+  window.lkAfterAuthFetch = function (kind, mount) {
+    if (typeof prevAfter === 'function') {
+      try { prevAfter(kind, mount); } catch (e) {}
+    }
+    if (kind === 'journal-options' && mount) {
+      window.lkApplyJournalOptions(mount.innerHTML || '');
+    }
+    if (kind === 'bank') {
+      window.lkApplyJournalOptions(null);
+    }
+  };
 
   document.addEventListener('click', function (ev) {
     var t = ev.target;
@@ -135,6 +162,8 @@ mod tests {
         assert!(js.contains("data-wj-bank-match-je"));
         assert!(js.contains("journal_entry_id"));
         assert!(js.contains("loadCheckbook"));
+        assert!(js.contains("lkApplyJournalOptions"));
+        assert!(js.contains("journal-options"));
         assert!(!js.contains("journal_entry_id: 'seed-je-ops'"));
     }
 }

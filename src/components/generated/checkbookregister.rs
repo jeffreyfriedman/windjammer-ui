@@ -1,4 +1,4 @@
-//! CheckbookRegister — spent/received register (LedgerKit ADR-002 / R2.5).
+//! CheckbookRegister — Amount + Balance register (LedgerKit ADR-002 / R2.6).
 //! Hand-maintained. Always SKIP_WJ_REGEN=1.
 
 use super::traits::Renderable;
@@ -8,8 +8,7 @@ pub struct CheckbookRow {
     pub date: String,
     pub num: String,
     pub payee: String,
-    pub spent_html: String,
-    pub received_html: String,
+    pub amount_html: String,
     pub balance_html: String,
     pub line_id: String,
     pub unmatched: bool,
@@ -20,16 +19,14 @@ impl CheckbookRow {
         date: impl Into<String>,
         num: impl Into<String>,
         payee: impl Into<String>,
-        spent_html: impl Into<String>,
-        received_html: impl Into<String>,
+        amount_html: impl Into<String>,
         balance_html: impl Into<String>,
     ) -> Self {
         Self {
             date: date.into(),
             num: num.into(),
             payee: payee.into(),
-            spent_html: spent_html.into(),
-            received_html: received_html.into(),
+            amount_html: amount_html.into(),
             balance_html: balance_html.into(),
             line_id: String::new(),
             unmatched: false,
@@ -96,7 +93,7 @@ impl Renderable for CheckbookRegister {
     fn render(&self) -> String {
         let body = if self.rows.is_empty() {
             format!(
-                r#"<tr class="lk-empty-row"><td colspan="6" class="muted">{}</td></tr>"#,
+                r#"<tr class="lk-empty-row"><td colspan="5" class="muted">{}</td></tr>"#,
                 self.empty_message
             )
         } else {
@@ -113,13 +110,12 @@ impl Renderable for CheckbookRegister {
                         r.payee.clone()
                     };
                     format!(
-                        r#"<tr class="wj-checkbook-row" data-line-id="{line}"><td>{date}</td><td>{num}</td><td>{payee}</td><td class="lk-num">{spent}</td><td class="lk-num">{recv}</td><td class="lk-num">{bal}</td></tr>"#,
+                        r#"<tr class="wj-checkbook-row" data-line-id="{line}"><td>{date}</td><td>{num}</td><td>{payee}</td><td class="lk-num">{amount}</td><td class="lk-num">{bal}</td></tr>"#,
                         line = r.line_id,
                         date = r.date,
                         num = r.num,
                         payee = payee,
-                        spent = r.spent_html,
-                        recv = r.received_html,
+                        amount = r.amount_html,
                         bal = r.balance_html
                     )
                 })
@@ -139,8 +135,7 @@ impl Renderable for CheckbookRegister {
           <th>Date</th>
           <th>Num</th>
           <th>Payee / memo</th>
-          <th class="lk-num">Spent</th>
-          <th class="lk-num">Received</th>
+          <th class="lk-num">Amount</th>
           <th class="lk-num">Balance</th>
         </tr>
       </thead>
@@ -200,17 +195,19 @@ mod tests {
     use super::*;
 
     #[test]
-    fn checkbook_register_has_spent_received_columns() {
+    fn checkbook_register_has_amount_balance_columns() {
         let html = CheckbookRegister::new().account_label("1000 · Cash").render();
         assert!(html.contains("wj-checkbook-register"));
-        assert!(html.contains("Spent"));
-        assert!(html.contains("Received"));
+        assert!(html.contains("Amount"));
+        assert!(html.contains("Balance"));
+        assert!(!html.contains(">Spent<"));
+        assert!(!html.contains(">Received<"));
     }
 
     #[test]
     fn checkbook_register_renders_rows() {
         let html = CheckbookRegister::new()
-            .row(CheckbookRow::new("2026-07-01", "", "FEE", "$45.00", "", ""))
+            .row(CheckbookRow::new("2026-07-01", "", "FEE", "-45.00", "100.00"))
             .render();
         assert!(html.contains("wj-checkbook-row"));
         assert!(html.contains("FEE"));
@@ -221,7 +218,7 @@ mod tests {
     fn unmatched_row_emits_register_match_link() {
         let html = CheckbookRegister::new()
             .row(
-                CheckbookRow::new("2026-07-01", "", "OFFICE DEPOT", "$45.00", "", "$45.00")
+                CheckbookRow::new("2026-07-01", "", "OFFICE DEPOT", "-45.00", "100.00")
                     .line_id("bank~1000~demo-fit-01")
                     .unmatched(true),
             )
