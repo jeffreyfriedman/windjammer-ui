@@ -1,4 +1,4 @@
-//! CheckbookRegister — Amount + Balance register (LedgerKit ADR-002 / R2.6).
+//! CheckbookRegister — Amount + Balance + Clr (LedgerKit ADR-002 / R2.6 / 1.5.1).
 //! Hand-maintained. Always SKIP_WJ_REGEN=1.
 
 use super::traits::Renderable;
@@ -12,6 +12,7 @@ pub struct CheckbookRow {
     pub balance_html: String,
     pub line_id: String,
     pub unmatched: bool,
+    pub cleared: bool,
 }
 
 impl CheckbookRow {
@@ -30,6 +31,7 @@ impl CheckbookRow {
             balance_html: balance_html.into(),
             line_id: String::new(),
             unmatched: false,
+            cleared: false,
         }
     }
 
@@ -40,6 +42,11 @@ impl CheckbookRow {
 
     pub fn unmatched(mut self, unmatched: bool) -> Self {
         self.unmatched = unmatched;
+        self
+    }
+
+    pub fn cleared(mut self, cleared: bool) -> Self {
+        self.cleared = cleared;
         self
     }
 }
@@ -93,7 +100,7 @@ impl Renderable for CheckbookRegister {
     fn render(&self) -> String {
         let body = if self.rows.is_empty() {
             format!(
-                r#"<tr class="lk-empty-row"><td colspan="5" class="muted">{}</td></tr>"#,
+                r#"<tr class="lk-empty-row"><td colspan="6" class="muted">{}</td></tr>"#,
                 self.empty_message
             )
         } else {
@@ -109,9 +116,20 @@ impl Renderable for CheckbookRegister {
                     } else {
                         r.payee.clone()
                     };
+                    let checked = if r.cleared { " checked" } else { "" };
+                    let clr = if r.line_id.is_empty() {
+                        String::new()
+                    } else {
+                        format!(
+                            r#"<input type="checkbox" data-wj-bank-clear data-line-id="{id}" aria-label="Cleared"{checked}>"#,
+                            id = r.line_id,
+                            checked = checked
+                        )
+                    };
                     format!(
-                        r#"<tr class="wj-checkbook-row" data-line-id="{line}"><td>{date}</td><td>{num}</td><td>{payee}</td><td class="lk-num">{amount}</td><td class="lk-num">{bal}</td></tr>"#,
+                        r#"<tr class="wj-checkbook-row" data-line-id="{line}"><td class="lk-clr">{clr}</td><td>{date}</td><td>{num}</td><td>{payee}</td><td class="lk-num">{amount}</td><td class="lk-num">{bal}</td></tr>"#,
                         line = r.line_id,
+                        clr = clr,
                         date = r.date,
                         num = r.num,
                         payee = payee,
@@ -132,6 +150,7 @@ impl Renderable for CheckbookRegister {
     <table class="lk-table wj-checkbook-table" aria-label="Checkbook register">
       <thead>
         <tr>
+          <th class="lk-clr">Clr</th>
           <th>Date</th>
           <th>Num</th>
           <th>Payee / memo</th>
@@ -152,7 +171,7 @@ impl Renderable for CheckbookRegister {
     }
 }
 
-/// Register → bank Match deep-link (R2.5). Scrolls/focuses the bank Match cell for the line.
+/// Register → bank Match deep-link (R2.5) + Cleared toggle (1.5.1).
 pub fn checkbook_register_runtime_js() -> &'static str {
     r##"
 (function () {
@@ -186,6 +205,41 @@ pub fn checkbook_register_runtime_js() -> &'static str {
       if (matchBtn && matchBtn.focus) { try { matchBtn.focus(); } catch (e) {} }
     }
   });
+
+  document.addEventListener('change', function (ev) {
+    var t = ev.target;
+    if (!t || !t.closest) return;
+    var box = t.closest('[data-wj-bank-clear][data-line-id]');
+    if (!box) return;
+    var lineId = box.getAttribute('data-line-id') || '';
+    if (!lineId) return;
+    var token = localStorage.getItem('ledgerkit_token') || '';
+    if (!token) {
+      box.checked = !box.checked;
+      return;
+    }
+    var cleared = !!box.checked;
+    var api = window.LEDGERKIT_API || '';
+    fetch(api + '/api/v1/bank-imports/lines/' + encodeURIComponent(lineId) + '/clear', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+      body: JSON.stringify({ cleared: cleared })
+    }).then(function (res) {
+      if (!res.ok) {
+        box.checked = !cleared;
+        return;
+      }
+      var loadReg = document.getElementById('loadCheckbook')
+        || document.querySelector('[data-wj-auth-fetch][data-wj-render-kind="checkbook"]');
+      if (loadReg && typeof window.wjAuthFetch === 'function') {
+        try { window.wjAuthFetch(loadReg); } catch (e) {}
+      } else if (loadReg) {
+        try { loadReg.click(); } catch (e) {}
+      }
+    }).catch(function () {
+      box.checked = !cleared;
+    });
+  });
 })();
 "##
 }
@@ -200,6 +254,7 @@ mod tests {
         assert!(html.contains("wj-checkbook-register"));
         assert!(html.contains("Amount"));
         assert!(html.contains("Balance"));
+        assert!(html.contains("Clr"));
         assert!(!html.contains(">Spent<"));
         assert!(!html.contains(">Received<"));
     }
@@ -229,10 +284,33 @@ mod tests {
     }
 
     #[test]
+    fn cleared_row_emits_clear_checkbox() {
+        let html = CheckbookRegister::new()
+            .row(
+                CheckbookRow::new("2026-07-01", "", "FEE", "-45.00", "100.00")
+                    .line_id("bank~1000~demo-fit-01")
+                    .cleared(true),
+            )
+            .render();
+        assert!(html.contains("data-wj-bank-clear"));
+        assert!(html.contains("checked"));
+        assert!(html.contains(">Clr<"));
+    }
+
+    #[test]
     fn runtime_focuses_bank_match_cell() {
         let js = checkbook_register_runtime_js();
         assert!(js.contains("data-wj-register-match"));
         assert!(js.contains("data-wj-bank-match"));
         assert!(js.contains("scrollIntoView") || js.contains("is-focus"));
+    }
+
+    #[test]
+    fn runtime_posts_cleared_toggle() {
+        let js = checkbook_register_runtime_js();
+        assert!(js.contains("data-wj-bank-clear"));
+        assert!(js.contains("/clear"));
+        assert!(js.contains("cleared"));
+        assert!(js.contains("loadCheckbook"));
     }
 }
