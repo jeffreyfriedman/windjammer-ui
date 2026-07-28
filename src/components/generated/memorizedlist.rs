@@ -121,6 +121,17 @@ pub fn memorized_list_runtime_js() -> &'static str {
     ).join('');
   }
   window.wjMemorizedRefresh = renderList;
+  window.wjMemorizedPrefill = function (title, body) {
+    var details = document.querySelector('[data-wj-memorized-list] details');
+    if (details) details.open = true;
+    var titleEl = document.getElementById('memTitle');
+    var bodyEl = document.getElementById('memBody');
+    if (titleEl) titleEl.value = title || '';
+    if (bodyEl) bodyEl.value = body || '';
+    if (titleEl && typeof titleEl.focus === 'function') {
+      try { titleEl.focus(); } catch (e) {}
+    }
+  };
   document.addEventListener('click', async (e) => {
     const t = e.target;
     if (!(t instanceof Element)) return;
@@ -204,5 +215,9 @@ mod tests {
         assert!(js.contains("ledgerkit_memorized"));
         assert!(js.contains("data-wj-memorized-run"));
         assert!(js.contains("ensureSeed") || js.contains("mem-rent"));
+        assert!(
+            js.contains("wjMemorizedPrefill"),
+            "1.5.8 post-finish handoff prefills memorized save form"
+        );
     }
 }
