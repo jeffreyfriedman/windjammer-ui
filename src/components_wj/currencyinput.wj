@@ -1,0 +1,80 @@
+// CurrencyInput — amount field with currency code for JE / write-check (finance dogfood P1)
+
+use super::traits::Renderable
+use super::moneydisplay::format_cents
+
+pub struct CurrencyInput {
+    name: string,
+    label: string,
+    currency: string,
+    value_cents: int,
+    required: bool,
+}
+
+impl CurrencyInput {
+    pub fn new() -> CurrencyInput {
+        CurrencyInput {
+            name: "amount".to_string(),
+            label: "".to_string(),
+            currency: "USD".to_string(),
+            value_cents: 0,
+            required: false,
+        }
+    }
+
+    pub fn name(self, name: string) -> CurrencyInput {
+        self.name = name
+        self
+    }
+
+    pub fn label(self, label: string) -> CurrencyInput {
+        self.label = label
+        self
+    }
+
+    pub fn currency(self, currency: string) -> CurrencyInput {
+        self.currency = currency
+        self
+    }
+
+    pub fn value_cents(self, value_cents: int) -> CurrencyInput {
+        self.value_cents = value_cents
+        self
+    }
+
+    pub fn required(self, required: bool) -> CurrencyInput {
+        self.required = required
+        self
+    }
+}
+
+impl Renderable for CurrencyInput {
+    fn render(self) -> string {
+        let value = format_cents(self.value_cents)
+        let req = if self.required {
+            " required"
+        } else {
+            ""
+        }
+        let label_html = if self.label.len() == 0 {
+            "".to_string()
+        } else {
+            format!("<label class='wj-currency-input-label' for='{}'>{}</label>", self.name, self.label)
+        }
+        format!(
+            "<div class='wj-currency-input' data-currency='{}'>{}<span class='wj-currency-input-code'>{}</span><input type='text' inputmode='decimal' class='wj-currency-input-field' id='{}' name='{}' value='{}'{} /></div>",
+            self.currency,
+            label_html,
+            self.currency,
+            self.name,
+            self.name,
+            value,
+            req
+        )
+    }
+}
+
+fn main() {
+    let html = CurrencyInput::new().name("amount".to_string()).currency("USD".to_string()).value_cents(1250).render()
+    println!("{}", html)
+}

@@ -1,0 +1,74 @@
+// PeriodBadge — fiscal period open / closed / locked (finance dogfood P1)
+
+use super::traits::Renderable
+use super::badge::{Badge, BadgeVariant, BadgeSize}
+
+pub struct PeriodBadge {
+    state: string,
+    label: string,
+}
+
+impl PeriodBadge {
+    pub fn new(state: string) -> PeriodBadge {
+        PeriodBadge {
+            state: state,
+            label: "".to_string(),
+        }
+    }
+
+    pub fn label(self, label: string) -> PeriodBadge {
+        self.label = label
+        self
+    }
+}
+
+fn period_variant_for(state: string) -> BadgeVariant {
+    let s = state.to_lowercase()
+    if s == "open" {
+        BadgeVariant::Success
+    } else if s == "locked" {
+        BadgeVariant::Danger
+    } else if s == "closed" {
+        BadgeVariant::Default
+    } else {
+        BadgeVariant::Info
+    }
+}
+
+fn state_class(state: string) -> string {
+    let s = state.to_lowercase()
+    if s == "open" {
+        "wj-period-open".to_string()
+    } else if s == "locked" {
+        "wj-period-locked".to_string()
+    } else if s == "closed" {
+        "wj-period-closed".to_string()
+    } else {
+        "wj-period-unknown".to_string()
+    }
+}
+
+fn display_text(state: string, label: string) -> string {
+    if label.len() == 0 {
+        state
+    } else {
+        label + " · " + state
+    }
+}
+
+impl Renderable for PeriodBadge {
+    fn render(self) -> string {
+        let state = self.state
+        let label = self.label
+        let v = period_variant_for(state.clone())
+        let cls = state_class(state.clone())
+        let text = display_text(state.clone(), label)
+        let badge = Badge::new(text).variant(v).size(BadgeSize::Small).render()
+        format!("<span class='wj-period-badge {}' data-period-state='{}'>{}</span>", cls, state, badge)
+    }
+}
+
+fn main() {
+    let html = PeriodBadge::new("open".to_string()).label("FY2026-Q2".to_string()).render()
+    println!("{}", html)
+}

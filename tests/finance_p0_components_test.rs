@@ -105,3 +105,42 @@ fn chart_renders_svg_bars() {
     assert!(html.contains("wj-chart-bar"));
     assert!(html.contains("Aging"));
 }
+
+#[test]
+fn period_badge_maps_fiscal_states() {
+    use windjammer_ui::components::generated::periodbadge;
+    let open = periodbadge::PeriodBadge::new("open".to_string())
+        .label("FY2026-Q2".to_string())
+        .render();
+    assert!(open.contains("wj-period-badge"));
+    assert!(open.contains("wj-period-open") || open.contains("wj-badge-success"));
+    assert!(open.contains("FY2026-Q2"));
+
+    let locked = periodbadge::PeriodBadge::new("locked".to_string()).render();
+    assert!(locked.contains("wj-period-badge"));
+    assert!(locked.contains("wj-period-locked") || locked.contains("wj-badge-danger"));
+    assert!(locked.to_lowercase().contains("locked"));
+
+    let closed = periodbadge::PeriodBadge::new("closed".to_string())
+        .label("FY2025".to_string())
+        .render();
+    assert!(closed.contains("wj-period-closed") || closed.contains("wj-badge-default"));
+    assert!(closed.contains("FY2025"));
+}
+
+#[test]
+fn currency_input_renders_money_field() {
+    use windjammer_ui::components::generated::currencyinput;
+    let html = currencyinput::CurrencyInput::new()
+        .name("amount".to_string())
+        .label("Amount".to_string())
+        .currency("USD".to_string())
+        .value_cents(1250)
+        .required(true)
+        .render();
+    assert!(html.contains("wj-currency-input"));
+    assert!(html.contains("name=\"amount\"") || html.contains("name='amount'"));
+    assert!(html.contains("USD"));
+    assert!(html.contains("12.50") || html.contains("value=\"12.50\"") || html.contains("value='12.50'"));
+    assert!(html.contains("required"));
+}
