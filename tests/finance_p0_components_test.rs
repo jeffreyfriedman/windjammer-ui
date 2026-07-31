@@ -144,3 +144,49 @@ fn currency_input_renders_money_field() {
     assert!(html.contains("12.50") || html.contains("value=\"12.50\"") || html.contains("value='12.50'"));
     assert!(html.contains("required"));
 }
+
+#[test]
+fn write_check_form_dogfoods_currency_input() {
+    use windjammer_ui::components::generated::{traits::Renderable, writecheckform};
+    let html = writecheckform::WriteCheckForm::new()
+        .sample_body("{}".to_string())
+        .render();
+    assert!(html.contains("wj-write-check-form"));
+    assert!(
+        html.contains("wj-currency-input"),
+        "D5: WriteCheckForm amount must use CurrencyInput"
+    );
+    assert!(html.contains("data-wj-write-check-amount"));
+    assert!(html.contains("checkAmount"));
+}
+
+#[test]
+fn auth_fetch_renders_bearer_load_button() {
+    use windjammer_ui::components::generated::{authfetch, traits::Renderable};
+    let html = authfetch::AuthFetch::new(
+        "/api/v1/bank-lines".to_string(),
+        "bank".to_string(),
+    )
+    .id("loadBank".to_string())
+    .label("List bank lines".to_string())
+    .mount("#bankTableMount".to_string())
+    .render();
+    assert!(html.contains("data-wj-auth-fetch"));
+    assert!(html.contains("data-wj-fetch-path=\"/api/v1/bank-lines\""));
+    assert!(html.contains("data-wj-render-kind=\"bank\""));
+    assert!(html.contains("data-wj-mount=\"#bankTableMount\""));
+    assert!(html.contains("id=\"loadBank\""));
+    assert!(html.contains("List bank lines"));
+}
+
+#[test]
+fn auth_fetch_runtime_js_drives_sync_badge() {
+    use windjammer_ui::components::generated::authfetch;
+    let js = authfetch::auth_fetch_runtime_js();
+    assert!(js.contains("lkSetSyncStatus"), "D5: sync badge hook");
+    assert!(js.contains("lkSyncBadge"));
+    assert!(js.contains("wjAuthFetch"));
+    assert!(js.contains("'syncing'") || js.contains("\"syncing\""));
+    assert!(js.contains("'offline'") || js.contains("\"offline\""));
+    assert!(js.contains("'synced'") || js.contains("\"synced\""));
+}

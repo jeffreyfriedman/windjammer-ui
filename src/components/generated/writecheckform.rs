@@ -1,9 +1,14 @@
-//! WriteCheckForm — Business write-check fields + JE sync (ADR-002 / R1.3 / R2.2 / tags-on-write-check).
-//! Hand-maintained. Always SKIP_WJ_REGEN=1.
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+//! Regenerated from `components_wj/writecheckform.wj` — Windjammer is source of truth.
+
+#[allow(unused_imports)]
+use super::*;
 
 use super::traits::Renderable;
-
-#[derive(Clone, Debug)]
+use super::currencyinput::CurrencyInput;
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct WriteCheckForm {
     pub sample_body: String,
     pub bank_code: String,
@@ -11,288 +16,38 @@ pub struct WriteCheckForm {
 }
 
 impl WriteCheckForm {
-    pub fn new() -> Self {
-        Self {
-            sample_body: "{}".to_string(),
-            bank_code: "1000".to_string(),
-            expense_code: "5000".to_string(),
-        }
-    }
-
-    pub fn sample_body(mut self, body: impl Into<String>) -> Self {
-        self.sample_body = body.into();
-        self
-    }
-
-    pub fn bank_code(mut self, code: impl Into<String>) -> Self {
-        self.bank_code = code.into();
-        self
-    }
-
-    pub fn expense_code(mut self, code: impl Into<String>) -> Self {
-        self.expense_code = code.into();
-        self
-    }
+#[inline]
+pub fn new() -> WriteCheckForm {
+        WriteCheckForm { sample_body: "{}".to_string(), bank_code: "1000".to_string(), expense_code: "5000".to_string() }
 }
-
-impl Default for WriteCheckForm {
-    fn default() -> Self {
-        Self::new()
-    }
+#[inline]
+pub fn sample_body(mut self, body: String) -> WriteCheckForm {
+        self.sample_body = body;
+        self
 }
-
-fn expense_option(code: &str, label: &str, selected: &str) -> String {
-    let sel = if code == selected { " selected" } else { "" };
-    format!(
-        r#"<option value="{code}"{sel}>{code} · {label}</option>"#,
-        code = code,
-        label = label,
-        sel = sel
-    )
+#[inline]
+pub fn bank_code(mut self, code: String) -> WriteCheckForm {
+        self.bank_code = code;
+        self
+}
+#[inline]
+pub fn expense_code(mut self, code: String) -> WriteCheckForm {
+        self.expense_code = code;
+        self
+}
 }
 
 impl Renderable for WriteCheckForm {
-    fn render(&self) -> String {
-        let expense = self.expense_code.as_str();
-        let options = [
-            expense_option("5000", "Payroll Expense", expense),
-            expense_option("5100", "Office Supplies", expense),
-            expense_option("5200", "Equipment Expense", expense),
-            expense_option("5300", "Software & SaaS", expense),
-            expense_option("5400", "Bank Fees", expense),
-        ]
-        .join("");
-        format!(
-            r##"<div class="wj-write-check-form" data-wj-write-check data-wj-bank-code="{bank}" data-wj-expense-code="{expense}">
-<p class="hub-kicker">Write check</p>
-<label for="checkPayee">Payee</label>
-<input id="checkPayee" name="payee" type="text" placeholder="Vendor or payee" data-wj-write-check-payee/>
-<label for="checkAmount">Amount</label>
-<input id="checkAmount" name="amount" type="text" inputmode="decimal" placeholder="0.00" data-wj-write-check-amount/>
-<label for="checkNum">Check number</label>
-<input id="checkNum" name="check_number" type="text" value="1001" data-wj-write-check-num/>
-<label for="checkExpense">Expense account</label>
-<select id="checkExpense" name="expense_account" data-wj-write-check-expense>{options}</select>
-<label for="checkClass">Class</label>
-<select id="checkClass" name="class_tag" data-wj-write-check-class>
-  <option value="">— None —</option>
-</select>
-<label for="checkDept">Department</label>
-<select id="checkDept" name="department_tag" data-wj-write-check-department>
-  <option value="">— None —</option>
-</select>
-<label for="checkMemo">Memo</label>
-<input id="checkMemo" name="memo" type="text" placeholder="Optional memo" data-wj-write-check-memo/>
-<details class="bw-advanced"><summary>Journal body (advanced)</summary>
-<label for="checkJeBody">Journal body (editable)</label>
-<textarea id="checkJeBody" rows="6" data-wj-write-check-body>{sample}</textarea>
-</details>
-<div class="row"><button type="button" class="btn-secondary" id="postCheck" data-wj-write-check-post>Post check</button></div>
-<p id="out" class="lk-status" role="status" hidden></p>
-</div>"##,
-            bank = self.bank_code,
-            expense = self.expense_code,
-            options = options,
-            sample = self.sample_body,
-        )
-    }
+#[inline]
+fn render(&self) -> String {
+        let amount = CurrencyInput::new().name("amount".to_string()).input_id("checkAmount".to_string()).label("Amount".to_string()).currency("USD".to_string()).extra_attrs("placeholder=\"0.00\" data-wj-write-check-amount".to_string()).render();
+        "<div class=\"wj-write-check-form\" data-wj-write-check data-wj-bank-code=\"".to_string() + &self.bank_code.clone() + &String::from("\" data-wj-expense-code=\"") + &self.expense_code.clone() + &String::from("\">") + &String::from("<p class=\"hub-kicker\">Write check</p>") + &String::from("<label for=\"checkPayee\">Payee</label>") + &String::from("<input id=\"checkPayee\" name=\"payee\" type=\"text\" placeholder=\"Vendor or payee\" data-wj-write-check-payee/>") + &amount + &String::from("<label for=\"checkNum\">Check number</label>") + &String::from("<input id=\"checkNum\" name=\"check_number\" type=\"text\" value=\"1001\" data-wj-write-check-num/>") + &String::from("<label for=\"checkExpense\">Expense account</label>") + &String::from("<select id=\"checkExpense\" name=\"expense_account\" data-wj-write-check-expense>") + &String::from("<option value=\"5000\">5000 · Payroll Expense</option>") + &String::from("<option value=\"5100\">5100 · Office Supplies</option>") + &String::from("<option value=\"5200\">5200 · Equipment Expense</option>") + &String::from("<option value=\"5300\">5300 · Software &amp; SaaS</option>") + &String::from("<option value=\"5400\">5400 · Bank Fees</option>") + &String::from("</select>") + &String::from("<label for=\"checkClass\">Class</label>") + &String::from("<select id=\"checkClass\" name=\"class_tag\" data-wj-write-check-class>") + &String::from("<option value=\"\">— None —</option>") + &String::from("</select>") + &String::from("<label for=\"checkDept\">Department</label>") + &String::from("<select id=\"checkDept\" name=\"department_tag\" data-wj-write-check-department>") + &String::from("<option value=\"\">— None —</option>") + &String::from("</select>") + &String::from("<label for=\"checkMemo\">Memo</label>") + &String::from("<input id=\"checkMemo\" name=\"memo\" type=\"text\" placeholder=\"Optional memo\" data-wj-write-check-memo/>") + &String::from("<details class=\"bw-advanced\"><summary>Journal body (advanced)</summary>") + &String::from("<label for=\"checkJeBody\">Journal body (editable)</label>") + &String::from("<textarea id=\"checkJeBody\" rows=\"6\" data-wj-write-check-body>") + &self.sample_body.clone() + &String::from("</textarea></details>") + &String::from("<div class=\"row\"><button type=\"button\" class=\"btn-secondary\" id=\"postCheck\" data-wj-write-check-post>Post check</button></div>") + &String::from("<p id=\"out\" class=\"lk-status\" role=\"status\" hidden></p>") + &String::from("</div>")
+}
 }
 
 /// Sync visible fields → journal JSON; post; refresh register.
+#[inline]
 pub fn write_check_form_runtime_js() -> &'static str {
-    r##"
-(function () {
-  if (window.__wjWriteCheckBound) return;
-  window.__wjWriteCheckBound = true;
-
-  function esc(s) {
-    return String(s || '').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
-  }
-  function centsFromAmount(raw) {
-    var t = String(raw || '').replace(/[^0-9.]/g, '');
-    if (!t) return 0;
-    var n = Math.round(parseFloat(t) * 100);
-    return isFinite(n) ? n : 0;
-  }
-  function today() {
-    var d = new Date();
-    var m = (d.getMonth() + 1);
-    var day = d.getDate();
-    return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (day < 10 ? '0' : '') + day;
-  }
-  function activeBankCode(root) {
-    var rail = document.querySelector('[data-wj-account-rail-item].is-active');
-    if (rail && rail.getAttribute('data-code')) return rail.getAttribute('data-code');
-    return (root && root.getAttribute('data-wj-bank-code')) || '1000';
-  }
-  function expenseCode(root) {
-    var sel = root.querySelector('[data-wj-write-check-expense]');
-    if (sel && sel.value) {
-      root.setAttribute('data-wj-expense-code', sel.value);
-      return sel.value;
-    }
-    return (root.getAttribute('data-wj-expense-code')) || '5000';
-  }
-  function selectedTagId(root, attr) {
-    var sel = root.querySelector('[' + attr + ']');
-    return (sel && sel.value) ? String(sel.value) : '';
-  }
-  function tagAssignmentsJson(root) {
-    var parts = [];
-    var classId = selectedTagId(root, 'data-wj-write-check-class');
-    var deptId = selectedTagId(root, 'data-wj-write-check-department');
-    if (classId) parts.push('{"tag_id":"' + esc(classId) + '","line_index":0}');
-    if (deptId) parts.push('{"tag_id":"' + esc(deptId) + '","line_index":0}');
-    return parts.length ? ',"tag_assignments":[' + parts.join(',') + ']' : '';
-  }
-  function buildBody(root) {
-    var payee = (root.querySelector('[data-wj-write-check-payee]') || {}).value || '';
-    var amount = (root.querySelector('[data-wj-write-check-amount]') || {}).value || '';
-    var num = (root.querySelector('[data-wj-write-check-num]') || {}).value || '1001';
-    var memo = (root.querySelector('[data-wj-write-check-memo]') || {}).value || '';
-    var bank = activeBankCode(root);
-    var expense = expenseCode(root);
-    var cents = centsFromAmount(amount);
-    if (!cents) throw new Error('Enter an amount greater than zero.');
-    if (!payee.trim()) throw new Error('Enter a payee.');
-    var desc = payee.trim();
-    var chk = 'CHK ' + String(num).trim();
-    return '{"reference":"CHK-' + esc(String(num).trim()) + '","transaction_date":"' + today()
-      + '","memo":"' + esc(memo.trim() || desc) + '"'
-      + tagAssignmentsJson(root)
-      + ',"lines":['
-      + '{"account_code":"' + esc(expense) + '","amount_cents":' + cents + ',"description":"' + esc(desc) + '"},'
-      + '{"account_code":"' + esc(bank) + '","amount_cents":' + (-cents) + ',"description":"' + esc(chk) + '"}'
-      + ']}';
-  }
-  function syncBody(root) {
-    var ta = root.querySelector('[data-wj-write-check-body]');
-    if (!ta) return null;
-    var body = buildBody(root);
-    ta.value = body;
-    return body;
-  }
-  function bumpCheckNum(root) {
-    var el = root.querySelector('[data-wj-write-check-num]');
-    if (!el) return;
-    var n = parseInt(String(el.value || '1001').replace(/[^0-9]/g, ''), 10);
-    if (!isFinite(n)) n = 1001;
-    el.value = String(n + 1);
-  }
-  function fillTagSelect(sel, tags, dimension) {
-    if (!sel) return;
-    var keep = sel.value || '';
-    var html = '<option value="">— None —</option>';
-    (tags || []).forEach(function (t) {
-      if (!t || t.dimension !== dimension) return;
-      var id = t.id || '';
-      var name = t.name || id;
-      var selAttr = (id === keep) ? ' selected' : '';
-      html += '<option value="' + String(id).replace(/"/g, '&quot;') + '"' + selAttr + '>' + name + '</option>';
-    });
-    sel.innerHTML = html;
-  }
-  window.wjWriteCheckApplyTags = function (tags) {
-    var roots = document.querySelectorAll('[data-wj-write-check]');
-    roots.forEach(function (root) {
-      fillTagSelect(root.querySelector('[data-wj-write-check-class]'), tags, 'class');
-      fillTagSelect(root.querySelector('[data-wj-write-check-department]'), tags, 'department');
-      try { syncBody(root); } catch (e) {}
-    });
-  };
-
-  document.addEventListener('click', function (ev) {
-    var t = ev.target;
-    if (!t || !t.closest) return;
-    var btn = t.closest('[data-wj-write-check-post]');
-    if (!btn) return;
-    var root = btn.closest('[data-wj-write-check]');
-    if (!root) return;
-    ev.preventDefault();
-    var out = root.querySelector('#out') || document.getElementById('out');
-    var tokenKey = 'ledgerkit_token';
-    try {
-      var body = syncBody(root);
-      var tkn = localStorage.getItem(tokenKey) || '';
-      if (!out) return;
-      if (!tkn) { out.hidden = false; out.classList.add('is-error'); out.textContent = 'Sign in first.'; return; }
-      out.hidden = false; out.classList.remove('is-error'); out.textContent = 'Posting check…';
-      var api = window.LEDGERKIT_API || '';
-      fetch(api + '/api/v1/journal-entries', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + tkn },
-        body: body
-      }).then(function (res) {
-        if (!res.ok) { out.classList.add('is-error'); out.textContent = 'Could not post (' + res.status + ')'; return; }
-        out.textContent = 'Check posted — register refreshing…';
-        bumpCheckNum(root);
-        var payee = root.querySelector('[data-wj-write-check-payee]');
-        var amount = root.querySelector('[data-wj-write-check-amount]');
-        var memo = root.querySelector('[data-wj-write-check-memo]');
-        if (payee) payee.value = '';
-        if (amount) amount.value = '';
-        if (memo) memo.value = '';
-        try { syncBody(root); } catch (e) {}
-        var load = document.getElementById('loadCheckbook')
-          || document.querySelector('[data-wj-render-kind="checkbook"]');
-        if (load) { try { load.click(); } catch (e) {} }
-      }).catch(function (err) {
-        out.classList.add('is-error'); out.textContent = String(err);
-      });
-    } catch (err) {
-      if (out) { out.hidden = false; out.classList.add('is-error'); out.textContent = String(err.message || err); }
-    }
-  });
-
-  document.addEventListener('input', function (ev) {
-    var t = ev.target;
-    if (!t || !t.closest) return;
-    var root = t.closest('[data-wj-write-check]');
-    if (!root) return;
-    if (!t.matches('[data-wj-write-check-payee],[data-wj-write-check-amount],[data-wj-write-check-num],[data-wj-write-check-memo],[data-wj-write-check-expense],[data-wj-write-check-class],[data-wj-write-check-department]')) return;
-    try { syncBody(root); } catch (e) {}
-  });
-  document.addEventListener('change', function (ev) {
-    var t = ev.target;
-    if (!t || !t.closest) return;
-    var root = t.closest('[data-wj-write-check]');
-    if (!root) return;
-    if (!t.matches('[data-wj-write-check-expense],[data-wj-write-check-class],[data-wj-write-check-department]')) return;
-    try { syncBody(root); } catch (e) {}
-  });
-})();
-"##
+    "\n(function () {\n  if (window.__wjWriteCheckBound) return;\n  window.__wjWriteCheckBound = true;\n\n  function esc(s) {\n    return String(s || '').replace(/\\\\/g, '\\\\\\\\').replace(/\"/g, '\\\\\"');\n  }\n  function centsFromAmount(raw) {\n    var t = String(raw || '').replace(/[^0-9.]/g, '');\n    if (!t) return 0;\n    var n = Math.round(parseFloat(t) * 100);\n    return isFinite(n) ? n : 0;\n  }\n  function today() {\n    var d = new Date();\n    var m = (d.getMonth() + 1);\n    var day = d.getDate();\n    return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (day < 10 ? '0' : '') + day;\n  }\n  function activeBankCode(root) {\n    var rail = document.querySelector('[data-wj-account-rail-item].is-active');\n    if (rail && rail.getAttribute('data-code')) return rail.getAttribute('data-code');\n    return (root && root.getAttribute('data-wj-bank-code')) || '1000';\n  }\n  function expenseCode(root) {\n    var sel = root.querySelector('[data-wj-write-check-expense]');\n    if (sel && sel.value) {\n      root.setAttribute('data-wj-expense-code', sel.value);\n      return sel.value;\n    }\n    return (root.getAttribute('data-wj-expense-code')) || '5000';\n  }\n  function selectedTagId(root, attr) {\n    var sel = root.querySelector('[' + attr + ']');\n    return (sel && sel.value) ? String(sel.value) : '';\n  }\n  function tagAssignmentsJson(root) {\n    var parts = [];\n    var classId = selectedTagId(root, 'data-wj-write-check-class');\n    var deptId = selectedTagId(root, 'data-wj-write-check-department');\n    if (classId) parts.push('{\"tag_id\":\"' + esc(classId) + '\",\"line_index\":0}');\n    if (deptId) parts.push('{\"tag_id\":\"' + esc(deptId) + '\",\"line_index\":0}');\n    return parts.length ? ',\"tag_assignments\":[' + parts.join(',') + ']' : '';\n  }\n  function buildBody(root) {\n    var payee = (root.querySelector('[data-wj-write-check-payee]') || {}).value || '';\n    var amount = (root.querySelector('[data-wj-write-check-amount]') || {}).value || '';\n    var num = (root.querySelector('[data-wj-write-check-num]') || {}).value || '1001';\n    var memo = (root.querySelector('[data-wj-write-check-memo]') || {}).value || '';\n    var bank = activeBankCode(root);\n    var expense = expenseCode(root);\n    var cents = centsFromAmount(amount);\n    if (!cents) throw new Error('Enter an amount greater than zero.');\n    if (!payee.trim()) throw new Error('Enter a payee.');\n    var desc = payee.trim();\n    var chk = 'CHK ' + String(num).trim();\n    return '{\"reference\":\"CHK-' + esc(String(num).trim()) + '\",\"transaction_date\":\"' + today()\n      + '\",\"memo\":\"' + esc(memo.trim() || desc) + '\"'\n      + tagAssignmentsJson(root)\n      + ',\"lines\":['\n      + '{\"account_code\":\"' + esc(expense) + '\",\"amount_cents\":' + cents + ',\"description\":\"' + esc(desc) + '\"},'\n      + '{\"account_code\":\"' + esc(bank) + '\",\"amount_cents\":' + (-cents) + ',\"description\":\"' + esc(chk) + '\"}'\n      + ']}';\n  }\n  function syncBody(root) {\n    var ta = root.querySelector('[data-wj-write-check-body]');\n    if (!ta) return null;\n    var body = buildBody(root);\n    ta.value = body;\n    return body;\n  }\n  function bumpCheckNum(root) {\n    var el = root.querySelector('[data-wj-write-check-num]');\n    if (!el) return;\n    var n = parseInt(String(el.value || '1001').replace(/[^0-9]/g, ''), 10);\n    if (!isFinite(n)) n = 1001;\n    el.value = String(n + 1);\n  }\n  function fillTagSelect(sel, tags, dimension) {\n    if (!sel) return;\n    var keep = sel.value || '';\n    var html = '<option value=\"\">— None —</option>';\n    (tags || []).forEach(function (t) {\n      if (!t || t.dimension !== dimension) return;\n      var id = t.id || '';\n      var name = t.name || id;\n      var selAttr = (id === keep) ? ' selected' : '';\n      html += '<option value=\"' + String(id).replace(/\"/g, '&quot;') + '\"' + selAttr + '>' + name + '</option>';\n    });\n    sel.innerHTML = html;\n  }\n  window.wjWriteCheckApplyTags = function (tags) {\n    var roots = document.querySelectorAll('[data-wj-write-check]');\n    roots.forEach(function (root) {\n      fillTagSelect(root.querySelector('[data-wj-write-check-class]'), tags, 'class');\n      fillTagSelect(root.querySelector('[data-wj-write-check-department]'), tags, 'department');\n      try { syncBody(root); } catch (e) {}\n    });\n  };\n\n  document.addEventListener('click', function (ev) {\n    var t = ev.target;\n    if (!t || !t.closest) return;\n    var btn = t.closest('[data-wj-write-check-post]');\n    if (!btn) return;\n    var root = btn.closest('[data-wj-write-check]');\n    if (!root) return;\n    ev.preventDefault();\n    var out = root.querySelector('#out') || document.getElementById('out');\n    var tokenKey = 'ledgerkit_token';\n    try {\n      var body = syncBody(root);\n      var tkn = localStorage.getItem(tokenKey) || '';\n      if (!out) return;\n      if (!tkn) { out.hidden = false; out.classList.add('is-error'); out.textContent = 'Sign in first.'; return; }\n      out.hidden = false; out.classList.remove('is-error'); out.textContent = 'Posting check…';\n      var api = window.LEDGERKIT_API || '';\n      fetch(api + '/api/v1/journal-entries', {\n        method: 'POST',\n        headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + tkn },\n        body: body\n      }).then(function (res) {\n        if (!res.ok) { out.classList.add('is-error'); out.textContent = 'Could not post (' + res.status + ')'; return; }\n        out.textContent = 'Check posted — register refreshing…';\n        bumpCheckNum(root);\n        var payee = root.querySelector('[data-wj-write-check-payee]');\n        var amount = root.querySelector('[data-wj-write-check-amount]');\n        var memo = root.querySelector('[data-wj-write-check-memo]');\n        if (payee) payee.value = '';\n        if (amount) amount.value = '';\n        if (memo) memo.value = '';\n        try { syncBody(root); } catch (e) {}\n        var load = document.getElementById('loadCheckbook')\n          || document.querySelector('[data-wj-render-kind=\"checkbook\"]');\n        if (load) { try { load.click(); } catch (e) {} }\n      }).catch(function (err) {\n        out.classList.add('is-error'); out.textContent = String(err);\n      });\n    } catch (err) {\n      if (out) { out.hidden = false; out.classList.add('is-error'); out.textContent = String(err.message || err); }\n    }\n  });\n\n  document.addEventListener('input', function (ev) {\n    var t = ev.target;\n    if (!t || !t.closest) return;\n    var root = t.closest('[data-wj-write-check]');\n    if (!root) return;\n    if (!t.matches('[data-wj-write-check-payee],[data-wj-write-check-amount],[data-wj-write-check-num],[data-wj-write-check-memo],[data-wj-write-check-expense],[data-wj-write-check-class],[data-wj-write-check-department]')) return;\n    try { syncBody(root); } catch (e) {}\n  });\n  document.addEventListener('change', function (ev) {\n    var t = ev.target;\n    if (!t || !t.closest) return;\n    var root = t.closest('[data-wj-write-check]');\n    if (!root) return;\n    if (!t.matches('[data-wj-write-check-expense],[data-wj-write-check-class],[data-wj-write-check-department]')) return;\n    try { syncBody(root); } catch (e) {}\n  });\n})();\n"
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn renders_fields_and_hooks() {
-        let html = WriteCheckForm::new()
-            .sample_body(r#"{"reference":"CHK-1001"}"#)
-            .expense_code("5100")
-            .render();
-        assert!(html.contains("wj-write-check-form"));
-        assert!(html.contains("data-wj-write-check-payee"));
-        assert!(html.contains("data-wj-write-check-post"));
-        assert!(html.contains("data-wj-write-check-expense"));
-        assert!(html.contains("data-wj-write-check-class"));
-        assert!(html.contains("data-wj-write-check-department"));
-        assert!(html.contains("checkExpense"));
-        assert!(html.contains("value=\"5100\" selected") || html.contains("5100 · Office"));
-        assert!(html.contains("checkJeBody"));
-    }
-
-    #[test]
-    fn runtime_clears_payee_amount_memo_after_post() {
-        let js = write_check_form_runtime_js();
-        assert!(js.contains("payee.value = ''"));
-        assert!(js.contains("amount.value = ''"));
-        assert!(js.contains("memo.value = ''"));
-        assert!(js.contains("bumpCheckNum"));
-        assert!(js.contains("tag_assignments"));
-        assert!(js.contains("wjWriteCheckApplyTags"));
-    }
-}

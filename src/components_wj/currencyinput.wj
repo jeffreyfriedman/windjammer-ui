@@ -5,25 +5,34 @@ use super::moneydisplay::format_cents
 
 pub struct CurrencyInput {
     name: string,
+    input_id: string,
     label: string,
     currency: string,
     value_cents: int,
     required: bool,
+    extra_attrs: string,
 }
 
 impl CurrencyInput {
     pub fn new() -> CurrencyInput {
         CurrencyInput {
             name: "amount".to_string(),
+            input_id: "".to_string(),
             label: "".to_string(),
             currency: "USD".to_string(),
             value_cents: 0,
             required: false,
+            extra_attrs: "".to_string(),
         }
     }
 
     pub fn name(self, name: string) -> CurrencyInput {
         self.name = name
+        self
+    }
+
+    pub fn input_id(self, input_id: string) -> CurrencyInput {
+        self.input_id = input_id
         self
     }
 
@@ -46,29 +55,46 @@ impl CurrencyInput {
         self.required = required
         self
     }
+
+    pub fn extra_attrs(self, extra_attrs: string) -> CurrencyInput {
+        self.extra_attrs = extra_attrs
+        self
+    }
 }
 
 impl Renderable for CurrencyInput {
     fn render(self) -> string {
         let value = format_cents(self.value_cents)
+        // No .clone() — W0005; compiler auto-clones on branch reuse (regen-unblock).
+        let id = if self.input_id.len() == 0 {
+            self.name
+        } else {
+            self.input_id
+        }
         let req = if self.required {
             " required"
         } else {
             ""
         }
+        let extra = if self.extra_attrs.len() == 0 {
+            "".to_string()
+        } else {
+            " ".to_string() + self.extra_attrs
+        }
         let label_html = if self.label.len() == 0 {
             "".to_string()
         } else {
-            format!("<label class='wj-currency-input-label' for='{}'>{}</label>", self.name, self.label)
+            format!("<label class='wj-currency-input-label' for='{}'>{}</label>", id, self.label)
         }
         format!(
-            "<div class='wj-currency-input' data-currency='{}'>{}<span class='wj-currency-input-code'>{}</span><input type='text' inputmode='decimal' class='wj-currency-input-field' id='{}' name='{}' value='{}'{} /></div>",
+            "<div class='wj-currency-input' data-currency='{}'>{}<span class='wj-currency-input-code'>{}</span><input type='text' inputmode='decimal' class='wj-currency-input-field' id='{}' name='{}' value='{}'{}{} /></div>",
             self.currency,
             label_html,
             self.currency,
-            self.name,
+            id,
             self.name,
             value,
+            extra,
             req
         )
     }

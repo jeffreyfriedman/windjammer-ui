@@ -1,7 +1,8 @@
-// WriteCheckForm — Business write-check fields + JE sync (ADR-002 / R1.3).
-// Post/sync runtime is Rust-only until codegen supports framework JS helpers.
+// WriteCheckForm — Business write-check fields + JE sync (ADR-002 / R1.3 / R2.2 / tags).
+// Amount field dogfoods CurrencyInput (E3.9.7 / D5). Hand-maintained Rust mirror + runtime JS.
 
 use super::traits::Renderable
+use super::currencyinput::CurrencyInput
 
 pub struct WriteCheckForm {
     sample_body: string,
@@ -36,6 +37,13 @@ impl WriteCheckForm {
 
 impl Renderable for WriteCheckForm {
     fn render(self) -> string {
+        let amount = CurrencyInput::new()
+            .name("amount".to_string())
+            .input_id("checkAmount".to_string())
+            .label("Amount".to_string())
+            .currency("USD".to_string())
+            .extra_attrs("placeholder=\"0.00\" data-wj-write-check-amount".to_string())
+            .render()
         "<div class=\"wj-write-check-form\" data-wj-write-check data-wj-bank-code=\"".to_string()
             + self.bank_code
             + "\" data-wj-expense-code=\""
@@ -44,8 +52,7 @@ impl Renderable for WriteCheckForm {
             + "<p class=\"hub-kicker\">Write check</p>"
             + "<label for=\"checkPayee\">Payee</label>"
             + "<input id=\"checkPayee\" name=\"payee\" type=\"text\" placeholder=\"Vendor or payee\" data-wj-write-check-payee/>"
-            + "<label for=\"checkAmount\">Amount</label>"
-            + "<input id=\"checkAmount\" name=\"amount\" type=\"text\" inputmode=\"decimal\" placeholder=\"0.00\" data-wj-write-check-amount/>"
+            + amount
             + "<label for=\"checkNum\">Check number</label>"
             + "<input id=\"checkNum\" name=\"check_number\" type=\"text\" value=\"1001\" data-wj-write-check-num/>"
             + "<label for=\"checkExpense\">Expense account</label>"
@@ -55,6 +62,14 @@ impl Renderable for WriteCheckForm {
             + "<option value=\"5200\">5200 · Equipment Expense</option>"
             + "<option value=\"5300\">5300 · Software &amp; SaaS</option>"
             + "<option value=\"5400\">5400 · Bank Fees</option>"
+            + "</select>"
+            + "<label for=\"checkClass\">Class</label>"
+            + "<select id=\"checkClass\" name=\"class_tag\" data-wj-write-check-class>"
+            + "<option value=\"\">— None —</option>"
+            + "</select>"
+            + "<label for=\"checkDept\">Department</label>"
+            + "<select id=\"checkDept\" name=\"department_tag\" data-wj-write-check-department>"
+            + "<option value=\"\">— None —</option>"
             + "</select>"
             + "<label for=\"checkMemo\">Memo</label>"
             + "<input id=\"checkMemo\" name=\"memo\" type=\"text\" placeholder=\"Optional memo\" data-wj-write-check-memo/>"
@@ -67,4 +82,176 @@ impl Renderable for WriteCheckForm {
             + "<p id=\"out\" class=\"lk-status\" role=\"status\" hidden></p>"
             + "</div>"
     }
+}
+
+
+/// Sync visible fields → journal JSON; post; refresh register.
+pub fn write_check_form_runtime_js() -> &'static str {
+    r##"
+(function () {
+  if (window.__wjWriteCheckBound) return;
+  window.__wjWriteCheckBound = true;
+
+  function esc(s) {
+    return String(s || '').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+  }
+  function centsFromAmount(raw) {
+    var t = String(raw || '').replace(/[^0-9.]/g, '');
+    if (!t) return 0;
+    var n = Math.round(parseFloat(t) * 100);
+    return isFinite(n) ? n : 0;
+  }
+  function today() {
+    var d = new Date();
+    var m = (d.getMonth() + 1);
+    var day = d.getDate();
+    return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (day < 10 ? '0' : '') + day;
+  }
+  function activeBankCode(root) {
+    var rail = document.querySelector('[data-wj-account-rail-item].is-active');
+    if (rail && rail.getAttribute('data-code')) return rail.getAttribute('data-code');
+    return (root && root.getAttribute('data-wj-bank-code')) || '1000';
+  }
+  function expenseCode(root) {
+    var sel = root.querySelector('[data-wj-write-check-expense]');
+    if (sel && sel.value) {
+      root.setAttribute('data-wj-expense-code', sel.value);
+      return sel.value;
+    }
+    return (root.getAttribute('data-wj-expense-code')) || '5000';
+  }
+  function selectedTagId(root, attr) {
+    var sel = root.querySelector('[' + attr + ']');
+    return (sel && sel.value) ? String(sel.value) : '';
+  }
+  function tagAssignmentsJson(root) {
+    var parts = [];
+    var classId = selectedTagId(root, 'data-wj-write-check-class');
+    var deptId = selectedTagId(root, 'data-wj-write-check-department');
+    if (classId) parts.push('{"tag_id":"' + esc(classId) + '","line_index":0}');
+    if (deptId) parts.push('{"tag_id":"' + esc(deptId) + '","line_index":0}');
+    return parts.length ? ',"tag_assignments":[' + parts.join(',') + ']' : '';
+  }
+  function buildBody(root) {
+    var payee = (root.querySelector('[data-wj-write-check-payee]') || {}).value || '';
+    var amount = (root.querySelector('[data-wj-write-check-amount]') || {}).value || '';
+    var num = (root.querySelector('[data-wj-write-check-num]') || {}).value || '1001';
+    var memo = (root.querySelector('[data-wj-write-check-memo]') || {}).value || '';
+    var bank = activeBankCode(root);
+    var expense = expenseCode(root);
+    var cents = centsFromAmount(amount);
+    if (!cents) throw new Error('Enter an amount greater than zero.');
+    if (!payee.trim()) throw new Error('Enter a payee.');
+    var desc = payee.trim();
+    var chk = 'CHK ' + String(num).trim();
+    return '{"reference":"CHK-' + esc(String(num).trim()) + '","transaction_date":"' + today()
+      + '","memo":"' + esc(memo.trim() || desc) + '"'
+      + tagAssignmentsJson(root)
+      + ',"lines":['
+      + '{"account_code":"' + esc(expense) + '","amount_cents":' + cents + ',"description":"' + esc(desc) + '"},'
+      + '{"account_code":"' + esc(bank) + '","amount_cents":' + (-cents) + ',"description":"' + esc(chk) + '"}'
+      + ']}';
+  }
+  function syncBody(root) {
+    var ta = root.querySelector('[data-wj-write-check-body]');
+    if (!ta) return null;
+    var body = buildBody(root);
+    ta.value = body;
+    return body;
+  }
+  function bumpCheckNum(root) {
+    var el = root.querySelector('[data-wj-write-check-num]');
+    if (!el) return;
+    var n = parseInt(String(el.value || '1001').replace(/[^0-9]/g, ''), 10);
+    if (!isFinite(n)) n = 1001;
+    el.value = String(n + 1);
+  }
+  function fillTagSelect(sel, tags, dimension) {
+    if (!sel) return;
+    var keep = sel.value || '';
+    var html = '<option value="">— None —</option>';
+    (tags || []).forEach(function (t) {
+      if (!t || t.dimension !== dimension) return;
+      var id = t.id || '';
+      var name = t.name || id;
+      var selAttr = (id === keep) ? ' selected' : '';
+      html += '<option value="' + String(id).replace(/"/g, '&quot;') + '"' + selAttr + '>' + name + '</option>';
+    });
+    sel.innerHTML = html;
+  }
+  window.wjWriteCheckApplyTags = function (tags) {
+    var roots = document.querySelectorAll('[data-wj-write-check]');
+    roots.forEach(function (root) {
+      fillTagSelect(root.querySelector('[data-wj-write-check-class]'), tags, 'class');
+      fillTagSelect(root.querySelector('[data-wj-write-check-department]'), tags, 'department');
+      try { syncBody(root); } catch (e) {}
+    });
+  };
+
+  document.addEventListener('click', function (ev) {
+    var t = ev.target;
+    if (!t || !t.closest) return;
+    var btn = t.closest('[data-wj-write-check-post]');
+    if (!btn) return;
+    var root = btn.closest('[data-wj-write-check]');
+    if (!root) return;
+    ev.preventDefault();
+    var out = root.querySelector('#out') || document.getElementById('out');
+    var tokenKey = 'ledgerkit_token';
+    try {
+      var body = syncBody(root);
+      var tkn = localStorage.getItem(tokenKey) || '';
+      if (!out) return;
+      if (!tkn) { out.hidden = false; out.classList.add('is-error'); out.textContent = 'Sign in first.'; return; }
+      out.hidden = false; out.classList.remove('is-error'); out.textContent = 'Posting check…';
+      var api = window.LEDGERKIT_API || '';
+      fetch(api + '/api/v1/journal-entries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + tkn },
+        body: body
+      }).then(function (res) {
+        if (!res.ok) { out.classList.add('is-error'); out.textContent = 'Could not post (' + res.status + ')'; return; }
+        out.textContent = 'Check posted — register refreshing…';
+        bumpCheckNum(root);
+        var payee = root.querySelector('[data-wj-write-check-payee]');
+        var amount = root.querySelector('[data-wj-write-check-amount]');
+        var memo = root.querySelector('[data-wj-write-check-memo]');
+        if (payee) payee.value = '';
+        if (amount) amount.value = '';
+        if (memo) memo.value = '';
+        try { syncBody(root); } catch (e) {}
+        var load = document.getElementById('loadCheckbook')
+          || document.querySelector('[data-wj-render-kind="checkbook"]');
+        if (load) { try { load.click(); } catch (e) {} }
+      }).catch(function (err) {
+        out.classList.add('is-error'); out.textContent = String(err);
+      });
+    } catch (err) {
+      if (out) { out.hidden = false; out.classList.add('is-error'); out.textContent = String(err.message || err); }
+    }
+  });
+
+  document.addEventListener('input', function (ev) {
+    var t = ev.target;
+    if (!t || !t.closest) return;
+    var root = t.closest('[data-wj-write-check]');
+    if (!root) return;
+    if (!t.matches('[data-wj-write-check-payee],[data-wj-write-check-amount],[data-wj-write-check-num],[data-wj-write-check-memo],[data-wj-write-check-expense],[data-wj-write-check-class],[data-wj-write-check-department]')) return;
+    try { syncBody(root); } catch (e) {}
+  });
+  document.addEventListener('change', function (ev) {
+    var t = ev.target;
+    if (!t || !t.closest) return;
+    var root = t.closest('[data-wj-write-check]');
+    if (!root) return;
+    if (!t.matches('[data-wj-write-check-expense],[data-wj-write-check-class],[data-wj-write-check-department]')) return;
+    try { syncBody(root); } catch (e) {}
+  });
+})();
+"##
+}
+
+fn main() {
+    let html = WriteCheckForm::new().sample_body("{}".to_string()).render()
+    println!("{}", html)
 }

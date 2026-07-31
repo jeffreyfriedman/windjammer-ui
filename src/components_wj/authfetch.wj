@@ -63,3 +63,71 @@ impl Renderable for AuthFetch {
             + "</button>"
     }
 }
+
+
+/// Framework runtime: Bearer GET → lkRender; drives #lkSyncBadge (D5).
+pub fn auth_fetch_runtime_js() -> &'static str {
+    r##"
+(function () {
+  if (window.__wjAuthFetchBound) return;
+  window.__wjAuthFetchBound = true;
+  window.lkSetSyncStatus = function (state) {
+    var el = document.getElementById('lkSyncBadge');
+    if (!el) return;
+    var s = state === 'syncing' ? 'syncing' : state === 'offline' ? 'offline' : 'synced';
+    el.setAttribute('data-lk-sync', s);
+    el.className = 'lk-sync-badge ' + (
+      s === 'syncing' ? 'lk-sync-syncing' : s === 'offline' ? 'lk-sync-offline' : 'lk-sync-synced'
+    );
+    el.textContent = s === 'syncing' ? 'Syncing…' : s === 'offline' ? 'Offline' : 'Synced';
+  };
+  window.wjAuthFetch = async function (btn) {
+    const path = btn.getAttribute('data-wj-fetch-path') || '';
+    const kind = btn.getAttribute('data-wj-render-kind') || '';
+    const mountSel = btn.getAttribute('data-wj-mount') || '#tableMount';
+    const token = localStorage.getItem('ledgerkit_token') || '';
+    const mount = document.querySelector(mountSel);
+    if (!path || !kind) return;
+    if (!token) {
+      if (mount) mount.innerHTML = '<p class="err">Sign in first.</p>';
+      window.lkSetSyncStatus('offline');
+      return;
+    }
+    if (mount) mount.innerHTML = '<p class="muted">Loading…</p>';
+    window.lkSetSyncStatus('syncing');
+    try {
+      const res = await fetch((window.LEDGERKIT_API || '') + path, {
+        headers: { Authorization: 'Bearer ' + token }
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        if (mount) mount.innerHTML = '<p class="err">' + (data.error || res.status) + '</p>';
+        window.lkSetSyncStatus('offline');
+        return;
+      }
+      if (mount && window.lkRender && window.lkRender[kind]) {
+        mount.innerHTML = window.lkRender[kind](data);
+        if (typeof window.lkAfterAuthFetch === 'function') {
+          try { window.lkAfterAuthFetch(kind, mount); } catch (err) {}
+        }
+      } else if (mount) {
+        mount.innerHTML = '<p class="err">Renderer unavailable for ' + kind + '</p>';
+      }
+      window.lkSetSyncStatus('synced');
+    } catch (e) {
+      if (mount) mount.innerHTML = '<p class="err">' + (e && e.message ? e.message : e) + '</p>';
+      window.lkSetSyncStatus('offline');
+    }
+  };
+  document.addEventListener('click', (e) => {
+    const t = e.target;
+    if (!(t instanceof Element)) return;
+    const btn = t.closest('[data-wj-auth-fetch]');
+    if (btn) {
+      e.preventDefault();
+      window.wjAuthFetch(btn);
+    }
+  });
+})();
+"##
+}
