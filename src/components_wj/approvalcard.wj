@@ -79,9 +79,9 @@ impl Renderable for ApprovalCard {
         let summary = self.summary
         let resource_type = self.resource_type
         let resource_id = self.resource_id
-        let heading = heading_text(title, resource_id.clone())
-        let badge = Badge::new(state.clone())
-            .variant(state_badge_variant(state.clone()))
+        let heading = heading_text(title, resource_id)
+        let badge = Badge::new(state)
+            .variant(state_badge_variant(state))
             .size(BadgeSize::Small)
             .render()
         let summary_html = if summary.len() == 0 {
@@ -108,6 +108,59 @@ impl Renderable for ApprovalCard {
             actions +
         "</article>"
     }
+}
+
+/// Framework runtime: Approve button → POST /api/v1/workflow/{id}/approve (finance P3.6).
+pub fn approval_card_runtime_js() -> &'static str {
+    r##"
+(function () {
+  if (window.__wjApprovalCardBound) return;
+  window.__wjApprovalCardBound = true;
+  document.addEventListener('click', async function (ev) {
+    var t = ev.target;
+    if (!t || !t.closest) return;
+    var approveBtn = t.closest('[data-wj-approval-approve]');
+    if (!approveBtn) return;
+    ev.preventDefault();
+    var card = approveBtn.closest('[data-wj-approval]');
+    if (!card) return;
+    var id = card.getAttribute('data-wj-workflow-id') || '';
+    if (!id) return;
+    var token = localStorage.getItem('ledgerkit_token') || '';
+    if (!token) {
+      card.insertAdjacentHTML('beforeend', '<p class="err">Sign in first.</p>');
+      return;
+    }
+    approveBtn.disabled = true;
+    try {
+      var res = await fetch((window.LEDGERKIT_API || '') + '/api/v1/workflow/' + encodeURIComponent(id) + '/approve', {
+        method: 'POST',
+        headers: { Authorization: 'Bearer ' + token }
+      });
+      var data = {};
+      try { data = await res.json(); } catch (e) {}
+      if (!res.ok) {
+        card.insertAdjacentHTML('beforeend', '<p class="err">Approve failed.</p>');
+        approveBtn.disabled = false;
+        return;
+      }
+      card.setAttribute('data-wj-approval-state', (data && data.state) || 'completed');
+      var actions = card.querySelector('.wj-approval-actions');
+      if (actions) actions.remove();
+      var badge = card.querySelector('.wj-badge');
+      if (badge) {
+        badge.textContent = (data && data.state) || 'completed';
+        badge.className = 'wj-badge wj-badge-success wj-badge-sm';
+      }
+      if (typeof window.lkSetSyncStatus === 'function') window.lkSetSyncStatus('synced');
+    } catch (e) {
+      card.insertAdjacentHTML('beforeend', '<p class="err">Approve offline.</p>');
+      approveBtn.disabled = false;
+      if (typeof window.lkSetSyncStatus === 'function') window.lkSetSyncStatus('offline');
+    }
+  });
+})();
+"##
 }
 
 fn main() {

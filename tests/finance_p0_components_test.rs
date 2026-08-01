@@ -138,6 +138,17 @@ fn approval_card_renders_pending_actions() {
 }
 
 #[test]
+fn approval_card_runtime_posts_approve() {
+    use windjammer_ui::components::generated::approvalcard;
+    let js = approvalcard::approval_card_runtime_js();
+    assert!(js.contains("__wjApprovalCardBound") || js.contains("wjApproval"));
+    assert!(js.contains("data-wj-approval-approve"));
+    assert!(js.contains("/api/v1/workflow/"));
+    assert!(js.contains("/approve"));
+    assert!(js.contains("POST") || js.contains("method: 'POST'") || js.contains("method: \"POST\""));
+}
+
+#[test]
 fn compliance_score_badge_renders_band_and_score() {
     use windjammer_ui::components::generated::compliancescorebadge;
     use windjammer_ui::components::generated::traits::Renderable;
