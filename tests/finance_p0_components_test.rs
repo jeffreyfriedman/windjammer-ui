@@ -138,6 +138,25 @@ fn approval_card_renders_pending_actions() {
 }
 
 #[test]
+fn compliance_score_badge_renders_band_and_score() {
+    use windjammer_ui::components::generated::compliancescorebadge;
+    use windjammer_ui::components::generated::traits::Renderable;
+    let html = compliancescorebadge::ComplianceScoreBadge::new(75, "watch".to_string()).render();
+    assert!(html.contains("wj-compliance-score"));
+    assert!(html.contains("data-wj-compliance-score"));
+    assert!(
+        html.contains("data-wj-compliance-band=\"watch\"")
+            || html.contains("data-wj-compliance-band='watch'")
+    );
+    assert!(
+        html.contains("data-wj-compliance-value=\"75\"")
+            || html.contains("data-wj-compliance-value='75'")
+    );
+    assert!(html.contains("75"));
+    assert!(html.contains("watch"));
+}
+
+#[test]
 fn period_badge_maps_fiscal_states() {
     use windjammer_ui::components::generated::periodbadge;
     let open = periodbadge::PeriodBadge::new("open".to_string())

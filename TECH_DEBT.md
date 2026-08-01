@@ -300,7 +300,7 @@ Priority order:
   - Gate A: DataTable forwards owned `TableColumn`/`TableRow` as `&col`/`&row` → E0308
   - Gate B: W0005 `.clone()` makes library build exit non-zero after codegen → `build.rs` panic
   - Gate C: PeriodBadge-style owned reuse without source `.clone()` must cargo-check
-- **D5 trio SOT:** `components_wj/{currencyinput,writecheckform,authfetch}.wj` + `scripts/regen-d5-trio.sh`; ApprovalCard: `scripts/regen-approvalcard.sh`. Keep `SKIP_WJ_REGEN=1` for full-crate builds until full regen gate is green.
+- **D5 trio SOT:** `components_wj/{currencyinput,writecheckform,authfetch}.wj` + `scripts/regen-d5-trio.sh`; ApprovalCard: `scripts/regen-approvalcard.sh`; ComplianceScoreBadge: `scripts/regen-compliancescorebadge.sh`. Keep `SKIP_WJ_REGEN=1` for full-crate builds until full regen gate is green.
 - `codegen_windjammer_ui_regen_unblock_test.rs` — D5 AuthFetch/WriteCheckForm/CurrencyInput regen contract (**PASS** on tip; selective SOT only).
 - `codegen_authfetch_mount_param_ambiguous_glob_test.rs` — no blanket `use super::*` under deny(ambiguous_glob_imports) (**PASS**).
 - `codegen_string_param_to_owned_method_test.rs` (KpiTile `value_html(&str)` vs `String`)

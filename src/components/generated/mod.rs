@@ -78,6 +78,7 @@ pub mod checkbox;
 pub mod checkbookregister;
 pub mod chip;
 pub mod codeblock;
+pub mod compliancescorebadge;
 pub mod codeeditor;
 pub mod collapsible;
 pub mod colorpicker;

@@ -1,0 +1,50 @@
+// ComplianceScoreBadge — risk band + score chip (Phase 3 / P3.3 dogfood)
+
+use super::traits::Renderable
+use super::badge::{Badge, BadgeVariant, BadgeSize}
+
+pub struct ComplianceScoreBadge {
+    score: int,
+    risk_band: string,
+}
+
+impl ComplianceScoreBadge {
+    pub fn new(score: int, risk_band: string) -> ComplianceScoreBadge {
+        ComplianceScoreBadge {
+            score: score,
+            risk_band: risk_band,
+        }
+    }
+}
+
+fn band_badge_variant(band: string) -> BadgeVariant {
+    let b = band.to_lowercase()
+    if b == "ready" {
+        BadgeVariant::Success
+    } else if b == "watch" {
+        BadgeVariant::Warning
+    } else if b == "gap" {
+        BadgeVariant::Danger
+    } else {
+        BadgeVariant::Info
+    }
+}
+
+impl Renderable for ComplianceScoreBadge {
+    fn render(self) -> string {
+        let score = self.score
+        let band = self.risk_band
+        let score_s = "${score}"
+        let label = "${score_s} · ${band}"
+        let badge = Badge::new(label)
+            .variant(band_badge_variant(band))
+            .size(BadgeSize::Medium)
+            .render()
+        "<div class='wj-compliance-score' data-wj-compliance-score data-wj-compliance-band='${band}' data-wj-compliance-value='${score_s}'>${badge}</div>"
+    }
+}
+
+fn main() {
+    let html = ComplianceScoreBadge::new(75, "watch".to_string()).render()
+    println!("{}", html)
+}
