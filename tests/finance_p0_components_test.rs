@@ -144,8 +144,17 @@ fn approval_card_runtime_posts_approve() {
     assert!(js.contains("__wjApprovalCardBound") || js.contains("wjApproval"));
     assert!(js.contains("data-wj-approval-approve"));
     assert!(js.contains("/api/v1/workflow/"));
-    assert!(js.contains("/approve"));
+    assert!(js.contains("/approve") || js.contains("'approve'"));
     assert!(js.contains("POST") || js.contains("method: 'POST'") || js.contains("method: \"POST\""));
+}
+
+#[test]
+fn approval_card_runtime_posts_reject() {
+    use windjammer_ui::components::generated::approvalcard;
+    let js = approvalcard::approval_card_runtime_js();
+    assert!(js.contains("data-wj-approval-reject"));
+    assert!(js.contains("reject") || js.contains("/reject"));
+    assert!(js.contains("'reject'") || js.contains("\"reject\"") || js.contains("/reject"));
 }
 
 #[test]

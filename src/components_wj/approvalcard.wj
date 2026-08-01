@@ -110,20 +110,13 @@ impl Renderable for ApprovalCard {
     }
 }
 
-/// Framework runtime: Approve button → POST /api/v1/workflow/{id}/approve (finance P3.6).
+/// Framework runtime: Approve/Reject → POST /api/v1/workflow/{id}/{approve|reject} (P3.6/P3.7).
 pub fn approval_card_runtime_js() -> &'static str {
     r##"
 (function () {
   if (window.__wjApprovalCardBound) return;
   window.__wjApprovalCardBound = true;
-  document.addEventListener('click', async function (ev) {
-    var t = ev.target;
-    if (!t || !t.closest) return;
-    var approveBtn = t.closest('[data-wj-approval-approve]');
-    if (!approveBtn) return;
-    ev.preventDefault();
-    var card = approveBtn.closest('[data-wj-approval]');
-    if (!card) return;
+  async function postWorkflowAction(card, action, btn) {
     var id = card.getAttribute('data-wj-workflow-id') || '';
     if (!id) return;
     var token = localStorage.getItem('ledgerkit_token') || '';
@@ -131,32 +124,50 @@ pub fn approval_card_runtime_js() -> &'static str {
       card.insertAdjacentHTML('beforeend', '<p class="err">Sign in first.</p>');
       return;
     }
-    approveBtn.disabled = true;
+    if (btn) btn.disabled = true;
     try {
-      var res = await fetch((window.LEDGERKIT_API || '') + '/api/v1/workflow/' + encodeURIComponent(id) + '/approve', {
+      var res = await fetch((window.LEDGERKIT_API || '') + '/api/v1/workflow/' + encodeURIComponent(id) + '/' + action, {
         method: 'POST',
         headers: { Authorization: 'Bearer ' + token }
       });
       var data = {};
       try { data = await res.json(); } catch (e) {}
       if (!res.ok) {
-        card.insertAdjacentHTML('beforeend', '<p class="err">Approve failed.</p>');
-        approveBtn.disabled = false;
+        card.insertAdjacentHTML('beforeend', '<p class="err">' + (action === 'reject' ? 'Reject' : 'Approve') + ' failed.</p>');
+        if (btn) btn.disabled = false;
         return;
       }
-      card.setAttribute('data-wj-approval-state', (data && data.state) || 'completed');
+      var state = (data && data.state) || (action === 'reject' ? 'rejected' : 'completed');
+      card.setAttribute('data-wj-approval-state', state);
       var actions = card.querySelector('.wj-approval-actions');
       if (actions) actions.remove();
       var badge = card.querySelector('.wj-badge');
       if (badge) {
-        badge.textContent = (data && data.state) || 'completed';
-        badge.className = 'wj-badge wj-badge-success wj-badge-sm';
+        badge.textContent = state;
+        badge.className = 'wj-badge ' + (state === 'rejected' ? 'wj-badge-danger' : 'wj-badge-success') + ' wj-badge-sm';
       }
       if (typeof window.lkSetSyncStatus === 'function') window.lkSetSyncStatus('synced');
     } catch (e) {
-      card.insertAdjacentHTML('beforeend', '<p class="err">Approve offline.</p>');
-      approveBtn.disabled = false;
+      card.insertAdjacentHTML('beforeend', '<p class="err">' + (action === 'reject' ? 'Reject' : 'Approve') + ' offline.</p>');
+      if (btn) btn.disabled = false;
       if (typeof window.lkSetSyncStatus === 'function') window.lkSetSyncStatus('offline');
+    }
+  }
+  document.addEventListener('click', function (ev) {
+    var t = ev.target;
+    if (!t || !t.closest) return;
+    var approveBtn = t.closest('[data-wj-approval-approve]');
+    if (approveBtn) {
+      ev.preventDefault();
+      var card = approveBtn.closest('[data-wj-approval]');
+      if (card) postWorkflowAction(card, 'approve', approveBtn);
+      return;
+    }
+    var rejectBtn = t.closest('[data-wj-approval-reject]');
+    if (rejectBtn) {
+      ev.preventDefault();
+      var rejectCard = rejectBtn.closest('[data-wj-approval]');
+      if (rejectCard) postWorkflowAction(rejectCard, 'reject', rejectBtn);
     }
   });
 })();

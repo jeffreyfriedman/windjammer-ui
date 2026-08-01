@@ -296,7 +296,7 @@ Priority order:
 7. **Bug #5:** Doc comments vs regular comments (LOW) — `codegen_windjammer_ui_fix_generated_debt_test.rs`
 
 **LedgerKit dogfood ownership:**
-- **Full regenerate gate (2026-08-01):** `codegen_windjammer_ui_full_regen_gate_test.rs` — **FAILING** on tip. Blocks pure `wj build src/components_wj --library` → replace `generated/` without `SKIP_WJ_REGEN=1`.
+- **Full regenerate gate (2026-08-01):** `codegen_windjammer_ui_full_regen_gate_test.rs` — **GREEN** on tip (3/3). Still verify a clean full-tree `generated/` replace before removing `SKIP_WJ_REGEN` from crate builds.
   - Gate A: DataTable forwards owned `TableColumn`/`TableRow` as `&col`/`&row` → E0308
   - Gate B: W0005 `.clone()` makes library build exit non-zero after codegen → `build.rs` panic
   - Gate C: PeriodBadge-style owned reuse without source `.clone()` must cargo-check
