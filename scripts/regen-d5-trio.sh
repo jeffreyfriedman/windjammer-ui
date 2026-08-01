@@ -70,18 +70,22 @@ EOF
 (cd "${OUT}" && cargo check --quiet)
 
 DEST="${ROOT}/src/components/generated"
+# Prefer a short SOT header if missing; strip `use super::*` (wasm ambiguous globs).
 for f in currencyinput writecheckform authfetch; do
-  # Prefer a short SOT header if missing.
-  if ! grep -q 'source of truth' "${OUT}/${f}.rs" 2>/dev/null; then
+  rs="${OUT}/${f}.rs"
+  # Drop blanket super glob — pulls ambiguous `mount` from app/renderer.
+  perl -i -0pe 's/#\[allow\(unused_imports\)\]\s*\nuse super::\*;\n\n//g' "${rs}"
+  if ! grep -q 'source of truth' "${rs}" 2>/dev/null; then
     {
       echo '#![allow(clippy::all)]'
       echo '#![allow(noop_method_call)]'
       echo "//! Regenerated from \`components_wj/${f}.wj\` — Windjammer is source of truth."
+      echo '//! Note: avoid `use super::*` (ambiguous glob imports under wasm deny).'
       echo
-      cat "${OUT}/${f}.rs"
+      cat "${rs}"
     } >"${DEST}/${f}.rs"
   else
-    cp "${OUT}/${f}.rs" "${DEST}/${f}.rs"
+    cp "${rs}" "${DEST}/${f}.rs"
   fi
   echo "installed ${DEST}/${f}.rs"
 done

@@ -35,8 +35,8 @@ impl AuthFetch {
         self
     }
 
-    pub fn mount(self, mount: string) -> AuthFetch {
-        self.mount = mount
+    pub fn mount(self, mount_sel: string) -> AuthFetch {
+        self.mount = mount_sel
         self
     }
 
