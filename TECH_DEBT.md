@@ -296,9 +296,13 @@ Priority order:
 7. **Bug #5:** Doc comments vs regular comments (LOW) — `codegen_windjammer_ui_fix_generated_debt_test.rs`
 
 **LedgerKit dogfood ownership:**
-- **D5 trio SOT (2026-07-30):** `components_wj/{currencyinput,writecheckform,authfetch}.wj` → selective regen into `generated/`. Script: `scripts/regen-d5-trio.sh`. Keep `SKIP_WJ_REGEN=1` for full-crate builds until TECH_DEBT #1–#7 green.
-- `codegen_windjammer_ui_regen_unblock_test.rs` — D5 AuthFetch/WriteCheckForm/CurrencyInput regen contract (**5/5 PASS** on tip; enables selective SOT install).
-- `codegen_wj_test_crate_str_formal_format_temp_test.rs` — **FAILING** `wj test` crate vs demoted `&str` formals + `HashMap` `&query` (blocks platform `make test` / E3.9.3; ~6 rustc errors).
+- **Full regenerate gate (2026-08-01):** `codegen_windjammer_ui_full_regen_gate_test.rs` — **FAILING** on tip. Blocks pure `wj build src/components_wj --library` → replace `generated/` without `SKIP_WJ_REGEN=1`.
+  - Gate A: DataTable forwards owned `TableColumn`/`TableRow` as `&col`/`&row` → E0308
+  - Gate B: W0005 `.clone()` makes library build exit non-zero after codegen → `build.rs` panic
+  - Gate C: PeriodBadge-style owned reuse without source `.clone()` must cargo-check
+- **D5 trio SOT:** `components_wj/{currencyinput,writecheckform,authfetch}.wj` + `scripts/regen-d5-trio.sh`; ApprovalCard: `scripts/regen-approvalcard.sh`. Keep `SKIP_WJ_REGEN=1` for full-crate builds until full regen gate is green.
+- `codegen_windjammer_ui_regen_unblock_test.rs` — D5 AuthFetch/WriteCheckForm/CurrencyInput regen contract (**PASS** on tip; selective SOT only).
+- `codegen_authfetch_mount_param_ambiguous_glob_test.rs` — no blanket `use super::*` under deny(ambiguous_glob_imports) (**PASS**).
 - `codegen_string_param_to_owned_method_test.rs` (KpiTile `value_html(&str)` vs `String`)
 - `codegen_statuschip_badge_compose_test.rs` / `codegen_owned_reuse_after_helper_test.rs` (StatusChip→Badge)
 - `codegen_appshell_retained_chrome_test.rs` / `codegen_shellnav_active_test.rs` / `codegen_command_palette_test.rs` / `codegen_auth_fetch_test.rs` / `codegen_checkbook_register_test.rs` / `codegen_memorized_list_test.rs` (LedgerKit F0–F4 / R0 dogfood)
