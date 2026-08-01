@@ -107,6 +107,37 @@ fn chart_renders_svg_bars() {
 }
 
 #[test]
+fn approval_card_renders_pending_actions() {
+    use windjammer_ui::components::generated::approvalcard;
+    let html = approvalcard::ApprovalCard::new(
+        "wf-pending-JE-1001".to_string(),
+        "pending".to_string(),
+    )
+    .title("Journal entry approval".to_string())
+    .summary("JE-1001 · creator-user · $1,250.00".to_string())
+    .resource_type("journal_entry".to_string())
+    .resource_id("JE-1001".to_string())
+    .render();
+    assert!(html.contains("wj-approval-card"));
+    assert!(html.contains("data-wj-approval"));
+    assert!(
+        html.contains("data-wj-workflow-id=\"wf-pending-JE-1001\"")
+            || html.contains("data-wj-workflow-id='wf-pending-JE-1001'")
+    );
+    assert!(
+        html.contains("data-wj-approval-state=\"pending\"")
+            || html.contains("data-wj-approval-state='pending'")
+            || html.contains("pending")
+    );
+    assert!(html.contains("Journal entry approval"));
+    assert!(html.contains("JE-1001"));
+    assert!(html.contains("data-wj-approval-approve"));
+    assert!(html.contains("data-wj-approval-reject"));
+    assert!(html.contains("Approve"));
+    assert!(html.contains("Reject"));
+}
+
+#[test]
 fn period_badge_maps_fiscal_states() {
     use windjammer_ui::components::generated::periodbadge;
     let open = periodbadge::PeriodBadge::new("open".to_string())

@@ -1,0 +1,120 @@
+// ApprovalCard — pending workflow approval (finance dogfood P1 / Phase 3)
+// Maps to in-app + Slack Block Kit / Teams Adaptive Cards surface.
+
+use super::traits::Renderable
+use super::badge::{Badge, BadgeVariant, BadgeSize}
+
+pub struct ApprovalCard {
+    workflow_id: string,
+    state: string,
+    title: string,
+    summary: string,
+    resource_type: string,
+    resource_id: string,
+}
+
+impl ApprovalCard {
+    pub fn new(workflow_id: string, state: string) -> ApprovalCard {
+        ApprovalCard {
+            workflow_id: workflow_id,
+            state: state,
+            title: "".to_string(),
+            summary: "".to_string(),
+            resource_type: "".to_string(),
+            resource_id: "".to_string(),
+        }
+    }
+
+    pub fn title(self, title: string) -> ApprovalCard {
+        self.title = title
+        self
+    }
+
+    pub fn summary(self, summary: string) -> ApprovalCard {
+        self.summary = summary
+        self
+    }
+
+    pub fn resource_type(self, resource_type: string) -> ApprovalCard {
+        self.resource_type = resource_type
+        self
+    }
+
+    pub fn resource_id(self, resource_id: string) -> ApprovalCard {
+        self.resource_id = resource_id
+        self
+    }
+}
+
+fn state_badge_variant(state: string) -> BadgeVariant {
+    let s = state.to_lowercase()
+    if s == "pending" {
+        BadgeVariant::Warning
+    } else if s == "completed" || s == "approved" {
+        BadgeVariant::Success
+    } else if s == "rejected" {
+        BadgeVariant::Danger
+    } else {
+        BadgeVariant::Info
+    }
+}
+
+fn heading_text(title: string, resource_id: string) -> string {
+    if title.len() == 0 {
+        if resource_id.len() == 0 {
+            "Approval".to_string()
+        } else {
+            "Approve " + resource_id
+        }
+    } else {
+        title
+    }
+}
+
+impl Renderable for ApprovalCard {
+    fn render(self) -> string {
+        let workflow_id = self.workflow_id
+        let state = self.state
+        let title = self.title
+        let summary = self.summary
+        let resource_type = self.resource_type
+        let resource_id = self.resource_id
+        let heading = heading_text(title, resource_id.clone())
+        let badge = Badge::new(state.clone())
+            .variant(state_badge_variant(state.clone()))
+            .size(BadgeSize::Small)
+            .render()
+        let summary_html = if summary.len() == 0 {
+            "".to_string()
+        } else {
+            "<p class='wj-approval-summary'>" + summary + "</p>"
+        }
+        let actions = if state.to_lowercase() == "pending" {
+            "<div class='wj-approval-actions'>" +
+                "<button type='button' class='wj-btn wj-btn-success' data-wj-approval-approve>Approve</button>" +
+                "<button type='button' class='wj-btn wj-btn-danger' data-wj-approval-reject>Reject</button>" +
+            "</div>"
+        } else {
+            "".to_string()
+        }
+        "<article class='wj-approval-card' data-wj-approval" +
+            " data-wj-workflow-id='" + workflow_id + "'" +
+            " data-wj-approval-state='" + state + "'" +
+            " data-wj-resource-type='" + resource_type + "'" +
+            " data-wj-resource-id='" + resource_id + "'>" +
+            "<header class='wj-approval-header'><h3 class='wj-approval-title'>" + heading + "</h3>" +
+            badge + "</header>" +
+            summary_html +
+            actions +
+        "</article>"
+    }
+}
+
+fn main() {
+    let html = ApprovalCard::new("wf-pending-JE-1001".to_string(), "pending".to_string())
+        .title("Journal entry approval".to_string())
+        .summary("JE-1001".to_string())
+        .resource_id("JE-1001".to_string())
+        .render()
+    println!("{}", html)
+}
