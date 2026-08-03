@@ -1,5 +1,5 @@
-// CheckbookRegister — spent/received register (Business mode / ADR-002).
-// NOTE: Into<String> / row helpers are Rust-only until owned-string codegen is green.
+// CheckbookRegister — Amount + Balance + Clr (LedgerKit ADR-002 / R2.6 / 1.5.1).
+// Hand-maintained Rust render/runtime stays SKIP_WJ_REGEN; this .wj is the API contract for tip.
 
 use super::traits::Renderable
 
@@ -7,9 +7,11 @@ pub struct CheckbookRow {
     date: string,
     num: string,
     payee: string,
-    spent_html: string,
-    received_html: string,
+    amount_html: string,
     balance_html: string,
+    line_id: string,
+    unmatched: bool,
+    cleared: bool,
 }
 
 impl CheckbookRow {
@@ -17,18 +19,34 @@ impl CheckbookRow {
         date: string,
         num: string,
         payee: string,
-        spent_html: string,
-        received_html: string,
+        amount_html: string,
         balance_html: string,
     ) -> CheckbookRow {
         CheckbookRow {
             date: date,
             num: num,
             payee: payee,
-            spent_html: spent_html,
-            received_html: received_html,
+            amount_html: amount_html,
             balance_html: balance_html,
+            line_id: "",
+            unmatched: false,
+            cleared: false,
         }
+    }
+
+    pub fn line_id(self, id: string) -> CheckbookRow {
+        self.line_id = id
+        self
+    }
+
+    pub fn unmatched(self, unmatched: bool) -> CheckbookRow {
+        self.unmatched = unmatched
+        self
+    }
+
+    pub fn cleared(self, cleared: bool) -> CheckbookRow {
+        self.cleared = cleared
+        self
     }
 }
 
@@ -42,9 +60,9 @@ pub struct CheckbookRegister {
 impl CheckbookRegister {
     pub fn new() -> CheckbookRegister {
         CheckbookRegister {
-            account_label: "Operating cash".to_string(),
-            empty_message: "No register lines yet — write a check or import bank lines.".to_string(),
-            mount_id: "registerMount".to_string(),
+            account_label: "Operating cash",
+            empty_message: "No register lines yet — write a check or import bank lines.",
+            mount_id: "registerMount",
             rows: Vec::new(),
         }
     }
@@ -72,40 +90,34 @@ impl CheckbookRegister {
 
 impl Renderable for CheckbookRegister {
     fn render(self) -> string {
-        let mut body = "".to_string()
+        let mut body = ""
         if self.rows.len() == 0 {
-            body = "<tr class=\"lk-empty-row\"><td colspan=\"6\" class=\"muted\">".to_string()
-                + self.empty_message
-                + "</td></tr>"
+            let msg = self.empty_message
+            body = "<tr class=\"lk-empty-row\"><td colspan=\"6\" class=\"muted\">${msg}</td></tr>"
         } else {
             for r in self.rows {
-                body = body
-                    + "<tr class=\"wj-checkbook-row\"><td>"
-                    + r.date
-                    + "</td><td>"
-                    + r.num
-                    + "</td><td>"
-                    + r.payee
-                    + "</td><td class=\"lk-num\">"
-                    + r.spent_html
-                    + "</td><td class=\"lk-num\">"
-                    + r.received_html
-                    + "</td><td class=\"lk-num\">"
-                    + r.balance_html
-                    + "</td></tr>"
+                let line = "${r.line_id}"
+                let payee_raw = "${r.payee}"
+                let payee = if r.unmatched && line.len() > 0 {
+                    "${payee_raw} <button type=\"button\" class=\"btn-link\" data-wj-register-match data-line-id=\"${line}\">Match</button>"
+                } else {
+                    payee_raw
+                }
+                let checked = if r.cleared { " checked" } else { "" }
+                let clr = if line.len() == 0 {
+                    ""
+                } else {
+                    "<input type=\"checkbox\" data-wj-bank-clear data-line-id=\"${line}\" aria-label=\"Cleared\"${checked}>"
+                }
+                let date = r.date
+                let num = r.num
+                let amount = r.amount_html
+                let bal = r.balance_html
+                body = "${body}<tr class=\"wj-checkbook-row\" data-line-id=\"${line}\"><td class=\"lk-clr\">${clr}</td><td>${date}</td><td>${num}</td><td>${payee}</td><td class=\"lk-num\">${amount}</td><td class=\"lk-num\">${bal}</td></tr>"
             }
         }
-        "<div class=\"wj-checkbook-register\" data-wj-checkbook-register>".to_string()
-            + "<div class=\"checkbook-head\"><p class=\"hub-kicker\">Checkbook</p><h3 class=\"checkbook-account\">"
-            + self.account_label
-            + "</h3></div>"
-            + "<div class=\"lk-table-scroll\"><table class=\"lk-table wj-checkbook-table\" aria-label=\"Checkbook register\">"
-            + "<thead><tr><th>Date</th><th>Num</th><th>Payee / memo</th>"
-            + "<th class=\"lk-num\">Spent</th><th class=\"lk-num\">Received</th><th class=\"lk-num\">Balance</th></tr></thead>"
-            + "<tbody id=\""
-            + self.mount_id
-            + "\">"
-            + body
-            + "</tbody></table></div></div>"
+        let account = self.account_label
+        let mount = self.mount_id
+        "<div class=\"wj-checkbook-register\" data-wj-checkbook-register>\n  <div class=\"checkbook-head\">\n    <p class=\"hub-kicker\">Checkbook</p>\n    <h3 class=\"checkbook-account\">${account}</h3>\n  </div>\n  <div class=\"lk-table-scroll\">\n    <table class=\"lk-table wj-checkbook-table\" aria-label=\"Checkbook register\">\n      <thead>\n        <tr>\n          <th class=\"lk-clr\">Clr</th>\n          <th>Date</th>\n          <th>Num</th>\n          <th>Payee / memo</th>\n          <th class=\"lk-num\">Amount</th>\n          <th class=\"lk-num\">Balance</th>\n        </tr>\n      </thead>\n      <tbody id=\"${mount}\">\n        ${body}\n      </tbody>\n    </table>\n  </div>\n</div>"
     }
 }
