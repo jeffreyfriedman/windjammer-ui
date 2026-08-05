@@ -16,19 +16,23 @@ pub struct BusinessWorkspace {
 impl BusinessWorkspace {
     pub fn new() -> BusinessWorkspace {
         BusinessWorkspace {
-            layout: "pane".to_string(),
-            rail_html: "".to_string(),
-            register_html: "".to_string(),
-            write_check_html: "".to_string(),
-            memorized_html: "".to_string(),
-            bank_html: "".to_string(),
-            active_tab: "register".to_string(),
+            layout: "pane",
+            rail_html: "",
+            register_html: "",
+            write_check_html: "",
+            memorized_html: "",
+            bank_html: "",
+            active_tab: "register",
         }
     }
 
     pub fn layout(self, layout: string) -> BusinessWorkspace {
         self.layout = layout
         self
+    }
+
+    pub fn layout_key(self, key: string) -> BusinessWorkspace {
+        self.layout(key)
     }
 
     pub fn rail_html(self, html: string) -> BusinessWorkspace {
@@ -65,12 +69,12 @@ impl BusinessWorkspace {
 impl Renderable for BusinessWorkspace {
     fn render(self) -> string {
         if self.layout == "tabs" {
-            return "<div class=\"wj-business-workspace\" data-layout=\"tabs\" data-wj-business-workspace>".to_string()
+            return "<div class=\"wj-business-workspace\" data-layout=\"tabs\" data-wj-business-workspace>"
                 + "<button type=\"button\" data-wj-bw-tab=\"bank\">Bank match</button>"
                 + self.bank_html
                 + "</div>"
         }
-        "<div class=\"wj-business-workspace\" data-layout=\"pane\" data-wj-business-workspace>".to_string()
+        "<div class=\"wj-business-workspace\" data-layout=\"pane\" data-wj-business-workspace>"
             + "<aside class=\"wj-bw-rail\">"
             + self.rail_html
             + "</aside><section class=\"wj-bw-register\">"

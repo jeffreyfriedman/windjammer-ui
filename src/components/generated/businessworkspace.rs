@@ -55,6 +55,12 @@ impl BusinessWorkspace {
         self
     }
 
+    /// String layout for Windjammer / hex adapters (`pane` | `tabs`).
+    pub fn layout_key(mut self, key: impl Into<String>) -> Self {
+        self.layout = BusinessWorkspaceLayout::parse(&key.into());
+        self
+    }
+
     pub fn rail_html(mut self, html: impl Into<String>) -> Self {
         self.rail_html = html.into();
         self
@@ -243,6 +249,16 @@ mod tests {
         assert!(html.contains("wj-bw-write") && html.contains("WC"));
         assert!(html.contains("wj-bw-memorized") && html.contains("MEM"));
         assert!(html.contains("wj-bw-bank") && html.contains("BANK"));
+    }
+
+    #[test]
+    fn layout_key_parses_tabs_and_pane() {
+        let tabs = BusinessWorkspace::new().layout_key("tabs").render();
+        assert!(tabs.contains("data-layout=\"tabs\""), "{tabs}");
+        let tabbed = BusinessWorkspace::new().layout_key("tabbed").render();
+        assert!(tabbed.contains("data-layout=\"tabs\""), "{tabbed}");
+        let pane = BusinessWorkspace::new().layout_key("nope").render();
+        assert!(pane.contains("data-layout=\"pane\""), "{pane}");
     }
 
     #[test]
