@@ -1,0 +1,82 @@
+// JsonPost — Bearer JSON POST from a body selector (journal / migrations dogfood).
+// Runtime is hand-maintained in generated/jsonpost.rs (SKIP_WJ_REGEN=1).
+
+use super::traits::Renderable
+
+pub struct JsonPost {
+    id: string,
+    label: string,
+    path: string,
+    body_sel: string,
+    token_key: string,
+    status_sel: string,
+    class_name: string,
+    success_message: string,
+}
+
+impl JsonPost {
+    pub fn new(path: string, body_sel: string) -> JsonPost {
+        JsonPost {
+            id: "jsonPost",
+            label: "Submit",
+            path: path,
+            body_sel: body_sel,
+            token_key: "ledgerkit_token",
+            status_sel: "#out",
+            class_name: "btn-secondary",
+            success_message: "OK",
+        }
+    }
+
+    pub fn id(self, id: string) -> JsonPost {
+        self.id = id
+        self
+    }
+
+    pub fn label(self, label: string) -> JsonPost {
+        self.label = label
+        self
+    }
+
+    pub fn token_key(self, key: string) -> JsonPost {
+        self.token_key = key
+        self
+    }
+
+    pub fn status_sel(self, sel: string) -> JsonPost {
+        self.status_sel = sel
+        self
+    }
+
+    pub fn class_name(self, class_name: string) -> JsonPost {
+        self.class_name = class_name
+        self
+    }
+
+    pub fn success_message(self, msg: string) -> JsonPost {
+        self.success_message = msg
+        self
+    }
+}
+
+impl Renderable for JsonPost {
+    fn render(self) -> string {
+        "<button type=\"button\" id=\""
+            + self.id
+            + "\" class=\""
+            + self.class_name
+            + " wj-json-post\" data-wj-json-post data-wj-fetch-path=\""
+            + self.path
+            + "\" data-wj-body-sel=\""
+            + self.body_sel
+            + "\" data-wj-token-key=\""
+            + self.token_key
+            + "\" data-wj-status-sel=\""
+            + self.status_sel
+            + "\" data-wj-success-message=\""
+            + self.success_message
+            + "\">"
+            + self.label
+            + "</button>"
+    }
+}

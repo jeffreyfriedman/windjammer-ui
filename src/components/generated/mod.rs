@@ -54,6 +54,18 @@
 #![allow(noop_method_call)]
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
+#![allow(clippy::all)]
+#![allow(noop_method_call)]
 // Auto-generated mod.rs by Windjammer CLI
 // This file declares all generated Windjammer modules
 
@@ -61,29 +73,29 @@ pub mod accordion;
 pub mod accountrail;
 pub mod advancedcodeeditor;
 pub mod alert;
-pub mod appshell;
 pub mod approvalcard;
+pub mod appshell;
 pub mod authfetch;
 pub mod avatar;
 pub mod badge;
 pub mod breadcrumb;
-pub mod button;
 pub mod businessworkspace;
+pub mod button;
 pub mod card;
 pub mod center;
 pub mod chart;
 pub mod chatinput;
 pub mod chatmessage;
-pub mod checkbox;
 pub mod checkbookregister;
+pub mod checkbox;
 pub mod chip;
 pub mod codeblock;
-pub mod compliancescorebadge;
 pub mod codeeditor;
 pub mod collapsible;
 pub mod colorpicker;
 pub mod column;
 pub mod commandpalette;
+pub mod compliancescorebadge;
 pub mod container;
 pub mod contextmenu;
 pub mod currencyinput;
@@ -106,9 +118,9 @@ pub mod kpitile;
 pub mod label;
 pub mod list;
 pub mod loading;
+pub mod memorizedlist;
 pub mod menu;
 pub mod messagelist;
-pub mod memorizedlist;
 pub mod modal;
 pub mod moneydisplay;
 pub mod navbar;
@@ -158,21 +170,21 @@ pub use accordion::*;
 pub use accountrail::*;
 pub use advancedcodeeditor::*;
 pub use alert::*;
-pub use appshell::*;
 pub use approvalcard::*;
+pub use appshell::*;
 pub use authfetch::*;
 pub use avatar::*;
 pub use badge::*;
 pub use breadcrumb::*;
-pub use button::*;
 pub use businessworkspace::*;
+pub use button::*;
 pub use card::*;
 pub use center::*;
 pub use chart::*;
 pub use chatinput::*;
 pub use chatmessage::*;
-pub use checkbox::*;
 pub use checkbookregister::*;
+pub use checkbox::*;
 pub use chip::*;
 pub use codeblock::*;
 pub use codeeditor::*;
@@ -202,9 +214,9 @@ pub use kpitile::*;
 pub use label::*;
 pub use list::*;
 pub use loading::*;
+pub use memorizedlist::*;
 pub use menu::*;
 pub use messagelist::*;
-pub use memorizedlist::*;
 pub use modal::*;
 pub use moneydisplay::*;
 pub use navbar::*;
@@ -356,3 +368,14 @@ pub use writecheckform::*;
 // Hand-maintained (LedgerKit R2.3) — keep SKIP_WJ_REGEN=1; tracked by codegen_bank_match_row_test.
 pub mod bankmatch;
 pub use bankmatch::*;
+
+// Hand-maintained (P3.38) — Bearer JSON POST + login form runtimes.
+pub mod jsonpost;
+pub use jsonpost::*;
+pub mod loginform;
+pub use loginform::*;
+
+pub mod wdb_observability_model;
+pub use wdb_observability_model::*;
+pub mod wdb_observability_panel;
+pub use wdb_observability_panel::*;

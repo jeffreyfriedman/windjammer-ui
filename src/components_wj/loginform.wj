@@ -1,0 +1,64 @@
+// LoginForm — email/password session form (LedgerKit demo login).
+// Runtime is hand-maintained in generated/loginform.rs (SKIP_WJ_REGEN=1).
+
+use super::traits::Renderable
+use super::form::FormField
+
+pub struct LoginForm {
+    path: string,
+    token_key: string,
+    email_value: string,
+    password_value: string,
+}
+
+impl LoginForm {
+    pub fn new() -> LoginForm {
+        LoginForm {
+            path: "/auth/login",
+            token_key: "ledgerkit_token",
+            email_value: "owner@demo.local",
+            password_value: "dev",
+        }
+    }
+
+    pub fn path(self, path: string) -> LoginForm {
+        self.path = path
+        self
+    }
+
+    pub fn token_key(self, key: string) -> LoginForm {
+        self.token_key = key
+        self
+    }
+
+    pub fn email_value(self, v: string) -> LoginForm {
+        self.email_value = v
+        self
+    }
+
+    pub fn password_value(self, v: string) -> LoginForm {
+        self.password_value = v
+        self
+    }
+}
+
+impl Renderable for LoginForm {
+    fn render(self) -> string {
+        let email_input = "<input id=\"email\" name=\"email\" type=\"email\" value=\""
+            + self.email_value
+            + "\" data-wj-login-email/>"
+        let password_input = "<input id=\"password\" name=\"password\" type=\"password\" value=\""
+            + self.password_value
+            + "\" data-wj-login-password/>"
+        let email = FormField::new("Email", email_input).render()
+        let password = FormField::new("Password", password_input).render()
+        "<div class=\"wj-login-form\" data-wj-login-form data-wj-login-path=\""
+            + self.path
+            + "\" data-wj-token-key=\""
+            + self.token_key
+            + "\"><p class=\"hub-kicker\">Session</p><h2>Login</h2><p class=\"lede\">Use the demo books account to load live KPIs and registers.</p>"
+            + email
+            + password
+            + "<div class=\"row\"><button id=\"loginBtn\" type=\"button\" data-wj-login-submit>Sign in</button></div><p id=\"out\" class=\"lk-status\" role=\"status\" hidden></p></div>"
+    }
+}
