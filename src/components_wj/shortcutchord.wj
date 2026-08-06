@@ -1,0 +1,8 @@
+// ShortcutChord — g-then-letter / single-key hash navigation + "/" opens palette.
+// Runtime is hand-maintained in generated/shortcutchord.rs (SKIP_WJ_REGEN=1).
+// Host emits `const LK_SHORTCUTS = { ... }` before this runtime.
+
+/// Marker that this module owns the shortcut chord keydown runtime.
+pub fn shortcut_chord_module() -> string {
+    "shortcutchord"
+}

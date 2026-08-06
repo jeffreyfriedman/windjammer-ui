@@ -386,3 +386,7 @@ pub use shellchrome::*;
 // Hand-maintained (P3.41) — window.lkRender → WASM/WJ read-model bridge.
 pub mod readmodelbridge;
 pub use readmodelbridge::*;
+
+// Hand-maintained (P3.42) — shortcut chord keydown (expects host LK_SHORTCUTS map).
+pub mod shortcutchord;
+pub use shortcutchord::*;
