@@ -1,0 +1,8 @@
+// ShellChrome — persona / density / shell-nav host helpers.
+// Runtime is hand-maintained in generated/shellchrome.rs (SKIP_WJ_REGEN=1).
+// Product shell mounts this via finance-ui command_palette_js.
+
+/// Marker that this module owns the shell chrome interaction runtime.
+pub fn shell_chrome_module() -> string {
+    "shellchrome"
+}
