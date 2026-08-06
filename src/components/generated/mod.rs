@@ -382,3 +382,7 @@ pub use reconcileactions::*;
 // Hand-maintained (P3.40) — persona / density / shell-nav host helpers.
 pub mod shellchrome;
 pub use shellchrome::*;
+
+// Hand-maintained (P3.41) — window.lkRender → WASM/WJ read-model bridge.
+pub mod readmodelbridge;
+pub use readmodelbridge::*;

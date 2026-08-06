@@ -1,0 +1,8 @@
+// ReadModelBridge — window.lkRender → WASM/WJ read-model renderers.
+// Runtime is hand-maintained in generated/readmodelbridge.rs (SKIP_WJ_REGEN=1).
+// AuthFetch and product hosts call window.lkRender[kind](data).
+
+/// Marker that this module owns the lkRender bridge runtime.
+pub fn read_model_bridge_module() -> string {
+    "readmodelbridge"
+}
