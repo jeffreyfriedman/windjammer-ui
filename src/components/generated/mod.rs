@@ -378,3 +378,7 @@ pub use loginform::*;
 // Hand-maintained (P3.39) — bank recon strip/queue/finish/export runtime.
 pub mod reconcileactions;
 pub use reconcileactions::*;
+
+// Hand-maintained (P3.40) — persona / density / shell-nav host helpers.
+pub mod shellchrome;
+pub use shellchrome::*;
