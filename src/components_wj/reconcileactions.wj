@@ -1,0 +1,8 @@
+// ReconcileActions — bank recon strip/queue/finish/export click handlers.
+// Runtime is hand-maintained in generated/reconcileactions.rs (SKIP_WJ_REGEN=1).
+// Markup lives in finance-screens panels (data-wj-reconcile-*).
+
+/// Marker that this module owns the reconcile interaction runtime.
+pub fn reconcile_actions_module() -> string {
+    "reconcileactions"
+}
