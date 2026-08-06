@@ -390,3 +390,7 @@ pub use readmodelbridge::*;
 // Hand-maintained (P3.42) — shortcut chord keydown (expects host LK_SHORTCUTS map).
 pub mod shortcutchord;
 pub use shortcutchord::*;
+
+// Hand-maintained (P3.43) — LedgerKit layout stylesheet (tokens stay in product host).
+pub mod ledgertheme;
+pub use ledgertheme::*;

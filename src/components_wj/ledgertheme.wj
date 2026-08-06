@@ -1,0 +1,8 @@
+// LedgerTheme — LedgerKit SPA layout stylesheet (fonts + component CSS).
+// Runtime/CSS is hand-maintained in generated/ledgertheme.rs (SKIP_WJ_REGEN=1).
+// Token `:root` vars stay in the product host (FinanceTokens / desktop egui).
+
+/// Marker that this module owns the LedgerKit layout stylesheet.
+pub fn ledger_theme_module() -> string {
+    "ledgertheme"
+}
