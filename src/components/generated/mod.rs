@@ -394,3 +394,7 @@ pub use shortcutchord::*;
 // Hand-maintained (P3.43) — LedgerKit layout stylesheet (tokens stay in product host).
 pub mod ledgertheme;
 pub use ledgertheme::*;
+
+// Hand-maintained (P3.44) — static SPA hash mount (expects host LK_PAGES / LK_TITLES).
+pub mod hashrouter;
+pub use hashrouter::*;

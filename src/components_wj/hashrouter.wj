@@ -1,0 +1,8 @@
+// HashRouter — static SPA hash mount (expects host LK_PAGES / LK_TITLES).
+// Runtime is hand-maintained in generated/hashrouter.rs (SKIP_WJ_REGEN=1).
+// WASM boot does not use this; it remounts from Rust.
+
+/// Marker that this module owns the static SPA hash-router runtime.
+pub fn hash_router_module() -> string {
+    "hashrouter"
+}
