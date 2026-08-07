@@ -398,3 +398,7 @@ pub use ledgertheme::*;
 // Hand-maintained (P3.44) — static SPA hash mount (expects host LK_PAGES / LK_TITLES).
 pub mod hashrouter;
 pub use hashrouter::*;
+
+// Hand-maintained (P3.50) — packs shell + finance product host runtimes.
+pub mod shellruntimes;
+pub use shellruntimes::*;
