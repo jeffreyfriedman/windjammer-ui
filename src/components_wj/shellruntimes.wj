@@ -1,0 +1,7 @@
+// ShellRuntimes — packs LedgerKit-oriented WJ-UI host runtimes (P3.50).
+// Runtime packer is hand-maintained in generated/shellruntimes.rs (SKIP_WJ_REGEN=1).
+
+/// Marker that this module owns the product shell runtime pack.
+pub fn shell_runtimes_module() -> string {
+    "shellruntimes"
+}
