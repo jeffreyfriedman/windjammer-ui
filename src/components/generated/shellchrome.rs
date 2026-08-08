@@ -7,7 +7,7 @@
 pub fn shell_chrome_runtime_js() -> &'static str {
     r##"
 function lkPersona() {
-  return (localStorage.getItem('ledgerkit_persona') || 'owner').toLowerCase();
+  return (localStorage.getItem('ledgerkit_persona') || 'owner').toLowerCase(); // lockstep: finance_screens::persona_storage_key / persona_default_wire
 }
 function lkApplyPersonaNav() {
   const p = lkPersona();
