@@ -19,14 +19,14 @@ function lkApplyPersonaNav() {
   if (chip) chip.textContent = p.charAt(0).toUpperCase() + p.slice(1);
 }
 function lkDensity() {
-  const stored = localStorage.getItem('ledgerkit_density');
+  const stored = localStorage.getItem('ledgerkit_density'); // lockstep: finance_screens::density_storage_key
   if (stored) return stored.toLowerCase();
   if (lkPersona() === 'bookkeeper') return 'compact';
   return 'comfortable';
 }
 function lkSetDensity(mode) {
   const d = (mode === 'compact' || mode === 'dense') ? 'compact' : 'comfortable';
-  localStorage.setItem('ledgerkit_density', d);
+  localStorage.setItem('ledgerkit_density', d); // lockstep: finance_screens::density_storage_key
   lkApplyDensity();
 }
 function lkApplyDensity() {
