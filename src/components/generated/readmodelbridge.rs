@@ -2,6 +2,10 @@
 //! Hand-maintained. Always SKIP_WJ_REGEN=1.
 //! `.wj` source: `components_wj/readmodelbridge.wj` (structural marker).
 //! AuthFetch and product hosts call `window.lkRender[kind](data)`.
+//!
+//! Product catalog SOT (P3.79): `finance_screens::build_lk_render_bridge_js` /
+//! `build_lk_render_bridge_install_js` — keep this framework stub in lockstep with
+//! `known_read_model_kind_wires()` when adding AuthFetch kinds.
 
 /// Framework runtime: thin lkRender stub; table HTML comes from WASM/WJ.
 pub fn read_model_bridge_runtime_js() -> &'static str {
