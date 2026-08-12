@@ -309,3 +309,32 @@ fn auth_fetch_runtime_js_auto_fires_without_clobbering_unauth() {
         "runtime still has sign-in/loading paths to gate on auto: {js}"
     );
 }
+
+#[test]
+fn json_post_refresh_emits_data_attr() {
+    use windjammer_ui::components::generated::{jsonpost, traits::Renderable};
+    let html = jsonpost::JsonPost::new(
+        "/api/v1/fiscal-periods/close".to_string(),
+        "#periodCloseBody".to_string(),
+    )
+    .id("softClose".to_string())
+    .refresh("#loadPeriod".to_string())
+    .render();
+    assert!(
+        html.contains("data-wj-refresh-sel=\"#loadPeriod\"")
+            || html.contains("data-wj-refresh-sel='#loadPeriod'"),
+        "refresh sel: {html}"
+    );
+}
+
+#[test]
+fn json_post_runtime_js_refreshes_auth_fetch_and_hooks() {
+    use windjammer_ui::components::generated::jsonpost;
+    let js = jsonpost::json_post_runtime_js();
+    assert!(
+        js.contains("data-wj-refresh-sel"),
+        "runtime reads refresh sel: {js}"
+    );
+    assert!(js.contains("wjAuthFetch"), "AuthFetch after success: {js}");
+    assert!(js.contains("lkAfterJsonPost"), "after-success hook: {js}");
+}

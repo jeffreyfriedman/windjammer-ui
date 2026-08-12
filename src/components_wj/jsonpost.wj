@@ -12,6 +12,7 @@ pub struct JsonPost {
     status_sel: string,
     class_name: string,
     success_message: string,
+    refresh_sel: string,
 }
 
 impl JsonPost {
@@ -25,6 +26,7 @@ impl JsonPost {
             status_sel: "#out",
             class_name: "btn-secondary",
             success_message: "OK",
+            refresh_sel: "",
         }
     }
 
@@ -57,10 +59,21 @@ impl JsonPost {
         self.success_message = msg
         self
     }
+
+    /// After a successful POST, AuthFetch the given button selector (e.g. `#loadPeriod`).
+    pub fn refresh(self, sel: string) -> JsonPost {
+        self.refresh_sel = sel
+        self
+    }
 }
 
 impl Renderable for JsonPost {
     fn render(self) -> string {
+        let refresh_attr = if self.refresh_sel.len() == 0 {
+            ""
+        } else {
+            " data-wj-refresh-sel=\"" + self.refresh_sel + "\""
+        }
         "<button type=\"button\" id=\""
             + self.id
             + "\" class=\""
@@ -75,7 +88,9 @@ impl Renderable for JsonPost {
             + self.status_sel
             + "\" data-wj-success-message=\""
             + self.success_message
-            + "\">"
+            + "\""
+            + refresh_attr
+            + ">"
             + self.label
             + "</button>"
     }

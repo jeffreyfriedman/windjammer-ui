@@ -14,6 +14,7 @@ pub struct JsonPost {
     pub status_sel: String,
     pub class_name: String,
     pub success_message: String,
+    pub refresh_sel: String,
 }
 
 impl JsonPost {
@@ -27,6 +28,7 @@ impl JsonPost {
             status_sel: "#out".to_string(),
             class_name: "btn-secondary".to_string(),
             success_message: "OK".to_string(),
+            refresh_sel: String::new(),
         }
     }
 
@@ -59,12 +61,23 @@ impl JsonPost {
         self.success_message = msg.into();
         self
     }
+
+    /// After a successful POST, AuthFetch the given button selector (e.g. `#loadPeriod`).
+    pub fn refresh(mut self, sel: impl Into<String>) -> Self {
+        self.refresh_sel = sel.into();
+        self
+    }
 }
 
 impl Renderable for JsonPost {
     fn render(&self) -> String {
+        let refresh_attr = if self.refresh_sel.is_empty() {
+            String::new()
+        } else {
+            format!(" data-wj-refresh-sel=\"{}\"", self.refresh_sel)
+        };
         format!(
-            r##"<button type="button" id="{id}" class="{class} wj-json-post" data-wj-json-post data-wj-fetch-path="{path}" data-wj-body-sel="{body}" data-wj-token-key="{token}" data-wj-status-sel="{status}" data-wj-success-message="{ok}">{label}</button>"##,
+            r##"<button type="button" id="{id}" class="{class} wj-json-post" data-wj-json-post data-wj-fetch-path="{path}" data-wj-body-sel="{body}" data-wj-token-key="{token}" data-wj-status-sel="{status}" data-wj-success-message="{ok}"{refresh}>{label}</button>"##,
             id = self.id,
             class = self.class_name,
             path = self.path,
@@ -72,12 +85,14 @@ impl Renderable for JsonPost {
             token = self.token_key,
             status = self.status_sel,
             ok = self.success_message,
+            refresh = refresh_attr,
             label = self.label,
         )
     }
 }
 
 /// Framework runtime: Bearer POST body from selector → status slot.
+/// On success, optional `data-wj-refresh-sel` AuthFetch + `lkAfterJsonPost` hook.
 pub fn json_post_runtime_js() -> &'static str {
     r##"
 (function () {
@@ -121,6 +136,16 @@ pub fn json_post_runtime_js() -> &'static str {
         return;
       }
       show(okMsg, false);
+      var refreshSel = btn.getAttribute('data-wj-refresh-sel') || '';
+      if (refreshSel && typeof window.wjAuthFetch === 'function') {
+        var refreshBtn = document.querySelector(refreshSel);
+        if (refreshBtn) {
+          try { window.wjAuthFetch(refreshBtn); } catch (e) {}
+        }
+      }
+      if (typeof window.lkAfterJsonPost === 'function') {
+        try { window.lkAfterJsonPost(path, btn); } catch (e) {}
+      }
     }).catch(function (err) {
       show(String(err), true);
     });
@@ -145,5 +170,40 @@ mod tests {
         assert!(html.contains("data-wj-body-sel=\"#jeBody\""));
         assert!(html.contains("id=\"postJe\""));
         assert!(html.contains("Journal posted") || html.contains("data-wj-success-message"));
+    }
+
+    #[test]
+    fn json_post_refresh_emits_data_attr() {
+        let html = JsonPost::new("/api/v1/fiscal-periods/close", "#periodCloseBody")
+            .id("softClose")
+            .refresh("#loadPeriod")
+            .render();
+        assert!(
+            html.contains("data-wj-refresh-sel=\"#loadPeriod\"")
+                || html.contains("data-wj-refresh-sel='#loadPeriod'"),
+            "refresh sel: {html}"
+        );
+        let plain = JsonPost::new("/x", "#b").render();
+        assert!(
+            !plain.contains("data-wj-refresh-sel=\"#loadPeriod\""),
+            "default has no refresh: {plain}"
+        );
+    }
+
+    #[test]
+    fn json_post_runtime_js_refreshes_auth_fetch_and_hooks() {
+        let js = json_post_runtime_js();
+        assert!(
+            js.contains("data-wj-refresh-sel") || js.contains("wj-refresh-sel"),
+            "runtime reads refresh sel: {js}"
+        );
+        assert!(
+            js.contains("wjAuthFetch"),
+            "runtime calls AuthFetch after success: {js}"
+        );
+        assert!(
+            js.contains("lkAfterJsonPost"),
+            "runtime exposes after-success hook: {js}"
+        );
     }
 }
