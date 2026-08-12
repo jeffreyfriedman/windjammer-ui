@@ -130,6 +130,9 @@ pub fn auth_fetch_runtime_js() -> &'static str {
         if (typeof window.lkAfterAuthFetch === 'function') {
           try { window.lkAfterAuthFetch(kind, mount); } catch (err) {}
         }
+        if (typeof window.wjApplyPeriodWriteGuard === 'function') {
+          try { window.wjApplyPeriodWriteGuard(); } catch (err) {}
+        }
       } else if (mount) {
         mount.innerHTML = '<p class="err">Renderer unavailable for ' + kind + '</p>';
       }

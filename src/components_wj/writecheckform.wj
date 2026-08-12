@@ -78,7 +78,8 @@ impl Renderable for WriteCheckForm {
             + "<textarea id=\"checkJeBody\" rows=\"6\" data-wj-write-check-body>"
             + self.sample_body
             + "</textarea></details>"
-            + "<div class=\"row\"><button type=\"button\" class=\"btn-secondary\" id=\"postCheck\" data-wj-write-check-post>Post check</button></div>"
+            + "<p class=\"lk-status\" data-wj-period-warn hidden role=\"status\"></p>"
+            + "<div class=\"row\"><button type=\"button\" class=\"btn-secondary\" id=\"postCheck\" data-wj-write-check-post data-wj-period-guard=\"1\">Post check</button></div>"
             + "<p id=\"out\" class=\"lk-status\" role=\"status\" hidden></p>"
             + "</div>"
     }
@@ -193,6 +194,7 @@ pub fn write_check_form_runtime_js() -> &'static str {
     if (!t || !t.closest) return;
     var btn = t.closest('[data-wj-write-check-post]');
     if (!btn) return;
+    if (btn.disabled) return;
     var root = btn.closest('[data-wj-write-check]');
     if (!root) return;
     ev.preventDefault();

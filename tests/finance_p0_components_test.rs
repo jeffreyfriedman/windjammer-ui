@@ -338,3 +338,81 @@ fn json_post_runtime_js_refreshes_auth_fetch_and_hooks() {
     assert!(js.contains("wjAuthFetch"), "AuthFetch after success: {js}");
     assert!(js.contains("lkAfterJsonPost"), "after-success hook: {js}");
 }
+
+#[test]
+fn json_post_period_guard_emits_data_attr() {
+    use windjammer_ui::components::generated::{jsonpost, traits::Renderable};
+    let html = jsonpost::JsonPost::new(
+        "/api/v1/journal-entries".to_string(),
+        "#jeBody".to_string(),
+    )
+    .id("postJe".to_string())
+    .period_guard(true)
+    .render();
+    assert!(
+        html.contains("data-wj-period-guard=\"1\"") || html.contains("data-wj-period-guard='1'"),
+        "period guard: {html}"
+    );
+    let plain = jsonpost::JsonPost::new("/x".to_string(), "#b".to_string()).render();
+    assert!(
+        !plain.contains("data-wj-period-guard=\"1\"") && !plain.contains("data-wj-period-guard='1'"),
+        "default has no guard: {plain}"
+    );
+}
+
+#[test]
+fn json_post_runtime_js_applies_period_write_guard() {
+    use windjammer_ui::components::generated::jsonpost;
+    let js = jsonpost::json_post_runtime_js();
+    assert!(
+        js.contains("wjApplyPeriodWriteGuard"),
+        "runtime exports period write guard: {js}"
+    );
+    assert!(
+        js.contains("data-period-state"),
+        "guard reads PeriodBadge state: {js}"
+    );
+    assert!(
+        js.contains("data-wj-period-guard"),
+        "guard targets period-gated buttons: {js}"
+    );
+    assert!(
+        js.contains("data-wj-period-warn"),
+        "guard toggles warn slot: {js}"
+    );
+    assert!(
+        js.contains(".disabled") || js.contains("disabled ="),
+        "locked period disables guarded posts: {js}"
+    );
+}
+
+#[test]
+fn auth_fetch_runtime_js_applies_period_write_guard() {
+    use windjammer_ui::components::generated::authfetch;
+    let js = authfetch::auth_fetch_runtime_js();
+    assert!(
+        js.contains("wjApplyPeriodWriteGuard"),
+        "after period paint, re-apply write guard: {js}"
+    );
+}
+
+#[test]
+fn write_check_post_is_period_guarded() {
+    use windjammer_ui::components::generated::{traits::Renderable, writecheckform};
+    let html = writecheckform::WriteCheckForm::new()
+        .sample_body("{}".to_string())
+        .render();
+    assert!(
+        html.contains("data-wj-period-guard"),
+        "write-check post honors period lock: {html}"
+    );
+    assert!(
+        html.contains("data-wj-period-warn"),
+        "write-check shows period warn slot: {html}"
+    );
+    let js = writecheckform::write_check_form_runtime_js();
+    assert!(
+        js.contains("disabled"),
+        "write-check runtime skips disabled post: {js}"
+    );
+}

@@ -15,6 +15,7 @@ pub struct JsonPost {
     pub class_name: String,
     pub success_message: String,
     pub refresh_sel: String,
+    pub period_guard: bool,
 }
 
 impl JsonPost {
@@ -29,6 +30,7 @@ impl JsonPost {
             class_name: "btn-secondary".to_string(),
             success_message: "OK".to_string(),
             refresh_sel: String::new(),
+            period_guard: false,
         }
     }
 
@@ -67,6 +69,12 @@ impl JsonPost {
         self.refresh_sel = sel.into();
         self
     }
+
+    /// Honor PeriodBadge lock (`data-wj-period-guard`) via `wjApplyPeriodWriteGuard`.
+    pub fn period_guard(mut self, enabled: bool) -> Self {
+        self.period_guard = enabled;
+        self
+    }
 }
 
 impl Renderable for JsonPost {
@@ -76,8 +84,13 @@ impl Renderable for JsonPost {
         } else {
             format!(" data-wj-refresh-sel=\"{}\"", self.refresh_sel)
         };
+        let guard_attr = if self.period_guard {
+            " data-wj-period-guard=\"1\""
+        } else {
+            ""
+        };
         format!(
-            r##"<button type="button" id="{id}" class="{class} wj-json-post" data-wj-json-post data-wj-fetch-path="{path}" data-wj-body-sel="{body}" data-wj-token-key="{token}" data-wj-status-sel="{status}" data-wj-success-message="{ok}"{refresh}>{label}</button>"##,
+            r##"<button type="button" id="{id}" class="{class} wj-json-post" data-wj-json-post data-wj-fetch-path="{path}" data-wj-body-sel="{body}" data-wj-token-key="{token}" data-wj-status-sel="{status}" data-wj-success-message="{ok}"{refresh}{guard}>{label}</button>"##,
             id = self.id,
             class = self.class_name,
             path = self.path,
@@ -86,6 +99,7 @@ impl Renderable for JsonPost {
             status = self.status_sel,
             ok = self.success_message,
             refresh = refresh_attr,
+            guard = guard_attr,
             label = self.label,
         )
     }
@@ -98,11 +112,37 @@ pub fn json_post_runtime_js() -> &'static str {
 (function () {
   if (window.__wjJsonPostBound) return;
   window.__wjJsonPostBound = true;
+  window.wjApplyPeriodWriteGuard = function () {
+    var badge = document.querySelector('[data-period-state]');
+    var state = badge ? (badge.getAttribute('data-period-state') || 'open') : 'open';
+    state = String(state).toLowerCase();
+    var blocked = state === 'locked';
+    var warn = blocked || state === 'closed';
+    document.querySelectorAll('[data-wj-period-guard]').forEach(function (el) {
+      el.disabled = blocked;
+      if (blocked) {
+        el.setAttribute('aria-disabled', 'true');
+      } else {
+        el.removeAttribute('aria-disabled');
+      }
+    });
+    document.querySelectorAll('[data-wj-period-warn]').forEach(function (el) {
+      el.hidden = !warn;
+      if (!warn) return;
+      var lockedMsg = el.getAttribute('data-wj-period-warn-locked')
+        || 'This period is locked. Reopen it from Close to post.';
+      var closedMsg = el.getAttribute('data-wj-period-warn-closed')
+        || 'This period is soft-closed. Posting is still allowed.';
+      el.textContent = blocked ? lockedMsg : closedMsg;
+      el.classList.toggle('is-error', blocked);
+    });
+  };
   document.addEventListener('click', function (ev) {
     var t = ev.target;
     if (!t || !t.closest) return;
     var btn = t.closest('[data-wj-json-post]');
     if (!btn) return;
+    if (btn.disabled) return;
     ev.preventDefault();
     var path = btn.getAttribute('data-wj-fetch-path') || '';
     var bodySel = btn.getAttribute('data-wj-body-sel') || '';
@@ -150,6 +190,9 @@ pub fn json_post_runtime_js() -> &'static str {
       show(String(err), true);
     });
   });
+  if (typeof window.wjApplyPeriodWriteGuard === 'function') {
+    try { window.wjApplyPeriodWriteGuard(); } catch (e) {}
+  }
 })();
 "##
 }

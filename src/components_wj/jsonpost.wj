@@ -13,6 +13,7 @@ pub struct JsonPost {
     class_name: string,
     success_message: string,
     refresh_sel: string,
+    period_guard: bool,
 }
 
 impl JsonPost {
@@ -27,6 +28,7 @@ impl JsonPost {
             class_name: "btn-secondary",
             success_message: "OK",
             refresh_sel: "",
+            period_guard: false,
         }
     }
 
@@ -65,6 +67,12 @@ impl JsonPost {
         self.refresh_sel = sel
         self
     }
+
+    /// Honor PeriodBadge lock (`data-wj-period-guard`) via `wjApplyPeriodWriteGuard`.
+    pub fn period_guard(self, enabled: bool) -> JsonPost {
+        self.period_guard = enabled
+        self
+    }
 }
 
 impl Renderable for JsonPost {
@@ -73,6 +81,11 @@ impl Renderable for JsonPost {
             ""
         } else {
             " data-wj-refresh-sel=\"" + self.refresh_sel + "\""
+        }
+        let guard_attr = if self.period_guard {
+            " data-wj-period-guard=\"1\""
+        } else {
+            ""
         }
         "<button type=\"button\" id=\""
             + self.id
@@ -90,6 +103,7 @@ impl Renderable for JsonPost {
             + self.success_message
             + "\""
             + refresh_attr
+            + guard_attr
             + ">"
             + self.label
             + "</button>"
