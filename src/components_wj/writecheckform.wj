@@ -212,7 +212,25 @@ pub fn write_check_form_runtime_js() -> &'static str {
         headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + tkn },
         body: body
       }).then(function (res) {
-        if (!res.ok) { out.classList.add('is-error'); out.textContent = 'Could not post (' + res.status + ')'; return; }
+        return res.json().then(function (data) {
+          return { res: res, data: data };
+        }).catch(function () {
+          return { res: res, data: {} };
+        });
+      }).then(function (pair) {
+        var res = pair.res;
+        var data = pair.data || {};
+        if (!res.ok) {
+          var msg = (typeof window.wjHttpErrorMessage === 'function')
+            ? window.wjHttpErrorMessage(res.status, data, 'Could not post')
+            : ('Could not post (' + res.status + ')');
+          out.classList.add('is-error');
+          out.textContent = msg;
+          if (typeof window.wjHandlePeriodLockError === 'function') {
+            try { window.wjHandlePeriodLockError(res.status, data); } catch (e) {}
+          }
+          return;
+        }
         out.textContent = 'Check posted — register refreshing…';
         bumpCheckNum(root);
         var payee = root.querySelector('[data-wj-write-check-payee]');

@@ -137,6 +137,26 @@ pub fn json_post_runtime_js() -> &'static str {
       el.classList.toggle('is-error', blocked);
     });
   };
+  window.wjHttpErrorMessage = function (status, data, fallback) {
+    var body = data || {};
+    var msg = body.error || body.message || '';
+    if (msg) return String(msg);
+    return (fallback || 'Request failed') + ' (' + status + ')';
+  };
+  window.wjIsPeriodLockError = function (status, data) {
+    if (status !== 403) return false;
+    var msg = String((data && (data.error || data.message)) || '').toLowerCase();
+    return msg.indexOf('posting not allowed') >= 0;
+  };
+  window.wjHandlePeriodLockError = function (status, data) {
+    if (!window.wjIsPeriodLockError(status, data)) return;
+    var periodBtn = document.querySelector('[data-wj-auth-fetch][data-wj-render-kind="period"]');
+    if (periodBtn && typeof window.wjAuthFetch === 'function') {
+      try { window.wjAuthFetch(periodBtn); } catch (e) {}
+    } else if (typeof window.wjApplyPeriodWriteGuard === 'function') {
+      try { window.wjApplyPeriodWriteGuard(); } catch (e) {}
+    }
+  };
   document.addEventListener('click', function (ev) {
     var t = ev.target;
     if (!t || !t.closest) return;
@@ -171,8 +191,17 @@ pub fn json_post_runtime_js() -> &'static str {
       },
       body: bodyEl.value
     }).then(function (res) {
+      return res.json().then(function (data) {
+        return { res: res, data: data };
+      }).catch(function () {
+        return { res: res, data: {} };
+      });
+    }).then(function (pair) {
+      var res = pair.res;
+      var data = pair.data || {};
       if (!res.ok) {
-        show('Could not post (' + res.status + ')', true);
+        show(window.wjHttpErrorMessage(res.status, data, 'Could not post'), true);
+        window.wjHandlePeriodLockError(res.status, data);
         return;
       }
       show(okMsg, false);

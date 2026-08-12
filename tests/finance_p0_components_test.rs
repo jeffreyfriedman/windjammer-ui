@@ -416,3 +416,50 @@ fn write_check_post_is_period_guarded() {
         "write-check runtime skips disabled post: {js}"
     );
 }
+
+#[test]
+fn json_post_runtime_js_surfaces_http_error_json() {
+    use windjammer_ui::components::generated::jsonpost;
+    let js = jsonpost::json_post_runtime_js();
+    assert!(
+        js.contains("wjHttpErrorMessage"),
+        "shared HTTP error helper: {js}"
+    );
+    assert!(
+        js.contains(".json()") || js.contains("res.json"),
+        "error path parses JSON body: {js}"
+    );
+    assert!(
+        js.contains("data.error") || js.contains(".error"),
+        "prefers error field: {js}"
+    );
+}
+
+#[test]
+fn json_post_runtime_js_surfaces_period_lock_403() {
+    use windjammer_ui::components::generated::jsonpost;
+    let js = jsonpost::json_post_runtime_js();
+    assert!(js.contains("403"), "detects forbidden: {js}");
+    assert!(
+        js.contains("posting not allowed") || js.contains("period"),
+        "detects period-lock copy: {js}"
+    );
+    assert!(
+        js.contains("wjApplyPeriodWriteGuard") && js.contains("wjAuthFetch"),
+        "403 period-lock refreshes badge/guard: {js}"
+    );
+    assert!(
+        js.contains("data-wj-render-kind") && js.contains("period"),
+        "refreshes period AuthFetch: {js}"
+    );
+}
+
+#[test]
+fn write_check_runtime_uses_http_error_helper() {
+    use windjammer_ui::components::generated::writecheckform;
+    let js = writecheckform::write_check_form_runtime_js();
+    assert!(
+        js.contains("wjHttpErrorMessage") || js.contains("res.json"),
+        "write-check surfaces API error body: {js}"
+    );
+}
