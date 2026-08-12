@@ -1,5 +1,6 @@
 // AuthFetch — load button that fetches with Bearer token and renders via window.lkRender.
 // LedgerKit F3 / ADR-001: product pages bake path+kind; framework runtime does fetch.
+// Runtime is hand-maintained in generated/authfetch.rs (SKIP_WJ_REGEN=1).
 // NOTE: `impl Into<String>` on builders is Rust-only until owned-string codegen is green.
 
 use super::traits::Renderable
@@ -11,17 +12,19 @@ pub struct AuthFetch {
     kind: string,
     mount: string,
     class_name: string,
+    auto: bool,
 }
 
 impl AuthFetch {
     pub fn new(path: string, kind: string) -> AuthFetch {
         AuthFetch {
-            id: "authFetch".to_string(),
-            label: "Load".to_string(),
+            id: "authFetch",
+            label: "Load",
             path: path,
             kind: kind,
-            mount: "#tableMount".to_string(),
-            class_name: "btn-secondary".to_string(),
+            mount: "#tableMount",
+            class_name: "btn-secondary",
+            auto: false,
         }
     }
 
@@ -44,11 +47,22 @@ impl AuthFetch {
         self.class_name = class_name
         self
     }
+
+    /// Hidden auto-fire on bind (`data-auto="1"`). Chrome fetches must not clobber mount when unauthenticated.
+    pub fn auto(self, enabled: bool) -> AuthFetch {
+        self.auto = enabled
+        self
+    }
 }
 
 impl Renderable for AuthFetch {
     fn render(self) -> string {
-        "<button type=\"button\" id=\"".to_string()
+        let auto_attr = if self.auto {
+            " data-auto=\"1\""
+        } else {
+            ""
+        }
+        "<button type=\"button\" id=\""
             + self.id
             + "\" class=\""
             + self.class_name
@@ -58,7 +72,9 @@ impl Renderable for AuthFetch {
             + self.kind
             + "\" data-wj-mount=\""
             + self.mount
-            + "\">"
+            + "\""
+            + auto_attr
+            + ">"
             + self.label
             + "</button>"
     }
@@ -66,6 +82,7 @@ impl Renderable for AuthFetch {
 
 
 /// Framework runtime: Bearer GET → lkRender; drives #lkSyncBadge (D5).
+/// Auto chrome (`data-auto="1"`) fires on bind and skips Sign-in/Loading clobber.
 pub fn auth_fetch_runtime_js() -> &'static str {
     r##"
 (function () {
@@ -85,15 +102,16 @@ pub fn auth_fetch_runtime_js() -> &'static str {
     const path = btn.getAttribute('data-wj-fetch-path') || '';
     const kind = btn.getAttribute('data-wj-render-kind') || '';
     const mountSel = btn.getAttribute('data-wj-mount') || '#tableMount';
+    const auto = btn.getAttribute('data-auto') === '1';
     const token = localStorage.getItem('ledgerkit_token') || '';
     const mount = document.querySelector(mountSel);
     if (!path || !kind) return;
     if (!token) {
-      if (mount) mount.innerHTML = '<p class="err">Sign in first.</p>';
+      if (!auto && mount) mount.innerHTML = '<p class="err">Sign in first.</p>';
       window.lkSetSyncStatus('offline');
       return;
     }
-    if (mount) mount.innerHTML = '<p class="muted">Loading…</p>';
+    if (!auto && mount) mount.innerHTML = '<p class="muted">Loading…</p>';
     window.lkSetSyncStatus('syncing');
     try {
       const res = await fetch((window.LEDGERKIT_API || '') + path, {
@@ -101,7 +119,7 @@ pub fn auth_fetch_runtime_js() -> &'static str {
       });
       const data = await res.json();
       if (!res.ok) {
-        if (mount) mount.innerHTML = '<p class="err">' + (data.error || res.status) + '</p>';
+        if (!auto && mount) mount.innerHTML = '<p class="err">' + (data.error || res.status) + '</p>';
         window.lkSetSyncStatus('offline');
         return;
       }
@@ -115,7 +133,7 @@ pub fn auth_fetch_runtime_js() -> &'static str {
       }
       window.lkSetSyncStatus('synced');
     } catch (e) {
-      if (mount) mount.innerHTML = '<p class="err">' + (e && e.message ? e.message : e) + '</p>';
+      if (!auto && mount) mount.innerHTML = '<p class="err">' + (e && e.message ? e.message : e) + '</p>';
       window.lkSetSyncStatus('offline');
     }
   };
@@ -127,6 +145,9 @@ pub fn auth_fetch_runtime_js() -> &'static str {
       e.preventDefault();
       window.wjAuthFetch(btn);
     }
+  });
+  document.querySelectorAll('[data-wj-auth-fetch][data-auto="1"]').forEach(function (el) {
+    window.wjAuthFetch(el);
   });
 })();
 "##

@@ -260,3 +260,52 @@ fn auth_fetch_runtime_js_drives_sync_badge() {
     assert!(js.contains("'offline'") || js.contains("\"offline\""));
     assert!(js.contains("'synced'") || js.contains("\"synced\""));
 }
+
+#[test]
+fn auth_fetch_auto_emits_data_auto() {
+    use windjammer_ui::components::generated::{authfetch, traits::Renderable};
+    let html = authfetch::AuthFetch::new(
+        "/api/v1/fiscal-periods/current".to_string(),
+        "period".to_string(),
+    )
+    .id("loadPeriod".to_string())
+    .label("Refresh period".to_string())
+    .mount("#periodBadgeMount".to_string())
+    .auto(true)
+    .render();
+    assert!(
+        html.contains("data-auto=\"1\"") || html.contains("data-auto='1'"),
+        "auto AuthFetch must emit data-auto: {html}"
+    );
+    assert!(html.contains("data-wj-auth-fetch"), "marker: {html}");
+    assert!(
+        html.contains("data-wj-mount=\"#periodBadgeMount\""),
+        "mount: {html}"
+    );
+    let manual = authfetch::AuthFetch::new("/x".to_string(), "k".to_string()).render();
+    assert!(
+        !manual.contains("data-auto=\"1\"") && !manual.contains("data-auto='1'"),
+        "manual fetch must not auto: {manual}"
+    );
+}
+
+#[test]
+fn auth_fetch_runtime_js_auto_fires_without_clobbering_unauth() {
+    use windjammer_ui::components::generated::authfetch;
+    let js = authfetch::auth_fetch_runtime_js();
+    assert!(
+        js.contains("[data-wj-auth-fetch][data-auto") || js.contains("data-auto"),
+        "runtime must discover auto buttons: {js}"
+    );
+    assert!(
+        js.contains("querySelectorAll") || js.contains("querySelector"),
+        "runtime must query auto buttons: {js}"
+    );
+    // Auto chrome must not replace mount with Sign-in / Loading when unauthenticated.
+    let has_auto_skip = js.contains("data-auto")
+        && (js.contains("Sign in first") || js.contains("Loading"));
+    assert!(
+        has_auto_skip,
+        "runtime still has sign-in/loading paths to gate on auto: {js}"
+    );
+}
