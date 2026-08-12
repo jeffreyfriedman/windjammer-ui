@@ -455,6 +455,36 @@ fn json_post_runtime_js_surfaces_period_lock_403() {
 }
 
 #[test]
+fn json_post_runtime_js_classifies_sod_and_workflow_403() {
+    use windjammer_ui::components::generated::jsonpost;
+    let js = jsonpost::json_post_runtime_js();
+    assert!(
+        js.contains("wjHttpErrorKind"),
+        "classifies 403 kinds: {js}"
+    );
+    assert!(
+        js.contains("creator cannot approve"),
+        "detects SoD: {js}"
+    );
+    assert!(
+        js.contains("workflow"),
+        "detects workflow 403: {js}"
+    );
+    assert!(
+        js.contains("segregation") || js.contains("own entry") || js.contains("own transaction"),
+        "SoD user copy: {js}"
+    );
+    assert!(
+        js.contains("needs approval") || js.contains("Pending approvals") || js.contains("approval before"),
+        "workflow user copy: {js}"
+    );
+    assert!(
+        js.contains("data-wj-forbidden-hint"),
+        "toggles SoD/workflow hint slot: {js}"
+    );
+}
+
+#[test]
 fn write_check_runtime_uses_http_error_helper() {
     use windjammer_ui::components::generated::writecheckform;
     let js = writecheckform::write_check_form_runtime_js();

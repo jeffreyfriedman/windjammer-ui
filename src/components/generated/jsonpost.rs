@@ -137,18 +137,35 @@ pub fn json_post_runtime_js() -> &'static str {
       el.classList.toggle('is-error', blocked);
     });
   };
+  window.wjHttpErrorKind = function (status, data) {
+    if (status !== 403) return 'http';
+    var msg = String((data && (data.error || data.message)) || '').toLowerCase();
+    if (msg.indexOf('creator cannot approve') >= 0) return 'sod';
+    if (msg.indexOf('workflow') >= 0) return 'workflow';
+    if (msg.indexOf('posting not allowed') >= 0) return 'period';
+    return 'http';
+  };
   window.wjHttpErrorMessage = function (status, data, fallback) {
+    var kind = window.wjHttpErrorKind(status, data);
+    if (kind === 'sod') return 'You can\'t approve your own entry (segregation of duties).';
+    if (kind === 'workflow') return 'This entry needs approval before posting.';
     var body = data || {};
     var msg = body.error || body.message || '';
     if (msg) return String(msg);
     return (fallback || 'Request failed') + ' (' + status + ')';
   };
   window.wjIsPeriodLockError = function (status, data) {
-    if (status !== 403) return false;
-    var msg = String((data && (data.error || data.message)) || '').toLowerCase();
-    return msg.indexOf('posting not allowed') >= 0;
+    return window.wjHttpErrorKind(status, data) === 'period';
+  };
+  window.wjHandleForbiddenHint = function (status, data) {
+    var kind = window.wjHttpErrorKind(status, data);
+    var showHint = kind === 'sod' || kind === 'workflow';
+    document.querySelectorAll('[data-wj-forbidden-hint]').forEach(function (el) {
+      el.hidden = !showHint;
+    });
   };
   window.wjHandlePeriodLockError = function (status, data) {
+    window.wjHandleForbiddenHint(status, data);
     if (!window.wjIsPeriodLockError(status, data)) return;
     var periodBtn = document.querySelector('[data-wj-auth-fetch][data-wj-render-kind="period"]');
     if (periodBtn && typeof window.wjAuthFetch === 'function') {
@@ -205,6 +222,7 @@ pub fn json_post_runtime_js() -> &'static str {
         return;
       }
       show(okMsg, false);
+      window.wjHandleForbiddenHint(res.status, data);
       var refreshSel = btn.getAttribute('data-wj-refresh-sel') || '';
       if (refreshSel && typeof window.wjAuthFetch === 'function') {
         var refreshBtn = document.querySelector(refreshSel);
