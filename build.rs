@@ -7,9 +7,12 @@ use std::path::PathBuf;
 use std::process::Command;
 
 fn main() {
-    // Allow skipping regeneration for manual fixes (temporary development mode)
-    if env::var("SKIP_WJ_REGEN").is_ok() {
-        println!("cargo:warning=⏭️  Skipping .wj regeneration (SKIP_WJ_REGEN set)");
+    println!("cargo:rerun-if-env-changed=WJ_REGEN");
+    println!("cargo:rerun-if-env-changed=SKIP_WJ_REGEN");
+    // Tip full regen corrupts hand-maintained generated (Renderable::render(&mut self), lost runtimes).
+    // Opt in with WJ_REGEN=1. SKIP_WJ_REGEN=1 also skips (legacy).
+    if env::var("WJ_REGEN").is_err() || env::var("SKIP_WJ_REGEN").is_ok() {
+        println!("cargo:warning=⏭️  Skipping .wj regeneration (set WJ_REGEN=1 to regenerate)");
         return;
     }
 
