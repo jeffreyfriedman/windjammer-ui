@@ -418,6 +418,25 @@ fn write_check_post_is_period_guarded() {
 }
 
 #[test]
+fn bank_match_button_is_period_guarded() {
+    use windjammer_ui::components::generated::{bankmatch, traits::Renderable};
+    let html = bankmatch::BankMatchRow::new("bank~1000~demo", true, "").render();
+    assert!(
+        html.contains("data-wj-period-guard"),
+        "bank Match honors period lock: {html}"
+    );
+    let js = bankmatch::bank_match_runtime_js();
+    assert!(
+        js.contains("disabled"),
+        "bank match runtime skips disabled Match: {js}"
+    );
+    assert!(
+        js.contains("wjHttpErrorMessage") || js.contains("wjHandlePeriodLockError"),
+        "bank match surfaces period/SoD 403: {js}"
+    );
+}
+
+#[test]
 fn json_post_runtime_js_surfaces_http_error_json() {
     use windjammer_ui::components::generated::jsonpost;
     let js = jsonpost::json_post_runtime_js();

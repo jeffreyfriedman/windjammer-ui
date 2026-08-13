@@ -36,7 +36,7 @@ impl Renderable for BankMatchRow {
     fn render(&self) -> String {
         if self.unmatched {
             format!(
-                r#"<span class="wj-bank-match-action" data-wj-bank-match-cell><select data-wj-bank-match-je aria-label="Journal entry">{opts}</select><button type="button" class="btn-secondary" data-wj-bank-match data-line-id="{id}">Match</button></span>"#,
+                r#"<span class="wj-bank-match-action" data-wj-bank-match-cell><select data-wj-bank-match-je aria-label="Journal entry">{opts}</select><button type="button" class="btn-secondary" data-wj-bank-match data-wj-period-guard="1" data-line-id="{id}">Match</button></span>"#,
                 opts = self.je_options_html,
                 id = self.line_id
             )
@@ -103,6 +103,7 @@ pub fn bank_match_runtime_js() -> &'static str {
     // Require data-line-id — panel wrapper must not steal Match clicks.
     var btn = t.closest('[data-wj-bank-match][data-line-id]');
     if (!btn) return;
+    if (btn.disabled) return;
     ev.preventDefault();
     var lineId = btn.getAttribute('data-line-id') || '';
     if (!lineId) return;
@@ -110,8 +111,16 @@ pub fn bank_match_runtime_js() -> &'static str {
     var sel = cell ? cell.querySelector('[data-wj-bank-match-je]') : null;
     var jeId = (sel && sel.value) ? sel.value : 'seed-je-ops';
     var token = localStorage.getItem('ledgerkit_token') || '';
+    var out = document.querySelector('#out');
+    function show(msg, err) {
+      if (!out) return;
+      out.hidden = false;
+      out.textContent = msg;
+      out.classList.toggle('is-error', !!err);
+    }
     if (!token) {
       btn.textContent = 'Sign in';
+      show('No token — sign in on Login first.', true);
       return;
     }
     btn.disabled = true;
@@ -122,17 +131,37 @@ pub fn bank_match_runtime_js() -> &'static str {
       headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
       body: JSON.stringify({ journal_entry_id: jeId })
     }).then(function (res) {
+      return res.json().then(function (data) {
+        return { res: res, data: data };
+      }).catch(function () {
+        return { res: res, data: {} };
+      });
+    }).then(function (pair) {
+      var res = pair.res;
+      var data = pair.data || {};
       if (!res.ok) {
         btn.disabled = false;
         btn.textContent = 'Retry';
+        var msg = (typeof window.wjHttpErrorMessage === 'function')
+          ? window.wjHttpErrorMessage(res.status, data, 'Could not match')
+          : ('Could not match (' + res.status + ')');
+        show(msg, true);
+        if (typeof window.wjHandlePeriodLockError === 'function') {
+          try { window.wjHandlePeriodLockError(res.status, data); } catch (e) {}
+        }
         return;
       }
       // Immediate feedback; seed overlay + AuthFetch prove persistence on reload.
       if (cell) cell.innerHTML = '<span class="muted">Matched</span>';
+      show('Matched', false);
+      if (typeof window.wjHandleForbiddenHint === 'function') {
+        try { window.wjHandleForbiddenHint(res.status, data); } catch (e) {}
+      }
       refreshBankAndRegister();
-    }).catch(function () {
+    }).catch(function (err) {
       btn.disabled = false;
       btn.textContent = 'Retry';
+      show(String(err), true);
     });
   });
 })();
@@ -180,5 +209,27 @@ mod tests {
         assert!(js.contains("lkApplyJournalOptions"));
         assert!(js.contains("journal-options"));
         assert!(!js.contains("journal_entry_id: 'seed-je-ops'"));
+    }
+
+    #[test]
+    fn unmatched_match_button_is_period_guarded() {
+        let html = BankMatchRow::new("bank~1000~x", true, "").render();
+        assert!(
+            html.contains("data-wj-period-guard"),
+            "Match honors period lock: {html}"
+        );
+    }
+
+    #[test]
+    fn runtime_skips_disabled_and_surfaces_http_errors() {
+        let js = bank_match_runtime_js();
+        assert!(
+            js.contains("btn.disabled") || js.contains(".disabled"),
+            "skip when period-guard disables Match: {js}"
+        );
+        assert!(
+            js.contains("wjHttpErrorMessage") || js.contains("wjHandlePeriodLockError"),
+            "surface 403 period/SoD like JsonPost: {js}"
+        );
     }
 }

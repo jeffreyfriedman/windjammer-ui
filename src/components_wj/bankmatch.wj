@@ -26,7 +26,7 @@ impl Renderable for BankMatchRow {
                 + "<select data-wj-bank-match-je aria-label=\"Journal entry\">"
                 + self.je_options_html
                 + "</select>"
-                + "<button type=\"button\" class=\"btn-secondary\" data-wj-bank-match data-line-id=\""
+                + "<button type=\"button\" class=\"btn-secondary\" data-wj-bank-match data-wj-period-guard=\"1\" data-line-id=\""
                 + self.line_id
                 + "\">Match</button></span>"
         } else {
