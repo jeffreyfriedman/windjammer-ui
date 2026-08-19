@@ -40,6 +40,36 @@ pub fn reconcile_actions_runtime_js() -> &'static str {
       try { railBtn.click(); } catch (e) {}
     }
   }
+  function applyScopeDenied(res, data) {
+    if (typeof window.wjHandleScopeDeniedHint === 'function') {
+      window.wjHandleScopeDeniedHint(res.status, data || {});
+    } else {
+      var show = res.status === 403 && String(((data && (data.error || data.message)) || '')).toLowerCase().indexOf('grant scope') >= 0;
+      document.querySelectorAll('[data-wj-scope-denied]').forEach(function (el) {
+        el.hidden = !show;
+      });
+    }
+  }
+  function downloadReconExport(res, filename) {
+    if (!res.ok) {
+      return res.json().then(function (data) {
+        applyScopeDenied(res, data);
+      }).catch(function () {
+        applyScopeDenied(res, {});
+      });
+    }
+    applyScopeDenied(res, {});
+    return res.blob().then(function (blob) {
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+  }
   document.addEventListener('click', function (ev) {
     var t = ev.target;
     if (!t || !t.closest) return;
@@ -160,17 +190,7 @@ pub fn reconcile_actions_runtime_js() -> &'static str {
         method: 'GET',
         headers: { Authorization: 'Bearer ' + token }
       }).then(function (res) {
-        if (!res.ok) return;
-        return res.blob().then(function (blob) {
-          var url = URL.createObjectURL(blob);
-          var a = document.createElement('a');
-          a.href = url;
-          a.download = 'recon-' + csvAccount + '.csv';
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-          URL.revokeObjectURL(url);
-        });
+        return downloadReconExport(res, 'recon-' + csvAccount + '.csv');
       }).catch(function () {});
       return;
     }
@@ -184,17 +204,7 @@ pub fn reconcile_actions_runtime_js() -> &'static str {
         method: 'GET',
         headers: { Authorization: 'Bearer ' + token }
       }).then(function (res) {
-        if (!res.ok) return;
-        return res.blob().then(function (blob) {
-          var url = URL.createObjectURL(blob);
-          var a = document.createElement('a');
-          a.href = url;
-          a.download = 'recon-' + pdfAccount + '.pdf';
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-          URL.revokeObjectURL(url);
-        });
+        return downloadReconExport(res, 'recon-' + pdfAccount + '.pdf');
       }).catch(function () {});
     }
   });
@@ -217,5 +227,20 @@ mod tests {
         assert!(js.contains("data-wj-reconcile-pdf"));
         assert!(js.contains("data-wj-reconcile-handoff-memorized"));
         assert!(js.contains("bank-reconciliation/finish"));
+    }
+
+    #[test]
+    fn reconcile_export_runtime_toggles_scope_denied_on_403() {
+        let js = reconcile_actions_runtime_js();
+        assert!(
+            js.contains("data-wj-scope-denied"),
+            "CSV/PDF 403 must toggle grant-scope hint slot: {js}"
+        );
+        assert!(
+            js.contains("wjHandleScopeDeniedHint") || js.contains("grant scope"),
+            "recon export must classify grant-scope 403: {js}"
+        );
+        assert!(js.contains("format=csv"), "csv download: {js}");
+        assert!(js.contains("format=pdf"), "pdf download: {js}");
     }
 }
