@@ -397,6 +397,20 @@ fn auth_fetch_runtime_js_applies_period_write_guard() {
 }
 
 #[test]
+fn auth_fetch_runtime_js_toggles_scope_denied_on_403() {
+    use windjammer_ui::components::generated::authfetch;
+    let js = authfetch::auth_fetch_runtime_js();
+    assert!(
+        js.contains("data-wj-scope-denied"),
+        "AuthFetch 403 must toggle grant-scope hint slot: {js}"
+    );
+    assert!(
+        js.contains("wjHandleScopeDeniedHint") || js.contains("grant scope"),
+        "AuthFetch must classify grant-scope 403: {js}"
+    );
+}
+
+#[test]
 fn write_check_post_is_period_guarded() {
     use windjammer_ui::components::generated::{traits::Renderable, writecheckform};
     let html = writecheckform::WriteCheckForm::new()
@@ -500,6 +514,18 @@ fn json_post_runtime_js_classifies_sod_and_workflow_403() {
     assert!(
         js.contains("data-wj-forbidden-hint"),
         "toggles SoD/workflow hint slot: {js}"
+    );
+    assert!(
+        js.contains("grant scope"),
+        "classifies auditor grant-scope 403: {js}"
+    );
+    assert!(
+        js.contains("'scope'") || js.contains("\"scope\""),
+        "wjHttpErrorKind returns scope: {js}"
+    );
+    assert!(
+        js.contains("wjHandleScopeDeniedHint"),
+        "toggles data-wj-scope-denied: {js}"
     );
 }
 

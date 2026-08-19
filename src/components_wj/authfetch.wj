@@ -118,8 +118,19 @@ pub fn auth_fetch_runtime_js() -> &'static str {
         headers: { Authorization: 'Bearer ' + token }
       });
       const data = await res.json();
+      if (typeof window.wjHandleScopeDeniedHint === 'function') {
+        window.wjHandleScopeDeniedHint(res.status, data);
+      } else {
+        var showScope = res.status === 403 && String((data && (data.error || data.message)) || '').toLowerCase().indexOf('grant scope') >= 0;
+        document.querySelectorAll('[data-wj-scope-denied]').forEach(function (el) {
+          el.hidden = !showScope;
+        });
+      }
       if (!res.ok) {
-        if (!auto && mount) mount.innerHTML = '<p class="err">' + (data.error || res.status) + '</p>';
+        var errText = (typeof window.wjHttpErrorMessage === 'function')
+          ? window.wjHttpErrorMessage(res.status, data, String(res.status))
+          : (data.error || res.status);
+        if (!auto && mount) mount.innerHTML = '<p class="err">' + errText + '</p>';
         window.lkSetSyncStatus('offline');
         return;
       }
