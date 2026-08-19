@@ -11,6 +11,7 @@ pub struct LoginForm {
     pub token_key: String,
     pub email_value: String,
     pub password_value: String,
+    pub lede: String,
 }
 
 impl LoginForm {
@@ -20,6 +21,7 @@ impl LoginForm {
             token_key: "ledgerkit_token".to_string(),
             email_value: "owner@demo.local".to_string(),
             password_value: "dev".to_string(),
+            lede: "Use the demo books account to load live KPIs and registers.".to_string(),
         }
     }
 
@@ -40,6 +42,11 @@ impl LoginForm {
 
     pub fn password_value(mut self, v: impl Into<String>) -> Self {
         self.password_value = v.into();
+        self
+    }
+
+    pub fn lede(mut self, v: impl Into<String>) -> Self {
+        self.lede = v.into();
         self
     }
 }
@@ -72,13 +79,14 @@ impl Renderable for LoginForm {
             r##"<div class="wj-login-form panel" data-wj-login-form data-wj-login-path="{path}" data-wj-token-key="{token}">
 <p class="hub-kicker">Session</p>
 <h2>Login</h2>
-<p class="lede">Use the demo books account to load live KPIs and registers.</p>
+<p class="lede">{lede}</p>
 {email}{password}
 <div class="row"><button id="loginBtn" type="button" data-wj-login-submit>Sign in</button></div>
 <p id="out" class="lk-status" role="status" hidden></p>
 </div>"##,
             path = self.path,
             token = self.token_key,
+            lede = self.lede,
             email = email,
             password = password,
         )
@@ -139,5 +147,21 @@ mod tests {
         assert!(html.contains("data-wj-login-email"));
         assert!(html.contains("owner@demo.local"));
         assert!(html.contains("/auth/login"));
+    }
+
+    #[test]
+    fn login_form_lede_is_overridable() {
+        let html = LoginForm::new()
+            .lede("Auditor scoped to trial balance.")
+            .render();
+        assert!(
+            html.contains("Auditor scoped to trial balance."),
+            "custom lede: {html}"
+        );
+        assert!(
+            !html.contains("Use the demo books account"),
+            "default lede must not remain when overridden: {html}"
+        );
+        assert!(html.contains("class=\"lede\""), "lede class: {html}");
     }
 }

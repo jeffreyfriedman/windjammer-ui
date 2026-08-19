@@ -1,4 +1,4 @@
-// LoginForm — email/password session form (LedgerKit demo login).
+// LoginForm — email/password session form.
 // Runtime is hand-maintained in generated/loginform.rs (SKIP_WJ_REGEN=1).
 
 use super::traits::Renderable
@@ -9,6 +9,7 @@ pub struct LoginForm {
     token_key: string,
     email_value: string,
     password_value: string,
+    lede: string,
 }
 
 impl LoginForm {
@@ -18,6 +19,7 @@ impl LoginForm {
             token_key: "ledgerkit_token",
             email_value: "owner@demo.local",
             password_value: "dev",
+            lede: "Use the demo books account to load live KPIs and registers.",
         }
     }
 
@@ -40,6 +42,11 @@ impl LoginForm {
         self.password_value = v
         self
     }
+
+    pub fn lede(self, v: string) -> LoginForm {
+        self.lede = v
+        self
+    }
 }
 
 impl Renderable for LoginForm {
@@ -56,7 +63,9 @@ impl Renderable for LoginForm {
             + self.path
             + "\" data-wj-token-key=\""
             + self.token_key
-            + "\"><p class=\"hub-kicker\">Session</p><h2>Login</h2><p class=\"lede\">Use the demo books account to load live KPIs and registers.</p>"
+            + "\"><p class=\"hub-kicker\">Session</p><h2>Login</h2><p class=\"lede\">"
+            + self.lede
+            + "</p>"
             + email
             + password
             + "<div class=\"row\"><button id=\"loginBtn\" type=\"button\" data-wj-login-submit>Sign in</button></div><p id=\"out\" class=\"lk-status\" role=\"status\" hidden></p></div>"
