@@ -530,11 +530,43 @@ fn json_post_runtime_js_classifies_sod_and_workflow_403() {
 }
 
 #[test]
+fn json_post_runtime_js_classifies_auditor_read_only_403() {
+    use windjammer_ui::components::generated::jsonpost;
+    let js = jsonpost::json_post_runtime_js();
+    assert!(
+        js.contains("read-only"),
+        "classifies auditor grant is read-only: {js}"
+    );
+    assert!(
+        js.contains("'readonly'") || js.contains("\"readonly\""),
+        "wjHttpErrorKind returns readonly: {js}"
+    );
+    assert!(
+        js.contains("wjHandleReadOnlyHint"),
+        "toggles data-wj-read-only: {js}"
+    );
+    assert!(
+        js.contains("data-wj-read-only"),
+        "read-only hint slot selector: {js}"
+    );
+}
+
+#[test]
 fn write_check_runtime_uses_http_error_helper() {
     use windjammer_ui::components::generated::writecheckform;
     let js = writecheckform::write_check_form_runtime_js();
     assert!(
         js.contains("wjHttpErrorMessage") || js.contains("res.json"),
         "write-check surfaces API error body: {js}"
+    );
+}
+
+#[test]
+fn write_check_runtime_toggles_read_only_on_403() {
+    use windjammer_ui::components::generated::writecheckform;
+    let js = writecheckform::write_check_form_runtime_js();
+    assert!(
+        js.contains("wjHandleReadOnlyHint") || js.contains("data-wj-read-only"),
+        "write-check 403 toggles auditor read-only hint: {js}"
     );
 }

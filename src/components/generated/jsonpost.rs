@@ -142,6 +142,7 @@ pub fn json_post_runtime_js() -> &'static str {
     var msg = String((data && (data.error || data.message)) || '').toLowerCase();
     if (msg.indexOf('creator cannot approve') >= 0) return 'sod';
     if (msg.indexOf('grant scope') >= 0) return 'scope';
+    if (msg.indexOf('read-only') >= 0) return 'readonly';
     if (msg.indexOf('workflow') >= 0) return 'workflow';
     if (msg.indexOf('posting not allowed') >= 0) return 'period';
     return 'http';
@@ -151,6 +152,7 @@ pub fn json_post_runtime_js() -> &'static str {
     if (kind === 'sod') return 'You can\'t approve your own entry (segregation of duties).';
     if (kind === 'workflow') return 'This entry needs approval before posting.';
     if (kind === 'scope') return 'This report is outside the current auditor grant.';
+    if (kind === 'readonly') return 'This grant is read-only; posting is not allowed.';
     var body = data || {};
     var msg = body.error || body.message || '';
     if (msg) return String(msg);
@@ -170,6 +172,13 @@ pub fn json_post_runtime_js() -> &'static str {
     var kind = window.wjHttpErrorKind(status, data);
     var show = kind === 'scope';
     document.querySelectorAll('[data-wj-scope-denied]').forEach(function (el) {
+      el.hidden = !show;
+    });
+  };
+  window.wjHandleReadOnlyHint = function (status, data) {
+    var kind = window.wjHttpErrorKind(status, data);
+    var show = kind === 'readonly';
+    document.querySelectorAll('[data-wj-read-only]').forEach(function (el) {
       el.hidden = !show;
     });
   };
@@ -229,11 +238,13 @@ pub fn json_post_runtime_js() -> &'static str {
         show(window.wjHttpErrorMessage(res.status, data, 'Could not post'), true);
         window.wjHandlePeriodLockError(res.status, data);
         window.wjHandleScopeDeniedHint(res.status, data);
+        window.wjHandleReadOnlyHint(res.status, data);
         return;
       }
       show(okMsg, false);
       window.wjHandleForbiddenHint(res.status, data);
       window.wjHandleScopeDeniedHint(res.status, data);
+      window.wjHandleReadOnlyHint(res.status, data);
       var refreshSel = btn.getAttribute('data-wj-refresh-sel') || '';
       if (refreshSel && typeof window.wjAuthFetch === 'function') {
         var refreshBtn = document.querySelector(refreshSel);

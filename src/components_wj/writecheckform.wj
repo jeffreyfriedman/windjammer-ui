@@ -229,7 +229,13 @@ pub fn write_check_form_runtime_js() -> &'static str {
           if (typeof window.wjHandlePeriodLockError === 'function') {
             try { window.wjHandlePeriodLockError(res.status, data); } catch (e) {}
           }
+          if (typeof window.wjHandleReadOnlyHint === 'function') {
+            try { window.wjHandleReadOnlyHint(res.status, data); } catch (e) {}
+          }
           return;
+        }
+        if (typeof window.wjHandleReadOnlyHint === 'function') {
+          try { window.wjHandleReadOnlyHint(res.status, data); } catch (e) {}
         }
         out.textContent = 'Check posted — register refreshing…';
         bumpCheckNum(root);
