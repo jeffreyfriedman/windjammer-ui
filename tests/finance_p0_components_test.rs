@@ -336,6 +336,20 @@ fn ledger_layout_compacts_mobile_shell_chrome() {
 }
 
 #[test]
+fn ledger_layout_mobile_nav_scrolls_horizontally() {
+    use windjammer_ui::components::generated::ledgertheme;
+    let css = ledgertheme::ledger_layout_stylesheet();
+    // IA: wrapped primary nav was a second chrome band (~70px) on 390px phones.
+    assert!(
+        css.contains("flex-wrap: nowrap")
+            && css.contains("overflow-x: auto")
+            && css.contains(".shell-nav a")
+            && css.contains("flex: 0 0 auto"),
+        "mobile primary nav must be a single-row horizontal scroller: {css}"
+    );
+}
+
+#[test]
 fn json_post_refresh_emits_data_attr() {
     use windjammer_ui::components::generated::{jsonpost, traits::Renderable};
     let html = jsonpost::JsonPost::new(

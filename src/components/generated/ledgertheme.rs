@@ -546,8 +546,19 @@ pre#out, pre.muted {
   .shell-brand { font-size: 1.25rem; }
   .shell-title { display: none; }
   .shell-header-meta { gap: 0.35rem; }
-  .shell-nav { padding: 0.3rem 0.75rem; gap: 0.15rem; }
-  .shell-nav a { padding: 0.3rem 0.55rem; font-size: 0.82rem; }
+  .shell-nav {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    padding: 0.3rem 0.75rem;
+    gap: 0.15rem;
+  }
+  .shell-nav a {
+    flex: 0 0 auto;
+    padding: 0.3rem 0.55rem;
+    font-size: 0.82rem;
+  }
   .shell-main { padding: 1.1rem 0.85rem 2rem; }
   .panel-head { flex-direction: column; align-items: stretch; }
 }
