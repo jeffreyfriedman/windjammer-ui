@@ -328,10 +328,9 @@ fn ledger_layout_compacts_mobile_shell_chrome() {
         "do not stack shell-header on mobile — keeps chrome to one band: {css}"
     );
     assert!(
-        css.contains(".shell-header {")
-            && css.contains("flex-wrap: wrap")
-            && css.contains("padding: 0.65rem 0.85rem 0.5rem"),
-        "mobile header stays a compact wrapping row: {css}"
+        css.contains("flex-wrap: nowrap !important")
+            && css.contains("padding: 0.55rem 0.85rem 0.45rem"),
+        "mobile header/meta must force nowrap after later base wrap rules: {css}"
     );
 }
 
@@ -346,6 +345,27 @@ fn ledger_layout_mobile_nav_scrolls_horizontally() {
             && css.contains(".shell-nav a")
             && css.contains("flex: 0 0 auto"),
         "mobile primary nav must be a single-row horizontal scroller: {css}"
+    );
+}
+
+#[test]
+fn ledger_layout_mobile_sync_badge_is_status_dot() {
+    use windjammer_ui::components::generated::ledgertheme;
+    let css = ledgertheme::ledger_layout_stylesheet();
+    // IA: "Offline"/"Synced" text + Search/Owner pills forced header meta onto a second row.
+    assert!(
+        css.contains(".lk-sync-badge")
+            && css.contains("border-radius: 50%")
+            && css.contains("font-size: 0"),
+        "mobile sync badge must collapse to a colored status dot: {css}"
+    );
+    assert!(
+        css.contains(".persona-chip") && css.contains("padding: 0.2rem 0.45rem"),
+        "mobile persona chip must tighten padding: {css}"
+    );
+    assert!(
+        css.contains(".cmd-trigger") && css.contains("padding: 0.28rem 0.45rem"),
+        "mobile search trigger must tighten padding: {css}"
     );
 }
 

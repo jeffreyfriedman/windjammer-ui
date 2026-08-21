@@ -538,14 +538,22 @@ pre#out, pre.muted {
 
 @media (max-width: 640px) {
   .shell-header {
-    flex-wrap: wrap;
+    flex-wrap: nowrap !important;
     align-items: center;
-    gap: 0.45rem 0.75rem;
-    padding: 0.65rem 0.85rem 0.5rem;
+    gap: 0.45rem 0.65rem;
+    padding: 0.55rem 0.85rem 0.45rem;
   }
-  .shell-brand { font-size: 1.25rem; }
+  .shell-brand { font-size: 1.2rem; flex: 0 0 auto; }
   .shell-title { display: none; }
-  .shell-header-meta { gap: 0.35rem; }
+  .shell-header-meta {
+    flex: 1 1 auto;
+    min-width: 0;
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    gap: 0.3rem;
+  }
   .shell-nav {
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -561,6 +569,30 @@ pre#out, pre.muted {
   }
   .shell-main { padding: 1.1rem 0.85rem 2rem; }
   .panel-head { flex-direction: column; align-items: stretch; }
+  .cmd-trigger {
+    padding: 0.28rem 0.45rem !important;
+    font-size: 0.75rem !important;
+    flex: 0 0 auto;
+  }
+  .persona-chip {
+    padding: 0.2rem 0.45rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.04em;
+    flex: 0 0 auto;
+  }
+  .lk-sync-badge {
+    width: 0.7rem !important;
+    height: 0.7rem !important;
+    min-width: 0.7rem !important;
+    max-width: 0.7rem !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    overflow: hidden;
+    flex: 0 0 auto;
+  }
+  #periodBadgeMount { flex: 0 0 auto; }
 }
 
 .shell-header-meta { display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap; }
