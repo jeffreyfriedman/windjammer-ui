@@ -537,9 +537,17 @@ pre#out, pre.muted {
 }
 
 @media (max-width: 640px) {
-  .shell-header { flex-direction: column; align-items: flex-start; }
-  .shell-brand { font-size: 1.35rem; }
-  .shell-title { border-left: none; padding-left: 0; }
+  .shell-header {
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem 0.75rem;
+    padding: 0.65rem 0.85rem 0.5rem;
+  }
+  .shell-brand { font-size: 1.25rem; }
+  .shell-title { display: none; }
+  .shell-header-meta { gap: 0.35rem; }
+  .shell-nav { padding: 0.3rem 0.75rem; gap: 0.15rem; }
+  .shell-nav a { padding: 0.3rem 0.55rem; font-size: 0.82rem; }
   .shell-main { padding: 1.1rem 0.85rem 2rem; }
   .panel-head { flex-direction: column; align-items: stretch; }
 }

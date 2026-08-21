@@ -311,6 +311,31 @@ fn auth_fetch_runtime_js_auto_fires_without_clobbering_unauth() {
 }
 
 #[test]
+fn ledger_layout_compacts_mobile_shell_chrome() {
+    use windjammer_ui::components::generated::ledgertheme;
+    let css = ledgertheme::ledger_layout_stylesheet();
+    assert!(
+        css.contains("@media (max-width: 640px)"),
+        "mobile breakpoint required: {css}"
+    );
+    // IA: stacked header + duplicate route title ate ~27% of a 390px viewport.
+    assert!(
+        css.contains(".shell-title { display: none"),
+        "hide shell-title on narrow viewports (nav already shows route): {css}"
+    );
+    assert!(
+        !css.contains(".shell-header { flex-direction: column; align-items: flex-start; }"),
+        "do not stack shell-header on mobile — keeps chrome to one band: {css}"
+    );
+    assert!(
+        css.contains(".shell-header {")
+            && css.contains("flex-wrap: wrap")
+            && css.contains("padding: 0.65rem 0.85rem 0.5rem"),
+        "mobile header stays a compact wrapping row: {css}"
+    );
+}
+
+#[test]
 fn json_post_refresh_emits_data_attr() {
     use windjammer_ui::components::generated::{jsonpost, traits::Renderable};
     let html = jsonpost::JsonPost::new(
