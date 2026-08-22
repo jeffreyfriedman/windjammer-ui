@@ -370,6 +370,19 @@ fn ledger_layout_mobile_sync_badge_is_status_dot() {
 }
 
 #[test]
+fn ledger_layout_home_hero_refresh_stays_inline_on_mobile() {
+    use windjammer_ui::components::generated::ledgertheme;
+    let css = ledgertheme::ledger_layout_stylesheet();
+    // IA: panel-head column stack made Home Refresh full-bleed (~316px) on phones.
+    assert!(
+        css.contains(".home-hero .panel-head")
+            && css.contains("flex-direction: row")
+            && css.contains("#loadHomeKpis"),
+        "home hero refresh must stay inline beside the lede on mobile: {css}"
+    );
+}
+
+#[test]
 fn json_post_refresh_emits_data_attr() {
     use windjammer_ui::components::generated::{jsonpost, traits::Renderable};
     let html = jsonpost::JsonPost::new(

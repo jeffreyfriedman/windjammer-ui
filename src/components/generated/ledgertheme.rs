@@ -593,6 +593,17 @@ pre#out, pre.muted {
     flex: 0 0 auto;
   }
   #periodBadgeMount { flex: 0 0 auto; }
+  .home-hero .panel-head {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+  .home-hero #loadHomeKpis {
+    flex: 0 0 auto;
+    align-self: flex-start;
+    width: auto;
+  }
 }
 
 .shell-header-meta { display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap; }
