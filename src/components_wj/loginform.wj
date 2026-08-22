@@ -63,7 +63,7 @@ impl Renderable for LoginForm {
             + self.path
             + "\" data-wj-token-key=\""
             + self.token_key
-            + "\"><p class=\"hub-kicker\">Session</p><h2>Login</h2><p class=\"lede\">"
+            + "\"><p class=\"hub-kicker\">Account</p><h2>Login</h2><p class=\"lede\">"
             + self.lede
             + "</p>"
             + email

@@ -77,7 +77,7 @@ impl Renderable for LoginForm {
         .render();
         format!(
             r##"<div class="wj-login-form panel" data-wj-login-form data-wj-login-path="{path}" data-wj-token-key="{token}">
-<p class="hub-kicker">Session</p>
+<p class="hub-kicker">Account</p>
 <h2>Login</h2>
 <p class="lede">{lede}</p>
 {email}{password}
@@ -147,6 +147,11 @@ mod tests {
         assert!(html.contains("data-wj-login-email"));
         assert!(html.contains("owner@demo.local"));
         assert!(html.contains("/auth/login"));
+        assert!(
+            html.contains("hub-kicker\">Account<") || html.contains("hub-kicker'>Account<"),
+            "Account kicker (not Session): {html}"
+        );
+        assert!(!html.contains(">Session<"), "Session kicker retired: {html}");
     }
 
     #[test]
