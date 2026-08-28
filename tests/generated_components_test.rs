@@ -150,6 +150,18 @@ fn test_card_component() {
 fn test_progress_component() {
     let progress = progress::Progress::new(75.0).render();
     assert!(progress.contains("75"));
+    assert!(
+        progress.contains("role='progressbar'"),
+        "Progress must expose ARIA progressbar role"
+    );
+    assert!(
+        progress.contains("aria-valuenow='75'"),
+        "Progress must expose aria-valuenow"
+    );
+    assert!(
+        progress.contains("aria-valuemin='0'") && progress.contains("aria-valuemax='100'"),
+        "Progress must expose aria-valuemin/max"
+    );
 }
 
 #[test]

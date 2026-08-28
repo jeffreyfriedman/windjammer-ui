@@ -71,6 +71,6 @@ impl Renderable for Progress {
                 "".to_string()
             }
         };
-        format!("<div class='wj-progress-container' style='width: 100%; background-color: #e0e0e0; border-radius: 4px; overflow: hidden;'>\n  <div class='wj-progress-bar {}' style='width: {}%; height: 24px; background-color: {}; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; transition: width 0.3s ease;'>\n    {}\n  </div>\n</div>", variant_class, percentage, color, label_html)
+        format!("<div class='wj-progress-container' role='progressbar' aria-valuenow='{:.0}' aria-valuemin='0' aria-valuemax='100' style='width: 100%; background-color: #e0e0e0; border-radius: 4px; overflow: hidden;'>\n  <div class='wj-progress-bar {}' style='width: {}%; height: 24px; background-color: {}; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; transition: width 0.3s ease;'>\n    {}\n  </div>\n</div>", percentage, variant_class, percentage, color, label_html)
     }
 }
