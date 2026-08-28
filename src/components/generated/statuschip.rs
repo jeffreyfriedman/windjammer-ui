@@ -1,16 +1,16 @@
 #![allow(clippy::all)]
 #![allow(noop_method_call)]
-#[allow(unused_imports)]
-use super::*;
+//! Mirrors `components_wj/statuschip.wj` — Windjammer is source of truth.
 
 use super::badge::{Badge, BadgeSize, BadgeVariant};
 use super::traits::Renderable;
 
-/// Mirrors `components_wj/statuschip.wj`.
+/// Maps ledger / close-checklist statuses to Badge variants.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 #[repr(C)]
 pub struct StatusChip {
     pub status: String,
+    pub label: String,
 }
 
 impl StatusChip {
@@ -18,28 +18,29 @@ impl StatusChip {
     pub fn new(status: impl Into<String>) -> StatusChip {
         StatusChip {
             status: status.into(),
+            label: String::new(),
         }
     }
-}
 
-impl Renderable for StatusChip {
+    /// Display text (defaults to `status` when empty).
     #[inline]
-    fn render(&self) -> String {
-        let status = self.status.clone();
-        let v = variant_for(&status);
-        Badge::new(status)
-            .variant(v)
-            .size(BadgeSize::Small)
-            .render()
+    pub fn label(mut self, label: impl Into<String>) -> StatusChip {
+        self.label = label.into();
+        self
     }
 }
 
 #[inline]
 pub fn variant_for(status: &str) -> BadgeVariant {
     let s = status.to_lowercase();
-    if s == "paid" || s == "matched" || s == "posted" || s == "balanced" {
+    if s == "paid" || s == "matched" || s == "posted" || s == "balanced" || s == "done" {
         BadgeVariant::Success
-    } else if s == "open" || s == "partial" || s == "suggested" || s == "customer" {
+    } else if s == "open"
+        || s == "partial"
+        || s == "suggested"
+        || s == "customer"
+        || s == "progress"
+    {
         BadgeVariant::Warning
     } else if s == "unmatched" || s == "overdue" || s == "void" || s == "failed" {
         BadgeVariant::Danger
@@ -47,5 +48,26 @@ pub fn variant_for(status: &str) -> BadgeVariant {
         BadgeVariant::Info
     } else {
         BadgeVariant::Default
+    }
+}
+
+impl Renderable for StatusChip {
+    #[inline]
+    fn render(&self) -> String {
+        let status = self.status.clone();
+        let text = if self.label.is_empty() {
+            status.clone()
+        } else {
+            self.label.clone()
+        };
+        let v = variant_for(&status);
+        let badge = Badge::new(text)
+            .variant(v)
+            .size(BadgeSize::Small)
+            .render();
+        format!(
+            "<span class='wj-status-chip' data-wj-status='{}'>{}</span>",
+            status, badge
+        )
     }
 }

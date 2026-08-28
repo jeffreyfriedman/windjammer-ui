@@ -1,25 +1,36 @@
 // StatusChip — maps ledger document/bank statuses to Badge variants (finance dogfood).
 // Explicit clone: variant_for consumes string; Badge::new needs the same value
 // (codegen_statuschip_badge_compose_test.rs / owned_reuse_after_helper).
+// P3.184: optional display label + close-checklist progress/done mapping.
 
 use super::traits::Renderable
 use super::badge::{Badge, BadgeVariant, BadgeSize}
 
 pub struct StatusChip {
     status: string,
+    label: string,
 }
 
 impl StatusChip {
     pub fn new(status: string) -> StatusChip {
-        StatusChip { status: status }
+        StatusChip {
+            status: status,
+            label: "".to_string(),
+        }
+    }
+
+    /// Display text (defaults to `status` when empty).
+    pub fn label(self, label: string) -> StatusChip {
+        self.label = label
+        self
     }
 }
 
 fn variant_for(status: string) -> BadgeVariant {
     let s = status.to_lowercase()
-    if s == "paid" || s == "matched" || s == "posted" || s == "balanced" {
+    if s == "paid" || s == "matched" || s == "posted" || s == "balanced" || s == "done" {
         BadgeVariant::Success
-    } else if s == "open" || s == "partial" || s == "suggested" || s == "customer" {
+    } else if s == "open" || s == "partial" || s == "suggested" || s == "customer" || s == "progress" {
         BadgeVariant::Warning
     } else if s == "unmatched" || s == "overdue" || s == "void" || s == "failed" {
         BadgeVariant::Danger
@@ -33,12 +44,26 @@ fn variant_for(status: string) -> BadgeVariant {
 impl Renderable for StatusChip {
     fn render(self) -> string {
         let status = self.status
+        let text = if self.label.len() == 0 {
+            status.clone()
+        } else {
+            self.label
+        }
         let v = variant_for(status.clone())
-        Badge::new(status).variant(v).size(BadgeSize::Small).render()
+        let badge = Badge::new(text).variant(v).size(BadgeSize::Small).render()
+        "<span class='wj-status-chip' data-wj-status='"
+            + status
+            + "'>"
+            + badge
+            + "</span>"
     }
 }
 
 fn main() {
     let html = StatusChip::new("paid".to_string()).render()
     println!("{}", html)
+    let labeled = StatusChip::new("progress".to_string())
+        .label("2 open".to_string())
+        .render()
+    println!("{}", labeled)
 }

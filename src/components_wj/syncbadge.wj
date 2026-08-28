@@ -1,0 +1,75 @@
+// SyncBadge — desktop sync status chrome (AuthFetch runtime drives #lkSyncBadge).
+// P3.185: extract hand-rolled shell header markup; a11y live region for status updates.
+
+use super::traits::Renderable
+
+pub struct SyncBadge {
+    state: string,
+    id: string,
+}
+
+impl SyncBadge {
+    pub fn new() -> SyncBadge {
+        SyncBadge {
+            state: "synced",
+            id: "lkSyncBadge",
+        }
+    }
+
+    /// Wire state: `synced` | `syncing` | `offline` (matches `lkSetSyncStatus`).
+    pub fn state(self, state: string) -> SyncBadge {
+        self.state = state
+        self
+    }
+
+    pub fn id(self, id: string) -> SyncBadge {
+        self.id = id
+        self
+    }
+}
+
+fn label_for(state: string) -> string {
+    let s = state.to_lowercase()
+    if s == "syncing" {
+        "Syncing…"
+    } else if s == "offline" {
+        "Offline"
+    } else {
+        "Synced"
+    }
+}
+
+fn class_for(state: string) -> string {
+    let s = state.to_lowercase()
+    if s == "syncing" {
+        "lk-sync-syncing"
+    } else if s == "offline" {
+        "lk-sync-offline"
+    } else {
+        "lk-sync-synced"
+    }
+}
+
+impl Renderable for SyncBadge {
+    fn render(self) -> string {
+        let state = self.state.to_lowercase()
+        let label = label_for(state.clone())
+        let cls = class_for(state.clone())
+        "<span id=\""
+            + self.id
+            + "\" class=\"lk-sync-badge "
+            + cls
+            + "\" data-lk-sync=\""
+            + state
+            + "\" role=\"status\" aria-live=\"polite\" title=\"Sync status (desktop always visible)\">"
+            + label
+            + "</span>"
+    }
+}
+
+fn main() {
+    let html = SyncBadge::new().render()
+    println!("{}", html)
+    let syncing = SyncBadge::new().state("syncing".to_string()).render()
+    println!("{}", syncing)
+}

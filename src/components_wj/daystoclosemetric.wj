@@ -1,0 +1,29 @@
+// DaysToCloseMetric — close-checklist KPI chrome (LedgerKit dogfood P3.182)
+
+use super::traits::Renderable
+
+pub struct DaysToCloseMetric {
+    days: int,
+}
+
+impl DaysToCloseMetric {
+    pub fn new(days: int) -> DaysToCloseMetric {
+        DaysToCloseMetric { days: days }
+    }
+}
+
+impl Renderable for DaysToCloseMetric {
+    pub fn render(self) -> string {
+        let n = self.days.to_string()
+        "<p class='wj-days-to-close close-days-to-close' role='status' data-wj-days-to-close='"
+            + n
+            + "'>Days to close: <strong>"
+            + n
+            + "</strong></p>"
+    }
+}
+
+fn main() {
+    let html = DaysToCloseMetric::new(3).render()
+    println!("{}", html)
+}

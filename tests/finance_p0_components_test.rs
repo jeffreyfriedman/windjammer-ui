@@ -177,6 +177,83 @@ fn compliance_score_badge_renders_band_and_score() {
 }
 
 #[test]
+fn status_chip_maps_paid_and_supports_display_label() {
+    use windjammer_ui::components::generated::statuschip;
+    use windjammer_ui::components::generated::traits::Renderable;
+    let paid = statuschip::StatusChip::new("paid".to_string()).render();
+    assert!(paid.contains("wj-badge"), "badge chrome: {paid}");
+    assert!(paid.contains("paid"), "status text: {paid}");
+    assert!(
+        paid.contains("wj-badge-success") || paid.contains("wj-badge-sm"),
+        "success/small: {paid}"
+    );
+
+    let labeled = statuschip::StatusChip::new("progress".to_string())
+        .label("2 open".to_string())
+        .render();
+    assert!(
+        labeled.contains("2 open"),
+        "display label: {labeled}"
+    );
+    assert!(
+        labeled.contains("wj-status-chip") || labeled.contains("data-wj-status=\"progress\""),
+        "status wire marker: {labeled}"
+    );
+}
+
+#[test]
+fn sync_badge_renders_states_with_a11y_live_region() {
+    use windjammer_ui::components::generated::syncbadge;
+    use windjammer_ui::components::generated::traits::Renderable;
+    let synced = syncbadge::SyncBadge::new().render();
+    assert!(synced.contains("lkSyncBadge"), "default mount id: {synced}");
+    assert!(synced.contains("lk-sync-synced"), "synced class: {synced}");
+    assert!(synced.contains("Synced"), "synced label: {synced}");
+    assert!(
+        synced.contains("role=\"status\"") || synced.contains("role='status'"),
+        "a11y role: {synced}"
+    );
+    assert!(
+        synced.contains("aria-live=\"polite\"") || synced.contains("aria-live='polite'"),
+        "live region: {synced}"
+    );
+
+    let syncing = syncbadge::SyncBadge::new()
+        .state("syncing".to_string())
+        .render();
+    assert!(syncing.contains("lk-sync-syncing"), "syncing class: {syncing}");
+    assert!(syncing.contains("Syncing"), "syncing label: {syncing}");
+
+    let offline = syncbadge::SyncBadge::new()
+        .state("offline".to_string())
+        .render();
+    assert!(offline.contains("lk-sync-offline"), "offline class: {offline}");
+    assert!(offline.contains("Offline"), "offline label: {offline}");
+}
+
+#[test]
+fn days_to_close_metric_renders_labeled_value() {
+    use windjammer_ui::components::generated::daystoclosemetric;
+    use windjammer_ui::components::generated::traits::Renderable;
+    let html = daystoclosemetric::DaysToCloseMetric::new(3).render();
+    assert!(
+        html.contains("wj-days-to-close") || html.contains("data-wj-days-to-close"),
+        "metric chrome: {html}"
+    );
+    assert!(
+        html.contains("data-wj-days-to-close=\"3\"")
+            || html.contains("data-wj-days-to-close='3'"),
+        "data attr: {html}"
+    );
+    assert!(html.contains("Days to close"), "label: {html}");
+    assert!(html.contains("3"), "value: {html}");
+    assert!(
+        html.contains("role='status'") || html.contains("role=\"status\""),
+        "a11y status role: {html}"
+    );
+}
+
+#[test]
 fn period_badge_maps_fiscal_states() {
     use windjammer_ui::components::generated::periodbadge;
     let open = periodbadge::PeriodBadge::new("open".to_string())
