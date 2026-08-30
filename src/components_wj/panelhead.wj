@@ -1,0 +1,103 @@
+// PanelHead — finance panel chrome (hub-kicker + h2 + optional lede/actions).
+// P3.194: DRY hand-rolled panel-head markup across controls/feature panels.
+// P3.196: `.inline()` breadcrumb layout (kicker + h2 + muted lede, no panel-head wrapper).
+
+use super::traits::Renderable
+
+pub struct PanelHead {
+    kicker: string,
+    title: string,
+    lede: string,
+    actions: string,
+    actions_row: bool,
+    inline: bool,
+}
+
+impl PanelHead {
+    pub fn new(kicker: string, title: string) -> PanelHead {
+        PanelHead {
+            kicker: kicker,
+            title: title,
+            lede: "",
+            actions: "",
+            actions_row: false,
+            inline: false,
+        }
+    }
+
+    pub fn lede(self, lede: string) -> PanelHead {
+        self.lede = lede
+        self
+    }
+
+    /// Breadcrumb layout: kicker + h2 + muted lede without `panel-head` wrapper.
+    pub fn inline(self) -> PanelHead {
+        self.inline = true
+        self
+    }
+
+    /// Append action HTML directly after the title block (AuthFetch refresh buttons).
+    pub fn actions(self, html: string) -> PanelHead {
+        self.actions = html
+        self.actions_row = false
+        self
+    }
+
+    /// Wrap actions in `<div class="row">` (close hub, multi-button chrome).
+    pub fn actions_row(self, html: string) -> PanelHead {
+        self.actions = html
+        self.actions_row = true
+        self
+    }
+}
+
+impl Renderable for PanelHead {
+    fn render(self) -> string {
+        let lede_class = if self.inline {
+            "muted"
+        } else {
+            "lede"
+        }
+        let lede_html = if self.lede.len() > 0 {
+            "<p class=\"" + lede_class + "\">" + self.lede + "</p>"
+        } else {
+            ""
+        }
+        if self.inline {
+            return "<p class=\"hub-kicker\">"
+                + self.kicker
+                + "</p><h2>"
+                + self.title
+                + "</h2>"
+                + lede_html
+        }
+        let actions_html = if self.actions.len() == 0 {
+            ""
+        } else if self.actions_row {
+            "<div class=\"row\">" + self.actions + "</div>"
+        } else {
+            self.actions
+        }
+        "<div class=\"panel-head\"><div><p class=\"hub-kicker\">"
+            + self.kicker
+            + "</p><h2>"
+            + self.title
+            + "</h2>"
+            + lede_html
+            + "</div>"
+            + actions_html
+            + "</div>"
+    }
+}
+
+fn main() {
+    let html = PanelHead::new("Controls", "Compliance controls")
+        .actions("<button type=\"button\" class=\"btn-secondary\">Refresh</button>")
+        .render()
+    println!("{}", html)
+    let breadcrumb = PanelHead::new("FP&A", "Budgets")
+        .inline()
+        .lede("Account lines vs actual.")
+        .render()
+    println!("{}", breadcrumb)
+}
