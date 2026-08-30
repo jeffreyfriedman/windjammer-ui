@@ -10,6 +10,8 @@ pub struct AccountRailItem {
     pub label: String,
     pub balance_html: String,
     pub active: bool,
+    /// Plain "code · name" for checkbook title sync (excludes status chip HTML).
+    pub title_label: String,
 }
 
 impl AccountRailItem {
@@ -23,11 +25,17 @@ impl AccountRailItem {
             label: label.into(),
             balance_html: balance_html.into(),
             active: false,
+            title_label: String::new(),
         }
     }
 
     pub fn active(mut self, active: bool) -> Self {
         self.active = active;
+        self
+    }
+
+    pub fn title_label(mut self, title: impl Into<String>) -> Self {
+        self.title_label = title.into();
         self
     }
 }
@@ -76,10 +84,16 @@ impl Renderable for AccountRail {
                     } else {
                         "wj-account-rail-item rail-item"
                     };
+                    let title_attr = if i.title_label.is_empty() {
+                        String::new()
+                    } else {
+                        format!(r#" data-wj-rail-title="{}""#, i.title_label)
+                    };
                     format!(
-                        r#"<li><button type="button" class="{cls}" data-code="{code}" data-wj-account-rail-item><span class="wj-account-rail-label">{label}</span><span class="wj-account-rail-bal lk-num">{bal}</span></button></li>"#,
+                        r#"<li><button type="button" class="{cls}" data-code="{code}"{title_attr} data-wj-account-rail-item><span class="wj-account-rail-label">{label}</span><span class="wj-account-rail-bal lk-num">{bal}</span></button></li>"#,
                         cls = cls,
                         code = i.code,
+                        title_attr = title_attr,
                         label = i.label,
                         bal = i.balance_html,
                     )
@@ -107,9 +121,13 @@ pub fn account_rail_runtime_js() -> &'static str {
   window.__wjAccountRailBound = true;
 
   window.lkSyncCheckbookTitle = function () {
-    var active = document.querySelector('[data-wj-account-rail-item].is-active .wj-account-rail-label');
+    var active = document.querySelector('[data-wj-account-rail-item].is-active');
     if (!active) return;
-    var label = active.textContent.trim();
+    var label = active.getAttribute('data-wj-rail-title') || '';
+    if (!label) {
+      var span = active.querySelector('.wj-account-rail-label');
+      label = span ? span.textContent.trim() : '';
+    }
     if (!label) return;
     document.querySelectorAll('.checkbook-account, [data-wj-checkbook-account]').forEach(function (el) {
       el.textContent = label;
@@ -174,7 +192,9 @@ mod tests {
     fn renders_balances_and_active() {
         let html = AccountRail::new()
             .item(
-                AccountRailItem::new("1000", "1000 · Cash", "$9,802.00").active(true),
+                AccountRailItem::new("1000", "1000 · Cash", "$9,802.00")
+                    .title_label("1000 · Cash")
+                    .active(true),
             )
             .item(AccountRailItem::new("2000", "2000 · AP", "−$1,806.00"))
             .render();
@@ -183,6 +203,14 @@ mod tests {
         assert!(html.contains("$9,802.00"));
         assert!(html.contains("is-active"));
         assert!(html.contains("data-code=\"1000\""));
+        assert!(html.contains("data-wj-rail-title=\"1000 · Cash\""));
+    }
+
+    #[test]
+    fn runtime_syncs_checkbook_title_from_rail_attr() {
+        let js = account_rail_runtime_js();
+        assert!(js.contains("data-wj-rail-title"));
+        assert!(js.contains("lkSyncCheckbookTitle"));
     }
 
     #[test]

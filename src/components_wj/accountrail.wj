@@ -8,6 +8,7 @@ pub struct AccountRailItem {
     label: string,
     balance_html: string,
     active: bool,
+    title_label: string,
 }
 
 impl AccountRailItem {
@@ -17,11 +18,17 @@ impl AccountRailItem {
             label: label,
             balance_html: balance_html,
             active: false,
+            title_label: "",
         }
     }
 
     pub fn active(self, active: bool) -> AccountRailItem {
         self.active = active
+        self
+    }
+
+    pub fn title_label(self, title: string) -> AccountRailItem {
+        self.title_label = title
         self
     }
 }
@@ -62,12 +69,19 @@ impl Renderable for AccountRail {
                 } else {
                     "wj-account-rail-item rail-item"
                 }
+                let title_attr = if i.title_label.len() > 0 {
+                    " data-wj-rail-title=\"" + i.title_label + "\""
+                } else {
+                    ""
+                }
                 body = body
                     + "<li><button type=\"button\" class=\""
                     + cls
                     + "\" data-code=\""
                     + i.code
-                    + "\" data-wj-account-rail-item><span class=\"wj-account-rail-label\">"
+                    + "\""
+                    + title_attr
+                    + " data-wj-account-rail-item><span class=\"wj-account-rail-label\">"
                     + i.label
                     + "</span><span class=\"wj-account-rail-bal lk-num\">"
                     + i.balance_html
