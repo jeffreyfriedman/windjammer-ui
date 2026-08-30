@@ -64,11 +64,15 @@ impl Renderable for PanelHead {
             ""
         }
         if self.inline {
+            let title_html = if self.title.len() > 0 {
+                "<h2>" + self.title + "</h2>"
+            } else {
+                ""
+            }
             return "<p class=\"hub-kicker\">"
                 + self.kicker
-                + "</p><h2>"
-                + self.title
-                + "</h2>"
+                + "</p>"
+                + title_html
                 + lede_html
         }
         let actions_html = if self.actions.len() == 0 {
@@ -100,4 +104,8 @@ fn main() {
         .lede("Account lines vs actual.")
         .render()
     println!("{}", breadcrumb)
+    let kicker_only = PanelHead::new("Memorized", "")
+        .inline()
+        .render()
+    println!("{}", kicker_only)
 }

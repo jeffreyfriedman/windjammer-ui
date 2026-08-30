@@ -68,8 +68,13 @@ impl Renderable for PanelHead {
         };
         if self.inline {
             return format!(
-                "<p class=\"hub-kicker\">{}</p><h2>{}</h2>{lede_html}",
-                self.kicker, self.title
+                "<p class=\"hub-kicker\">{}</p>{title_html}{lede_html}",
+                self.kicker,
+                title_html = if !self.title.is_empty() {
+                    format!("<h2>{}</h2>", self.title)
+                } else {
+                    String::new()
+                },
             );
         }
         let actions_html = if self.actions.is_empty() {
