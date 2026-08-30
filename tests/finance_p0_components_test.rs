@@ -702,6 +702,11 @@ fn panel_head_renders_kicker_title_and_actions() {
     assert!(inline.contains("hub-kicker\">FP&A<"));
     assert!(inline.contains("<h2>Budgets</h2>"));
     assert!(inline.contains("class=\"muted\""));
+    let kicker_only = panelhead::PanelHead::new("Memorized".to_string(), String::new())
+        .inline()
+        .render();
+    assert!(kicker_only.contains("hub-kicker\">Memorized<"));
+    assert!(!kicker_only.contains("<h2>"), "kicker-only inline must omit h2: {kicker_only}");
 }
 
 #[test]
