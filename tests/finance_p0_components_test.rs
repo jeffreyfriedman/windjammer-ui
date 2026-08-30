@@ -710,6 +710,17 @@ fn panel_head_renders_kicker_title_and_actions() {
 }
 
 #[test]
+fn panel_section_head_renders_h3_and_actions() {
+    use windjammer_ui::components::generated::panelsectionhead;
+    let html = panelsectionhead::PanelSectionHead::new("Semantic schema".to_string())
+        .actions("<button type=\"button\" class=\"btn-secondary\">Refresh</button>".to_string())
+        .render();
+    assert!(html.contains("panel-head"));
+    assert!(html.contains("<h3>Semantic schema</h3>"));
+    assert!(html.contains("btn-secondary"));
+}
+
+#[test]
 fn json_post_runtime_js_classifies_auditor_read_only_403() {
     use windjammer_ui::components::generated::jsonpost;
     let js = jsonpost::json_post_runtime_js();
