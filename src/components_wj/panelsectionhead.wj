@@ -1,0 +1,41 @@
+// PanelSectionHead — in-panel h3 subsection chrome (analytics schema/change feed).
+// P3.199: DRY hand-rolled `<div class="panel-head"><h3>` markup.
+
+use super::traits::Renderable
+
+pub struct PanelSectionHead {
+    title: string,
+    actions: string,
+}
+
+impl PanelSectionHead {
+    pub fn new(title: string) -> PanelSectionHead {
+        PanelSectionHead {
+            title: title,
+            actions: "",
+        }
+    }
+
+    /// Append action HTML after the h3 (AuthFetch refresh buttons).
+    pub fn actions(self, html: string) -> PanelSectionHead {
+        self.actions = html
+        self
+    }
+}
+
+impl Renderable for PanelSectionHead {
+    fn render(self) -> string {
+        "<div class=\"panel-head\"><h3>"
+            + self.title
+            + "</h3>"
+            + self.actions
+            + "</div>"
+    }
+}
+
+fn main() {
+    let html = PanelSectionHead::new("Semantic schema")
+        .actions("<button type=\"button\" class=\"btn-secondary\">Refresh</button>")
+        .render()
+    println!("{}", html)
+}
