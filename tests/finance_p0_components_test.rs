@@ -679,6 +679,32 @@ fn json_post_runtime_js_classifies_sod_and_workflow_403() {
 }
 
 #[test]
+fn panel_head_renders_kicker_title_and_actions() {
+    use windjammer_ui::components::generated::panelhead;
+    let html = panelhead::PanelHead::new("Controls".to_string(), "Compliance controls".to_string())
+        .actions("<button type=\"button\" class=\"btn-secondary\">Refresh</button>".to_string())
+        .render();
+    assert!(html.contains("panel-head"));
+    assert!(html.contains("hub-kicker\">Controls<"));
+    assert!(html.contains("<h2>Compliance controls</h2>"));
+    assert!(html.contains("btn-secondary"));
+    let with_lede = panelhead::PanelHead::new("Continuous".to_string(), "Close".to_string())
+        .lede("Always-on checklist.".to_string())
+        .actions_row("<button>Refresh</button>".to_string())
+        .render();
+    assert!(with_lede.contains("class=\"lede\""));
+    assert!(with_lede.contains("class=\"row\""));
+    let inline = panelhead::PanelHead::new("FP&A".to_string(), "Budgets".to_string())
+        .inline()
+        .lede("Account lines vs actual.".to_string())
+        .render();
+    assert!(!inline.contains("panel-head"), "inline must omit panel-head wrapper: {inline}");
+    assert!(inline.contains("hub-kicker\">FP&A<"));
+    assert!(inline.contains("<h2>Budgets</h2>"));
+    assert!(inline.contains("class=\"muted\""));
+}
+
+#[test]
 fn json_post_runtime_js_classifies_auditor_read_only_403() {
     use windjammer_ui::components::generated::jsonpost;
     let js = jsonpost::json_post_runtime_js();
