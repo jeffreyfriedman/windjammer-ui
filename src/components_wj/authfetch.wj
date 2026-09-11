@@ -1,7 +1,7 @@
 // AuthFetch — load button that fetches with Bearer token and renders via window.lkRender.
 // LedgerKit F3 / ADR-001: product pages bake path+kind; framework runtime does fetch.
 // Runtime is hand-maintained in generated/authfetch.rs (SKIP_WJ_REGEN=1).
-// NOTE: `impl Into<String>` on builders is Rust-only until owned-string codegen is green.
+// Into formals are tip-GREEN for owned string builders.
 
 use super::traits::Renderable
 

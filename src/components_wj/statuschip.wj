@@ -15,7 +15,7 @@ impl StatusChip {
     pub fn new(status: string) -> StatusChip {
         StatusChip {
             status: status,
-            label: "".to_string(),
+            label: "",
         }
     }
 
@@ -60,10 +60,10 @@ impl Renderable for StatusChip {
 }
 
 fn main() {
-    let html = StatusChip::new("paid".to_string()).render()
+    let html = StatusChip::new("paid").render()
     println!("{}", html)
-    let labeled = StatusChip::new("progress".to_string())
-        .label("2 open".to_string())
+    let labeled = StatusChip::new("progress")
+        .label("2 open")
         .render()
     println!("{}", labeled)
 }

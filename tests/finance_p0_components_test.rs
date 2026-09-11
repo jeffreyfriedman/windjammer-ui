@@ -180,7 +180,7 @@ fn compliance_score_badge_renders_band_and_score() {
 fn status_chip_maps_paid_and_supports_display_label() {
     use windjammer_ui::components::generated::statuschip;
     use windjammer_ui::components::generated::traits::Renderable;
-    let paid = statuschip::StatusChip::new("paid".to_string()).render();
+    let paid = statuschip::StatusChip::new("paid").render();
     assert!(paid.contains("wj-badge"), "badge chrome: {paid}");
     assert!(paid.contains("paid"), "status text: {paid}");
     assert!(
@@ -188,8 +188,8 @@ fn status_chip_maps_paid_and_supports_display_label() {
         "success/small: {paid}"
     );
 
-    let labeled = statuschip::StatusChip::new("progress".to_string())
-        .label("2 open".to_string())
+    let labeled = statuschip::StatusChip::new("progress")
+        .label("2 open")
         .render();
     assert!(
         labeled.contains("2 open"),
@@ -219,13 +219,13 @@ fn sync_badge_renders_states_with_a11y_live_region() {
     );
 
     let syncing = syncbadge::SyncBadge::new()
-        .state("syncing".to_string())
+        .state("syncing")
         .render();
     assert!(syncing.contains("lk-sync-syncing"), "syncing class: {syncing}");
     assert!(syncing.contains("Syncing"), "syncing label: {syncing}");
 
     let offline = syncbadge::SyncBadge::new()
-        .state("offline".to_string())
+        .state("offline")
         .render();
     assert!(offline.contains("lk-sync-offline"), "offline class: {offline}");
     assert!(offline.contains("Offline"), "offline label: {offline}");
@@ -681,28 +681,28 @@ fn json_post_runtime_js_classifies_sod_and_workflow_403() {
 #[test]
 fn panel_head_renders_kicker_title_and_actions() {
     use windjammer_ui::components::generated::panelhead;
-    let html = panelhead::PanelHead::new("Controls".to_string(), "Compliance controls".to_string())
-        .actions("<button type=\"button\" class=\"btn-secondary\">Refresh</button>".to_string())
+    let html = panelhead::PanelHead::new("Controls", "Compliance controls")
+        .actions("<button type=\"button\" class=\"btn-secondary\">Refresh</button>")
         .render();
     assert!(html.contains("panel-head"));
     assert!(html.contains("hub-kicker\">Controls<"));
     assert!(html.contains("<h2>Compliance controls</h2>"));
     assert!(html.contains("btn-secondary"));
-    let with_lede = panelhead::PanelHead::new("Continuous".to_string(), "Close".to_string())
-        .lede("Always-on checklist.".to_string())
-        .actions_row("<button>Refresh</button>".to_string())
+    let with_lede = panelhead::PanelHead::new("Continuous", "Close")
+        .lede("Always-on checklist.")
+        .actions_row("<button>Refresh</button>")
         .render();
     assert!(with_lede.contains("class=\"lede\""));
     assert!(with_lede.contains("class=\"row\""));
-    let inline = panelhead::PanelHead::new("FP&A".to_string(), "Budgets".to_string())
+    let inline = panelhead::PanelHead::new("FP&A", "Budgets")
         .inline()
-        .lede("Account lines vs actual.".to_string())
+        .lede("Account lines vs actual.")
         .render();
     assert!(!inline.contains("panel-head"), "inline must omit panel-head wrapper: {inline}");
     assert!(inline.contains("hub-kicker\">FP&A<"));
     assert!(inline.contains("<h2>Budgets</h2>"));
     assert!(inline.contains("class=\"muted\""));
-    let kicker_only = panelhead::PanelHead::new("Memorized".to_string(), String::new())
+    let kicker_only = panelhead::PanelHead::new("Memorized", "")
         .inline()
         .render();
     assert!(kicker_only.contains("hub-kicker\">Memorized<"));
@@ -712,8 +712,8 @@ fn panel_head_renders_kicker_title_and_actions() {
 #[test]
 fn panel_section_head_renders_h3_and_actions() {
     use windjammer_ui::components::generated::panelsectionhead;
-    let html = panelsectionhead::PanelSectionHead::new("Semantic schema".to_string())
-        .actions("<button type=\"button\" class=\"btn-secondary\">Refresh</button>".to_string())
+    let html = panelsectionhead::PanelSectionHead::new("Semantic schema")
+        .actions("<button type=\"button\" class=\"btn-secondary\">Refresh</button>")
         .render();
     assert!(html.contains("panel-head"));
     assert!(html.contains("<h3>Semantic schema</h3>"));

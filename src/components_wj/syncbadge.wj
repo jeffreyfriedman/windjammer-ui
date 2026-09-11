@@ -70,6 +70,6 @@ impl Renderable for SyncBadge {
 fn main() {
     let html = SyncBadge::new().render()
     println!("{}", html)
-    let syncing = SyncBadge::new().state("syncing".to_string()).render()
+    let syncing = SyncBadge::new().state("syncing").render()
     println!("{}", syncing)
 }
