@@ -24,18 +24,18 @@ impl DatePicker {
         }
     }
     #[inline]
-    pub fn value(mut self, value: String) -> DatePicker {
-        self.value = value;
+    pub fn value(mut self, value: impl Into<String>) -> DatePicker {
+        self.value = value.into();
         self
     }
     #[inline]
-    pub fn label(mut self, label: String) -> DatePicker {
-        self.label = label;
+    pub fn label(mut self, label: impl Into<String>) -> DatePicker {
+        self.label = label.into();
         self
     }
     #[inline]
-    pub fn name(mut self, name: String) -> DatePicker {
-        self.name = name;
+    pub fn name(mut self, name: impl Into<String>) -> DatePicker {
+        self.name = name.into();
         self
     }
     #[inline]

@@ -38,8 +38,8 @@ impl Chart {
         }
     }
     #[inline]
-    pub fn title(mut self, title: String) -> Chart {
-        self.title = title;
+    pub fn title(mut self, title: impl Into<String>) -> Chart {
+        self.title = title.into();
         self
     }
     #[inline]
