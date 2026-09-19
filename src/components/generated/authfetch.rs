@@ -17,35 +17,35 @@ pub struct AuthFetch {
 
 impl AuthFetch {
     #[inline]
-    pub fn new(path: String, kind: String) -> AuthFetch {
+    pub fn new(path: impl Into<String>, kind: impl Into<String>) -> AuthFetch {
         AuthFetch {
             id: "authFetch".to_string(),
             label: "Load".to_string(),
-            path,
-            kind,
+            path: path.into(),
+            kind: kind.into(),
             mount: "#tableMount".to_string(),
             class_name: "btn-secondary".to_string(),
             auto: false,
         }
     }
     #[inline]
-    pub fn id(mut self, id: String) -> AuthFetch {
-        self.id = id;
+    pub fn id(mut self, id: impl Into<String>) -> AuthFetch {
+        self.id = id.into();
         self
     }
     #[inline]
-    pub fn label(mut self, label: String) -> AuthFetch {
-        self.label = label;
+    pub fn label(mut self, label: impl Into<String>) -> AuthFetch {
+        self.label = label.into();
         self
     }
     #[inline]
-    pub fn mount(mut self, mount_sel: String) -> AuthFetch {
-        self.mount = mount_sel;
+    pub fn mount(mut self, mount_sel: impl Into<String>) -> AuthFetch {
+        self.mount = mount_sel.into();
         self
     }
     #[inline]
-    pub fn class_name(mut self, class_name: String) -> AuthFetch {
-        self.class_name = class_name;
+    pub fn class_name(mut self, class_name: impl Into<String>) -> AuthFetch {
+        self.class_name = class_name.into();
         self
     }
     /// Hidden auto-fire on bind (`data-auto="1"`).

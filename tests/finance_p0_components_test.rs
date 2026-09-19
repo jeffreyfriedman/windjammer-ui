@@ -308,6 +308,21 @@ fn write_check_form_dogfoods_currency_input() {
 }
 
 #[test]
+fn auth_fetch_string_builders_accept_impl_into_string() {
+    use windjammer_ui::components::generated::{authfetch, traits::Renderable};
+    // Must compile without `.to_string()` — `impl Into<String>` on new/builders.
+    let html = authfetch::AuthFetch::new("/api/v1/bank-lines", "bank")
+        .id("loadBank")
+        .label("List bank lines")
+        .mount("#bankTableMount")
+        .class_name("btn-secondary")
+        .render();
+    assert!(html.contains("data-wj-auth-fetch"));
+    assert!(html.contains("data-wj-fetch-path=\"/api/v1/bank-lines\""));
+    assert!(html.contains("id=\"loadBank\""));
+}
+
+#[test]
 fn auth_fetch_renders_bearer_load_button() {
     use windjammer_ui::components::generated::{authfetch, traits::Renderable};
     let html = authfetch::AuthFetch::new(
