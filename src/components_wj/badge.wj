@@ -1,7 +1,7 @@
 // Badge Component - Display labels, tags, and status indicators
 //
-// NOTE: Generated Rust may temporarily use `impl Into<String>` on `new` until
-// owned-string param codegen is green (see TECH_DEBT / codegen_owned_string_param_test).
+// Into formals are tip-GREEN for owned string builders (generated Badge uses
+// `impl Into<String>` on new — maximize Windjammer bare string lits).
 
 use super::traits::Renderable
 pub enum BadgeVariant {
