@@ -1,7 +1,8 @@
 // AuthFetch — load button that fetches with Bearer token and renders via window.lkRender.
 // LedgerKit F3 / ADR-001: product pages bake path+kind; framework runtime does fetch.
 // Runtime is hand-maintained in generated/authfetch.rs (SKIP_WJ_REGEN=1).
-// Into formals are tip-GREEN for owned string builders.
+// Into formals are tip-GREEN for owned string builders (generated AuthFetch uses
+// `impl Into<String>` on new/id/label/mount/class_name — P3.381).
 
 use super::traits::Renderable
 
