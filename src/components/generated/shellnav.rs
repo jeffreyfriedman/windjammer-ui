@@ -32,6 +32,14 @@ impl ShellNavLink {
         self
     }
 
+    /// Unique name — tip can resolve `active` to string overloads on Tabs/TabPanel
+    /// (`active(id: string)` → `.to_string()` on bool). Prefer this in LedgerKit hosts.
+    #[inline]
+    pub fn with_active(mut self, active: bool) -> ShellNavLink {
+        self.active = active;
+        self
+    }
+
     #[inline]
     pub fn personas(mut self, personas: impl Into<String>) -> ShellNavLink {
         self.personas = personas.into();
