@@ -62,4 +62,4 @@ tests, so each must be either rewritten against the current API or deleted.
 3. Delete the copies here, together with `components/generated/{...}` entries and `mod.rs` lines.
 4. Regenerate `mod.rs`/`lib.rs` with `wj`; confirm no `SKIP_WJ_REGEN` remains.
 5. Resolve section C (rewrite or delete).
-6. Bump `WJ_PIN.md` consumers if the pinned compiler changes.
+6. Add `WJ_PIN.md` (required by AGENTS.md; missing today) recording the known-good `wj` commit.
