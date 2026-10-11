@@ -105,11 +105,10 @@ impl SSRRenderer {
 
         // Attributes
         for (key, value) in &element.attrs {
-            self.html.push(' ');
-            self.html.push_str(&Self::escape_attribute(key));
-            self.html.push_str("=\"");
-            self.html.push_str(&Self::escape_attribute(value));
-            self.html.push('"');
+            if let Some(attr) = Self::attribute_html(key, value) {
+                self.html.push(' ');
+                self.html.push_str(&attr);
+            }
         }
 
         // Self-closing tags
@@ -168,10 +167,13 @@ impl SSRRenderer {
 
     /// Escape attribute values
     fn escape_attribute(text: &str) -> String {
-        text.replace('&', "&amp;")
-            .replace('"', "&quot;")
-            .replace('<', "&lt;")
-            .replace('>', "&gt;")
+        crate::escape::escape_attr(text).into_string()
+    }
+
+    /// `name="value"` for a safe attribute (valid name, no inline handler, sanitized URL).
+    fn attribute_html(key: &str, value: &str) -> Option<String> {
+        let value = crate::escape::safe_attr(key, value)?;
+        Some(format!("{}=\"{}\"", key, Self::escape_attribute(&value)))
     }
 
     /// Add component state for hydration
@@ -229,11 +231,10 @@ impl StreamingSSRRenderer {
                 buffer.push_str(&element.tag);
 
                 for (key, value) in &element.attrs {
-                    buffer.push(' ');
-                    buffer.push_str(key);
-                    buffer.push_str("=\"");
-                    buffer.push_str(&SSRRenderer::escape_attribute(value));
-                    buffer.push('"');
+                    if let Some(attr) = SSRRenderer::attribute_html(key, value) {
+                        buffer.push(' ');
+                        buffer.push_str(&attr);
+                    }
                 }
 
                 if element.children.is_empty() && SSRRenderer::is_void_element(&element.tag) {

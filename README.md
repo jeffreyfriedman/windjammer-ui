@@ -1,7 +1,7 @@
 # Windjammer UI
 
 A UI component library and reactive runtime for Windjammer. Components are written in
-`.wj` as builders that render HTML strings; a Rust reactive core (signals, vdom) drives
+`.wj` as builders that render HTML strings; a Rust reactive core (signals, keyed DOM patcher) drives
 the browser (WASM) loop.
 
 **Status: experimental.** The web target works for the components and examples in this
@@ -44,8 +44,9 @@ fn main() {
 
 - 17 files in `src/components/generated/` are hand-maintained, not compiler output.
 - Some interactive behaviour is JS embedded in Rust strings.
-- Escape-by-default and `RawHtml` are project rules that still need a per-component audit.
-- Several tests are parked as `.disabled`.
+- Escape-by-default is enforced for the VNode renderer, the DOM patcher, SSR and the
+  hand-maintained generated files; compiler-generated string builders still need a
+  `.wj`-side audit (`docs/known-issues/escaping.md`).
 
 ## Docs
 

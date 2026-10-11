@@ -48,8 +48,46 @@ impl VNode {
     }
 
     /// Trusted HTML island (scripts/markup already sanitized by the adapter).
+    /// This is the only way to bypass escaping; prefer [`VNode::raw`] with an
+    /// explicit [`crate::escape::RawHtml`].
     pub fn raw_html(html: impl Into<String>) -> Self {
         VNode::RawHtml(html.into())
+    }
+
+    /// Explicit opt-out of escaping.
+    pub fn raw(html: crate::escape::RawHtml) -> Self {
+        VNode::RawHtml(html.0)
+    }
+
+    /// Element key used for keyed reordering (`key` attribute), if any.
+    pub fn key(&self) -> Option<&str> {
+        match self {
+            VNode::Element { attrs, .. } => attrs.iter().rev().find_map(|(k, v)| match v {
+                VAttr::Static(s) | VAttr::Dynamic(s) if k == "key" => Some(s.as_str()),
+                _ => None,
+            }),
+            _ => None,
+        }
+    }
+
+    /// Return a copy that is safe to serialize or patch into a DOM:
+    /// invalid/blocked tags become empty text, invalid attribute names and inline
+    /// `on*` attributes are dropped, URL attributes are sanitized, and duplicate
+    /// attribute names collapse (last wins). `RawHtml` is left untouched.
+    pub fn sanitized(&self) -> VNode {
+        match self {
+            VNode::Element { tag, attrs, children } => {
+                if !crate::escape::is_valid_tag(tag) {
+                    return VNode::Text(String::new());
+                }
+                VNode::Element {
+                    tag: tag.clone(),
+                    attrs: sanitize_attrs(attrs),
+                    children: children.iter().map(VNode::sanitized).collect(),
+                }
+            }
+            other => other.clone(),
+        }
     }
 
     /// Render this VNode to the DOM
@@ -125,6 +163,29 @@ impl VNode {
     }
 }
 
+fn sanitize_attrs(attrs: &[(String, VAttr)]) -> Vec<(String, VAttr)> {
+    let mut out: Vec<(String, VAttr)> = Vec::with_capacity(attrs.len());
+    for (name, value) in attrs {
+        let cleaned = match value {
+            VAttr::Event(_) => crate::escape::is_valid_attr_name(name).then(|| value.clone()),
+            VAttr::Static(v) | VAttr::Dynamic(v) if name.starts_with("on_") => {
+                let _ = v; // event attributes must be VAttr::Event
+                None
+            }
+            VAttr::Static(v) | VAttr::Dynamic(v) => {
+                crate::escape::safe_attr(name, v).map(VAttr::Static)
+            }
+        };
+        if let Some(c) = cleaned {
+            out.retain(|(n, v)| !(n == name && matches!(v, VAttr::Static(_)) == matches!(c, VAttr::Static(_))));
+            out.push((name.clone(), c));
+        }
+    }
+    out
+}
+
+/// Legacy host-side debug render: tags and text only, escaped. Use
+/// `simple_renderer::render_to_html` for full output.
 #[cfg(not(target_arch = "wasm32"))]
 impl VNode {
     pub fn render(&self) -> Result<String, String> {
@@ -141,7 +202,7 @@ impl VNode {
                 html.push_str(&format!("</{}>", tag));
                 Ok(html)
             }
-            VNode::Text(content) => Ok(content.clone()),
+            VNode::Text(content) => Ok(crate::escape::escape_text(content).into_string()),
             VNode::RawHtml(html) => Ok(html.clone()),
         }
     }

@@ -99,6 +99,9 @@ impl ReactiveApp {
 
         let render_fn = self.render_fn.clone();
         let needs_rerender = Rc::new(RefCell::new(true));
+        // Keyed DOM patcher: nodes (focus, caret, scroll, input values) survive re-renders,
+        // and event handlers are delegated from the mount root.
+        let mounted = crate::dom_patch::web::new_mounted(document.clone(), root.clone().into());
 
         let needs_rerender_clone = needs_rerender.clone();
         set_render_callback(move || {
@@ -116,8 +119,7 @@ impl ReactiveApp {
                 *needs_rerender_clone.borrow_mut() = false;
 
                 let vnode = render_fn_clone();
-                let html = crate::simple_renderer::render_to_html(&vnode);
-                root.set_inner_html(&html);
+                mounted.borrow_mut().update(&vnode);
             }
 
             web_sys::window()

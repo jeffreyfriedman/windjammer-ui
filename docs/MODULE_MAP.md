@@ -9,13 +9,15 @@ Each entry: single responsibility -> allowed dependencies. Lower layers never im
 | `reactivity.rs` | Public reactive API over signals | `signal` |
 | `reactivity_optimized.rs` | Experimental batched/SmallVec reactivity | std |
 | `signal_ffi.rs` | Signal access for generated code | `signal` |
-| `vdom.rs` | VNode tree, diff, patch | std |
-| `simple_vnode.rs` | Lightweight VNode used by app loops | std |
+| `escape.rs` | Escape-by-default policy, URL/name sanitizing, `RawHtml` opt-out | std |
+| `vdom.rs` | LEGACY VNode tree + path diff (Component/Renderer/SSR/platform only) | std |
+| `simple_vnode.rs` | Canonical VNode; `sanitized()` | `escape` |
+| `dom_patch/` | Keyed diff, `PatchOp`s, `DomPort`, `Mounted` (delegated events); `web.rs` is the wasm adapter | `simple_vnode`, `escape` (+ web-sys in `web.rs`) |
 | `to_vnode.rs` | Component to VNode trait | `simple_vnode` |
 | `vnode_ffi.rs` | Build VNodes from `.wj` code | `simple_vnode`, `vdom` |
 | `component.rs`, `component_runtime.rs`, `runtime.rs` | Component trait, lifecycle, DOM runtime | `vdom`, `reactivity` |
 | `reactive_mount.rs` | Mount-target selection | `simple_vnode` |
-| `app_reactive.rs` | WASM app loop | `reactive_mount`, `simple_vnode`, `reactivity` |
+| `app_reactive.rs` | WASM app loop (patches DOM via `dom_patch`) | `reactive_mount`, `simple_vnode`, `dom_patch`, `reactivity` |
 | `app_reactive_eframe.rs`, `desktop_renderer*.rs`, `desktop_app_context.rs`, `app.rs`, `app_docking.rs` | Desktop app via eframe/egui (feature `desktop`) | `simple_vnode`, egui |
 | `renderer.rs`, `simple_renderer.rs` | Cross-platform renderer entry; console renderer | `component`, `vdom`, `platform` |
 | `ssr.rs` | Server-side string rendering | `component`, `vdom` |
@@ -25,6 +27,8 @@ Each entry: single responsibility -> allowed dependencies. Lower layers never im
 | `wasm_events.rs`, `event_handler.rs`, `events*` | DOM event plumbing | `reactivity` |
 | `frame_trace_ffi.rs` | Engine frame-trace read bridge for profiler panels | std |
 | `examples_wasm.rs` | Demo code compiled for wasm | everything above |
+
+MODULE.md contracts: `src/dom_patch/MODULE.md`, `docs/modules/{escape,simple_vnode,simple_renderer,app_reactive}.MODULE.md`.
 
 ## Components (`src/components_wj/`)
 - Layout and primitives (`row`, `column`, `stack`, `grid`, `flex`, `container`, `text`, `button`, `input`...): depend only on `traits`, `style`, `html_elements`.

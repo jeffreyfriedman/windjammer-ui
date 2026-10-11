@@ -12,10 +12,21 @@ This document describes what exists today, not what is planned.
 2. **Reactive core (Rust)** - `signal.rs` (Signal/Computed/Effect), `reactivity.rs`
    (the public reactive API), `reactivity_optimized.rs` (experimental variant, not the
    default), `signal_ffi.rs` (exposes signals to generated code).
-3. **Virtual node types** - `vdom.rs` (VElement/VNode/VText with diff/patch) and
-   `simple_vnode.rs` (the lighter VNode used by the app loops). `to_vnode.rs` converts
-   components to `simple_vnode::VNode`; `vnode_ffi.rs` lets `.wj` code build nodes.
-4. **App loops** - `app_reactive.rs` (WASM/browser loop, the primary supported path),
+3. **Virtual node types** - `simple_vnode.rs` is the canonical VNode (all new code,
+   app loops, `to_vnode.rs`, `vnode_ffi.rs`). `vdom.rs` is legacy: it is still the type of
+   the `Component` trait, `renderer.rs`, `ssr.rs` and `platform/*`, and has its own
+   path-based diff that nothing in the app loop uses any more. It is not deleted because
+   those callers have not been migrated (see gaps).
+3a. **Escaping (`escape.rs`)** - escape-by-default policy: `escape_text`/`escape_attr`,
+   `sanitize_url`, tag/attribute-name validation, and the explicit `RawHtml` opt-out.
+   `VNode::sanitized()` applies it to a tree; `simple_renderer::render_to_html` and the
+   patcher both consume sanitized trees.
+3b. **DOM patcher (`dom_patch/`)** - pure keyed diff -> `PatchOp`s, applied through the
+   `DomPort` trait (`FakeDom` for host tests, `WebDom` over web-sys on wasm32).
+   `Mounted` owns the current tree and a `(path, event)` handler table; events are
+   delegated from the mount container. See `src/dom_patch/MODULE.md`.
+4. **App loops** - `app_reactive.rs` (WASM/browser loop, the primary supported path;
+   patches the DOM in place instead of replacing `innerHTML`),
    `app_reactive_eframe.rs` + `desktop_renderer.rs` (desktop via eframe/egui, feature
    `desktop`), `reactive_mount.rs` (mount-target selection).
 5. **Other runtime pieces** - `ssr.rs` (string SSR), `routing.rs`, `runtime.rs`,
@@ -44,11 +55,14 @@ repo rule and is treated as debt, not a feature.
 
 ## Known gaps
 
-- Escaping: builders build strings; escaping-by-default with a `RawHtml` type is a
-  rule in AGENTS.md but must be audited per component.
+- Escaping: the VNode path, SSR and the hand-maintained generated files escape by
+  default. Compiler-generated HTML-string builders (`.wj` sources) still interpolate raw
+  values; see `docs/known-issues/escaping.md`.
+- `vdom.rs` is still used by `component.rs`, `renderer.rs`, `ssr.rs`, `platform/*`.
+- The web patcher has no in-browser test yet (host fake-DOM tests only).
 - Interactive behaviour in several components is JS embedded in Rust strings; the rule
   is to write it in Windjammer signals/closures.
 - Domain (ledger) components still live here; see `docs/EXTRACTION_PLAN.md`.
-- Six integration tests are parked as `.disabled` (listed in the plan).
+- `.disabled` tests were resolved (see `docs/EXTRACTION_PLAN.md` section C).
 
 See `docs/MODULE_MAP.md` for per-module responsibilities.
