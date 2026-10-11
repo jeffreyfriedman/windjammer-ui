@@ -28,15 +28,43 @@ impl fmt::Display for Escaped {
 }
 
 /// Trusted HTML that bypasses escaping. Only construct from markup you control.
-#[derive(Debug, Clone, PartialEq, Eq)]
+///
+/// There is deliberately no `From<String>` / `From<&str>`: components with `*_html`
+/// slots take `impl Into<RawHtml>`, so passing a plain string is a compile error and
+/// every raw-markup call site is greppable (`RawHtml::new`). For plain text use
+/// [`RawHtml::text`], which escapes.
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub struct RawHtml(pub String);
 
 impl RawHtml {
+    /// Trusted markup, emitted verbatim.
     pub fn new(html: impl Into<String>) -> Self {
         RawHtml(html.into())
     }
+    /// Plain text, escaped, as a (safe) `RawHtml` for slots that take markup.
+    pub fn text(text: &str) -> Self {
+        RawHtml(escape_text(text).into_string())
+    }
+    pub fn empty() -> Self {
+        RawHtml(String::new())
+    }
     pub fn as_str(&self) -> &str {
         &self.0
+    }
+    pub fn is_empty(&self) -> bool {
+        self.0.is_empty()
+    }
+}
+
+impl From<Escaped> for RawHtml {
+    fn from(e: Escaped) -> Self {
+        RawHtml(e.into_string())
+    }
+}
+
+impl fmt::Display for RawHtml {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(&self.0)
     }
 }
 
@@ -251,5 +279,13 @@ mod tests {
         assert_eq!(safe_attr("HREF", "javascript:x"), Some("#".into()));
         assert_eq!(safe_attr("class", "a b"), Some("a b".into()));
         assert_eq!(safe_attr("a b", "x"), None);
+    }
+
+    #[test]
+    fn raw_html_text_escapes_and_display_is_verbatim() {
+        assert_eq!(RawHtml::text("<b>&\"x\"</b>").as_str(), "&lt;b&gt;&amp;&quot;x&quot;&lt;/b&gt;");
+        assert_eq!(RawHtml::new("<b>ok</b>").to_string(), "<b>ok</b>");
+        assert!(RawHtml::empty().is_empty());
+        assert_eq!(RawHtml::from(escape_text("<")).as_str(), "&lt;");
     }
 }
