@@ -11,6 +11,7 @@ Each entry: single responsibility -> allowed dependencies. Lower layers never im
 | `signal_ffi.rs` | Signal access for generated code | `signal` |
 | `escape.rs` | Escape-by-default policy, URL/name sanitizing, `RawHtml` opt-out | std |
 | `vdom.rs` | LEGACY VNode tree + path diff (Component/Renderer/SSR/platform only) | std |
+| `safe_dom_js.rs` | `window.wjDom` helper embedded into JS runtimes (the only audited HTML sink) | std |
 | `simple_vnode.rs` | Canonical VNode; `sanitized()` | `escape` |
 | `dom_patch/` | Keyed diff, `PatchOp`s, `DomPort`, `Mounted` (delegated events); `web.rs` is the wasm adapter | `simple_vnode`, `escape` (+ web-sys in `web.rs`) |
 | `to_vnode.rs` | Component to VNode trait | `simple_vnode` |

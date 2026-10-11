@@ -18,6 +18,12 @@ event routing. Replaces the old "set `innerHTML` every frame" loop in `ReactiveA
   listener per event name sits on the container; dispatch bubbles innermost first.
 - `value`/`checked` are written as properties only if they differ from the live value.
 
+- Moving an attached node (`DomPort::move_child`) preserves focus and selection: hosts with
+  `Element.moveBefore` (Chromium 133+ only) use it, others restore focus/selection after the move.
+  `FakeDom` blurs on reparent like a browser, so the restore path is tested.
+- Handlers may call `dom_patch::stop_propagation()` / `prevent_default()` (thread-local flags, reset per
+  dispatch); `Mounted::dispatch_event` returns a `DispatchOutcome`, and the web adapter forwards both to the native event.
+
 **Owns.** Diff algorithm, op semantics, handler table, port contract.
 **Never decides.** Escaping/sanitizing rules (`escape.rs`, `VNode::sanitized`), when to
 re-render (`app_reactive.rs`), component structure.
