@@ -41,7 +41,7 @@ fn find_hits(text: &str) -> Vec<String> {
 }
 
 fn skip_dir(name: &str) -> bool {
-    matches!(name, ".git" | "target" | "node_modules")
+    matches!(name, ".git" | "target" | "node_modules" | "build")
 }
 
 fn scan_tree(root: &Path) -> Vec<String> {
