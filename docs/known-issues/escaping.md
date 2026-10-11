@@ -15,33 +15,31 @@ Highest-risk first: `Text`, `Button` labels, `Alert`, `Input` (`value`, `placeho
 `Link`/`Image` (`href`/`src`: also pass through `sanitize_url`), `DataTable` cells, `Tabs`,
 `Modal`, `CommandPalette`, `Tooltip`, `Badge`, `Card` title/body.
 
-## Hand-maintained files: intentionally raw `*_html` fields
+## Hand-maintained files: `*_html` fields are `RawHtml`
 
-These fields are documented as pre-rendered HTML and are NOT escaped (changing their
-type would break consumers in downstream-screens). Callers must pass trusted markup or
-pre-escape. Proper fix: change the field type to `escape::RawHtml` when the components
-move out (EXTRACTION_PLAN section A).
+The pre-rendered HTML slots now have type `escape::RawHtml` (constructors take `impl Into<RawHtml>`; there is no
+`From<&str>`/`From<String>`, so passing a plain string is a compile error). Use `RawHtml::new(markup)` for trusted markup
+and `RawHtml::text(s)` for plain text (escaped). This breaks callers in downstream-screens, which must wrap values.
 
 - `accountrail.rs`: `AccountRailItem.balance_html`
 - `checkbookregister.rs`: `CheckbookRow.amount_html`, `balance_html`
 - `bankmatch.rs`: `BankMatchRow.je_options_html`
-- `businessworkspace.rs`: `rail_html`, `register_html`, `write_check_html`,
-  `memorized_html`, `bank_html`
+- `businessworkspace.rs`: `rail_html`, `register_html`, `write_check_html`, `memorized_html`, `bank_html`
 
-Escaped in this pass (attribute and text interpolations): accountrail, authfetch, bankmatch
-(line id), checkbookregister, jsonpost, loginform, memorizedlist. `hashrouter`,
-`ledgertheme`, `readmodelbridge`, `reconcileactions`, `shellchrome`, `shellruntimes`,
-`shortcutchord`, `lib.rs`, `mod.rs` have no dynamic interpolation (static markup/JS/CSS).
+The `.wj` copies of accountrail, bankmatch and checkbookregister still take `string`; they leave with the extraction.
 
-## Embedded JS runtimes
+## Embedded JS runtimes (audited)
 
-The `*_runtime_js()` strings assign server/user data with `innerHTML`
-(`bank_match_runtime_js` copies `mount.innerHTML` into selects; auth-fetch `lkRender`
-paths build tables from JSON). They need an audit and a move to Windjammer closures;
-JS embedded in Rust strings is itself a rule violation (AGENTS.md).
+No runtime assigns `innerHTML`/`outerHTML`, calls `insertAdjacentHTML`, `document.write` or `eval`, except through
+`window.wjDom` (`src/safe_dom_js.rs`): `setText`, `note`, `clear`, `setSafeHtml` (DOMParser, strips scripts/frames/`on*`/bad
+URLs, executes nothing), and `setTrustedHtml`, the single audited sink used only by `hashrouter` for static app-authored
+pages. `tests/embedded_js_test.rs` enforces this statically and runs the runtimes under node with a DOM stub.
+Behaviour change: markup returned by `window.lkRender[kind]`, `__wjRenderReadModel` and `LK_NAVS` is now sanitised, so
+inline `on*` handlers or `<script>` in those renderers no longer work (use `data-*` attributes plus delegation).
 
 ## Legacy `vdom` string renderers
 
-`ssr.rs` escapes text/attributes (now also `'`), but not URL-bearing attributes.
-`renderer.rs::vnode_to_html` (desktop/Tauri placeholder) was unescaped and now uses the
-shared escaper.
+`ssr.rs` now validates tag names, sanitises URL attributes (all of `is_url_attr`), escapes hydration state for
+`<script type="application/json">`, and chunks streaming output on UTF-8 boundaries. `renderer.rs::vnode_to_html`
+uses the shared escaper. Note `src/components/generated/ssr.rs` is a stale duplicate of `src/ssr.rs` without these fixes
+(see DESIGN_DIRECTION.md D4: delete).
