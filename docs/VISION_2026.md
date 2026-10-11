@@ -127,8 +127,8 @@ product differentiator on web, so it is designed in from day one rather than ret
 
 Rules: lower layers never import upper ones (same discipline as `MODULE_MAP.md`); L0-L3 have no platform imports, so
 they run headless in tests and in the interpreter; every layer has a fake (FakePainter, FakeClock, FakeShell, RecordingA11y).
-That is what makes the testing strategy in section 6 possible, and it mirrors the `gpu_port` hexagonal boundary already used in
-the GPU-port pattern of the 3D game engine host (a trait, typed generational handles, a recording fake).
+That is what makes the testing strategy in section 6 possible, and it mirrors the hexagonal GPU-port boundary already used in
+a 3D game engine host (a trait, typed generational handles, a recording fake).
 
 ### 2.3 The hard parts that sink custom-rendered frameworks, one plan each
 
@@ -322,3 +322,276 @@ story (async is unsupported in the interpreter today): R8.
 Summary: the ergonomic edge is real but narrow. It exists *only* if the compiler delivers inferred closure capture and trailing-block syntax; if those slip, we are a
 worse Leptos with a worse ecosystem. That is why they are the first milestone and a kill criterion.
 
+## 4. Game-engine integration
+
+Goal: the HUD, menus, and the editor are the same framework as the app UI, drawn inside the engine's frame, not in a separate window or overlay process.
+
+### 4.1 One tree, the engine's wgpu pass
+
+- The engine host already owns a wgpu device, queue and surface, and exposes GPU functionality through a trait-based port (`GpuPort`: typed generational handles, a
+  device-less recording fake, an adapter over the real device) and a typed host/shader struct layout contract (std140/std430 validation of host structs against WGSL).
+  Both are private-repo internals in the engine host; the pattern is what matters. `wj_engine_bridge` consumes the engine's device and queue **by handle** and records into a
+  caller-supplied `wgpu::TextureView` plus encoder, i.e. the UI is composited as a last pass over the 3D frame, or into an offscreen texture that a 3D material can sample
+  (in-world screens, holographic UI).
+- Vello renders via compute into a storage texture, then a blit pass composites with the scene. Because the renderer is Vello-class compute, UI cost is GPU compute time added to the
+  frame; measured standalone: 2.5-4 ms median for a 40-row virtualized list at 1280x720 on an M1 Pro, headless [M]. A typical HUD is far smaller, but the compute-shader cost is *shared
+  with the 3D frame*, which this spike did not measure. M6 must measure UI cost inside a real 3D frame and set a hard budget (target <= 1.0 ms for a HUD at 1080p on the reference GPU).
+- A second, cheaper path for HUDs: a **quad/glyph-atlas painter** (same `Painter` trait) that draws UI as instanced triangles in the engine's own render graph (no compute, no storage
+  texture). Needed anyway for the WebGL2 fallback (section 2.6), so it is built once and serves both.
+- Immediate vs retained: the UI is retained (scene graph, dirty flags); the *engine* calls `ui.frame(dt, input, target)` once per frame, which is an immediate-style integration point. A frame with no
+  state change and no animation re-encodes nothing and reuses the last display list. Editor panels that need immediate-mode ergonomics (debug inspectors) can still be written as ordinary components; no egui-style per-frame widget calls are needed.
+- Input routing: the engine owns raw input and forwards events with a `consumed` result (`UiInput::feed(event) -> Consumed`). The UI reports `wants_pointer`/`wants_keyboard` (derived from hit-test and focus) so
+  gameplay input is suppressed only when a widget captures it. Gamepad/focus navigation uses the same focus tree as keyboard accessibility (directional focus).
+- Determinism: the engine may drive a `FakeClock`/replayed input log, enabling replay and automated playtests of menus (the same mechanism as UI tests, section 6.4).
+- Signals as the engine bridge: engine-side state (health, ammo, quest log) is exposed as read-only reactive sources updated at a defined tick; the UI never calls back into gameplay except through typed commands.
+  Cross-thread: the engine mutates a double-buffered snapshot; the UI thread applies it at frame start (one batch = one reactive flush).
+
+### 4.2 The editor on the same framework
+
+The existing editor panels (inspectors, profilers, node graphs, curve editors, behaviour-tree views in `src/components_wj/`) currently reach desktop through an egui walker (`desktop_renderer*.rs`)
+that shares nothing with the web components (`ASSESSMENT_2026.md` 2.5). Under this vision they are ordinary components. The editor therefore runs as a native desktop app, in the browser (wasm + WebGPU),
+and docked *inside* the running game window, with identical code. This is also the best dogfooding case: the editor is a large, text-heavy, a11y- and IME-sensitive application and will find the problems the demo apps hide.
+
+### 4.3 What to reuse and what not
+
+Reuse: the port/fake/recording pattern, the layout-contract idea (generate Rust-side `#[repr(C)]` mirrors of display-list structs from the WGSL source and fail loudly on mismatch: the UI painter has the same
+host/shader struct hazard), the frame-trace bridge (`frame_trace_ffi.rs`) for a UI frame-time overlay. Do not reuse: egui as a dependency of the UI path (keep only until M6 for parity of existing panels).
+
+## 5. Platform plan
+
+### 5.1 The thin shell trait
+
+```
+trait Shell {   // one implementation per platform; everything above this line is shared
+    surface() -> wgpu::Surface/Texture target        window_size/scale/safe_area as signals
+    events() -> pointer, touch, key, text-input (IME composition), focus, lifecycle, system prefs (theme, locale, text scale, reduced motion)
+    clipboard, drag_drop, cursor, haptics, share, open_url, file_dialog, notifications
+    a11y_adapter(tree_update)       // AccessKit update sink, or DOM projection on web
+    run_frame_loop(callback)        // display-link / requestAnimationFrame / engine tick
+}
+```
+
+### 5.2 Per target
+
+| Target | Window/surface | Text input & IME | A11y | Clipboard/dialogs | Build and adopt |
+|---|---|---|---|---|---|
+| **Web (wasm)** | `<canvas>` + WebGPU (primary), WebGL2 via hybrid/own quad painter, canvas2D/CPU last | hidden `<textarea>`/`contenteditable` host focused per text field; composition events mapped to our editor; mobile keyboards via the same host | DOM projection (section 2.3), SSR skeleton, landmarks | async Clipboard API, `<input type=file>`/File System Access | wgpu (webgpu/webgl backends), a tiny own JS shim (< 20 KB target) written **without wasm-bindgen** if R7 delivers wasm imports; until then wasm-bindgen is acceptable [spike used it]. Fonts: bundled subset + `queryLocalFonts` optional. |
+| **macOS** | winit window + wgpu Metal; later CAMetalLayer-in-NSView for embedding | winit IME (`Ime` events) now; NSTextInputClient direct if winit's coverage is insufficient (candidate window positioning, reconversion) | AccessKit macOS adapter (via accesskit_winit) | native NSOpenPanel, NSPasteboard through a small own native layer (objc2) or `rfd`/`arboard` crates | winit, wgpu, accesskit, rfd, arboard (adopt). |
+| **Windows** | winit + wgpu (DX12/Vulkan) | winit IME; TSF behaviors verified early (known tricky) | AccessKit UIA adapter | same crates | same. |
+| **Linux** | winit + wgpu (Vulkan), X11 and Wayland | winit IME (ibus/fcitx via text-input-v3 on Wayland) | AccessKit AT-SPI adapter | same crates; xdg-portal dialogs | same. Wayland decorations and fractional scaling are known rough edges **[K]**. |
+| **iOS** | UIKit host view with CAMetalLayer; shell in Swift (or Rust via objc2) as a static library linked by a generated Xcode project | a hidden UITextInput-conforming view (UIKeyInput/UITextInput: marked text, selection rects) | UIAccessibility elements generated from the semantic tree (no AccessKit iOS adapter found [U]; own work) | UIPasteboard, UIDocumentPicker, share sheet | winit's iOS backend is an option for windowing, but text input/a11y need our own UIKit glue; decide at the M7 spike. wgpu Metal. |
+| **Android** | `NativeActivity`/GameActivity or a `SurfaceView` in a thin Kotlin host; Vulkan via wgpu (GLES fallback) | `InputConnection` via a hidden `View` (Kotlin shim + JNI) | AccessKit Android adapter (exists in the adapter list [V search, verify]) via `AccessibilityNodeProvider` | ClipboardManager, SAF file picker | android-activity + winit Android backend; Kotlin shim; cargo-ndk. Vello on mid-range Mali/Adreno GPUs is the **largest performance unknown** (compute-heavy renderer; no measurement here). |
+| **Game engine** | caller-provided wgpu view (section 4) | engine forwards text events, or in-engine IME not supported in v1 for HUD | in-game a11y optional; editor yes (OS tree) | n/a / host | `wj_engine_bridge`. |
+
+### 5.3 Build vs adopt (decisions with reasons)
+
+| Component | Decision | Reason |
+|---|---|---|
+| GPU API | **Adopt wgpu** | One API for Metal/Vulkan/DX12/WebGPU/GLES; the engine already uses it. |
+| 2D vector renderer | **Adopt Vello** (GPU), `vello_cpu` (fallback/oracle); **write own quad painter** for WebGL2 and engine HUD | Vello is the best-fit modern Rust renderer, but `vello_hybrid` is not production-ready [V] and compute shaders are heavy on mobile/WebGL; own simple painter covers the 95% case and gives a controlled fallback. |
+| Shaping/bidi/segmentation | **Adopt Parley** (HarfRust + ICU4X + fontique) | Years of work we should not repeat; actively developed (0.12 now) [M]. |
+| Text editing model | Adopt Parley editing, **own** selection/IME/undo glue | Platform specifics. |
+| Layout | **Adopt Taffy** (flex/grid) for the common case; **own** stack/scroll/virtual list/constraints-based boxes | Taffy 0.14 has an MSRV of 1.71 and is widely used [M: `cargo info`]; but we want Flutter-style constraints for custom widgets, so own both a "box constraints" protocol and a Taffy bridge. Decision pending ADR-0002 layout spike (see M1). |
+| Windowing | **Adopt winit** (0.31 beta now [M]) for desktop and Android; own iOS/web shells | Ubiquitous; text input and a11y glue on top. |
+| A11y | **Adopt AccessKit** core + adapters; **own** web projection and iOS mapping | See 2.3. |
+| Reactive core | **Own** (arena, Copy handles) | Spike shows the design works and it is what makes `@handle` and the compiler lowering possible; adopting `reactive_graph` would tie the ownership story to Rc/Arc handles. |
+| Scene graph | **Own** | Core IP. |
+| Animation/gesture | **Own** | Small, must fit the scene and clock. |
+| Clipboard/file dialogs | **Adopt** `arboard`/`rfd` where adequate | Commodity. |
+| Images/SVG/Lottie/Rive | **Adopt** `image`, `resvg`/Vello SVG, optionally Rive runtime | Not our differentiator. |
+| Networking/async | Windjammer stdlib (ADR-0008 portable core) with capability externs | Keeps UI code portable. |
+
+## 6. Existing code, roadmap, acceptance criteria and verification
+
+### 6.1 Existing windjammer-ui code: keep, migrate, delete
+
+| Path | Fate | Reason |
+|---|---|---|
+| `src/dom_patch/` (keyed diff, `DomPort`, `FakeDom`, delegated events, property tests) | **Migrate** into the web DOM *projection* (semantic mirror); keep the tests | Correct, well-tested patcher with a clean port; the projection needs exactly keyed incremental DOM updates. |
+| `src/escape.rs`, `safe_dom_js.rs` | **Keep** | The projection and SSR skeleton still emit HTML; escape-by-default is mandatory. |
+| `src/simple_vnode.rs` | **Migrate** into the SSR/semantic-HTML node type | Small canonical tree for HTML output. |
+| `src/signal.rs`, `reactivity*.rs`, `signal_ffi.rs` | **Replace** with `wj_reactive` (spike core) | Three overlapping modules; no batching; handles not Copy. Keep tests as behavior oracles. |
+| `src/routing.rs`, `undo_redo.rs` | **Migrate** (typed routes; undo service for the editor) | Reusable logic. |
+| `src/components_wj/*.wj` (~120 string-builder components) | **Rewrite incrementally** in the new DSL as widgets once M2 exists; **delete** each string-builder version when its replacement passes parity tests. Domain-specific business/finance components move out to the apps that use them (`EXTRACTION_PLAN.md`). Editor panels are rewritten first (they are the dogfood). | They emit HTML strings: wrong output model for a scene renderer. |
+| `src/components/generated/` (stale copies of core modules, 17 hand-maintained JS runtimes) | **Delete** (stale copies immediately; JS runtimes with their components) | Pure liability (`ASSESSMENT_2026.md` 2.9). C10 becomes moot. |
+| `vdom.rs`, `renderer.rs`, `runtime.rs`, `ssr.rs`, `platform/*`, `vnode_ffi.rs`, `component*.rs` | **Delete** after M2 | Legacy models; SSR re-implemented over the semantic tree. |
+| `desktop_renderer*.rs`, `app_reactive_eframe.rs`, `app*.rs` (egui/eframe) | **Keep until M6**, then delete | Existing editor depends on it; do not break it before parity. |
+| `windjammer-ui-macro` | **Delete** | Macros unusable from `.wj`; replaced by compiler support. |
+| `tests/js/`, wasm-bindgen-test harness | **Keep** the harness idea for the projection | Real DOM behaviors. |
+| `styles/*.css` | **Delete** (tokens replace) after web projection ships | Scene renderer does not use CSS. |
+
+### 6.2 Staged roadmap with measurable acceptance criteria
+
+Each milestone is also a go/no-go gate (section 8). "Compare" means run the same app in the named frameworks on the same machine, pinned versions, published scripts.
+
+| M | Name | Contents | Acceptance criteria (all must pass) |
+|---|---|---|---|
+| **M0** (2-3 weeks) | De-risk | Extend the spikes: wasm in a real browser (WebGPU), mid-range Android device Vello measurement, startup with pipeline cache, Parley editing + IME on web hidden-input, Taffy-vs-own-constraints layout choice, AccessKit tree on one native + DOM mirror on web for a 5-widget demo. | (1) wgpu+vello+parley wasm runs in Chrome and Safari 26 with WebGPU and renders text; measured brotli size reported (baseline 0.58 MB without app code or fonts, section 9). (2) Vello on a mid-range Android phone: virtualized 40-row list p95 GPU+encode < 8.3 ms at 1080p, else adopt the quad painter as primary on mobile. (3) Warm desktop first frame < 300 ms with pipeline cache. (4) VoiceOver reads the demo on web and macOS. |
+| **M1** (6-8 weeks) | Core: reactive + scene + layout + paint, no DSL | `wj_reactive` (productionized), `wj_scene`, layout, `Painter` trait + Vello and CPU painters, FakeClock/FakeShell, desktop shell (macOS first). Rust API only. | 10k-row create+update benchmark (js-framework-benchmark-style operations: create 1k/10k, update every 10th, select, swap, remove, clear): **median update-one-row <= 0.1 ms** CPU; create 10k rows <= 150 ms native; each operation is also run in Leptos and Dioxus (web, wasm in a browser) and in Dioxus Native where it runs, and the table reports each framework in its own habitat; a native-vs-wasm ratio is never presented as a like-for-like win (the like-for-like browser comparison is the M3 criterion). Golden-image suite >= 200 scenes, CPU-vs-GPU painter diff <= 1/255 per channel on all but anti-aliased edge pixels (<= 0.5% pixels differ by > 3/255). Reactive core passes the port of the signal-bench tests plus property tests (random graph vs naive recomputation oracle, 10k cases). |
+| **M2** (6-8 weeks) | Language: `component`/view DSL, interpreter dev loop | Compiler R1-R4, R9, R12; stock widget set v0 (Text, Button, TextField, Checkbox, List, Scroll, Row/Column/Stack); `wj dev` hot reload | The six samples compile and run (SAMPLES.md); counter sample <= 6 lines, no `clone/move`; hot reload save-to-pixels **p95 < 300 ms** on desktop (compared with Dioxus Subsecond on the same edit: report both); interpreter vs compiled differential tests identical on the UI corpus; 10k-row list creation under interpretation < 1 s. |
+| **M3** (8-10 weeks) | Web: wasm, WebGPU/WebGL2, DOM projection, SSR | Web shell, hidden-input text, DOM projection (migrated `dom_patch`), SSR skeleton + hydration adoption, fallbacks | Counter app **<= 400 KB brotli** (lite) and text-capable demo **<= 2.0 MB brotli**; first contentful paint (SSR HTML) < 0.6 s and interactive < 1.0 s on throttled 4G, cached assets; axe-core: zero critical violations on the 6 samples; Lighthouse accessibility >= 95; crawler-fetched HTML contains the page text; browser 10k-row benchmark vs Leptos and Dioxus-web: update-one-row within 3x of Leptos (the DOM wins small updates; we win big-surface animation), scroll a 10k virtual list at p99 frame < 8.3 ms on Chrome WebGPU. |
+| **M4** (8 weeks) | Text and input depth | IME (CJK, dead keys, Android/iOS keyboards deferred to M7), selection, clipboard, bidi, rich text, i18n | A conformance suite of 100 text-editing scenarios (independent oracle: ICU/browser contenteditable behaviors recorded from Chrome and macOS TextEdit for the same event sequences); Hebrew/Arabic/CJK/emoji paragraphs render equal to a reference shaping (HarfBuzz via a separate tool) at glyph-id level; CJK IME composition passes a manual script on macOS, Windows, Linux (fcitx5/ibus) and web. |
+| **M5** (8 weeks) | Widget set, theming, routing, forms, animation, a11y complete | Full stock set; typed routing; `form`; animation primitives; previews as tests | Every stock widget has role/name/state/actions test; NVDA, VoiceOver, Orca manual script passes; 60 previews run as golden + a11y tests; animation tests use FakeClock and match analytic curves within 1e-3. |
+| **M6** (6-8 weeks) | Engine integration and editor port | `wj_engine_bridge`, quad painter, editor panels ported, egui path deleted | HUD cost inside a real 3D frame <= 1.0 ms @1080p on reference GPU; editor panels reach feature parity with the egui path (checklist); input capture tests (UI consumes click, gameplay does not); editor runs in the browser and natively from the same source. |
+| **M7** (10-12 weeks) | iOS and Android | Shells, IME/a11y glue, packaging, `wj build --target ios/android` | Sample apps pass TalkBack and VoiceOver scripts; 120 Hz ProMotion device holds p95 < 8.3 ms on the list sample, mid-range Android p95 < 16.6 ms; app size: counter < 12 MB (iOS) / < 8 MB (Android AAB download); cold start < 500 ms mid-range Android. |
+| **M8** | 1.0 hardening | docs, migration, perf regressions gated in CI | All benchmark gates in CI, no P0 a11y bugs. |
+
+Calendar numbers are engineer-effort estimates by one person-equivalent team of 3-4; they are guesses ([U]) and exist to size the plan, not to promise dates. Headline: roughly 14-18 months to a credible 1.0 on desktop+web+engine,
+mobile after. If the owner expects "Flutter-class everywhere" sooner, that is a different (much larger) staffing decision.
+
+### 6.3 Benchmark protocol
+
+- Reactive/update: js-framework-benchmark operations (it is the public baseline; its official results page is dynamic and could not be scraped this session, so we run our own harness against pinned Leptos, Dioxus, Solid versions).
+- List scroll: 10k rows, 60 s scripted scroll, frame times from a frame-callback recorder; report p50/p95/p99 and dropped-frame %.
+- Startup: process start to first interactive frame (native), navigation start to first input response (web), cold and warm.
+- Size: brotli of wasm+js shim+shaders+fonts; native stripped binary.
+- Flutter comparison: same screens built in Flutter 3.44-line (current in 2026 per sources [U]) on web (Wasm) and mobile; report size, startup and frame times side by side.
+- Never publish a ratio without the script and the machine description (the spike READMEs state the load level of the machine).
+
+### 6.4 TDD and verification strategy (independent oracles)
+
+1. **Reactive core**: model-based tests, a naive "recompute everything" interpreter of the same graph as oracle; random graphs with 10k cases; invariants: no glitches, effects run at most once per batch, equality cutoff, dependency GC. (The spike has three hand-written cases; the oracle harness is M1.)
+2. **Layout**: differential against Taffy and against Chrome's flexbox for the supported subset (recorded as fixtures from a headless browser: an independent implementation); property tests for constraints invariants (child size within constraints, no NaN).
+3. **Text**: shaping output compared with HarfBuzz CLI (`hb-shape`) glyph ids/advances for a corpus; bidi against the Unicode BidiTest.txt conformance file (an authoritative external oracle); line breaking against UAX#14 test data.
+4. **Painting**: golden images rendered by the **CPU painter** (`vello_cpu`) and compared against the GPU painters with tolerance; plus a handful of reference images produced by an unrelated rasterizer (resvg for SVG-expressible scenes) so the CPU painter is not its own oracle. Goldens are updated only by an explicit command with a reviewed diff image.
+5. **Accessibility**: tree snapshot tests per preview; role/name/state completeness lints; web: axe-core in headless Chrome; scripted screen-reader passes before each release (manual, recorded).
+6. **Determinism**: `FakeClock`, event-log record/replay, seeded randomness; no sleeps in tests.
+7. **Differential across backends**: interpreter vs compiled Rust vs wasm for component logic (compiler team's harness pattern); native vs web scene output equality on the display list (not pixels): the display list is the contract, pixels are a second check.
+8. **Mutation testing** of the test suite on the reactive core and layout (the compiler repo already applies mutant-kill thresholds in its interpreter harness; reuse the practice).
+9. **Performance regression**: benchmarks in CI with stored baselines and a 10% gate; frame-time traces attached to failures.
+10. **Fuzzing**: event streams and tree mutations against the scene for panics/invariant violations; the DOM projection against `FakeDom` (exists).
+
+## 7. Compiler requirements (refines `docs/compiler-requests/README.md` C1-C10)
+
+Priority: **P0** blocks M2 (the language milestone); **P1** needed by M3-M5; **P2** nice to have; **drop** no longer needed. "Touches" names the compiler ADR
+(`windjammer/docs/adr/`) or work package. None are implemented; the compiler repo was not modified.
+
+| ID | Requirement | Replaces | Pri | Touches |
+|---|---|---|---|---|
+| R1 | **`@handle` (Copy-like handle types)**: attribute making a type implicitly copyable for ownership inference regardless of representation; closures capture it by copy, never move; reading a handle's value in a tracked scope borrows from the runtime. | C1 | **P0** | ADR-0001 (IR solver as single ownership writer), ADR-0003 (no `owned` keyword) |
+| R2 | **Trailing-block children and named arguments**: `Column(gap: 8) { ... }` lowers to a call with a `children` list; `for`/`if`/`match` as expressions producing child lists (with `key` clause). | C2 | **P0** | ADR-0014/0015 (surface syntax) |
+| R3 | **`component` / `state` / `derived` / `effect` / `resource` / `view` forms**: parsed and lowered by the compiler to builder calls plus dependency metadata; reads/writes of `state` need no `.get()/.set()` (compound assignment desugars to `set`). Runtime tracking suffices for v1. | C6 (extended) | **P0** | ADR-0015; IR (`IrModule`) |
+| R4 | **Structured interpolation** visible to lowering (`Template(parts, exprs)`) so a binding targets one text node. | C3 | P1 | ADR-0014 |
+| R5 | **Two-way `bind:`** and `form` declarative lowering (`Valid<T>`). | C4 (extended) | P1 (form: P2) | ADR-0015 |
+| R6 | **Source maps and error overlay spans** for generated and interpreted code; stable diagnostics in dev server. | C8 | P1 | compiler diagnostics (ADR-0005 error strategy) |
+| R7 | **wasm without wasm-bindgen**: the wasm target emits plain wasm imports/exports (`extern "host"` capability functions), linear-memory string/slice ABI, a generated <20 KB JS shim; no JS-glue dependence in user code. This replaces "JS backend Tier 2": the web target is wasm, JS is only a loader. | C5, C7 (reframed) | **P0 for web** (M3) | ADR-0007 (Tier 2 WASM), ADR-0008 (capability-tagged host modules), ADR-0012 (extern boundary) |
+| R8 | **Async in compiled and interpreted targets** (`resource`, `await` in handlers), with cancellation tied to scopes. | new | P1 | ADR-0004 (concurrency surface, accepted); interpreter limits (`INTERPRETER.md`) |
+| R9 | **Interpreter host-call interface**: register Rust functions/types (scene, text, painter) callable from interpreted code; today `extern` is unsupported there. Handles are opaque values. | C9 (reframed) | **P0** | `INTERPRETER.md` remaining gaps; ADR-0007 (interpreter tier amendment) |
+| R10 | **Generics, trait objects (`dyn Widget`), associated types and `impl Fn() -> View` params** working through the Rust and wasm backends; needed for typed child slots and the `Animatable<T>` trait. | new | **P0** (verify) | ADR-0001; IR solver |
+| R11 | **Derives for UI**: `@derive(Store)` (per-field reactivity), `@derive(Props)` (builders/defaults), `@derive(Animatable)`, `@derive(Serialize)` for SSR state; no user-visible proc macros, built into the compiler like `@derive(Clone)`. | new (replaces `windjammer-ui-macro`) | P1 | ADR-0015 |
+| R12 | **Closure capture semantics identical across interpreter and compiled targets** (the documented divergence: interpreted by-reference vs compiled `move` copy). | new | **P0** | `INTERPRETER.md` findings; ADR-0001 |
+| R13 | **Hot-reload support**: incremental/watch mode with stable symbol identity, state keys (component path, declaration name, type hash), reload protocol over a dev-server socket; also a Subsecond-like path for compiled Rust as a later P2. | C9 | P1 | `wj` CLI; interpreter |
+| R14 | **Const-evaluable tokens and typed units** (`Px`, `Pct`, `Duration` literals `150ms`), theme token structs checked at compile time; pipe-friendly modifier functions. | new | P1 | ADR-0015 |
+| R15 | **C ABI exports and static/cdylib outputs for iOS/Android** (`@export extern "C"`, staticlib), plus `@repr(C)` layouts for GPU/FFI structs. | new | P1 (M7) | ADR-0012 |
+| R16 | **Compile-time lints for UI**: required a11y props, slot-constraint violations, unbounded constraints heuristic. | new | P2 | ADR-0009-style lint infrastructure |
+| R17 | **Test support**: `@preview` registry, golden-image and a11y snapshot helpers callable from `wj test` and `wj test --interpret`. | new | P1 | `wj test` |
+| R18 | ~~Hand-maintained file marker~~ | C10 | **drop** (generated dir is deleted, 6.1) | - |
+| R19 | **Backend trait over the IR** so the UI lowering is written once, not per target. | new | P1 | ADR-0007; "WP 11 (Backend trait over IrModule)" |
+
+Early de-risking: R1+R2+R12 can be prototyped as a *library convention* in a spike branch before the compiler work (trailing builders already exist as method chains today), so the DSL's ergonomics can be judged in M1 using the current compiler.
+
+## 8. Risks, kill criteria, owner decisions
+
+### 8.1 Risks (ranked)
+
+1. **Scope**: this is a Flutter-sized product (text, IME, a11y, platforms) plus a language feature program. Mitigation: the staged gates; adopt Parley/AccessKit/wgpu/Vello/winit; only own what differentiates.
+2. **Compiler dependency**: the ergonomic edge exists only if R1-R3, R9, R12 land. These are in a repo this project does not control.
+3. **Vello on mobile and WebGL**: compute-heavy renderer, `vello_hybrid` not production-ready [V], unmeasured on mid-range Android. Mitigation: own quad painter (also required for the engine).
+4. **Startup**: first Vello pipeline compile cost 1.0-1.4 s cold on Metal [M]; browsers have their own shader compile costs; unmeasured on web.
+5. **Web a11y/SEO credibility**: the projection must be real; a canvas with a hidden placeholder will be rejected as "Flutter web again".
+6. **Text input quality** across IME/OS combinations; years of bug-tail.
+7. **Upstream churn**: wgpu 30, vello 0.11, parley 0.12, accesskit 0.25, winit 0.31-beta: all pre-1.0 and moving; pin and budget upgrade work each quarter.
+8. **Ecosystem**: no packages, IDE support, docs, community; adoption by outsiders is unlikely before 1.0 regardless of quality.
+9. **Cross-origin isolation** for wasm threads limits deployment on some hosts (single-threaded v1 avoids this).
+10. **Wasm GC/Component Model** might make the Rust-wasm path obsolete-ish for Dart/Kotlin but not for us; low risk.
+
+### 8.2 Kill / pivot criteria (checked at the named gate; any single one triggers an owner review)
+
+| Gate | Condition | Pivot |
+|---|---|---|
+| M0 | Vello on the reference mid-range Android misses 16.6 ms p95 on a 40-row list **and** the quad painter prototype cannot reach it | Drop GPU-compute renderer on mobile; make quad painter primary; if still missed, mobile becomes "later" |
+| M0 | No viable IME/selection path on web hidden-input for CJK | Web text input uses real DOM `<input>` elements for editable fields only (documented hybrid) |
+| M1 | Update-one-row or 10k create misses criteria by > 3x after one optimization sprint | Re-evaluate retained-scene design (consider Xilem/Masonry adoption instead of own scene) |
+| M2 | Compiler team cannot commit to R1-R3, R9, R12 within the milestone window | Fall back to a Rust-first library (builder API, own `view` conventions) with Windjammer as optional; the "ergonomics better than Rust frameworks" thesis is then **dead** and the project's reason to exist must be re-argued |
+| M3 | Counter app > 800 KB brotli or text app > 3.5 MB brotli (twice the target; Flutter-class), **or** axe-core critical violations that the projection cannot fix | Shrink scope (lite profile only) or reintroduce a DOM document-mode backend for content sites |
+| M3 | Browser baseline: update-one-row > 10x Leptos in the same browser | Fix before continuing; no feature work |
+| M4 | Text conformance < 95% on the editing scenarios after two sprints | Narrow supported languages for v1 (document it); do not ship partial IME silently |
+| Any | Upstream (wgpu/vello/parley) abandonment or a breaking redesign we cannot track with < 0.5 FTE | Vendor and freeze, or switch to the alternative in the same layer (`Painter`/text traits keep this possible) |
+| Any | Two milestones in a row slip > 50% | Stop and re-plan with the owner; consider adopting Xilem/Masonry or Slint and contributing instead of building |
+
+### 8.3 Top 5 decisions the owner must make
+
+1. **Commit to a custom-rendered primary target with a DOM *projection* (ADR-0001), accepting the web SEO/a11y engineering cost, vs a pure Flutter-style canvas, vs also building a DOM document-mode backend later.** Recommendation: projection now, document mode deferred.
+2. **Authorize the compiler work program (R1-R3, R9, R12 as P0) and name an owner for it**, since the ergonomics thesis depends on it (kill criterion at M2).
+3. **Adopt vs build on the Linebender stack** (Vello + Parley + AccessKit; and possibly Masonry/Xilem instead of an own scene): recommendation adopt Vello/Parley/AccessKit/wgpu/winit/Taffy, build own reactive core and scene; revisit Masonry at M1 gate.
+4. **Scope and ordering of targets**: web + desktop + engine first (M1-M6), iOS/Android after (M7), or mobile in parallel at higher cost. Includes the headcount assumption (3-4 engineers).
+5. **What happens to the existing egui editor path and ~120 string-builder components**: recommendation as 6.1 (keep egui until M6, rewrite components incrementally, delete HTML-string components and stale generated copies now), plus whether business-domain components leave this repo.
+
+## 9. Spikes and measurements (real numbers, with caveats)
+
+Machine: Apple M1 Pro, macOS (Darwin 23.5), Metal, rustc 1.100 nightly (2026-09-01). **The machine was shared with other agents running builds**, so timings are noisy;
+ranges across repeated runs are given instead of single numbers. Nothing was run in a browser, on a phone, in a real window with vsync, or inside a 3D frame. All commands are in the spike READMEs.
+
+### 9.1 `spikes/signal-bench`: reactive core vs Leptos's `reactive_graph` 0.2.15
+
+An arena-based graph with Copy generational-style handles (u32 index in this spike), lazy memos with clean/check/dirty colouring, equality cutoff, dynamic dependencies and effects.
+Three semantic tests pass (`cargo test --release`: glitch-free diamond runs the effect once, equality cutoff stops propagation, dynamic dependency drop). Benchmarks (release, LTO, 10,000 nodes, median of 15; final run):
+
+| Benchmark | wjsig (ours) | reactive_graph 0.2.15 |
+|---|---|---|
+| create 10k signals + 10k memos + read | 1.9 ms | 6.8 ms |
+| fan-out: 1 source -> 10k memos, 10 updates + full reads | 9.7 ms | 2472 ms |
+| chain depth 1000, 100 updates | 12.6 ms | 3312 ms |
+| diamond, 100k updates | 25.6 ms | 159 ms |
+| 10k effects, 1000 single-source updates | 1.8 ms | not measured (needs async executor) |
+
+Caveats (important): (1) my first fan-out run was 529 ms because of an O(n^2) resubscription bug in my own code, fixed before the numbers above, an example of how easy it is to get this wrong; (2) I drove `reactive_graph`
+synchronously without an effect/executor, in an unusual pattern (memo reads from the owner thread), so the 100x+ gaps likely reflect that pattern and not what Leptos does in an app; **do not quote these as "Leptos is slow"**. The valid conclusion
+is only that an arena design is *not slower* than the Rc-based one and has no per-node allocation beyond the value box, so it is a safe foundation; (3) my core is incomplete (no scopes/disposal, batching, async, `Send`) and single-threaded.
+
+### 9.2 `spikes/gpu-scene`: wgpu 30 + Vello 0.11 + Parley 0.12, headless on Metal
+
+1280x720 offscreen Rgba8 texture, rows of rounded rect + one text run, text layouts cached per row.
+
+| Measurement | Result (range over 3-4 runs unless noted) |
+|---|---|
+| wgpu device init | 26-1670 ms (the outlier is cold; typical warm 26-110 ms) |
+| `Renderer::new` (Vello pipeline creation) | cold 1049 and 1391 ms; warm 20-120 ms |
+| First `FontContext` + one layout (system fonts) | 165-735 ms |
+| Shape+layout 10,000 rows of ~40 chars | 80-490 ms (8-49 us/row; load-dependent) |
+| Bidi/CJK/emoji paragraph | shaped to 9 glyph runs, one line (smoke test only; not a correctness check) |
+| Virtualized 40 visible rows: scene encode | 0.05-0.06 ms median |
+| Virtualized 40 rows: render + GPU wait | 2.5-4.0 ms median (p95 4.7-23 ms, min 1.4-2.4) |
+| All 10,000 rows, no culling: scene encode | 16-21 ms median |
+| All 10,000 rows, no culling: render + GPU wait | 150-185 ms median (p95 285-352) |
+| Native release binary | 6.9 MB (unstripped) |
+| **Wasm** (`wasm32-unknown-unknown`, opt-level z, LTO, panic abort, stripped; same wgpu+vello+parley code path, one text layout, one rect, one render) | **2.85 MB raw; wasm-opt -Oz 2.47 MB; gzip -9 0.80 MB; brotli -q11 0.58 MB** |
+
+What this shows: (a) culling/virtualization is non-negotiable; (b) per-frame cost for a UI-sized scene is comfortably inside 8.33 ms on this GPU, but the number includes `device.poll(wait)` in a headless loop and is not a vsync'd
+display measurement; (c) cold start is the problem (shader pipelines, system fonts), not steady state; (d) the web payload for the *engine* (without app code, fonts or ICU data beyond what linked) is ~0.6 MB brotli, far below Flutter's published
+CanvasKit +1.5 MB / Skwasm +1.1 MB [V via assessment], leaving room for app + fonts under the 2.0 MB target.
+Not measured: wasm execution (no browser run: the wasm was not passed through `wasm-bindgen` because my installed CLI (0.2.108) did not match the crate version resolved (0.2.129) and the downgrade attempt failed to build, so the byte counts are of the raw module and omit bindgen glue (tens of KB typically) and fonts; whether it runs under WebGPU in Chrome/Safari is **unverified**), Android/iOS, WebGL2 fallback, text editing/IME, accessibility.
+
+### 9.3 Not measured (so no claim is made)
+
+Flutter/Compose/Dioxus/Leptos comparative benchmarks; web frame times; mobile anything; memory; real-window frame pacing; interpreter UI performance; Taffy vs own layout; AccessKit integration.
+
+## 10. Sources (fetched or searched 2026-10-11; reliability as labelled in the text)
+
+- Flutter and Dart 2026 roadmap (Impeller on Android, Wasm intended as web default; fetched): https://flutter.dev/blog/flutter-darts-2026-roadmap
+- Flutter web accessibility (placeholder activation; search result summary): https://docs.flutter.dev/ui/accessibility/web-accessibility
+- Flutter 3.44 / Skia-removal timing, Skwasm fallback in Firefox/Safari (secondary blogs, **U**): https://www.cmarix.com/blog/latest-flutter-version/ , https://ecorpit.com/impeller-mandatory-flutter-android-ios-2026/ , https://startdebugging.net/pt-br/2026/07/how-to-build-a-flutter-web-app-with-webassembly-using-flutter-build-web-wasm/
+- Dioxus 0.7 release (Dioxus Native/Blitz status, Subsecond hot-patching, signals/stores; fetched): https://dioxuslabs.com/blog/release-070
+- Blitz pre-alpha and AccessKit "coming soon" (search result): https://lib.rs/crates/blitz-html
+- Compose Multiplatform 1.8.0 (iOS stable): https://blog.jetbrains.com/kotlin/2025/05/compose-multiplatform-1-8-0-released-compose-multiplatform-for-ios-is-stable-and-production-ready/ ; 1.9.0 (web Beta): https://blog.jetbrains.com/kotlin/2025/09/compose-multiplatform-1-9-0-compose-for-web-beta/
+- Slint 1.6 (accessibility custom actions): https://slint.dev/blog/slint-1.6-released
+- vello_hybrid / sparse_strips README (not production-ready): https://skia.googlesource.com/external/github.com/linebender/vello/+/refs/heads/main/sparse_strips
+- WebGPU support across browsers (secondary; coverage figure unverified): https://ascii.co.uk/news/article/news-20251126-7cbd345e/webgpu-now-supported-across-chrome-firefox-safari-edge , https://www.khronos.org/developers/linkto/webgl-and-webgpu-sigg26
+- AccessKit repository and adapters: https://github.com/AccessKit/accesskit ; Ply web a11y DOM bridge (third party): https://plyx.iz.rs/docs/accessibility/
+- GPUI status (Register 2025; gpui-component): https://www.theregister.com/2025/08/22/everything_is_different_on_windows/ , https://github.com/longbridge/gpui-component
+- Lynx vs React Native (vendor claims, secondary): https://thenewstack.io/cross-platform-ui-framework-lynx-competes-with-react-native , https://www.pkgpulse.com/guides/lynx-bytedance-framework-vs-react-native-2026
+- Rive Flutter runtime migration (C++ runtime, data binding): https://rive.app/docs/runtimes/flutter/migration-guide
+- Makepad 2.0 (third-party skill docs, **U**): https://skillselion.com/skills/zhanghandong/makepad-skills/makepad-2.0-migration
+- Crate versions: `cargo info` against crates.io, 2026-10-11 [M].
+- Internal: `docs/ASSESSMENT_2026.md` (including its own source list), compiler `docs/INTERPRETER.md`, `docs/adr/0001-0015`, `docs/design/pipe-operator.md`.
+- Not retrieved (404/blocked): Linebender Xilem roadmap page, Lynx intro page; Xilem/Masonry statements are **[K]** apart from crate versions.

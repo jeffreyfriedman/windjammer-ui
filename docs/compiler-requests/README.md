@@ -58,3 +58,6 @@ Per ADR-0007: closures, structs/enums, interpolation, `List/Map`, with conforman
 ## C10. Hand-maintained file marker
 Honour a header marker (for example `// wj:hand-maintained`) in `src/components/generated/*.rs` so a full regen never
 overwrites them; retire `SKIP_WJ_REGEN`/`WJ_REGEN` env toggles in `build.rs`.
+
+---
+**Update 2026-10-11:** refined for the unified-renderer direction in `docs/VISION_2026.md` section 7 (requirements R1-R19, with priorities). C1->R1, C2->R2, C3->R4, C4->R5, C5/C7->R7, C6->R3, C8->R6, C9->R13/R9, C10 dropped.

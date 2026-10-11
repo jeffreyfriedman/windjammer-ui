@@ -179,3 +179,5 @@ Details and minimal repros in `docs/compiler-requests/README.md`.
 2. Approve "web first, Tauri shell for desktop/mobile, egui kept for editor panels only".
 3. Approve deleting vdom/renderer/mobile stubs/proc macros/duplicated generated modules after the stage 1 migration.
 4. Approve sending C1-C10 to the compiler team.
+
+> **Update 2026-10-11:** the direction this file describes was rejected. See `VISION_2026.md` and `docs/adr/`. The facts in `ASSESSMENT_2026.md` still stand.
