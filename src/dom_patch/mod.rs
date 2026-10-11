@@ -10,7 +10,7 @@ pub mod port;
 pub mod web;
 
 pub use diff::{diff, PatchOp};
-pub use mounted::Mounted;
+pub use mounted::{prevent_default, run_handlers, stop_propagation, DispatchOutcome, Mounted};
 pub use port::DomPort;
 
 /// Child-index path from the tree root. `[]` is the root itself.

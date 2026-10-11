@@ -32,6 +32,10 @@ pub struct FakeDom {
     pub listening: BTreeSet<String>,
     /// Count of `create_*` calls; lets tests assert nodes were reused, not rebuilt.
     pub created: usize,
+    /// Model a host with `Element.moveBefore` (state-preserving move).
+    pub supports_move_before: bool,
+    /// Number of moves done atomically (focus never lost).
+    pub atomic_moves: usize,
 }
 
 impl Default for FakeDom {
@@ -49,7 +53,7 @@ impl FakeDom {
             value: None,
             caret: 0,
         };
-        FakeDom { nodes: vec![root], focused: None, listening: BTreeSet::new(), created: 0 }
+        FakeDom { nodes: vec![root], focused: None, listening: BTreeSet::new(), created: 0, supports_move_before: false, atomic_moves: 0 }
     }
 
     fn add(&mut self, kind: Kind) -> FakeNode {
@@ -58,7 +62,25 @@ impl FakeDom {
         FakeNode(self.nodes.len() - 1)
     }
 
+    fn contains(&self, ancestor: usize, mut n: usize) -> bool {
+        loop {
+            if n == ancestor {
+                return true;
+            }
+            match self.nodes[n].parent {
+                Some(p) => n = p,
+                None => return false,
+            }
+        }
+    }
+
+    /// Browser behaviour: removing a subtree that holds focus blurs it.
     fn detach(&mut self, n: usize) {
+        if let Some(f) = self.focused {
+            if self.contains(n, f) {
+                self.focused = None;
+            }
+        }
         if let Some(p) = self.nodes[n].parent.take() {
             self.nodes[p].children.retain(|&c| c != n);
         }
@@ -189,6 +211,33 @@ impl DomPort for FakeDom {
         let (p, i) = (self.parent(old).expect("attached"), self.index_in_parent(old).unwrap());
         self.remove(old);
         self.insert_child(&p, i, new);
+    }
+    fn focused_within(&self, node: &FakeNode) -> Option<FakeNode> {
+        self.focused.filter(|&f| self.contains(node.0, f)).map(FakeNode)
+    }
+    fn selection_of(&self, node: &FakeNode) -> Option<(usize, usize)> {
+        Some((self.nodes[node.0].caret, self.nodes[node.0].caret))
+    }
+    fn focus_node(&mut self, node: &FakeNode, selection: Option<(usize, usize)>) {
+        self.focused = Some(node.0);
+        if let Some((_, end)) = selection {
+            self.nodes[node.0].caret = end;
+        }
+    }
+    fn move_child(&mut self, parent: &FakeNode, index: usize, child: &FakeNode) {
+        if self.supports_move_before {
+            // Atomic: detach without blurring.
+            let keep = self.focused;
+            self.insert_child(parent, index, child);
+            self.focused = keep;
+            self.atomic_moves += 1;
+        } else {
+            let had = self.focused_within(child).map(|f| (self.selection_of(&f), f));
+            self.insert_child(parent, index, child);
+            if let Some((sel, f)) = had {
+                self.focus_node(&f, sel);
+            }
+        }
     }
     fn listen(&mut self, event: &str) {
         self.listening.insert(event.into());

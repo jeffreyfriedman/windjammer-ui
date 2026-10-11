@@ -25,6 +25,27 @@ pub trait DomPort {
     fn insert_child(&mut self, parent: &Self::Node, index: usize, child: &Self::Node);
     fn remove(&mut self, node: &Self::Node);
     fn replace(&mut self, old: &Self::Node, new: &Self::Node);
+    /// Focused descendant-or-self of `node`, if any.
+    fn focused_within(&self, _node: &Self::Node) -> Option<Self::Node> {
+        None
+    }
+    /// Text selection `(start, end)` of an input-like node.
+    fn selection_of(&self, _node: &Self::Node) -> Option<(usize, usize)> {
+        None
+    }
+    /// Focus `node` and restore `selection` if given.
+    fn focus_node(&mut self, _node: &Self::Node, _selection: Option<(usize, usize)>) {}
+    /// Move an attached `child` to `index` among `parent`'s other children without
+    /// losing focus or selection. Reparenting through remove+insert blurs the focused
+    /// node in browsers; hosts with an atomic move (`Element.moveBefore`) override this,
+    /// the default restores focus and selection after `insert_child`.
+    fn move_child(&mut self, parent: &Self::Node, index: usize, child: &Self::Node) {
+        let had_focus = self.focused_within(child).map(|f| (self.selection_of(&f), f));
+        self.insert_child(parent, index, child);
+        if let Some((sel, f)) = had_focus {
+            self.focus_node(&f, sel);
+        }
+    }
     /// Start delivering `event` (capturing, at the container) to the app.
     fn listen(&mut self, event: &str);
 }
@@ -96,8 +117,8 @@ fn apply_op<P: DomPort>(port: &mut P, op: &PatchOp) {
         PatchOp::Move { parent, from, to } => {
             let p = resolve(port, parent);
             let n = port.child_at(&p, *from).expect("move source");
-            // insert_child detaches first, so `to` indexes the list without `n`.
-            port.insert_child(&p, *to, &n);
+            // `to` indexes the list without `n`; focus survives via move_child.
+            port.move_child(&p, *to, &n);
         }
         PatchOp::SetAttr { path, name, value } => {
             let n = resolve(port, path);

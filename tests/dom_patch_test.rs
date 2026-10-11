@@ -4,7 +4,7 @@ use std::cell::RefCell;
 use std::rc::Rc;
 use windjammer_ui::dom_patch::apply::{apply, canon};
 use windjammer_ui::dom_patch::fake_dom::FakeDom;
-use windjammer_ui::dom_patch::{diff, DomPort, Mounted, PatchOp};
+use windjammer_ui::dom_patch::{diff, prevent_default, stop_propagation, DomPort, Mounted, PatchOp};
 use windjammer_ui::simple_renderer::render_to_html;
 use windjammer_ui::simple_vnode::{VAttr, VNode};
 
@@ -292,4 +292,123 @@ fn xss_payloads_never_reach_the_dom_through_patching() {
     assert!(!snap.contains("onclick") && !snap.contains("script"), "{snap}");
     // Text stays literal text (the DOM never parses it), and the string renderer escapes it.
     assert!(render_to_html(&page("x", "<img src=x onerror=alert(1)>")).contains("&lt;img"));
+}
+
+// --- focus across moves (browser reparenting blurs; the patcher must restore) ---
+
+fn input_list(keys: &[&str]) -> VNode {
+    el("div", vec![], keys.iter().map(|k| keyed("input", k, vec![])).collect())
+}
+
+#[test]
+fn reparenting_blurs_in_the_fake_dom_like_a_browser() {
+    let mut m = Mounted::new(FakeDom::new());
+    m.update(&input_list(&["a", "b"]));
+    let a = m.port.find_by_attr("key", "a").unwrap();
+    m.port.focus(a);
+    let root = m.port.child_at(&m.port.container(), 0).unwrap();
+    m.port.insert_child(&root, 1, &a); // raw reparent, no patcher
+    assert_eq!(m.port.focused(), None, "model must reproduce the browser's blur-on-move");
+}
+
+#[test]
+fn keyed_move_restores_focus_and_selection_without_atomic_move() {
+    let mut m = Mounted::new(FakeDom::new());
+    m.update(&input_list(&["a", "b", "c"]));
+    let b = m.port.find_by_attr("key", "b").unwrap();
+    m.port.focus(b);
+    m.port.type_value(b, "hello", 2);
+    m.update(&input_list(&["c", "b", "a"]));
+    m.update(&input_list(&["b", "a", "c"]));
+    assert_eq!(m.port.focused(), Some(b));
+    assert_eq!(m.port.caret(b), 2);
+    assert_eq!(m.port.value(b).as_deref(), Some("hello"));
+    assert_eq!(m.port.atomic_moves, 0);
+}
+
+#[test]
+fn keyed_move_prefers_atomic_move_before_when_the_host_has_it() {
+    let mut dom = FakeDom::new();
+    dom.supports_move_before = true;
+    let mut m = Mounted::new(dom);
+    m.update(&input_list(&["a", "b", "c"]));
+    let a = m.port.find_by_attr("key", "a").unwrap();
+    m.port.focus(a);
+    m.update(&input_list(&["b", "c", "a"]));
+    assert_eq!(m.port.focused(), Some(a));
+    assert!(m.port.atomic_moves > 0, "should use moveBefore semantics");
+}
+
+#[test]
+fn moving_an_ancestor_of_the_focused_node_keeps_focus() {
+    let page = |keys: &[&str]| {
+        el("div", vec![], keys.iter().map(|k| keyed("div", k, vec![el("input", vec![("id", st(&format!("in-{k}")))], vec![])])).collect())
+    };
+    let mut m = Mounted::new(FakeDom::new());
+    m.update(&page(&["a", "b"]));
+    let inp = m.port.find_by_attr("id", "in-a").unwrap();
+    m.port.focus(inp);
+    m.update(&page(&["b", "a"]));
+    assert_eq!(m.port.focused(), Some(inp));
+}
+
+#[test]
+fn removing_the_focused_node_still_blurs() {
+    let mut m = Mounted::new(FakeDom::new());
+    m.update(&input_list(&["a", "b"]));
+    let b = m.port.find_by_attr("key", "b").unwrap();
+    m.port.focus(b);
+    m.update(&input_list(&["a"]));
+    assert_eq!(m.port.focused(), None);
+}
+
+// --- stop_propagation / prevent_default ---
+
+fn nested_click_tree(log: &Rc<RefCell<Vec<&'static str>>>, inner_action: fn()) -> VNode {
+    let mk = |tag: &'static str, act: Option<fn()>| -> VAttr {
+        let l = log.clone();
+        VAttr::Event(Rc::new(RefCell::new(move || {
+            l.borrow_mut().push(tag);
+            if let Some(f) = act { f() }
+        })))
+    };
+    el("div", vec![("on_click", mk("outer", None))], vec![
+        el("button", vec![("on_click", mk("inner", Some(inner_action)))], vec![]),
+    ])
+}
+
+#[test]
+fn stop_propagation_in_a_handler_skips_ancestor_handlers() {
+    let log = Rc::new(RefCell::new(Vec::new()));
+    let mut m = Mounted::new(FakeDom::new());
+    m.update(&nested_click_tree(&log, stop_propagation));
+    let btn = m.port.child_at(&m.port.child_at(&m.port.container(), 0).unwrap(), 0).unwrap();
+    let out = m.dispatch_event(&btn, "click");
+    assert_eq!(*log.borrow(), vec!["inner"]);
+    assert!(out.propagation_stopped && !out.default_prevented);
+    assert_eq!(out.handled, 1);
+}
+
+#[test]
+fn prevent_default_is_reported_and_does_not_stop_bubbling() {
+    let log = Rc::new(RefCell::new(Vec::new()));
+    let mut m = Mounted::new(FakeDom::new());
+    m.update(&nested_click_tree(&log, prevent_default));
+    let btn = m.port.child_at(&m.port.child_at(&m.port.container(), 0).unwrap(), 0).unwrap();
+    let out = m.dispatch_event(&btn, "click");
+    assert_eq!(*log.borrow(), vec!["inner", "outer"]);
+    assert!(out.default_prevented && !out.propagation_stopped);
+}
+
+#[test]
+fn propagation_flags_do_not_leak_between_dispatches() {
+    let log = Rc::new(RefCell::new(Vec::new()));
+    let mut m = Mounted::new(FakeDom::new());
+    m.update(&nested_click_tree(&log, stop_propagation));
+    let btn = m.port.child_at(&m.port.child_at(&m.port.container(), 0).unwrap(), 0).unwrap();
+    m.dispatch_event(&btn, "click");
+    let div = m.port.child_at(&m.port.container(), 0).unwrap();
+    let out = m.dispatch_event(&div, "click"); // outer only, handler does not stop
+    assert!(!out.propagation_stopped);
+    assert_eq!(*log.borrow(), vec!["inner", "outer"]);
 }

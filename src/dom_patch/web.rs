@@ -1,6 +1,6 @@
 //! web-sys adapter for [`DomPort`] (wasm32 + `web` feature only).
 
-use super::mounted::Mounted;
+use super::mounted::{run_handlers, DispatchOutcome, Mounted};
 use super::port::DomPort;
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
@@ -10,7 +10,7 @@ pub struct WebDom {
     document: Document,
     container: Element,
     /// Set by `listen`; the owner wires closures to `Mounted::dispatch`.
-    pub on_event: Option<std::rc::Rc<dyn Fn(Node, String)>>,
+    pub on_event: Option<std::rc::Rc<dyn Fn(Node, String) -> DispatchOutcome>>,
     closures: Vec<Closure<dyn FnMut(web_sys::Event)>>,
 }
 
@@ -106,12 +106,69 @@ impl DomPort for WebDom {
             let _ = p.replace_child(new, old);
         }
     }
+    fn focused_within(&self, node: &Node) -> Option<Node> {
+        let active: Node = self.document.active_element()?.into();
+        node.contains(Some(&active)).then_some(active)
+    }
+    fn selection_of(&self, node: &Node) -> Option<(usize, usize)> {
+        let get = |k: &str| js_sys::Reflect::get(node, &JsValue::from_str(k)).ok()?.as_f64();
+        Some((get("selectionStart")? as usize, get("selectionEnd")? as usize))
+    }
+    fn focus_node(&mut self, node: &Node, selection: Option<(usize, usize)>) {
+        if let Some(h) = node.dyn_ref::<web_sys::HtmlElement>() {
+            let _ = h.focus();
+        }
+        if let Some((a, b)) = selection {
+            let f = js_sys::Reflect::get(node, &JsValue::from_str("setSelectionRange")).ok();
+            if let Some(f) = f.and_then(|f| f.dyn_into::<js_sys::Function>().ok()) {
+                let _ = f.call2(node, &JsValue::from_f64(a as f64), &JsValue::from_f64(b as f64));
+            }
+        }
+    }
+    /// `Element.moveBefore` (state-preserving move; Chromium-first, feature-detected),
+    /// else remove+insert with focus/selection restored.
+    fn move_child(&mut self, parent: &Node, index: usize, child: &Node) {
+        let mb = js_sys::Reflect::get(parent, &JsValue::from_str("moveBefore"))
+            .ok()
+            .and_then(|f| f.dyn_into::<js_sys::Function>().ok());
+        if let Some(f) = mb {
+            // `index` addresses siblings without `child`.
+            let mut reference = parent.first_child();
+            let mut i = 0;
+            while let Some(r) = reference.clone() {
+                if &r == child {
+                    reference = r.next_sibling();
+                    continue;
+                }
+                if i == index {
+                    break;
+                }
+                i += 1;
+                reference = r.next_sibling();
+            }
+            let r = reference.map(JsValue::from).unwrap_or(JsValue::NULL);
+            if f.call2(parent, child, &r).is_ok() {
+                return;
+            }
+        }
+        let had = self.focused_within(child).map(|f| (self.selection_of(&f), f));
+        self.insert_child(parent, index, child);
+        if let Some((sel, f)) = had {
+            self.focus_node(&f, sel);
+        }
+    }
     fn listen(&mut self, event: &str) {
         let Some(cb) = self.on_event.clone() else { return };
         let name = event.to_string();
         let closure = Closure::wrap(Box::new(move |e: web_sys::Event| {
             if let Some(t) = e.target().and_then(|t| t.dyn_into::<Node>().ok()) {
-                cb(t, name.clone());
+                let out = cb(t, name.clone());
+                if out.default_prevented {
+                    e.prevent_default();
+                }
+                if out.propagation_stopped {
+                    e.stop_propagation();
+                }
             }
         }) as Box<dyn FnMut(web_sys::Event)>);
         let opts = web_sys::AddEventListenerOptions::new();
@@ -133,12 +190,10 @@ pub fn new_mounted(document: Document, container: Element) -> std::rc::Rc<std::c
     let mounted = Rc::new(RefCell::new(Mounted::new(WebDom::new(document, container))));
     let weak = Rc::downgrade(&mounted);
     mounted.borrow_mut().port.on_event = Some(Rc::new(move |target: Node, event: String| {
-        let Some(m) = weak.upgrade() else { return };
+        let Some(m) = weak.upgrade() else { return DispatchOutcome::default() };
         // Clone handlers out so no borrow is held while user code runs.
         let handlers = m.borrow().handlers_for(&target, &event);
-        for h in handlers {
-            (h.borrow_mut())();
-        }
+        run_handlers(&handlers)
     }));
     mounted
 }
