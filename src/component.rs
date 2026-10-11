@@ -20,6 +20,12 @@ pub trait Component: Send + Sync {
     /// Render the component to a virtual DOM node
     /// This is provided as a trait method for type safety
     fn render(&self) -> VNode;
+
+    /// Render to the canonical tree (`simple_vnode::VNode`) so the component can be mounted
+    /// through `dom_patch::Mounted`. Default: convert the legacy tree.
+    fn render_canonical(&self) -> crate::simple_vnode::VNode {
+        self.render().into()
+    }
 }
 
 /// Props trait for component properties

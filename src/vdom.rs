@@ -98,6 +98,36 @@ pub struct VComponent {
     pub props: HashMap<String, String>,
 }
 
+/// Bridge to the canonical tree: legacy trees can be mounted through `dom_patch`
+/// (keyed diff, delegated events, escaping) without migrating their producers.
+/// Attributes are emitted in key order so output is deterministic; `Empty` becomes an
+/// empty text node; an unexpanded `Component` becomes `<wj-component data-name=..>` with
+/// its props as `data-*` attributes.
+impl From<VNode> for crate::simple_vnode::VNode {
+    fn from(v: VNode) -> Self {
+        use crate::simple_vnode::{VAttr, VNode as C};
+        fn sorted(map: &HashMap<String, String>, prefix: &str) -> Vec<(String, VAttr)> {
+            let mut kv: Vec<_> = map.iter().collect();
+            kv.sort();
+            kv.into_iter().map(|(k, v)| (format!("{prefix}{k}"), VAttr::Static(v.clone()))).collect()
+        }
+        match v {
+            VNode::Text(t) => C::Text(t.content),
+            VNode::Empty => C::Text(String::new()),
+            VNode::Element(e) => C::Element {
+                tag: e.tag,
+                attrs: sorted(&e.attrs, ""),
+                children: e.children.into_iter().map(Into::into).collect(),
+            },
+            VNode::Component(c) => {
+                let mut attrs = vec![("data-name".to_string(), VAttr::Static(c.name))];
+                attrs.extend(sorted(&c.props, "data-"));
+                C::Element { tag: "wj-component".into(), attrs, children: vec![] }
+            }
+        }
+    }
+}
+
 /// Diff two virtual DOM trees and produce a list of patches
 pub fn diff(old: &VNode, new: &VNode) -> Vec<Patch> {
     let mut patches = Vec::new();
@@ -216,6 +246,32 @@ mod tests {
         let patches = diff(&old, &new);
         assert_eq!(patches.len(), 1);
         assert!(matches!(patches[0], Patch::UpdateText { .. }));
+    }
+
+    #[test]
+    fn legacy_tree_converts_and_mounts_through_the_keyed_patcher() {
+        use crate::dom_patch::{fake_dom::FakeDom, Mounted};
+        let legacy = VNode::Element(
+            VElement::new("ul").attr("class", "l").child(VNode::Element(VElement::new("li").attr("key", "a"))),
+        );
+        let canon: crate::simple_vnode::VNode = legacy.into();
+        let mut m = Mounted::new(FakeDom::new());
+        m.update(&canon);
+        let li = m.port.find_by_attr("key", "a").expect("li mounted");
+        assert_eq!(m.port.find_by_attr("class", "l").is_some(), true);
+        let _ = li;
+    }
+
+    #[test]
+    fn component_and_empty_nodes_convert_to_safe_placeholders() {
+        let mut props = HashMap::new();
+        props.insert("x".to_string(), "<1>".to_string());
+        let c: crate::simple_vnode::VNode =
+            VNode::Component(VComponent { name: "Foo".into(), props }).into();
+        let html = crate::simple_renderer::render_to_html(&c);
+        assert!(html.contains("<wj-component") && html.contains("data-name=\"Foo\"") && html.contains("data-x=\"&lt;1&gt;\""), "{html}");
+        let e: crate::simple_vnode::VNode = VNode::Empty.into();
+        assert_eq!(crate::simple_renderer::render_to_html(&e), "");
     }
 
     #[test]
