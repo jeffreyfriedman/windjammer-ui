@@ -66,6 +66,7 @@ pub mod undo_redo; // Available on all platforms
 pub mod component;
 pub mod dom_patch;
 pub mod escape;
+pub mod safe_dom_js;
 pub mod component_runtime;
 pub mod components; // Component library
 pub mod events;
