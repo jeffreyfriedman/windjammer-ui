@@ -32,7 +32,7 @@ pub enum VNode {
         children: Vec<VNode>,
     },
     Text(String),
-    /// Trusted HTML fragment (DownstreamApp Home pilot).
+    /// Trusted HTML fragment (Hash-routed pilot).
     RawHtml(String),
 }
 

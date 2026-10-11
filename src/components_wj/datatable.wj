@@ -1,4 +1,4 @@
-// DataTable — finance-oriented table alias with empty state (P0)
+// DataTable — data table alias with empty state (P0)
 
 use super::traits::Renderable
 use super::table::{Table, TableColumn, TableRow}

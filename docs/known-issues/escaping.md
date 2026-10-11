@@ -15,27 +15,13 @@ Highest-risk first: `Text`, `Button` labels, `Alert`, `Input` (`value`, `placeho
 `Link`/`Image` (`href`/`src`: also pass through `sanitize_url`), `DataTable` cells, `Tabs`,
 `Modal`, `CommandPalette`, `Tooltip`, `Badge`, `Card` title/body.
 
-## Hand-maintained files: `*_html` fields are `RawHtml`
+## Domain-specific runtimes moved out
 
-The pre-rendered HTML slots now have type `escape::RawHtml` (constructors take `impl Into<RawHtml>`; there is no
-`From<&str>`/`From<String>`, so passing a plain string is a compile error). Use `RawHtml::new(markup)` for trusted markup
-and `RawHtml::text(s)` for plain text (escaped). This breaks callers in downstream-screens, which must wrap values.
-
-- `accountrail.rs`: `AccountRailItem.balance_html`
-- `checkbookregister.rs`: `CheckbookRow.amount_html`, `balance_html`
-- `bankmatch.rs`: `BankMatchRow.je_options_html`
-- `businessworkspace.rs`: `rail_html`, `register_html`, `write_check_html`, `memorized_html`, `bank_html`
-
-The `.wj` copies of accountrail, bankmatch and checkbookregister still take `string`; they leave with the extraction.
-
-## Embedded JS runtimes (audited)
-
-No runtime assigns `innerHTML`/`outerHTML`, calls `insertAdjacentHTML`, `document.write` or `eval`, except through
-`window.wjDom` (`src/safe_dom_js.rs`): `setText`, `note`, `clear`, `setSafeHtml` (DOMParser, strips scripts/frames/`on*`/bad
-URLs, executes nothing), and `setTrustedHtml`, the single audited sink used only by `hashrouter` for static app-authored
-pages. `tests/embedded_js_test.rs` enforces this statically and runs the runtimes under node with a DOM stub.
-Behaviour change: markup returned by `window.lkRender[kind]`, `__wjRenderReadModel` and `LK_NAVS` is now sanitised, so
-inline `on*` handlers or `<script>` in those renderers no longer work (use `data-*` attributes plus delegation).
+The hand-maintained domain components (register/matching tables, bearer-token fetch and shell runtimes) and their
+embedded-JS tests were removed from this crate and now live in the consuming application. Their `*_html` fields use
+`escape::RawHtml` (`RawHtml::new(markup)` for trusted markup, `RawHtml::text(s)` for escaped plain text).
+Shared DOM helpers remain in `src/safe_dom_js.rs` (`window.wjDom`: `setText`, `note`, `clear`, `setSafeHtml`,
+`setTrustedHtml`); no runtime in this crate assigns `innerHTML`/`outerHTML` or calls `eval`.
 
 ## Legacy `vdom` string renderers
 

@@ -1,4 +1,4 @@
-// Icon — compact inline SVG glyphs for finance shells (dogfood extension).
+// Icon — compact inline SVG glyphs for app shells.
 // Named icons keep call sites DRY; paths are decorative (aria-hidden).
 
 use super::traits::Renderable

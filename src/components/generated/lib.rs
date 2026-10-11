@@ -70,23 +70,17 @@
 // This file declares all generated Windjammer modules
 
 pub mod accordion;
-pub mod accountrail;
 pub mod advancedcodeeditor;
 pub mod alert;
-pub mod approvalcard;
-pub mod appshell;
-pub mod authfetch;
 pub mod avatar;
 pub mod badge;
 pub mod breadcrumb;
-pub mod businessworkspace;
 pub mod button;
 pub mod card;
 pub mod center;
 pub mod chart;
 pub mod chatinput;
 pub mod chatmessage;
-pub mod checkbookregister;
 pub mod checkbox;
 pub mod chip;
 pub mod codeblock;
@@ -94,11 +88,8 @@ pub mod codeeditor;
 pub mod collapsible;
 pub mod colorpicker;
 pub mod column;
-pub mod commandpalette;
-pub mod compliancescorebadge;
 pub mod container;
 pub mod contextmenu;
-pub mod currencyinput;
 pub mod curve_editor;
 pub mod datatable;
 pub mod datepicker;
@@ -118,18 +109,14 @@ pub mod kpitile;
 pub mod label;
 pub mod list;
 pub mod loading;
-pub mod memorizedlist;
 pub mod menu;
 pub mod messagelist;
 pub mod modal;
-pub mod moneydisplay;
 pub mod navbar;
 pub mod node_graph;
 pub mod pagination;
 pub mod panel;
 pub mod panelhead;
-pub mod periodbadge;
-pub mod daystoclosemetric;
 pub mod popover;
 pub mod progress;
 pub mod propertyeditor;
@@ -140,7 +127,6 @@ pub mod scroll;
 pub mod scrollarea;
 pub mod section;
 pub mod select;
-pub mod shellnav;
 pub mod sidebar;
 pub mod skeleton;
 pub mod slider;
@@ -148,8 +134,6 @@ pub mod spacer;
 pub mod spinner;
 pub mod splitpanel;
 pub mod stack;
-pub mod statuschip;
-pub mod syncbadge;
 pub mod stepper;
 pub mod style;
 pub mod switch;
@@ -170,23 +154,17 @@ pub mod vnode;
 
 // Re-export all public items
 pub use accordion::*;
-pub use accountrail::*;
 pub use advancedcodeeditor::*;
 pub use alert::*;
-pub use approvalcard::*;
-pub use appshell::*;
-pub use authfetch::*;
 pub use avatar::*;
 pub use badge::*;
 pub use breadcrumb::*;
-pub use businessworkspace::*;
 pub use button::*;
 pub use card::*;
 pub use center::*;
 pub use chart::*;
 pub use chatinput::*;
 pub use chatmessage::*;
-pub use checkbookregister::*;
 pub use checkbox::*;
 pub use chip::*;
 pub use codeblock::*;
@@ -194,10 +172,8 @@ pub use codeeditor::*;
 pub use collapsible::*;
 pub use colorpicker::*;
 pub use column::*;
-pub use commandpalette::*;
 pub use container::*;
 pub use contextmenu::*;
-pub use currencyinput::*;
 pub use curve_editor::*;
 pub use datatable::*;
 pub use datepicker::*;
@@ -217,18 +193,14 @@ pub use kpitile::*;
 pub use label::*;
 pub use list::*;
 pub use loading::*;
-pub use memorizedlist::*;
 pub use menu::*;
 pub use messagelist::*;
 pub use modal::*;
-pub use moneydisplay::*;
 pub use navbar::*;
 pub use node_graph::*;
 pub use pagination::*;
 pub use panel::*;
 pub use panelhead::*;
-pub use periodbadge::*;
-pub use daystoclosemetric::*;
 pub use popover::*;
 pub use progress::*;
 pub use propertyeditor::*;
@@ -239,7 +211,6 @@ pub use scroll::*;
 pub use scrollarea::*;
 pub use section::*;
 pub use select::*;
-pub use shellnav::*;
 pub use sidebar::*;
 pub use skeleton::*;
 pub use slider::*;
@@ -247,8 +218,6 @@ pub use spacer::*;
 pub use spinner::*;
 pub use splitpanel::*;
 pub use stack::*;
-pub use statuschip::*;
-pub use syncbadge::*;
 pub use stepper::*;
 pub use style::*;
 pub use switch::*;
@@ -367,44 +336,12 @@ pub use wasm_events::*;
 // #[cfg(target_arch = "wasm32")]
 // pub use examples_wasm::*;
 
-// Hand-maintained (DownstreamApp R1.3) — keep SKIP_WJ_REGEN=1; tracked by codegen_write_check_form_test.
-pub mod writecheckform;
-pub use writecheckform::*;
 
-// Hand-maintained (DownstreamApp R2.3) — keep SKIP_WJ_REGEN=1; tracked by codegen_bank_match_row_test.
-pub mod bankmatch;
-pub use bankmatch::*;
 
-// Hand-maintained (P3.38) — Bearer JSON POST + login form runtimes.
-pub mod jsonpost;
-pub use jsonpost::*;
-pub mod loginform;
-pub use loginform::*;
 
-// Hand-maintained (P3.39) — bank recon strip/queue/finish/export runtime.
-pub mod reconcileactions;
-pub use reconcileactions::*;
 
-// Hand-maintained (P3.40) — persona / density / shell-nav host helpers.
-pub mod shellchrome;
-pub use shellchrome::*;
 
-// Hand-maintained (P3.41) — window.lkRender → WASM/WJ read-model bridge.
-pub mod readmodelbridge;
-pub use readmodelbridge::*;
 
-// Hand-maintained (P3.42) — shortcut chord keydown (expects host LK_SHORTCUTS map).
-pub mod shortcutchord;
-pub use shortcutchord::*;
 
-// Hand-maintained (P3.43) — DownstreamApp layout stylesheet (tokens stay in product host).
-pub mod ledgertheme;
-pub use ledgertheme::*;
 
-// Hand-maintained (P3.44) — static SPA hash mount (expects host LK_PAGES / LK_TITLES).
-pub mod hashrouter;
-pub use hashrouter::*;
 
-// Hand-maintained (P3.50) — packs shell + finance product host runtimes.
-pub mod shellruntimes;
-pub use shellruntimes::*;

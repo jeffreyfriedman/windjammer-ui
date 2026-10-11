@@ -23,7 +23,7 @@ impl Renderable for BtDebuggerOverlay {
             + &"</ul>";
         let mut dbg = "".to_string();
         dbg = format!("{}{}", dbg, "<aside class=\"bt-debug-pane\">");
-        dbg = format!("{}{}", dbg, "<strong>Visualizer</strong><p class=\"muted\">Shares color tokens with game-host-core bt_visual_debug snapshots.</p>");
+        dbg = format!("{}{}", dbg, "<strong>Visualizer</strong><p class=\"muted\">Shares color tokens with the engine bt_visual_debug snapshots.</p>");
         dbg = format!("{}{}", dbg, legend);
         format!("{}{}", dbg, "</aside>")
     }

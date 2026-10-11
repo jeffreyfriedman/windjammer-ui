@@ -11,7 +11,7 @@
 windjammer-ui has a solid, tested patcher and escaping core, but three component models, a render loop that rebuilds
 and diffs the whole tree per frame, no connection between signals and DOM nodes, no mobile story, an egui desktop path
 that shares nothing with the web components, and accessibility that depends on whoever wrote each component. Two real
-consumers exist: web business apps (DownstreamApp downstream screens) and the engine's editor panels (egui desktop).
+consumers exist: web business apps (a downstream finance app) and the engine's editor panels (egui desktop).
 
 ## Options considered
 
@@ -131,8 +131,8 @@ fields, SSR hardening, examples compile, browserless test setups. Exit: `cargo t
   test (`wasm-pack test --headless --chrome`) in CI.
 - Router on History API with typed params, guards; form state + validation primitives; `resource` (async data with
   loading/error states) built on signals.
-- Exit: every component has a keyboard test (FakeDom event simulation) and passes axe in the browser suite; DownstreamApp
-  downstream-screens builds against the new API with ledger components extracted.
+- Exit: every component has a keyboard test (FakeDom event simulation) and passes axe in the browser suite; a downstream finance app
+  builds against the new API with domain components extracted.
 - Compiler asks: C4, C5.
 
 ### Stage 3: compiler-assisted reactivity and DX (needs compiler team)
@@ -168,7 +168,7 @@ Details and minimal repros in `docs/compiler-requests/README.md`.
 
 - Short term: no rewrite. Stage 1 is a refactor of reactivity plus deletions, protected by the existing property tests.
 - Library surface shrinks (string-builder path, vdom, mobile stubs, macros removed) and breaks consumers that use them;
-  downstream-screens must migrate (also true for the `RawHtml` field change landed now).
+  downstream apps must migrate (also true for the `RawHtml` field change landed now).
 - The Dioxus-style IR plus mutation stream decision means desktop-egui and web stay on one tree; the cost is that
   direct-DOM bindings (stage 3) need a second code path for non-DOM renderers (fall back to regions).
 - We accept that Wasm size will not match Svelte/Solid until the JS backend exists; the budget and measurement are in stage 1.

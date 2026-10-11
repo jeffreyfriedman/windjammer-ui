@@ -14,7 +14,7 @@
 - `button_click_test.rs` - Needs egui_kittest dev dependency
 - `simple_button_test.rs` - Needs egui_kittest dev dependency
 
-### ⏭️ Moved to game-host
+### ⏭️ Moved to the engine repo
 - `integration_tests.rs` - Uses undo_redo, build_system, file_watcher (game editor modules)
 - `editor_comprehensive_test.rs` - Uses EditorApp/scene_gizmos/asset_browser
 - `editor_kittest.rs` - Game editor UI tests

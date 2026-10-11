@@ -1,4 +1,4 @@
-// DatePicker — HTML date input for finance forms (P0)
+// DatePicker — HTML date input for forms (P0)
 
 use super::traits::Renderable
 

@@ -2,7 +2,7 @@
 //!
 //! Context: windjammer-runtime used to be an unconditional dependency of windjammer-ui and
 //! always pulled axum/tokio/mio, which fails on `wasm32-unknown-unknown`. UI web/WASM dogfood
-//! (DownstreamApp, counter_wasm) requires this to stay green.
+//! (downstream apps, counter_wasm) requires this to stay green.
 //!
 //! Run:
 //!   cargo check -p windjammer-ui --target wasm32-unknown-unknown --no-default-features --features web

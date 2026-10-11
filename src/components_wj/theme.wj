@@ -80,7 +80,7 @@ impl ColorPalette {
         }
     }
 
-    // DownstreamApp / calm fintech light (dogfood for financial apps)
+    // calm light palette
     pub fn fintech_light() -> ColorPalette {
         ColorPalette {
             bg_primary: "#e6ecf1".to_string(),
@@ -211,7 +211,7 @@ impl EditorTheme {
 
     pub fn fintech_light() -> EditorTheme {
         EditorTheme {
-            name: "DownstreamApp Fintech Light".to_string(),
+            name: "Calm Light".to_string(),
             palette: ColorPalette::fintech_light(),
             font_family: "'Sora', 'IBM Plex Sans', sans-serif".to_string(),
             font_size_base: 14,

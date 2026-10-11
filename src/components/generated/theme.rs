@@ -201,7 +201,7 @@ impl EditorTheme {
     #[inline]
     pub fn fintech_light() -> EditorTheme {
         EditorTheme {
-            name: "DownstreamApp Fintech Light".to_string(),
+            name: "Calm Light".to_string(),
             palette: ColorPalette::fintech_light(),
             font_family: "'Sora', 'IBM Plex Sans', sans-serif".to_string(),
             font_size_base: 14_i32,

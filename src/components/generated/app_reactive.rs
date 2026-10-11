@@ -53,7 +53,7 @@ impl ReactiveApp {
     }
 
     /// Mount into a CSS selector instead of the default `#app`.
-    /// Hybrid DownstreamApp shell: `.mount_target("#main")` preserves chrome.
+    /// Hybrid app shell: `.mount_target("#main")` preserves chrome.
     pub fn mount_target(mut self, selector: impl Into<String>) -> Self {
         self.mount = self.mount.mount_target(selector);
         self

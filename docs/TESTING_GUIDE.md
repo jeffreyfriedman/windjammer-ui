@@ -30,7 +30,7 @@ The UI server should be running on **http://localhost:8080**
 
 If it's not running, start it with:
 ```bash
-cd /home/user/src/windjammer/crates/windjammer-ui
+cd <workspace>/crates/windjammer-ui
 cargo run --bin serve_wasm
 ```
 
@@ -127,7 +127,7 @@ cargo run --bin serve_wasm
 ### Desktop Game Editor
 **Status**: 🔄 In Development (75% complete)
 
-**Location**: `crates/game-host-editor`
+**Location**: `crates/<editor-crate>`
 
 **Current state**:
 - ✅ Tauri backend ready with file operations
@@ -136,7 +136,7 @@ cargo run --bin serve_wasm
 
 **To test the current HTML/JS version**:
 ```bash
-cd /home/user/src/windjammer/crates/game-host-editor
+cd <workspace>/crates/<editor-crate>
 cargo tauri dev
 ```
 
@@ -207,7 +207,7 @@ cargo tauri dev
 
 ### 1. Start the Server
 ```bash
-cd /home/user/src/windjammer/crates/windjammer-ui
+cd <workspace>/crates/windjammer-ui
 cargo run --bin serve_wasm
 ```
 
@@ -234,7 +234,7 @@ Visit: http://localhost:8080/examples/index.html
 lsof -ti:8080 | xargs kill -9
 
 # Start fresh
-cd /home/user/src/windjammer/crates/windjammer-ui
+cd <workspace>/crates/windjammer-ui
 cargo run --bin serve_wasm
 ```
 
@@ -252,7 +252,7 @@ cargo run --bin serve_wasm
 ### Desktop Editor Won't Launch
 ```bash
 # Rebuild Tauri app
-cd /home/user/src/windjammer/crates/game-host-editor
+cd <workspace>/crates/<editor-crate>
 cargo tauri build
 
 # Or run in dev mode
@@ -313,5 +313,5 @@ When testing, note:
 
 **Ready to test?** Start here: http://localhost:8080/examples/index.html
 
-**Questions?** Check the docs in `/home/user/src/windjammer/docs/`
+**Questions?** Check the docs in `<workspace>/docs/`
 

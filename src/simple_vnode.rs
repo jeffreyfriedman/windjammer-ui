@@ -20,7 +20,7 @@ pub enum VNode {
         children: Vec<VNode>,
     },
     Text(String),
-    /// Trusted HTML fragment (DownstreamApp Home pilot: finance-ui body into `#main`).
+    /// Trusted HTML fragment (Hash-routed pilot: page body into `#main`).
     RawHtml(String),
 }
 

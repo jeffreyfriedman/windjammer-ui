@@ -1,4 +1,4 @@
-// Alert — calm status banners (finance dogfood: no emoji marks)
+// Alert — calm status banners (no emoji marks)
 
 use super::traits::Renderable
 

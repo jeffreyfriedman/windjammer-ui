@@ -163,7 +163,7 @@ renderer choice. On egui the tree is whatever egui exposes. A custom canvas rend
   history API in this crate), `AuthGuard`. The hash router actually used is embedded JS (`hashrouter`).
 - State: signals, plus `undo_redo.rs` (command pattern; good, editor-oriented). No store/context/DI.
 - Forms: `form`/`input` string builders; validation is per example. No form state model.
-- Data fetching: JS `authfetch`/`jsonpost` runtimes (ledger-specific bearer-token code). Nothing in Windjammer.
+- Data fetching: JS `authfetch`/`jsonpost` runtimes (app-specific bearer-token code). Nothing in Windjammer.
 
 ### 2.9 Testing, DX
 
@@ -292,7 +292,7 @@ compiler can analyse it.
 5. Accessibility is incidental.
 6. Behaviour lives in JS strings; 17 hand-maintained generated files; 27 stale duplicated core modules.
 7. No DX loop (hot reload, error overlay), no real-browser test, no measured size/perf numbers.
-8. Domain (ledger) components living in a general library.
+8. Domain (app-specific) components living in a general library.
 
 ## 6. Honest tradeoffs
 
@@ -307,7 +307,7 @@ compiler can analyse it.
 - **Own renderer vs webview.** An own renderer (egui/Slint/wgpu) is attractive for game-editor panels that live next to a
   GPU viewport and is what the engine consumer actually uses today. It is a poor fit for web (size, a11y, text) and an
   open-ended cost for mobile (IME, a11y, platform conventions). A webview shell shares the web component set and its a11y.
-  There is no single answer; there are two real consumers (web business apps like DownstreamApp, and the engine editor).
+  There is no single answer; there are two real consumers (web business apps, and the engine editor).
 - **Scope.** The honest competitor set for web is Leptos/Dioxus/Sycamore, who have years of head start and teams. A
   differentiator has to be the language (inferred ownership, no macros, multi-backend), not a bigger widget library.
 
@@ -316,7 +316,7 @@ compiler can analyse it.
 - Run js-framework-benchmark or an equivalent harness on a windjammer-ui keyed-list app (Chrome version pinned).
 - Measure counter and todo wasm size: raw, after `wasm-opt -Oz`, gzip and brotli.
 - Measure DOM-op throughput of the patcher on 1k/10k rows, with and without cached node handles.
-- Check Tauri 2 mobile plugin coverage for what DownstreamApp/engine editor need.
+- Check Tauri 2 mobile plugin coverage for what a downstream business app and the engine editor need.
 - Re-verify Svelte 5, Solid, Qwik, egui/iced claims marked **[K]**.
 
 ## 8. Sources (retrieved 2026-10-11)

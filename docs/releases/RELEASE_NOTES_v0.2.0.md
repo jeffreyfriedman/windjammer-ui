@@ -110,7 +110,7 @@ Requires Windjammer v0.37.2 or later.
 
 ## 🔜 What's Next
 
-- Continue dogfooding with `game-host` framework
+- Continue dogfooding with a game-engine host
 - Add more interactive components based on user feedback
 - Improve desktop platform support
 - Expand mobile platform support

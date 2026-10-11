@@ -7,7 +7,7 @@ pub fn default_mount_selector() -> &'static str {
     "#app"
 }
 
-/// Builder state for where ReactiveApp remounts HTML (DownstreamApp: `#main`).
+/// Builder state for where ReactiveApp remounts HTML (e.g. `#main`).
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct MountTarget {
     selector: String,

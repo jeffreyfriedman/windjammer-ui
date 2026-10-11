@@ -697,7 +697,7 @@ App::new_reactive("My App", move || {
 
 ## Getting Help
 
-- **GitHub:** [windjammer/issues](https://github.com/jeffreyfriedman/windjammer)
+- **GitHub:** windjammer compiler repository issue tracker
 - **Docs:** `windjammer-ui/docs/`
 - **Examples:** `windjammer-ui/examples_wj/`
 

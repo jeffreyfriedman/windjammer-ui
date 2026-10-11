@@ -4,7 +4,7 @@
 
 use super::traits::Renderable;
 
-/// Finance panel chrome — hub kicker, title, optional lede, and action slot.
+/// Panel chrome — hub kicker, title, optional lede, and action slot.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 #[repr(C)]
 pub struct PanelHead {

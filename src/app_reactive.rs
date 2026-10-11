@@ -49,7 +49,7 @@ impl ReactiveApp {
     }
 
     /// Mount into a CSS selector instead of the default `#app`.
-    /// Hybrid DownstreamApp shell: `.mount_target("#main")` preserves chrome.
+    /// Hybrid app shell: `.mount_target("#main")` preserves chrome.
     pub fn mount_target(mut self, selector: impl Into<String>) -> Self {
         self.mount = self.mount.mount_target(selector);
         self
@@ -66,7 +66,7 @@ impl ReactiveApp {
     }
 
     /// One-shot remount into `mount_target` without starting the RAF loop.
-    /// DownstreamApp Home pilot: hash changes call this instead of stacking `run()` loops.
+    /// Hash-routed pilot: hash changes call this instead of stacking `run()` loops.
     #[cfg(target_arch = "wasm32")]
     pub fn paint_once(self) {
         use wasm_bindgen::JsCast;
