@@ -54,10 +54,29 @@ impl SSRRenderer {
 </body>
 </html>"#,
             Self::escape_html(title),
-            serde_json::to_string(&self.state).unwrap_or_default(),
+            Self::state_json_for_script(&self.state),
             body_html,
             self.get_hydration_script()
         )
+    }
+
+    /// JSON for an inline `<script type="application/json">`: `<`, `>`, `&` and the JS
+    /// line separators are `\u`-escaped so state values cannot close the tag or start a
+    /// comment. `JSON.parse` / serde decode the escapes back to the original text.
+    fn state_json_for_script(state: &HashMap<String, String>) -> String {
+        let json = serde_json::to_string(state).unwrap_or_default();
+        let mut out = String::with_capacity(json.len());
+        for c in json.chars() {
+            match c {
+                '<' => out.push_str("\\u003c"),
+                '>' => out.push_str("\\u003e"),
+                '&' => out.push_str("\\u0026"),
+                '\u{2028}' => out.push_str("\\u2028"),
+                '\u{2029}' => out.push_str("\\u2029"),
+                c => out.push(c),
+            }
+        }
+        out
     }
 
     /// Get the hydration script
@@ -99,6 +118,9 @@ impl SSRRenderer {
 
     /// Render an element
     fn render_element(&mut self, element: &VElement) {
+        if !crate::escape::is_valid_tag(&element.tag) {
+            return; // invalid or blocked tag: emit nothing (children dropped too)
+        }
         // Opening tag
         self.html.push('<');
         self.html.push_str(&element.tag);
@@ -215,9 +237,17 @@ impl StreamingSSRRenderer {
 
         self.render_vnode_to_buffer(vnode, &mut buffer);
 
-        // Split into chunks
-        for chunk in buffer.as_bytes().chunks(self.chunk_size) {
-            self.chunks.push(String::from_utf8_lossy(chunk).to_string());
+        // Split into chunks of at most `chunk_size` bytes, never inside a character
+        // (a single character wider than the limit gets its own chunk).
+        let mut rest = buffer.as_str();
+        while !rest.is_empty() {
+            let mut end = self.chunk_size.max(1).min(rest.len());
+            while !rest.is_char_boundary(end) {
+                end += 1;
+            }
+            let (head, tail) = rest.split_at(end);
+            self.chunks.push(head.to_string());
+            rest = tail;
         }
 
         self.chunks.clone()
@@ -227,6 +257,9 @@ impl StreamingSSRRenderer {
     fn render_vnode_to_buffer(&self, vnode: &VNode, buffer: &mut String) {
         match vnode {
             VNode::Element(element) => {
+                if !crate::escape::is_valid_tag(&element.tag) {
+                    return;
+                }
                 buffer.push('<');
                 buffer.push_str(&element.tag);
 
@@ -298,7 +331,8 @@ impl Hydration {
     {}
 </body>
 </html>"#,
-            title, body_html
+            SSRRenderer::escape_html(title),
+            body_html
         )
     }
 }
@@ -426,5 +460,89 @@ mod tests {
         renderer.render_vnode(&vnode);
         assert!(renderer.html.contains("&quot;"));
         assert!(renderer.html.contains("&lt;script&gt;"));
+    }
+
+    fn render(v: &VNode) -> String {
+        let mut r = SSRRenderer::new();
+        r.render_vnode(v);
+        r.html
+    }
+
+    #[test]
+    fn url_attributes_are_sanitized_for_every_url_attr() {
+        for name in ["href", "src", "action", "formaction", "poster", "data", "cite", "background", "ping", "xlink:href"] {
+            for bad in ["javascript:alert(1)", "JaVaScRiPt:alert(1)", " \tjava\nscript:alert(1)", "vbscript:x", "data:text/html,<script>alert(1)</script>"] {
+                let out = render(&VNode::Element(VElement::new("a").attr(name, bad)));
+                assert!(!out.to_lowercase().contains("script:") && !out.contains("data:text"), "{name}={bad:?} -> {out}");
+                assert!(out.contains(&format!("{name}=\"#\"")), "{name}={bad:?} -> {out}");
+            }
+        }
+    }
+
+    #[test]
+    fn safe_urls_pass_through_and_are_attribute_escaped() {
+        let out = render(&VNode::Element(VElement::new("a").attr("href", "https://x.test/?a=1&b=\"2\"")));
+        assert!(out.contains("href=\"https://x.test/?a=1&amp;b=&quot;2&quot;\""), "{out}");
+        for ok in ["/rel/path", "#frag", "mailto:a@b.test", "tel:+1555", "data:image/png;base64,AAAA"] {
+            let out = render(&VNode::Element(VElement::new("a").attr("href", ok)));
+            assert!(out.contains(&format!("href=\"{ok}\"")), "{ok} -> {out}");
+        }
+    }
+
+    #[test]
+    fn inline_handlers_and_bad_attribute_names_are_dropped() {
+        let out = render(&VNode::Element(
+            VElement::new("div").attr("onclick", "alert(1)").attr("x\" onfocus=\"alert(1)", "v").attr("id", "ok"),
+        ));
+        assert!(!out.contains("onclick") && !out.contains("onfocus"), "{out}");
+        assert!(out.contains("id=\"ok\""));
+    }
+
+    #[test]
+    fn hostile_tag_names_cannot_inject_markup() {
+        for tag in ["script", "img src=x onerror=alert(1)", "div><script>alert(1)</script", "iframe"] {
+            let out = render(&VNode::Element(VElement::new(tag).child(VText::new("t").into())));
+            assert!(!out.contains("<script") && !out.contains("onerror") && !out.contains("<iframe"), "{tag:?} -> {out}");
+        }
+    }
+
+    #[test]
+    fn streaming_renderer_applies_the_same_sanitization() {
+        let v = VNode::Element(VElement::new("a").attr("href", "javascript:alert(1)").attr("onclick", "x").child(VText::new("<b>").into()));
+        let joined = StreamingSSRRenderer::new(7).render_vnode(&v).concat();
+        assert!(joined.contains("href=\"#\"") && !joined.contains("onclick") && joined.contains("&lt;b&gt;"), "{joined}");
+        let bad_tag = VNode::Element(VElement::new("script"));
+        assert!(!StreamingSSRRenderer::new(7).render_vnode(&bad_tag).concat().contains("<script"));
+    }
+
+    #[test]
+    fn streaming_chunks_never_split_multibyte_characters() {
+        let v = VNode::Text(VText::new("héllo wörld ✓ 日本語"));
+        let chunks = StreamingSSRRenderer::new(3).render_vnode(&v);
+        assert!(chunks.iter().all(|c| !c.contains('\u{FFFD}')), "{chunks:?}");
+        assert_eq!(chunks.concat(), "héllo wörld ✓ 日本語");
+    }
+
+    #[test]
+    fn hydration_state_cannot_break_out_of_the_json_script_tag() {
+        let mut r = SSRRenderer::new();
+        r.add_state("k".into(), "</script><img src=x onerror=alert(1)>".into());
+        r.add_state("\u{2028}".into(), "<!--".into());
+        let doc = r.render_to_document(Hello, "t</title><script>alert(1)</script>");
+        assert_eq!(doc.matches("</script>").count(), 2, "only the two real script tags: {doc}");
+        assert!(!doc.contains("<img src=x"), "{doc}");
+        assert!(!doc.contains("<script>alert"), "{doc}");
+        // The state must still round-trip through JSON.parse semantics.
+        let start = doc.find("application/json\">").unwrap() + "application/json\">".len();
+        let end = doc[start..].find("</script>").unwrap() + start;
+        let parsed: HashMap<String, String> = serde_json::from_str(doc[start..end].trim()).unwrap();
+        assert_eq!(parsed["k"], "</script><img src=x onerror=alert(1)>");
+    }
+
+    struct Hello;
+    impl crate::component::Component for Hello {
+        fn render(&self) -> VNode {
+            VNode::Text(VText::new("hi"))
+        }
     }
 }
