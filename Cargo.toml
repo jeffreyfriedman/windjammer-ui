@@ -115,11 +115,16 @@ console_error_panic_hook = { version = "0.1", optional = true }
 # NOTE: do not depend on windjammer-runtime on the normal path — it pulls axum/tokio/mio
 # and breaks wasm32. Tests that need it use the dev-dependency below.
 
-[dev-dependencies]
+[target.'cfg(not(target_arch = "wasm32"))'.dev-dependencies]
 tokio-test = "0.4"
 criterion = "0.5"
 windjammer-runtime = { path = "../windjammer/crates/windjammer-runtime", default-features = false }
 # egui_kittest = "0.29"  # Disabled due to version conflicts
+
+# Browserless wasm tests: run under node with `wasm-bindgen-test-runner` (see docs/TESTING_GUIDE.md).
+# The version must match the installed `wasm-bindgen` CLI (0.3.N <-> 0.2.(N+50)).
+[target.'cfg(target_arch = "wasm32")'.dev-dependencies]
+wasm-bindgen-test = "=0.3.58"
 
 [[bench]]
 name = "signal_benchmarks"

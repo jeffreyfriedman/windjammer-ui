@@ -1,3 +1,26 @@
+# Testing guide
+
+## Current commands (authoritative; the sections below are older and may lag)
+
+Use a private target dir on shared machines (`CARGO_TARGET_DIR=...`, `CARGO_BUILD_JOBS=3`).
+
+| What | Command |
+|------|---------|
+| Unit + integration (host) | `cargo test --lib --tests` |
+| Keyed patcher, focus, delegation, stop_propagation | `cargo test --test dom_patch_test` (uses `FakeDom`, which blurs on reparent like a browser) |
+| Embedded JS runtimes (no browser) | `cargo test --test embedded_js_test` (needs `node`; `WJ_UI_REQUIRE_NODE=1` makes a missing node an error). Runs runtimes against the stub in `tests/js/dom_stub.js` |
+| Patcher compiled to wasm32, run in node | `CARGO_TARGET_WASM32_UNKNOWN_UNKNOWN_RUNNER=wasm-bindgen-test-runner cargo test --target wasm32-unknown-unknown --test wasm_node_test` |
+| Nested build checks (separate target dir, timeouts) | `cargo test --test integration_ui_examples -- --ignored` (`WJ_UI_NESTED_TARGET_DIR`, `WJ_UI_NESTED_TIMEOUT_SECS`) |
+| Example `.wj` transpile checks | `cargo test --test examples_integration_test` (skipped when `wj` is not installed) |
+
+Wasm-in-node notes: the installed `wasm-bindgen` CLI must match the lockfile exactly
+(`wasm-bindgen 0.2.108` <-> `wasm-bindgen-test =0.3.58`, pinned in `Cargo.toml`). The wasm32
+dev-dependency set excludes `windjammer-runtime`/tokio (they do not build for wasm32).
+This setup tests pure logic only. Behaviour of `dom_patch::web` against a real DOM
+(`moveBefore`, focus restore, delegated listeners) needs a browser:
+`wasm-pack test --headless --chrome` with `wasm_bindgen_test_configure!(run_in_browser)`;
+no such test exists yet.
+
 # 🧪 Windjammer UI Framework - Testing Guide
 
 ## 🌐 Web Examples (WASM)
