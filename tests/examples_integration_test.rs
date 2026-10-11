@@ -19,11 +19,19 @@ fn transpile_example(path: &str) -> Result<(), String> {
 
     // Always use --no-cargo to skip cargo build
     // (Examples depend on windjammer-ui which may not be published yet)
+    // Generated Rust goes to a throwaway dir, never into the checkout.
+    let out_dir = std::env::temp_dir().join(format!(
+        "wj-ui-example-{}-{}",
+        std::process::id(),
+        Path::new(path).file_stem().and_then(|s| s.to_str()).unwrap_or("x")
+    ));
     let output = Command::new("wj")
-        .args(["build", path, "--no-cargo"])
+        .args(["build", path, "--no-cargo", "-o"])
+        .arg(&out_dir)
         .output()
         .map_err(|e| format!("Failed to run wj: {}", e))?;
 
+    let _ = std::fs::remove_dir_all(&out_dir);
     if !output.status.success() {
         return Err(format!(
             "Transpilation failed:\nstdout: {}\nstderr: {}",

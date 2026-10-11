@@ -8,14 +8,14 @@ fn start() {
     println!("📬 Starting Contact Form")
     
     // Form state
-    let name = Signal::new("".to_string())
-    let email = Signal::new("".to_string())
-    let message = Signal::new("".to_string())
+    let name = Signal::new("")
+    let email = Signal::new("")
+    let message = Signal::new("")
     
     // Validation errors
-    let name_error = Signal::new("".to_string())
-    let email_error = Signal::new("".to_string())
-    let message_error = Signal::new("".to_string())
+    let name_error = Signal::new("")
+    let email_error = Signal::new("")
+    let message_error = Signal::new("")
     
     // Submission state
     let is_submitting = Signal::new(false)
@@ -100,9 +100,9 @@ fn start() {
                                         println!("Form submitted successfully!")
                                         submit_success.set(true)
                                         // Reset form
-                                        name_submit.set("".to_string())
-                                        email_submit.set("".to_string())
-                                        message_submit.set("".to_string())
+                                        name_submit.set("")
+                                        email_submit.set("")
+                                        message_submit.set("")
                                     } else {
                                         println!("Validation failed")
                                     }

@@ -17,13 +17,13 @@ fn start() {
     
     // State
     let todos = Signal::new(vec![
-        TodoItem { id: 1, text: "Learn Windjammer".to_string(), completed: false },
-        TodoItem { id: 2, text: "Build UI framework".to_string(), completed: true },
-        TodoItem { id: 3, text: "Ship v0.1.0".to_string(), completed: false }
+        TodoItem { id: 1, text: "Learn Windjammer", completed: false },
+        TodoItem { id: 2, text: "Build UI framework", completed: true },
+        TodoItem { id: 3, text: "Ship v0.1.0", completed: false }
     ])
     let next_id = Signal::new(4)
-    let input_text = Signal::new("".to_string())
-    let filter = Signal::new("all".to_string()) // "all", "active", "completed"
+    let input_text = Signal::new("")
+    let filter = Signal::new("all") // "all", "active", "completed"
     
     let todos_add = todos
     let todos_toggle = todos
@@ -70,7 +70,7 @@ fn start() {
                                         })
                                         todos_add.set(current_todos)
                                         next_id_add.set(id + 1)
-                                        input_add.set("".to_string())
+                                        input_add.set("")
                                         println!("Added todo: {}", text)
                                     }
                                 })
