@@ -121,7 +121,7 @@ fn removed_nodes_disappear_from_the_known_set() {
 fn dom_projection_is_semantic_positioned_and_escaped() {
     let d = demo();
     let html = project(&d.scene.semantic_tree()).to_html();
-    for want in ["<h2", ">Settings</span>", "<input", "aria-label=\"Display name\"", "value=\"Ada\"", "type=\"checkbox\"", "<button", ">Save</button>", "<ul", "<li"] {
+    for want in ["<h2", ">Settings</h2>", "<input", "aria-label=\"Display name\"", "value=\"Ada\"", "type=\"checkbox\"", "<button", ">Save</button>", "<ul", "<li"] {
         assert!(html.contains(want), "missing {want:?} in {html}");
     }
     assert!(html.contains("position:absolute;left:"), "mirror is positioned over the canvas");

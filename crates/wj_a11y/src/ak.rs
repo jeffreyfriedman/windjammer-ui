@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use accesskit::{Action, Node, NodeId, Rect, Role, Toggled, Tree, TreeId, TreeUpdate};
+use accesskit::{Action, Node, NodeId, Rect, Role, Toggled, TreeId, TreeInfo, TreeUpdate};
 use wj_scene::{Action as SAction, NodeId as SId, Role as SRole, SemanticNode, SemanticTree};
 
 /// The synthetic window node that parents the scene's semantic roots.
@@ -94,7 +94,7 @@ impl AccessKitTree {
         self.sent = flat.into_iter().collect();
         self.last_focus = Some(focus_id);
         self.started = true;
-        let mut info = Tree::new(ROOT_ID);
+        let mut info = TreeInfo::new(ROOT_ID);
         info.toolkit_name = Some("windjammer-ui".into());
         Some(TreeUpdate { nodes: changed, tree: if first { Some(info) } else { None }, tree_id: TreeId::ROOT, focus: focus_id })
     }
