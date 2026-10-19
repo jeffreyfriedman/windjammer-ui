@@ -124,6 +124,7 @@ impl Scene {
                 scene.set_children(parent, idx.iter().map(|i| live[i].0).collect());
                 let mut st = scene.style(parent);
                 st.height = crate::Dim::Px(n as f32 * row_height);
+                st.flex_shrink = 0.0; // the extent is exact, never squeezed by the viewport
                 scene.set_style(parent, st);
             });
         });

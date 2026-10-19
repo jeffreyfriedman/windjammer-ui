@@ -1,0 +1,15 @@
+[package]
+name = "wj-layout"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Incremental layout for wj-scene: Taffy flexbox adapter with a pluggable text measurer"
+publish = false
+
+[dependencies]
+wj-scene = { path = "../wj_scene" }
+wj-reactive = { path = "../wj_reactive" }
+taffy = { version = "0.14", default-features = false, features = ["std", "taffy_tree", "flexbox", "content_size"] }
+
+[dev-dependencies]
+serde_json = "1"
