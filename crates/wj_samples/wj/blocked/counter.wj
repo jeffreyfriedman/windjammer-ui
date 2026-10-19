@@ -1,0 +1,11 @@
+use wj_reactive::state
+use wj_ui::button_fn
+use wj_ui::column
+
+pub fn counter() {
+    let count = state(0)
+    let view = column()
+        .center()
+        .child(button_fn(|| "Clicked ${count.get()} times").on_click(|| count.set(count.get() + 1)))
+    view.mount()
+}

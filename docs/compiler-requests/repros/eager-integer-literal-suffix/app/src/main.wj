@@ -1,0 +1,8 @@
+use handle_lib::new_handle
+use handle_lib::Record
+
+pub fn demo() {
+    let h = new_handle(0)
+    let doubled = h.get() * 2
+    let r = Record { id: h.get() }
+}

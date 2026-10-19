@@ -40,3 +40,8 @@ MODULE.md contracts: `src/dom_patch/MODULE.md`, `docs/modules/{escape,simple_vno
 ## Support
 - `src/components/generated/`: transpiler output (plus the 17 hand-maintained files). Never edit generated files by hand.
 - `tests/`: Rust integration tests, one per feature area.
+
+## New core (`crates/`, own workspace; layers lower to higher, never upward)
+- `wj_reactive` L0 reactive arena; `wj_scene` L1 node tree, bindings, events, semantic tree; `wj_layout` + `wj_text` L2;
+  `wj_paint` (+ `_cpu`, `_vello`) and `wj_a11y` L3; `wj_shell` (+ `_desktop`) L4; `wj_ui` Windjammer API; `wj_samples`, `wj_golden` test crates.
+- Each directory has a `MODULE.md` with its contract and tests.

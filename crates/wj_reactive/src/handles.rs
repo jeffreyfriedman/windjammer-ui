@@ -114,3 +114,21 @@ impl<T: 'static> Signal<T> {
         self.update(|slot| *slot = v);
     }
 }
+
+/// Anything readable as a `T` inside a tracking scope: `Signal<T>` and `Memo<T>`. Lets UI helpers
+/// take either by value (both are `Copy`), so views bind to state without writing a closure.
+pub trait Readable<T>: Copy + 'static {
+    fn read(&self) -> T;
+}
+
+impl<T: Clone + 'static> Readable<T> for Signal<T> {
+    fn read(&self) -> T {
+        self.get()
+    }
+}
+
+impl<T: Clone + 'static> Readable<T> for Memo<T> {
+    fn read(&self) -> T {
+        self.get()
+    }
+}

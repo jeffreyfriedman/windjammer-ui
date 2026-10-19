@@ -1,0 +1,28 @@
+use wj_reactive::state
+use wj_reactive::derived
+use wj_ui::column
+use wj_ui::row
+use wj_ui::text
+use wj_ui::button
+use wj_ui::each
+
+struct Todo {
+    id: int,
+    title: string,
+    done: bool,
+}
+
+pub fn todo_app() {
+    let todos = state(Vec::new())
+    let next_id = state(1)
+    let remaining = derived(|| todos.with(|list| list.filter(|t| !t.done).count()))
+    let view = column().gap(8.0).padding(16.0)
+        .child(button("Add task").on_click(|| {
+            let id = next_id.get()
+            todos.update(|list| list.push(Todo { id: id, title: "task ${id}", done: false }))
+            next_id.set(id + 1)
+        }))
+        .child(each(|| todos.with(|list| list.map(|t| t.id).collect()), |id| row().child(text("item ${id}"))))
+        .child(text("").text_fn(|| "${remaining.get()} left"))
+    view.mount()
+}

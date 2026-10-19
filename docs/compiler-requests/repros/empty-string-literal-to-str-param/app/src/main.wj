@@ -1,0 +1,6 @@
+use handle_lib::set_label
+
+pub fn demo() {
+    set_label("hello")
+    set_label("")
+}

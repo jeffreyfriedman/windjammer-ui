@@ -1,0 +1,18 @@
+[package]
+name = "wj-samples"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Windjammer sample views compiled by the wj compiler (build.rs) against the wj-ui API, with behaviour tests"
+publish = false
+build = "build.rs"
+
+[dependencies]
+wj-ui = { path = "../wj_ui" }
+wj-reactive = { path = "../wj_reactive" }
+
+[dev-dependencies]
+wj-scene = { path = "../wj_scene" }
+wj-shell = { path = "../wj_shell" }
+wj-paint = { path = "../wj_paint" }
+wj-a11y = { path = "../wj_a11y" }

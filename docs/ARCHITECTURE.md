@@ -66,3 +66,10 @@ repo rule and is treated as debt, not a feature.
 - `.disabled` tests were resolved (see `docs/EXTRACTION_PLAN.md` section C).
 
 See `docs/MODULE_MAP.md` for per-module responsibilities.
+
+## New core (crates/, separate Cargo workspace)
+
+The vision's scene renderer is being built beside the legacy crate in `crates/`: `wj-reactive` (L0), `wj-scene` (L1),
+`wj-layout`/`wj-text` (L2), `wj-paint`, `wj-paint-cpu`, `wj-paint-vello`, `wj-a11y` (L3), `wj-shell`, `wj-shell-desktop` (L4),
+`wj-ui` (Windjammer-facing API), `wj-samples`, `wj-golden`. Each has a `MODULE.md`. See ADR-0012 for decisions and measurements.
+Run a crate's tests with `cd crates && CARGO_TARGET_DIR=<cache> cargo test -p wj-scene --release`.

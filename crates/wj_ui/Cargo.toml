@@ -1,0 +1,15 @@
+[package]
+name = "wj-ui"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Windjammer-facing UI API: Copy node handles, chained props, reactive text and keyed lists"
+publish = false
+
+[dependencies]
+wj-reactive = { path = "../wj_reactive" }
+wj-scene = { path = "../wj_scene" }
+wj-shell = { path = "../wj_shell" }
+
+[dev-dependencies]
+wj-paint = { path = "../wj_paint" }

@@ -61,3 +61,11 @@ overwrites them; retire `SKIP_WJ_REGEN`/`WJ_REGEN` env toggles in `build.rs`.
 
 ---
 **Update 2026-10-11:** refined for the unified-renderer direction in `docs/VISION_2026.md` section 7 (requirements R1-R19, with priorities). C1->R1, C2->R2, C3->R4, C4->R5, C5/C7->R7, C6->R3, C8->R6, C9->R13/R9, C10 dropped.
+
+## Minimal repros found while building the M1 API (2026-10)
+Each directory in `repros/` is a neutral project (tiny external crate + `.wj` + `check.sh`) against compiler `next/v0.50.0` @ 8f70969e:
+- `empty-string-literal-to-str-param/`: `f("")` emitted as `f(String::new())` for a `&str` parameter.
+- `closure-capturing-copy-value-not-move/`: of two closures capturing one `Copy` value, the first lacks `move` (E0373 with `'static` callbacks). Needs R1.
+- `eager-integer-literal-suffix/`: literals suffixed `_i32` / `_i64` inconsistently around dependency method calls (E0277/E0308).
+Also known (compiler repo, `examples/verified/iter_map_filter.wj`): `xs.map(..)` / `xs.filter(..)` on `Vec` emit no iterator call, while `.iter()` is rejected by lint W0003, so there is no compiling spelling for collection pipelines over a `Vec` today.
+The natural-style samples these block live in `crates/wj_samples/wj/blocked/` with tripwire tests.

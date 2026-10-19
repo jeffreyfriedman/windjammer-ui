@@ -1,0 +1,7 @@
+[package]
+name = "wj-samples-src"
+version = "0.1.0"
+
+[dependencies]
+wj-ui = { path = "../../wj_ui" }
+wj-reactive = { path = "../../wj_reactive" }
