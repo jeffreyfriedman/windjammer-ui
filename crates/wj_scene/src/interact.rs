@@ -71,6 +71,22 @@ impl Scene {
         ran
     }
 
+    /// Run the handlers registered directly on `node` for `event` (no hit test, no bubbling): how
+    /// assistive technology triggers a control. Returns whether a handler ran.
+    pub fn invoke(&self, node: NodeId, event: Event) -> bool {
+        if !self.is_alive(node) {
+            return false;
+        }
+        let hs = self.handlers_of(node, event.kind());
+        let ran = !hs.is_empty();
+        batch(|| {
+            for h in hs {
+                h(&event);
+            }
+        });
+        ran
+    }
+
     fn bubble(&self, from: NodeId, event: &Event) -> bool {
         let kind = event.kind();
         let mut hs = vec![];

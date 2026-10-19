@@ -22,28 +22,29 @@ fn rrect(r: wj_scene::Rect, radius: f32) -> RoundedRect {
 }
 
 /// Encode a display list into a Vello scene. Public so shells can time encode and render separately.
-pub fn encode(list: &DisplayList, scene: &mut Scene, fonts: &mut HashMap<(u64, u32), FontData>) {
+pub fn encode(list: &DisplayList, scene: &mut Scene, fonts: &mut HashMap<(u64, u32), FontData>, scale: f64) {
+    let base = Affine::scale(scale);
     assert!(list.is_balanced(), "unbalanced display list");
     scene.reset();
     for cmd in &list.cmds {
         match cmd {
-            DrawCmd::PushClip { rect, radius } => scene.push_clip_layer(Fill::NonZero, Affine::IDENTITY, &rrect(*rect, *radius)),
+            DrawCmd::PushClip { rect, radius } => scene.push_clip_layer(Fill::NonZero, base, &rrect(*rect, *radius)),
             DrawCmd::PopClip | DrawCmd::PopLayer => scene.pop_layer(),
             DrawCmd::PushLayer { opacity } => {
                 // Whole-surface group at the given alpha.
-                scene.push_layer(Fill::NonZero, BlendMode::new(Mix::Normal, Compose::SrcOver), *opacity, Affine::IDENTITY, &Rect::new(-1e6, -1e6, 1e6, 1e6));
+                scene.push_layer(Fill::NonZero, BlendMode::new(Mix::Normal, Compose::SrcOver), *opacity, base, &Rect::new(-1e6, -1e6, 1e6, 1e6));
             }
             DrawCmd::FillRRect { rect, radius, color } => {
                 if *radius <= 0.0 {
-                    scene.fill(Fill::NonZero, Affine::IDENTITY, vcolor(*color), None, &Rect::new(rect.x as f64, rect.y as f64, (rect.x + rect.w) as f64, (rect.y + rect.h) as f64));
+                    scene.fill(Fill::NonZero, base, vcolor(*color), None, &Rect::new(rect.x as f64, rect.y as f64, (rect.x + rect.w) as f64, (rect.y + rect.h) as f64));
                 } else {
-                    scene.fill(Fill::NonZero, Affine::IDENTITY, vcolor(*color), None, &rrect(*rect, *radius));
+                    scene.fill(Fill::NonZero, base, vcolor(*color), None, &rrect(*rect, *radius));
                 }
             }
             DrawCmd::StrokeRRect { rect, radius, width, color } => {
                 let half = width / 2.0;
                 let inner = wj_scene::Rect::new(rect.x + half, rect.y + half, rect.w - width, rect.h - width);
-                scene.stroke(&Stroke::new(*width as f64), Affine::IDENTITY, vcolor(*color), None, &rrect(inner, (radius - half).max(0.0)));
+                scene.stroke(&Stroke::new(*width as f64), base, vcolor(*color), None, &rrect(inner, (radius - half).max(0.0)));
             }
             DrawCmd::Text { run } => {
                 let font = fonts
@@ -52,7 +53,7 @@ pub fn encode(list: &DisplayList, scene: &mut Scene, fonts: &mut HashMap<(u64, u
                     .clone();
                 scene
                     .draw_glyphs(&font)
-                    .transform(Affine::translate((run.x as f64, run.y as f64)))
+                    .transform(base * Affine::translate((run.x as f64, run.y as f64)))
                     .font_size(run.size)
                     .brush(vcolor(run.color))
                     .draw(Fill::NonZero, run.glyphs.iter().map(|g| Glyph { id: g.id, x: g.x, y: g.y }));
@@ -67,6 +68,8 @@ pub struct VelloPainter {
     renderer: Renderer,
     scene: Scene,
     fonts: HashMap<(u64, u32), FontData>,
+    /// Device pixels per display-list unit (the window scale factor).
+    pub scale: f64,
 }
 
 impl VelloPainter {
@@ -80,12 +83,12 @@ impl VelloPainter {
 
     pub fn with_device(device: wgpu::Device, queue: wgpu::Queue) -> Self {
         let renderer = Renderer::new(&device, RendererOptions { antialiasing_support: AaSupport::area_only(), ..Default::default() }).expect("vello renderer");
-        VelloPainter { device, queue, renderer, scene: Scene::new(), fonts: HashMap::new() }
+        VelloPainter { device, queue, renderer, scene: Scene::new(), fonts: HashMap::new(), scale: 1.0 }
     }
 
     /// Render into a texture created with `STORAGE_BINDING` (usually `Rgba8Unorm`).
     pub fn render_to_texture(&mut self, list: &DisplayList, view: &wgpu::TextureView, width: u32, height: u32, clear: Color) {
-        encode(list, &mut self.scene, &mut self.fonts);
+        encode(list, &mut self.scene, &mut self.fonts, self.scale);
         let params = RenderParams { base_color: vcolor(clear), width, height, antialiasing_method: AaConfig::Area };
         self.renderer.render_to_texture(&self.device, &self.queue, &self.scene, view, &params).expect("vello render");
     }

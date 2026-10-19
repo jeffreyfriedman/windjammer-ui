@@ -17,4 +17,5 @@ wj-reactive = { path = "../wj_reactive" }
 wj-paint-cpu = { path = "../wj_paint_cpu" }
 wj-paint-vello = { path = "../wj_paint_vello" }
 png = "0.17"
+wj-shell = { path = "../wj_shell" }
 tiny-skia = "0.11"

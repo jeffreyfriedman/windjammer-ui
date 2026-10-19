@@ -59,13 +59,14 @@ pub struct App {
     a11y: AccessKitTree,
     first: bool,
     resized: bool,
+    a11y_full: bool,
 }
 
 impl App {
     /// A new app with an empty scene on the current thread's reactive runtime.
     pub fn new() -> Self {
         let window = WindowInfo { width: state(0.0), height: state(0.0), scale: state(1.0), dark: state(false) };
-        App { scene: Scene::new(), window, layout: LayoutEngine::new(), text: Rc::new(RefCell::new(TextEngine::new())), a11y: AccessKitTree::new(), first: true, resized: false }
+        App { scene: Scene::new(), window, layout: LayoutEngine::new(), text: Rc::new(RefCell::new(TextEngine::new())), a11y: AccessKitTree::new(), first: true, resized: false, a11y_full: false }
     }
 
     /// Run one frame: deliver events, lay out, paint, forward accessibility changes.
@@ -102,7 +103,7 @@ impl App {
         }
 
         let mut entries = self.scene.drain_dirty();
-        if entries.is_empty() && !self.first && !self.resized {
+        if entries.is_empty() && !self.first && !self.resized && !self.a11y_full {
             rep.skipped = true;
             return rep;
         }
@@ -122,7 +123,7 @@ impl App {
         shell.present(&list, pw, ph);
         rep.present_ms = clock.now_ms() - t2;
 
-        if self.first || entries.iter().any(|e| e.flags.contains(Dirty::SEMANTICS)) {
+        if self.first || self.a11y_full || entries.iter().any(|e| e.flags.contains(Dirty::SEMANTICS)) {
             let tree = self.scene.semantic_tree();
             if let Some(u) = self.a11y.update(&tree, self.scene.focus()) {
                 rep.a11y_nodes_sent = u.nodes.len();
@@ -131,7 +132,16 @@ impl App {
         }
         self.first = false;
         self.resized = false;
+        self.a11y_full = false;
         rep
+    }
+}
+
+impl App {
+    /// The platform accessibility adapter (re)activated: send a full tree on the next frame.
+    pub fn reset_a11y(&mut self) {
+        self.a11y.reset();
+        self.a11y_full = true;
     }
 }
 

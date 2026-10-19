@@ -21,6 +21,11 @@ impl NodeId {
     pub fn parts(&self) -> (u32, u32) {
         (self.idx, self.gen)
     }
+    /// Rebuild an id from [`NodeId::parts`] (for example from a platform accessibility request).
+    /// Check `Scene::is_alive` before using it: the node may have been removed since.
+    pub fn from_parts(idx: u32, gen: u32) -> NodeId {
+        NodeId { idx, gen }
+    }
 }
 
 pub(crate) struct NodeData {

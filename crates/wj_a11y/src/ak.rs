@@ -6,6 +6,14 @@ use wj_scene::{Action as SAction, NodeId as SId, Role as SRole, SemanticNode, Se
 /// The synthetic window node that parents the scene's semantic roots.
 pub const ROOT_ID: NodeId = NodeId(0);
 
+/// Inverse of the id mapping: the scene node an accessibility request refers to, if it is one of ours.
+pub fn scene_parts(id: NodeId) -> Option<(u32, u32)> {
+    if id.0 == 0 {
+        return None;
+    }
+    Some((((id.0 & 0xFFFF_FFFF) - 1) as u32, (id.0 >> 32) as u32))
+}
+
 fn ak_id(id: SId) -> NodeId {
     // Scene ids are (index, generation); AccessKit ids are u64. Index+1 keeps 0 for the window.
     let (idx, gen) = id.parts();
@@ -97,6 +105,12 @@ impl AccessKitTree {
         let mut info = TreeInfo::new(ROOT_ID);
         info.toolkit_name = Some("windjammer-ui".into());
         Some(TreeUpdate { nodes: changed, tree: if first { Some(info) } else { None }, tree_id: TreeId::ROOT, focus: focus_id })
+    }
+
+    /// Forget what was sent: the next `update` is a full tree. Call when the platform adapter
+    /// (re)activates, because updates sent while it was inactive were dropped.
+    pub fn reset(&mut self) {
+        *self = Self::default();
     }
 
     /// Nodes currently known to the platform adapter (for leak checks).

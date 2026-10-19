@@ -8,5 +8,5 @@
 mod ak;
 mod dom;
 
-pub use ak::{AccessKitTree, ROOT_ID};
+pub use ak::{scene_parts, AccessKitTree, ROOT_ID};
 pub use dom::{project, ProjectedNode};
