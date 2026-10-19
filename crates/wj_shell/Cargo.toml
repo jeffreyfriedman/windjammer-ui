@@ -1,0 +1,19 @@
+[package]
+name = "wj-shell"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Shell trait, clocks, the frame pipeline, and FakeShell for deterministic headless tests"
+publish = false
+
+[dependencies]
+wj-reactive = { path = "../wj_reactive" }
+wj-scene = { path = "../wj_scene" }
+wj-layout = { path = "../wj_layout" }
+wj-paint = { path = "../wj_paint" }
+wj-a11y = { path = "../wj_a11y" }
+wj-text = { path = "../wj_text" }
+accesskit = "0.25"
+
+[dev-dependencies]
+wj-reactive = { path = "../wj_reactive" }

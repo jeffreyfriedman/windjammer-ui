@@ -78,7 +78,10 @@ impl TextEngine {
                     let r = run.run();
                     let font = r.font();
                     let data = font.data.data();
-                    let fd = FontData { id: font.data.id(), bytes: if data.len() == self.font_blob.len() { self.font_blob.clone() } else { Arc::new(data.to_vec()) }, index: font.index };
+                    // The embedded font gets a fixed id so display lists compare equal across runs and
+                    // processes; other fonts use Parley's per-process blob id.
+                    let embedded = data.len() == self.font_blob.len();
+                    let fd = FontData { id: if embedded { 1 } else { font.data.id() | (1 << 62) }, bytes: if embedded { self.font_blob.clone() } else { Arc::new(data.to_vec()) }, index: font.index };
                     runs.push(GlyphRun {
                         font: fd,
                         size: r.font_size(),
