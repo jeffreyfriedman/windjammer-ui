@@ -10,7 +10,9 @@
 mod handles;
 mod runtime;
 mod scope;
+mod selector;
 
 pub use handles::{Memo, Signal};
 pub use runtime::{batch, derived, effect, reset, state, stats, untrack, Stats};
 pub use scope::{create_scope, Scope};
+pub use selector::Selector;

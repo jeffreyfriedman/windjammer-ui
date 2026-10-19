@@ -1,0 +1,10 @@
+[package]
+name = "wj-scene"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Retained scene tree: layout, paint and semantics props, dirty flags, events and reactive binding sites"
+publish = false
+
+[dependencies]
+wj-reactive = { path = "../wj_reactive" }

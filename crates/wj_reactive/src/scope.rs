@@ -1,4 +1,6 @@
 //! Scopes own the nodes created while they are current and dispose them together.
+use std::collections::HashSet;
+
 use crate::runtime::{free_node, with_rt};
 
 pub(crate) struct ScopeSlot {
@@ -6,7 +8,7 @@ pub(crate) struct ScopeSlot {
     alive: bool,
     parent: u32,
     nodes: Vec<(u32, u32)>,
-    children: Vec<u32>,
+    children: HashSet<u32>,
 }
 
 pub(crate) struct ScopeArena {
@@ -17,7 +19,7 @@ pub(crate) struct ScopeArena {
 
 impl ScopeArena {
     pub(crate) fn new() -> Self {
-        let root = ScopeSlot { gen: 0, alive: true, parent: 0, nodes: Vec::new(), children: Vec::new() };
+        let root = ScopeSlot { gen: 0, alive: true, parent: 0, nodes: Vec::new(), children: HashSet::new() };
         ScopeArena { slots: vec![root], free: Vec::new(), stack: vec![0] }
     }
     pub(crate) fn current(&self) -> u32 {
@@ -30,7 +32,7 @@ impl ScopeArena {
         self.slots.iter().filter(|s| s.alive).count()
     }
     fn create(&mut self, parent: u32) -> (u32, u32) {
-        let fresh = ScopeSlot { gen: 0, alive: true, parent, nodes: Vec::new(), children: Vec::new() };
+        let fresh = ScopeSlot { gen: 0, alive: true, parent, nodes: Vec::new(), children: HashSet::new() };
         let (idx, gen) = if let Some(i) = self.free.pop() {
             let s = &mut self.slots[i as usize];
             let gen = s.gen;
@@ -40,7 +42,7 @@ impl ScopeArena {
             self.slots.push(fresh);
             ((self.slots.len() - 1) as u32, 0)
         };
-        self.slots[parent as usize].children.push(idx);
+        self.slots[parent as usize].children.insert(idx);
         (idx, gen)
     }
 }
@@ -112,6 +114,6 @@ fn dispose_scope(r: &mut crate::runtime::Rt, idx: u32) {
     s.gen = s.gen.wrapping_add(1);
     r.scopes.free.push(idx);
     if r.scopes.slots[parent as usize].alive {
-        r.scopes.slots[parent as usize].children.retain(|&c| c != idx);
+        r.scopes.slots[parent as usize].children.remove(&idx);
     }
 }

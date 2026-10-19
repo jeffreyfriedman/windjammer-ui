@@ -272,8 +272,9 @@ fn run_effect(id: u32) {
     update(id); // handles Check (verifies sources) and Dirty (runs)
 }
 
-/// A state cell. Writes that compare equal to the current value do not propagate.
-pub fn state<T: PartialEq + 'static>(v: T) -> Signal<T> {
+/// A state cell. `set` drops writes equal to the current value (needs `PartialEq`); `update` /
+/// `set_always` work for any type.
+pub fn state<T: 'static>(v: T) -> Signal<T> {
     let (idx, gen) = alloc(false, Some(Rc::new(RefCell::new(v)) as Value), None, Color::Clean);
     Signal::from_raw(idx, gen)
 }

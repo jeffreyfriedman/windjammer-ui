@@ -290,3 +290,44 @@ fn restoring_a_value_inside_a_batch_still_reruns_direct_readers() {
     });
     assert_eq!(runs.get(), 2);
 }
+
+#[test]
+fn selector_reruns_only_the_old_and_new_selected_readers() {
+    reset();
+    let sel = state(Some(1u32));
+    let selector = Selector::new(move || sel.get());
+    let runs: Vec<Rc<Cell<i32>>> = (0..5).map(|_| Rc::new(Cell::new(0))).collect();
+    let flags: Vec<Rc<Cell<bool>>> = (0..5).map(|_| Rc::new(Cell::new(false))).collect();
+    for k in 0..5u32 {
+        let (r, f, s) = (runs[k as usize].clone(), flags[k as usize].clone(), selector.clone());
+        effect(move || {
+            r.set(r.get() + 1);
+            f.set(s.is_selected(&k));
+        });
+    }
+    assert!(flags[1].get() && !flags[0].get());
+    sel.set(Some(3));
+    let counts: Vec<i32> = runs.iter().map(|r| r.get()).collect();
+    assert_eq!(counts, vec![1, 2, 1, 2, 1], "only keys 1 and 3 re-ran");
+    assert!(flags[3].get() && !flags[1].get());
+    sel.set(None);
+    assert!(flags.iter().all(|f| !f.get()));
+}
+
+#[test]
+fn selector_survives_readers_in_disposed_scopes() {
+    reset();
+    let sel = state(Some(0u32));
+    let selector = Selector::new(move || sel.get());
+    for k in 0..500u32 {
+        let (_, sc) = create_scope(|| {
+            let s = selector.clone();
+            effect(move || {
+                let _ = s.is_selected(&k);
+            });
+        });
+        sc.dispose();
+        sel.set(Some(k + 1)); // touches possibly-dead flags
+    }
+    assert!(stats().live_nodes < 200, "dead selector flags are purged, live {}", stats().live_nodes);
+}
