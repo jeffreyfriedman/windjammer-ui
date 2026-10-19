@@ -3,7 +3,6 @@
 use std::collections::HashMap;
 use std::sync::Arc;
 
-use vello_cpu::color::palette::css;
 use vello_cpu::kurbo::{Rect, RoundedRect, Shape, Stroke};
 use vello_cpu::peniko::{Blob, Color as VColor, FontData};
 use vello_cpu::{Glyph, Pixmap, RenderContext, Resources};
@@ -92,7 +91,6 @@ impl Painter for CpuPainter {
             let un = |c: u8| (((c as u32) * 255 + a / 2) / a).min(255) as u8;
             dst.copy_from_slice(&[un(src.r), un(src.g), un(src.b), src.a]);
         }
-        let _ = css::BLACK;
         img
     }
 }

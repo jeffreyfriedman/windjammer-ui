@@ -16,6 +16,13 @@ pub struct NodeId {
     pub(crate) gen: u32,
 }
 
+impl NodeId {
+    /// `(index, generation)`, for adapters that need a stable numeric identity.
+    pub fn parts(&self) -> (u32, u32) {
+        (self.idx, self.gen)
+    }
+}
+
 pub(crate) struct NodeData {
     pub parent: Option<NodeId>,
     pub children: Vec<NodeId>,

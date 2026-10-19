@@ -1,0 +1,15 @@
+[package]
+name = "wj-a11y"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Semantic tree to AccessKit updates (native) and to a DOM projection (web)"
+publish = false
+
+[dependencies]
+wj-scene = { path = "../wj_scene" }
+accesskit = "0.25"
+
+[dev-dependencies]
+wj-layout = { path = "../wj_layout" }
+wj-reactive = { path = "../wj_reactive" }

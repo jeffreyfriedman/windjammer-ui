@@ -1,0 +1,20 @@
+[package]
+name = "wj-golden"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Golden-image scene corpus and painter conformance tests (CPU goldens, GPU vs CPU, unrelated-rasterizer references)"
+publish = false
+
+[dependencies]
+wj-paint = { path = "../wj_paint" }
+wj-scene = { path = "../wj_scene" }
+wj-layout = { path = "../wj_layout" }
+wj-text = { path = "../wj_text" }
+wj-reactive = { path = "../wj_reactive" }
+
+[dev-dependencies]
+wj-paint-cpu = { path = "../wj_paint_cpu" }
+wj-paint-vello = { path = "../wj_paint_vello" }
+png = "0.17"
+tiny-skia = "0.11"
