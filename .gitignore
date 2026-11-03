@@ -45,3 +45,7 @@ tmp/
 
 # Windjammer local codegen cache
 .wj-cache/
+
+# Generated build metadata (kept in the wj cache now, never beside sources)
+*.wj.meta
+.claude/
