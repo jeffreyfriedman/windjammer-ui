@@ -51,7 +51,7 @@ impl Input {
 
 impl RenderableVNode for Input {
     fn to_vnode(&self) -> VNode {
-        let node = VNode::input()
+        let mut node = VNode::input()
             .add_class("wj-input".to_string())
             .set_type(self.input_type.clone())
             .set_value(self.value.clone())

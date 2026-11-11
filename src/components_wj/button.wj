@@ -124,7 +124,7 @@ impl Button {
 // Implement RenderableVNode for cross-platform rendering
 impl RenderableVNode for Button {
     fn to_vnode(&self) -> VNode {
-        let node = VNode::button()
+        let mut node = VNode::button()
             .add_class("wj-button".to_string())
             .add_class(self.get_variant_class())
             .add_class(self.get_size_class())
