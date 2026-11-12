@@ -38,7 +38,7 @@ impl NodePin {
             pin_type,
             is_input: true,
             connected_to: None,
-            default_value: "".to_string(),
+            default_value: "",
         }
     }
     
@@ -49,7 +49,7 @@ impl NodePin {
             pin_type,
             is_input: false,
             connected_to: None,
-            default_value: "".to_string(),
+            default_value: "",
         }
     }
     
@@ -59,23 +59,23 @@ impl NodePin {
     }
     
     pub fn connect(self, target: string) -> NodePin {
-        self.connected_to = Some(target.to_string())
+        self.connected_to = Some(target)
         self
     }
     
-    fn get_color(&self) -> string {
+    fn get_color(self) -> string {
         match self.pin_type {
-            PinType::Flow => "#ffffff".to_string(),
-            PinType::Bool => "#e94560".to_string(),
-            PinType::Int => "#00d9ff".to_string(),
-            PinType::Float => "#4ade80".to_string(),
-            PinType::Vec2 => "#facc15".to_string(),
-            PinType::Vec3 => "#f59e0b".to_string(),
-            PinType::Vec4 => "#a855f7".to_string(),
-            PinType::Color => "#ec4899".to_string(),
-            PinType::Texture => "#fb923c".to_string(),
-            PinType::Object => "#3b82f6".to_string(),
-            PinType::Any => "#888888".to_string(),
+            PinType::Flow => "#ffffff",
+            PinType::Bool => "#e94560",
+            PinType::Int => "#00d9ff",
+            PinType::Float => "#4ade80",
+            PinType::Vec2 => "#facc15",
+            PinType::Vec3 => "#f59e0b",
+            PinType::Vec4 => "#a855f7",
+            PinType::Color => "#ec4899",
+            PinType::Texture => "#fb923c",
+            PinType::Object => "#3b82f6",
+            PinType::Any => "#888888",
         }
     }
 }
@@ -123,7 +123,7 @@ impl GraphNode {
             collapsed: false,
             preview_enabled: false,
             trace_active: false,
-            pin_watch_text: "".to_string(),
+            pin_watch_text: "",
         }
     }
     
@@ -163,17 +163,17 @@ impl GraphNode {
         self
     }
     
-    fn get_category_color(&self) -> string {
+    fn get_category_color(self) -> string {
         match self.category {
-            NodeCategory::Math => "#4ade80".to_string(),
-            NodeCategory::Logic => "#e94560".to_string(),
-            NodeCategory::Texture => "#fb923c".to_string(),
-            NodeCategory::Color => "#ec4899".to_string(),
-            NodeCategory::Vector => "#facc15".to_string(),
-            NodeCategory::Flow => "#ffffff".to_string(),
-            NodeCategory::Event => "#3b82f6".to_string(),
-            NodeCategory::Variable => "#a855f7".to_string(),
-            NodeCategory::Custom => "#888888".to_string(),
+            NodeCategory::Math => "#4ade80",
+            NodeCategory::Logic => "#e94560",
+            NodeCategory::Texture => "#fb923c",
+            NodeCategory::Color => "#ec4899",
+            NodeCategory::Vector => "#facc15",
+            NodeCategory::Flow => "#ffffff",
+            NodeCategory::Event => "#3b82f6",
+            NodeCategory::Variable => "#a855f7",
+            NodeCategory::Custom => "#888888",
         }
     }
 }
@@ -183,35 +183,35 @@ impl Renderable for GraphNode {
         let header_color = self.get_category_color()
         
         // Render inputs
-        let mut inputs_html = "".to_string()
+        let mut inputs_html = ""
         for pin in self.inputs {
             let color = pin.get_color()
             let connected_class = match pin.connected_to {
                 Some(_) => "connected",
                 None => "",
             }
-            inputs_html = inputs_html + format!("
-                <div class='node-pin input {}'>
-                    <div class='pin-socket' style='background: {};' data-pin='{}'></div>
-                    <span class='pin-name'>{}</span>
+            inputs_html = inputs_html + "
+                <div class='node-pin input ${connected_class}'>
+                    <div class='pin-socket' style='background: ${color};' data-pin='${pin.id}'></div>
+                    <span class='pin-name'>${pin.name}</span>
                 </div>
-            ", connected_class, color, pin.id, pin.name)
+            "
         }
         
         // Render outputs
-        let mut outputs_html = "".to_string()
+        let mut outputs_html = ""
         for pin in self.outputs {
             let color = pin.get_color()
             let connected_class = match pin.connected_to {
                 Some(_) => "connected",
                 None => "",
             }
-            outputs_html = outputs_html + format!("
-                <div class='node-pin output {}'>
-                    <span class='pin-name'>{}</span>
-                    <div class='pin-socket' style='background: {};' data-pin='{}'></div>
+            outputs_html = outputs_html + "
+                <div class='node-pin output ${connected_class}'>
+                    <span class='pin-name'>${pin.name}</span>
+                    <div class='pin-socket' style='background: ${color};' data-pin='${pin.id}'></div>
                 </div>
-            ", connected_class, pin.name, color, pin.id)
+            "
         }
         
         let preview_html = if self.preview_enabled {
@@ -222,15 +222,15 @@ impl Renderable for GraphNode {
         
         let trace_class = if self.trace_active { " trace-active" } else { "" }
         let watch_html = if self.pin_watch_text.len() > 0 {
-            format!("<div class='pin-watch'>{}</div>", self.pin_watch_text)
+            "<div class='pin-watch'>${self.pin_watch_text}</div>"
         } else {
-            "".to_string()
+            ""
         }
         
-        format!("
-            <div class='graph-node{}' id='{}' style='left: {}px; top: {}px;'>
-                <div class='node-header' style='background: {};'>
-                    <span class='node-title'>{}</span>
+        "
+            <div class='graph-node${trace_class}' id='${self.id}' style='left: ${self.x}px; top: ${self.y}px;'>
+                <div class='node-header' style='background: ${header_color};'>
+                    <span class='node-title'>${self.title}</span>
                     <div class='node-actions'>
                         <button class='node-btn preview' title='Preview'>👁</button>
                         <button class='node-btn collapse' title='Collapse'>−</button>
@@ -238,16 +238,16 @@ impl Renderable for GraphNode {
                 </div>
                 <div class='node-body'>
                     <div class='node-inputs'>
-                        {}
+                        ${inputs_html}
                     </div>
                     <div class='node-outputs'>
-                        {}
+                        ${outputs_html}
                     </div>
                 </div>
-                {}
-                {}
+                ${preview_html}
+                ${watch_html}
             </div>
-        ", trace_class, self.id, self.x, self.y, header_color, self.title, inputs_html, outputs_html, preview_html, watch_html)
+        "
     }
 }
 
@@ -286,7 +286,7 @@ impl NodeGraph {
             pan_x: 0.0,
             pan_y: 0.0,
             show_grid: true,
-            on_change: "".to_string(),
+            on_change: "",
             trace_node_ids: Vec::new(),
         }
     }
@@ -332,7 +332,7 @@ impl NodeGraph {
 
 impl Renderable for NodeGraph {
     pub fn render(self) -> string {
-        let mut nodes_html = "".to_string()
+        let mut nodes_html = ""
         for n in self.nodes {
             let mut node = n.clone()
             for tid in self.trace_node_ids {
@@ -344,42 +344,41 @@ impl Renderable for NodeGraph {
         }
         
         // Generate SVG connections
-        let mut connections_html = "".to_string()
+        let mut connections_html = ""
         for c in self.connections {
-            connections_html = connections_html + format!("
+            connections_html = connections_html + "
                 <path class='node-connection' 
-                      data-from='{}:{}' 
-                      data-to='{}:{}'/>
-            ", c.from_node, c.from_pin, c.to_node, c.to_pin)
+                      data-from='${c.from_node}:${c.from_pin}' 
+                      data-to='${c.to_node}:${c.to_pin}'/>
+            "
         }
         
         let grid_class = if self.show_grid { "show-grid" } else { "" }
         
-        format!("
-            <div class='node-graph {}' style='width: {}px; height: {}px;'>
+        "
+            <div class='node-graph ${grid_class}' style='width: ${self.width}px; height: ${self.height}px;'>
                 <div class='graph-toolbar'>
                     <button onclick='addNode()'>+ Add Node</button>
                     <span class='toolbar-sep'></span>
                     <button onclick='zoomIn()'>🔍+</button>
                     <button onclick='zoomOut()'>🔍−</button>
                     <button onclick='fitAll()'>⊞</button>
-                    <span class='zoom-level'>{:.0}%</span>
+                    <span class='zoom-level'>${self.zoom * 100.0:.0}%</span>
                 </div>
                 <div class='graph-canvas' 
-                     style='transform: scale({}) translate({}px, {}px);'>
+                     style='transform: scale(${self.zoom}) translate(${self.pan_x}px, ${self.pan_y}px);'>
                     <svg class='connections-layer'>
-                        {}
+                        ${connections_html}
                     </svg>
                     <div class='nodes-layer'>
-                        {}
+                        ${nodes_html}
                     </div>
                 </div>
                 <div class='graph-minimap'>
                     <div class='minimap-viewport'></div>
                 </div>
             </div>
-        ", grid_class, self.width, self.height, self.zoom * 100.0, 
-           self.zoom, self.pan_x, self.pan_y, connections_html, nodes_html)
+        "
     }
 }
 
@@ -604,6 +603,6 @@ pub fn node_graph_styles() -> string {
         padding: 4px 8px;
         border-top: 1px solid rgba(251, 191, 36, 0.25);
     }
-    ".to_string()
+    "
 }
 

@@ -16,16 +16,16 @@ impl EcsInspectorPanel {
     pub fn from_mock() -> EcsInspectorPanel {
         EcsInspectorPanel {
             snapshot: EcsInspectorSnapshot::mock_runtime_demo(),
-            refresh_handler: "ecs_inspector_refresh()".to_string(),
-            select_entity_handler: "ecs_inspector_select_entity".to_string(),
+            refresh_handler: "ecs_inspector_refresh()",
+            select_entity_handler: "ecs_inspector_select_entity",
         }
     }
 
     pub fn empty() -> EcsInspectorPanel {
         EcsInspectorPanel {
             snapshot: EcsInspectorSnapshot::empty(),
-            refresh_handler: "ecs_inspector_refresh()".to_string(),
-            select_entity_handler: "ecs_inspector_select_entity".to_string(),
+            refresh_handler: "ecs_inspector_refresh()",
+            select_entity_handler: "ecs_inspector_select_entity",
         }
     }
 
@@ -38,10 +38,10 @@ impl EcsInspectorPanel {
 fn entity_row_class(entity_id: i64, selected_id: Option<i64>) -> string {
     if let Some(sel) = selected_id {
         if sel == entity_id {
-            return "ecs-entity-row selected".to_string()
+            return "ecs-entity-row selected"
         }
     }
-    "ecs-entity-row".to_string()
+    "ecs-entity-row"
 }
 
 fn render_entity_row(row: EcsEntityRow, selected_id: Option<i64>, select_handler: string) -> string {
@@ -50,20 +50,13 @@ fn render_entity_row(row: EcsEntityRow, selected_id: Option<i64>, select_handler
     let mut i = 0
     while i < row.component_names.len() {
         let name = row.component_names[i]
-        badges = badges + format!("<span class='ecs-comp-badge'>{}</span>", name)
+        badges = badges + "<span class='ecs-comp-badge'>${name}</span>"
         i = i + 1
     }
-    format!(
-        "<button type='button' class='{}' onclick=\"{}({})\">
-  <span class='ecs-entity-id'>#{}</span>
-  <span class='ecs-entity-badges'>{}</span>
-</button>",
-        row_class,
-        select_handler,
-        row.entity_id,
-        row.entity_id,
-        badges,
-    )
+    "<button type='button' class='${row_class}' onclick=\"${select_handler}(${row.entity_id})\">
+  <span class='ecs-entity-id'>#${row.entity_id}</span>
+  <span class='ecs-entity-badges'>${badges}</span>
+</button>"
 }
 
 fn render_entity_list(
@@ -72,7 +65,7 @@ fn render_entity_list(
     select_handler: string,
 ) -> string {
     if entities.len() == 0 {
-        return "<div class='ecs-inspector-empty'>No entities in world</div>".to_string()
+        return "<div class='ecs-inspector-empty'>No entities in world</div>"
     }
     let mut html = ""
     for row in entities {
@@ -82,14 +75,10 @@ fn render_entity_list(
 }
 
 fn render_field_row(field: EcsInspectorField) -> string {
-    format!(
-        "<div class='ecs-field-row'>
-  <label class='ecs-field-name'>{}</label>
-  <input class='ecs-field-value' type='text' value='{}' readonly />
-</div>",
-        field.name,
-        field.display_value,
-    )
+    "<div class='ecs-field-row'>
+  <label class='ecs-field-name'>${field.name}</label>
+  <input class='ecs-field-value' type='text' value='${field.display_value}' readonly />
+</div>"
 }
 
 fn render_component_section(section: EcsComponentSection) -> string {
@@ -97,14 +86,10 @@ fn render_component_section(section: EcsComponentSection) -> string {
     for field in section.fields {
         fields_html = fields_html + render_field_row(field)
     }
-    format!(
-        "<details class='ecs-component-section' open>
-  <summary class='ecs-component-title'>{}</summary>
-  <div class='ecs-component-fields'>{}</div>
-</details>",
-        section.name,
-        fields_html,
-    )
+    "<details class='ecs-component-section' open>
+  <summary class='ecs-component-title'>${section.name}</summary>
+  <div class='ecs-component-fields'>${fields_html}</div>
+</details>"
 }
 
 fn render_component_pane(
@@ -112,15 +97,12 @@ fn render_component_pane(
     selected_label: string,
 ) -> string {
     if components.len() == 0 {
-        return format!(
-            "<div class='ecs-inspector-detail-empty'>
-  <p class='ecs-detail-title'>{}</p>
+        return "<div class='ecs-inspector-detail-empty'>
+  <p class='ecs-detail-title'>${selected_label}</p>
   <p class='ecs-detail-hint'>Select an entity to view read-only component fields.</p>
-</div>",
-            selected_label,
-        )
+</div>"
     }
-    let mut html = format!("<p class='ecs-detail-title'>{}</p>", selected_label)
+    let mut html = "<p class='ecs-detail-title'>${selected_label}</p>"
     for section in components {
         html = html + render_component_section(section)
     }
@@ -129,9 +111,9 @@ fn render_component_pane(
 
 fn selected_entity_label_from_id(selected_id: Option<i64>) -> string {
     if let Some(id) = selected_id {
-        format!("Entity #{}", id)
+        "Entity #${id}"
     } else {
-        "No entity selected".to_string()
+        "No entity selected"
     }
 }
 
@@ -145,30 +127,23 @@ impl Renderable for EcsInspectorPanel {
         let entity_count = entities.len()
         let entity_html = render_entity_list(entities, selected_id, self.select_entity_handler)
         let component_html = render_component_pane(components, selected_label)
-        format!(
-            "<style>{}</style>
+        "<style>${styles}</style>
 <div class='ecs-inspector-panel'>
   <header class='ecs-inspector-header'>
     <h3>ECS Inspector</h3>
-    <button type='button' onclick='{}'>Refresh</button>
-    <span class='ecs-entity-count'>{} entities</span>
+    <button type='button' onclick='${self.refresh_handler}'>Refresh</button>
+    <span class='ecs-entity-count'>${entity_count} entities</span>
   </header>
   <div class='ecs-inspector-body'>
     <aside class='ecs-entity-list'>
       <h4>Entities</h4>
-      {}
+      ${entity_html}
     </aside>
     <section class='ecs-component-pane'>
-      {}
+      ${component_html}
     </section>
   </div>
-</div>",
-            styles,
-            self.refresh_handler,
-            entity_count,
-            entity_html,
-            component_html,
-        )
+</div>"
     }
 }
 

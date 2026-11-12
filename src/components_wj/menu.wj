@@ -64,7 +64,7 @@ impl MenuItem {
         MenuItem {
             label,
             icon: "",
-            href: "#".to_string(),
+            href: "#",
             disabled: false,
             class: "",
         }

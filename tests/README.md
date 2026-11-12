@@ -6,6 +6,7 @@
 - `crud_operations_test.rs` - Tests CRUD patterns (Card, Text, Badge, etc.)
 - `dashboard_patterns_test.rs` - Tests dashboard UI patterns
 - `examples_integration_test.rs` - Tests .wj example compilation
+- `wj_sources_check_test.rs` - `wj check` on `src/components_wj`, transpile of every example (`WJ=/path/to/wj`, `WJ_UI_REQUIRE_WJ=1`)
 - `form_validation_test.rs` - Tests form validation patterns
 - `integration_ui_examples.rs` - Tests UI framework compilation  
 - `widget_integration_test.rs` - Tests widget integration

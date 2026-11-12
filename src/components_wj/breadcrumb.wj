@@ -16,7 +16,7 @@ impl Breadcrumb {
     pub fn new() -> Breadcrumb {
         Breadcrumb {
             items: Vec::new(),
-            separator: "/".to_string(),
+            separator: "/",
             class: "",
         }
     }
@@ -46,7 +46,7 @@ impl Breadcrumb {
         html.push_str(self.class)
         html.push_str("\" style=\"display: flex; align-items: center; gap: 8px; font-size: 14px;\">")
         
-        for (i, item) in self.items.iter().enumerate() {
+        for (i, item) in self.items.enumerate() {
             if i > 0 {
                 html.push_str("<span style=\"color: #9ca3af;\">")
                 html.push_str(self.separator)

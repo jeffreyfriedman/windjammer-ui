@@ -32,34 +32,34 @@ impl Pagination {
 
 impl Renderable for Pagination {
 pub fn render(self) -> string {
-        let mut html = "<nav class='wj-pagination'><ul>".to_string()
+        let mut html = "<nav class='wj-pagination'><ul>"
 
         if self.show_first_last {
-            html = format!("{}<li class='wj-pagination-item'><a href='#'>«</a></li>", html)
+            html = "${html}<li class='wj-pagination-item'><a href='#'>«</a></li>"
         }
 
         if self.show_prev_next {
             let prev_disabled = if self.current_page == 1 { " disabled" } else { "" }
-            html = format!("{}<li class='wj-pagination-item{}'><a href='#'>‹</a></li>", html, prev_disabled)
+            html = "${html}<li class='wj-pagination-item${prev_disabled}'><a href='#'>‹</a></li>"
         }
 
         let mut page = 1
         while page <= self.total_pages {
             let active = if page == self.current_page { " active" } else { "" }
-            html = format!("{}<li class='wj-pagination-item{}'><a href='#'>{}</a></li>", html, active, page)
+            html = "${html}<li class='wj-pagination-item${active}'><a href='#'>${page}</a></li>"
             page = page + 1
         }
 
         if self.show_prev_next {
             let next_disabled = if self.current_page == self.total_pages { " disabled" } else { "" }
-            html = format!("{}<li class='wj-pagination-item{}'><a href='#'>›</a></li>", html, next_disabled)
+            html = "${html}<li class='wj-pagination-item${next_disabled}'><a href='#'>›</a></li>"
         }
 
         if self.show_first_last {
-            html = format!("{}<li class='wj-pagination-item'><a href='#'>»</a></li>", html)
+            html = "${html}<li class='wj-pagination-item'><a href='#'>»</a></li>"
         }
 
-        format!("{}</ul></nav>", html)
+        "${html}</ul></nav>"
     }
 }
 
@@ -68,7 +68,7 @@ fn main() {
         .show_first_last(true)
         .show_prev_next(true)
 
-    println!("{}", pagination.render())
+    println("${pagination.render()}")
 }
 
 

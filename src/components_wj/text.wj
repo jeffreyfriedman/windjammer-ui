@@ -31,7 +31,7 @@ impl Text {
             content: content,
             size: TextSize::Medium,
             weight: TextWeight::Normal,
-            color: "".to_string(),
+            color: "",
         }
     }
     
@@ -70,12 +70,12 @@ impl RenderableVNode for Text {
             TextWeight::Bold => "wj-text-bold",
         }
         let mut node = VNode::span()
-            .add_class("wj-text".to_string())
+            .add_class("wj-text")
             .add_class(size_class.to_string())
             .add_class(weight_class.to_string())
             .add_text(self.content.clone())
         if self.color.len() > 0 {
-            node = node.add_style(format!("color: {};", self.color))
+            node = node.add_style("color: ${self.color};")
         }
         node
     }
@@ -98,12 +98,12 @@ impl Renderable for Text {
         }
         
         let style = if self.color != "" {
-            format!(" style='color: {};'", self.color)
+            " style='color: ${self.color};'"
         } else {
-            "".to_string()
+            ""
         }
         
-        format!("<span class='wj-text {} {}'{}>{}</span>", size_class, weight_class, style, self.content)
+        "<span class='wj-text ${size_class} ${weight_class}'${style}>${self.content}</span>"
     }
 }
 
@@ -114,6 +114,6 @@ fn main() {
         .bold()
     
     let html = text.render()
-    println!("{}", html)
+    println("${html}")
 }
 

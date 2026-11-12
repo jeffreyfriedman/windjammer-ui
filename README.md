@@ -42,6 +42,8 @@ fn main() {
 
 ## Known limitations
 
+- The component sources pass `wj check` and transpile with the current compiler (`tests/wj_sources_check_test.rs`);
+  the checked-in generated Rust is not yet regenerated from them (`docs/WEB_AND_WASM.md`).
 - 17 files in `src/components/generated/` are hand-maintained, not compiler output.
 - Some interactive behaviour is JS embedded in Rust strings.
 - Escape-by-default is enforced for the VNode renderer, the DOM patcher, SSR and the
@@ -51,7 +53,7 @@ fn main() {
 ## Docs
 
 `docs/ARCHITECTURE.md`, `docs/MODULE_MAP.md`, `docs/EXTRACTION_PLAN.md`, plus
-`docs/QUICKSTART.md`, `docs/GUIDE.md`, `docs/API_REFERENCE.md`, `docs/STYLE_GUIDE.md`
+`docs/WEB_AND_WASM.md` (web and wasm status with a roadmap), `docs/QUICKSTART.md`, `docs/GUIDE.md`, `docs/API_REFERENCE.md`, `docs/STYLE_GUIDE.md`
 (the guides may lag the code).
 
 ## License

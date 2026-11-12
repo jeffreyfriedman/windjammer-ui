@@ -20,8 +20,8 @@ impl Scroll {
         Scroll {
             children: Vec::new(),
             direction: ScrollDir::Vertical,
-            height: "400px".to_string(),
-            width: "100%".to_string(),
+            height: "400px",
+            width: "100%",
             class: "",
         }
     }

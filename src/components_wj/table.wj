@@ -11,7 +11,7 @@ impl TableColumn {
     pub fn new(header: string) -> TableColumn {
         TableColumn {
             header: header,
-            width: "auto".to_string(),
+            width: "auto",
         }
     }
 
@@ -85,7 +85,7 @@ impl Table {
 
 impl Renderable for Table {
     fn render(self) -> string {
-        let mut classes = "wj-table".to_string()
+        let mut classes = "wj-table"
         if self.striped {
             classes.push_str(" wj-table-striped")
         }
@@ -96,13 +96,13 @@ impl Renderable for Table {
             classes.push_str(" wj-table-hover")
         }
 
-        let mut html = format!("<table class='{}'>", classes)
+        let mut html = "<table class='${classes}'>"
         html.push_str("<thead><tr>")
         for col in &self.columns {
             if col.width == "auto" {
                 html.push_str("<th>")
             } else {
-                html.push_str(&format!("<th style='width: {}'>", col.width))
+                html.push_str(&"<th style='width: ${col.width}'>")
             }
             html.push_str(&col.header)
             html.push_str("</th>")

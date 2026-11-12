@@ -23,7 +23,7 @@ impl Rating {
             max: 5,
             size: RatingSize::Medium,
             readonly: true,
-            color: "#fbbf24".to_string(),
+            color: "#fbbf24",
         }
     }
 

@@ -26,7 +26,7 @@ pub struct Chart {
 impl Chart {
     pub fn new() -> Chart {
         Chart {
-            title: "".to_string(),
+            title: "",
             bars: Vec::new(),
             width: 320,
             height: 160,
@@ -61,7 +61,7 @@ impl Renderable for Chart {
             }
             i = i + 1
         }
-        let mut bars_html = "".to_string()
+        let mut bars_html = ""
         let mut bi = 0
         let segment = 40
         while bi < self.bars.len() {
@@ -69,29 +69,23 @@ impl Renderable for Chart {
             let h = if max_v == 0 { 0 } else { (bar.value * (self.height - 40)) / max_v }
             let x = 20 + bi * segment
             let y = self.height - 20 - h
-            bars_html = format!(
-                "{}<rect class='wj-chart-bar' x='{}' y='{}' width='24' height='{}' data-label='{}' data-value='{}'/>",
-                bars_html, x, y, h, bar.label, bar.value
-            )
+            bars_html = "${bars_html}<rect class='wj-chart-bar' x='${x}' y='${y}' width='24' height='${h}' data-label='${bar.label}' data-value='${bar.value}'/>"
             bi = bi + 1
         }
         let title_html = if self.title.len() > 0 {
-            format!("<text class='wj-chart-title' x='12' y='16'>{}</text>", self.title)
+            "<text class='wj-chart-title' x='12' y='16'>${self.title}</text>"
         } else {
-            "".to_string()
+            ""
         }
-        format!(
-            "<div class='wj-chart'><svg class='wj-chart-svg' width='{}' height='{}' viewBox='0 0 {} {}' role='img'>{}{}</svg></div>",
-            self.width, self.height, self.width, self.height, title_html, bars_html
-        )
+        "<div class='wj-chart'><svg class='wj-chart-svg' width='${self.width}' height='${self.height}' viewBox='0 0 ${self.width} ${self.height}' role='img'>${title_html}${bars_html}</svg></div>"
     }
 }
 
 fn main() {
     let html = Chart::new()
-        .title("Aging".to_string())
-        .bar(ChartBar::new("Current".to_string(), 100))
-        .bar(ChartBar::new("30+".to_string(), 40))
+        .title("Aging")
+        .bar(ChartBar::new("Current", 100))
+        .bar(ChartBar::new("30+", 40))
         .render()
-    println!("{}", html)
+    println("${html}")
 }

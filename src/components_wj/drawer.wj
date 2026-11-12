@@ -20,7 +20,7 @@ impl Drawer {
         Drawer {
             children: Vec::new(),
             position: DrawerPosition::Right,
-            width: "320px".to_string(),
+            width: "320px",
             open: false,
             class: "",
         }
@@ -53,10 +53,10 @@ impl Drawer {
     
     pub fn render() -> string {
         let (position_style, size_prop) = match self.position {
-            DrawerPosition::Left => ("left: 0; top: 0; bottom: 0;", format!("width: {};", self.width)),
-            DrawerPosition::Right => ("right: 0; top: 0; bottom: 0;", format!("width: {};", self.width)),
-            DrawerPosition::Top => ("top: 0; left: 0; right: 0;", format!("height: {};", self.width)),
-            DrawerPosition::Bottom => ("bottom: 0; left: 0; right: 0;", format!("height: {};", self.width)),
+            DrawerPosition::Left => ("left: 0; top: 0; bottom: 0;", "width: ${self.width};"),
+            DrawerPosition::Right => ("right: 0; top: 0; bottom: 0;", "width: ${self.width};"),
+            DrawerPosition::Top => ("top: 0; left: 0; right: 0;", "height: ${self.width};"),
+            DrawerPosition::Bottom => ("bottom: 0; left: 0; right: 0;", "height: ${self.width};"),
         }
         
         let transform = if self.open {

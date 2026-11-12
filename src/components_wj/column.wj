@@ -27,7 +27,7 @@ impl Column {
     pub fn new() -> Column {
         Column {
             children: Vec::new(),
-            gap: "8px".to_string(),
+            gap: "8px",
             align: ColumnAlign::Start,
             justify: ColumnJustify::Start,
             class: "",

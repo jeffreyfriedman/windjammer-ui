@@ -17,8 +17,8 @@ impl Skeleton {
     pub fn new() -> Skeleton {
         Skeleton {
             variant: SkeletonVariant::Text,
-            width: "100%".to_string(),
-            height: "20px".to_string(),
+            width: "100%",
+            height: "20px",
             class: "",
         }
     }

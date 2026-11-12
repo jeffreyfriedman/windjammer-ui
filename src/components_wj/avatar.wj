@@ -26,7 +26,7 @@ impl Avatar {
     pub fn new(src: string) -> Avatar {
         Avatar {
             src,
-            alt: "Avatar".to_string(),
+            alt: "Avatar",
             size: AvatarSize::Medium,
             shape: AvatarShape::Circle,
             fallback: "",

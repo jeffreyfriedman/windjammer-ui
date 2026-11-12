@@ -15,7 +15,7 @@ impl KpiTile {
     pub fn new(label: string) -> KpiTile {
         KpiTile {
             label: label,
-            value_html: "".to_string(),
+            value_html: "",
         }
     }
 
@@ -27,11 +27,7 @@ impl KpiTile {
 
 impl Renderable for KpiTile {
     fn render(self) -> string {
-        format!(
-            "<div class='wj-kpi-tile kpi'><span class='kpi-label'>{}</span><div class='kpi-value'>{}</div></div>",
-            self.label,
-            self.value_html
-        )
+        "<div class='wj-kpi-tile kpi'><span class='kpi-label'>${self.label}</span><div class='kpi-value'>${self.value_html}</div></div>"
     }
 }
 
@@ -54,16 +50,16 @@ impl KpiGrid {
 
 impl Renderable for KpiGrid {
     fn render(self) -> string {
-        let mut body = "".to_string()
+        let mut body = ""
         for t in &self.tiles {
             body.push_str(t)
         }
-        format!("<div class='kpi-grid wj-kpi-grid'>{}</div>", body)
+        "<div class='kpi-grid wj-kpi-grid'>${body}</div>"
     }
 }
 
 fn main() {
-    let tile = KpiTile::new("Cash".to_string()).value_html("<span class='wj-money'>$10.00</span>".to_string()).render()
+    let tile = KpiTile::new("Cash").value_html("<span class='wj-money'>$10.00</span>").render()
     let html = KpiGrid::new().tile(tile).render()
-    println!("{}", html)
+    println("${html}")
 }

@@ -15,7 +15,7 @@ impl Panel {
             children: Vec::new(),
             collapsible: false,
             collapsed: false,
-            padding: "16px".to_string(),
+            padding: "16px",
         }
     }
 
@@ -59,24 +59,24 @@ pub fn render(self) -> string {
 
         let children_html = self.children.join("\n")
 
-        format!("<div class='wj-panel'>
-  <div class='{}'>
-    <span>{}</span>
-    <h3>{}</h3>
+        "<div class='wj-panel'>
+  <div class='${header_class}'>
+    <span>${icon}</span>
+    <h3>${self.title}</h3>
   </div>
-  <div class='wj-panel-content' style='{}padding: {};'>
-    {}
+  <div class='wj-panel-content' style='${content_style}padding: ${self.padding};'>
+    ${children_html}
   </div>
-</div>", header_class, icon, self.title, content_style, self.padding, children_html)
+</div>"
     }
 }
 
 fn main() {
-    let panel = Panel::new("Settings".to_string())
-        .child("<p>Panel content goes here</p>".to_string())
+    let panel = Panel::new("Settings")
+        .child("<p>Panel content goes here</p>")
         .collapsible(true)
 
-    println!("{}", panel.render())
+    println("${panel.render()}")
 }
 
 

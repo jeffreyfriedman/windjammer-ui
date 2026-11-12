@@ -18,8 +18,8 @@ impl ScrollArea {
         ScrollArea {
             children: Vec::new(),
             direction: ScrollDirection::Vertical,
-            height: "300px".to_string(),
-            width: "100%".to_string(),
+            height: "300px",
+            width: "100%",
         }
     }
 
@@ -56,20 +56,20 @@ pub fn render(self) -> string {
 
         let children_html = self.children.join("\n")
 
-        format!("<div class='wj-scroll-area' style='height: {}; width: {}; {}'>
-  {}
-</div>", self.height, self.width, overflow_style, children_html)
+        "<div class='wj-scroll-area' style='height: ${self.height}; width: ${self.width}; ${overflow_style}'>
+  ${children_html}
+</div>"
     }
 }
 
 fn main() {
     let scroll = ScrollArea::new()
-        .height("200px".to_string())
-        .child("<p>Line 1</p>".to_string())
-        .child("<p>Line 2</p>".to_string())
-        .child("<p>Line 3</p>".to_string())
+        .height("200px")
+        .child("<p>Line 1</p>")
+        .child("<p>Line 2</p>")
+        .child("<p>Line 3</p>")
 
-    println!("{}", scroll.render())
+    println("${scroll.render()}")
 }
 
 

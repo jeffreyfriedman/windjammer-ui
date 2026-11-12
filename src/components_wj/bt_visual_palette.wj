@@ -5,7 +5,7 @@ pub struct BtPalettePanel {}
 
 impl Renderable for BtPalettePanel {
     pub fn render(self) -> string {
-        let mut mk = "".to_string()
+        let mut mk = ""
         mk = mk + "<div class=\"bt-pane-label\">Compositor</div>"
         mk = mk + "<button class=\"bt-drag-chip\" draggable=\"true\" data-bt-kind=\"sequence\">Sequence</button>"
         mk = mk + "<button class=\"bt-drag-chip\" draggable=\"true\" data-bt-kind=\"selector\">Selector</button>"
@@ -18,9 +18,9 @@ impl Renderable for BtPalettePanel {
         mk = mk + "<button class=\"bt-drag-chip\" draggable=\"true\" data-bt-kind=\"condition\">Condition</button>"
         mk = mk + "<button class=\"bt-drag-chip\" draggable=\"true\" data-bt-kind=\"action\">Action</button>"
         mk = mk + "<p class=\"bt-hint\">Drag onto the canvas grid. Host tooling wires callbacks to Rust/Windjammer delegates.</p>"
-        let mut shell = "".to_string()
+        let mut shell = ""
         shell = shell + "<aside class=\"bt-palette-pane\">"
-        shell = format!("{}{}", shell, mk)
+        shell = "${shell}${mk}"
         shell + "</aside>"
     }
 }
