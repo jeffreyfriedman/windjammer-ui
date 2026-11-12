@@ -1,5 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -17,69 +15,55 @@ pub struct Input {
 }
 
 impl Input {
-    #[inline]
-    pub fn new() -> Input {
-        Input {
-            value: "".to_string(),
-            placeholder: "".to_string(),
-            input_type: "text".to_string(),
-            change_handler: String::new(),
-            input_handler: String::new(),
-        }
-    }
-    #[inline]
-    pub fn value(mut self, value: String) -> Input {
-        self.value = value;
+#[inline]
+pub fn new() -> Input {
+        Input { value: String::new(), placeholder: String::new(), input_type: String::from("text"), change_handler: String::new(), input_handler: String::new() }
+}
+#[inline]
+pub fn value(mut self, value: impl Into<String>) -> Input {
+        self.value = value.into();
         self
-    }
-    #[inline]
-    pub fn placeholder(mut self, placeholder: String) -> Input {
-        self.placeholder = placeholder;
+}
+#[inline]
+pub fn placeholder(mut self, placeholder: impl Into<String>) -> Input {
+        self.placeholder = placeholder.into();
         self
-    }
-    #[inline]
-    pub fn input_type(mut self, input_type: String) -> Input {
-        self.input_type = input_type;
+}
+#[inline]
+pub fn input_type(mut self, input_type: impl Into<String>) -> Input {
+        self.input_type = input_type.into();
         self
-    }
-    #[inline]
-    pub fn on_change(mut self, handler: String) -> Input {
-        self.change_handler = handler;
+}
+#[inline]
+pub fn on_change(mut self, handler: impl Into<String>) -> Input {
+        self.change_handler = handler.into();
         self
-    }
-    #[inline]
-    pub fn on_input(mut self, handler: String) -> Input {
-        self.input_handler = handler;
+}
+#[inline]
+pub fn on_input(mut self, handler: impl Into<String>) -> Input {
+        self.input_handler = handler.into();
         self
-    }
+}
 }
 
 impl RenderableVNode for Input {
-    #[inline]
-    fn to_vnode(&self) -> VNode {
-        let mut node = VNode::input()
-            .add_class("wj-input")
-            .set_type(self.input_type.as_str())
-            .set_value(self.value.as_str())
-            .set_placeholder(self.placeholder.as_str());
+#[inline]
+fn to_vnode(&self) -> VNode {
+        let mut node = VNode::input().add_class("wj-input".to_string()).set_type(self.input_type.clone()).set_value(self.value.clone()).set_placeholder(self.placeholder.clone());
         if !self.change_handler.is_empty() {
-            node = node.on_change(self.change_handler.as_str());
+            node = node.on_change(self.change_handler.clone());
         }
         if !self.input_handler.is_empty() {
-            node = node.on_input(self.input_handler.as_str());
+            node = node.on_input(self.input_handler.clone());
         }
         node
-    }
+}
 }
 
 impl Renderable for Input {
-    #[inline]
-    fn render(&self) -> String {
-        format!(
-            "<input class='wj-input' type='{}' value='{}' placeholder='{}'/>",
-            self.input_type.clone(),
-            self.value.clone(),
-            self.placeholder.clone()
-        )
-    }
+#[inline]
+fn render(&self) -> String {
+        format!("<input class='wj-input' type='{}' value='{}' placeholder='{}'/>", self.input_type, self.value, self.placeholder)
 }
+}
+

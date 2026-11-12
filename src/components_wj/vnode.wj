@@ -17,7 +17,15 @@
 //   }
 
 // Import the Rust FFI functions
-use crate::vnode_ffi
+use crate::vnode_ffi::vnode_attr
+use crate::vnode_ffi::vnode_child
+use crate::vnode_ffi::vnode_class
+use crate::vnode_ffi::vnode_element
+use crate::vnode_ffi::vnode_on_change
+use crate::vnode_ffi::vnode_on_click
+use crate::vnode_ffi::vnode_on_input
+use crate::vnode_ffi::vnode_style
+use crate::vnode_ffi::vnode_text
 
 /// VNode handle - wraps the Rust VNode registry handle
 /// This is an opaque wrapper that tracks the VNode in the Rust registry
@@ -33,32 +41,37 @@ impl VNode {
     
     /// Create a new div element
     pub fn div() -> VNode {
-        VNode { handle: vnode_ffi::vnode_element("div") }
+        VNode { handle: vnode_element("div") }
     }
     
     /// Create a new span element
     pub fn span() -> VNode {
-        VNode { handle: vnode_ffi::vnode_element("span") }
+        VNode { handle: vnode_element("span") }
     }
     
     /// Create a new button element
     pub fn button() -> VNode {
-        VNode { handle: vnode_ffi::vnode_element("button") }
+        VNode { handle: vnode_element("button") }
     }
     
     /// Create a new input element
     pub fn input() -> VNode {
-        VNode { handle: vnode_ffi::vnode_element("input") }
+        VNode { handle: vnode_element("input") }
+    }
+    
+    /// Create a new horizontal rule element
+    pub fn hr() -> VNode {
+        VNode { handle: vnode_element("hr") }
     }
     
     /// Create a new text node
     pub fn text(content: string) -> VNode {
-        VNode { handle: vnode_ffi::vnode_text(content) }
+        VNode { handle: vnode_text(content) }
     }
     
     /// Create any HTML element by tag name
     pub fn element(tag: string) -> VNode {
-        VNode { handle: vnode_ffi::vnode_element(tag) }
+        VNode { handle: vnode_element(tag) }
     }
     
     // ========================================================================
@@ -68,32 +81,32 @@ impl VNode {
     
     /// Add a CSS class (takes owned String)
     pub fn add_class(self, class: string) -> VNode {
-        vnode_ffi::vnode_class(self.handle, class)
+        vnode_class(self.handle, class)
         self
     }
     
     /// Add inline style (takes owned String)
     pub fn add_style(self, style: string) -> VNode {
-        vnode_ffi::vnode_style(self.handle, style)
+        vnode_style(self.handle, style)
         self
     }
     
     /// Add an attribute (takes owned Strings)
     pub fn add_attr(self, name: string, value: string) -> VNode {
-        vnode_ffi::vnode_attr(self.handle, name, value)
+        vnode_attr(self.handle, name, value)
         self
     }
     
     /// Add a child VNode
     pub fn child(self, child: VNode) -> VNode {
-        vnode_ffi::vnode_child(self.handle, child.handle)
+        vnode_child(self.handle, child.handle)
         self
     }
     
     /// Add text content (takes owned String)
     pub fn add_text(self, text: string) -> VNode {
         let text_node = VNode::text(text)
-        vnode_ffi::vnode_child(self.handle, text_node.handle)
+        vnode_child(self.handle, text_node.handle)
         self
     }
     
@@ -103,32 +116,32 @@ impl VNode {
     
     /// Set id attribute
     pub fn set_id(self, id: string) -> VNode {
-        vnode_ffi::vnode_attr(self.handle, "id", id)
+        vnode_attr(self.handle, "id", id)
         self
     }
     
     /// Set placeholder (for inputs)
     pub fn set_placeholder(self, text: string) -> VNode {
-        vnode_ffi::vnode_attr(self.handle, "placeholder", text)
+        vnode_attr(self.handle, "placeholder", text)
         self
     }
     
     /// Set type attribute (for inputs/buttons)
     pub fn set_type(self, t: string) -> VNode {
-        vnode_ffi::vnode_attr(self.handle, "type", t)
+        vnode_attr(self.handle, "type", t)
         self
     }
     
     /// Set value attribute
     pub fn set_value(self, v: string) -> VNode {
-        vnode_ffi::vnode_attr(self.handle, "value", v)
+        vnode_attr(self.handle, "value", v)
         self
     }
     
     /// Set disabled attribute
     pub fn set_disabled(self, d: bool) -> VNode {
         if d {
-            vnode_ffi::vnode_attr(self.handle, "disabled", "true")
+            vnode_attr(self.handle, "disabled", "true")
         }
         self
     }
@@ -139,19 +152,19 @@ impl VNode {
     
     /// Attach a click handler by name (looked up in event dispatcher at render time)
     pub fn on_click(self, handler_name: string) -> VNode {
-        vnode_ffi::vnode_on_click(self.handle, handler_name)
+        vnode_on_click(self.handle, handler_name)
         self
     }
     
     /// Attach a change handler by name
     pub fn on_change(self, handler_name: string) -> VNode {
-        vnode_ffi::vnode_on_change(self.handle, handler_name)
+        vnode_on_change(self.handle, handler_name)
         self
     }
     
     /// Attach an input handler by name
     pub fn on_input(self, handler_name: string) -> VNode {
-        vnode_ffi::vnode_on_input(self.handle, handler_name)
+        vnode_on_input(self.handle, handler_name)
         self
     }
     
@@ -193,6 +206,6 @@ pub fn spacer() -> VNode {
 
 /// Create a horizontal divider
 pub fn divider() -> VNode {
-    VNode::element("hr")
+    VNode::hr()
         .add_style("border: 0; border-top: 1px solid #333; margin: 8px 0")
 }

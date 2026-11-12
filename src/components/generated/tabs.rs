@@ -1,5 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -14,20 +12,15 @@ pub struct Tab {
 }
 
 impl Tab {
-    #[inline]
-    pub fn new(id: String, label: String, content: String) -> Tab {
-        Tab {
-            id,
-            label,
-            content,
-            disabled: false,
-        }
-    }
-    #[inline]
-    pub fn disabled(mut self, disabled: bool) -> Tab {
+#[inline]
+pub fn new(id: String, label: String, content: String) -> Tab {
+        Tab { id, label, content, disabled: false }
+}
+#[inline]
+pub fn disabled(mut self, disabled: bool) -> Tab {
         self.disabled = disabled;
         self
-    }
+}
 }
 
 #[derive(Debug, Clone, PartialEq, Default)]
@@ -38,30 +31,27 @@ pub struct Tabs {
 }
 
 impl Tabs {
-    #[inline]
-    pub fn new() -> Tabs {
-        Tabs {
-            tabs: Vec::new(),
-            active: "".to_string(),
-        }
-    }
-    #[inline]
-    pub fn tab(mut self, tab: Tab) -> Tabs {
+#[inline]
+pub fn new() -> Tabs {
+        Tabs { tabs: Vec::new(), active: String::new() }
+}
+#[inline]
+pub fn tab(mut self, tab: Tab) -> Tabs {
         self.tabs.push(tab);
         self
-    }
-    #[inline]
-    pub fn active(mut self, id: String) -> Tabs {
-        self.active = id;
+}
+#[inline]
+pub fn active(mut self, id: impl Into<String>) -> Tabs {
+        self.active = id.into();
         self
-    }
+}
 }
 
 impl Renderable for Tabs {
-    #[inline]
-    fn render(&self) -> String {
-        let mut tabs_html = "<div class='wj-tabs-header'>".to_string();
-        let mut i = 0;
+
+fn render(&self) -> String {
+        let mut tabs_html: String = String::from("<div class='wj-tabs-header'>");
+        let mut i = 0_usize;
         while i < self.tabs.len() {
             let tab = &self.tabs[i];
             let active_class = {
@@ -78,15 +68,12 @@ impl Renderable for Tabs {
                     String::new()
                 }
             };
-            tabs_html = format!(
-                "{}<button class='wj-tab{}{}' data-tab-id='{}'>{}</button>",
-                tabs_html, active_class, disabled_class, tab.id, tab.label
-            );
+            { use std::fmt::Write as _; write!(tabs_html, "<button class='wj-tab{}{}' data-tab-id='{}'>{}</button>", active_class, disabled_class, tab.id, tab.label).expect("a formatting trait implementation returned an error"); };
             i += 1;
         }
-        tabs_html = format!("{}</div>", tabs_html);
-        let mut content_html = "<div class='wj-tabs-content'>".to_string();
-        let mut j = 0;
+        { use std::fmt::Write as _; write!(tabs_html, "</div>").expect("a formatting trait implementation returned an error"); };
+        let mut content_html: String = String::from("<div class='wj-tabs-content'>");
+        let mut j = 0_usize;
         while j < self.tabs.len() {
             let tab = &self.tabs[j];
             let display_style: String = {
@@ -96,13 +83,11 @@ impl Renderable for Tabs {
                     String::from("display: none;")
                 }
             };
-            content_html = format!(
-                "{}<div class='wj-tab-panel' data-tab-id='{}' style='{}'>{}</div>",
-                content_html, tab.id, display_style, tab.content
-            );
+            { use std::fmt::Write as _; write!(content_html, "<div class='wj-tab-panel' data-tab-id='{}' style='{}'>{}</div>", tab.id, display_style, tab.content).expect("a formatting trait implementation returned an error"); };
             j += 1;
         }
-        content_html = format!("{}</div>", content_html);
+        { use std::fmt::Write as _; write!(content_html, "</div>").expect("a formatting trait implementation returned an error"); };
         format!("<div class='wj-tabs'>{}{}</div>", tabs_html, content_html)
-    }
 }
+}
+

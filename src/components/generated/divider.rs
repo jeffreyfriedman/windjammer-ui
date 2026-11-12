@@ -1,5 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -20,73 +18,51 @@ pub struct Divider {
 }
 
 impl Divider {
-    #[inline]
-    pub fn new() -> Divider {
-        Divider {
-            orientation: DividerOrientation::Horizontal,
-            color: "#3E3E3E".to_string(),
-            thickness: "1px".to_string(),
-            margin: "0".to_string(),
-        }
-    }
-    #[inline]
-    pub fn horizontal() -> Divider {
+#[inline]
+pub fn new() -> Divider {
+        Divider { orientation: DividerOrientation::Horizontal, color: String::from("#3E3E3E"), thickness: String::from("1px"), margin: String::from("0") }
+}
+#[inline]
+pub fn horizontal() -> Divider {
         Divider::new()
-    }
-    #[inline]
-    pub fn vertical() -> Divider {
-        Divider {
-            orientation: DividerOrientation::Vertical,
-            color: "#3E3E3E".to_string(),
-            thickness: "1px".to_string(),
-            margin: "0".to_string(),
-        }
-    }
-    #[inline]
-    pub fn color(mut self, color: String) -> Divider {
-        self.color = color;
+}
+#[inline]
+pub fn vertical() -> Divider {
+        Divider { orientation: DividerOrientation::Vertical, color: String::from("#3E3E3E"), thickness: String::from("1px"), margin: String::from("0") }
+}
+#[inline]
+pub fn color(mut self, color: impl Into<String>) -> Divider {
+        self.color = color.into();
         self
-    }
-    #[inline]
-    pub fn thickness(mut self, thickness: String) -> Divider {
-        self.thickness = thickness;
+}
+#[inline]
+pub fn thickness(mut self, thickness: impl Into<String>) -> Divider {
+        self.thickness = thickness.into();
         self
-    }
-    #[inline]
-    pub fn margin(mut self, margin: String) -> Divider {
-        self.margin = margin;
+}
+#[inline]
+pub fn margin(mut self, margin: impl Into<String>) -> Divider {
+        self.margin = margin.into();
         self
-    }
+}
 }
 
 impl Renderable for Divider {
-    #[inline]
-    fn render(&self) -> String {
-        let orientation_class: String = match self.orientation {
+
+fn render(&self) -> String {
+        let orientation_class: String = match &self.orientation {
             DividerOrientation::Horizontal => String::from("wj-divider-horizontal"),
             DividerOrientation::Vertical => String::from("wj-divider-vertical"),
         };
-        let style: String = match self.orientation {
+        let style: String = match &self.orientation {
             DividerOrientation::Horizontal => {
-                format!(
-                    "width: 100%; height: {}; background: {}; margin: {} 0;",
-                    self.thickness.clone(),
-                    self.color.clone(),
-                    self.margin.clone()
-                )
-            }
+                format!("width: 100%; height: {}; background: {}; margin: {} 0;", self.thickness, self.color, self.margin)
+            },
             DividerOrientation::Vertical => {
-                format!(
-                    "width: {}; height: 100%; background: {}; margin: 0 {};",
-                    self.thickness.clone(),
-                    self.color.clone(),
-                    self.margin.clone()
-                )
-            }
+                format!("width: {}; height: 100%; background: {}; margin: 0 {};", self.thickness, self.color, self.margin)
+            },
         };
-        format!(
-            "<div class='wj-divider {}' style='{}'></div>",
-            orientation_class, style
-        )
-    }
+        format!("<div class='wj-divider {}' style='{}'></div>", orientation_class, style)
 }
+}
+
