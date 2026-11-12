@@ -32,6 +32,9 @@ They meet at one point: both want the component library to be ordinary Windjamme
 - The checked-in `src/components/generated/` is not regenerated from `src/components_wj/` (a full regeneration at the
   current compiler differs from the hand-maintained files); closing that gap is the main authoring task.
 - The size budgets of ADR-0005 (counter under 400 KB brotli) are targets; no measurement is committed.
+- `crates/wj_samples` (the new-core samples) stops at the current compiler with WJ0050: `wj_reactive::state` and the
+  other generic functions of a Rust crate are not in its generated signature surface, and the opaque `Signal` type is not
+  expressible yet (ADR-0026). It needs a pinned `rust/wj_reactive.wji` once the compiler supports generic and opaque types.
 - Desktop (egui) shares no code with the web components; iOS and Android are stubs.
 
 ## Roadmap
