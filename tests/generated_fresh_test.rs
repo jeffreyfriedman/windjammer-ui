@@ -26,13 +26,18 @@ fn wj_binary() -> Option<String> {
     None
 }
 
-/// Every `.rs` file of a directory, by file name.
+/// The files that make up a generated tree: `mod.rs` and every module it declares, by file name. (The compiler
+/// occasionally also writes a `lib.rs` copy of `mod.rs`; that is not part of the tree.)
 fn rs_files(dir: &Path) -> BTreeMap<String, String> {
+    let declared = declared_modules(dir);
     let mut map = BTreeMap::new();
     for entry in std::fs::read_dir(dir).unwrap_or_else(|e| panic!("cannot read {}: {e}", dir.display())) {
         let path: PathBuf = entry.expect("dir entry").path();
         if path.extension().map(|x| x == "rs").unwrap_or(false) {
             let name = path.file_name().unwrap().to_string_lossy().to_string();
+            if name != "mod.rs" && !declared.contains(&name) {
+                continue;
+            }
             map.insert(name, std::fs::read_to_string(&path).expect("read generated file"));
         }
     }
@@ -108,4 +113,21 @@ fn tree_diff_reports_edits_missing_and_extra_files() {
     assert!(diff[0].contains("a.rs") && diff[0].contains("line 2"));
     assert!(diff[1].contains("c.rs") && diff[2].contains("d.rs"));
     assert!(tree_diff(&fresh, &fresh).is_empty());
+}
+
+/// File names of the modules a directory's `mod.rs` declares with `pub mod x;`.
+fn declared_modules(dir: &Path) -> Vec<String> {
+    let text = std::fs::read_to_string(dir.join("mod.rs")).unwrap_or_default();
+    text.lines()
+        .filter_map(|l| l.trim().strip_prefix("pub mod ")?.strip_suffix(';').map(|m| format!("{m}.rs")))
+        .collect()
+}
+
+#[test]
+fn declared_modules_reads_pub_mod_lines_only() {
+    let dir = std::env::temp_dir().join(format!("wj-ui-declared-{}", std::process::id()));
+    std::fs::create_dir_all(&dir).unwrap();
+    std::fs::write(dir.join("mod.rs"), "// header\npub mod a;\n#[cfg(test)]\npub mod b_test;\npub use a::*;\n").unwrap();
+    assert_eq!(declared_modules(&dir), ["a.rs", "b_test.rs"]);
+    let _ = std::fs::remove_dir_all(&dir);
 }

@@ -28,7 +28,7 @@ They meet at one point: both want the component library to be ordinary Windjamme
 ## What is not done yet
 
 - Behaviour against a real browser DOM (`moveBefore`, focus restore, delegated listeners) is covered by
-  `tests/wasm_browser_test.rs` (`wasm-pack test --headless --chrome`).
+  `tests/wasm_browser_test.rs` (headless Chrome through `wasm-bindgen-test-runner`; command in `docs/TESTING_GUIDE.md`). A CI job with a pinned Chrome and chromedriver is the remaining piece.
 - Components that call into the crate's own Rust modules by module path (`vnode_ffi::f(..)`) need the module imported and the
   function called by bare name: the compiler has no boundary signature for module-qualified calls into hand-written
   modules of the same crate (repro `findings/ui/rust_module_qualified_call`). A literal passed to an owned `String`
@@ -45,7 +45,7 @@ Each step has a measurable exit, and a kill criterion where one applies.
 
 1. **Regenerate for real.** Done: `src/components/generated/` is the compiler's output byte for byte, and
    `tests/generated_fresh_test.rs` regenerates it and fails on any difference.
-2. **Browser DOM tests.** One `wasm-pack test --headless --chrome` suite for `dom_patch::web`: focus survives a keyed
+2. **Browser DOM tests.** Landed (5 tests, green in Chrome 157): one headless-Chrome suite for `dom_patch::web`: focus survives a keyed
    move, delegated clicks fire once, `stop_propagation` holds. Exit: green in CI on a pinned Chrome.
 3. **Render in the playground.** Prerequisite found by trying it: `components_wj/vnode.wj` builds its tree through the Rust
    `vnode_ffi` registry, which the interpreter cannot call, so no component runs interpreted yet (`wj run --interpret`
