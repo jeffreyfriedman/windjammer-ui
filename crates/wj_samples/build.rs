@@ -6,7 +6,7 @@ use std::process::Command;
 
 fn main() {
     println!("cargo:rerun-if-changed=wj/src");
-    println!("cargo:rerun-if-changed=wj/blocked");
+    println!("cargo:rerun-if-changed=wj/rust");
     println!("cargo:rerun-if-changed=wj/wj.toml");
     println!("cargo:rerun-if-env-changed=WJ_BIN");
     let out = PathBuf::from(std::env::var("OUT_DIR").unwrap());
@@ -32,16 +32,4 @@ fn main() {
         all.push_str(&format!("pub mod {n} {{\n{src}\n}}\n"));
     }
     std::fs::write(out.join("generated.rs"), all).unwrap();
-
-    // Samples the compiler cannot compile yet are transpiled only, so tests can pin the defect.
-    let blocked = out.join("blocked");
-    let _ = std::fs::remove_dir_all(&blocked);
-    let status = Command::new(&wj)
-        .current_dir("wj")
-        .args(["build", "blocked", "--library", "--no-cargo", "--no-lint", "-o"])
-        .arg(&blocked)
-        .status()
-        .expect("run wj for blocked samples");
-    assert!(status.success(), "wj build failed for wj/blocked");
-    println!("cargo:rustc-env=WJ_BLOCKED_DIR={}", blocked.display());
 }

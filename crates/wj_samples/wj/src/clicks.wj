@@ -2,7 +2,7 @@ use wj_reactive::state
 use wj_ui::button_fn
 use wj_ui::column
 
-pub fn counter() {
+pub fn clicks() {
     let count = state(0)
     let view = column()
         .center()

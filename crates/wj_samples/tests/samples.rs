@@ -71,3 +71,18 @@ fn profile_card_sample_exposes_heading_text_and_two_buttons() {
     let html = wj_a11y::project(&tree).to_html();
     assert!(html.contains("<h2") && html.contains(">Follow</button>"));
 }
+
+#[test]
+fn clicks_sample_relabels_its_button_with_the_count() {
+    let (mut app, mut shell, clock) = boot(wj_samples::clicks::clicks);
+    assert_eq!(app.scene.audit_semantics(), Vec::<String>::new());
+    find(&app.scene.semantic_tree(), Role::Button, "Clicked 0 times");
+    for expected in 1..=2 {
+        let button = app.scene.semantic_tree();
+        let name = format!("Clicked {} times", expected - 1);
+        let b = find(&button, Role::Button, &name);
+        click(&mut shell, &b);
+        app.frame(&mut shell, &clock);
+        find(&app.scene.semantic_tree(), Role::Button, &format!("Clicked {expected} times"));
+    }
+}
