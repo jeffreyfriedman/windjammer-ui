@@ -7,37 +7,52 @@
 use std::fs;
 use std::path::{Path, PathBuf};
 
-/// Each entry is a list of fragments; the forbidden term is their concatenation.
-const FRAGMENTS: &[&[&str]] = &[
-    &["windjammer", "db"],
-    &["windjammer-", "db"],
-    &["wd", "b-"],
-    &["wd", "b_"],
-    &["windjammer-", "game"],
-    &["windjammer_", "game"],
-    &["breach", "-protocol"],
-    &["breach", "_protocol"],
-    &["breach", " protocol"],
-    &["ledger", "kit"],
-    &["financial", "-management"],
-    &["finance", "-screens"],
-    &["trash", " panda"],
-    &["jeffrey", "friedman"],
-    &["wj", "_pin"],
-];
-
-/// The one tolerated occurrence: the public repository URL of this project.
-fn allowed_url() -> String {
-    ["github.com/jeffrey", "friedman/windjammer-ui"].concat()
+/// One forbidden term: its pieces must appear in order, optionally separated by one character of `seps`.
+struct Term {
+    seps: Vec<char>,
+    pieces: Vec<String>,
 }
 
-fn terms() -> Vec<String> {
-    FRAGMENTS.iter().map(|f| f.concat()).collect()
+const PATTERNS: &str = "docs/public-hygiene-patterns.txt";
+
+fn parse_patterns(text: &str) -> Vec<Term> {
+    text.lines()
+        .map(str::trim)
+        .filter(|l| !l.is_empty() && !l.starts_with('#'))
+        .map(|l| {
+            let (seps, pieces) = l.split_once(':').expect("pattern line needs ':'");
+            Term { seps: seps.chars().collect(), pieces: pieces.split('|').map(|p| p.to_lowercase()).collect() }
+        })
+        .collect()
 }
 
+fn terms() -> Vec<Term> {
+    let root = Path::new(env!("CARGO_MANIFEST_DIR"));
+    parse_patterns(&fs::read_to_string(root.join(PATTERNS)).expect("patterns file"))
+}
+
+fn match_from(term: &Term, hay: &str, idx: usize, pos: usize) -> bool {
+    if !hay[pos..].starts_with(term.pieces[idx].as_str()) {
+        return false;
+    }
+    let after = pos + term.pieces[idx].len();
+    if idx + 1 == term.pieces.len() || match_from(term, hay, idx + 1, after) {
+        return true;
+    }
+    match hay[after..].chars().next() {
+        Some(c) if term.seps.contains(&c) => match_from(term, hay, idx + 1, after + c.len_utf8()),
+        _ => false,
+    }
+}
+
+/// Forbidden terms found in `text`, each rendered as its pieces joined by `+`.
 fn find_hits(text: &str) -> Vec<String> {
-    let lower = text.to_lowercase().replace(&allowed_url(), "");
-    terms().into_iter().filter(|t| lower.contains(t.as_str())).collect()
+    let hay = text.to_lowercase();
+    terms()
+        .into_iter()
+        .filter(|t| hay.match_indices(t.pieces[0].as_str()).any(|(i, _)| match_from(t, &hay, 0, i)))
+        .map(|t| t.pieces.join("+"))
+        .collect()
 }
 
 fn skip_dir(name: &str) -> bool {
@@ -92,18 +107,24 @@ fn scanner_detects_planted_forbidden_strings() {
     assert!(scan_tree(&dir).is_empty(), "clean tree must pass");
 
     for t in terms() {
-        fs::write(dir.join("sub/planted.txt"), format!("see {} for details", t.to_uppercase())).unwrap();
+        let adjacent = t.pieces.concat().to_uppercase();
+        fs::write(dir.join("sub/planted.txt"), format!("see {adjacent} for details")).unwrap();
         let hits = scan_tree(&dir);
-        assert!(hits.iter().any(|h| h.contains("content matches")), "term not detected: {t}");
+        assert!(hits.iter().any(|h| h.contains("content matches")), "term not detected: {}", t.pieces.join("+"));
+        if let Some(sep) = t.seps.first() {
+            let spaced = t.pieces.join(&sep.to_string());
+            fs::write(dir.join("sub/planted.txt"), format!("see {spaced} for details")).unwrap();
+            assert!(!scan_tree(&dir).is_empty(), "separated form not detected: {spaced}");
+        }
         fs::remove_file(dir.join("sub/planted.txt")).unwrap();
     }
     // file-name detection
-    fs::write(dir.join(format!("{}.md", terms()[9])), "x").unwrap();
+    fs::write(dir.join(format!("{}.md", terms()[0].pieces.concat())), "x").unwrap();
     assert!(scan_tree(&dir).iter().any(|h| h.contains("file name")));
     let _ = fs::remove_dir_all(&dir);
 }
 
 #[test]
-fn allowed_repo_url_is_not_flagged() {
-    assert!(find_hits(&format!("repository = \"https://{}\"", allowed_url())).is_empty());
+fn own_repository_url_is_not_flagged() {
+    assert!(find_hits("repository = \"https://github.com/jeffreyfriedman/windjammer-ui\"").is_empty());
 }
