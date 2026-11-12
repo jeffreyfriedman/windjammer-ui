@@ -1,5 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -14,40 +12,35 @@ pub struct DatePicker {
 }
 
 impl DatePicker {
-    #[inline]
-    pub fn new() -> DatePicker {
-        DatePicker {
-            value: "".to_string(),
-            label: "".to_string(),
-            name: "date".to_string(),
-            required: false,
-        }
-    }
-    #[inline]
-    pub fn value(mut self, value: impl Into<String>) -> DatePicker {
+#[inline]
+pub fn new() -> DatePicker {
+        DatePicker { value: String::new(), label: String::new(), name: String::from("date"), required: false }
+}
+#[inline]
+pub fn value(mut self, value: impl Into<String>) -> DatePicker {
         self.value = value.into();
         self
-    }
-    #[inline]
-    pub fn label(mut self, label: impl Into<String>) -> DatePicker {
+}
+#[inline]
+pub fn label(mut self, label: impl Into<String>) -> DatePicker {
         self.label = label.into();
         self
-    }
-    #[inline]
-    pub fn name(mut self, name: impl Into<String>) -> DatePicker {
+}
+#[inline]
+pub fn name(mut self, name: impl Into<String>) -> DatePicker {
         self.name = name.into();
         self
-    }
-    #[inline]
-    pub fn required(mut self, required: bool) -> DatePicker {
+}
+#[inline]
+pub fn required(mut self, required: bool) -> DatePicker {
         self.required = required;
         self
-    }
+}
 }
 
 impl Renderable for DatePicker {
-    #[inline]
-    fn render(&self) -> String {
+
+fn render(&self) -> String {
         let req = {
             if self.required {
                 String::from(" required")
@@ -55,17 +48,14 @@ impl Renderable for DatePicker {
                 String::new()
             }
         };
-        let label_html: String = {
+        let label_html = {
             if !self.label.is_empty() {
-                format!(
-                    "<label class='wj-datepicker-label' for='{}'>{}</label>",
-                    self.name.clone(),
-                    self.label.clone()
-                )
+                format!("<label class='wj-datepicker-label' for='{}'>{}</label>", self.name, self.label)
             } else {
-                "".to_string()
+                String::new()
             }
         };
-        format!("<div class='wj-datepicker'>{}<input class='wj-datepicker-input' type='date' id='{}' name='{}' value='{}'{}/></div>", label_html, self.name.clone(), self.name.clone(), self.value.clone(), req)
-    }
+        format!("<div class='wj-datepicker'>{}<input class='wj-datepicker-input' type='date' id='{}' name='{}' value='{}'{}/></div>", label_html, self.name, self.name, self.value, req)
 }
+}
+

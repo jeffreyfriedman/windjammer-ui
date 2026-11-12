@@ -1,7 +1,13 @@
 // Data model for realtime profiler timeline (frame budget + scope rows).
 // Reads live engine metrics via crate::frame_trace_ffi when a provider is registered.
 
-use crate::frame_trace_ffi
+use crate::frame_trace_ffi::has_live_data
+use crate::frame_trace_ffi::live_frame_index
+use crate::frame_trace_ffi::live_frame_time_ms
+use crate::frame_trace_ffi::live_scope_count
+use crate::frame_trace_ffi::live_scope_name
+use crate::frame_trace_ffi::live_scope_duration_ms
+use crate::frame_trace_ffi::live_scope_is_gpu
 
 pub enum ProfilerScopeKind {
     Cpu,
@@ -80,18 +86,18 @@ impl LiveProfilerSnapshot {
     }
 
     pub fn from_engine_live(budget_ms: f32) -> LiveProfilerSnapshot {
-        if !frame_trace_ffi::has_live_data() {
+        if !has_live_data() {
             return LiveProfilerSnapshot::new(0, 0.0, budget_ms)
         }
-        let frame_index = frame_trace_ffi::live_frame_index()
-        let frame_time_ms = frame_trace_ffi::live_frame_time_ms()
+        let frame_index = live_frame_index()
+        let frame_time_ms = live_frame_time_ms()
         let mut snap = LiveProfilerSnapshot::new(frame_index, frame_time_ms, budget_ms)
-        let count = frame_trace_ffi::live_scope_count()
-        let mut i = 0
+        let count = live_scope_count()
+        let mut i: u32 = 0
         while i < count {
-            let name = frame_trace_ffi::live_scope_name(i)
-            let duration_ms = frame_trace_ffi::live_scope_duration_ms(i)
-            let is_gpu = frame_trace_ffi::live_scope_is_gpu(i)
+            let name = live_scope_name(i)
+            let duration_ms = live_scope_duration_ms(i)
+            let is_gpu = live_scope_is_gpu(i)
             let kind = if is_gpu {
                 ProfilerScopeKind::Gpu
             } else {

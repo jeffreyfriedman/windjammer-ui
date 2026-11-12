@@ -1,5 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -15,41 +13,35 @@ pub struct CodeEditor {
 }
 
 impl CodeEditor {
-    #[inline]
-    pub fn new(code: String) -> CodeEditor {
-        CodeEditor {
-            code,
-            language: "rust".to_string(),
-            theme: "dark".to_string(),
-            line_numbers: true,
-            readonly: false,
-        }
-    }
-    #[inline]
-    pub fn language(mut self, language: String) -> CodeEditor {
-        self.language = language;
+#[inline]
+pub fn new(code: String) -> CodeEditor {
+        CodeEditor { code, language: String::from("rust"), theme: String::from("dark"), line_numbers: true, readonly: false }
+}
+#[inline]
+pub fn language(mut self, language: impl Into<String>) -> CodeEditor {
+        self.language = language.into();
         self
-    }
-    #[inline]
-    pub fn theme(mut self, theme: String) -> CodeEditor {
-        self.theme = theme;
+}
+#[inline]
+pub fn theme(mut self, theme: impl Into<String>) -> CodeEditor {
+        self.theme = theme.into();
         self
-    }
-    #[inline]
-    pub fn line_numbers(mut self, show: bool) -> CodeEditor {
+}
+#[inline]
+pub fn line_numbers(mut self, show: bool) -> CodeEditor {
         self.line_numbers = show;
         self
-    }
-    #[inline]
-    pub fn readonly(mut self, readonly: bool) -> CodeEditor {
+}
+#[inline]
+pub fn readonly(mut self, readonly: bool) -> CodeEditor {
         self.readonly = readonly;
         self
-    }
+}
 }
 
 impl Renderable for CodeEditor {
-    #[inline]
-    fn render(&self) -> String {
+#[inline]
+fn render(&self) -> String {
         let readonly_attr = {
             if self.readonly {
                 String::from(" readonly")
@@ -64,6 +56,7 @@ impl Renderable for CodeEditor {
                 String::new()
             }
         };
-        format!("<div class='wj-code-editor wj-editor-{} wj-editor-theme-{}{}'>\n  <textarea{}>\n{}</textarea>\n</div>", self.language.clone(), self.theme.clone(), line_numbers_class, readonly_attr, self.code.clone())
-    }
+        format!("<div class='wj-code-editor wj-editor-{} wj-editor-theme-{}{}'>\n  <textarea{}>\n{}</textarea>\n</div>", self.language, self.theme, line_numbers_class, readonly_attr, self.code)
 }
+}
+

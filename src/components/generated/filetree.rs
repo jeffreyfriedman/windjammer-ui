@@ -1,8 +1,5 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
-use std::fmt::Write;
 
 use super::traits::Renderable;
 #[derive(Debug, Clone, Default)]
@@ -15,27 +12,22 @@ pub struct FileNode {
 }
 
 impl FileNode {
-    #[inline]
-    pub fn new(name: String, is_directory: bool) -> FileNode {
-        FileNode {
-            name,
-            is_directory,
-            children: Vec::new(),
-            expanded: false,
-        }
-    }
-    #[inline]
-    pub fn child(mut self, node: FileNode) -> FileNode {
+#[inline]
+pub fn new(name: String, is_directory: bool) -> FileNode {
+        FileNode { name, is_directory, children: Vec::new(), expanded: false }
+}
+#[inline]
+pub fn child(mut self, node: FileNode) -> FileNode {
         self.children.push(node);
         self
-    }
-    #[inline]
-    pub fn expanded(mut self, expanded: bool) -> FileNode {
+}
+#[inline]
+pub fn expanded(mut self, expanded: bool) -> FileNode {
         self.expanded = expanded;
         self
-    }
-    #[inline]
-    pub fn render(&self, depth: i32) -> String {
+}
+
+pub fn render(&self, depth: i32) -> String {
         let indent = "  ".repeat(depth as usize);
         let icon: String = {
             if self.is_directory {
@@ -48,13 +40,9 @@ impl FileNode {
                 String::from("📄")
             }
         };
-        let mut html = {
-            let mut __s = String::with_capacity(64);
-            write!(&mut __s, "{}{} {}\n", indent, icon, self.name.clone()).unwrap();
-            __s
-        };
+        let mut html = format!("{}{} {}\n", indent, icon, self.name);
         if self.is_directory && self.expanded {
-            let mut i = 0;
+            let mut i = 0_usize;
             while i < self.children.len() {
                 let child = &self.children[i];
                 html = format!("{}{}", html, child.render(depth + 1_i32));
@@ -62,7 +50,7 @@ impl FileNode {
             }
         }
         html
-    }
+}
 }
 
 #[derive(Debug, Clone)]
@@ -72,18 +60,16 @@ pub struct FileTree {
 }
 
 impl FileTree {
-    #[inline]
-    pub fn new(root: FileNode) -> FileTree {
+#[inline]
+pub fn new(root: FileNode) -> FileTree {
         FileTree { root }
-    }
+}
 }
 
 impl Renderable for FileTree {
-    #[inline]
-    fn render(&self) -> String {
-        format!(
-            "<div class='wj-file-tree'>\n{}</div>",
-            self.root.render(0_i32)
-        )
-    }
+#[inline]
+fn render(&self) -> String {
+        format!("<div class='wj-file-tree'>\n{}</div>", self.root.render(0_i32))
 }
+}
+

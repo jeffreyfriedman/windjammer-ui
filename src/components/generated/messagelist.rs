@@ -1,5 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -13,34 +11,30 @@ pub struct MessageList {
 }
 
 impl MessageList {
-    #[inline]
-    pub fn new() -> MessageList {
-        MessageList {
-            messages: Vec::new(),
-            height: String::from("600px"),
-            auto_scroll: true,
-        }
-    }
-    #[inline]
-    pub fn message(mut self, message: String) -> MessageList {
-        self.messages.push(message);
+#[inline]
+pub fn new() -> MessageList {
+        MessageList { messages: Vec::new(), height: String::from("600px"), auto_scroll: true }
+}
+#[inline]
+pub fn message(mut self, message: impl Into<String>) -> MessageList {
+        self.messages.push(message.into());
         self
-    }
-    #[inline]
-    pub fn height(mut self, height: String) -> MessageList {
-        self.height = height;
+}
+#[inline]
+pub fn height(mut self, height: impl Into<String>) -> MessageList {
+        self.height = height.into();
         self
-    }
-    #[inline]
-    pub fn auto_scroll(mut self, auto_scroll: bool) -> MessageList {
+}
+#[inline]
+pub fn auto_scroll(mut self, auto_scroll: bool) -> MessageList {
         self.auto_scroll = auto_scroll;
         self
-    }
+}
 }
 
 impl Renderable for MessageList {
-    #[inline]
-    fn render(&self) -> String {
+#[inline]
+fn render(&self) -> String {
         let scroll_script = {
             if self.auto_scroll {
                 String::from("onload='this.scrollTop = this.scrollHeight'")
@@ -48,6 +42,7 @@ impl Renderable for MessageList {
                 String::new()
             }
         };
-        format!("<div class='wj-message-list' style='height: {}' {}>\n                {}\n            </div>", self.height.clone(), scroll_script, self.messages.join(&""))
-    }
+        format!("<div class='wj-message-list' style='height: {}' {}>\n                {}\n            </div>", self.height, scroll_script, self.messages.join(""))
 }
+}
+

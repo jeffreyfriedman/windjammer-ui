@@ -1,5 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -30,86 +28,69 @@ pub struct Text {
 }
 
 impl Text {
-    #[inline]
-    pub fn new(content: String) -> Text {
-        Text {
-            content,
-            size: TextSize::Medium,
-            weight: TextWeight::Normal,
-            color: "".to_string(),
-        }
-    }
-    #[inline]
-    pub fn size(mut self, size: TextSize) -> Text {
+#[inline]
+pub fn new(content: String) -> Text {
+        Text { content, size: TextSize::Medium, weight: TextWeight::Normal, color: String::new() }
+}
+#[inline]
+pub fn size(mut self, size: TextSize) -> Text {
         self.size = size;
         self
-    }
-    #[inline]
-    pub fn bold(mut self) -> Text {
+}
+#[inline]
+pub fn bold(mut self) -> Text {
         self.weight = TextWeight::Bold;
         self
-    }
-    #[inline]
-    pub fn color(mut self, color: String) -> Text {
-        self.color = color;
+}
+#[inline]
+pub fn color(mut self, color: impl Into<String>) -> Text {
+        self.color = color.into();
         self
-    }
+}
 }
 
 impl RenderableVNode for Text {
-    #[inline]
-    fn to_vnode(&self) -> VNode {
-        let size_class: String = match self.size {
+
+fn to_vnode(&self) -> VNode {
+        let size_class: String = match &self.size {
             TextSize::Small => String::from("wj-text-sm"),
             TextSize::Medium => String::from("wj-text-md"),
             TextSize::Large => String::from("wj-text-lg"),
             TextSize::XLarge => String::from("wj-text-xl"),
         };
-        let weight_class: String = match self.weight {
+        let weight_class: String = match &self.weight {
             TextWeight::Normal => String::from("wj-text-normal"),
             TextWeight::Bold => String::from("wj-text-bold"),
         };
-        let mut node = VNode::span()
-            .add_class("wj-text")
-            .add_class(size_class.to_string().as_str())
-            .add_class(weight_class.to_string().as_str())
-            .add_text(self.content.clone());
+        let mut node = VNode::span().add_class("wj-text".to_string()).add_class(size_class.to_string()).add_class(weight_class.to_string()).add_text(self.content.clone());
         if !self.color.is_empty() {
-            node = {
-                let _temp0 = format!("color: {};", self.color.clone());
-                node.add_style(_temp0)
-            };
+            node = { let _temp0 = format!("color: {};", self.color); node.add_style(_temp0) };
         }
         node
-    }
+}
 }
 
 impl Renderable for Text {
-    #[inline]
-    fn render(&self) -> String {
-        let size_class: String = match self.size {
+
+fn render(&self) -> String {
+        let size_class: String = match &self.size {
             TextSize::Small => String::from("sm"),
             TextSize::Medium => String::from("md"),
             TextSize::Large => String::from("lg"),
             TextSize::XLarge => String::from("xl"),
         };
-        let weight_class: String = match self.weight {
+        let weight_class: String = match &self.weight {
             TextWeight::Normal => String::from("normal"),
             TextWeight::Bold => String::from("bold"),
         };
-        let style: String = {
+        let style = {
             if self.color != "" {
-                format!(" style='color: {};'", self.color.clone())
+                format!(" style='color: {};'", self.color)
             } else {
-                "".to_string()
+                String::new()
             }
         };
-        format!(
-            "<span class='wj-text {} {}'{}>{}</span>",
-            size_class,
-            weight_class,
-            style,
-            self.content.clone()
-        )
-    }
+        format!("<span class='wj-text {} {}'{}>{}</span>", size_class, weight_class, style, self.content)
 }
+}
+

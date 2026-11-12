@@ -1,5 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -33,48 +31,42 @@ pub struct Toast {
 }
 
 impl Toast {
-    #[inline]
-    pub fn new(message: String) -> Toast {
-        Toast {
-            message,
-            variant: ToastVariant::Info,
-            position: ToastPosition::TopRight,
-            duration: 3000_i32,
-            show_close: true,
-        }
-    }
-    #[inline]
-    pub fn variant(mut self, variant: ToastVariant) -> Toast {
+#[inline]
+pub fn new(message: String) -> Toast {
+        Toast { message, variant: ToastVariant::Info, position: ToastPosition::TopRight, duration: 3000_i32, show_close: true }
+}
+#[inline]
+pub fn variant(mut self, variant: ToastVariant) -> Toast {
         self.variant = variant;
         self
-    }
-    #[inline]
-    pub fn position(mut self, position: ToastPosition) -> Toast {
+}
+#[inline]
+pub fn position(mut self, position: ToastPosition) -> Toast {
         self.position = position;
         self
-    }
-    #[inline]
-    pub fn duration(mut self, duration: i32) -> Toast {
+}
+#[inline]
+pub fn duration(mut self, duration: i32) -> Toast {
         self.duration = duration;
         self
-    }
-    #[inline]
-    pub fn show_close(mut self, show: bool) -> Toast {
+}
+#[inline]
+pub fn show_close(mut self, show: bool) -> Toast {
         self.show_close = show;
         self
-    }
+}
 }
 
 impl Renderable for Toast {
-    #[inline]
-    fn render(&self) -> String {
-        let variant_class: String = match self.variant {
+
+fn render(&self) -> String {
+        let variant_class: String = match &self.variant {
             ToastVariant::Success => String::from("wj-toast-success"),
             ToastVariant::Error => String::from("wj-toast-error"),
             ToastVariant::Warning => String::from("wj-toast-warning"),
             ToastVariant::Info => String::from("wj-toast-info"),
         };
-        let position_class: String = match self.position {
+        let position_class: String = match &self.position {
             ToastPosition::TopRight => String::from("wj-toast-top-right"),
             ToastPosition::TopLeft => String::from("wj-toast-top-left"),
             ToastPosition::BottomRight => String::from("wj-toast-bottom-right"),
@@ -82,7 +74,7 @@ impl Renderable for Toast {
             ToastPosition::TopCenter => String::from("wj-toast-top-center"),
             ToastPosition::BottomCenter => String::from("wj-toast-bottom-center"),
         };
-        let icon: String = match self.variant {
+        let icon: String = match &self.variant {
             ToastVariant::Success => String::from("✓"),
             ToastVariant::Error => String::from("✗"),
             ToastVariant::Warning => String::from("⚠"),
@@ -95,6 +87,7 @@ impl Renderable for Toast {
                 String::new()
             }
         };
-        format!("<div class='wj-toast {} {}' data-duration='{}'>\n  <span class='wj-toast-icon'>{}</span>\n  <span class='wj-toast-message'>{}</span>\n  {}\n</div>", variant_class, position_class, self.duration, icon, self.message.clone(), close_button)
-    }
+        format!("<div class='wj-toast {} {}' data-duration='{}'>\n  <span class='wj-toast-icon'>{}</span>\n  <span class='wj-toast-message'>{}</span>\n  {}\n</div>", variant_class, position_class, self.duration, icon, self.message, close_button)
 }
+}
+

@@ -1,8 +1,5 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
-use std::fmt::Write;
 
 use super::traits::Renderable;
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
@@ -14,19 +11,15 @@ pub struct RadioOption {
 }
 
 impl RadioOption {
-    #[inline]
-    pub fn new(value: String, label: String) -> RadioOption {
-        RadioOption {
-            value,
-            label,
-            disabled: false,
-        }
-    }
-    #[inline]
-    pub fn disabled(mut self, disabled: bool) -> RadioOption {
+#[inline]
+pub fn new(value: String, label: String) -> RadioOption {
+        RadioOption { value, label, disabled: false }
+}
+#[inline]
+pub fn disabled(mut self, disabled: bool) -> RadioOption {
         self.disabled = disabled;
         self
-    }
+}
 }
 
 #[derive(Debug, Clone, PartialEq, Default)]
@@ -38,40 +31,27 @@ pub struct RadioGroup {
 }
 
 impl RadioGroup {
-    #[inline]
-    pub fn new(name: String) -> RadioGroup {
-        RadioGroup {
-            name,
-            options: Vec::new(),
-            selected: "".to_string(),
-        }
-    }
-    #[inline]
-    pub fn option(mut self, option: RadioOption) -> RadioGroup {
+#[inline]
+pub fn new(name: String) -> RadioGroup {
+        RadioGroup { name, options: Vec::new(), selected: String::new() }
+}
+#[inline]
+pub fn option(mut self, option: RadioOption) -> RadioGroup {
         self.options.push(option);
         self
-    }
-    #[inline]
-    pub fn selected(mut self, value: String) -> RadioGroup {
-        self.selected = value;
+}
+#[inline]
+pub fn selected(mut self, value: impl Into<String>) -> RadioGroup {
+        self.selected = value.into();
         self
-    }
+}
 }
 
 impl Renderable for RadioGroup {
-    #[inline]
-    fn render(&self) -> String {
-        let mut html = {
-            let mut __s = String::with_capacity(64);
-            write!(
-                &mut __s,
-                "<div class='wj-radio-group' data-name='{}'>",
-                self.name.clone()
-            )
-            .unwrap();
-            __s
-        };
-        let mut i = 0;
+
+fn render(&self) -> String {
+        let mut html = format!("<div class='wj-radio-group' data-name='{}'>", self.name);
+        let mut i = 0_usize;
         while i < self.options.len() {
             let opt = &self.options[i];
             let checked_attr = {
@@ -88,9 +68,10 @@ impl Renderable for RadioGroup {
                     String::new()
                 }
             };
-            html = format!("{}<label class='wj-radio'><input type='radio' name='{}' value='{}'{}{}><span>{}</span></label>", html, self.name.clone(), opt.value, checked_attr, disabled_attr, opt.label);
+            html = format!("{}<label class='wj-radio'><input type='radio' name='{}' value='{}'{}{}><span>{}</span></label>", html, self.name, opt.value, checked_attr, disabled_attr, opt.label);
             i += 1;
         }
         format!("{}</div>", html)
-    }
 }
+}
+

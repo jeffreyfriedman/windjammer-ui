@@ -46,16 +46,15 @@ This document describes what exists today, not what is planned.
 
 `platform/web.rs` and `platform/desktop.rs` are placeholders that re-export other modules.
 
-## Generated vs hand-maintained code
+## Generated code
 
-`src/components/generated/` should only contain `wj` output. Seventeen files there are
-currently hand-maintained (marked `SKIP_WJ_REGEN=1`) because the compiler cannot yet
-produce them. They are listed in `docs/EXTRACTION_PLAN.md`. This diverges from the
-repo rule and is treated as debt, not a feature.
+`src/components/generated/` holds only `wj` output of `src/components_wj/`, byte for byte; `tests/generated_fresh_test.rs`
+regenerates it and fails on any difference. Hand-written Rust (reactivity, vdom, renderers, the VNode and signal FFI) lives
+at the crate root. Refresh the tree with the command in that test's header.
 
 ## Known gaps
 
-- Escaping: the VNode path, SSR and the hand-maintained generated files escape by
+- Escaping: the VNode path and SSR escape by
   default. Compiler-generated HTML-string builders (`.wj` sources) still interpolate raw
   values; see `docs/known-issues/escaping.md`.
 - `vdom.rs` is still used by `component.rs`, `renderer.rs`, `ssr.rs`, `platform/*`.

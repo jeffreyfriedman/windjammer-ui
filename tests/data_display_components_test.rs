@@ -92,20 +92,20 @@ fn chart_renders_svg_bars() {
 #[test]
 fn panel_head_renders_kicker_title_and_actions() {
     use windjammer_ui::components::generated::panelhead;
-    let html = panelhead::PanelHead::new("Overview", "Status overview")
-        .actions("<button type=\"button\" class=\"btn-secondary\">Refresh</button>")
+    let html = panelhead::PanelHead::new("Overview".to_string(), "Status overview".to_string())
+        .actions("<button type=\"button\" class=\"btn-secondary\">Refresh</button>".to_string())
         .render();
     assert!(html.contains("panel-head"));
     assert!(html.contains("hub-kicker\">Overview<"));
     assert!(html.contains("<h2>Status overview</h2>"));
     assert!(html.contains("btn-secondary"));
-    let with_lede = panelhead::PanelHead::new("Ongoing", "Summary")
+    let with_lede = panelhead::PanelHead::new("Ongoing".to_string(), "Summary".to_string())
         .lede("Always-on summary.")
         .actions_row("<button>Refresh</button>")
         .render();
     assert!(with_lede.contains("class=\"lede\""));
     assert!(with_lede.contains("class=\"row\""));
-    let inline = panelhead::PanelHead::new("Planning", "Plans")
+    let inline = panelhead::PanelHead::new("Planning".to_string(), "Plans".to_string())
         .inline()
         .lede("Plan vs actual.")
         .render();
@@ -113,7 +113,7 @@ fn panel_head_renders_kicker_title_and_actions() {
     assert!(inline.contains("hub-kicker\">Planning<"));
     assert!(inline.contains("<h2>Plans</h2>"));
     assert!(inline.contains("class=\"muted\""));
-    let kicker_only = panelhead::PanelHead::new("Saved", "")
+    let kicker_only = panelhead::PanelHead::new("Saved".to_string(), "".to_string())
         .inline()
         .render();
     assert!(kicker_only.contains("hub-kicker\">Saved<"));
@@ -123,8 +123,8 @@ fn panel_head_renders_kicker_title_and_actions() {
 #[test]
 fn panel_section_head_renders_h3_and_actions() {
     use windjammer_ui::components::generated::panelsectionhead;
-    let html = panelsectionhead::PanelSectionHead::new("Semantic schema")
-        .actions("<button type=\"button\" class=\"btn-secondary\">Refresh</button>")
+    let html = panelsectionhead::PanelSectionHead::new("Semantic schema".to_string())
+        .actions("<button type=\"button\" class=\"btn-secondary\">Refresh</button>".to_string())
         .render();
     assert!(html.contains("panel-head"));
     assert!(html.contains("<h3>Semantic schema</h3>"));

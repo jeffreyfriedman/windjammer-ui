@@ -27,27 +27,31 @@ They meet at one point: both want the component library to be ordinary Windjamme
 
 ## What is not done yet
 
-- Behaviour against a real browser DOM (`moveBefore`, focus restore, delegated listeners) has no automated test;
-  `wasm-pack test --headless --chrome` is the planned home.
-- The checked-in `src/components/generated/` is not regenerated from `src/components_wj/` (a full regeneration at the
-  current compiler differs from the hand-maintained files); closing that gap is the main authoring task.
+- Behaviour against a real browser DOM (`moveBefore`, focus restore, delegated listeners) is covered by
+  `tests/wasm_browser_test.rs` (headless Chrome through `wasm-bindgen-test-runner`; command in `docs/TESTING_GUIDE.md`). A CI job with a pinned Chrome and chromedriver is the remaining piece.
+- Components that call into the crate's own Rust modules by module path (`vnode_ffi::f(..)`) need the module imported and the
+  function called by bare name: the compiler has no boundary signature for module-qualified calls into hand-written
+  modules of the same crate (repro `findings/ui/rust_module_qualified_call`). A literal passed to an owned `String`
+  formal of a method that forwards it to such a module is not converted (repro `findings/ui/literal_to_owned_param_chain`);
+  `VNode::hr()` exists because of it.
 - The size budgets of ADR-0005 (counter under 400 KB brotli) are targets; no measurement is committed.
-- `crates/wj_samples` (the new-core samples) stops at the current compiler with WJ0050: `wj_reactive::state` and the
-  other generic functions of a Rust crate are not in its generated signature surface, and the opaque `Signal` type is not
-  expressible yet (ADR-0026). It needs a pinned `rust/wj_reactive.wji` once the compiler supports generic and opaque types.
+- `crates/wj_samples` pins `wj/rust/wj_reactive.wji` with the `i32` instantiation of `state`: a surface cannot declare generic
+  functions or opaque crate types yet (ADR-0026), so other element types wait for the compiler.
 - Desktop (egui) shares no code with the web components; iOS and Android are stubs.
 
 ## Roadmap
 
 Each step has a measurable exit, and a kill criterion where one applies.
 
-1. **Regenerate for real.** Make `wj build src/components_wj --library` produce the files in `src/components/generated/`
-   (byte for byte, or with the differences moved into `.wj`), then delete the hand-maintained copies. Exit: a CI job
-   that regenerates and fails on any diff. Blocked on nothing; the sources already build.
-2. **Browser DOM tests.** One `wasm-pack test --headless --chrome` suite for `dom_patch::web`: focus survives a keyed
+1. **Regenerate for real.** Done: `src/components/generated/` is the compiler's output byte for byte, and
+   `tests/generated_fresh_test.rs` regenerates it and fails on any difference.
+2. **Browser DOM tests.** Landed (5 tests, green in Chrome 157): one headless-Chrome suite for `dom_patch::web`: focus survives a keyed
    move, delegated clicks fire once, `stop_propagation` holds. Exit: green in CI on a pinned Chrome.
-3. **Render in the playground.** The `examples_wj/` programs build VNode trees with plain string work, so they run
-   under the playground's `run_project` (in-memory source tree). Publish a "UI gallery" page that loads
+3. **Render in the playground.** Prerequisite found by trying it: `components_wj/vnode.wj` builds its tree through the Rust
+   `vnode_ffi` registry, which the interpreter cannot call, so no component runs interpreted yet (`wj run --interpret`
+   over `src/components_wj` stops at the first `VNode` method). The step starts with a pure-Windjammer `VNode` (a tree value
+   with tag, attributes and children, rendered to HTML by a Windjammer function) that the compiled build can still map
+   onto the Rust registry. Then the `examples_wj/` programs run under the playground's `run_project` (in-memory source tree). Publish a "UI gallery" page that loads
    `src/components_wj` plus an example into the playground and shows the produced HTML in an iframe. Exit: three
    examples render identically in the playground and in native `wj run`, checked by the playground parity script.
 4. **Events in the playground.** Add a small host call that lets an interpreted program register handlers and receive

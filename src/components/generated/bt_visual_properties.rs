@@ -1,5 +1,3 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
 #[allow(unused_imports)]
 use super::*;
 
@@ -15,55 +13,44 @@ pub struct BtInspectorModel {
 }
 
 impl BtInspectorModel {
-    #[inline]
-    pub fn demo() -> BtInspectorModel {
-        BtInspectorModel {
-            title: "attack".to_string(),
-            subtitle: "action".to_string(),
-            hotspot: "Break when reached".to_string(),
-            params_json: "{ \"dmg\":12 }".to_string(),
-            breakpoint: true,
-        }
-    }
+#[inline]
+pub fn demo() -> BtInspectorModel {
+        BtInspectorModel { title: String::from("attack"), subtitle: String::from("action"), hotspot: String::from("Break when reached"), params_json: String::from("{ \"dmg\":12 }"), breakpoint: true }
+}
 }
 
 impl Renderable for BtInspectorModel {
-    #[inline]
-    fn render(&self) -> String {
-        let mut bp = "".to_string();
+
+fn render(&self) -> String {
+        let mut bp = String::new();
         if self.breakpoint {
-            bp = "checked".to_string();
+            bp = String::from("checked");
         }
-        let mut panel = "".to_string();
-        panel = format!("{}{}", panel, "<div class=\"bt-inspector-title\">");
-        panel = format!("{}{}", panel, self.title.clone());
-        panel = format!("{}{}", panel, "</div>");
-        panel = format!("{}{}", panel, "<div class=\"bt-inspector-sub\">");
-        panel = format!("{}{}", panel, self.subtitle.clone());
-        panel = format!("{}{}", panel, "</div>");
-        panel = format!(
-            "{}{}",
-            panel, "<label class=\"bt-toggle\"><input type=\"checkbox\" "
-        );
-        panel = format!("{}{}", panel, bp);
-        panel = format!("{}{}", panel, " /> Breakpoint · ");
-        panel = format!("{}{}", panel, self.hotspot.clone());
-        panel = format!("{}{}", panel, "</label>");
-        panel = format!(
-            "{}{}",
-            panel, "<label class=\"bt-field\"><span>Payload</span>"
-        );
-        panel = format!("{}{}", panel, "<textarea rows=\"6\">");
-        panel = format!("{}{}", panel, self.params_json.clone());
-        panel = format!("{}{}", panel, "</textarea></label>");
-        let mut wrapped = "".to_string();
-        wrapped = format!("{}{}", wrapped, "<section class=\"bt-properties-pane\">");
-        wrapped = format!("{}{}", wrapped, panel);
+        let mut panel = String::new();
+        { use std::fmt::Write as _; write!(panel, "{}", "<div class=\"bt-inspector-title\">").expect("a formatting trait implementation returned an error"); };
+        { use std::fmt::Write as _; write!(panel, "{}", self.title).expect("a formatting trait implementation returned an error"); };
+        { use std::fmt::Write as _; write!(panel, "{}", "</div>").expect("a formatting trait implementation returned an error"); };
+        { use std::fmt::Write as _; write!(panel, "{}", "<div class=\"bt-inspector-sub\">").expect("a formatting trait implementation returned an error"); };
+        { use std::fmt::Write as _; write!(panel, "{}", self.subtitle).expect("a formatting trait implementation returned an error"); };
+        { use std::fmt::Write as _; write!(panel, "{}", "</div>").expect("a formatting trait implementation returned an error"); };
+        { use std::fmt::Write as _; write!(panel, "{}", "<label class=\"bt-toggle\"><input type=\"checkbox\" ").expect("a formatting trait implementation returned an error"); };
+        { use std::fmt::Write as _; write!(panel, "{}", bp).expect("a formatting trait implementation returned an error"); };
+        { use std::fmt::Write as _; write!(panel, "{}", " /> Breakpoint · ").expect("a formatting trait implementation returned an error"); };
+        { use std::fmt::Write as _; write!(panel, "{}", self.hotspot).expect("a formatting trait implementation returned an error"); };
+        { use std::fmt::Write as _; write!(panel, "{}", "</label>").expect("a formatting trait implementation returned an error"); };
+        { use std::fmt::Write as _; write!(panel, "{}", "<label class=\"bt-field\"><span>Payload</span>").expect("a formatting trait implementation returned an error"); };
+        { use std::fmt::Write as _; write!(panel, "{}", "<textarea rows=\"6\">").expect("a formatting trait implementation returned an error"); };
+        { use std::fmt::Write as _; write!(panel, "{}", self.params_json).expect("a formatting trait implementation returned an error"); };
+        { use std::fmt::Write as _; write!(panel, "{}", "</textarea></label>").expect("a formatting trait implementation returned an error"); };
+        let mut wrapped = String::new();
+        { use std::fmt::Write as _; write!(wrapped, "{}", "<section class=\"bt-properties-pane\">").expect("a formatting trait implementation returned an error"); };
+        { use std::fmt::Write as _; write!(wrapped, "{}", panel).expect("a formatting trait implementation returned an error"); };
         format!("{}{}", wrapped, "</section>")
-    }
+}
 }
 
-#[inline]
+
 pub fn bt_visual_properties_styles() -> String {
     String::from("\n    .bt-properties-pane {\n        width: 300px;\n        border-left: 1px solid rgba(255,255,255,0.08);\n        background: rgba(8,11,29,0.96);\n        color: #e5ecff;\n        padding: 16px;\n        display: flex;\n        flex-direction: column;\n        gap: 12px;\n    }\n    .bt-inspector-title {\n        font-size: 20px;\n        font-weight: 600;\n    }\n    .bt-inspector-sub {\n        color: #8492c7;\n        text-transform: uppercase;\n        font-size: 11px;\n        letter-spacing: 0.22em;\n    }\n    .bt-toggle {\n        display: flex;\n        gap: 8px;\n        font-size: 13px;\n    }\n    .bt-field textarea {\n        width: 100%;\n        margin-top: 6px;\n        border-radius: 8px;\n        border: 1px solid rgba(255,255,255,0.12);\n        background: rgba(5,10,38,0.88);\n        color: inherit;\n        font-family: JetBrains Mono, monospace;\n        font-size: 12px;\n        padding: 8px;\n    }\n    ")
 }
+
