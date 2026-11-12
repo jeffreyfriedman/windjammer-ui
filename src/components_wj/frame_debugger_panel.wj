@@ -110,12 +110,7 @@ fn frame_position_label(
     if total_frames == 0 {
         "No frames captured"
     } else {
-        format!(
-            "Frame {} / {} ({:.2} ms)",
-            current_index,
-            total_frames,
-            frame_time_ms,
-        )
+        "Frame ${current_index} / ${total_frames} (${frame_time_ms:.2} ms)"
     }
 }
 
@@ -137,28 +132,19 @@ impl Renderable for FrameDebuggerPanel {
         )
         let back_class = step_button_class(can_step_back)
         let forward_class = step_button_class(can_step_forward)
-        format!(
-            "<style>{}</style>
+        "<style>${styles}</style>
 <div class='frame-debug-panel'>
   <header>
     <h3>Frame Debugger</h3>
-    <button type='button' onclick='{}'>Capture</button>
+    <button type='button' onclick='${capture_handler}'>Capture</button>
   </header>
   <div class='frame-debug-transport'>
-    <button type='button' class='{}' onclick='{}' title='Previous frame'>&larr; Prev</button>
-    <span class='frame-debug-position'>{}</span>
-    <button type='button' class='{}' onclick='{}' title='Next frame'>Next &rarr;</button>
+    <button type='button' class='${back_class}' onclick='${step_back_handler}' title='Previous frame'>&larr; Prev</button>
+    <span class='frame-debug-position'>${position_label}</span>
+    <button type='button' class='${forward_class}' onclick='${step_forward_handler}' title='Next frame'>Next &rarr;</button>
   </div>
   <p class='frame-debug-hint'>Step through captured frame traces from the engine ring buffer.</p>
-</div>",
-            styles,
-            capture_handler,
-            back_class,
-            step_back_handler,
-            position_label,
-            forward_class,
-            step_forward_handler,
-        )
+</div>"
     }
 }
 

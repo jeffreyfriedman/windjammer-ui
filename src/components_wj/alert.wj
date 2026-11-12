@@ -20,7 +20,7 @@ impl Alert {
         Alert {
             message: message,
             variant: AlertVariant::Error,
-            title: "".to_string(),
+            title: "",
         }
     }
 
@@ -28,7 +28,7 @@ impl Alert {
         Alert {
             message: message,
             variant: AlertVariant::Warning,
-            title: "".to_string(),
+            title: "",
         }
     }
 
@@ -36,7 +36,7 @@ impl Alert {
         Alert {
             message: message,
             variant: AlertVariant::Info,
-            title: "".to_string(),
+            title: "",
         }
     }
 
@@ -44,7 +44,7 @@ impl Alert {
         Alert {
             message: message,
             variant: AlertVariant::Success,
-            title: "".to_string(),
+            title: "",
         }
     }
 
@@ -73,21 +73,15 @@ impl Renderable for Alert {
         }
         let mark = mark_for(self.variant)
         let heading = if self.title.len() == 0 {
-            "".to_string()
+            ""
         } else {
-            format!("<strong class='wj-alert-title'>{}</strong>", self.title)
+            "<strong class='wj-alert-title'>${self.title}</strong>"
         }
-        format!(
-            "<div class='wj-alert {}' role='status'><span class='wj-alert-mark'>{}</span>{} <span class='wj-alert-msg'>{}</span></div>",
-            variant_class,
-            mark,
-            heading,
-            self.message
-        )
+        "<div class='wj-alert ${variant_class}' role='status'><span class='wj-alert-mark'>${mark}</span>${heading} <span class='wj-alert-msg'>${self.message}</span></div>"
     }
 }
 
 fn main() {
-    let html = Alert::warning("Review open items".to_string()).title("Today".to_string()).render()
-    println!("{}", html)
+    let html = Alert::warning("Review open items").title("Today").render()
+    println("${html}")
 }

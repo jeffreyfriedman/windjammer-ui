@@ -54,23 +54,15 @@ fn render_budget_bar(frame_time_ms: f32, budget_ms: f32) -> string {
     } else {
         "#2ecc71"
     }
-    format!(
-        "<div class='rt-profiler-budget'>
+    "<div class='rt-profiler-budget'>
   <div class='rt-profiler-budget-label'>
     <span>Frame budget</span>
-    <span>{:.2} / {:.2} ms ({:.0}%)</span>
+    <span>${frame_time_ms:.2} / ${budget_ms:.2} ms (${util:.0}%)</span>
   </div>
   <div class='wj-progress-container' style='width:100%;background:#1a1a2e;border-radius:4px;overflow:hidden;'>
-    <div class='wj-progress-bar {}' style='width:{:.0}%;height:20px;background-color:{};'></div>
+    <div class='wj-progress-bar ${vclass}' style='width:${clamped:.0}%;height:20px;background-color:${color};'></div>
   </div>
-</div>",
-        frame_time_ms,
-        budget_ms,
-        util,
-        vclass,
-        clamped,
-        color,
-    )
+</div>"
 }
 
 fn render_scope_row(row: ProfilerScopeRow) -> string {
@@ -79,22 +71,15 @@ fn render_scope_row(row: ProfilerScopeRow) -> string {
         ProfilerScopeKind::Gpu => "GPU",
     }
     let bar_w = if row.percentage > 100.0 { 100.0 } else { row.percentage }
-    format!(
-        "<div class='rt-profiler-scope'>
+    "<div class='rt-profiler-scope'>
   <div class='rt-profiler-scope-head'>
-    <span class='rt-profiler-scope-name'>{}</span>
-    <span class='rt-profiler-scope-kind'>{}</span>
-    <span class='rt-profiler-scope-ms'>{:.2} ms</span>
-    <span class='rt-profiler-scope-pct'>{:.1}%</span>
+    <span class='rt-profiler-scope-name'>${row.name}</span>
+    <span class='rt-profiler-scope-kind'>${kind_label}</span>
+    <span class='rt-profiler-scope-ms'>${row.duration_ms:.2} ms</span>
+    <span class='rt-profiler-scope-pct'>${row.percentage:.1}%</span>
   </div>
-  <div class='rt-profiler-scope-bar' style='width:{:.0}%;'></div>
-</div>",
-        row.name,
-        kind_label,
-        row.duration_ms,
-        row.percentage,
-        bar_w,
-    )
+  <div class='rt-profiler-scope-bar' style='width:${bar_w:.0}%;'></div>
+</div>"
 }
 
 fn render_scope_list(scopes: Vec<ProfilerScopeRow>) -> string {
@@ -117,26 +102,19 @@ impl Renderable for RealtimeProfilerPanel {
         let scopes = self.snapshot.scopes
         let budget_html = render_budget_bar(frame_time_ms, budget_ms)
         let scopes_html = render_scope_list(scopes)
-        format!(
-            "<style>{}</style>
+        "<style>${styles}</style>
 <div class='rt-profiler-panel'>
   <header class='rt-profiler-header'>
     <h3>Realtime Profiler</h3>
-    <button type='button' onclick='{}'>Refresh</button>
-    <span class='rt-profiler-frame-tag'>Frame #{}</span>
+    <button type='button' onclick='${self.refresh_handler}'>Refresh</button>
+    <span class='rt-profiler-frame-tag'>Frame #${frame_index}</span>
   </header>
-  {}
+  ${budget_html}
   <section class='rt-profiler-scopes'>
     <h4>Scopes</h4>
-    {}
+    ${scopes_html}
   </section>
-</div>",
-            styles,
-            self.refresh_handler,
-            frame_index,
-            budget_html,
-            scopes_html,
-        )
+</div>"
     }
 }
 

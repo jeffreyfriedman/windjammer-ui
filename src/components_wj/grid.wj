@@ -12,8 +12,8 @@ impl Grid {
         Grid {
             children: Vec::new(),
             columns,
-            gap: "16px".to_string(),
-            padding: "0".to_string(),
+            gap: "16px",
+            padding: "0",
         }
     }
 
@@ -42,24 +42,23 @@ impl Grid {
 
 impl Renderable for Grid {
 pub fn render(self) -> string {
-        let style = format!("display: grid; grid-template-columns: repeat({}, 1fr); gap: {}; padding: {};",
-            self.columns, self.gap, self.padding)
+        let style = "display: grid; grid-template-columns: repeat(${self.columns}, 1fr); gap: ${self.gap}; padding: ${self.padding};"
 
         let children_html = self.children.join("\n")
 
-        format!("<div class='wj-grid' style='{}'>\n{}\n</div>", style, children_html)
+        "<div class='wj-grid' style='${style}'>\n${children_html}\n</div>"
     }
 }
 
 fn main() {
     let grid = Grid::new(3)
-        .gap("20px".to_string())
-        .child("<div style='padding:20px; background:#e3f2fd;'>Item 1</div>".to_string())
-        .child("<div style='padding:20px; background:#e3f2fd;'>Item 2</div>".to_string())
-        .child("<div style='padding:20px; background:#e3f2fd;'>Item 3</div>".to_string())
-        .child("<div style='padding:20px; background:#e3f2fd;'>Item 4</div>".to_string())
+        .gap("20px")
+        .child("<div style='padding:20px; background:#e3f2fd;'>Item 1</div>")
+        .child("<div style='padding:20px; background:#e3f2fd;'>Item 2</div>")
+        .child("<div style='padding:20px; background:#e3f2fd;'>Item 3</div>")
+        .child("<div style='padding:20px; background:#e3f2fd;'>Item 4</div>")
 
-    println!("{}", grid.render())
+    println("${grid.render()}")
 }
 
 

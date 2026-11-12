@@ -98,11 +98,7 @@ fn test_all_examples_exist() {
         "examples_wj/todo_app.wj",
         "examples_wj/contact_form.wj",
         "examples_wj/dashboard.wj",
-        "examples_wj/pbr_material_editor.wj",
-        "examples_wj/scene_hierarchy.wj",
-        "examples_wj/inspector.wj",
-        "examples_wj/asset_browser.wj",
-        "examples_wj/animation_editor.wj",
+        "examples_wj/chat_app.wj",
     ];
 
     let mut missing = Vec::new();

@@ -36,7 +36,7 @@ impl Row {
     pub fn new() -> Row {
         Row {
             children: Vec::new(),
-            gap: "8px".to_string(),
+            gap: "8px",
             align: RowAlign::Start,
             justify: RowJustify::Start,
             wrap: false,

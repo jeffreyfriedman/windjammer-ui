@@ -25,7 +25,7 @@ impl Select {
         Select {
             options: Vec::new(),
             selected: "",
-            placeholder: "Select an option".to_string(),
+            placeholder: "Select an option",
             disabled: false,
             size: SelectSize::Medium,
             class: "",

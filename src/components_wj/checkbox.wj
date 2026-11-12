@@ -58,13 +58,13 @@ impl RenderableVNode for Checkbox {
             CheckboxSize::Medium => "wj-checkbox-md",
             CheckboxSize::Large => "wj-checkbox-lg",
         }
-        let mut label_node = VNode::element("label".to_string())
-            .add_class("wj-checkbox".to_string())
+        let mut label_node = VNode::element("label")
+            .add_class("wj-checkbox")
             .add_class(size_class.to_string())
             .child(
                 VNode::input()
-                    .set_type("checkbox".to_string())
-                    .add_attr("checked".to_string(), if self.checked { "true" } else { "false" }.to_string())
+                    .set_type("checkbox")
+                    .add_attr("checked", if self.checked { "true" } else { "false" }.to_string())
                     .set_disabled(self.disabled)
             )
             .child(
@@ -89,16 +89,15 @@ pub fn render(self) -> string {
         let checked_attr = if self.checked { " checked" } else { "" }
         let disabled_attr = if self.disabled { " disabled" } else { "" }
         
-        format!("<label class='wj-checkbox wj-checkbox-{}'><input type='checkbox'{}{}/><span>{}</span></label>",
-                size_class, checked_attr, disabled_attr, self.label)
+        "<label class='wj-checkbox wj-checkbox-${size_class}'><input type='checkbox'${checked_attr}${disabled_attr}/><span>${self.label}</span></label>"
     }
 }
 
 fn main() {
-    let cb1 = Checkbox::new("Accept terms".to_string()).checked(true)
-    let cb2 = Checkbox::new("Subscribe".to_string()).size(CheckboxSize::Large).disabled(true)
+    let cb1 = Checkbox::new("Accept terms").checked(true)
+    let cb2 = Checkbox::new("Subscribe").size(CheckboxSize::Large).disabled(true)
     
-    println!("{}", cb1.render())
-    println!("{}", cb2.render())
+    println("${cb1.render()}")
+    println("${cb2.render()}")
 }
 

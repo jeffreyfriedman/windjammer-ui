@@ -14,8 +14,8 @@ impl DataTable {
     pub fn new() -> DataTable {
         DataTable {
             table: Table::new(),
-            empty_message: "No rows".to_string(),
-            caption: "".to_string(),
+            empty_message: "No rows",
+            caption: "",
             scrollable: false,
         }
     }
@@ -49,31 +49,26 @@ impl DataTable {
 impl Renderable for DataTable {
     fn render(self) -> string {
         let body = self.table.render()
-        let mut caption_html = "".to_string()
+        let mut caption_html = ""
         if self.caption.len() > 0 {
-            caption_html = format!("<div class='wj-datatable-caption'>{}</div>", self.caption)
+            caption_html = "<div class='wj-datatable-caption'>${self.caption}</div>"
         }
         let table_block = if self.scrollable {
-            format!("<div class='lk-table-scroll'>{}</div>", body)
+            "<div class='lk-table-scroll'>${body}</div>"
         } else {
             body
         }
-        format!(
-            "<div class='wj-datatable' data-empty-message='{}'>{}{}</div>",
-            self.empty_message,
-            caption_html,
-            table_block
-        )
+        "<div class='wj-datatable' data-empty-message='${self.empty_message}'>${caption_html}${table_block}</div>"
     }
 }
 
 fn main() {
     let html = DataTable::new()
-        .caption("Parties".to_string())
+        .caption("Parties")
         .scrollable(true)
-        .column(TableColumn::new("Name".to_string()))
-        .column(TableColumn::new("Role".to_string()))
-        .row(TableRow::new().cell("Acme".to_string()).cell("customer".to_string()))
+        .column(TableColumn::new("Name"))
+        .column(TableColumn::new("Role"))
+        .row(TableRow::new().cell("Acme").cell("customer"))
         .render()
-    println!("{}", html)
+    println("${html}")
 }

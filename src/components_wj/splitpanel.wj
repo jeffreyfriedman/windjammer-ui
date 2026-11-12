@@ -22,7 +22,7 @@ impl SplitPanel {
             right: right,
             direction: SplitDirection::Vertical,
             initial_size: 50,
-            class_name: "wj-split-panel".to_string(),
+            class_name: "wj-split-panel",
         }
     }
 
@@ -49,21 +49,13 @@ impl Renderable for SplitPanel {
             SplitDirection::Vertical => "row",
         }
         let right_flex = 100 - self.initial_size
-        format!(
-            "<div class='{}' style='display: flex; flex-direction: {}; height: 100%;'><div class='wj-split-pane' style='flex: {}%;'>{}</div><div class='wj-split-divider'></div><div class='wj-split-pane' style='flex: {}%;'>{}</div></div>",
-            self.class_name,
-            flex_direction,
-            self.initial_size,
-            self.left,
-            right_flex,
-            self.right
-        )
+        "<div class='${self.class_name}' style='display: flex; flex-direction: ${flex_direction}; height: 100%;'><div class='wj-split-pane' style='flex: ${self.initial_size}%;'>${self.left}</div><div class='wj-split-divider'></div><div class='wj-split-pane' style='flex: ${right_flex}%;'>${self.right}</div></div>"
     }
 }
 
 fn main() {
-    let split = SplitPanel::new("<p>Left</p>".to_string(), "<p>Right</p>".to_string())
+    let split = SplitPanel::new("<p>Left</p>", "<p>Right</p>")
         .initial_size(28)
-        .class_name("wj-split-panel lk-register-split".to_string())
-    println!("{}", split.render())
+        .class_name("wj-split-panel lk-register-split")
+    println("${split.render()}")
 }

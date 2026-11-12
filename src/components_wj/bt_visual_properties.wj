@@ -12,10 +12,10 @@ pub struct BtInspectorModel {
 impl BtInspectorModel {
     pub fn demo() -> BtInspectorModel {
         BtInspectorModel {
-            title: "attack".to_string(),
-            subtitle: "action".to_string(),
-            hotspot: "Break when reached".to_string(),
-            params_json: "{ \"dmg\":12 }".to_string(),
+            title: "attack",
+            subtitle: "action",
+            hotspot: "Break when reached",
+            params_json: "{ \"dmg\":12 }",
             breakpoint: true,
         }
     }
@@ -23,29 +23,29 @@ impl BtInspectorModel {
 
 impl Renderable for BtInspectorModel {
     pub fn render(self) -> string {
-        let mut bp = "".to_string()
+        let mut bp = ""
         if self.breakpoint {
-            bp = "checked".to_string()
+            bp = "checked"
         }
-        let mut panel = "".to_string()
+        let mut panel = ""
         panel = panel + "<div class=\"bt-inspector-title\">"
-        panel = format!("{}{}", panel, self.title)
+        panel = "${panel}${self.title}"
         panel = panel + "</div>"
         panel = panel + "<div class=\"bt-inspector-sub\">"
-        panel = format!("{}{}", panel, self.subtitle)
+        panel = "${panel}${self.subtitle}"
         panel = panel + "</div>"
         panel = panel + "<label class=\"bt-toggle\"><input type=\"checkbox\" "
-        panel = format!("{}{}", panel, bp)
+        panel = "${panel}${bp}"
         panel = panel + " /> Breakpoint · "
-        panel = format!("{}{}", panel, self.hotspot)
+        panel = "${panel}${self.hotspot}"
         panel = panel + "</label>"
         panel = panel + "<label class=\"bt-field\"><span>Payload</span>"
         panel = panel + "<textarea rows=\"6\">"
-        panel = format!("{}{}", panel, self.params_json)
+        panel = "${panel}${self.params_json}"
         panel = panel + "</textarea></label>"
-        let mut wrapped = "".to_string()
+        let mut wrapped = ""
         wrapped = wrapped + "<section class=\"bt-properties-pane\">"
-        wrapped = format!("{}{}", wrapped, panel)
+        wrapped = "${wrapped}${panel}"
         wrapped + "</section>"
     }
 }

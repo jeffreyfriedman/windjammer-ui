@@ -15,9 +15,9 @@ pub struct Input {
 impl Input {
     pub fn new() -> Input {
         Input {
-            value: "".to_string(),
-            placeholder: "".to_string(),
-            input_type: "text".to_string(),
+            value: "",
+            placeholder: "",
+            input_type: "text",
             change_handler: "",
             input_handler: "",
         }
@@ -52,7 +52,7 @@ impl Input {
 impl RenderableVNode for Input {
     fn to_vnode(&self) -> VNode {
         let mut node = VNode::input()
-            .add_class("wj-input".to_string())
+            .add_class("wj-input")
             .set_type(self.input_type.clone())
             .set_value(self.value.clone())
             .set_placeholder(self.placeholder.clone())
@@ -68,16 +68,15 @@ impl RenderableVNode for Input {
 
 impl Renderable for Input {
     fn render(self) -> string {
-        format!("<input class='wj-input' type='{}' value='{}' placeholder='{}'/>", 
-                self.input_type, self.value, self.placeholder)
+        "<input class='wj-input' type='${self.input_type}' value='${self.value}' placeholder='${self.placeholder}'/>"
     }
 }
 
 fn main() {
     let input = Input::new()
-        .value("Hello".to_string())
-        .placeholder("Enter text...".to_string())
+        .value("Hello")
+        .placeholder("Enter text...")
     
-    println!("{}", input.render())
+    println("${input.render()}")
 }
 

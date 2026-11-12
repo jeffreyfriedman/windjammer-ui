@@ -41,13 +41,8 @@ pub fn render(self) -> string {
             ""
         }
         
-        format!(
-            "<div class='wj-message-list' style='height: {}' {}>
-                {}
-            </div>",
-            self.height,
-            scroll_script,
-            self.messages.join("")
-        )
+        "<div class='wj-message-list' style='height: ${self.height}' ${scroll_script}>
+                ${self.messages.join("")}
+            </div>"
     }
 }

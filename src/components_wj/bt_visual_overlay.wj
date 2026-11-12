@@ -8,17 +8,17 @@ pub struct BtDebuggerOverlay {}
 
 impl Renderable for BtDebuggerOverlay {
     pub fn render(self) -> string {
-        let legend = "".to_string()
+        let legend = ""
             + "<ul class=\"bt-legend\">"
             + "<li><span class=\"swatch bt-visual-running\"></span> Running</li>"
             + "<li><span class=\"swatch bt-visual-success\"></span> Success</li>"
             + "<li><span class=\"swatch bt-visual-failure\"></span> Failure</li>"
             + "<li><span class=\"swatch bt-visual-idle\"></span> Idle</li>"
             + "</ul>"
-        let mut dbg = "".to_string()
+        let mut dbg = ""
         dbg = dbg + "<aside class=\"bt-debug-pane\">"
         dbg = dbg + "<strong>Visualizer</strong><p class=\"muted\">Shares color tokens with the engine bt_visual_debug snapshots.</p>"
-        dbg = format!("{}{}", dbg, legend)
+        dbg = "${dbg}${legend}"
         dbg + "</aside>"
     }
 }
@@ -77,7 +77,7 @@ pub fn bt_visual_debug_styles() -> string {
 }
 
 pub fn bt_behavior_editor_styles() -> string {
-    let mut blob = "".to_string()
+    let mut blob = ""
     blob = blob + bt_visual_canvas_styles()
     blob = blob + bt_visual_palette_styles()
     blob = blob + bt_visual_properties_styles()
@@ -85,7 +85,7 @@ pub fn bt_behavior_editor_styles() -> string {
 }
 
 pub fn bt_editor_layout_stub() -> string {
-    "".to_string()
+    ""
         + "<div class=\"bt-shell\">"
         + "<header style=\"padding:14px;border-bottom:1px solid rgba(255,255,255,0.08)\">Windjammer · Visual Behavior Tree Shell</header>"
         + "<div class=\"bt-shell-body\">{{PALETTE}}</div>"

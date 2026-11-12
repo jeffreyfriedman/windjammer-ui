@@ -63,7 +63,7 @@ fn render(self) -> string {
         let mut items_html = Vec::new()
         
         for item in self.items {
-            items_html.push(format!("<a href='{}' class='wj-navbar-item'>{}</a>", item.href, item.label))
+            items_html.push("<a href='${item.href}' class='wj-navbar-item'>${item.label}</a>")
         }
         
         let position_class = match self.position {
@@ -74,17 +74,11 @@ fn render(self) -> string {
         let sticky_class = if self.sticky { " wj-navbar-sticky" } else { "" }
         
         let brand_html = if self.brand.len() > 0 {
-            format!("<div class='wj-navbar-brand'>{}</div>", self.brand)
+            "<div class='wj-navbar-brand'>${self.brand}</div>"
         } else {
             ""
         }
         
-        format!(
-            "<nav class='wj-navbar {} {}'>{}<div class='wj-navbar-items'>{}</div></nav>",
-            position_class,
-            sticky_class,
-            brand_html,
-            items_html.join("")
-        )
+        "<nav class='wj-navbar ${position_class} ${sticky_class}'>${brand_html}<div class='wj-navbar-items'>${items_html.join("")}</div></nav>"
     }
 }

@@ -32,7 +32,7 @@ impl RadioGroup {
         RadioGroup {
             name,
             options: Vec::new(),
-            selected: "".to_string(),
+            selected: "",
         }
     }
 
@@ -50,7 +50,7 @@ impl RadioGroup {
 
 impl Renderable for RadioGroup {
 fn render(self) -> string {
-        let mut html = format!("<div class='wj-radio-group' data-name='{}'>", self.name)
+        let mut html = "<div class='wj-radio-group' data-name='${self.name}'>"
 
         let mut i = 0
         while i < self.options.len() {
@@ -58,24 +58,23 @@ fn render(self) -> string {
             let checked_attr = if opt.value == self.selected { " checked" } else { "" }
             let disabled_attr = if opt.disabled { " disabled" } else { "" }
 
-            html = format!("{}<label class='wj-radio'><input type='radio' name='{}' value='{}'{}{}><span>{}</span></label>",
-                html, self.name, opt.value, checked_attr, disabled_attr, opt.label)
+            html = "${html}<label class='wj-radio'><input type='radio' name='${self.name}' value='${opt.value}'${checked_attr}${disabled_attr}><span>${opt.label}</span></label>"
 
             i = i + 1
         }
 
-        format!("{}</div>", html)
+        "${html}</div>"
     }
 }
 
 fn main() {
-    let radio = RadioGroup::new("theme".to_string())
-        .option(RadioOption::new("light".to_string(), "Light Theme".to_string()))
-        .option(RadioOption::new("dark".to_string(), "Dark Theme".to_string()))
-        .option(RadioOption::new("auto".to_string(), "Auto Theme".to_string()))
-        .selected("dark".to_string())
+    let radio = RadioGroup::new("theme")
+        .option(RadioOption::new("light", "Light Theme"))
+        .option(RadioOption::new("dark", "Dark Theme"))
+        .option(RadioOption::new("auto", "Auto Theme"))
+        .selected("dark")
 
-    println!("{}", radio.render())
+    println("${radio.render()}")
 }
 
 

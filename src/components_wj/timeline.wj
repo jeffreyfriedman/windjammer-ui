@@ -16,8 +16,8 @@ impl TimelineEvent {
             title: title,
             description: "",
             timestamp: timestamp,
-            icon: "●".to_string(),
-            color: "#3b82f6".to_string(),
+            icon: "●",
+            color: "#3b82f6",
         }
     }
 
@@ -64,7 +64,7 @@ fn render(self) -> string {
         // Vertical line
         html.push_str("<div style='position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: #e2e8f0;'></div>");
 
-        for (_event_index, event) in self.events.iter().enumerate() {
+        for (_event_index, event) in self.events.enumerate() {
             html.push_str("<div style='position: relative; padding-bottom: 32px;'>");
 
             // Icon/dot

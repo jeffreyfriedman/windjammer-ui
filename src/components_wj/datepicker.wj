@@ -12,9 +12,9 @@ pub struct DatePicker {
 impl DatePicker {
     pub fn new() -> DatePicker {
         DatePicker {
-            value: "".to_string(),
-            label: "".to_string(),
-            name: "date".to_string(),
+            value: "",
+            label: "",
+            name: "date",
             required: false,
         }
     }
@@ -44,27 +44,20 @@ impl Renderable for DatePicker {
     fn render(self) -> string {
         let req = if self.required { " required" } else { "" }
         let label_html = if self.label.len() > 0 {
-            format!("<label class='wj-datepicker-label' for='{}'>{}</label>", self.name, self.label)
+            "<label class='wj-datepicker-label' for='${self.name}'>${self.label}</label>"
         } else {
-            "".to_string()
+            ""
         }
-        format!(
-            "<div class='wj-datepicker'>{}<input class='wj-datepicker-input' type='date' id='{}' name='{}' value='{}'{}/></div>",
-            label_html,
-            self.name,
-            self.name,
-            self.value,
-            req
-        )
+        "<div class='wj-datepicker'>${label_html}<input class='wj-datepicker-input' type='date' id='${self.name}' name='${self.name}' value='${self.value}'${req}/></div>"
     }
 }
 
 fn main() {
     let html = DatePicker::new()
-        .label("Issue date".to_string())
-        .name("issue_date".to_string())
-        .value("2026-07-25".to_string())
+        .label("Issue date")
+        .name("issue_date")
+        .value("2026-07-25")
         .required(true)
         .render()
-    println!("{}", html)
+    println("${html}")
 }

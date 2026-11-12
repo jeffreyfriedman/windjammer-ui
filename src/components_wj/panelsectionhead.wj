@@ -37,5 +37,5 @@ fn main() {
     let html = PanelSectionHead::new("Semantic schema")
         .actions("<button type=\"button\" class=\"btn-secondary\">Refresh</button>")
         .render()
-    println!("{}", html)
+    println("${html}")
 }

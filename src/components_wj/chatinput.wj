@@ -52,31 +52,16 @@ pub fn render(self) -> string {
         let disabled_attr = if self.disabled { " disabled" } else { "" }
         
         let input_html = if self.multiline {
-            format!(
-                "<textarea class='wj-chat-input-field' placeholder='{}' rows='{}'{}>{}</textarea>",
-                self.placeholder,
-                self.rows,
-                disabled_attr,
-                self.value
-            )
+            "<textarea class='wj-chat-input-field' placeholder='${self.placeholder}' rows='${self.rows}'${disabled_attr}>${self.value}</textarea>"
         } else {
-            format!(
-                "<input type='text' class='wj-chat-input-field' placeholder='{}' value='{}'{}/>",
-                self.placeholder,
-                self.value,
-                disabled_attr
-            )
+            "<input type='text' class='wj-chat-input-field' placeholder='${self.placeholder}' value='${self.value}'${disabled_attr}/>"
         }
         
-        format!(
-            "<div class='wj-chat-input'>
-                {}
-                <button class='wj-chat-send-button'{}>
+        "<div class='wj-chat-input'>
+                ${input_html}
+                <button class='wj-chat-send-button'${disabled_attr}>
                     <span>➤</span>
                 </button>
-            </div>",
-            input_html,
-            disabled_attr
-        )
+            </div>"
     }
 }

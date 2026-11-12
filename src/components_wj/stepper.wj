@@ -61,7 +61,7 @@ fn render(self) -> string {
 
         let total_steps = self.steps.len() as i32;
 
-        for (step_index, step) in self.steps.iter().enumerate() {
+        for (step_index, step) in self.steps.enumerate() {
             let step_index = step_index as i32;
             let is_current = step_index == self.current_step;
             let is_completed = step.completed || step_index < self.current_step;
@@ -93,7 +93,7 @@ fn render(self) -> string {
             if is_completed {
                 html.push('✓');
             } else {
-                html.push_str(&format!("{}", step_index + 1));
+                html.push_str(&"${step_index + 1}");
             }
 
             html.push_str("</div>");

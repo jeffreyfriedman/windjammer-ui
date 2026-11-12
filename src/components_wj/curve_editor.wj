@@ -66,7 +66,7 @@ impl CurveEditor {
             min_value: 0.0,
             max_value: 1.0,
             grid_enabled: true,
-            on_change: "".to_string(),
+            on_change: "",
         }
     }
     
@@ -133,7 +133,7 @@ impl CurveEditor {
 impl Renderable for CurveEditor {
     pub fn render(self) -> string {
         // Generate SVG path for the curve
-        let mut path_d = "".to_string()
+        let mut path_d = ""
         let range = self.max_value - self.min_value
         
         for i in 0..self.points.len() {
@@ -144,9 +144,9 @@ impl Renderable for CurveEditor {
                     let y = (self.height as f32) - ((point.value - self.min_value) / range) * (self.height as f32)
                     
                     if i == 0 {
-                        path_d = format!("M {} {}", x, y)
+                        path_d = "M ${x} ${y}"
                     } else {
-                        path_d = format!("{} L {} {}", path_d, x, y)
+                        path_d = "${path_d} L ${x} ${y}"
                     }
                 },
                 None => {},
@@ -154,15 +154,14 @@ impl Renderable for CurveEditor {
         }
         
         // Generate point markers
-        let mut points_html = "".to_string()
+        let mut points_html = ""
         for i in 0..self.points.len() {
             let p = self.points.get(i)
             match p {
                 Some(point) => {
                     let x = point.time * (self.width as f32)
                     let y = (self.height as f32) - ((point.value - self.min_value) / range) * (self.height as f32)
-                    points_html = format!("{}<circle cx='{}' cy='{}' r='6' class='curve-point' data-index='{}'/>", 
-                                          points_html, x, y, i)
+                    points_html = "${points_html}<circle cx='${x}' cy='${y}' r='6' class='curve-point' data-index='${i}'/>"
                 },
                 None => {},
             }
@@ -170,21 +169,17 @@ impl Renderable for CurveEditor {
         
         // Grid lines
         let grid_html = if self.grid_enabled {
-            format!("
-                <line x1='0' y1='{}' x2='{}' y2='{}' class='grid-line'/>
-                <line x1='0' y1='{}' x2='{}' y2='{}' class='grid-line'/>
-                <line x1='{}' y1='0' x2='{}' y2='{}' class='grid-line'/>
-                <line x1='{}' y1='0' x2='{}' y2='{}' class='grid-line'/>
-            ", 
-            self.height / 4, self.width, self.height / 4,
-            self.height * 3 / 4, self.width, self.height * 3 / 4,
-            self.width / 4, self.width / 4, self.height,
-            self.width * 3 / 4, self.width * 3 / 4, self.height)
+            "
+                <line x1='0' y1='${self.height / 4}' x2='${self.width}' y2='${self.height / 4}' class='grid-line'/>
+                <line x1='0' y1='${self.height * 3 / 4}' x2='${self.width}' y2='${self.height * 3 / 4}' class='grid-line'/>
+                <line x1='${self.width / 4}' y1='0' x2='${self.width / 4}' y2='${self.height}' class='grid-line'/>
+                <line x1='${self.width * 3 / 4}' y1='0' x2='${self.width * 3 / 4}' y2='${self.height}' class='grid-line'/>
+            "
         } else {
-            "".to_string()
+            ""
         }
         
-        format!("
+        "
             <div class='curve-editor'>
                 <div class='curve-toolbar'>
                     <button onclick='setCurvePreset(\"linear\")'>Linear</button>
@@ -192,19 +187,18 @@ impl Renderable for CurveEditor {
                     <button onclick='setCurvePreset(\"easeOut\")'>Ease Out</button>
                     <button onclick='setCurvePreset(\"easeInOut\")'>Ease In/Out</button>
                 </div>
-                <svg class='curve-canvas' width='{}' height='{}' viewBox='0 0 {} {}'>
+                <svg class='curve-canvas' width='${self.width}' height='${self.height}' viewBox='0 0 ${self.width} ${self.height}'>
                     <rect class='curve-bg' width='100%' height='100%'/>
-                    {}
-                    <path d='{}' class='curve-line'/>
-                    {}
+                    ${grid_html}
+                    <path d='${path_d}' class='curve-line'/>
+                    ${points_html}
                 </svg>
                 <div class='curve-values'>
-                    <span>{:.2}</span>
-                    <span>{:.2}</span>
+                    <span>${self.max_value:.2}</span>
+                    <span>${self.min_value:.2}</span>
                 </div>
             </div>
-        ", self.width, self.height, self.width, self.height, grid_html, path_d, points_html,
-           self.max_value, self.min_value)
+        "
     }
 }
 
@@ -232,14 +226,14 @@ pub struct GradientEditor {
 impl GradientEditor {
     pub fn new() -> GradientEditor {
         let mut stops = Vec::new()
-        stops.push(GradientStop::new(0.0, "#000000".to_string()))
-        stops.push(GradientStop::new(1.0, "#ffffff".to_string()))
+        stops.push(GradientStop::new(0.0, "#000000"))
+        stops.push(GradientStop::new(1.0, "#ffffff"))
         
         GradientEditor {
             width: 300,
             height: 40,
             stops,
-            on_change: "".to_string(),
+            on_change: "",
         }
     }
     
@@ -257,7 +251,7 @@ impl GradientEditor {
 impl Renderable for GradientEditor {
     pub fn render(self) -> string {
         // Build CSS gradient
-        let mut gradient_stops = "".to_string()
+        let mut gradient_stops = ""
         for i in 0..self.stops.len() {
             let s = self.stops.get(i)
             match s {
@@ -265,38 +259,38 @@ impl Renderable for GradientEditor {
                     if i > 0 {
                         gradient_stops = gradient_stops + ", "
                     }
-                    gradient_stops = gradient_stops + stop.color + " " + format!("{}%", (stop.position * 100.0) as i32)
+                    gradient_stops = gradient_stops + stop.color + " " + "${(stop.position * 100.0) as i32}%"
                 },
                 None => {},
             }
         }
         
         // Build stop markers
-        let mut markers_html = "".to_string()
+        let mut markers_html = ""
         for i in 0..self.stops.len() {
             let s = self.stops.get(i)
             match s {
                 Some(stop) => {
                     let left = (stop.position * 100.0) as i32
-                    markers_html = format!("{}
-                        <div class='gradient-stop' style='left: {}%; background: {};' 
-                             data-index='{}'></div>
-                    ", markers_html, left, stop.color, i)
+                    markers_html = "${markers_html}
+                        <div class='gradient-stop' style='left: ${left}%; background: ${stop.color};' 
+                             data-index='${i}'></div>
+                    "
                 },
                 None => {},
             }
         }
         
-        format!("
+        "
             <div class='gradient-editor'>
-                <div class='gradient-bar' style='background: linear-gradient(to right, {});'>
-                    {}
+                <div class='gradient-bar' style='background: linear-gradient(to right, ${gradient_stops});'>
+                    ${markers_html}
                 </div>
                 <div class='gradient-controls'>
                     <button onclick='addGradientStop()'>+ Add Stop</button>
                 </div>
             </div>
-        ", gradient_stops, markers_html)
+        "
     }
 }
 
@@ -415,6 +409,6 @@ pub fn curve_editor_styles() -> string {
         border-color: #e94560;
         color: #e94560;
     }
-    ".to_string()
+    "
 }
 
