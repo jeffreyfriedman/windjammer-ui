@@ -43,11 +43,9 @@ fn main() {
 ## Known limitations
 
 - The component sources pass `wj check` and transpile with the current compiler (`tests/wj_sources_check_test.rs`);
-  the checked-in generated Rust is not yet regenerated from them (`docs/WEB_AND_WASM.md`).
-- 17 files in `src/components/generated/` are hand-maintained, not compiler output.
+  `src/components/generated/` is compiler output, and `tests/generated_fresh_test.rs` fails when it drifts from them.
 - Some interactive behaviour is JS embedded in Rust strings.
-- Escape-by-default is enforced for the VNode renderer, the DOM patcher, SSR and the
-  hand-maintained generated files; compiler-generated string builders still need a
+- Escape-by-default is enforced for the VNode renderer, the DOM patcher and SSR; compiler-generated string builders still need a
   `.wj`-side audit (`docs/known-issues/escaping.md`).
 
 ## Docs
