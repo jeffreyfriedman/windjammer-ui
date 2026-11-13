@@ -3,6 +3,7 @@
 
 pub mod apply;
 pub mod diff;
+pub mod event_info;
 pub mod fake_dom;
 pub mod mounted;
 pub mod port;
@@ -10,6 +11,7 @@ pub mod port;
 pub mod web;
 
 pub use diff::{diff, PatchOp};
+pub use event_info::{current_event, set_current_event, EventInfo};
 pub use mounted::{prevent_default, run_handlers, stop_propagation, DispatchOutcome, Mounted};
 pub use port::DomPort;
 

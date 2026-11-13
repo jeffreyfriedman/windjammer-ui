@@ -1,0 +1,118 @@
+// Design tokens: one declared token set (light, dark, high-contrast) that the kit components read through CSS custom
+// properties. `theme_css()` declares every token for every mode; `kit_css()` styles the kit components using only
+// `var(--wj-...)`, so switching `data-wj-theme` on any ancestor (usually <html>) re-themes everything at once.
+//
+// Mode selection: an explicit `data-wj-theme="light|dark|high-contrast"` always wins. Without one, the user's system
+// preference decides: `prefers-contrast: more` selects high-contrast, `prefers-color-scheme: dark` selects dark.
+
+pub enum ThemeMode {
+    Light,
+    Dark,
+    HighContrast,
+}
+
+pub struct Token {
+    name: string,
+    light: string,
+    dark: string,
+    contrast: string,
+}
+
+impl Token {
+    pub fn new(name: string, light: string, dark: string, contrast: string) -> Token {
+        Token { name: name, light: light, dark: dark, contrast: contrast }
+    }
+
+    pub fn value(self, mode: ThemeMode) -> string {
+        match mode {
+            ThemeMode::Light => self.light,
+            ThemeMode::Dark => self.dark,
+            ThemeMode::HighContrast => self.contrast,
+        }
+    }
+}
+
+/// The value of the `data-wj-theme` attribute that selects `mode`.
+pub fn mode_name(mode: ThemeMode) -> string {
+    match mode {
+        ThemeMode::Light => "light",
+        ThemeMode::Dark => "dark",
+        ThemeMode::HighContrast => "high-contrast",
+    }
+}
+
+/// Every token, declared once. Colors are six-digit hex so contrast can be checked mechanically.
+pub fn tokens() -> Vec<Token> {
+    let mut t: Vec<Token> = Vec::new()
+    t.push(Token::new("color-bg", "#ffffff", "#0f1419", "#000000"))
+    t.push(Token::new("color-surface", "#f3f5f8", "#1a2029", "#000000"))
+    t.push(Token::new("color-text", "#1a1f27", "#e8ecf1", "#ffffff"))
+    t.push(Token::new("color-text-muted", "#4a5361", "#a9b4c2", "#ffffff"))
+    t.push(Token::new("color-border", "#6b7686", "#74839a", "#ffffff"))
+    t.push(Token::new("color-primary", "#1a56db", "#6ea8fe", "#ffff00"))
+    t.push(Token::new("color-on-primary", "#ffffff", "#0b1220", "#000000"))
+    t.push(Token::new("color-focus-ring", "#1a56db", "#9ec5fe", "#00ffff"))
+    t.push(Token::new("color-danger", "#b42318", "#ff8a80", "#ff6b6b"))
+    t.push(Token::new("color-success", "#067647", "#5fd38d", "#00ff7f"))
+    t.push(Token::new("focus-width", "2px", "2px", "3px"))
+    t.push(Token::new("border-width", "1px", "1px", "2px"))
+    t.push(Token::new("radius", "6px", "6px", "2px"))
+    t.push(Token::new("space-1", "4px", "4px", "4px"))
+    t.push(Token::new("space-2", "8px", "8px", "8px"))
+    t.push(Token::new("space-3", "16px", "16px", "16px"))
+    t
+}
+
+fn declarations(mode: ThemeMode) -> string {
+    let mut css = ""
+    for tok in tokens() {
+        css = "${css}  --wj-${tok.name}: ${tok.value(mode)};\n"
+    }
+    css
+}
+
+/// All token declarations for every mode, plus the system-preference fallbacks.
+pub fn theme_css() -> string {
+    let light = declarations(ThemeMode::Light)
+    let dark = declarations(ThemeMode::Dark)
+    let contrast = declarations(ThemeMode::HighContrast)
+    let mut css = ":root, [data-wj-theme=\"light\"] {\n${light}  color-scheme: light;\n}\n"
+    css = "${css}[data-wj-theme=\"dark\"] {\n${dark}  color-scheme: dark;\n}\n"
+    css = "${css}[data-wj-theme=\"high-contrast\"] {\n${contrast}  color-scheme: dark;\n}\n"
+    css = "${css}@media (prefers-color-scheme: dark) {\n:root:not([data-wj-theme]) {\n${dark}  color-scheme: dark;\n}\n}\n"
+    css = "${css}@media (prefers-contrast: more) {\n:root:not([data-wj-theme]) {\n${contrast}  color-scheme: dark;\n}\n}\n"
+    css
+}
+
+/// Kit component styles. Colors, widths and spacing come only from `var(--wj-...)` tokens.
+pub fn kit_css() -> string {
+    let mut css = ""
+    css = "${css}body { background: var(--wj-color-bg); color: var(--wj-color-text); }\n"
+    css = "${css}.wj-button, .wj-tab, .wj-sort, .wj-page, .wj-menu-item, .wj-switch, .wj-accordion-head {\n"
+    css = "${css}  background: var(--wj-color-surface); color: var(--wj-color-text);\n"
+    css = "${css}  border: var(--wj-border-width) solid var(--wj-color-border); border-radius: var(--wj-radius);\n"
+    css = "${css}  padding: var(--wj-space-2) var(--wj-space-3); cursor: pointer;\n}\n"
+    css = "${css}.wj-button-primary { background: var(--wj-color-primary); color: var(--wj-color-on-primary); }\n"
+    css = "${css}.wj-tab[aria-selected=\"true\"], .wj-page[aria-current=\"page\"], .wj-switch[aria-checked=\"true\"], [aria-pressed=\"true\"] {\n"
+    css = "${css}  background: var(--wj-color-primary); color: var(--wj-color-on-primary);\n}\n"
+    css = "${css}:focus-visible, [tabindex]:focus-visible {\n"
+    css = "${css}  outline: var(--wj-focus-width) solid var(--wj-color-focus-ring); outline-offset: 2px;\n}\n"
+    css = "${css}input, select, .wj-input {\n"
+    css = "${css}  background: var(--wj-color-bg); color: var(--wj-color-text);\n"
+    css = "${css}  border: var(--wj-border-width) solid var(--wj-color-border); border-radius: var(--wj-radius);\n"
+    css = "${css}  padding: var(--wj-space-1) var(--wj-space-2);\n}\n"
+    css = "${css}[aria-invalid=\"true\"] { border-color: var(--wj-color-danger); }\n"
+    css = "${css}.wj-error { color: var(--wj-color-danger); margin: var(--wj-space-1) 0 0; }\n"
+    css = "${css}.wj-hint { color: var(--wj-color-text-muted); margin: var(--wj-space-1) 0 0; }\n"
+    css = "${css}.wj-form-status { color: var(--wj-color-success); }\n"
+    css = "${css}.wj-field { margin-bottom: var(--wj-space-3); }\n"
+    css = "${css}.wj-table { border-collapse: collapse; width: 100%; }\n"
+    css = "${css}.wj-table th, .wj-table td { border: var(--wj-border-width) solid var(--wj-color-border); padding: var(--wj-space-2); text-align: left; }\n"
+    css = "${css}.wj-modal-backdrop { background: var(--wj-color-bg); }\n"
+    css = "${css}.wj-modal, .wj-menu, .wj-tooltip { background: var(--wj-color-surface); color: var(--wj-color-text);\n"
+    css = "${css}  border: var(--wj-border-width) solid var(--wj-color-border); border-radius: var(--wj-radius); padding: var(--wj-space-3); }\n"
+    css = "${css}.wj-vlist { border: var(--wj-border-width) solid var(--wj-color-border); }\n"
+    css = "${css}.wj-vlist-row[aria-selected=\"true\"] { background: var(--wj-color-primary); color: var(--wj-color-on-primary); }\n"
+    css = "${css}[hidden] { display: none !important; }\n"
+    css
+}

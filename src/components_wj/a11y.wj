@@ -1,0 +1,83 @@
+// Accessibility kit core.
+//
+// Every interactive kit component (tabs, accordion, dialog, menu, switch, slider, form fields, data grid...) is a small
+// model: it renders ARIA-complete markup from its state and updates that state from DOM events. This module holds the
+// pieces they share: the `Interactive` contract, keyboard navigation rules, and helpers that build ARIA attribute values.
+//
+// Event contract (see src/kit_mount.rs for the browser side): an element that can be acted on carries
+// `data-wj-act="<name>[:<index>]"`. The mount layer delivers `keydown`, `click`, `input`, `change` and `focusout` events
+// as (event, act, key, value) to `on_event`, which returns true when it handled the event (the mount layer then calls
+// preventDefault, so arrow keys and Space do not scroll the page). After each event the mount re-renders `view()` and
+// moves focus to `focus_id()` when it is not empty.
+
+use super::vnode::VNode
+
+pub trait Interactive {
+    fn on_event(&mut self, event: string, act: string, key: string, value: string) -> bool
+    fn view(&self) -> VNode
+    fn focus_id(&self) -> string
+}
+
+/// "true" / "false" as ARIA expects them.
+pub fn aria_bool(b: bool) -> string {
+    if b {
+        "true"
+    } else {
+        "false"
+    }
+}
+
+/// Roving tabindex: the active item is in the tab order, the rest are reached with arrow keys.
+pub fn roving_tabindex(is_active: bool) -> string {
+    if is_active {
+        "0"
+    } else {
+        "-1"
+    }
+}
+
+/// Enter and Space activate a control.
+pub fn is_activation_key(key: string) -> bool {
+    key == "Enter" || key == " " || key == "Spacebar"
+}
+
+/// Where arrow keys move inside a group of `count` items. Returns the new index, or -1 when `key` is not a navigation
+/// key for this orientation. Movement wraps; Home and End jump to the ends.
+pub fn roving_next(key: string, current: i32, count: i32, vertical: bool) -> i32 {
+    if count <= 0 {
+        return -1
+    }
+    if key == "Home" {
+        return 0
+    }
+    if key == "End" {
+        return count - 1
+    }
+    let forward = if vertical { "ArrowDown" } else { "ArrowRight" }
+    let backward = if vertical { "ArrowUp" } else { "ArrowLeft" }
+    if key == forward {
+        return (current + 1) % count
+    }
+    if key == backward {
+        return (current + count - 1) % count
+    }
+    -1
+}
+
+/// The index in an act such as "tab:3" given its prefix "tab", or -1 when the act has another name.
+pub fn act_index(act: string, prefix: string) -> i32 {
+    let head = "${prefix}:"
+    if !act.starts_with(head.as_str()) {
+        return -1
+    }
+    let rest = act.replace(head.as_str(), "")
+    match rest.parse::<i32>() {
+        Ok(n) => n,
+        Err(_) => -1,
+    }
+}
+
+/// Stable element id for part `index` of a component: "<base>-<part>-<index>".
+pub fn part_id(base: string, part: string, index: i32) -> string {
+    "${base}-${part}-${index}"
+}

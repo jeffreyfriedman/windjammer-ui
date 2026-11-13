@@ -19,6 +19,7 @@
     "DividerOrientation",
     "DrawerPosition",
     "EasingPreset",
+    "FieldKind",
     "FlexDirection",
     "FrameDebuggerViewState",
     "IconName",
@@ -50,6 +51,7 @@
     "TextSize",
     "TextWeight",
     "TextareaResize",
+    "ThemeMode",
     "ToastPosition",
     "ToastVariant",
     "TooltipPosition",
@@ -208,6 +210,243 @@
       ],
       "parent_type": "AccordionItem",
       "return_type": "Custom(\"AccordionItem\")",
+      "string_ref_string_formal_params": null
+    },
+    "AccordionStack::exclusive": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"AccordionStack\")",
+        "Bool"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"AccordionStack\")",
+        "Bool"
+      ],
+      "parent_type": "AccordionStack",
+      "return_type": "Custom(\"AccordionStack\")",
+      "string_ref_string_formal_params": null
+    },
+    "AccordionStack::focus_id": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"AccordionStack\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"AccordionStack\")"
+      ],
+      "parent_type": "AccordionStack",
+      "return_type": "String",
+      "string_ref_string_formal_params": null
+    },
+    "AccordionStack::is_open": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"AccordionStack\")",
+        "Custom(\"i32\")"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"AccordionStack\")",
+        "Custom(\"i32\")"
+      ],
+      "parent_type": "AccordionStack",
+      "return_type": "Bool",
+      "string_ref_string_formal_params": null
+    },
+    "AccordionStack::item": {
+      "emitted_rust_ref_params": [
+        false,
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"AccordionStack\")",
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"AccordionStack\")",
+        "String",
+        "String"
+      ],
+      "parent_type": "AccordionStack",
+      "return_type": "Custom(\"AccordionStack\")",
+      "string_ref_string_formal_params": null
+    },
+    "AccordionStack::new": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": false,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned"
+      ],
+      "params": [
+        "String"
+      ],
+      "parent_type": "AccordionStack",
+      "return_type": "Custom(\"AccordionStack\")",
+      "string_ref_string_formal_params": null
+    },
+    "AccordionStack::on_event": {
+      "emitted_rust_ref_params": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"AccordionStack\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false,
+        true,
+        true,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned",
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"AccordionStack\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "parent_type": "AccordionStack",
+      "return_type": "Bool",
+      "string_ref_string_formal_params": null
+    },
+    "AccordionStack::toggle": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"AccordionStack\")",
+        "Custom(\"i32\")"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"AccordionStack\")",
+        "Custom(\"i32\")"
+      ],
+      "parent_type": "AccordionStack",
+      "return_type": null,
+      "string_ref_string_formal_params": null
+    },
+    "AccordionStack::view": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"AccordionStack\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"AccordionStack\")"
+      ],
+      "parent_type": "AccordionStack",
+      "return_type": "Custom(\"VNode\")",
       "string_ref_string_formal_params": null
     },
     "AdvancedCodeEditor::autocomplete": {
@@ -2382,6 +2621,180 @@
       "return_type": "Custom(\"VNode\")",
       "string_ref_string_formal_params": null
     },
+    "CheckboxField::checked": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"CheckboxField\")",
+        "Bool"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"CheckboxField\")",
+        "Bool"
+      ],
+      "parent_type": "CheckboxField",
+      "return_type": "Custom(\"CheckboxField\")",
+      "string_ref_string_formal_params": null
+    },
+    "CheckboxField::focus_id": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"CheckboxField\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"CheckboxField\")"
+      ],
+      "parent_type": "CheckboxField",
+      "return_type": "String",
+      "string_ref_string_formal_params": null
+    },
+    "CheckboxField::is_checked": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"CheckboxField\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"CheckboxField\")"
+      ],
+      "parent_type": "CheckboxField",
+      "return_type": "Bool",
+      "string_ref_string_formal_params": null
+    },
+    "CheckboxField::new": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": false,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "String",
+        "String"
+      ],
+      "parent_type": "CheckboxField",
+      "return_type": "Custom(\"CheckboxField\")",
+      "string_ref_string_formal_params": null
+    },
+    "CheckboxField::on_event": {
+      "emitted_rust_ref_params": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"CheckboxField\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned",
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"CheckboxField\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "parent_type": "CheckboxField",
+      "return_type": "Bool",
+      "string_ref_string_formal_params": null
+    },
+    "CheckboxField::view": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"CheckboxField\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"CheckboxField\")"
+      ],
+      "parent_type": "CheckboxField",
+      "return_type": "Custom(\"VNode\")",
+      "string_ref_string_formal_params": null
+    },
     "Chip::icon": {
       "emitted_rust_ref_params": [
         false,
@@ -4055,6 +4468,368 @@
       ],
       "parent_type": "CurvePoint",
       "return_type": "Custom(\"CurvePoint\")",
+      "string_ref_string_formal_params": null
+    },
+    "DataGrid::column": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"DataGrid\")",
+        "Custom(\"GridColumn\")"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"DataGrid\")",
+        "Custom(\"GridColumn\")"
+      ],
+      "parent_type": "DataGrid",
+      "return_type": "Custom(\"DataGrid\")",
+      "string_ref_string_formal_params": null
+    },
+    "DataGrid::current_page": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"DataGrid\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"DataGrid\")"
+      ],
+      "parent_type": "DataGrid",
+      "return_type": "Custom(\"i32\")",
+      "string_ref_string_formal_params": null
+    },
+    "DataGrid::focus_id": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"DataGrid\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"DataGrid\")"
+      ],
+      "parent_type": "DataGrid",
+      "return_type": "String",
+      "string_ref_string_formal_params": null
+    },
+    "DataGrid::go": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"DataGrid\")",
+        "Custom(\"i32\")"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"DataGrid\")",
+        "Custom(\"i32\")"
+      ],
+      "parent_type": "DataGrid",
+      "return_type": null,
+      "string_ref_string_formal_params": null
+    },
+    "DataGrid::matching_rows": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"DataGrid\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"DataGrid\")"
+      ],
+      "parent_type": "DataGrid",
+      "return_type": "Vec(Custom(\"i32\"))",
+      "string_ref_string_formal_params": null
+    },
+    "DataGrid::new": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": false,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "String",
+        "String"
+      ],
+      "parent_type": "DataGrid",
+      "return_type": "Custom(\"DataGrid\")",
+      "string_ref_string_formal_params": null
+    },
+    "DataGrid::on_event": {
+      "emitted_rust_ref_params": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"DataGrid\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false,
+        false,
+        true,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned",
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"DataGrid\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "parent_type": "DataGrid",
+      "return_type": "Bool",
+      "string_ref_string_formal_params": null
+    },
+    "DataGrid::page_count": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"DataGrid\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"DataGrid\")"
+      ],
+      "parent_type": "DataGrid",
+      "return_type": "Custom(\"i32\")",
+      "string_ref_string_formal_params": null
+    },
+    "DataGrid::page_size": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"DataGrid\")",
+        "Custom(\"i32\")"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"DataGrid\")",
+        "Custom(\"i32\")"
+      ],
+      "parent_type": "DataGrid",
+      "return_type": "Custom(\"DataGrid\")",
+      "string_ref_string_formal_params": null
+    },
+    "DataGrid::row": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"DataGrid\")",
+        "Vec(String)"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"DataGrid\")",
+        "Vec(String)"
+      ],
+      "parent_type": "DataGrid",
+      "return_type": "Custom(\"DataGrid\")",
+      "string_ref_string_formal_params": null
+    },
+    "DataGrid::sort_by": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"DataGrid\")",
+        "Custom(\"i32\")"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"DataGrid\")",
+        "Custom(\"i32\")"
+      ],
+      "parent_type": "DataGrid",
+      "return_type": null,
+      "string_ref_string_formal_params": null
+    },
+    "DataGrid::view": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"DataGrid\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"DataGrid\")"
+      ],
+      "parent_type": "DataGrid",
+      "return_type": "Custom(\"VNode\")",
+      "string_ref_string_formal_params": null
+    },
+    "DataGrid::visible_rows": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"DataGrid\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"DataGrid\")"
+      ],
+      "parent_type": "DataGrid",
+      "return_type": "Vec(Custom(\"i32\"))",
       "string_ref_string_formal_params": null
     },
     "DataTable::caption": {
@@ -6028,6 +6803,30 @@
       "return_type": "Custom(\"FormField\")",
       "string_ref_string_formal_params": null
     },
+    "FormField::error_message": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"FormField\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"FormField\")"
+      ],
+      "parent_type": "FormField",
+      "return_type": "String",
+      "string_ref_string_formal_params": null
+    },
     "FormField::help_text": {
       "emitted_rust_ref_params": [
         false,
@@ -6057,6 +6856,146 @@
       "return_type": "Custom(\"FormField\")",
       "string_ref_string_formal_params": null
     },
+    "FormField::hint": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"FormField\")",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"FormField\")",
+        "String"
+      ],
+      "parent_type": "FormField",
+      "return_type": "Custom(\"FormField\")",
+      "string_ref_string_formal_params": null
+    },
+    "FormField::is_empty": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"FormField\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"FormField\")"
+      ],
+      "parent_type": "FormField",
+      "return_type": "Bool",
+      "string_ref_string_formal_params": null
+    },
+    "FormField::max": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"FormField\")",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"FormField\")",
+        "String"
+      ],
+      "parent_type": "FormField",
+      "return_type": "Custom(\"FormField\")",
+      "string_ref_string_formal_params": null
+    },
+    "FormField::min": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"FormField\")",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"FormField\")",
+        "String"
+      ],
+      "parent_type": "FormField",
+      "return_type": "Custom(\"FormField\")",
+      "string_ref_string_formal_params": null
+    },
+    "FormField::min_len": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"FormField\")",
+        "Custom(\"i32\")"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"FormField\")",
+        "Custom(\"i32\")"
+      ],
+      "parent_type": "FormField",
+      "return_type": "Custom(\"FormField\")",
+      "string_ref_string_formal_params": null
+    },
     "FormField::new": {
       "emitted_rust_ref_params": [
         false,
@@ -6079,6 +7018,40 @@
         "Owned"
       ],
       "params": [
+        "String",
+        "String"
+      ],
+      "parent_type": "FormField",
+      "return_type": "Custom(\"FormField\")",
+      "string_ref_string_formal_params": null
+    },
+    "FormField::option": {
+      "emitted_rust_ref_params": [
+        false,
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"FormField\")",
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"FormField\")",
         "String",
         "String"
       ],
@@ -6137,6 +7110,358 @@
       ],
       "parent_type": "FormField",
       "return_type": "Custom(\"FormField\")",
+      "string_ref_string_formal_params": null
+    },
+    "FormField::value": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"FormField\")",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"FormField\")",
+        "String"
+      ],
+      "parent_type": "FormField",
+      "return_type": "Custom(\"FormField\")",
+      "string_ref_string_formal_params": null
+    },
+    "FormKit::error_count": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"FormKit\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"FormKit\")"
+      ],
+      "parent_type": "FormKit",
+      "return_type": "Custom(\"i32\")",
+      "string_ref_string_formal_params": null
+    },
+    "FormKit::field": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"FormKit\")",
+        "Custom(\"FormField\")"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"FormKit\")",
+        "Custom(\"FormField\")"
+      ],
+      "parent_type": "FormKit",
+      "return_type": "Custom(\"FormKit\")",
+      "string_ref_string_formal_params": null
+    },
+    "FormKit::field_view": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"FormKit\")",
+        "Custom(\"i32\")"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        true
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"FormKit\")",
+        "Custom(\"i32\")"
+      ],
+      "parent_type": "FormKit",
+      "return_type": "Custom(\"VNode\")",
+      "string_ref_string_formal_params": null
+    },
+    "FormKit::focus_id": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"FormKit\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"FormKit\")"
+      ],
+      "parent_type": "FormKit",
+      "return_type": "String",
+      "string_ref_string_formal_params": null
+    },
+    "FormKit::new": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": false,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "String",
+        "String"
+      ],
+      "parent_type": "FormKit",
+      "return_type": "Custom(\"FormKit\")",
+      "string_ref_string_formal_params": null
+    },
+    "FormKit::on_event": {
+      "emitted_rust_ref_params": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"FormKit\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned",
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"FormKit\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "parent_type": "FormKit",
+      "return_type": "Bool",
+      "string_ref_string_formal_params": null
+    },
+    "FormKit::reset": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"FormKit\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed"
+      ],
+      "params": [
+        "Custom(\"FormKit\")"
+      ],
+      "parent_type": "FormKit",
+      "return_type": null,
+      "string_ref_string_formal_params": null
+    },
+    "FormKit::status": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"FormKit\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"FormKit\")"
+      ],
+      "parent_type": "FormKit",
+      "return_type": "String",
+      "string_ref_string_formal_params": null
+    },
+    "FormKit::submit": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"FormKit\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed"
+      ],
+      "params": [
+        "Custom(\"FormKit\")"
+      ],
+      "parent_type": "FormKit",
+      "return_type": null,
+      "string_ref_string_formal_params": null
+    },
+    "FormKit::submit_count": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"FormKit\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"FormKit\")"
+      ],
+      "parent_type": "FormKit",
+      "return_type": "Custom(\"i32\")",
+      "string_ref_string_formal_params": null
+    },
+    "FormKit::submitted": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"FormKit\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"FormKit\")"
+      ],
+      "parent_type": "FormKit",
+      "return_type": "String",
+      "string_ref_string_formal_params": null
+    },
+    "FormKit::view": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"FormKit\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"FormKit\")"
+      ],
+      "parent_type": "FormKit",
+      "return_type": "Custom(\"VNode\")",
       "string_ref_string_formal_params": null
     },
     "FrameDebuggerPanel::from_live": {
@@ -6883,6 +8208,54 @@
       ],
       "parent_type": "Grid",
       "return_type": "String",
+      "string_ref_string_formal_params": null
+    },
+    "GridColumn::number": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": false,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned"
+      ],
+      "params": [
+        "String"
+      ],
+      "parent_type": "GridColumn",
+      "return_type": "Custom(\"GridColumn\")",
+      "string_ref_string_formal_params": null
+    },
+    "GridColumn::text": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": false,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned"
+      ],
+      "params": [
+        "String"
+      ],
+      "parent_type": "GridColumn",
+      "return_type": "Custom(\"GridColumn\")",
       "string_ref_string_formal_params": null
     },
     "H1::class": {
@@ -7639,6 +9012,78 @@
       ],
       "parent_type": "Input",
       "return_type": "Custom(\"Input\")",
+      "string_ref_string_formal_params": null
+    },
+    "Interactive::focus_id": {
+      "emitted_rust_ref_params": null,
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "forwarding_borrow_params": null,
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": true,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Reference(Custom(\"Self\"))"
+      ],
+      "parent_type": "Interactive",
+      "return_type": "String",
+      "string_ref_string_formal_params": null
+    },
+    "Interactive::on_event": {
+      "emitted_rust_ref_params": null,
+      "formal_params": [
+        "Custom(\"Self\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": null,
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": true,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned",
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "MutableReference(Custom(\"Self\"))",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "parent_type": "Interactive",
+      "return_type": "Bool",
+      "string_ref_string_formal_params": null
+    },
+    "Interactive::view": {
+      "emitted_rust_ref_params": null,
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "forwarding_borrow_params": null,
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": true,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Reference(Custom(\"Self\"))"
+      ],
+      "parent_type": "Interactive",
+      "return_type": "Custom(\"VNode\")",
       "string_ref_string_formal_params": null
     },
     "KpiGrid::new": {
@@ -8594,6 +10039,286 @@
       "return_type": "String",
       "string_ref_string_formal_params": null
     },
+    "MenuButton::choose": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"MenuButton\")",
+        "Custom(\"i32\")"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"MenuButton\")",
+        "Custom(\"i32\")"
+      ],
+      "parent_type": "MenuButton",
+      "return_type": null,
+      "string_ref_string_formal_params": null
+    },
+    "MenuButton::chosen": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"MenuButton\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"MenuButton\")"
+      ],
+      "parent_type": "MenuButton",
+      "return_type": "String",
+      "string_ref_string_formal_params": null
+    },
+    "MenuButton::close_to_trigger": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"MenuButton\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed"
+      ],
+      "params": [
+        "Custom(\"MenuButton\")"
+      ],
+      "parent_type": "MenuButton",
+      "return_type": null,
+      "string_ref_string_formal_params": null
+    },
+    "MenuButton::focus_id": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"MenuButton\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"MenuButton\")"
+      ],
+      "parent_type": "MenuButton",
+      "return_type": "String",
+      "string_ref_string_formal_params": null
+    },
+    "MenuButton::is_open": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"MenuButton\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"MenuButton\")"
+      ],
+      "parent_type": "MenuButton",
+      "return_type": "Bool",
+      "string_ref_string_formal_params": null
+    },
+    "MenuButton::item": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"MenuButton\")",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"MenuButton\")",
+        "String"
+      ],
+      "parent_type": "MenuButton",
+      "return_type": "Custom(\"MenuButton\")",
+      "string_ref_string_formal_params": null
+    },
+    "MenuButton::new": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": false,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "String",
+        "String"
+      ],
+      "parent_type": "MenuButton",
+      "return_type": "Custom(\"MenuButton\")",
+      "string_ref_string_formal_params": null
+    },
+    "MenuButton::on_event": {
+      "emitted_rust_ref_params": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"MenuButton\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned",
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"MenuButton\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "parent_type": "MenuButton",
+      "return_type": "Bool",
+      "string_ref_string_formal_params": null
+    },
+    "MenuButton::open_at": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"MenuButton\")",
+        "Custom(\"i32\")"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"MenuButton\")",
+        "Custom(\"i32\")"
+      ],
+      "parent_type": "MenuButton",
+      "return_type": null,
+      "string_ref_string_formal_params": null
+    },
+    "MenuButton::view": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"MenuButton\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"MenuButton\")"
+      ],
+      "parent_type": "MenuButton",
+      "return_type": "Custom(\"VNode\")",
+      "string_ref_string_formal_params": null
+    },
     "MenuItem::class": {
       "emitted_rust_ref_params": [
         false,
@@ -9079,6 +10804,286 @@
       ],
       "parent_type": "Modal",
       "return_type": "Custom(\"Modal\")",
+      "string_ref_string_formal_params": null
+    },
+    "ModalDialog::body": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"ModalDialog\")",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"ModalDialog\")",
+        "String"
+      ],
+      "parent_type": "ModalDialog",
+      "return_type": "Custom(\"ModalDialog\")",
+      "string_ref_string_formal_params": null
+    },
+    "ModalDialog::close_dialog": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"ModalDialog\")",
+        "Bool"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"ModalDialog\")",
+        "Bool"
+      ],
+      "parent_type": "ModalDialog",
+      "return_type": null,
+      "string_ref_string_formal_params": null
+    },
+    "ModalDialog::focus_id": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"ModalDialog\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"ModalDialog\")"
+      ],
+      "parent_type": "ModalDialog",
+      "return_type": "String",
+      "string_ref_string_formal_params": null
+    },
+    "ModalDialog::is_open": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"ModalDialog\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"ModalDialog\")"
+      ],
+      "parent_type": "ModalDialog",
+      "return_type": "Bool",
+      "string_ref_string_formal_params": null
+    },
+    "ModalDialog::new": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": false,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "String",
+        "String"
+      ],
+      "parent_type": "ModalDialog",
+      "return_type": "Custom(\"ModalDialog\")",
+      "string_ref_string_formal_params": null
+    },
+    "ModalDialog::on_event": {
+      "emitted_rust_ref_params": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"ModalDialog\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned",
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"ModalDialog\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "parent_type": "ModalDialog",
+      "return_type": "Bool",
+      "string_ref_string_formal_params": null
+    },
+    "ModalDialog::open_dialog": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"ModalDialog\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed"
+      ],
+      "params": [
+        "Custom(\"ModalDialog\")"
+      ],
+      "parent_type": "ModalDialog",
+      "return_type": null,
+      "string_ref_string_formal_params": null
+    },
+    "ModalDialog::trigger": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"ModalDialog\")",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"ModalDialog\")",
+        "String"
+      ],
+      "parent_type": "ModalDialog",
+      "return_type": "Custom(\"ModalDialog\")",
+      "string_ref_string_formal_params": null
+    },
+    "ModalDialog::view": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"ModalDialog\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"ModalDialog\")"
+      ],
+      "parent_type": "ModalDialog",
+      "return_type": "Custom(\"VNode\")",
+      "string_ref_string_formal_params": null
+    },
+    "ModalDialog::was_confirmed": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"ModalDialog\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"ModalDialog\")"
+      ],
+      "parent_type": "ModalDialog",
+      "return_type": "Bool",
       "string_ref_string_formal_params": null
     },
     "Navbar::brand": {
@@ -9803,6 +11808,185 @@
       ],
       "parent_type": "P",
       "return_type": "Custom(\"P\")",
+      "string_ref_string_formal_params": null
+    },
+    "PageNav::current": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"PageNav\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"PageNav\")"
+      ],
+      "parent_type": "PageNav",
+      "return_type": "Custom(\"i32\")",
+      "string_ref_string_formal_params": null
+    },
+    "PageNav::focus_id": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"PageNav\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"PageNav\")"
+      ],
+      "parent_type": "PageNav",
+      "return_type": "String",
+      "string_ref_string_formal_params": null
+    },
+    "PageNav::go": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"PageNav\")",
+        "Custom(\"i32\")"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"PageNav\")",
+        "Custom(\"i32\")"
+      ],
+      "parent_type": "PageNav",
+      "return_type": null,
+      "string_ref_string_formal_params": null
+    },
+    "PageNav::new": {
+      "emitted_rust_ref_params": [
+        false,
+        false,
+        false
+      ],
+      "formal_params": [
+        "String",
+        "String",
+        "Custom(\"i32\")"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false,
+        false
+      ],
+      "has_self_receiver": false,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "String",
+        "String",
+        "Custom(\"i32\")"
+      ],
+      "parent_type": "PageNav",
+      "return_type": "Custom(\"PageNav\")",
+      "string_ref_string_formal_params": null
+    },
+    "PageNav::on_event": {
+      "emitted_rust_ref_params": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"PageNav\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false,
+        false,
+        true,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned",
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"PageNav\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "parent_type": "PageNav",
+      "return_type": "Bool",
+      "string_ref_string_formal_params": null
+    },
+    "PageNav::view": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"PageNav\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"PageNav\")"
+      ],
+      "parent_type": "PageNav",
+      "return_type": "Custom(\"VNode\")",
       "string_ref_string_formal_params": null
     },
     "Pagination::new": {
@@ -10841,6 +13025,243 @@
       ],
       "parent_type": "Property",
       "return_type": "Custom(\"Property\")",
+      "string_ref_string_formal_params": null
+    },
+    "RadioChoice::focus_id": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"RadioChoice\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"RadioChoice\")"
+      ],
+      "parent_type": "RadioChoice",
+      "return_type": "String",
+      "string_ref_string_formal_params": null
+    },
+    "RadioChoice::new": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": false,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "String",
+        "String"
+      ],
+      "parent_type": "RadioChoice",
+      "return_type": "Custom(\"RadioChoice\")",
+      "string_ref_string_formal_params": null
+    },
+    "RadioChoice::on_event": {
+      "emitted_rust_ref_params": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"RadioChoice\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false,
+        true,
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned",
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"RadioChoice\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "parent_type": "RadioChoice",
+      "return_type": "Bool",
+      "string_ref_string_formal_params": null
+    },
+    "RadioChoice::option": {
+      "emitted_rust_ref_params": [
+        false,
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"RadioChoice\")",
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"RadioChoice\")",
+        "String",
+        "String"
+      ],
+      "parent_type": "RadioChoice",
+      "return_type": "Custom(\"RadioChoice\")",
+      "string_ref_string_formal_params": null
+    },
+    "RadioChoice::pick": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"RadioChoice\")",
+        "Custom(\"i32\")"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"RadioChoice\")",
+        "Custom(\"i32\")"
+      ],
+      "parent_type": "RadioChoice",
+      "return_type": null,
+      "string_ref_string_formal_params": null
+    },
+    "RadioChoice::select": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"RadioChoice\")",
+        "Custom(\"i32\")"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"RadioChoice\")",
+        "Custom(\"i32\")"
+      ],
+      "parent_type": "RadioChoice",
+      "return_type": "Custom(\"RadioChoice\")",
+      "string_ref_string_formal_params": null
+    },
+    "RadioChoice::value": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"RadioChoice\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"RadioChoice\")"
+      ],
+      "parent_type": "RadioChoice",
+      "return_type": "String",
+      "string_ref_string_formal_params": null
+    },
+    "RadioChoice::view": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"RadioChoice\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"RadioChoice\")"
+      ],
+      "parent_type": "RadioChoice",
+      "return_type": "Custom(\"VNode\")",
       "string_ref_string_formal_params": null
     },
     "RadioGroup::new": {
@@ -12986,6 +15407,248 @@
       ],
       "parent_type": "Slider",
       "return_type": "Custom(\"Slider\")",
+      "string_ref_string_formal_params": null
+    },
+    "SliderControl::current": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"SliderControl\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"SliderControl\")"
+      ],
+      "parent_type": "SliderControl",
+      "return_type": "Custom(\"i32\")",
+      "string_ref_string_formal_params": null
+    },
+    "SliderControl::focus_id": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"SliderControl\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"SliderControl\")"
+      ],
+      "parent_type": "SliderControl",
+      "return_type": "String",
+      "string_ref_string_formal_params": null
+    },
+    "SliderControl::new": {
+      "emitted_rust_ref_params": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "formal_params": [
+        "String",
+        "String",
+        "Custom(\"i32\")",
+        "Custom(\"i32\")"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "has_self_receiver": false,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "String",
+        "String",
+        "Custom(\"i32\")",
+        "Custom(\"i32\")"
+      ],
+      "parent_type": "SliderControl",
+      "return_type": "Custom(\"SliderControl\")",
+      "string_ref_string_formal_params": null
+    },
+    "SliderControl::on_event": {
+      "emitted_rust_ref_params": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"SliderControl\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned",
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"SliderControl\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "parent_type": "SliderControl",
+      "return_type": "Bool",
+      "string_ref_string_formal_params": null
+    },
+    "SliderControl::set": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"SliderControl\")",
+        "Custom(\"i32\")"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"SliderControl\")",
+        "Custom(\"i32\")"
+      ],
+      "parent_type": "SliderControl",
+      "return_type": null,
+      "string_ref_string_formal_params": null
+    },
+    "SliderControl::step": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"SliderControl\")",
+        "Custom(\"i32\")"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"SliderControl\")",
+        "Custom(\"i32\")"
+      ],
+      "parent_type": "SliderControl",
+      "return_type": "Custom(\"SliderControl\")",
+      "string_ref_string_formal_params": null
+    },
+    "SliderControl::value": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"SliderControl\")",
+        "Custom(\"i32\")"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"SliderControl\")",
+        "Custom(\"i32\")"
+      ],
+      "parent_type": "SliderControl",
+      "return_type": "Custom(\"SliderControl\")",
+      "string_ref_string_formal_params": null
+    },
+    "SliderControl::view": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"SliderControl\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"SliderControl\")"
+      ],
+      "parent_type": "SliderControl",
+      "return_type": "Custom(\"VNode\")",
       "string_ref_string_formal_params": null
     },
     "Spacer::flexible": {
@@ -15201,6 +17864,209 @@
       "return_type": "Custom(\"Switch\")",
       "string_ref_string_formal_params": null
     },
+    "SwitchControl::disabled": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"SwitchControl\")",
+        "Bool"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"SwitchControl\")",
+        "Bool"
+      ],
+      "parent_type": "SwitchControl",
+      "return_type": "Custom(\"SwitchControl\")",
+      "string_ref_string_formal_params": null
+    },
+    "SwitchControl::focus_id": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"SwitchControl\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"SwitchControl\")"
+      ],
+      "parent_type": "SwitchControl",
+      "return_type": "String",
+      "string_ref_string_formal_params": null
+    },
+    "SwitchControl::is_on": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"SwitchControl\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"SwitchControl\")"
+      ],
+      "parent_type": "SwitchControl",
+      "return_type": "Bool",
+      "string_ref_string_formal_params": null
+    },
+    "SwitchControl::new": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": false,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "String",
+        "String"
+      ],
+      "parent_type": "SwitchControl",
+      "return_type": "Custom(\"SwitchControl\")",
+      "string_ref_string_formal_params": null
+    },
+    "SwitchControl::on": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"SwitchControl\")",
+        "Bool"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"SwitchControl\")",
+        "Bool"
+      ],
+      "parent_type": "SwitchControl",
+      "return_type": "Custom(\"SwitchControl\")",
+      "string_ref_string_formal_params": null
+    },
+    "SwitchControl::on_event": {
+      "emitted_rust_ref_params": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"SwitchControl\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false,
+        false,
+        true,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned",
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"SwitchControl\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "parent_type": "SwitchControl",
+      "return_type": "Bool",
+      "string_ref_string_formal_params": null
+    },
+    "SwitchControl::view": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"SwitchControl\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"SwitchControl\")"
+      ],
+      "parent_type": "SwitchControl",
+      "return_type": "Custom(\"VNode\")",
+      "string_ref_string_formal_params": null
+    },
     "Tab::disabled": {
       "emitted_rust_ref_params": [
         false,
@@ -15421,6 +18287,238 @@
       ],
       "parent_type": "TabPanelTab",
       "return_type": "Custom(\"TabPanelTab\")",
+      "string_ref_string_formal_params": null
+    },
+    "TabStrip::focus_id": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"TabStrip\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"TabStrip\")"
+      ],
+      "parent_type": "TabStrip",
+      "return_type": "String",
+      "string_ref_string_formal_params": null
+    },
+    "TabStrip::new": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": false,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned"
+      ],
+      "params": [
+        "String"
+      ],
+      "parent_type": "TabStrip",
+      "return_type": "Custom(\"TabStrip\")",
+      "string_ref_string_formal_params": null
+    },
+    "TabStrip::on_event": {
+      "emitted_rust_ref_params": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"TabStrip\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false,
+        true,
+        true,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned",
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"TabStrip\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "parent_type": "TabStrip",
+      "return_type": "Bool",
+      "string_ref_string_formal_params": null
+    },
+    "TabStrip::pick": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"TabStrip\")",
+        "Custom(\"i32\")"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"TabStrip\")",
+        "Custom(\"i32\")"
+      ],
+      "parent_type": "TabStrip",
+      "return_type": null,
+      "string_ref_string_formal_params": null
+    },
+    "TabStrip::selected": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"TabStrip\")",
+        "Custom(\"i32\")"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"TabStrip\")",
+        "Custom(\"i32\")"
+      ],
+      "parent_type": "TabStrip",
+      "return_type": "Custom(\"TabStrip\")",
+      "string_ref_string_formal_params": null
+    },
+    "TabStrip::selected_index": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"TabStrip\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"TabStrip\")"
+      ],
+      "parent_type": "TabStrip",
+      "return_type": "Custom(\"i32\")",
+      "string_ref_string_formal_params": null
+    },
+    "TabStrip::tab": {
+      "emitted_rust_ref_params": [
+        false,
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"TabStrip\")",
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"TabStrip\")",
+        "String",
+        "String"
+      ],
+      "parent_type": "TabStrip",
+      "return_type": "Custom(\"TabStrip\")",
+      "string_ref_string_formal_params": null
+    },
+    "TabStrip::view": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"TabStrip\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"TabStrip\")"
+      ],
+      "parent_type": "TabStrip",
+      "return_type": "Custom(\"VNode\")",
       "string_ref_string_formal_params": null
     },
     "Table::bordered": {
@@ -16636,6 +19734,219 @@
       "return_type": "Custom(\"Toast\")",
       "string_ref_string_formal_params": null
     },
+    "ToggleButton::focus_id": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"ToggleButton\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"ToggleButton\")"
+      ],
+      "parent_type": "ToggleButton",
+      "return_type": "String",
+      "string_ref_string_formal_params": null
+    },
+    "ToggleButton::is_pressed": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"ToggleButton\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"ToggleButton\")"
+      ],
+      "parent_type": "ToggleButton",
+      "return_type": "Bool",
+      "string_ref_string_formal_params": null
+    },
+    "ToggleButton::new": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": false,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "String",
+        "String"
+      ],
+      "parent_type": "ToggleButton",
+      "return_type": "Custom(\"ToggleButton\")",
+      "string_ref_string_formal_params": null
+    },
+    "ToggleButton::on_event": {
+      "emitted_rust_ref_params": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"ToggleButton\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false,
+        false,
+        true,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned",
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"ToggleButton\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "parent_type": "ToggleButton",
+      "return_type": "Bool",
+      "string_ref_string_formal_params": null
+    },
+    "ToggleButton::view": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"ToggleButton\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"ToggleButton\")"
+      ],
+      "parent_type": "ToggleButton",
+      "return_type": "Custom(\"VNode\")",
+      "string_ref_string_formal_params": null
+    },
+    "Token::new": {
+      "emitted_rust_ref_params": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "formal_params": [
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "has_self_receiver": false,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "parent_type": "Token",
+      "return_type": "Custom(\"Token\")",
+      "string_ref_string_formal_params": null
+    },
+    "Token::value": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"Token\")",
+        "Custom(\"ThemeMode\")"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"Token\")",
+        "Custom(\"ThemeMode\")"
+      ],
+      "parent_type": "Token",
+      "return_type": "String",
+      "string_ref_string_formal_params": null
+    },
     "Toolbar::item": {
       "emitted_rust_ref_params": [
         false,
@@ -16812,6 +20123,156 @@
       ],
       "parent_type": "Tooltip",
       "return_type": "String",
+      "string_ref_string_formal_params": null
+    },
+    "TooltipHost::focus_id": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"TooltipHost\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"TooltipHost\")"
+      ],
+      "parent_type": "TooltipHost",
+      "return_type": "String",
+      "string_ref_string_formal_params": null
+    },
+    "TooltipHost::is_shown": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"TooltipHost\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"TooltipHost\")"
+      ],
+      "parent_type": "TooltipHost",
+      "return_type": "Bool",
+      "string_ref_string_formal_params": null
+    },
+    "TooltipHost::new": {
+      "emitted_rust_ref_params": [
+        false,
+        false,
+        false
+      ],
+      "formal_params": [
+        "String",
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false,
+        false
+      ],
+      "has_self_receiver": false,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "String",
+        "String",
+        "String"
+      ],
+      "parent_type": "TooltipHost",
+      "return_type": "Custom(\"TooltipHost\")",
+      "string_ref_string_formal_params": null
+    },
+    "TooltipHost::on_event": {
+      "emitted_rust_ref_params": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"TooltipHost\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned",
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"TooltipHost\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "parent_type": "TooltipHost",
+      "return_type": "Bool",
+      "string_ref_string_formal_params": null
+    },
+    "TooltipHost::view": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"TooltipHost\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"TooltipHost\")"
+      ],
+      "parent_type": "TooltipHost",
+      "return_type": "Custom(\"VNode\")",
       "string_ref_string_formal_params": null
     },
     "TreeItem::child": {
@@ -17675,6 +21136,392 @@
       "return_type": "String",
       "string_ref_string_formal_params": null
     },
+    "VirtualList::active_index": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"VirtualList\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"VirtualList\")"
+      ],
+      "parent_type": "VirtualList",
+      "return_type": "Custom(\"i32\")",
+      "string_ref_string_formal_params": null
+    },
+    "VirtualList::first_rendered": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"VirtualList\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"VirtualList\")"
+      ],
+      "parent_type": "VirtualList",
+      "return_type": "Custom(\"i32\")",
+      "string_ref_string_formal_params": null
+    },
+    "VirtualList::focus_id": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"VirtualList\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"VirtualList\")"
+      ],
+      "parent_type": "VirtualList",
+      "return_type": "String",
+      "string_ref_string_formal_params": null
+    },
+    "VirtualList::last_rendered": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"VirtualList\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"VirtualList\")"
+      ],
+      "parent_type": "VirtualList",
+      "return_type": "Custom(\"i32\")",
+      "string_ref_string_formal_params": null
+    },
+    "VirtualList::move_to": {
+      "emitted_rust_ref_params": [
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"VirtualList\")",
+        "Custom(\"i32\")"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"VirtualList\")",
+        "Custom(\"i32\")"
+      ],
+      "parent_type": "VirtualList",
+      "return_type": null,
+      "string_ref_string_formal_params": null
+    },
+    "VirtualList::new": {
+      "emitted_rust_ref_params": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "formal_params": [
+        "String",
+        "String",
+        "Custom(\"i32\")",
+        "Custom(\"i32\")",
+        "Custom(\"i32\")"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "has_self_receiver": false,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned",
+        "Owned",
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "String",
+        "String",
+        "Custom(\"i32\")",
+        "Custom(\"i32\")",
+        "Custom(\"i32\")"
+      ],
+      "parent_type": "VirtualList",
+      "return_type": "Custom(\"VirtualList\")",
+      "string_ref_string_formal_params": null
+    },
+    "VirtualList::on_event": {
+      "emitted_rust_ref_params": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "formal_params": [
+        "Custom(\"VirtualList\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned",
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"VirtualList\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "parent_type": "VirtualList",
+      "return_type": "Bool",
+      "string_ref_string_formal_params": null
+    },
+    "VirtualList::rows_per_page": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"VirtualList\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"VirtualList\")"
+      ],
+      "parent_type": "VirtualList",
+      "return_type": "Custom(\"i32\")",
+      "string_ref_string_formal_params": null
+    },
+    "VirtualList::view": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"VirtualList\")"
+      ],
+      "forwarding_borrow_params": [
+        false
+      ],
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Custom(\"VirtualList\")"
+      ],
+      "parent_type": "VirtualList",
+      "return_type": "Custom(\"VNode\")",
+      "string_ref_string_formal_params": null
+    },
+    "a11y::Interactive::focus_id": {
+      "emitted_rust_ref_params": null,
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "forwarding_borrow_params": null,
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": true,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Reference(Custom(\"Self\"))"
+      ],
+      "parent_type": "Interactive",
+      "return_type": "String",
+      "string_ref_string_formal_params": null
+    },
+    "a11y::Interactive::on_event": {
+      "emitted_rust_ref_params": null,
+      "formal_params": [
+        "Custom(\"Self\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": null,
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": true,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned",
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "MutableReference(Custom(\"Self\"))",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "parent_type": "Interactive",
+      "return_type": "Bool",
+      "string_ref_string_formal_params": null
+    },
+    "a11y::Interactive::view": {
+      "emitted_rust_ref_params": null,
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "forwarding_borrow_params": null,
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": true,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Reference(Custom(\"Self\"))"
+      ],
+      "parent_type": "Interactive",
+      "return_type": "Custom(\"VNode\")",
+      "string_ref_string_formal_params": null
+    },
+    "act_index": {
+      "emitted_rust_ref_params": [
+        true,
+        true
+      ],
+      "formal_params": [
+        "Reference(Custom(\"str\"))",
+        "Reference(Custom(\"str\"))"
+      ],
+      "forwarding_borrow_params": null,
+      "has_self_receiver": false,
+      "is_associated": false,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed",
+        "Borrowed"
+      ],
+      "params": [
+        "Reference(Custom(\"str\"))",
+        "Reference(Custom(\"str\"))"
+      ],
+      "parent_type": null,
+      "return_type": "Custom(\"i32\")",
+      "string_ref_string_formal_params": [
+        false,
+        false
+      ]
+    },
+    "aria_bool": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Bool"
+      ],
+      "forwarding_borrow_params": null,
+      "has_self_receiver": false,
+      "is_associated": false,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned"
+      ],
+      "params": [
+        "Bool"
+      ],
+      "parent_type": null,
+      "return_type": "String",
+      "string_ref_string_formal_params": [
+        false
+      ]
+    },
     "bt_behavior_editor_styles": {
       "emitted_rust_ref_params": [],
       "formal_params": [],
@@ -17773,6 +21620,40 @@
       "return_type": "Custom(\"VNode\")",
       "string_ref_string_formal_params": []
     },
+    "compare_cells": {
+      "emitted_rust_ref_params": [
+        true,
+        true,
+        false
+      ],
+      "formal_params": [
+        "Reference(Custom(\"str\"))",
+        "Reference(Custom(\"str\"))",
+        "Bool"
+      ],
+      "forwarding_borrow_params": null,
+      "has_self_receiver": false,
+      "is_associated": false,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed",
+        "Borrowed",
+        "Owned"
+      ],
+      "params": [
+        "Reference(Custom(\"str\"))",
+        "Reference(Custom(\"str\"))",
+        "Bool"
+      ],
+      "parent_type": null,
+      "return_type": "Custom(\"i32\")",
+      "string_ref_string_formal_params": [
+        false,
+        false,
+        false
+      ]
+    },
     "container": {
       "emitted_rust_ref_params": [],
       "formal_params": [],
@@ -17786,6 +21667,78 @@
       "parent_type": null,
       "return_type": "Custom(\"VNode\")",
       "string_ref_string_formal_params": []
+    },
+    "crate::a11y::Interactive::focus_id": {
+      "emitted_rust_ref_params": null,
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "forwarding_borrow_params": null,
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": true,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Reference(Custom(\"Self\"))"
+      ],
+      "parent_type": "Interactive",
+      "return_type": "String",
+      "string_ref_string_formal_params": null
+    },
+    "crate::a11y::Interactive::on_event": {
+      "emitted_rust_ref_params": null,
+      "formal_params": [
+        "Custom(\"Self\")",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "forwarding_borrow_params": null,
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": true,
+      "param_ownership": [
+        "MutBorrowed",
+        "Owned",
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "MutableReference(Custom(\"Self\"))",
+        "String",
+        "String",
+        "String",
+        "String"
+      ],
+      "parent_type": "Interactive",
+      "return_type": "Bool",
+      "string_ref_string_formal_params": null
+    },
+    "crate::a11y::Interactive::view": {
+      "emitted_rust_ref_params": null,
+      "formal_params": [
+        "Custom(\"Self\")"
+      ],
+      "forwarding_borrow_params": null,
+      "has_self_receiver": true,
+      "is_associated": true,
+      "is_extern": false,
+      "is_trait_method": true,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Reference(Custom(\"Self\"))"
+      ],
+      "parent_type": "Interactive",
+      "return_type": "Custom(\"VNode\")",
+      "string_ref_string_formal_params": null
     },
     "crate::traits::Renderable::render": {
       "emitted_rust_ref_params": null,
@@ -17840,6 +21793,30 @@
       "parent_type": null,
       "return_type": "String",
       "string_ref_string_formal_params": []
+    },
+    "declarations": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"ThemeMode\")"
+      ],
+      "forwarding_borrow_params": null,
+      "has_self_receiver": false,
+      "is_associated": false,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"ThemeMode\")"
+      ],
+      "parent_type": null,
+      "return_type": "String",
+      "string_ref_string_formal_params": [
+        false
+      ]
     },
     "divider": {
       "emitted_rust_ref_params": [],
@@ -17946,6 +21923,44 @@
         false
       ]
     },
+    "is_activation_key": {
+      "emitted_rust_ref_params": [
+        true
+      ],
+      "formal_params": [
+        "Reference(Custom(\"str\"))"
+      ],
+      "forwarding_borrow_params": null,
+      "has_self_receiver": false,
+      "is_associated": false,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed"
+      ],
+      "params": [
+        "Reference(Custom(\"str\"))"
+      ],
+      "parent_type": null,
+      "return_type": "Bool",
+      "string_ref_string_formal_params": [
+        false
+      ]
+    },
+    "kit_css": {
+      "emitted_rust_ref_params": [],
+      "formal_params": [],
+      "forwarding_borrow_params": null,
+      "has_self_receiver": false,
+      "is_associated": false,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [],
+      "params": [],
+      "parent_type": null,
+      "return_type": "String",
+      "string_ref_string_formal_params": []
+    },
     "main": {
       "emitted_rust_ref_params": [],
       "formal_params": [],
@@ -17984,6 +21999,30 @@
         false
       ]
     },
+    "mode_name": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Custom(\"ThemeMode\")"
+      ],
+      "forwarding_borrow_params": null,
+      "has_self_receiver": false,
+      "is_associated": false,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned"
+      ],
+      "params": [
+        "Custom(\"ThemeMode\")"
+      ],
+      "parent_type": null,
+      "return_type": "String",
+      "string_ref_string_formal_params": [
+        false
+      ]
+    },
     "node_graph_styles": {
       "emitted_rust_ref_params": [],
       "formal_params": [],
@@ -17997,6 +22036,40 @@
       "parent_type": null,
       "return_type": "String",
       "string_ref_string_formal_params": []
+    },
+    "part_id": {
+      "emitted_rust_ref_params": [
+        true,
+        true,
+        false
+      ],
+      "formal_params": [
+        "Reference(Custom(\"str\"))",
+        "Reference(Custom(\"str\"))",
+        "Custom(\"i32\")"
+      ],
+      "forwarding_borrow_params": null,
+      "has_self_receiver": false,
+      "is_associated": false,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed",
+        "Borrowed",
+        "Owned"
+      ],
+      "params": [
+        "Reference(Custom(\"str\"))",
+        "Reference(Custom(\"str\"))",
+        "Custom(\"i32\")"
+      ],
+      "parent_type": null,
+      "return_type": "String",
+      "string_ref_string_formal_params": [
+        false,
+        false,
+        false
+      ]
     },
     "path_for": {
       "emitted_rust_ref_params": [
@@ -18276,6 +22349,69 @@
         false
       ]
     },
+    "roving_next": {
+      "emitted_rust_ref_params": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "formal_params": [
+        "Reference(Custom(\"str\"))",
+        "Custom(\"i32\")",
+        "Custom(\"i32\")",
+        "Bool"
+      ],
+      "forwarding_borrow_params": null,
+      "has_self_receiver": false,
+      "is_associated": false,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Borrowed",
+        "Owned",
+        "Owned",
+        "Owned"
+      ],
+      "params": [
+        "Reference(Custom(\"str\"))",
+        "Custom(\"i32\")",
+        "Custom(\"i32\")",
+        "Bool"
+      ],
+      "parent_type": null,
+      "return_type": "Custom(\"i32\")",
+      "string_ref_string_formal_params": [
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    "roving_tabindex": {
+      "emitted_rust_ref_params": [
+        false
+      ],
+      "formal_params": [
+        "Bool"
+      ],
+      "forwarding_borrow_params": null,
+      "has_self_receiver": false,
+      "is_associated": false,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [
+        "Owned"
+      ],
+      "params": [
+        "Bool"
+      ],
+      "parent_type": null,
+      "return_type": "String",
+      "string_ref_string_formal_params": [
+        false
+      ]
+    },
     "row": {
       "emitted_rust_ref_params": [],
       "formal_params": [],
@@ -18394,6 +22530,34 @@
       "return_type": null,
       "string_ref_string_formal_params": []
     },
+    "theme_css": {
+      "emitted_rust_ref_params": [],
+      "formal_params": [],
+      "forwarding_borrow_params": null,
+      "has_self_receiver": false,
+      "is_associated": false,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [],
+      "params": [],
+      "parent_type": null,
+      "return_type": "String",
+      "string_ref_string_formal_params": []
+    },
+    "tokens": {
+      "emitted_rust_ref_params": [],
+      "formal_params": [],
+      "forwarding_borrow_params": null,
+      "has_self_receiver": false,
+      "is_associated": false,
+      "is_extern": false,
+      "is_trait_method": false,
+      "param_ownership": [],
+      "params": [],
+      "parent_type": null,
+      "return_type": "Vec(Custom(\"Token\"))",
+      "string_ref_string_formal_params": []
+    },
     "traits::Renderable::render": {
       "emitted_rust_ref_params": null,
       "formal_params": [
@@ -18445,6 +22609,14 @@
       "content": "String",
       "open": "Bool",
       "title": "String"
+    },
+    "AccordionStack": {
+      "base": "String",
+      "bodies": "Vec(String)",
+      "exclusive": "Bool",
+      "focus": "String",
+      "open": "Vec(Bool)",
+      "titles": "Vec(String)"
     },
     "AdvancedCodeEditor": {
       "autocomplete": "Bool",
@@ -18561,6 +22733,11 @@
       "label": "String",
       "size": "Custom(\"CheckboxSize\")"
     },
+    "CheckboxField": {
+      "base": "String",
+      "checked": "Bool",
+      "label": "String"
+    },
     "Chip": {
       "icon": "String",
       "label": "String",
@@ -18648,6 +22825,18 @@
       "out_tangent": "Custom(\"f32\")",
       "time": "Custom(\"f32\")",
       "value": "Custom(\"f32\")"
+    },
+    "DataGrid": {
+      "ascending": "Bool",
+      "base": "String",
+      "caption": "String",
+      "columns": "Vec(Custom(\"GridColumn\"))",
+      "filter": "String",
+      "focus": "String",
+      "page": "Custom(\"i32\")",
+      "page_size": "Custom(\"i32\")",
+      "rows": "Vec(Vec(String))",
+      "sort_col": "Custom(\"i32\")"
     },
     "DataTable": {
       "caption": "String",
@@ -18752,9 +22941,30 @@
     "FormField": {
       "error": "String",
       "help_text": "String",
+      "hint": "String",
+      "initial": "String",
       "input": "String",
+      "kind": "Custom(\"FieldKind\")",
       "label": "String",
-      "required": "Bool"
+      "max": "String",
+      "min": "String",
+      "min_len": "Custom(\"i32\")",
+      "name": "String",
+      "option_labels": "Vec(String)",
+      "options": "Vec(String)",
+      "required": "Bool",
+      "touched": "Bool",
+      "value": "String"
+    },
+    "FormKit": {
+      "attempted": "Bool",
+      "base": "String",
+      "fields": "Vec(Custom(\"FormField\"))",
+      "focus": "String",
+      "status": "String",
+      "submit_count": "Custom(\"i32\")",
+      "submitted": "String",
+      "title": "String"
     },
     "FrameDebuggerPanel": {
       "capture_handler": "String",
@@ -18797,6 +23007,10 @@
       "columns": "Custom(\"i32\")",
       "gap": "String",
       "padding": "String"
+    },
+    "GridColumn": {
+      "header": "String",
+      "numeric": "Bool"
     },
     "H1": {
       "class": "String",
@@ -18872,6 +23086,15 @@
       "items": "Vec(String)",
       "trigger": "String"
     },
+    "MenuButton": {
+      "active": "Custom(\"i32\")",
+      "base": "String",
+      "chosen": "String",
+      "focus": "String",
+      "items": "Vec(String)",
+      "label": "String",
+      "open": "Bool"
+    },
     "MenuItem": {
       "class": "String",
       "disabled": "Bool",
@@ -18892,6 +23115,17 @@
       "size": "Custom(\"ModalSize\")",
       "title": "String",
       "visible": "Bool"
+    },
+    "ModalDialog": {
+      "base": "String",
+      "body": "String",
+      "cancel_label": "String",
+      "confirm_label": "String",
+      "confirmed": "Bool",
+      "focus": "String",
+      "open": "Bool",
+      "title": "String",
+      "trigger_label": "String"
     },
     "Navbar": {
       "brand": "String",
@@ -18933,6 +23167,13 @@
       "children": "Vec(String)",
       "class": "String",
       "style": "String"
+    },
+    "PageNav": {
+      "base": "String",
+      "focus": "String",
+      "label": "String",
+      "page": "Custom(\"i32\")",
+      "pages": "Custom(\"i32\")"
     },
     "Pagination": {
       "current_page": "Custom(\"i32\")",
@@ -18984,6 +23225,14 @@
       "tooltip": "String",
       "unit": "String",
       "value": "String"
+    },
+    "RadioChoice": {
+      "base": "String",
+      "focus": "String",
+      "label": "String",
+      "labels": "Vec(String)",
+      "selected": "Custom(\"i32\")",
+      "values": "Vec(String)"
     },
     "RadioGroup": {
       "name": "String",
@@ -19077,6 +23326,14 @@
       "step": "Float",
       "value": "Float"
     },
+    "SliderControl": {
+      "base": "String",
+      "label": "String",
+      "max": "Custom(\"i32\")",
+      "min": "Custom(\"i32\")",
+      "now": "Custom(\"i32\")",
+      "step": "Custom(\"i32\")"
+    },
     "Spacer": {
       "flex": "Bool",
       "height": "String",
@@ -19131,6 +23388,12 @@
       "label": "String",
       "size": "Custom(\"SwitchSize\")"
     },
+    "SwitchControl": {
+      "base": "String",
+      "disabled": "Bool",
+      "label": "String",
+      "on": "Bool"
+    },
     "Tab": {
       "content": "String",
       "disabled": "Bool",
@@ -19146,6 +23409,13 @@
       "content": "String",
       "id": "String",
       "title": "String"
+    },
+    "TabStrip": {
+      "base": "String",
+      "focus": "String",
+      "labels": "Vec(String)",
+      "panels": "Vec(String)",
+      "selected": "Custom(\"i32\")"
     },
     "Table": {
       "bordered": "Bool",
@@ -19203,6 +23473,17 @@
       "show_close": "Bool",
       "variant": "Custom(\"ToastVariant\")"
     },
+    "ToggleButton": {
+      "base": "String",
+      "label": "String",
+      "pressed": "Bool"
+    },
+    "Token": {
+      "contrast": "String",
+      "dark": "String",
+      "light": "String",
+      "name": "String"
+    },
     "Toolbar": {
       "items": "Vec(String)",
       "position": "String"
@@ -19211,6 +23492,12 @@
       "child": "String",
       "position": "Custom(\"TooltipPosition\")",
       "text": "String"
+    },
+    "TooltipHost": {
+      "base": "String",
+      "label": "String",
+      "shown": "Bool",
+      "tip": "String"
     },
     "TreeItem": {
       "children": "Vec(Custom(\"TreeItem\"))",
@@ -19232,6 +23519,16 @@
       "x": "Custom(\"f32\")",
       "y": "Custom(\"f32\")",
       "z": "Custom(\"f32\")"
+    },
+    "VirtualList": {
+      "active": "Custom(\"i32\")",
+      "base": "String",
+      "count": "Custom(\"i32\")",
+      "label": "String",
+      "overscan": "Custom(\"i32\")",
+      "row_height": "Custom(\"i32\")",
+      "scroll_top": "Custom(\"i32\")",
+      "viewport": "Custom(\"i32\")"
     }
   },
   "variant_payloads": {},

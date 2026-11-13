@@ -26,6 +26,10 @@ fn main() {
 - `src/components_wj/`: about 120 `.wj` component sources (primitives, layout, forms,
   data display, editor/profiler panels). Some are ledger-specific and are scheduled to
   move out; see `docs/EXTRACTION_PLAN.md`.
+- `src/components_wj/{a11y,kit_*,form_kit,grid_kit,tokens}.wj`: the accessible component kit (tabs, accordion, dialog, menu,
+  switch, radio, slider, pagination, tooltip, forms with validation, sortable/filterable/paged table, virtualized list,
+  light/dark/high-contrast tokens). Each component is covered by a browser test that asserts its ARIA attributes, tab order
+  and key handling; see `docs/KIT.md`.
 - `src/*.rs`: reactive core, vdom, app loops, SSR, routing.
 - `examples/`, `examples_wj/`: demos (some HTML demos predate the current API).
 

@@ -1,0 +1,459 @@
+// Form kit: text, email, number, date, select, checkbox and radio fields with validation state, error messages bound to
+// their inputs, and form-level submit and reset.
+//
+// Validation is a pure function of a field's value (`FormField::error_message`), so it is easy to test without a
+// browser. The form shows a field's error once the user has left the field or tried to submit. Each invalid input is
+// marked `aria-invalid="true"` and points at its message with `aria-describedby`; the form announces the outcome of
+// a submit in a polite live region and moves focus to the first invalid field.
+
+use super::a11y::*
+use super::vnode::VNode
+
+pub enum FieldKind {
+    Text,
+    Email,
+    Number,
+    Date,
+    Select,
+    Checkbox,
+    Radio,
+}
+
+pub struct FormField {
+    name: string,
+    label: string,
+    kind: FieldKind,
+    value: string,
+    initial: string,
+    required: bool,
+    min_len: i32,
+    min: string,
+    max: string,
+    hint: string,
+    options: Vec<string>,
+    option_labels: Vec<string>,
+    touched: bool,
+}
+
+impl FormField {
+    pub fn new(name: string, label: string, kind: FieldKind) -> FormField {
+        FormField {
+            name: name,
+            label: label,
+            kind: kind,
+            value: "",
+            initial: "",
+            required: false,
+            min_len: 0,
+            min: "",
+            max: "",
+            hint: "",
+            options: Vec::new(),
+            option_labels: Vec::new(),
+            touched: false,
+        }
+    }
+
+    pub fn value(self, v: string) -> FormField {
+        self.value = v
+        self.initial = self.value
+        self
+    }
+
+    pub fn required(self, on: bool) -> FormField {
+        self.required = on
+        self
+    }
+
+    pub fn min_len(self, n: i32) -> FormField {
+        self.min_len = n
+        self
+    }
+
+    /// Lower bound: a number for Number fields, an ISO date (YYYY-MM-DD) for Date fields.
+    pub fn min(self, v: string) -> FormField {
+        self.min = v
+        self
+    }
+
+    pub fn max(self, v: string) -> FormField {
+        self.max = v
+        self
+    }
+
+    pub fn hint(self, text: string) -> FormField {
+        self.hint = text
+        self
+    }
+
+    pub fn option(self, value: string, label: string) -> FormField {
+        self.options.push(value)
+        self.option_labels.push(label)
+        self
+    }
+
+    fn is_empty(self) -> bool {
+        match self.kind {
+            FieldKind::Checkbox => self.value != "true",
+            _ => self.value.trim().len() == 0,
+        }
+    }
+
+    /// The validation message for the current value, or an empty string when the value is acceptable.
+    pub fn error_message(self) -> string {
+        if self.is_empty() {
+            if self.required {
+                return "${self.label} is required"
+            }
+            return ""
+        }
+        match self.kind {
+            FieldKind::Text => {
+                if self.value.len() < self.min_len as usize {
+                    return "${self.label} must be at least ${self.min_len} characters"
+                }
+                ""
+            }
+            FieldKind::Email => {
+                let at = self.value.find("@")
+                let ok = match at {
+                    Some(i) => i > 0 && self.value.rfind(".").unwrap_or(0) > i + 1 && !self.value.ends_with("."),
+                    None => false,
+                }
+                if ok {
+                    return ""
+                }
+                "${self.label} must be an email address"
+            }
+            FieldKind::Number => {
+                let parsed = self.value.trim().parse::<f64>()
+                match parsed {
+                    Ok(n) => {
+                        if self.min.len() > 0 && n < self.min.parse::<f64>().unwrap_or(n) {
+                            return "${self.label} must be at least ${self.min}"
+                        }
+                        if self.max.len() > 0 && n > self.max.parse::<f64>().unwrap_or(n) {
+                            return "${self.label} must be at most ${self.max}"
+                        }
+                        ""
+                    }
+                    Err(_) => "${self.label} must be a number",
+                }
+            }
+            FieldKind::Date => {
+                let v = self.value.as_str()
+                let shaped = v.len() == 10 && v.chars().nth(4) == Some('-') && v.chars().nth(7) == Some('-')
+                if !shaped {
+                    return "${self.label} must be a date (YYYY-MM-DD)"
+                }
+                if self.min.len() > 0 && v < self.min.as_str() {
+                    return "${self.label} must be on or after ${self.min}"
+                }
+                if self.max.len() > 0 && v > self.max.as_str() {
+                    return "${self.label} must be on or before ${self.max}"
+                }
+                ""
+            }
+            FieldKind::Select => {
+                if self.options.contains(self.value) {
+                    return ""
+                }
+                "${self.label} must be one of the listed options"
+            }
+            FieldKind::Radio => {
+                if self.options.contains(self.value) {
+                    return ""
+                }
+                "${self.label} must be one of the listed options"
+            }
+            FieldKind::Checkbox => "",
+        }
+    }
+}
+
+pub struct FormKit {
+    base: string,
+    title: string,
+    fields: Vec<FormField>,
+    attempted: bool,
+    status: string,
+    submitted: string,
+    submit_count: i32,
+    focus: string,
+}
+
+impl FormKit {
+    pub fn new(base: string, title: string) -> FormKit {
+        FormKit {
+            base: base,
+            title: title,
+            fields: Vec::new(),
+            attempted: false,
+            status: "",
+            submitted: "",
+            submit_count: 0,
+            focus: "",
+        }
+    }
+
+    pub fn field(self, f: FormField) -> FormKit {
+        self.fields.push(f)
+        self
+    }
+
+    /// Number of fields that currently fail validation.
+    pub fn error_count(self) -> i32 {
+        let mut n = 0
+        let mut i = 0
+        while i < self.fields.len() {
+            if self.fields[i].error_message().len() > 0 {
+                n = n + 1
+            }
+            i = i + 1
+        }
+        n
+    }
+
+    /// "name=value" pairs (joined with `&`) of the last successful submit, empty before one.
+    pub fn submitted(self) -> string {
+        self.submitted
+    }
+
+    pub fn submit_count(self) -> i32 {
+        self.submit_count
+    }
+
+    pub fn status(self) -> string {
+        self.status
+    }
+
+    fn submit(self) {
+        self.attempted = true
+        let mut first_bad = -1
+        let mut bad = 0
+        let mut i = 0
+        while i < self.fields.len() {
+            if self.fields[i].error_message().len() > 0 {
+                bad = bad + 1
+                if first_bad < 0 {
+                    first_bad = i as i32
+                }
+            }
+            i = i + 1
+        }
+        if bad > 0 {
+            self.status = if bad == 1 { "1 field needs attention" } else { "${bad} fields need attention" }
+            self.focus = part_id(self.base, "f", first_bad)
+            return
+        }
+        let mut pairs = ""
+        let mut j = 0
+        while j < self.fields.len() {
+            if j > 0 {
+                pairs = "${pairs}&"
+            }
+            pairs = "${pairs}${self.fields[j].name}=${self.fields[j].value}"
+            j = j + 1
+        }
+        self.submitted = pairs
+        self.submit_count = self.submit_count + 1
+        self.status = "Submitted"
+        self.focus = ""
+    }
+
+    fn reset(self) {
+        let mut i = 0
+        while i < self.fields.len() {
+            self.fields[i].value = self.fields[i].initial
+            self.fields[i].touched = false
+            i = i + 1
+        }
+        self.attempted = false
+        self.status = "Form reset"
+        self.focus = part_id(self.base, "f", 0)
+    }
+}
+
+impl Interactive for FormKit {
+    fn on_event(self, event: string, act: string, key: string, value: string) -> bool {
+        if act == "submit" && event == "click" {
+            self.submit()
+            return true
+        }
+        if act == "reset" && event == "click" {
+            self.reset()
+            return true
+        }
+        let index = act_index(act, "field")
+        if index < 0 {
+            return false
+        }
+        let at = index as usize
+        if event == "input" || event == "change" {
+            self.fields[at].value = value
+            return false
+        }
+        if event == "focusout" {
+            self.fields[at].touched = true
+            return false
+        }
+        if event == "keydown" && key == "Enter" {
+            let free_text = match self.fields[at].kind {
+                FieldKind::Text => true,
+                FieldKind::Email => true,
+                FieldKind::Number => true,
+                FieldKind::Date => true,
+                _ => false,
+            }
+            if free_text {
+                self.submit()
+                return true
+            }
+        }
+        false
+    }
+
+    fn focus_id(self) -> string {
+        self.focus
+    }
+
+    fn view(self) -> VNode {
+        let mut form = VNode::element("form")
+            .add_class("wj-form")
+            .add_attr("novalidate", "novalidate")
+            .add_attr("aria-label", self.title)
+        let mut i = 0
+        while i < self.fields.len() as i32 {
+            form = form.child(self.field_view(i))
+            i = i + 1
+        }
+        let actions = VNode::div()
+            .add_class("wj-form-actions")
+            .child(
+                VNode::button()
+                    .add_class("wj-button wj-button-primary")
+                    .set_id(part_id(self.base, "submit", 0))
+                    .add_attr("type", "submit")
+                    .add_attr("data-wj-act", "submit")
+                    .add_text("Submit")
+            )
+            .child(
+                VNode::button()
+                    .add_class("wj-button")
+                    .set_id(part_id(self.base, "reset", 0))
+                    .add_attr("type", "reset")
+                    .add_attr("data-wj-act", "reset")
+                    .add_text("Reset")
+            )
+        let status = VNode::div()
+            .add_class("wj-form-status")
+            .set_id(part_id(self.base, "status", 0))
+            .add_attr("role", "status")
+            .add_attr("aria-live", "polite")
+            .add_text(self.status)
+        form.child(actions).child(status)
+    }
+}
+
+impl FormKit {
+    fn field_view(self, i: i32) -> VNode {
+        let f = &self.fields[i as usize]
+        let id = part_id(self.base, "f", i)
+        let err_id = part_id(self.base, "err", i)
+        let hint_id = part_id(self.base, "hint", i)
+        let message = f.error_message()
+        let shown = message.len() > 0 && (f.touched || self.attempted)
+        let act = "field:${i}"
+        let mut described = ""
+        if f.hint.len() > 0 {
+            described = hint_id
+        }
+        if shown {
+            described = if described.len() > 0 { "${described} ${err_id}" } else { err_id }
+        }
+        let label_text = if f.required { "${f.label} *" } else { f.label }
+        let mut wrap = VNode::div().add_class("wj-field")
+        let is_group = match f.kind {
+            FieldKind::Radio => true,
+            _ => false,
+        }
+        if is_group {
+            let mut group = VNode::element("fieldset")
+                .add_class("wj-fieldset")
+                .set_id(id)
+                .add_attr("aria-required", aria_bool(f.required))
+                .add_attr("aria-invalid", aria_bool(shown))
+                .child(VNode::element("legend").add_text(label_text))
+            if described.len() > 0 {
+                group = group.add_attr("aria-describedby", described)
+            }
+            let mut j = 0
+            while j < f.options.len() {
+                let opt_id = "${id}-opt-${j}"
+                let mut radio = VNode::input()
+                    .set_id(opt_id)
+                    .set_type("radio")
+                    .add_attr("name", f.name)
+                    .set_value(f.options[j])
+                    .add_attr("data-wj-act", act)
+                if f.value == f.options[j] {
+                    radio = radio.add_attr("checked", "true")
+                }
+                group = group.child(
+                    VNode::element("label")
+                        .add_attr("for", "${id}-opt-${j}")
+                        .child(radio)
+                        .child(VNode::span().add_text(f.option_labels[j]))
+                )
+                j = j + 1
+            }
+            wrap = wrap.child(group)
+        } else {
+            let label = VNode::element("label").add_attr("for", id).add_text(label_text)
+            let mut control = match f.kind {
+                FieldKind::Select => {
+                    let mut sel = VNode::element("select").set_value(f.value)
+                    sel = sel.child(VNode::element("option").set_value("").add_text("Select..."))
+                    let mut j = 0
+                    while j < f.options.len() {
+                        let mut opt = VNode::element("option").set_value(f.options[j]).add_text(f.option_labels[j])
+                        if f.value == f.options[j] {
+                            opt = opt.add_attr("selected", "true")
+                        }
+                        sel = sel.child(opt)
+                        j = j + 1
+                    }
+                    sel
+                }
+                FieldKind::Checkbox => {
+                    let mut cb = VNode::input().set_type("checkbox")
+                    if f.value == "true" {
+                        cb = cb.add_attr("checked", "true")
+                    }
+                    cb
+                }
+                FieldKind::Number => VNode::input().set_type("number").set_value(f.value),
+                FieldKind::Date => VNode::input().set_type("date").set_value(f.value),
+                FieldKind::Email => VNode::input().set_type("email").set_value(f.value),
+                _ => VNode::input().set_type("text").set_value(f.value),
+            }
+            control = control
+                .set_id(id)
+                .add_attr("name", f.name)
+                .add_attr("aria-required", aria_bool(f.required))
+                .add_attr("aria-invalid", aria_bool(shown))
+                .add_attr("data-wj-act", act)
+            if described.len() > 0 {
+                control = control.add_attr("aria-describedby", described)
+            }
+            wrap = wrap.child(label).child(control)
+        }
+        if f.hint.len() > 0 {
+            wrap = wrap.child(VNode::element("p").set_id(part_id(self.base, "hint", i)).add_class("wj-hint").add_text(f.hint))
+        }
+        if shown {
+            wrap = wrap.child(VNode::element("p").set_id(part_id(self.base, "err", i)).add_class("wj-error").add_text(message))
+        }
+        wrap
+    }
+}
