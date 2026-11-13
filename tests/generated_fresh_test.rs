@@ -2,12 +2,10 @@
 //! `src/components_wj/` must reproduce the checked-in tree byte for byte.
 //!
 //! The compiler is `$WJ` when set, otherwise `wj` from PATH. A missing compiler skips the test unless
-//! `WJ_UI_REQUIRE_WJ=1` (CI sets it). To refresh the tree after editing a component:
+//! `WJ_UI_REQUIRE_WJ=1` (CI sets it). To refresh the tree and `src/metadata.json` after editing a component:
 //!
 //! ```text
-//! wj build src/components_wj -o src/components/generated --target rust --library --module-file \
-//!     --no-cargo --no-generate-cargo-toml && rm -f src/components/generated/metadata.json \
-//!     src/components/generated/.wj-compiler-stamp
+//! WJ=/path/to/wj WJ_UI_REGEN=1 cargo test --test generated_fresh_test
 //! ```
 
 use std::collections::BTreeMap;
@@ -65,7 +63,8 @@ fn tree_diff(fresh: &BTreeMap<String, String>, checked_in: &BTreeMap<String, Str
     out
 }
 
-fn regenerate(wj: &str) -> BTreeMap<String, String> {
+/// Fresh compiler output: the module files and the crate metadata consumers read (see `METADATA`).
+fn regenerate(wj: &str) -> (BTreeMap<String, String>, serde_json::Value) {
     let root = Path::new(env!("CARGO_MANIFEST_DIR"));
     let out_dir = std::env::temp_dir().join(format!("wj-ui-generated-fresh-{}", std::process::id()));
     let _ = std::fs::remove_dir_all(&out_dir);
@@ -78,15 +77,41 @@ fn regenerate(wj: &str) -> BTreeMap<String, String> {
         .expect("run wj build");
     assert!(out.status.success(), "wj build failed:\n{}", String::from_utf8_lossy(&out.stderr));
     let files = rs_files(&out_dir);
+    let metadata = serde_json::from_str(&std::fs::read_to_string(out_dir.join("metadata.json")).expect("compiler wrote metadata.json"))
+        .expect("metadata.json is JSON");
     let _ = std::fs::remove_dir_all(&out_dir);
-    files
+    (files, metadata)
+}
+
+/// Crate metadata shipped for consumers. A Windjammer project that depends on this crate by path reads signatures
+/// (for example that `Skeleton::width` takes `&str`) from `src/metadata.json`; without it the consumer assumes owned
+/// `String` formals and generates calls that do not compile. Compared as JSON values (the compiler's key order varies).
+const METADATA: &str = "src/metadata.json";
+
+/// `WJ_UI_REGEN=1` rewrites the checked-in tree and metadata from the compiler instead of comparing.
+fn write_regenerated(root: &Path, files: &BTreeMap<String, String>, metadata: &serde_json::Value) {
+    let dir = root.join("src/components/generated");
+    for entry in std::fs::read_dir(&dir).expect("generated dir") {
+        let p = entry.expect("entry").path();
+        if p.extension().map(|x| x == "rs").unwrap_or(false) {
+            std::fs::remove_file(p).expect("remove old module");
+        }
+    }
+    for (name, text) in files {
+        std::fs::write(dir.join(name), text).expect("write module");
+    }
+    let text = serde_json::to_string_pretty(metadata).expect("serialize") + "\n";
+    std::fs::write(root.join(METADATA), text).expect("write metadata");
 }
 
 #[test]
 fn checked_in_generated_tree_matches_components_wj() {
     let Some(wj) = wj_binary() else { return };
     let root = Path::new(env!("CARGO_MANIFEST_DIR"));
-    let fresh = regenerate(&wj);
+    let (fresh, fresh_metadata) = regenerate(&wj);
+    if std::env::var("WJ_UI_REGEN").is_ok() {
+        write_regenerated(root, &fresh, &fresh_metadata);
+    }
     let checked_in = rs_files(&root.join("src/components/generated"));
     assert!(fresh.len() >= 90, "expected the compiler to produce the component tree, saw {} files", fresh.len());
     let diff = tree_diff(&fresh, &checked_in);
@@ -95,6 +120,9 @@ fn checked_in_generated_tree_matches_components_wj() {
         "src/components/generated is stale relative to src/components_wj (regenerate it, see this file's header):\n{}",
         diff.join("\n")
     );
+    let shipped: serde_json::Value = serde_json::from_str(&std::fs::read_to_string(root.join(METADATA)).expect("src/metadata.json is checked in"))
+        .expect("src/metadata.json is JSON");
+    assert!(shipped == fresh_metadata, "src/metadata.json is stale relative to src/components_wj (regenerate with WJ_UI_REGEN=1, see this file's header)");
 }
 
 /// Mutation self-test: the comparison really reports an edited, a missing and an extra file.
