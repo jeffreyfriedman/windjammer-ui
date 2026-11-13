@@ -65,6 +65,8 @@ pub mod undo_redo; // Available on all platforms
 // Component trait (used by renderer, runtime, ssr)
 pub mod component;
 pub mod dom_patch;
+#[cfg(all(target_arch = "wasm32", feature = "web"))]
+pub mod kit_mount;
 pub mod escape;
 pub mod safe_dom_js;
 pub mod component_runtime;

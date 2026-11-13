@@ -1,0 +1,302 @@
+// Overlay components: a modal dialog with a focus trap and a menu button.
+//
+// ModalDialog: role=dialog with aria-modal, labelled by its title and described by its body. Opening moves focus into
+// the dialog, Tab and Shift+Tab cycle inside it, Escape or the backdrop closes it, and closing returns focus to the
+// button that opened it. MenuButton follows the menu-button pattern: Enter, Space or the arrow keys open the menu and
+// focus an item, arrows move between items, Enter/Space choose, Escape closes and returns focus to the button.
+
+use super::a11y::*
+use super::vnode::VNode
+
+pub struct ModalDialog {
+    base: string,
+    trigger_label: string,
+    title: string,
+    body: string,
+    confirm_label: string,
+    cancel_label: string,
+    open: bool,
+    confirmed: bool,
+    focus: string,
+}
+
+impl ModalDialog {
+    pub fn new(base: string, title: string) -> ModalDialog {
+        ModalDialog {
+            base: base,
+            trigger_label: "Open",
+            title: title,
+            body: "",
+            confirm_label: "OK",
+            cancel_label: "Cancel",
+            open: false,
+            confirmed: false,
+            focus: "",
+        }
+    }
+
+    pub fn trigger(self, label: string) -> ModalDialog {
+        self.trigger_label = label
+        self
+    }
+
+    pub fn body(self, text: string) -> ModalDialog {
+        self.body = text
+        self
+    }
+
+    pub fn is_open(self) -> bool {
+        self.open
+    }
+
+    /// True after the dialog was closed with its confirm button.
+    pub fn was_confirmed(self) -> bool {
+        self.confirmed
+    }
+
+    fn open_dialog(self) {
+        self.open = true
+        self.confirmed = false
+        self.focus = part_id(self.base, "btn", 0)
+    }
+
+    fn close_dialog(self, confirmed: bool) {
+        self.open = false
+        self.confirmed = confirmed
+        self.focus = part_id(self.base, "trigger", 0)
+    }
+}
+
+impl Interactive for ModalDialog {
+    fn on_event(self, event: string, act: string, key: string, value: string) -> bool {
+        if event == "click" {
+            if act == "open" {
+                self.open_dialog()
+                return true
+            }
+            if act == "backdrop" || act == "dlg:0" {
+                self.close_dialog(false)
+                return true
+            }
+            if act == "dlg:1" {
+                self.close_dialog(true)
+                return true
+            }
+            return false
+        }
+        if event == "keydown" && self.open {
+            if key == "Escape" {
+                self.close_dialog(false)
+                return true
+            }
+            let index = act_index(act, "dlg")
+            if index >= 0 && (key == "Tab" || key == "Shift+Tab") {
+                let last = 1
+                let mut next = index
+                if key == "Tab" {
+                    next = if index >= last { 0 } else { index + 1 }
+                } else {
+                    next = if index <= 0 { last } else { index - 1 }
+                }
+                self.focus = part_id(self.base, "btn", next)
+                return true
+            }
+        }
+        false
+    }
+
+    fn focus_id(self) -> string {
+        self.focus
+    }
+
+    fn view(self) -> VNode {
+        let trigger = VNode::button()
+            .add_class("wj-button")
+            .set_id(part_id(self.base, "trigger", 0))
+            .add_attr("type", "button")
+            .add_attr("aria-haspopup", "dialog")
+            .add_attr("aria-expanded", aria_bool(self.open))
+            .add_attr("data-wj-act", "open")
+            .add_text(self.trigger_label)
+        let mut root = VNode::div().add_class("wj-modal-host").child(trigger)
+        if self.open {
+            let title_id = part_id(self.base, "title", 0)
+            let body_id = part_id(self.base, "body", 0)
+            let cancel = VNode::button()
+                .add_class("wj-button")
+                .set_id(part_id(self.base, "btn", 0))
+                .add_attr("type", "button")
+                .add_attr("data-wj-act", "dlg:0")
+                .add_text(self.cancel_label)
+            let confirm = VNode::button()
+                .add_class("wj-button wj-button-primary")
+                .set_id(part_id(self.base, "btn", 1))
+                .add_attr("type", "button")
+                .add_attr("data-wj-act", "dlg:1")
+                .add_text(self.confirm_label)
+            let dialog = VNode::div()
+                .add_class("wj-modal")
+                .add_attr("role", "dialog")
+                .add_attr("aria-modal", "true")
+                .add_attr("data-wj-act", "dialog")
+                .add_attr("aria-labelledby", title_id)
+                .add_attr("aria-describedby", body_id)
+                .child(VNode::element("h2").set_id(part_id(self.base, "title", 0)).add_text(self.title))
+                .child(VNode::element("p").set_id(part_id(self.base, "body", 0)).add_text(self.body))
+                .child(VNode::div().add_class("wj-modal-actions").child(cancel).child(confirm))
+            let backdrop = VNode::div()
+                .add_class("wj-modal-backdrop")
+                .add_attr("data-wj-act", "backdrop")
+                .child(dialog)
+            root = root.child(backdrop)
+        }
+        root
+    }
+}
+
+pub struct MenuButton {
+    base: string,
+    label: string,
+    items: Vec<string>,
+    open: bool,
+    active: i32,
+    chosen: string,
+    focus: string,
+}
+
+impl MenuButton {
+    pub fn new(base: string, label: string) -> MenuButton {
+        MenuButton {
+            base: base,
+            label: label,
+            items: Vec::new(),
+            open: false,
+            active: 0,
+            chosen: "",
+            focus: "",
+        }
+    }
+
+    pub fn item(self, label: string) -> MenuButton {
+        self.items.push(label)
+        self
+    }
+
+    pub fn is_open(self) -> bool {
+        self.open
+    }
+
+    /// Label of the last item chosen, empty before any choice.
+    pub fn chosen(self) -> string {
+        self.chosen
+    }
+
+    fn open_at(self, index: i32) {
+        self.open = true
+        self.active = index
+        self.focus = part_id(self.base, "item", index)
+    }
+
+    fn close_to_trigger(self) {
+        self.open = false
+        self.focus = part_id(self.base, "trigger", 0)
+    }
+
+    fn choose(self, index: i32) {
+        self.chosen = self.items[index as usize]
+        self.close_to_trigger()
+    }
+}
+
+impl Interactive for MenuButton {
+    fn on_event(self, event: string, act: string, key: string, value: string) -> bool {
+        let count = self.items.len() as i32
+        if act == "trigger" {
+            if event == "click" {
+                if self.open {
+                    self.close_to_trigger()
+                } else {
+                    self.open_at(0)
+                }
+                return true
+            }
+            if event == "keydown" {
+                if key == "Enter" || key == " " || key == "ArrowDown" {
+                    self.open_at(0)
+                    return true
+                }
+                if key == "ArrowUp" {
+                    self.open_at(count - 1)
+                    return true
+                }
+            }
+            return false
+        }
+        let index = act_index(act, "item")
+        if index < 0 {
+            return false
+        }
+        if event == "click" {
+            self.choose(index)
+            return true
+        }
+        if event == "keydown" {
+            if key == "Escape" {
+                self.close_to_trigger()
+                return true
+            }
+            if key == "Tab" || key == "Shift+Tab" {
+                self.open = false
+                return false
+            }
+            if is_activation_key(key) {
+                self.choose(index)
+                return true
+            }
+            let next = roving_next(key, index, count, true)
+            if next >= 0 {
+                self.open_at(next)
+                return true
+            }
+        }
+        false
+    }
+
+    fn focus_id(self) -> string {
+        self.focus
+    }
+
+    fn view(self) -> VNode {
+        let trigger = VNode::button()
+            .add_class("wj-button")
+            .set_id(part_id(self.base, "trigger", 0))
+            .add_attr("type", "button")
+            .add_attr("aria-haspopup", "menu")
+            .add_attr("aria-expanded", aria_bool(self.open))
+            .add_attr("aria-controls", part_id(self.base, "menu", 0))
+            .add_attr("data-wj-act", "trigger")
+            .add_text(self.label)
+        let mut menu = VNode::div()
+            .add_class("wj-menu")
+            .set_id(part_id(self.base, "menu", 0))
+            .add_attr("role", "menu")
+            .add_attr("aria-labelledby", part_id(self.base, "trigger", 0))
+        if !self.open {
+            menu = menu.add_attr("hidden", "hidden")
+        }
+        let mut i = 0
+        while i < self.items.len() as i32 {
+            let entry = VNode::button()
+                .add_class("wj-menu-item")
+                .set_id(part_id(self.base, "item", i))
+                .add_attr("type", "button")
+                .add_attr("role", "menuitem")
+                .add_attr("tabindex", "-1")
+                .add_attr("data-wj-act", "item:${i}")
+                .add_text(self.items[i as usize])
+            menu = menu.child(entry)
+            i = i + 1
+        }
+        VNode::div().add_class("wj-menu-host").child(trigger).child(menu)
+    }
+}

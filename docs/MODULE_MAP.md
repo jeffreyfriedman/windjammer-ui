@@ -14,6 +14,7 @@ Each entry: single responsibility -> allowed dependencies. Lower layers never im
 | `safe_dom_js.rs` | `window.wjDom` helper embedded into JS runtimes (the only audited HTML sink) | std |
 | `simple_vnode.rs` | Canonical VNode; `sanitized()` | `escape` |
 | `dom_patch/` | Keyed diff, `PatchOp`s, `DomPort`, `Mounted` (delegated events); `web.rs` is the wasm adapter | `simple_vnode`, `escape` (+ web-sys in `web.rs`) |
+| `kit_mount.rs` | Browser mount for kit components: delivers key/click/input/focus/scroll events to an `Interactive` model, patches its view, manages focus (wasm + `web`) | `dom_patch`, generated `a11y` |
 | `to_vnode.rs` | Component to VNode trait | `simple_vnode` |
 | `vnode_ffi.rs` | Build VNodes from `.wj` code | `simple_vnode`, `vdom` |
 | `component.rs`, `component_runtime.rs`, `runtime.rs` | Component trait, lifecycle, DOM runtime | `vdom`, `reactivity` |
@@ -34,6 +35,7 @@ MODULE.md contracts: `src/dom_patch/MODULE.md`, `docs/modules/{escape,simple_vno
 ## Components (`src/components_wj/`)
 - Layout and primitives (`row`, `column`, `stack`, `grid`, `flex`, `container`, `text`, `button`, `input`...): depend only on `traits`, `style`, `html_elements`.
 - Composite widgets (`datatable`, `tabs`, `modal`, `commandpalette`...): may use primitives, never each other cyclically.
+- Accessible kit (`a11y`, `kit_disclosure`, `kit_overlay`, `kit_choice`, `form_kit`, `grid_kit`, `tokens`): models implementing `a11y::Interactive`, built on `vnode` only; they read colors and spacing through the `tokens` custom properties. See `docs/KIT.md`.
 - Editor/tooling panels (`ecs_inspector_*`, `profiler_*`, `frame_debugger_panel`, `node_graph`, `curve_editor`, `bt_visual_*`): may use primitives; consumed by the engine editor.
 - Ledger/finance components: to be moved out (see `EXTRACTION_PLAN.md`); they currently depend on primitives and, for runtimes, on hand-maintained JS in `components/generated/`.
 

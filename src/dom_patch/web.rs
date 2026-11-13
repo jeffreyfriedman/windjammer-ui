@@ -61,6 +61,14 @@ impl DomPort for WebDom {
             if is_value_prop(name) {
                 sync_property(el, name, value);
             }
+            if name == "data-wj-scroll-top" {
+                // Models that virtualize their content own the scroll offset; mirror it onto the element.
+                if let Ok(top) = value.parse::<i32>() {
+                    if el.scroll_top() != top {
+                        el.set_scroll_top(top);
+                    }
+                }
+            }
         }
     }
     fn remove_attr(&mut self, node: &Node, name: &str) {
@@ -162,7 +170,9 @@ impl DomPort for WebDom {
         let name = event.to_string();
         let closure = Closure::wrap(Box::new(move |e: web_sys::Event| {
             if let Some(t) = e.target().and_then(|t| t.dyn_into::<Node>().ok()) {
+                let prev = super::event_info::set_current_event(event_info_of(&e, &t));
                 let out = cb(t, name.clone());
+                super::event_info::set_current_event(prev);
                 if out.default_prevented {
                     e.prevent_default();
                 }
@@ -180,6 +190,34 @@ impl DomPort for WebDom {
         );
         self.closures.push(closure);
     }
+}
+
+/// Key, nearest `data-wj-act` and value of the event's target, for `dom_patch::current_event`.
+fn event_info_of(e: &web_sys::Event, target: &Node) -> super::event_info::EventInfo {
+    let key = e.dyn_ref::<web_sys::KeyboardEvent>().map(|k| k.key()).unwrap_or_default();
+    let shift = e.dyn_ref::<web_sys::KeyboardEvent>().map(|k| k.shift_key()).unwrap_or(false);
+    let key = if shift && key == "Tab" { "Shift+Tab".to_string() } else { key };
+    let mut act = String::new();
+    let mut value = String::new();
+    if let Some(el) = target.dyn_ref::<Element>() {
+        if let Ok(Some(host)) = el.closest("[data-wj-act]") {
+            act = host.get_attribute("data-wj-act").unwrap_or_default();
+        }
+        let get = |name: &str| js_sys::Reflect::get(el, &JsValue::from_str(name)).ok();
+        let is_checkbox = matches!(get("type").and_then(|v| v.as_string()).as_deref(), Some("checkbox"));
+        if is_checkbox {
+            let checked = get("checked").and_then(|v| v.as_bool()).unwrap_or(false);
+            value = if checked { "true" } else { "false" }.to_string();
+        } else if let Some(v) = get("value").and_then(|v| v.as_string()) {
+            value = v;
+        }
+    }
+    if e.type_() == "scroll" {
+        if let Some(el) = target.dyn_ref::<Element>() {
+            value = el.scroll_top().to_string();
+        }
+    }
+    super::event_info::EventInfo { key, act, value, shift }
 }
 
 /// Mount helper: wires delegated events to the shared `Mounted`.

@@ -1,0 +1,516 @@
+// Choice controls: checkbox, switch, toggle button, radio group, slider, pagination and tooltip.
+//
+// Native elements are used where the browser already provides the keyboard behaviour (the checkbox is an
+// `<input type="checkbox">` with a label). Custom-role controls (switch, radio group, slider, toggle button) implement
+// the WAI-ARIA pattern themselves: role, accessible name, state attributes, tabindex and the full key map.
+
+use super::a11y::*
+use super::vnode::VNode
+
+pub struct CheckboxField {
+    base: string,
+    label: string,
+    checked: bool,
+}
+
+impl CheckboxField {
+    pub fn new(base: string, label: string) -> CheckboxField {
+        CheckboxField { base: base, label: label, checked: false }
+    }
+
+    pub fn checked(self, on: bool) -> CheckboxField {
+        self.checked = on
+        self
+    }
+
+    pub fn is_checked(self) -> bool {
+        self.checked
+    }
+}
+
+impl Interactive for CheckboxField {
+    fn on_event(self, event: string, act: string, key: string, value: string) -> bool {
+        if act == "check" && event == "change" {
+            self.checked = value == "true"
+            return true
+        }
+        false
+    }
+
+    fn focus_id(self) -> string {
+        ""
+    }
+
+    fn view(self) -> VNode {
+        let id = part_id(self.base, "input", 0)
+        let mut input = VNode::input()
+            .set_id(id)
+            .set_type("checkbox")
+            .add_attr("data-wj-act", "check")
+        if self.checked {
+            input = input.add_attr("checked", "true")
+        }
+        VNode::element("label")
+            .add_class("wj-checkbox")
+            .add_attr("for", part_id(self.base, "input", 0))
+            .child(input)
+            .child(VNode::span().add_text(self.label))
+    }
+}
+
+pub struct SwitchControl {
+    base: string,
+    label: string,
+    on: bool,
+    disabled: bool,
+}
+
+impl SwitchControl {
+    pub fn new(base: string, label: string) -> SwitchControl {
+        SwitchControl { base: base, label: label, on: false, disabled: false }
+    }
+
+    pub fn on(self, state: bool) -> SwitchControl {
+        self.on = state
+        self
+    }
+
+    pub fn disabled(self, state: bool) -> SwitchControl {
+        self.disabled = state
+        self
+    }
+
+    pub fn is_on(self) -> bool {
+        self.on
+    }
+}
+
+impl Interactive for SwitchControl {
+    fn on_event(self, event: string, act: string, key: string, value: string) -> bool {
+        if act != "switch" || self.disabled {
+            return false
+        }
+        if event == "click" || (event == "keydown" && is_activation_key(key)) {
+            self.on = !self.on
+            return true
+        }
+        false
+    }
+
+    fn focus_id(self) -> string {
+        ""
+    }
+
+    fn view(self) -> VNode {
+        let mut node = VNode::button()
+            .add_class("wj-switch")
+            .set_id(part_id(self.base, "switch", 0))
+            .add_attr("type", "button")
+            .add_attr("role", "switch")
+            .add_attr("aria-checked", aria_bool(self.on))
+            .add_attr("data-wj-act", "switch")
+            .add_text(self.label)
+        if self.disabled {
+            node = node.add_attr("disabled", "true").add_attr("aria-disabled", "true")
+        }
+        node
+    }
+}
+
+pub struct ToggleButton {
+    base: string,
+    label: string,
+    pressed: bool,
+}
+
+impl ToggleButton {
+    pub fn new(base: string, label: string) -> ToggleButton {
+        ToggleButton { base: base, label: label, pressed: false }
+    }
+
+    pub fn is_pressed(self) -> bool {
+        self.pressed
+    }
+}
+
+impl Interactive for ToggleButton {
+    fn on_event(self, event: string, act: string, key: string, value: string) -> bool {
+        if act != "toggle" {
+            return false
+        }
+        if event == "click" || (event == "keydown" && is_activation_key(key)) {
+            self.pressed = !self.pressed
+            return true
+        }
+        false
+    }
+
+    fn focus_id(self) -> string {
+        ""
+    }
+
+    fn view(self) -> VNode {
+        VNode::button()
+            .add_class("wj-button")
+            .set_id(part_id(self.base, "toggle", 0))
+            .add_attr("type", "button")
+            .add_attr("aria-pressed", aria_bool(self.pressed))
+            .add_attr("data-wj-act", "toggle")
+            .add_text(self.label)
+    }
+}
+
+pub struct RadioChoice {
+    base: string,
+    label: string,
+    values: Vec<string>,
+    labels: Vec<string>,
+    selected: i32,
+    focus: string,
+}
+
+impl RadioChoice {
+    pub fn new(base: string, label: string) -> RadioChoice {
+        RadioChoice {
+            base: base,
+            label: label,
+            values: Vec::new(),
+            labels: Vec::new(),
+            selected: -1,
+            focus: "",
+        }
+    }
+
+    pub fn option(self, value: string, label: string) -> RadioChoice {
+        self.values.push(value)
+        self.labels.push(label)
+        self
+    }
+
+    pub fn select(self, index: i32) -> RadioChoice {
+        self.selected = index
+        self
+    }
+
+    /// Value of the selected option, empty when nothing is selected.
+    pub fn value(self) -> string {
+        if self.selected < 0 {
+            return ""
+        }
+        self.values[self.selected as usize]
+    }
+
+    fn pick(self, index: i32) {
+        self.selected = index
+        self.focus = part_id(self.base, "radio", index)
+    }
+}
+
+impl Interactive for RadioChoice {
+    fn on_event(self, event: string, act: string, key: string, value: string) -> bool {
+        let count = self.values.len() as i32
+        let index = act_index(act, "radio")
+        if index < 0 {
+            return false
+        }
+        if event == "click" {
+            self.pick(index)
+            return true
+        }
+        if event == "keydown" {
+            if key == " " {
+                self.pick(index)
+                return true
+            }
+            // Arrow keys move and select, in either orientation.
+            let mut next = roving_next(key, index, count, false)
+            if next < 0 {
+                next = roving_next(key, index, count, true)
+            }
+            if next >= 0 {
+                self.pick(next)
+                return true
+            }
+        }
+        false
+    }
+
+    fn focus_id(self) -> string {
+        self.focus
+    }
+
+    fn view(self) -> VNode {
+        let label_id = part_id(self.base, "label", 0)
+        let mut group = VNode::div()
+            .add_class("wj-radiogroup")
+            .add_attr("role", "radiogroup")
+            .add_attr("aria-labelledby", label_id)
+            .child(VNode::span().set_id(part_id(self.base, "label", 0)).add_text(self.label))
+        let mut i = 0
+        while i < self.values.len() as i32 {
+            // With nothing selected the first radio is the entry point; otherwise the selected one.
+            let entry = if self.selected < 0 { i == 0 } else { i == self.selected }
+            let on = i == self.selected
+            let radio = VNode::div()
+                .add_class("wj-radio")
+                .set_id(part_id(self.base, "radio", i))
+                .add_attr("role", "radio")
+                .add_attr("aria-checked", aria_bool(on))
+                .add_attr("tabindex", roving_tabindex(entry))
+                .add_attr("data-wj-act", "radio:${i}")
+                .add_text(self.labels[i as usize])
+            group = group.child(radio)
+            i = i + 1
+        }
+        group
+    }
+}
+
+pub struct SliderControl {
+    base: string,
+    label: string,
+    min: i32,
+    max: i32,
+    step: i32,
+    now: i32,
+}
+
+impl SliderControl {
+    pub fn new(base: string, label: string, min: i32, max: i32) -> SliderControl {
+        SliderControl { base: base, label: label, min: min, max: max, step: 1, now: min }
+    }
+
+    pub fn step(self, step: i32) -> SliderControl {
+        self.step = step
+        self
+    }
+
+    pub fn value(self, v: i32) -> SliderControl {
+        self.now = v
+        self
+    }
+
+    pub fn current(self) -> i32 {
+        self.now
+    }
+
+    fn set(self, v: i32) {
+        let mut next = v
+        if next < self.min {
+            next = self.min
+        }
+        if next > self.max {
+            next = self.max
+        }
+        self.now = next
+    }
+}
+
+impl Interactive for SliderControl {
+    fn on_event(self, event: string, act: string, key: string, value: string) -> bool {
+        if act != "slider" || event != "keydown" {
+            return false
+        }
+        if key == "ArrowRight" || key == "ArrowUp" {
+            self.set(self.now + self.step)
+            return true
+        }
+        if key == "ArrowLeft" || key == "ArrowDown" {
+            self.set(self.now - self.step)
+            return true
+        }
+        if key == "PageUp" {
+            self.set(self.now + self.step * 10)
+            return true
+        }
+        if key == "PageDown" {
+            self.set(self.now - self.step * 10)
+            return true
+        }
+        if key == "Home" {
+            self.set(self.min)
+            return true
+        }
+        if key == "End" {
+            self.set(self.max)
+            return true
+        }
+        false
+    }
+
+    fn focus_id(self) -> string {
+        ""
+    }
+
+    fn view(self) -> VNode {
+        VNode::div()
+            .add_class("wj-slider")
+            .set_id(part_id(self.base, "slider", 0))
+            .add_attr("role", "slider")
+            .add_attr("tabindex", "0")
+            .add_attr("aria-label", self.label)
+            .add_attr("aria-orientation", "horizontal")
+            .add_attr("aria-valuemin", "${self.min}")
+            .add_attr("aria-valuemax", "${self.max}")
+            .add_attr("aria-valuenow", "${self.now}")
+            .add_attr("data-wj-act", "slider")
+            .add_text("${self.now}")
+    }
+}
+
+pub struct PageNav {
+    base: string,
+    label: string,
+    page: i32,
+    pages: i32,
+    focus: string,
+}
+
+impl PageNav {
+    pub fn new(base: string, label: string, pages: i32) -> PageNav {
+        PageNav { base: base, label: label, page: 1, pages: pages, focus: "" }
+    }
+
+    pub fn current(self) -> i32 {
+        self.page
+    }
+
+    fn go(self, page: i32) {
+        if page >= 1 && page <= self.pages {
+            self.page = page
+        }
+        self.focus = part_id(self.base, "page", self.page)
+    }
+}
+
+impl Interactive for PageNav {
+    fn on_event(self, event: string, act: string, key: string, value: string) -> bool {
+        let wanted = if act == "prev" {
+            self.page - 1
+        } else if act == "next" {
+            self.page + 1
+        } else {
+            act_index(act, "page")
+        }
+        if wanted < 0 {
+            return false
+        }
+        if event == "click" || (event == "keydown" && is_activation_key(key)) {
+            self.go(wanted)
+            return true
+        }
+        false
+    }
+
+    fn focus_id(self) -> string {
+        self.focus
+    }
+
+    fn view(self) -> VNode {
+        let mut prev = VNode::button()
+            .add_class("wj-page")
+            .set_id(part_id(self.base, "prev", 0))
+            .add_attr("type", "button")
+            .add_attr("aria-label", "Previous page")
+            .add_attr("data-wj-act", "prev")
+            .add_text("Prev")
+        if self.page <= 1 {
+            prev = prev.add_attr("disabled", "true")
+        }
+        let mut next = VNode::button()
+            .add_class("wj-page")
+            .set_id(part_id(self.base, "next", 0))
+            .add_attr("type", "button")
+            .add_attr("aria-label", "Next page")
+            .add_attr("data-wj-act", "next")
+            .add_text("Next")
+        if self.page >= self.pages {
+            next = next.add_attr("disabled", "true")
+        }
+        let mut nav = VNode::element("nav")
+            .add_class("wj-pagination")
+            .add_attr("aria-label", self.label)
+            .child(prev)
+        let mut p = 1
+        while p <= self.pages {
+            let mut btn = VNode::button()
+                .add_class("wj-page")
+                .set_id(part_id(self.base, "page", p))
+                .add_attr("type", "button")
+                .add_attr("aria-label", "Page ${p}")
+                .add_attr("data-wj-act", "page:${p}")
+                .add_text("${p}")
+            if p == self.page {
+                btn = btn.add_attr("aria-current", "page")
+            }
+            nav = nav.child(btn)
+            p = p + 1
+        }
+        nav.child(next)
+    }
+}
+
+pub struct TooltipHost {
+    base: string,
+    label: string,
+    tip: string,
+    shown: bool,
+}
+
+impl TooltipHost {
+    pub fn new(base: string, label: string, tip: string) -> TooltipHost {
+        TooltipHost { base: base, label: label, tip: tip, shown: false }
+    }
+
+    pub fn is_shown(self) -> bool {
+        self.shown
+    }
+}
+
+impl Interactive for TooltipHost {
+    fn on_event(self, event: string, act: string, key: string, value: string) -> bool {
+        if act != "tip" {
+            return false
+        }
+        if event == "focusin" {
+            self.shown = true
+            return false
+        }
+        if event == "focusout" {
+            self.shown = false
+            return false
+        }
+        if event == "keydown" && key == "Escape" && self.shown {
+            self.shown = false
+            return true
+        }
+        false
+    }
+
+    fn focus_id(self) -> string {
+        ""
+    }
+
+    fn view(self) -> VNode {
+        let mut tip = VNode::span()
+            .add_class("wj-tooltip")
+            .set_id(part_id(self.base, "tip", 0))
+            .add_attr("role", "tooltip")
+            .add_text(self.tip)
+        if !self.shown {
+            tip = tip.add_attr("hidden", "hidden")
+        }
+        VNode::span()
+            .add_class("wj-tooltip-host")
+            .child(
+                VNode::button()
+                    .add_class("wj-button")
+                    .set_id(part_id(self.base, "trigger", 0))
+                    .add_attr("type", "button")
+                    .add_attr("aria-describedby", part_id(self.base, "tip", 0))
+                    .add_attr("data-wj-act", "tip")
+                    .add_text(self.label)
+            )
+            .child(tip)
+    }
+}

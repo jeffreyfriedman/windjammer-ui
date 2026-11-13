@@ -1,6 +1,7 @@
 // Auto-generated mod.rs by Windjammer CLI
 // This file declares all generated Windjammer modules
 
+pub mod a11y;
 pub mod accordion;
 pub mod advancedcodeeditor;
 pub mod alert;
@@ -38,14 +39,19 @@ pub mod ecs_inspector_panel;
 pub mod filetree;
 pub mod flex;
 pub mod form;
+pub mod form_kit;
 pub mod frame_debugger_panel;
 #[cfg(test)]
 pub mod graph_trace_test;
 pub mod grid;
+pub mod grid_kit;
 pub mod hamburgermenu;
 pub mod html_elements;
 pub mod icon;
 pub mod input;
+pub mod kit_choice;
+pub mod kit_disclosure;
+pub mod kit_overlay;
 pub mod kpitile;
 pub mod label;
 pub mod list;
@@ -89,6 +95,7 @@ pub mod textarea;
 pub mod theme;
 pub mod timeline;
 pub mod toast;
+pub mod tokens;
 pub mod toolbar;
 pub mod tooltip;
 pub mod traits;
@@ -97,6 +104,7 @@ pub mod typingindicator;
 pub mod vnode;
 
 // Re-export public items
+pub use a11y::*;
 pub use accordion::*;
 pub use advancedcodeeditor::*;
 pub use alert::*;
@@ -133,13 +141,19 @@ pub use ecs_inspector_model::*;
 pub use ecs_inspector_panel::*;
 pub use filetree::*;
 pub use flex::*;
-pub use form::*;
+pub use form::Form;
+pub use form_kit::FieldKind;
+pub use form_kit::FormKit;
 pub use frame_debugger_panel::*;
 pub use grid::*;
+pub use grid_kit::*;
 pub use hamburgermenu::*;
 pub use html_elements::*;
 pub use icon::*;
 pub use input::*;
+pub use kit_choice::*;
+pub use kit_disclosure::*;
+pub use kit_overlay::*;
 pub use kpitile::*;
 pub use label::*;
 pub use list::*;
@@ -183,6 +197,7 @@ pub use textarea::*;
 pub use theme::*;
 pub use timeline::*;
 pub use toast::*;
+pub use tokens::*;
 pub use toolbar::*;
 pub use tooltip::*;
 pub use traits::*;

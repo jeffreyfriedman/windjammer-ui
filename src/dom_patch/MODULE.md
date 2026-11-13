@@ -24,6 +24,10 @@ event routing. Replaces the old "set `innerHTML` every frame" loop in `ReactiveA
 - Handlers may call `dom_patch::stop_propagation()` / `prevent_default()` (thread-local flags, reset per
   dispatch); `Mounted::dispatch_event` returns a `DispatchOutcome`, and the web adapter forwards both to the native event.
 
+- `event_info`: the web adapter publishes the running event's key, nearest `data-wj-act` and target value (`current_event()`), so handlers
+  that take no argument can still act on keys. Shift+Tab is reported as `"Shift+Tab"`; `scroll` reports `scrollTop`.
+- An element with `data-wj-scroll-top="N"` has its `scrollTop` mirrored from the model (virtualized lists).
+
 **Owns.** Diff algorithm, op semantics, handler table, port contract.
 **Never decides.** Escaping/sanitizing rules (`escape.rs`, `VNode::sanitized`), when to
 re-render (`app_reactive.rs`), component structure.
