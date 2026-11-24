@@ -36,14 +36,14 @@ pub fn render(&self) -> String {
         html.push_str(&self.class);
         html.push_str("\" style=\"font-weight: 500; font-size: 14px; color: #374151; display: block; margin-bottom: 4px;\"");
         if !self.for_id.is_empty() {
-            let _ = html.push_str(" for=\"");
-            let _ = html.push_str(&self.for_id);
-            let _ = html.push('"');
+            html.push_str(" for=\"");
+            html.push_str(&self.for_id);
+            html.push('"');
         }
         html.push('>');
         html.push_str(&self.text);
         if self.required {
-            let _ = html.push_str("<span style=\"color: #ef4444; margin-left: 4px;\">*</span>");
+            html.push_str("<span style=\"color: #ef4444; margin-left: 4px;\">*</span>");
         }
         html.push_str("</label>");
         html

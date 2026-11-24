@@ -4,7 +4,9 @@ use std::cell::RefCell;
 use std::rc::Rc;
 use windjammer_ui::dom_patch::apply::{apply, canon};
 use windjammer_ui::dom_patch::fake_dom::FakeDom;
-use windjammer_ui::dom_patch::{diff, prevent_default, stop_propagation, DomPort, Mounted, PatchOp};
+use windjammer_ui::dom_patch::{
+    diff, prevent_default, stop_propagation, DomPort, Mounted, PatchOp,
+};
 use windjammer_ui::simple_renderer::render_to_html;
 use windjammer_ui::simple_vnode::{VAttr, VNode};
 
@@ -40,7 +42,10 @@ fn identical_trees_produce_no_ops() {
 
 #[test]
 fn text_change_is_a_single_set_text() {
-    let ops = roundtrip(&el("p", vec![], vec![VNode::text("a")]), &el("p", vec![], vec![VNode::text("b")]));
+    let ops = roundtrip(
+        &el("p", vec![], vec![VNode::text("a")]),
+        &el("p", vec![], vec![VNode::text("b")]),
+    );
     assert!(matches!(ops.as_slice(), [PatchOp::SetText { .. }]));
 }
 
@@ -50,8 +55,12 @@ fn attr_add_change_remove_are_minimal() {
     let b = el("div", vec![("class", st("y")), ("title", st("t"))], vec![]);
     let ops = roundtrip(&a, &b);
     assert_eq!(ops.len(), 3);
-    assert!(ops.iter().any(|o| matches!(o, PatchOp::RemoveAttr { name, .. } if name == "id")));
-    assert!(ops.iter().any(|o| matches!(o, PatchOp::SetAttr { name, value, .. } if name == "class" && value == "y")));
+    assert!(ops
+        .iter()
+        .any(|o| matches!(o, PatchOp::RemoveAttr { name, .. } if name == "id")));
+    assert!(ops.iter().any(
+        |o| matches!(o, PatchOp::SetAttr { name, value, .. } if name == "class" && value == "y")
+    ));
 }
 
 #[test]
@@ -63,20 +72,41 @@ fn tag_change_replaces_node() {
 #[test]
 fn keyed_reorder_uses_moves_not_rebuilds() {
     let ops = roundtrip(&ul(&["a", "b", "c", "d"]), &ul(&["d", "a", "b", "c"]));
-    assert!(ops.iter().all(|o| matches!(o, PatchOp::Move { .. })), "only moves expected");
+    assert!(
+        ops.iter().all(|o| matches!(o, PatchOp::Move { .. })),
+        "only moves expected"
+    );
     assert_eq!(ops.len(), 1);
 }
 
 #[test]
 fn keyed_insert_and_remove_in_middle() {
     let ops = roundtrip(&ul(&["a", "b", "c"]), &ul(&["a", "x", "c"]));
-    assert_eq!(ops.iter().filter(|o| matches!(o, PatchOp::Insert { .. })).count(), 1);
-    assert_eq!(ops.iter().filter(|o| matches!(o, PatchOp::Remove { .. })).count(), 1);
+    assert_eq!(
+        ops.iter()
+            .filter(|o| matches!(o, PatchOp::Insert { .. }))
+            .count(),
+        1
+    );
+    assert_eq!(
+        ops.iter()
+            .filter(|o| matches!(o, PatchOp::Remove { .. }))
+            .count(),
+        1
+    );
 }
 
 #[test]
 fn unkeyed_lists_patch_positionally() {
-    let mk = |n: usize| el("div", vec![], (0..n).map(|i| el("p", vec![], vec![VNode::text(&i.to_string())])).collect());
+    let mk = |n: usize| {
+        el(
+            "div",
+            vec![],
+            (0..n)
+                .map(|i| el("p", vec![], vec![VNode::text(&i.to_string())]))
+                .collect(),
+        )
+    };
     roundtrip(&mk(5), &mk(2));
     roundtrip(&mk(2), &mk(5));
 }
@@ -109,7 +139,7 @@ fn gen_node(r: &mut Rng, depth: usize) -> VNode {
     match r.below(if depth == 0 { 3 } else { 6 }) {
         0 => VNode::text(["a", "b", "<x>", "日本"][r.below(4)]),
         1 => VNode::raw_html(["<i>1</i>", "<i>2</i>"][r.below(2)]),
-        2 | 3 | 4 | 5 => gen_element(r, depth),
+        2..=5 => gen_element(r, depth),
         _ => unreachable!(),
     }
 }
@@ -123,14 +153,20 @@ fn gen_element(r: &mut Rng, depth: usize) -> VNode {
             attrs.push((name, st(v)));
         }
     }
-    let kids = (0..r.below(6)).map(|_| gen_node(r, depth.saturating_sub(1))).collect();
+    let kids = (0..r.below(6))
+        .map(|_| gen_node(r, depth.saturating_sub(1)))
+        .collect();
     el(tag, attrs, kids)
 }
 
 /// Mutate a tree lightly so old/new share structure (the realistic case).
 fn mutate(r: &mut Rng, v: &VNode) -> VNode {
     match v {
-        VNode::Element { tag, attrs, children } if r.below(4) != 0 => {
+        VNode::Element {
+            tag,
+            attrs,
+            children,
+        } if r.below(4) != 0 => {
             let mut kids: Vec<VNode> = children.iter().map(|c| mutate(r, c)).collect();
             match r.below(4) {
                 0 if kids.len() > 1 => {
@@ -152,10 +188,20 @@ fn mutate(r: &mut Rng, v: &VNode) -> VNode {
             if r.below(3) == 0 {
                 attrs.push(("class".to_string(), st(["p", "q"][r.below(2)])));
             }
-            VNode::Element { tag: tag.clone(), attrs, children: kids }
+            VNode::Element {
+                tag: tag.clone(),
+                attrs,
+                children: kids,
+            }
         }
         VNode::Text(_) if r.below(2) == 0 => VNode::text("changed"),
-        other => if r.below(8) == 0 { gen_node(r, 2) } else { other.clone() },
+        other => {
+            if r.below(8) == 0 {
+                gen_node(r, 2)
+            } else {
+                other.clone()
+            }
+        }
     }
 }
 
@@ -164,13 +210,21 @@ fn property_apply_diff_equals_target_pure_and_on_fake_dom() {
     let mut r = Rng(0x9E3779B97F4A7C15);
     for case in 0..1500 {
         let a = gen_element(&mut r, 3);
-        let b = if case % 3 == 0 { gen_element(&mut r, 3) } else { mutate(&mut r, &a) };
+        let b = if case % 3 == 0 {
+            gen_element(&mut r, 3)
+        } else {
+            mutate(&mut r, &a)
+        };
         roundtrip(&a, &b);
 
         let mut m = Mounted::new(FakeDom::new());
         m.update(&a);
         m.update(&b);
-        assert_eq!(m.port.snapshot(), Some(canon(&b.sanitized())), "case {case}");
+        assert_eq!(
+            m.port.snapshot(),
+            Some(canon(&b.sanitized())),
+            "case {case}"
+        );
     }
 }
 
@@ -187,10 +241,18 @@ fn update_reuses_existing_nodes() {
 }
 
 fn input_page(value: &str, label: &str) -> VNode {
-    el("div", vec![], vec![
-        el("h1", vec![], vec![VNode::text(label)]),
-        el("input", vec![("id", st("name")), ("value", st(value))], vec![]),
-    ])
+    el(
+        "div",
+        vec![],
+        vec![
+            el("h1", vec![], vec![VNode::text(label)]),
+            el(
+                "input",
+                vec![("id", st("name")), ("value", st(value))],
+                vec![],
+            ),
+        ],
+    )
 }
 
 #[test]
@@ -213,7 +275,13 @@ fn focus_caret_and_typed_value_survive_rerender() {
 
 #[test]
 fn focused_node_survives_keyed_move() {
-    let page = |keys: &[&str]| el("div", vec![], keys.iter().map(|k| keyed("input", k, vec![])).collect());
+    let page = |keys: &[&str]| {
+        el(
+            "div",
+            vec![],
+            keys.iter().map(|k| keyed("input", k, vec![])).collect(),
+        )
+    };
     let mut m = Mounted::new(FakeDom::new());
     m.update(&page(&["a", "b", "c"]));
     let b = m.port.find_by_attr("key", "b").unwrap();
@@ -225,7 +293,15 @@ fn focused_node_survives_keyed_move() {
 
 fn counter(n: Rc<RefCell<i32>>, label: &str) -> VNode {
     let h: Rc<RefCell<dyn FnMut()>> = Rc::new(RefCell::new(move || *n.borrow_mut() += 1));
-    el("div", vec![], vec![el("button", vec![("on_click", VAttr::Event(h))], vec![VNode::text(label)])])
+    el(
+        "div",
+        vec![],
+        vec![el(
+            "button",
+            vec![("on_click", VAttr::Event(h))],
+            vec![VNode::text(label)],
+        )],
+    )
 }
 
 #[test]
@@ -234,10 +310,16 @@ fn delegated_handlers_survive_patches_and_use_latest_closure() {
     let mut m = Mounted::new(FakeDom::new());
     m.update(&counter(n1.clone(), "one"));
     assert!(m.port.listening.contains("click"));
-    let btn = m.port.child_at(&m.port.child_at(&m.port.container(), 0).unwrap(), 0).unwrap();
+    let btn = m
+        .port
+        .child_at(&m.port.child_at(&m.port.container(), 0).unwrap(), 0)
+        .unwrap();
     assert_eq!(m.dispatch(&btn, "click"), 1);
     m.update(&counter(n2.clone(), "two"));
-    let btn2 = m.port.child_at(&m.port.child_at(&m.port.container(), 0).unwrap(), 0).unwrap();
+    let btn2 = m
+        .port
+        .child_at(&m.port.child_at(&m.port.container(), 0).unwrap(), 0)
+        .unwrap();
     assert_eq!(btn, btn2, "button node reused");
     m.dispatch(&btn2, "click");
     assert_eq!((*n1.borrow(), *n2.borrow()), (1, 1));
@@ -250,10 +332,17 @@ fn events_bubble_to_ancestor_handlers_innermost_first() {
         let l = log.clone();
         VAttr::Event(Rc::new(RefCell::new(move || l.borrow_mut().push(tag))))
     };
-    let tree = el("div", vec![("on_click", mk("outer"))], vec![el("span", vec![("on_click", mk("inner"))], vec![])]);
+    let tree = el(
+        "div",
+        vec![("on_click", mk("outer"))],
+        vec![el("span", vec![("on_click", mk("inner"))], vec![])],
+    );
     let mut m = Mounted::new(FakeDom::new());
     m.update(&tree);
-    let span = m.port.child_at(&m.port.child_at(&m.port.container(), 0).unwrap(), 0).unwrap();
+    let span = m
+        .port
+        .child_at(&m.port.child_at(&m.port.container(), 0).unwrap(), 0)
+        .unwrap();
     m.dispatch(&span, "click");
     assert_eq!(*log.borrow(), vec!["inner", "outer"]);
 }
@@ -262,11 +351,22 @@ fn events_bubble_to_ancestor_handlers_innermost_first() {
 fn handlers_follow_their_nodes_through_keyed_moves() {
     let hits = Rc::new(RefCell::new(Vec::<String>::new()));
     let page = |keys: &[&str]| {
-        el("div", vec![], keys.iter().map(|k| {
-            let (h, k2) = (hits.clone(), k.to_string());
-            let cb: Rc<RefCell<dyn FnMut()>> = Rc::new(RefCell::new(move || h.borrow_mut().push(k2.clone())));
-            el("button", vec![("key", st(k)), ("on_click", VAttr::Event(cb))], vec![])
-        }).collect())
+        el(
+            "div",
+            vec![],
+            keys.iter()
+                .map(|k| {
+                    let (h, k2) = (hits.clone(), k.to_string());
+                    let cb: Rc<RefCell<dyn FnMut()>> =
+                        Rc::new(RefCell::new(move || h.borrow_mut().push(k2.clone())));
+                    el(
+                        "button",
+                        vec![("key", st(k)), ("on_click", VAttr::Event(cb))],
+                        vec![],
+                    )
+                })
+                .collect(),
+        )
     };
     let mut m = Mounted::new(FakeDom::new());
     m.update(&page(&["a", "b"]));
@@ -279,17 +379,28 @@ fn handlers_follow_their_nodes_through_keyed_moves() {
 #[test]
 fn xss_payloads_never_reach_the_dom_through_patching() {
     let page = |href: &str, text: &str| {
-        el("div", vec![], vec![
-            el("a", vec![("href", st(href)), ("onclick", st("alert(1)"))], vec![VNode::text(text)]),
-            el("script", vec![], vec![VNode::text("alert(1)")]),
-        ])
+        el(
+            "div",
+            vec![],
+            vec![
+                el(
+                    "a",
+                    vec![("href", st(href)), ("onclick", st("alert(1)"))],
+                    vec![VNode::text(text)],
+                ),
+                el("script", vec![], vec![VNode::text("alert(1)")]),
+            ],
+        )
     };
     let mut m = Mounted::new(FakeDom::new());
     m.update(&page("https://ok.test", "x"));
     m.update(&page("javascript:alert(1)", "<img src=x onerror=alert(1)>"));
     let snap = format!("{:?}", m.port.snapshot().unwrap());
     assert!(!snap.contains("javascript:"), "{snap}");
-    assert!(!snap.contains("onclick") && !snap.contains("script"), "{snap}");
+    assert!(
+        !snap.contains("onclick") && !snap.contains("script"),
+        "{snap}"
+    );
     // Text stays literal text (the DOM never parses it), and the string renderer escapes it.
     assert!(render_to_html(&page("x", "<img src=x onerror=alert(1)>")).contains("&lt;img"));
 }
@@ -297,7 +408,11 @@ fn xss_payloads_never_reach_the_dom_through_patching() {
 // --- focus across moves (browser reparenting blurs; the patcher must restore) ---
 
 fn input_list(keys: &[&str]) -> VNode {
-    el("div", vec![], keys.iter().map(|k| keyed("input", k, vec![])).collect())
+    el(
+        "div",
+        vec![],
+        keys.iter().map(|k| keyed("input", k, vec![])).collect(),
+    )
 }
 
 #[test]
@@ -308,7 +423,11 @@ fn reparenting_blurs_in_the_fake_dom_like_a_browser() {
     m.port.focus(a);
     let root = m.port.child_at(&m.port.container(), 0).unwrap();
     m.port.insert_child(&root, 1, &a); // raw reparent, no patcher
-    assert_eq!(m.port.focused(), None, "model must reproduce the browser's blur-on-move");
+    assert_eq!(
+        m.port.focused(),
+        None,
+        "model must reproduce the browser's blur-on-move"
+    );
 }
 
 #[test]
@@ -342,7 +461,19 @@ fn keyed_move_prefers_atomic_move_before_when_the_host_has_it() {
 #[test]
 fn moving_an_ancestor_of_the_focused_node_keeps_focus() {
     let page = |keys: &[&str]| {
-        el("div", vec![], keys.iter().map(|k| keyed("div", k, vec![el("input", vec![("id", st(&format!("in-{k}")))], vec![])])).collect())
+        el(
+            "div",
+            vec![],
+            keys.iter()
+                .map(|k| {
+                    keyed(
+                        "div",
+                        k,
+                        vec![el("input", vec![("id", st(&format!("in-{k}")))], vec![])],
+                    )
+                })
+                .collect(),
+        )
     };
     let mut m = Mounted::new(FakeDom::new());
     m.update(&page(&["a", "b"]));
@@ -369,12 +500,20 @@ fn nested_click_tree(log: &Rc<RefCell<Vec<&'static str>>>, inner_action: fn()) -
         let l = log.clone();
         VAttr::Event(Rc::new(RefCell::new(move || {
             l.borrow_mut().push(tag);
-            if let Some(f) = act { f() }
+            if let Some(f) = act {
+                f()
+            }
         })))
     };
-    el("div", vec![("on_click", mk("outer", None))], vec![
-        el("button", vec![("on_click", mk("inner", Some(inner_action)))], vec![]),
-    ])
+    el(
+        "div",
+        vec![("on_click", mk("outer", None))],
+        vec![el(
+            "button",
+            vec![("on_click", mk("inner", Some(inner_action)))],
+            vec![],
+        )],
+    )
 }
 
 #[test]
@@ -382,7 +521,10 @@ fn stop_propagation_in_a_handler_skips_ancestor_handlers() {
     let log = Rc::new(RefCell::new(Vec::new()));
     let mut m = Mounted::new(FakeDom::new());
     m.update(&nested_click_tree(&log, stop_propagation));
-    let btn = m.port.child_at(&m.port.child_at(&m.port.container(), 0).unwrap(), 0).unwrap();
+    let btn = m
+        .port
+        .child_at(&m.port.child_at(&m.port.container(), 0).unwrap(), 0)
+        .unwrap();
     let out = m.dispatch_event(&btn, "click");
     assert_eq!(*log.borrow(), vec!["inner"]);
     assert!(out.propagation_stopped && !out.default_prevented);
@@ -394,7 +536,10 @@ fn prevent_default_is_reported_and_does_not_stop_bubbling() {
     let log = Rc::new(RefCell::new(Vec::new()));
     let mut m = Mounted::new(FakeDom::new());
     m.update(&nested_click_tree(&log, prevent_default));
-    let btn = m.port.child_at(&m.port.child_at(&m.port.container(), 0).unwrap(), 0).unwrap();
+    let btn = m
+        .port
+        .child_at(&m.port.child_at(&m.port.container(), 0).unwrap(), 0)
+        .unwrap();
     let out = m.dispatch_event(&btn, "click");
     assert_eq!(*log.borrow(), vec!["inner", "outer"]);
     assert!(out.default_prevented && !out.propagation_stopped);
@@ -405,7 +550,10 @@ fn propagation_flags_do_not_leak_between_dispatches() {
     let log = Rc::new(RefCell::new(Vec::new()));
     let mut m = Mounted::new(FakeDom::new());
     m.update(&nested_click_tree(&log, stop_propagation));
-    let btn = m.port.child_at(&m.port.child_at(&m.port.container(), 0).unwrap(), 0).unwrap();
+    let btn = m
+        .port
+        .child_at(&m.port.child_at(&m.port.container(), 0).unwrap(), 0)
+        .unwrap();
     m.dispatch_event(&btn, "click");
     let div = m.port.child_at(&m.port.container(), 0).unwrap();
     let out = m.dispatch_event(&div, "click"); // outer only, handler does not stop

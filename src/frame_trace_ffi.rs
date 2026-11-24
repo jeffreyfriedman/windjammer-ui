@@ -63,15 +63,11 @@ pub fn has_live_data() -> bool {
 // Windjammer-callable accessors (profiler_timeline_model.wj)
 
 pub fn live_frame_index() -> u64 {
-    read_live_snapshot()
-        .map(|s| s.frame_index)
-        .unwrap_or(0)
+    read_live_snapshot().map(|s| s.frame_index).unwrap_or(0)
 }
 
 pub fn live_frame_time_ms() -> f32 {
-    read_live_snapshot()
-        .map(|s| s.frame_time_ms)
-        .unwrap_or(0.0)
+    read_live_snapshot().map(|s| s.frame_time_ms).unwrap_or(0.0)
 }
 
 pub fn live_scope_count() -> u32 {
@@ -99,9 +95,7 @@ pub fn live_scope_is_gpu(index: u32) -> bool {
 }
 
 pub fn live_frame_count() -> u32 {
-    read_live_snapshot()
-        .map(|s| s.frame_count)
-        .unwrap_or(0)
+    read_live_snapshot().map(|s| s.frame_count).unwrap_or(0)
 }
 
 pub fn live_can_step_back() -> bool {
@@ -115,4 +109,3 @@ pub fn live_can_step_forward() -> bool {
         .map(|s| s.can_step_forward)
         .unwrap_or(false)
 }
-

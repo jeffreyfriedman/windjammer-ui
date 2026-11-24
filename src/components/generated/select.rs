@@ -83,20 +83,20 @@ pub fn render(&self) -> String {
         html.push_str(&disabled_attr);
         html.push('>');
         if !self.placeholder.is_empty() {
-            let _ = html.push_str("<option value=\"\" disabled");
+            html.push_str("<option value=\"\" disabled");
             if self.selected.is_empty() {
-                let _ = html.push_str(" selected");
+                html.push_str(" selected");
             }
-            let _ = html.push_str(">");
-            let _ = html.push_str(&self.placeholder);
-            let _ = html.push_str("</option>");
+            html.push_str(">");
+            html.push_str(&self.placeholder);
+            html.push_str("</option>");
         }
         for opt in &self.options {
             html.push_str("<option value=\"");
             html.push_str(&opt.value);
             html.push('"');
             if opt.value == self.selected {
-                let _ = html.push_str(" selected");
+                html.push_str(" selected");
             }
             html.push('>');
             html.push_str(&opt.label);

@@ -94,7 +94,7 @@ pub fn render(&self) -> String {
         html.push_str("\">");
         html.push_str("<input type=\"checkbox\"");
         if self.checked {
-            let _ = html.push_str(" checked");
+            html.push_str(" checked");
         }
         html.push_str(&disabled_attr);
         html.push_str(" style=\"position: absolute; opacity: 0; width: 0; height: 0;\">");
@@ -114,9 +114,9 @@ pub fn render(&self) -> String {
         html.push_str("; background-color: white; border-radius: 50%; transition: left 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.2);\"></span>");
         html.push_str("</span>");
         if !self.label.is_empty() {
-            let _ = html.push_str("<span style=\"font-size: 14px;\">");
-            let _ = html.push_str(&self.label);
-            let _ = html.push_str("</span>");
+            html.push_str("<span style=\"font-size: 14px;\">");
+            html.push_str(&self.label);
+            html.push_str("</span>");
         }
         html.push_str("</label>");
         html

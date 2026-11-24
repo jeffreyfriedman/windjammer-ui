@@ -98,8 +98,17 @@ pub fn escape_attr(input: &str) -> Escaped {
 pub fn is_url_attr(name: &str) -> bool {
     matches!(
         name.to_ascii_lowercase().as_str(),
-        "href" | "src" | "action" | "formaction" | "xlink:href" | "poster" | "data" | "cite"
-            | "background" | "ping" | "srcset"
+        "href"
+            | "src"
+            | "action"
+            | "formaction"
+            | "xlink:href"
+            | "poster"
+            | "data"
+            | "cite"
+            | "background"
+            | "ping"
+            | "srcset"
     )
 }
 
@@ -134,9 +143,10 @@ pub fn sanitize_url(url: &str) -> String {
 }
 
 fn is_safe_data_image(probe: &str) -> bool {
-    ["png", "gif", "jpeg", "jpg", "webp"]
-        .iter()
-        .any(|t| probe.starts_with(&format!("data:image/{t};")) || probe.starts_with(&format!("data:image/{t},")))
+    ["png", "gif", "jpeg", "jpg", "webp"].iter().any(|t| {
+        probe.starts_with(&format!("data:image/{t};"))
+            || probe.starts_with(&format!("data:image/{t},"))
+    })
 }
 
 /// Tags that may never be created through a VNode element (use [`RawHtml`] deliberately).
@@ -196,7 +206,10 @@ mod tests {
     fn text_escape_neutralizes_markup_characters() {
         for p in PAYLOADS {
             let e = escape_text(p).into_string();
-            assert!(!e.contains('<') && !e.contains('>') && !e.contains('"') && !e.contains('\''), "{e}");
+            assert!(
+                !e.contains('<') && !e.contains('>') && !e.contains('"') && !e.contains('\''),
+                "{e}"
+            );
         }
     }
 
@@ -207,12 +220,18 @@ mod tests {
 
     #[test]
     fn unicode_is_preserved() {
-        assert_eq!(escape_text("héllo 日本語 🚀 <b>").as_str(), "héllo 日本語 🚀 &lt;b&gt;");
+        assert_eq!(
+            escape_text("héllo 日本語 🚀 <b>").as_str(),
+            "héllo 日本語 🚀 &lt;b&gt;"
+        );
     }
 
     #[test]
     fn attr_breakout_quotes_are_escaped() {
-        assert_eq!(escape_attr("\" onmouseover=\"x").as_str(), "&quot; onmouseover=&quot;x");
+        assert_eq!(
+            escape_attr("\" onmouseover=\"x").as_str(),
+            "&quot; onmouseover=&quot;x"
+        );
         assert_eq!(escape_attr("' onfocus='x").as_str(), "&#39; onfocus=&#39;x");
     }
 
@@ -261,10 +280,23 @@ mod tests {
     #[test]
     fn tag_and_attr_name_validation() {
         assert!(is_valid_tag("div") && is_valid_tag("my-element") && is_valid_tag("H1"));
-        for t in ["", "1a", "div onclick=x", "a>b", "script", "SCRIPT", "iframe", "a/b"] {
+        for t in [
+            "",
+            "1a",
+            "div onclick=x",
+            "a>b",
+            "script",
+            "SCRIPT",
+            "iframe",
+            "a/b",
+        ] {
             assert!(!is_valid_tag(t), "{t}");
         }
-        assert!(is_valid_attr_name("data-x") && is_valid_attr_name("aria-label") && is_valid_attr_name("xlink:href"));
+        assert!(
+            is_valid_attr_name("data-x")
+                && is_valid_attr_name("aria-label")
+                && is_valid_attr_name("xlink:href")
+        );
         for n in ["", "a b", "a=b", "a\"b", "a>b", "a/b"] {
             assert!(!is_valid_attr_name(n), "{n}");
         }
@@ -283,7 +315,10 @@ mod tests {
 
     #[test]
     fn raw_html_text_escapes_and_display_is_verbatim() {
-        assert_eq!(RawHtml::text("<b>&\"x\"</b>").as_str(), "&lt;b&gt;&amp;&quot;x&quot;&lt;/b&gt;");
+        assert_eq!(
+            RawHtml::text("<b>&\"x\"</b>").as_str(),
+            "&lt;b&gt;&amp;&quot;x&quot;&lt;/b&gt;"
+        );
         assert_eq!(RawHtml::new("<b>ok</b>").to_string(), "<b>ok</b>");
         assert!(RawHtml::empty().is_empty());
         assert_eq!(RawHtml::from(escape_text("<")).as_str(), "&lt;");

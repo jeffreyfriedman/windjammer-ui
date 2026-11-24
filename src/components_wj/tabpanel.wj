@@ -83,15 +83,3 @@ fn render(self) -> string {
         "<div class='wj-tab-panel' style='display: flex; flex-direction: ${flex_direction};'>\n${tabs_html}${content_html}\n</div>"
     }
 }
-
-fn main() {
-    let panel = TabPanel::new()
-        .tab(TabPanelTab::new("overview", "Overview", "<h2>Overview Content</h2>"))
-        .tab(TabPanelTab::new("details", "Details", "<h2>Details Content</h2>"))
-        .tab(TabPanelTab::new("settings", "Settings", "<h2>Settings Content</h2>"))
-        .active("overview")
-
-    println("${panel.render()}")
-}
-
-

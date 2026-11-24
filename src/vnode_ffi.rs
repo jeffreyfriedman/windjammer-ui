@@ -437,9 +437,7 @@ mod tests {
 
         let node = vnode_take(handle);
         if let Some(VNode::Element { attrs, .. }) = node {
-            let event_attr = attrs
-                .iter()
-                .find(|(n, _)| n == "on_click");
+            let event_attr = attrs.iter().find(|(n, _)| n == "on_click");
             assert!(event_attr.is_some());
             if let Some((_, VAttr::Dynamic(handler_name))) = event_attr {
                 assert_eq!(handler_name, "increment");
@@ -455,9 +453,7 @@ mod tests {
 
         let node = vnode_take(handle);
         if let Some(VNode::Element { attrs, .. }) = node {
-            let event_attr = attrs
-                .iter()
-                .find(|(n, _)| n == "on_change");
+            let event_attr = attrs.iter().find(|(n, _)| n == "on_change");
             assert!(event_attr.is_some());
             if let Some((_, VAttr::Dynamic(handler_name))) = event_attr {
                 assert_eq!(handler_name, "update_value");

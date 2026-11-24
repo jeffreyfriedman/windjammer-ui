@@ -64,7 +64,7 @@ fn render(&self) -> String {
 }
 
 #[inline]
-pub fn mark_for(variant: AlertVariant) -> String {
+fn mark_for(variant: AlertVariant) -> String {
     match variant {
         AlertVariant::Error => String::from("Error"),
         AlertVariant::Warning => String::from("Warning"),

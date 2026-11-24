@@ -100,23 +100,3 @@ pub fn render(self) -> string {
         "<div class='wj-flex' style='${style}'>\n  ${children_html}\n</div>"
     }
 }
-
-fn main() {
-    let flex_row = Flex::new()
-        .direction(FlexDirection::Row)
-        .gap("16px")
-        .child("<button>First</button>")
-        .child("<button>Second</button>")
-        .child("<button>Third</button>")
-    
-    let flex_col = Flex::new()
-        .direction(FlexDirection::Column)
-        .gap("12px")
-        .padding("20px")
-        .background_color("#f5f5f5")
-        .children(vec!["<h2>Title</h2>", "<p>Paragraph 1</p>", "<p>Paragraph 2</p>"])
-    
-    println("Flex Row:\n${flex_row.render()}")
-    println("\nFlex Column:\n${flex_col.render()}")
-}
-

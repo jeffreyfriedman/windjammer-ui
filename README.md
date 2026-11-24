@@ -17,7 +17,7 @@ fn main() {
         .child(Text::new("Hello, World!").size(TextSize::XLarge).bold().render())
         .child(Button::new("Click Me").variant(ButtonVariant::Primary).render())
         .render()
-    println!("{}", app)
+    println("${app}")
 }
 ```
 

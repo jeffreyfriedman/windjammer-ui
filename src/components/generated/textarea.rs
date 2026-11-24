@@ -95,14 +95,14 @@ pub fn render(&self) -> String {
         html.push_str(&self.rows.to_string());
         html.push('"');
         if !self.placeholder.is_empty() {
-            let _ = html.push_str(" placeholder=\"");
-            let _ = html.push_str(&self.placeholder);
-            let _ = html.push('"');
+            html.push_str(" placeholder=\"");
+            html.push_str(&self.placeholder);
+            html.push('"');
         }
         if self.max_length > 0_i32 {
-            let _ = html.push_str(" maxlength=\"");
-            let _ = html.push_str(&self.max_length.to_string());
-            let _ = html.push('"');
+            html.push_str(" maxlength=\"");
+            html.push_str(&self.max_length.to_string());
+            html.push('"');
         }
         html.push_str(&disabled_attr);
         html.push_str(&readonly_attr);

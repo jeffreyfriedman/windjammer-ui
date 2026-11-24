@@ -5,7 +5,7 @@ use windjammer_ui::*
 
 @export
 fn start() {
-    println!("📊 Starting Dashboard")
+    println("📊 Starting Dashboard")
     
     // Mock data
     let total_users = Signal::new(1247)

@@ -102,9 +102,9 @@ fn render(&self) -> String {
             html.push_str(&step.label);
             html.push_str("</div>");
             if !step.description.is_empty() {
-                let _ = html.push_str("<div style='font-size: 12px; color: #a0aec0;'>");
-                let _ = html.push_str(&step.description);
-                let _ = html.push_str("</div>");
+                html.push_str("<div style='font-size: 12px; color: #a0aec0;'>");
+                html.push_str(&step.description);
+                html.push_str("</div>");
             }
             html.push_str("</div>");
             html.push_str("</div>");
@@ -116,9 +116,9 @@ fn render(&self) -> String {
                         String::from("#e2e8f0")
                     }
                 };
-                let _ = html.push_str("<div style='flex: 1; height: 2px; background: ");
-                let _ = html.push_str(&line_color);
-                let _ = html.push_str("; margin: 0 8px; margin-bottom: 48px;'></div>");
+                html.push_str("<div style='flex: 1; height: 2px; background: ");
+                html.push_str(&line_color);
+                html.push_str("; margin: 0 8px; margin-bottom: 48px;'></div>");
             }
         }
         html.push_str("</div>");

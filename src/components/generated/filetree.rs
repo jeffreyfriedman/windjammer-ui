@@ -46,7 +46,7 @@ pub fn render(&self, depth: i32) -> String {
             while i < self.children.len() {
                 let child = &self.children[i];
                 html = format!("{}{}", html, child.render(depth + 1_i32));
-                i += 1;
+                i = i.wrapping_add(1);
             }
         }
         html

@@ -76,19 +76,19 @@ pub fn render(&self) -> String {
         html.push_str("<label class='wj-form-field-label' style='display: block; margin-bottom: 4px; font-weight: 500; color: #333;'>");
         html.push_str(&self.label);
         if self.required {
-            let _ = html.push_str(" <span style='color: #e53e3e;'>*</span>");
+            html.push_str(" <span style='color: #e53e3e;'>*</span>");
         }
         html.push_str("</label>");
         html.push_str(&self.input);
         if !self.help_text.is_empty() {
-            let _ = html.push_str("<div class='wj-form-field-hint' style='margin-top: 4px; font-size: 12px; color: #718096;'>");
-            let _ = html.push_str(&self.help_text);
-            let _ = html.push_str("</div>");
+            html.push_str("<div class='wj-form-field-hint' style='margin-top: 4px; font-size: 12px; color: #718096;'>");
+            html.push_str(&self.help_text);
+            html.push_str("</div>");
         }
         if !self.error.is_empty() {
-            let _ = html.push_str("<div class='wj-form-field-error' role='alert' style='margin-top: 4px; font-size: 12px; color: #e53e3e;'>");
-            let _ = html.push_str(&self.error);
-            let _ = html.push_str("</div>");
+            html.push_str("<div class='wj-form-field-error' role='alert' style='margin-top: 4px; font-size: 12px; color: #e53e3e;'>");
+            html.push_str(&self.error);
+            html.push_str("</div>");
         }
         html.push_str("</div>");
         html

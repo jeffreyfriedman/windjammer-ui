@@ -61,15 +61,3 @@ pub fn render(self) -> string {
 </div>"
     }
 }
-
-fn main() {
-    let scroll = ScrollArea::new()
-        .height("200px")
-        .child("<p>Line 1</p>")
-        .child("<p>Line 2</p>")
-        .child("<p>Line 3</p>")
-
-    println("${scroll.render()}")
-}
-
-

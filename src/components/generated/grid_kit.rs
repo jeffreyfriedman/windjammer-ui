@@ -73,9 +73,9 @@ pub fn matching_rows(&self) -> Vec<i32> {
                 c += 1;
             }
             if hit {
-                let _ = order.push(i as i32);
+                order.push(i as i32);
             }
-            i += 1;
+            i = i.wrapping_add(1);
         }
         if self.sort_col >= 0_i32 {
             let col = self.sort_col as usize;
@@ -98,7 +98,7 @@ pub fn matching_rows(&self) -> Vec<i32> {
                     order[b] = tmp;
                     b -= 1;
                 }
-                a += 1;
+                a = a.wrapping_add(1);
             }
         }
         order
@@ -135,7 +135,7 @@ pub fn visible_rows(&self) -> Vec<i32> {
         let mut out: Vec<i32> = Vec::new();
         let mut k = start;
         while k < start + self.page_size && k < (all.len() as i32) {
-            let _ = out.push(all[k as usize]);
+            out.push(all[k as usize]);
             k += 1;
         }
         out
@@ -217,8 +217,8 @@ fn view(&self) -> VNode {
                     }
                 }
             };
-            head = { head.child({ VNode::element("th".to_string()).add_attr("scope".to_string(), "col".to_string()).add_attr("aria-sort".to_string(), dir).child({ let _temp0 = format!("sort:{}", c); VNode::button().add_class("wj-sort".to_string()).set_id(part_id(&self.base, "sort", c)).add_attr("type".to_string(), "button".to_string()).add_attr("data-wj-act".to_string(), _temp0) }.add_text(self.columns[c as usize].header.clone())) }) };
-            c += 1;
+            head = { head.child({ VNode::element("th".to_string()).add_attr("scope".to_string(), "col".to_string()).add_attr("aria-sort".to_string(), dir.to_string()).child({ let _temp0 = format!("sort:{}", c); VNode::button().add_class("wj-sort".to_string()).set_id(part_id(&self.base, "sort", c)).add_attr("type".to_string(), "button".to_string()).add_attr("data-wj-act".to_string(), _temp0) }.add_text(self.columns[c as usize].header.clone())) }) };
+            c = c.wrapping_add(1);
         }
         let mut body = VNode::element("tbody".to_string());
         let mut r = 0_usize;
@@ -228,10 +228,10 @@ fn view(&self) -> VNode {
             let mut k = 0_usize;
             while k < cells.len() {
                 tr = tr.child(VNode::element("td".to_string()).add_text(cells[k].clone()));
-                k += 1;
+                k = k.wrapping_add(1);
             }
             body = body.child(tr);
-            r += 1;
+            r = r.wrapping_add(1);
         }
         let table = { let _temp0 = format!("{}", self.columns.len()); { let _temp0 = format!("{}", total); VNode::element("table".to_string()).add_class("wj-table".to_string()).set_id(part_id(&self.base, "table", 0_i32)).add_attr("aria-rowcount".to_string(), _temp0) }.add_attr("aria-colcount".to_string(), _temp0) }.child(VNode::element("caption".to_string()).add_text(self.caption.clone())).child(VNode::element("thead".to_string()).child(head)).child(body);
         let status = { VNode::div().add_class("wj-grid-status".to_string()).set_id(part_id(&self.base, "status", 0_i32)).add_attr("role".to_string(), "status".to_string()).add_attr("aria-live".to_string(), "polite".to_string()).add_text({

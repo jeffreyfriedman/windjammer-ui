@@ -86,13 +86,13 @@ impl Renderable for Table {
 fn render(&self) -> String {
         let mut classes: String = String::from("wj-table");
         if self.striped {
-            let _ = classes.push_str(" wj-table-striped");
+            classes.push_str(" wj-table-striped");
         }
         if self.bordered {
-            let _ = classes.push_str(" wj-table-bordered");
+            classes.push_str(" wj-table-bordered");
         }
         if self.hoverable {
-            let _ = classes.push_str(" wj-table-hover");
+            classes.push_str(" wj-table-hover");
         }
         let mut html = format!("<table class='{}'>", classes);
         html.push_str("<thead><tr>");

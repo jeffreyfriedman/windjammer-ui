@@ -5,7 +5,7 @@ use windjammer_ui::*
 
 @export
 fn start() {
-    println!("📬 Starting Contact Form")
+    println("📬 Starting Contact Form")
     
     // Form state
     let name = Signal::new("")
@@ -97,14 +97,14 @@ fn start() {
                                     
                                     if has_name && has_email && has_message {
                                         is_submitting.set(true)
-                                        println!("Form submitted successfully!")
+                                        println("Form submitted successfully!")
                                         submit_success.set(true)
                                         // Reset form
                                         name_submit.set("")
                                         email_submit.set("")
                                         message_submit.set("")
                                     } else {
-                                        println!("Validation failed")
+                                        println("Validation failed")
                                     }
                                 })
                         )

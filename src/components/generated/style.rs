@@ -173,7 +173,7 @@ pub fn to_string(&self) -> String {
         let mut result = String::new();
         for (i, prop) in self.properties.iter().enumerate() {
             if i > 0_usize {
-                let _ = result.push_str("; ");
+                result.push_str("; ");
             }
             result.push_str(&prop.name);
             result.push_str(": ");

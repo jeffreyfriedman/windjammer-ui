@@ -470,20 +470,54 @@ mod tests {
 
     #[test]
     fn url_attributes_are_sanitized_for_every_url_attr() {
-        for name in ["href", "src", "action", "formaction", "poster", "data", "cite", "background", "ping", "xlink:href"] {
-            for bad in ["javascript:alert(1)", "JaVaScRiPt:alert(1)", " \tjava\nscript:alert(1)", "vbscript:x", "data:text/html,<script>alert(1)</script>"] {
+        for name in [
+            "href",
+            "src",
+            "action",
+            "formaction",
+            "poster",
+            "data",
+            "cite",
+            "background",
+            "ping",
+            "xlink:href",
+        ] {
+            for bad in [
+                "javascript:alert(1)",
+                "JaVaScRiPt:alert(1)",
+                " \tjava\nscript:alert(1)",
+                "vbscript:x",
+                "data:text/html,<script>alert(1)</script>",
+            ] {
                 let out = render(&VNode::Element(VElement::new("a").attr(name, bad)));
-                assert!(!out.to_lowercase().contains("script:") && !out.contains("data:text"), "{name}={bad:?} -> {out}");
-                assert!(out.contains(&format!("{name}=\"#\"")), "{name}={bad:?} -> {out}");
+                assert!(
+                    !out.to_lowercase().contains("script:") && !out.contains("data:text"),
+                    "{name}={bad:?} -> {out}"
+                );
+                assert!(
+                    out.contains(&format!("{name}=\"#\"")),
+                    "{name}={bad:?} -> {out}"
+                );
             }
         }
     }
 
     #[test]
     fn safe_urls_pass_through_and_are_attribute_escaped() {
-        let out = render(&VNode::Element(VElement::new("a").attr("href", "https://x.test/?a=1&b=\"2\"")));
-        assert!(out.contains("href=\"https://x.test/?a=1&amp;b=&quot;2&quot;\""), "{out}");
-        for ok in ["/rel/path", "#frag", "mailto:a@b.test", "tel:+1555", "data:image/png;base64,AAAA"] {
+        let out = render(&VNode::Element(
+            VElement::new("a").attr("href", "https://x.test/?a=1&b=\"2\""),
+        ));
+        assert!(
+            out.contains("href=\"https://x.test/?a=1&amp;b=&quot;2&quot;\""),
+            "{out}"
+        );
+        for ok in [
+            "/rel/path",
+            "#frag",
+            "mailto:a@b.test",
+            "tel:+1555",
+            "data:image/png;base64,AAAA",
+        ] {
             let out = render(&VNode::Element(VElement::new("a").attr("href", ok)));
             assert!(out.contains(&format!("href=\"{ok}\"")), "{ok} -> {out}");
         }
@@ -492,27 +526,56 @@ mod tests {
     #[test]
     fn inline_handlers_and_bad_attribute_names_are_dropped() {
         let out = render(&VNode::Element(
-            VElement::new("div").attr("onclick", "alert(1)").attr("x\" onfocus=\"alert(1)", "v").attr("id", "ok"),
+            VElement::new("div")
+                .attr("onclick", "alert(1)")
+                .attr("x\" onfocus=\"alert(1)", "v")
+                .attr("id", "ok"),
         ));
-        assert!(!out.contains("onclick") && !out.contains("onfocus"), "{out}");
+        assert!(
+            !out.contains("onclick") && !out.contains("onfocus"),
+            "{out}"
+        );
         assert!(out.contains("id=\"ok\""));
     }
 
     #[test]
     fn hostile_tag_names_cannot_inject_markup() {
-        for tag in ["script", "img src=x onerror=alert(1)", "div><script>alert(1)</script", "iframe"] {
-            let out = render(&VNode::Element(VElement::new(tag).child(VText::new("t").into())));
-            assert!(!out.contains("<script") && !out.contains("onerror") && !out.contains("<iframe"), "{tag:?} -> {out}");
+        for tag in [
+            "script",
+            "img src=x onerror=alert(1)",
+            "div><script>alert(1)</script",
+            "iframe",
+        ] {
+            let out = render(&VNode::Element(
+                VElement::new(tag).child(VText::new("t").into()),
+            ));
+            assert!(
+                !out.contains("<script") && !out.contains("onerror") && !out.contains("<iframe"),
+                "{tag:?} -> {out}"
+            );
         }
     }
 
     #[test]
     fn streaming_renderer_applies_the_same_sanitization() {
-        let v = VNode::Element(VElement::new("a").attr("href", "javascript:alert(1)").attr("onclick", "x").child(VText::new("<b>").into()));
+        let v = VNode::Element(
+            VElement::new("a")
+                .attr("href", "javascript:alert(1)")
+                .attr("onclick", "x")
+                .child(VText::new("<b>").into()),
+        );
         let joined = StreamingSSRRenderer::new(7).render_vnode(&v).concat();
-        assert!(joined.contains("href=\"#\"") && !joined.contains("onclick") && joined.contains("&lt;b&gt;"), "{joined}");
+        assert!(
+            joined.contains("href=\"#\"")
+                && !joined.contains("onclick")
+                && joined.contains("&lt;b&gt;"),
+            "{joined}"
+        );
         let bad_tag = VNode::Element(VElement::new("script"));
-        assert!(!StreamingSSRRenderer::new(7).render_vnode(&bad_tag).concat().contains("<script"));
+        assert!(!StreamingSSRRenderer::new(7)
+            .render_vnode(&bad_tag)
+            .concat()
+            .contains("<script"));
     }
 
     #[test]
@@ -529,7 +592,11 @@ mod tests {
         r.add_state("k".into(), "</script><img src=x onerror=alert(1)>".into());
         r.add_state("\u{2028}".into(), "<!--".into());
         let doc = r.render_to_document(Hello, "t</title><script>alert(1)</script>");
-        assert_eq!(doc.matches("</script>").count(), 2, "only the two real script tags: {doc}");
+        assert_eq!(
+            doc.matches("</script>").count(),
+            2,
+            "only the two real script tags: {doc}"
+        );
         assert!(!doc.contains("<img src=x"), "{doc}");
         assert!(!doc.contains("<script>alert"), "{doc}");
         // The state must still round-trip through JSON.parse semantics.

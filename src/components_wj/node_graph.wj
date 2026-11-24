@@ -26,7 +26,7 @@ pub struct NodePin {
     pub name: string,
     pub pin_type: PinType,
     pub is_input: bool,
-    pub connected_to: Option<string>,
+    pub connected_to: string?,
     pub default_value: string,
 }
 

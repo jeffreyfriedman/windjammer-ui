@@ -82,16 +82,3 @@ impl Renderable for TreeView {
         "${html}</div>"
     }
 }
-
-fn main() {
-    let tree = TreeView::new()
-        .item(TreeItem::new("Root 1")
-            .expanded(true)
-            .child(TreeItem::new("Child 1.1"))
-            .child(TreeItem::new("Child 1.2")))
-        .item(TreeItem::new("Root 2"))
-
-    println("${tree.render()}")
-}
-
-

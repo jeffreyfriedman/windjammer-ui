@@ -61,14 +61,3 @@ impl Renderable for DataTable {
         "<div class='wj-datatable' data-empty-message='${self.empty_message}'>${caption_html}${table_block}</div>"
     }
 }
-
-fn main() {
-    let html = DataTable::new()
-        .caption("Parties")
-        .scrollable(true)
-        .column(TableColumn::new("Name"))
-        .column(TableColumn::new("Role"))
-        .row(TableRow::new().cell("Acme").cell("customer"))
-        .render()
-    println("${html}")
-}

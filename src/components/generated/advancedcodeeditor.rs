@@ -64,9 +64,9 @@ fn render(&self) -> String {
         };
         format!("<div class='wj-advanced-editor wj-editor-{} wj-editor-theme-{}{}{}'>\n  <div class='wj-editor-toolbar'>\n    <span>Language: {}</span>\n    <span>Theme: {}</span>\n  </div>\n  <div class='wj-editor-main'>\n    <textarea class='wj-editor-textarea'>\n{}</textarea>\n    {}\n  </div>\n</div>", self.language, self.theme, features_class, line_class, self.language, self.theme, self.code, {
             if self.minimap {
-                "<div class='wj-editor-minimap'></div>"
+                String::from("<div class='wj-editor-minimap'></div>")
             } else {
-                ""
+                String::new()
             }
         })
 }

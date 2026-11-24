@@ -130,9 +130,9 @@ impl RenderableVNode for Button {
             .add_class(self.get_size_class())
             .add_style(self.get_style())
             .set_disabled(self.disabled)
-            .add_text(self.label.clone())
+            .add_text(self.label)
         if self.click_handler.len() > 0 {
-            node = node.on_click(self.click_handler.clone())
+            node = node.on_click(self.click_handler)
         }
         node
     }
@@ -165,23 +165,3 @@ impl Renderable for Button {
     }
 }
 
-// Test the Button component
-fn main() {
-    let button1 = Button::new("Click Me")
-        .variant(ButtonVariant::Primary)
-        .size(ButtonSize::Large)
-    
-    let button2 = Button::new("Cancel")
-        .variant(ButtonVariant::Danger)
-        .disabled(true)
-    
-    // Test both rendering methods
-    println("Button 1 (HTML): ${button1.clone().render()}")
-    println("Button 2 (HTML): ${button2.clone().render()}")
-    
-    // Test VNode rendering
-    let vnode1 = button1.to_vnode()
-    let vnode2 = button2.to_vnode()
-    println("Button 1 VNode handle: ${vnode1.raw_handle()}")
-    println("Button 2 VNode handle: ${vnode2.raw_handle()}")
-}

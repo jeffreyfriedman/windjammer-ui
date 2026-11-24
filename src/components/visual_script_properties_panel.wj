@@ -29,14 +29,7 @@ impl VisualScriptPropertiesPanel {
 impl Renderable for VisualScriptPropertiesPanel {
     pub fn render(self) -> string {
         let styles = visual_script_properties_styles()
-        format!(
-            "<style>{}</style>\n<section class='vs-props'><header>Properties · {} · <code>{}</code></header>\n<label>Payload JSON</label>\n<textarea class='vs-props-json' spellcheck='false'>{}</textarea>\n<button class='vs-props-save' onclick='{}'>Apply</button></section>",
-            styles,
-            self.node_title,
-            self.node_kind,
-            self.serialized_json_fragment,
-            self.save_handler,
-        )
+        "<style>${styles}</style>\n<section class='vs-props'><header>Properties · ${self.node_title} · <code>${self.node_kind}</code></header>\n<label>Payload JSON</label>\n<textarea class='vs-props-json' spellcheck='false'>${self.serialized_json_fragment}</textarea>\n<button class='vs-props-save' onclick='${self.save_handler}'>Apply</button></section>"
     }
 }
 

@@ -70,13 +70,3 @@ pub fn render(self) -> string {
 </div>"
     }
 }
-
-fn main() {
-    let panel = Panel::new("Settings")
-        .child("<p>Panel content goes here</p>")
-        .collapsible(true)
-
-    println("${panel.render()}")
-}
-
-

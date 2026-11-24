@@ -8,7 +8,9 @@ use windjammer_ui::components::generated::profiler_timeline_model::{
 };
 use windjammer_ui::components::generated::realtime_profiler_panel::RealtimeProfilerPanel;
 use windjammer_ui::components::generated::traits::Renderable;
-use windjammer_ui::frame_trace_ffi::{test_clear_live_snapshot, test_set_live_snapshot, LiveFrameSnapshot, LiveScopeRow};
+use windjammer_ui::frame_trace_ffi::{
+    test_clear_live_snapshot, test_set_live_snapshot, LiveFrameSnapshot, LiveScopeRow,
+};
 
 #[test]
 fn test_live_profiler_snapshot_mock_budget() {
@@ -91,7 +93,10 @@ fn test_realtime_profiler_panel_from_live_engine_snapshot() {
     assert!(html.contains("Frame #99"));
     assert!(html.contains("ecs_update_systems"));
     assert!(html.contains("voxel_do_render_frame"));
-    assert!(!html.contains("raymarch"), "mock demo must not appear when live data set");
+    assert!(
+        !html.contains("raymarch"),
+        "mock demo must not appear when live data set"
+    );
 
     test_clear_live_snapshot();
 }

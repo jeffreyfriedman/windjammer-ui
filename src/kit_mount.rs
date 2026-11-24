@@ -22,7 +22,9 @@ use wasm_bindgen::JsCast;
 use web_sys::{Document, Element, HtmlElement};
 
 /// Events a kit listens to. `focusout` lets fields validate when the user leaves them.
-pub const KIT_EVENTS: [&str; 7] = ["keydown", "click", "input", "change", "focusin", "focusout", "scroll"];
+pub const KIT_EVENTS: [&str; 7] = [
+    "keydown", "click", "input", "change", "focusin", "focusout", "scroll",
+];
 
 pub struct KitMount<M: Interactive> {
     model: RefCell<M>,
@@ -43,8 +45,10 @@ impl<M: Interactive + 'static> KitMount<M> {
     }
 
     fn tree(self: &Rc<Self>) -> VNode {
-        let inner = vnode_take(self.model.borrow().view().raw_handle()).expect("view produced a node");
-        let mut attrs: Vec<(String, VAttr)> = vec![("style".into(), VAttr::Static("display:contents".into()))];
+        let inner =
+            vnode_take(self.model.borrow().view().raw_handle()).expect("view produced a node");
+        let mut attrs: Vec<(String, VAttr)> =
+            vec![("style".into(), VAttr::Static("display:contents".into()))];
         for ev in KIT_EVENTS {
             let weak: Weak<Self> = Rc::downgrade(self);
             let handler: Rc<RefCell<dyn FnMut()>> = Rc::new(RefCell::new(move || {
@@ -54,7 +58,11 @@ impl<M: Interactive + 'static> KitMount<M> {
             }));
             attrs.push((format!("on_{ev}"), VAttr::Event(handler)));
         }
-        VNode::Element { tag: "div".into(), attrs, children: vec![inner] }
+        VNode::Element {
+            tag: "div".into(),
+            attrs,
+            children: vec![inner],
+        }
     }
 
     fn deliver(self: &Rc<Self>, event: &str) {
@@ -70,7 +78,11 @@ impl<M: Interactive + 'static> KitMount<M> {
         self.render();
         if handled && !focus.is_empty() {
             if let Some(el) = self.document.get_element_by_id(&focus) {
-                let already = self.document.active_element().map(|a| a == el).unwrap_or(false);
+                let already = self
+                    .document
+                    .active_element()
+                    .map(|a| a == el)
+                    .unwrap_or(false);
                 if !already {
                     if let Ok(h) = el.dyn_into::<HtmlElement>() {
                         let _ = h.focus();
@@ -82,9 +94,17 @@ impl<M: Interactive + 'static> KitMount<M> {
 }
 
 /// Mount `model` into `container` and render it.
-pub fn mount<M: Interactive + 'static>(document: Document, container: Element, model: M) -> Rc<KitMount<M>> {
+pub fn mount<M: Interactive + 'static>(
+    document: Document,
+    container: Element,
+    model: M,
+) -> Rc<KitMount<M>> {
     let mounted = new_mounted(document.clone(), container);
-    let kit = Rc::new(KitMount { model: RefCell::new(model), mounted, document });
+    let kit = Rc::new(KitMount {
+        model: RefCell::new(model),
+        mounted,
+        document,
+    });
     kit.render();
     kit
 }

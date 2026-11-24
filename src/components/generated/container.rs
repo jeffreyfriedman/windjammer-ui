@@ -74,11 +74,11 @@ fn to_vnode(&self) -> VNode {
         if !self.background_color.is_empty() {
             { use std::fmt::Write as _; write!(style, " background-color: {};", self.background_color).expect("a formatting trait implementation returned an error"); };
         }
-        let mut node = VNode::div().add_class("wj-container".to_string()).add_style(style);
+        let mut node = VNode::div().add_class("wj-container".to_string()).add_style(style.to_string());
         let mut i: u32 = 0_u32;
         while i < (self.vnode_children.len() as u32) {
             node = node.child(self.vnode_children[i as usize]);
-            i += 1;
+            i = i.wrapping_add(1);
         }
         node
 }

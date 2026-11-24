@@ -29,23 +29,23 @@ impl Renderable for BtInspectorModel {
         }
         let mut panel = "".to_string()
         panel = panel + "<div class=\"bt-inspector-title\">"
-        panel = format!("{}{}", panel, self.title)
+        panel = "${panel}${self.title}"
         panel = panel + "</div>"
         panel = panel + "<div class=\"bt-inspector-sub\">"
-        panel = format!("{}{}", panel, self.subtitle)
+        panel = "${panel}${self.subtitle}"
         panel = panel + "</div>"
         panel = panel + "<label class=\"bt-toggle\"><input type=\"checkbox\" "
-        panel = format!("{}{}", panel, bp)
+        panel = "${panel}${bp}"
         panel = panel + " /> Breakpoint · "
-        panel = format!("{}{}", panel, self.hotspot)
+        panel = "${panel}${self.hotspot}"
         panel = panel + "</label>"
         panel = panel + "<label class=\"bt-field\"><span>Payload</span>"
         panel = panel + "<textarea rows=\"6\">"
-        panel = format!("{}{}", panel, self.params_json)
+        panel = "${panel}${self.params_json}"
         panel = panel + "</textarea></label>"
         let mut wrapped = "".to_string()
         wrapped = wrapped + "<section class=\"bt-properties-pane\">"
-        wrapped = format!("{}{}", wrapped, panel)
+        wrapped = "${wrapped}${panel}"
         wrapped + "</section>"
     }
 }

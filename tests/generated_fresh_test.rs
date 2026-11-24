@@ -29,35 +29,54 @@ fn wj_binary() -> Option<String> {
 fn rs_files(dir: &Path) -> BTreeMap<String, String> {
     let declared = declared_modules(dir);
     let mut map = BTreeMap::new();
-    for entry in std::fs::read_dir(dir).unwrap_or_else(|e| panic!("cannot read {}: {e}", dir.display())) {
+    for entry in
+        std::fs::read_dir(dir).unwrap_or_else(|e| panic!("cannot read {}: {e}", dir.display()))
+    {
         let path: PathBuf = entry.expect("dir entry").path();
         if path.extension().map(|x| x == "rs").unwrap_or(false) {
             let name = path.file_name().unwrap().to_string_lossy().to_string();
             if name != "mod.rs" && !declared.contains(&name) {
                 continue;
             }
-            map.insert(name, std::fs::read_to_string(&path).expect("read generated file"));
+            map.insert(
+                name,
+                std::fs::read_to_string(&path).expect("read generated file"),
+            );
         }
     }
     map
 }
 
 /// Names of the files that differ between two trees, with a short reason each.
-fn tree_diff(fresh: &BTreeMap<String, String>, checked_in: &BTreeMap<String, String>) -> Vec<String> {
+fn tree_diff(
+    fresh: &BTreeMap<String, String>,
+    checked_in: &BTreeMap<String, String>,
+) -> Vec<String> {
     let mut out = Vec::new();
     for (name, text) in fresh {
         match checked_in.get(name) {
-            None => out.push(format!("{name}: produced by the compiler but not checked in")),
+            None => out.push(format!(
+                "{name}: produced by the compiler but not checked in"
+            )),
             Some(old) if old != text => {
-                let line = text.lines().zip(old.lines()).position(|(a, b)| a != b).map(|i| i + 1);
-                out.push(format!("{name}: differs (first differing line {})", line.unwrap_or(0)));
+                let line = text
+                    .lines()
+                    .zip(old.lines())
+                    .position(|(a, b)| a != b)
+                    .map(|i| i + 1);
+                out.push(format!(
+                    "{name}: differs (first differing line {})",
+                    line.unwrap_or(0)
+                ));
             }
             _ => {}
         }
     }
     for name in checked_in.keys() {
         if !fresh.contains_key(name) {
-            out.push(format!("{name}: checked in but no longer produced from components_wj"));
+            out.push(format!(
+                "{name}: checked in but no longer produced from components_wj"
+            ));
         }
     }
     out
@@ -66,19 +85,35 @@ fn tree_diff(fresh: &BTreeMap<String, String>, checked_in: &BTreeMap<String, Str
 /// Fresh compiler output: the module files and the crate metadata consumers read (see `METADATA`).
 fn regenerate(wj: &str) -> (BTreeMap<String, String>, serde_json::Value) {
     let root = Path::new(env!("CARGO_MANIFEST_DIR"));
-    let out_dir = std::env::temp_dir().join(format!("wj-ui-generated-fresh-{}", std::process::id()));
+    let out_dir =
+        std::env::temp_dir().join(format!("wj-ui-generated-fresh-{}", std::process::id()));
     let _ = std::fs::remove_dir_all(&out_dir);
     let out = Command::new(wj)
         .arg("build")
         .arg(root.join("src/components_wj"))
-        .args(["--target", "rust", "--library", "--module-file", "--no-cargo", "--no-generate-cargo-toml", "-o"])
+        .args([
+            "--target",
+            "rust",
+            "--library",
+            "--module-file",
+            "--no-cargo",
+            "--no-generate-cargo-toml",
+            "-o",
+        ])
         .arg(&out_dir)
         .output()
         .expect("run wj build");
-    assert!(out.status.success(), "wj build failed:\n{}", String::from_utf8_lossy(&out.stderr));
+    assert!(
+        out.status.success(),
+        "wj build failed:\n{}",
+        String::from_utf8_lossy(&out.stderr)
+    );
     let files = rs_files(&out_dir);
-    let metadata = serde_json::from_str(&std::fs::read_to_string(out_dir.join("metadata.json")).expect("compiler wrote metadata.json"))
-        .expect("metadata.json is JSON");
+    let metadata = serde_json::from_str(
+        &std::fs::read_to_string(out_dir.join("metadata.json"))
+            .expect("compiler wrote metadata.json"),
+    )
+    .expect("metadata.json is JSON");
     let _ = std::fs::remove_dir_all(&out_dir);
     (files, metadata)
 }
@@ -113,15 +148,21 @@ fn checked_in_generated_tree_matches_components_wj() {
         write_regenerated(root, &fresh, &fresh_metadata);
     }
     let checked_in = rs_files(&root.join("src/components/generated"));
-    assert!(fresh.len() >= 90, "expected the compiler to produce the component tree, saw {} files", fresh.len());
+    assert!(
+        fresh.len() >= 90,
+        "expected the compiler to produce the component tree, saw {} files",
+        fresh.len()
+    );
     let diff = tree_diff(&fresh, &checked_in);
     assert!(
         diff.is_empty(),
         "src/components/generated is stale relative to src/components_wj (regenerate it, see this file's header):\n{}",
         diff.join("\n")
     );
-    let shipped: serde_json::Value = serde_json::from_str(&std::fs::read_to_string(root.join(METADATA)).expect("src/metadata.json is checked in"))
-        .expect("src/metadata.json is JSON");
+    let shipped: serde_json::Value = serde_json::from_str(
+        &std::fs::read_to_string(root.join(METADATA)).expect("src/metadata.json is checked in"),
+    )
+    .expect("src/metadata.json is JSON");
     assert!(shipped == fresh_metadata, "src/metadata.json is stale relative to src/components_wj (regenerate with WJ_UI_REGEN=1, see this file's header)");
 }
 
@@ -147,7 +188,12 @@ fn tree_diff_reports_edits_missing_and_extra_files() {
 fn declared_modules(dir: &Path) -> Vec<String> {
     let text = std::fs::read_to_string(dir.join("mod.rs")).unwrap_or_default();
     text.lines()
-        .filter_map(|l| l.trim().strip_prefix("pub mod ")?.strip_suffix(';').map(|m| format!("{m}.rs")))
+        .filter_map(|l| {
+            l.trim()
+                .strip_prefix("pub mod ")?
+                .strip_suffix(';')
+                .map(|m| format!("{m}.rs"))
+        })
         .collect()
 }
 
@@ -155,7 +201,11 @@ fn declared_modules(dir: &Path) -> Vec<String> {
 fn declared_modules_reads_pub_mod_lines_only() {
     let dir = std::env::temp_dir().join(format!("wj-ui-declared-{}", std::process::id()));
     std::fs::create_dir_all(&dir).unwrap();
-    std::fs::write(dir.join("mod.rs"), "// header\npub mod a;\n#[cfg(test)]\npub mod b_test;\npub use a::*;\n").unwrap();
+    std::fs::write(
+        dir.join("mod.rs"),
+        "// header\npub mod a;\n#[cfg(test)]\npub mod b_test;\npub use a::*;\n",
+    )
+    .unwrap();
     assert_eq!(declared_modules(&dir), ["a.rs", "b_test.rs"]);
     let _ = std::fs::remove_dir_all(&dir);
 }

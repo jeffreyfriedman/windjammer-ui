@@ -26,9 +26,16 @@ fn nested_target_dir() -> std::path::PathBuf {
 fn cargo_ok(what: &str, args: &[&str]) {
     let _guard = NESTED.lock().unwrap_or_else(|e| e.into_inner());
     let timeout = Duration::from_secs(
-        std::env::var("WJ_UI_NESTED_TIMEOUT_SECS").ok().and_then(|s| s.parse().ok()).unwrap_or(900),
+        std::env::var("WJ_UI_NESTED_TIMEOUT_SECS")
+            .ok()
+            .and_then(|s| s.parse().ok())
+            .unwrap_or(900),
     );
-    let log = std::env::temp_dir().join(format!("wj-ui-nested-{}-{}.log", std::process::id(), what.replace(' ', "_")));
+    let log = std::env::temp_dir().join(format!(
+        "wj-ui-nested-{}-{}.log",
+        std::process::id(),
+        what.replace(' ', "_")
+    ));
     let file = std::fs::File::create(&log).expect("log file");
     let mut child = Command::new("cargo")
         .args(args)
@@ -76,7 +83,14 @@ fn ui_framework_compiles() {
 fn ui_web_feature_compiles_for_wasm32() {
     cargo_ok(
         "check wasm32",
-        &["check", "-p", "windjammer-ui", "--lib", "--target", "wasm32-unknown-unknown"],
+        &[
+            "check",
+            "-p",
+            "windjammer-ui",
+            "--lib",
+            "--target",
+            "wasm32-unknown-unknown",
+        ],
     );
 }
 
@@ -84,11 +98,17 @@ fn ui_web_feature_compiles_for_wasm32() {
 #[ignore = "nested cargo build (heavy: eframe/wgpu); run with --ignored"]
 #[cfg(not(target_os = "linux"))]
 fn ui_desktop_feature_compiles() {
-    cargo_ok("check desktop", &["check", "-p", "windjammer-ui", "--features", "desktop"]);
+    cargo_ok(
+        "check desktop",
+        &["check", "-p", "windjammer-ui", "--features", "desktop"],
+    );
 }
 
 #[test]
 #[ignore = "nested cargo build; run with --ignored"]
 fn ui_benchmarks_compile() {
-    cargo_ok("build benches", &["build", "--benches", "-p", "windjammer-ui"]);
+    cargo_ok(
+        "build benches",
+        &["build", "--benches", "-p", "windjammer-ui"],
+    );
 }

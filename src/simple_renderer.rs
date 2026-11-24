@@ -134,8 +134,20 @@ mod tests {
 pub fn is_void_tag(tag: &str) -> bool {
     matches!(
         tag,
-        "area" | "base" | "br" | "col" | "embed" | "hr" | "img" | "input" | "link" | "meta"
-            | "param" | "source" | "track" | "wbr"
+        "area"
+            | "base"
+            | "br"
+            | "col"
+            | "embed"
+            | "hr"
+            | "img"
+            | "input"
+            | "link"
+            | "meta"
+            | "param"
+            | "source"
+            | "track"
+            | "wbr"
     )
 }
 
@@ -156,7 +168,11 @@ fn write_html(vnode: &crate::simple_vnode::VNode, out: &mut String) {
     use crate::simple_vnode::{VAttr, VNode};
 
     match vnode {
-        VNode::Element { tag, attrs, children } => {
+        VNode::Element {
+            tag,
+            attrs,
+            children,
+        } => {
             out.push('<');
             out.push_str(tag);
             for (key, value) in attrs {
@@ -220,13 +236,21 @@ mod xss_tests {
 
     #[test]
     fn text_script_payload_is_escaped() {
-        let h = render_to_html(&el("div", vec![], vec![VNode::text("<script>alert(1)</script>")]));
+        let h = render_to_html(&el(
+            "div",
+            vec![],
+            vec![VNode::text("<script>alert(1)</script>")],
+        ));
         assert_eq!(h, "<div>&lt;script&gt;alert(1)&lt;/script&gt;</div>");
     }
 
     #[test]
     fn attribute_breakout_is_contained() {
-        let h = render_to_html(&el("input", vec![("value", st("\" onmouseover=\"alert(1)"))], vec![]));
+        let h = render_to_html(&el(
+            "input",
+            vec![("value", st("\" onmouseover=\"alert(1)"))],
+            vec![],
+        ));
         assert_eq!(h, "<input value=\"&quot; onmouseover=&quot;alert(1)\">");
         let h = render_to_html(&el("a", vec![("title", st("' onfocus='x"))], vec![]));
         assert!(h.contains("&#39; onfocus=&#39;x"));
@@ -234,19 +258,37 @@ mod xss_tests {
 
     #[test]
     fn javascript_urls_are_neutralized_in_url_attributes() {
-        for (attr, val) in [("href", "javascript:alert(1)"), ("src", " JaVa\tScRiPt:alert(1)"), ("action", "vbscript:x"), ("formaction", "data:text/html,x")] {
+        for (attr, val) in [
+            ("href", "javascript:alert(1)"),
+            ("src", " JaVa\tScRiPt:alert(1)"),
+            ("action", "vbscript:x"),
+            ("formaction", "data:text/html,x"),
+        ] {
             let h = render_to_html(&el("a", vec![(attr, st(val))], vec![]));
             assert!(h.contains(&format!("{attr}=\"#\"")), "{h}");
         }
-        let ok = render_to_html(&el("a", vec![("href", st("https://example.com/?a=1&b=2"))], vec![]));
+        let ok = render_to_html(&el(
+            "a",
+            vec![("href", st("https://example.com/?a=1&b=2"))],
+            vec![],
+        ));
         assert_eq!(ok, "<a href=\"https://example.com/?a=1&amp;b=2\"></a>");
     }
 
     #[test]
     fn nested_elements_escape_every_level() {
-        let tree = el("ul", vec![("class", st("\"x"))], vec![
-            el("li", vec![], vec![VNode::text("<b>1</b>"), el("em", vec![], vec![VNode::text("'&\"")])]),
-        ]);
+        let tree = el(
+            "ul",
+            vec![("class", st("\"x"))],
+            vec![el(
+                "li",
+                vec![],
+                vec![
+                    VNode::text("<b>1</b>"),
+                    el("em", vec![], vec![VNode::text("'&\"")]),
+                ],
+            )],
+        );
         assert_eq!(
             render_to_html(&tree),
             "<ul class=\"&quot;x\"><li>&lt;b&gt;1&lt;/b&gt;<em>&#39;&amp;&quot;</em></li></ul>"
@@ -255,28 +297,50 @@ mod xss_tests {
 
     #[test]
     fn unicode_is_preserved_verbatim() {
-        let h = render_to_html(&el("p", vec![("title", st("日本 🚀"))], vec![VNode::text("héllo ✓")]));
+        let h = render_to_html(&el(
+            "p",
+            vec![("title", st("日本 🚀"))],
+            vec![VNode::text("héllo ✓")],
+        ));
         assert_eq!(h, "<p title=\"日本 🚀\">héllo ✓</p>");
     }
 
     #[test]
     fn hostile_tag_and_attribute_names_are_dropped() {
-        assert_eq!(render_to_html(&el("div onclick=alert(1)", vec![], vec![])), "");
-        assert_eq!(render_to_html(&el("script", vec![], vec![VNode::text("alert(1)")])), "");
-        let h = render_to_html(&el("div", vec![("x onmouseover=alert(1) y", st("1")), ("ok", st("2"))], vec![]));
+        assert_eq!(
+            render_to_html(&el("div onclick=alert(1)", vec![], vec![])),
+            ""
+        );
+        assert_eq!(
+            render_to_html(&el("script", vec![], vec![VNode::text("alert(1)")])),
+            ""
+        );
+        let h = render_to_html(&el(
+            "div",
+            vec![("x onmouseover=alert(1) y", st("1")), ("ok", st("2"))],
+            vec![],
+        ));
         assert_eq!(h, "<div ok=\"2\"></div>");
     }
 
     #[test]
     fn inline_handler_attributes_are_dropped_but_event_attrs_are_not_serialized() {
         let ev = VAttr::Event(Rc::new(RefCell::new(|| {})));
-        let h = render_to_html(&el("button", vec![("onclick", st("alert(1)")), ("on_click", ev)], vec![]));
+        let h = render_to_html(&el(
+            "button",
+            vec![("onclick", st("alert(1)")), ("on_click", ev)],
+            vec![],
+        ));
         assert_eq!(h, "<button></button>");
     }
 
     #[test]
     fn raw_html_is_the_only_unescaped_path() {
-        let h = render_to_html(&el("div", vec![], vec![VNode::raw(crate::escape::RawHtml::new("<b>trusted</b>"))]));
+        let h = render_to_html(&el(
+            "div",
+            vec![],
+            vec![VNode::raw(crate::escape::RawHtml::new("<b>trusted</b>"))],
+        ));
         assert_eq!(h, "<div><b>trusted</b></div>");
     }
 

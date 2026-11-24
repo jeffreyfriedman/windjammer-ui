@@ -42,14 +42,3 @@ pub fn render(self) -> string {
         "<div class='wj-tooltip-container ${position_class}'>${self.child}<span class='wj-tooltip-text'>${self.text}</span></div>"
     }
 }
-
-fn main() {
-    let tooltip1 = Tooltip::new("This is a helpful tooltip", "<button>Hover me</button>")
-    println("${tooltip1.render()}")
-
-    let tooltip2 = Tooltip::new("Bottom tooltip", "<span>Info</span>")
-        .position(TooltipPosition::Bottom)
-    println("${tooltip2.render()}")
-}
-
-

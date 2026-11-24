@@ -68,7 +68,7 @@ Button::new("Inc").on_click(move || {
 })
 
 // Display in UI
-Text::new(format!("Count: {}", count.get()))
+Text::new("Count: ${count.get()}")
 ```
 
 **❌ Common Mistakes:**
@@ -158,8 +158,8 @@ fn start() {}
 
 **✅ Correct:**
 ```windjammer
-Text::new(format!("Count: {}", count.get()))
-Text::new(format!("Hello, {}!", name))
+Text::new("Count: ${count.get()}")
+Text::new("Hello, ${name}!")
 ```
 
 **Note:** Direct string interpolation syntax (like `"Count: {count}"`) is planned but not yet implemented. Use `format!()` for now.
@@ -177,7 +177,7 @@ Button::new("Click").on_click(move || {
     // Closure body
     let current = count_ref.get()
     count_ref.set(current + 1)
-    println!("Clicked!")
+    println("Clicked!")
 })
 ```
 
@@ -216,9 +216,9 @@ let ui = if condition {
 let items = Signal::new(vec![1, 2, 3])
 
 // Loop to build UI (outside component tree)
-let mut children = vec![]
+let mut children = []
 for item in items.get() {
-    children.push(Text::new(format!("Item: {}", item)).to_vnode())
+    children.push(Text::new("Item: ${item}").to_vnode())
 }
 
 Flex::new()
@@ -296,7 +296,7 @@ Button::new("Inc").on_click(move || {
     count_inc.set(count_inc.get() + 1)
 })
 
-Text::new(format!("Count: {}", count_display.get()))
+Text::new("Count: ${count_display.get()}")
 ```
 
 ### 2. Use Descriptive Signal Names
@@ -351,7 +351,7 @@ let total = Computed::new(move || {
     items.get().iter().sum::<i32>()
 })
 
-Text::new(format!("Total: {}", total.get()))
+Text::new("Total: ${total.get()}")
 
 // ❌ Avoid: Manual recalculation
 let sum = items.get().iter().sum::<i32>()  // Doesn't update!
@@ -381,7 +381,7 @@ let count = Signal::new(0)
 Button::new("Inc").on_click(move || {
     count.set(count.get() + 1)  // count moved here
 })
-Text::new(format!("{}", count.get()))  // ❌ Error: count moved
+Text::new("${count.get()}")  // ❌ Error: count moved
 
 // ✅ Correct
 let count = Signal::new(0)
@@ -391,7 +391,7 @@ let count_display = count.clone()
 Button::new("Inc").on_click(move || {
     count_inc.set(count_inc.get() + 1)
 })
-Text::new(format!("{}", count_display.get()))
+Text::new("${count_display.get()}")
 ```
 
 ### Pitfall 3: Using Static UI for Dynamic Content
@@ -399,14 +399,14 @@ Text::new(format!("{}", count_display.get()))
 ```windjammer
 // ❌ Wrong: UI won't update
 let count = Signal::new(0)
-let ui = Text::new(format!("Count: {}", count.get()))  // Evaluated once!
+let ui = Text::new("Count: ${count.get()}")  // Evaluated once!
 App::new("Counter", ui.to_vnode()).run()
 
 // ✅ Correct: Use reactive app
 let count = Signal::new(0)
 let count_ref = count.clone()
 App::new_reactive("Counter", move || {
-    Text::new(format!("Count: {}", count_ref.get())).to_vnode()
+    Text::new("Count: ${count_ref.get()}").to_vnode()
 }).run()
 ```
 
@@ -443,7 +443,7 @@ let count_for_display = count.clone()
 ```windjammer
 // ✅ Good: No tracking in debug logs
 Effect::new(move || {
-    println!("Debug: {}", count.get_untracked())
+    println("Debug: ${count.get_untracked()}")
 })
 ```
 
@@ -498,7 +498,7 @@ fn start() {
                     .direction(FlexDirection::Column)
                     .gap("16px")
                     .child(
-                        Text::new(format!("Count: {}", count_ref.get()))
+                        Text::new("Count: ${count_ref.get()}")
                             .size(TextSize::XLarge)
                     )
                     .child(
@@ -553,8 +553,8 @@ fn start() {
                     Button::new("Submit")
                         .variant(ButtonVariant::Primary)
                         .on_click(move || {
-                            println!("Name: {}", name_ref.get())
-                            println!("Email: {}", email_ref.get())
+                            println("Name: ${name_ref.get()}")
+                            println("Email: ${email_ref.get()}")
                         })
                 )
         )

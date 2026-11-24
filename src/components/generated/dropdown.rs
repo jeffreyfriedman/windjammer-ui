@@ -56,7 +56,7 @@ fn render(&self) -> String {
                 }
             };
             { use std::fmt::Write as _; write!(items_html, "<a class='wj-dropdown-item{}' data-value='{}'>{}</a>", disabled_class, item.value, item.label).expect("a formatting trait implementation returned an error"); };
-            i += 1;
+            i = i.wrapping_add(1);
         }
         format!("<div class='wj-dropdown'>\n  <button class='wj-dropdown-toggle'>{} ▼</button>\n  <div class='wj-dropdown-menu'>\n    {}\n  </div>\n</div>", self.label, items_html)
 }

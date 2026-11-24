@@ -21,16 +21,30 @@ fn main() {
     let out_dir = root.join("src/components/generated");
     let local = root.join("../windjammer/target/release/wj");
     let wj = env::var("WJ").unwrap_or_else(|_| {
-        if local.exists() { local.to_string_lossy().to_string() } else { "wj".to_string() }
+        if local.exists() {
+            local.to_string_lossy().to_string()
+        } else {
+            "wj".to_string()
+        }
     });
 
     let status = Command::new(&wj)
         .arg("build")
         .arg(&src_dir)
-        .args(["--target", "rust", "--library", "--module-file", "--no-cargo", "--no-generate-cargo-toml", "-o"])
+        .args([
+            "--target",
+            "rust",
+            "--library",
+            "--module-file",
+            "--no-cargo",
+            "--no-generate-cargo-toml",
+            "-o",
+        ])
         .arg(&out_dir)
         .status()
-        .unwrap_or_else(|e| panic!("could not run the Windjammer compiler `{wj}` ({e}); set WJ=/path/to/wj"));
+        .unwrap_or_else(|e| {
+            panic!("could not run the Windjammer compiler `{wj}` ({e}); set WJ=/path/to/wj")
+        });
     assert!(status.success(), "wj build failed for src/components_wj");
 
     // The compiler also writes cross-crate metadata and a stamp; they are not part of the tree.

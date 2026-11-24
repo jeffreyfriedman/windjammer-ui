@@ -66,7 +66,12 @@ pub struct Mounted<P: DomPort> {
 
 impl<P: DomPort> Mounted<P> {
     pub fn new(port: P) -> Self {
-        Mounted { port, current: None, handlers: HashMap::new(), listened: BTreeSet::new() }
+        Mounted {
+            port,
+            current: None,
+            handlers: HashMap::new(),
+            listened: BTreeSet::new(),
+        }
     }
 
     /// First render builds the tree; later renders diff and patch in place.
@@ -97,7 +102,9 @@ impl<P: DomPort> Mounted<P> {
 
     /// Handlers for `event` on `target` and its ancestors, innermost first.
     pub fn handlers_for(&self, target: &P::Node, event: &str) -> Vec<Handler> {
-        let Some(mut path) = path_of(&self.port, target) else { return vec![] };
+        let Some(mut path) = path_of(&self.port, target) else {
+            return vec![];
+        };
         let mut found = Vec::new();
         loop {
             if let Some(h) = self.handlers.get(&(path.clone(), event.to_string())) {
@@ -121,7 +128,10 @@ impl<P: DomPort> Mounted<P> {
 }
 
 fn collect_handlers(v: &VNode, path: &mut Path, out: &mut HashMap<(Path, String), Handler>) {
-    if let VNode::Element { attrs, children, .. } = v {
+    if let VNode::Element {
+        attrs, children, ..
+    } = v
+    {
         for (k, a) in attrs {
             if let (VAttr::Event(h), Some(ev)) = (a, k.strip_prefix("on_")) {
                 out.insert((path.clone(), ev.to_string()), h.clone());

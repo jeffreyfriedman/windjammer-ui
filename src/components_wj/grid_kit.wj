@@ -107,7 +107,7 @@ impl DataGrid {
             let mut hit = needle.len() == 0
             let mut c = 0
             while c < self.rows[i].len() && !hit {
-                if self.rows[i][c].to_lowercase().contains(needle.as_str()) {
+                if self.rows[i][c].to_lowercase().contains(needle) {
                     hit = true
                 }
                 c = c + 1

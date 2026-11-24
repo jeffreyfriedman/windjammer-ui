@@ -43,7 +43,7 @@ fn start() {
         .child(
             Flex::new()
                 .direction(FlexDirection::Column)
-                .child(Text::new(format!("Count: {}", count.get())))
+                .child(Text::new("Count: ${count.get()}"))
                 .child(
                     Button::new("Click me")
                         .on_click(move || count.set(count.get() + 1))
@@ -106,9 +106,9 @@ Derived value that auto-updates when dependencies change.
 let count = Signal::new(0)
 let doubled = Computed::new(move || count.get() * 2)
 
-println!("{}", doubled.get())  // 0
+println("${doubled.get()}")  // 0
 count.set(5)
-println!("{}", doubled.get())  // 10
+println("${doubled.get()}")  // 10
 ```
 
 ### Effect
@@ -119,7 +119,7 @@ Side effect that runs when dependencies change.
 let count = Signal::new(0)
 
 Effect::new(move || {
-    println!("Count is now: {}", count.get())
+    println("Count is now: ${count.get()}")
 })
 
 count.set(5)  // Prints: "Count is now: 5"
@@ -241,7 +241,7 @@ Button::new("Click me")
     .size(ButtonSize::Medium)
     .disabled(false)
     .on_click(move || {
-        println!("Button clicked!")
+        println("Button clicked!")
     })
 ```
 
@@ -467,10 +467,10 @@ VNode::Text("Hello".to_string())
 // Element node
 VNode::Element {
     tag: "div".to_string(),
-    attrs: vec![
+    attrs: [
         ("class".to_string(), VAttr::Static("container".to_string())),
     ],
-    children: vec![
+    children: [
         VNode::Text("Content".to_string()),
     ],
 }
@@ -488,7 +488,7 @@ Most components provide `.to_vnode()` method for conversion.
 
 ```windjammer
 Button::new("Click").on_click(move || {
-    println!("Clicked!")
+    println("Clicked!")
 })
 ```
 
@@ -559,7 +559,7 @@ fn start() {
                 .direction(FlexDirection::Column)
                 .gap("16px")
                 .child(
-                    Text::new(format!("Count: {}", count_display.get()))
+                    Text::new("Count: ${count_display.get()}")
                         .size(TextSize::XLarge)
                         .bold()
                 )

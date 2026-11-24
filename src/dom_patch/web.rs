@@ -16,7 +16,12 @@ pub struct WebDom {
 
 impl WebDom {
     pub fn new(document: Document, container: Element) -> Self {
-        WebDom { document, container, on_event: None, closures: Vec::new() }
+        WebDom {
+            document,
+            container,
+            on_event: None,
+            closures: Vec::new(),
+        }
     }
 }
 
@@ -119,8 +124,15 @@ impl DomPort for WebDom {
         node.contains(Some(&active)).then_some(active)
     }
     fn selection_of(&self, node: &Node) -> Option<(usize, usize)> {
-        let get = |k: &str| js_sys::Reflect::get(node, &JsValue::from_str(k)).ok()?.as_f64();
-        Some((get("selectionStart")? as usize, get("selectionEnd")? as usize))
+        let get = |k: &str| {
+            js_sys::Reflect::get(node, &JsValue::from_str(k))
+                .ok()?
+                .as_f64()
+        };
+        Some((
+            get("selectionStart")? as usize,
+            get("selectionEnd")? as usize,
+        ))
     }
     fn focus_node(&mut self, node: &Node, selection: Option<(usize, usize)>) {
         if let Some(h) = node.dyn_ref::<web_sys::HtmlElement>() {
@@ -129,7 +141,11 @@ impl DomPort for WebDom {
         if let Some((a, b)) = selection {
             let f = js_sys::Reflect::get(node, &JsValue::from_str("setSelectionRange")).ok();
             if let Some(f) = f.and_then(|f| f.dyn_into::<js_sys::Function>().ok()) {
-                let _ = f.call2(node, &JsValue::from_f64(a as f64), &JsValue::from_f64(b as f64));
+                let _ = f.call2(
+                    node,
+                    &JsValue::from_f64(a as f64),
+                    &JsValue::from_f64(b as f64),
+                );
             }
         }
     }
@@ -159,14 +175,18 @@ impl DomPort for WebDom {
                 return;
             }
         }
-        let had = self.focused_within(child).map(|f| (self.selection_of(&f), f));
+        let had = self
+            .focused_within(child)
+            .map(|f| (self.selection_of(&f), f));
         self.insert_child(parent, index, child);
         if let Some((sel, f)) = had {
             self.focus_node(&f, sel);
         }
     }
     fn listen(&mut self, event: &str) {
-        let Some(cb) = self.on_event.clone() else { return };
+        let Some(cb) = self.on_event.clone() else {
+            return;
+        };
         let name = event.to_string();
         let closure = Closure::wrap(Box::new(move |e: web_sys::Event| {
             if let Some(t) = e.target().and_then(|t| t.dyn_into::<Node>().ok()) {
@@ -183,20 +203,32 @@ impl DomPort for WebDom {
         }) as Box<dyn FnMut(web_sys::Event)>);
         let opts = web_sys::AddEventListenerOptions::new();
         opts.set_capture(true);
-        let _ = self.container.add_event_listener_with_callback_and_add_event_listener_options(
-            event,
-            closure.as_ref().unchecked_ref(),
-            &opts,
-        );
+        let _ = self
+            .container
+            .add_event_listener_with_callback_and_add_event_listener_options(
+                event,
+                closure.as_ref().unchecked_ref(),
+                &opts,
+            );
         self.closures.push(closure);
     }
 }
 
 /// Key, nearest `data-wj-act` and value of the event's target, for `dom_patch::current_event`.
 fn event_info_of(e: &web_sys::Event, target: &Node) -> super::event_info::EventInfo {
-    let key = e.dyn_ref::<web_sys::KeyboardEvent>().map(|k| k.key()).unwrap_or_default();
-    let shift = e.dyn_ref::<web_sys::KeyboardEvent>().map(|k| k.shift_key()).unwrap_or(false);
-    let key = if shift && key == "Tab" { "Shift+Tab".to_string() } else { key };
+    let key = e
+        .dyn_ref::<web_sys::KeyboardEvent>()
+        .map(|k| k.key())
+        .unwrap_or_default();
+    let shift = e
+        .dyn_ref::<web_sys::KeyboardEvent>()
+        .map(|k| k.shift_key())
+        .unwrap_or(false);
+    let key = if shift && key == "Tab" {
+        "Shift+Tab".to_string()
+    } else {
+        key
+    };
     let mut act = String::new();
     let mut value = String::new();
     if let Some(el) = target.dyn_ref::<Element>() {
@@ -204,7 +236,10 @@ fn event_info_of(e: &web_sys::Event, target: &Node) -> super::event_info::EventI
             act = host.get_attribute("data-wj-act").unwrap_or_default();
         }
         let get = |name: &str| js_sys::Reflect::get(el, &JsValue::from_str(name)).ok();
-        let is_checkbox = matches!(get("type").and_then(|v| v.as_string()).as_deref(), Some("checkbox"));
+        let is_checkbox = matches!(
+            get("type").and_then(|v| v.as_string()).as_deref(),
+            Some("checkbox")
+        );
         if is_checkbox {
             let checked = get("checked").and_then(|v| v.as_bool()).unwrap_or(false);
             value = if checked { "true" } else { "false" }.to_string();
@@ -217,18 +252,28 @@ fn event_info_of(e: &web_sys::Event, target: &Node) -> super::event_info::EventI
             value = el.scroll_top().to_string();
         }
     }
-    super::event_info::EventInfo { key, act, value, shift }
+    super::event_info::EventInfo {
+        key,
+        act,
+        value,
+        shift,
+    }
 }
 
 /// Mount helper: wires delegated events to the shared `Mounted`.
-pub fn new_mounted(document: Document, container: Element) -> std::rc::Rc<std::cell::RefCell<Mounted<WebDom>>> {
+pub fn new_mounted(
+    document: Document,
+    container: Element,
+) -> std::rc::Rc<std::cell::RefCell<Mounted<WebDom>>> {
     use std::cell::RefCell;
     use std::rc::Rc;
     container.set_inner_html(""); // the patcher owns the container's only child
     let mounted = Rc::new(RefCell::new(Mounted::new(WebDom::new(document, container))));
     let weak = Rc::downgrade(&mounted);
     mounted.borrow_mut().port.on_event = Some(Rc::new(move |target: Node, event: String| {
-        let Some(m) = weak.upgrade() else { return DispatchOutcome::default() };
+        let Some(m) = weak.upgrade() else {
+            return DispatchOutcome::default();
+        };
         // Clone handlers out so no borrow is held while user code runs.
         let handlers = m.borrow().handlers_for(&target, &event);
         run_handlers(&handlers)

@@ -83,14 +83,14 @@ fn render(&self) -> String {
             let frag = format!("{}{}", frag, n.subtitle);
             let frag = format!("{}{}", frag, "</div></div>");
             { use std::fmt::Write as _; write!(body, "{}", frag).expect("a formatting trait implementation returned an error"); };
-            i += 1;
+            i = i.wrapping_add(1);
         }
         let mut svg_paths = String::new();
         let mut w = 0_usize;
         while w < self.wires.len() {
             let edge = self.wires[w];
             { use std::fmt::Write as _; write!(svg_paths, "<path class='bt-wire' data-from=\"{}\" data-to=\"{}\" />", edge.from_id, edge.to_id).expect("a formatting trait implementation returned an error"); };
-            w += 1;
+            w = w.wrapping_add(1);
         }
         let z = format!("{}{}", "", "<div class='bt-canvas'>");
         let z = z + "<div class='bt-canvas-inner' style=\"transform: scale(" + &format!("{}", self.zoom) + ") translate(" + &format!("{}", self.pan_x) + "px," + &format!("{}", self.pan_y) + "px);\">";

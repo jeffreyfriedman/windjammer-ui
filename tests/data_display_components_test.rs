@@ -109,7 +109,10 @@ fn panel_head_renders_kicker_title_and_actions() {
         .inline()
         .lede("Plan vs actual.")
         .render();
-    assert!(!inline.contains("panel-head"), "inline must omit panel-head wrapper: {inline}");
+    assert!(
+        !inline.contains("panel-head"),
+        "inline must omit panel-head wrapper: {inline}"
+    );
     assert!(inline.contains("hub-kicker\">Planning<"));
     assert!(inline.contains("<h2>Plans</h2>"));
     assert!(inline.contains("class=\"muted\""));
@@ -117,7 +120,10 @@ fn panel_head_renders_kicker_title_and_actions() {
         .inline()
         .render();
     assert!(kicker_only.contains("hub-kicker\">Saved<"));
-    assert!(!kicker_only.contains("<h2>"), "kicker-only inline must omit h2: {kicker_only}");
+    assert!(
+        !kicker_only.contains("<h2>"),
+        "kicker-only inline must omit h2: {kicker_only}"
+    );
 }
 
 #[test]
@@ -130,4 +136,3 @@ fn panel_section_head_renders_h3_and_actions() {
     assert!(html.contains("<h3>Semantic schema</h3>"));
     assert!(html.contains("btn-secondary"));
 }
-

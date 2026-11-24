@@ -62,7 +62,7 @@ fn render(&self) -> String {
 }
 
 
-pub fn path_for(name: IconName) -> String {
+fn path_for(name: IconName) -> String {
     match name {
         IconName::Home => String::from("M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1v-10.5z"),
         IconName::Money => String::from("M4 7h16v10H4V7zm2 2v6h12V9H6zm3 2h6v2H9v-2z"),

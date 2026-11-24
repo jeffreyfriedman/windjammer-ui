@@ -53,13 +53,3 @@ ${self.code}</textarea>
 </div>"
     }
 }
-
-fn main() {
-    let editor = CodeEditor::new("fn main() {\n    println!(\"Hello\");\n}")
-        .language("rust")
-        .theme("dark")
-
-    println("${editor.render()}")
-}
-
-

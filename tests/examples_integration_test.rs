@@ -23,7 +23,10 @@ fn transpile_example(path: &str) -> Result<(), String> {
     let out_dir = std::env::temp_dir().join(format!(
         "wj-ui-example-{}-{}",
         std::process::id(),
-        Path::new(path).file_stem().and_then(|s| s.to_str()).unwrap_or("x")
+        Path::new(path)
+            .file_stem()
+            .and_then(|s| s.to_str())
+            .unwrap_or("x")
     ));
     let output = Command::new("wj")
         .args(["build", path, "--no-cargo", "-o"])

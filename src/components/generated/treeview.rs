@@ -45,7 +45,7 @@ pub fn render(&self, depth: i32) -> String {
             while i < self.children.len() {
                 let child = &self.children[i];
                 html = format!("{}{}", html, child.render(depth + 1_i32));
-                i += 1;
+                i = i.wrapping_add(1);
             }
         }
         html
@@ -78,7 +78,7 @@ fn render(&self) -> String {
         while i < self.items.len() {
             let item = &self.items[i];
             { use std::fmt::Write as _; write!(html, "{}", item.render(0_i32)).expect("a formatting trait implementation returned an error"); };
-            i += 1;
+            i = i.wrapping_add(1);
         }
         format!("{}</div>", html)
 }

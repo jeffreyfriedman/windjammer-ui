@@ -69,7 +69,7 @@ fn render(&self) -> String {
                 }
             };
             html = format!("{}<label class='wj-radio'><input type='radio' name='{}' value='{}'{}{}><span>{}</span></label>", html, self.name, opt.value, checked_attr, disabled_attr, opt.label);
-            i += 1;
+            i = i.wrapping_add(1);
         }
         format!("{}</div>", html)
 }

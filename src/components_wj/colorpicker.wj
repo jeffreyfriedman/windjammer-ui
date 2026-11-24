@@ -41,13 +41,3 @@ pub fn render(self) -> string {
 </div>"
     }
 }
-
-fn main() {
-    let picker = ColorPicker::new()
-        .value("#667eea")
-        .label("Theme Color")
-
-    println("${picker.render()}")
-}
-
-

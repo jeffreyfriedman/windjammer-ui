@@ -38,7 +38,10 @@ mod tests {
 
     #[test]
     fn set_returns_previous_and_current_reads_back() {
-        let first = EventInfo { key: "Enter".into(), ..Default::default() };
+        let first = EventInfo {
+            key: "Enter".into(),
+            ..Default::default()
+        };
         let prev = set_current_event(first.clone());
         assert_eq!(prev, EventInfo::default());
         assert_eq!(current_event(), first);

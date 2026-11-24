@@ -10,16 +10,39 @@ use std::collections::HashMap;
 #[derive(Clone)]
 pub enum PatchOp {
     /// Replace the node at `path` (a root replace uses `[]`).
-    Replace { path: Path, node: VNode },
+    Replace {
+        path: Path,
+        node: VNode,
+    },
     /// Insert `node` as child `index` of `parent`.
-    Insert { parent: Path, index: usize, node: VNode },
+    Insert {
+        parent: Path,
+        index: usize,
+        node: VNode,
+    },
     /// Remove the node at `path`.
-    Remove { path: Path },
+    Remove {
+        path: Path,
+    },
     /// Move child `from` of `parent` so it ends up at index `to`.
-    Move { parent: Path, from: usize, to: usize },
-    SetAttr { path: Path, name: String, value: String },
-    RemoveAttr { path: Path, name: String },
-    SetText { path: Path, text: String },
+    Move {
+        parent: Path,
+        from: usize,
+        to: usize,
+    },
+    SetAttr {
+        path: Path,
+        name: String,
+        value: String,
+    },
+    RemoveAttr {
+        path: Path,
+        name: String,
+    },
+    SetText {
+        path: Path,
+        text: String,
+    },
 }
 
 /// Diff `old` into `new`. Both should already be `sanitized()`.
@@ -33,22 +56,39 @@ fn diff_node(old: &VNode, new: &VNode, path: &mut Path, ops: &mut Vec<PatchOp>) 
     match (old, new) {
         (VNode::Text(a), VNode::Text(b)) => {
             if a != b {
-                ops.push(PatchOp::SetText { path: path.clone(), text: b.clone() });
+                ops.push(PatchOp::SetText {
+                    path: path.clone(),
+                    text: b.clone(),
+                });
             }
         }
         (VNode::RawHtml(a), VNode::RawHtml(b)) => {
             if a != b {
-                ops.push(PatchOp::Replace { path: path.clone(), node: new.clone() });
+                ops.push(PatchOp::Replace {
+                    path: path.clone(),
+                    node: new.clone(),
+                });
             }
         }
         (
-            VNode::Element { tag: ta, attrs: aa, children: ca },
-            VNode::Element { tag: tb, attrs: ab, children: cb },
+            VNode::Element {
+                tag: ta,
+                attrs: aa,
+                children: ca,
+            },
+            VNode::Element {
+                tag: tb,
+                attrs: ab,
+                children: cb,
+            },
         ) if ta == tb => {
             diff_attrs(aa, ab, path, ops);
             diff_children(ca, cb, path, ops);
         }
-        _ => ops.push(PatchOp::Replace { path: path.clone(), node: new.clone() }),
+        _ => ops.push(PatchOp::Replace {
+            path: path.clone(),
+            node: new.clone(),
+        }),
     }
 }
 
@@ -63,17 +103,32 @@ pub(crate) fn plain_attrs(attrs: &[(String, VAttr)]) -> HashMap<&str, &str> {
         .collect()
 }
 
-fn diff_attrs(old: &[(String, VAttr)], new: &[(String, VAttr)], path: &Path, ops: &mut Vec<PatchOp>) {
+fn diff_attrs(
+    old: &[(String, VAttr)],
+    new: &[(String, VAttr)],
+    path: &Path,
+    ops: &mut Vec<PatchOp>,
+) {
     let (old, new) = (plain_attrs(old), plain_attrs(new));
     let mut removed: Vec<&&str> = old.keys().filter(|k| !new.contains_key(*k)).collect();
     removed.sort();
     for name in removed {
-        ops.push(PatchOp::RemoveAttr { path: path.clone(), name: (*name).to_string() });
+        ops.push(PatchOp::RemoveAttr {
+            path: path.clone(),
+            name: (*name).to_string(),
+        });
     }
-    let mut changed: Vec<(&&str, &&str)> = new.iter().filter(|(k, v)| old.get(*k) != Some(*v)).collect();
+    let mut changed: Vec<(&&str, &&str)> = new
+        .iter()
+        .filter(|(k, v)| old.get(*k) != Some(*v))
+        .collect();
     changed.sort();
     for (name, value) in changed {
-        ops.push(PatchOp::SetAttr { path: path.clone(), name: (*name).to_string(), value: (*value).to_string() });
+        ops.push(PatchOp::SetAttr {
+            path: path.clone(),
+            name: (*name).to_string(),
+            value: (*value).to_string(),
+        });
     }
 }
 
@@ -121,11 +176,22 @@ fn diff_children(old: &[VNode], new: &[VNode], path: &mut Path, ops: &mut Vec<Pa
     let mut order = remove_unmatched(old.len(), &matches, path, ops);
     for (i, m) in matches.iter().enumerate() {
         match m {
-            None => ops.push(PatchOp::Insert { parent: path.clone(), index: i, node: new[i].clone() }),
+            None => ops.push(PatchOp::Insert {
+                parent: path.clone(),
+                index: i,
+                node: new[i].clone(),
+            }),
             Some(old_idx) => {
-                let from = order.iter().position(|o| o == old_idx).expect("matched node present");
+                let from = order
+                    .iter()
+                    .position(|o| o == old_idx)
+                    .expect("matched node present");
                 if from != i {
-                    ops.push(PatchOp::Move { parent: path.clone(), from, to: i });
+                    ops.push(PatchOp::Move {
+                        parent: path.clone(),
+                        from,
+                        to: i,
+                    });
                     let moved = order.remove(from);
                     order.insert(i, moved);
                 }
@@ -141,7 +207,12 @@ fn diff_children(old: &[VNode], new: &[VNode], path: &mut Path, ops: &mut Vec<Pa
 }
 
 /// Emit removals (highest index first) for old children nobody matched; return survivors.
-fn remove_unmatched(old_len: usize, matches: &[Option<usize>], path: &Path, ops: &mut Vec<PatchOp>) -> Vec<usize> {
+fn remove_unmatched(
+    old_len: usize,
+    matches: &[Option<usize>],
+    path: &Path,
+    ops: &mut Vec<PatchOp>,
+) -> Vec<usize> {
     let kept: std::collections::HashSet<usize> = matches.iter().flatten().copied().collect();
     for i in (0..old_len).rev().filter(|i| !kept.contains(i)) {
         let mut p = path.clone();

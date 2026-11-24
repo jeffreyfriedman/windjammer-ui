@@ -8,22 +8,22 @@ use windjammer_ui::*
 use std::net::{Server, ServerRequest, ServerResponse}
 
 fn main() {
-    println!("🚀 Starting Windjammer UI Web Server...")
-    println!("📍 Server running at http://localhost:3000")
-    println!("Press Ctrl+C to stop")
+    println("🚀 Starting Windjammer UI Web Server...")
+    println("📍 Server running at http://localhost:3000")
+    println("Press Ctrl+C to stop")
     
     let server = Server::new("127.0.0.1", 3000)
     
     match server.serve(handle_request) {
-        Ok(_) => println!("Server stopped"),
-        Err(e) => println!("Server error: {}", e),
+        Ok(_) => println("Server stopped"),
+        Err(e) => println("Server error: ${e}"),
     }
 }
 
 fn handle_request(req: ServerRequest) -> ServerResponse {
-    println!("📨 {} {}", req.method, req.path)
+    println("📨 ${req.method} ${req.path}")
     
-    match req.path.as_str() {
+    match req.path {
         "/" => serve_home_page(),
         "/dashboard" => serve_dashboard(),
         "/chat" => serve_chat_page(),
@@ -61,7 +61,7 @@ fn serve_chat_page() -> ServerResponse {
 
 fn serve_api_todos(req: ServerRequest) -> ServerResponse {
     // Example API endpoint
-    match req.method.as_str() {
+    match req.method {
         "GET" => {
             let todos = "[{\"id\": 1, \"text\": \"Learn Windjammer\", \"completed\": true}]"
             ServerResponse::json(todos)
@@ -86,25 +86,19 @@ fn serve_not_found() -> ServerResponse {
 }
 
 fn build_complete_html_page(title: string, content: string) -> string {
-    format!(
-        "<!DOCTYPE html>
+    "<!DOCTYPE html>
 <html>
 <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>{}</title>
-    <style>{}</style>
+    <title>${title}</title>
+    <style>${get_base_styles()}</style>
 </head>
 <body>
-    {}
-    {}
+    ${build_nav_bar()}
+    ${content}
 </body>
-</html>",
-        title,
-        get_base_styles(),
-        build_nav_bar(),
-        content
-    )
+</html>"
 }
 
 fn build_nav_bar() -> string {

@@ -4,7 +4,7 @@
 use windjammer_ui::*
 
 fn main() {
-    println!("🤖 Starting Windjammer Chat App")
+    println("🤖 Starting Windjammer Chat App")
     
     // Build chat interface
     let ui = Container::new()
@@ -18,7 +18,7 @@ fn main() {
         )
         .render()
     
-    println!("{}", ui)
+    println("${ui}")
 }
 
 fn build_chat_history() -> string {

@@ -36,10 +36,23 @@ fn wj_files(dir: &str) -> Vec<PathBuf> {
 fn components_wj_passes_wj_check() {
     let Some(wj) = wj_binary() else { return };
     let dir = Path::new(env!("CARGO_MANIFEST_DIR")).join("src/components_wj");
-    let out = Command::new(&wj).arg("check").arg(&dir).output().expect("run wj check");
-    let text = String::from_utf8_lossy(&out.stdout).to_string() + &String::from_utf8_lossy(&out.stderr);
-    let errors: Vec<&str> = text.lines().filter(|l| l.starts_with("error")).take(20).collect();
-    assert!(out.status.success() && errors.is_empty(), "wj check src/components_wj failed:\n{}", errors.join("\n"));
+    let out = Command::new(&wj)
+        .arg("check")
+        .arg(&dir)
+        .output()
+        .expect("run wj check");
+    let text =
+        String::from_utf8_lossy(&out.stdout).to_string() + &String::from_utf8_lossy(&out.stderr);
+    let errors: Vec<&str> = text
+        .lines()
+        .filter(|l| l.starts_with("error"))
+        .take(20)
+        .collect();
+    assert!(
+        out.status.success() && errors.is_empty(),
+        "wj check src/components_wj failed:\n{}",
+        errors.join("\n")
+    );
 }
 
 #[test]
@@ -66,11 +79,21 @@ fn every_example_transpiles() {
             let _ = std::fs::remove_dir_all(&out_dir);
             if !out.status.success() {
                 let text = String::from_utf8_lossy(&out.stderr);
-                let first = text.lines().find(|l| l.contains("rror")).unwrap_or("(no message)");
+                let first = text
+                    .lines()
+                    .find(|l| l.contains("rror"))
+                    .unwrap_or("(no message)");
                 failures.push(format!("{}: {}", file.display(), first));
             }
         }
     }
-    assert!(checked >= 10, "expected the examples to be found, saw {checked}");
-    assert!(failures.is_empty(), "examples that no longer transpile:\n{}", failures.join("\n"));
+    assert!(
+        checked >= 10,
+        "expected the examples to be found, saw {checked}"
+    );
+    assert!(
+        failures.is_empty(),
+        "examples that no longer transpile:\n{}",
+        failures.join("\n")
+    );
 }

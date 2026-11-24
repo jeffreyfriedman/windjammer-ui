@@ -51,13 +51,3 @@ impl Renderable for DatePicker {
         "<div class='wj-datepicker'>${label_html}<input class='wj-datepicker-input' type='date' id='${self.name}' name='${self.name}' value='${self.value}'${req}/></div>"
     }
 }
-
-fn main() {
-    let html = DatePicker::new()
-        .label("Issue date")
-        .name("issue_date")
-        .value("2026-07-25")
-        .required(true)
-        .render()
-    println("${html}")
-}

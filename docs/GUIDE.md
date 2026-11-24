@@ -61,7 +61,7 @@ Create a file called `hello.wj`:
 
 ```windjammer
 fn main() {
-    println!("Hello, Windjammer!")
+    println("Hello, Windjammer!")
 }
 ```
 
@@ -114,7 +114,7 @@ Types are usually inferred, but you can be explicit:
 ```windjammer
 let x: int = 42
 let name: string = "Alice"
-let numbers: Vec<int> = vec![1, 2, 3]
+let numbers: Vec<int> = [1, 2, 3]
 ```
 
 ### Basic Types
@@ -473,10 +473,10 @@ enum Color {
 let color = Color.Red
 
 match color {
-    Color.Red => println!("Red!"),
-    Color.Green => println!("Green!"),
-    Color.Blue => println!("Blue!"),
-    Color.Custom(r, g, b) => println!("RGB({}, {}, {})", r, g, b),
+    Color.Red => println("Red!"),
+    Color.Green => println("Green!"),
+    Color.Blue => println("Blue!"),
+    Color.Custom(r, g, b) => println("RGB(${r}, ${g}, ${b})"),
 }
 ```
 
@@ -673,7 +673,7 @@ When targeting JavaScript, Windjammer generates clean ES2020+ code:
 **Input (`hello.wj`):**
 ```windjammer
 fn greet(name: string) {
-    println!("Hello, ${name}!")
+    println("Hello, ${name}!")
 }
 
 fn main() {
@@ -970,10 +970,10 @@ Automatic browser parallelism for `spawn`:
 // Windjammer code
 go {
     let result = heavy_computation()
-    println!("Result: ${result}")
+    println("Result: ${result}")
 }
 
-println!("Main thread continues...")
+println("Main thread continues...")
 ```
 
 **JavaScript output (with automatic Web Worker):**
@@ -1145,7 +1145,7 @@ fn test_assertions() {
 fn test_should_panic() {
     // Test that code panics
     let result = should_panic(|| {
-        panic!("This should panic")
+        panic("This should panic")
     })
     assert(result, "Code should have panicked")
 }
@@ -1417,8 +1417,8 @@ let single_quote = '\''  // Single quote
 let null = '\0'         // Null character
 
 // Use in strings
-println!("Line 1\nLine 2\nLine 3")
-println!("Column1\tColumn2\tColumn3")
+println("Line 1\nLine 2\nLine 3")
+println("Column1\tColumn2\tColumn3")
 ```
 
 ### Character Operations
@@ -1435,7 +1435,7 @@ fn is_vowel(c: char) -> bool {
 fn main() {
     let ch = 'a'
     if is_vowel(ch) {
-        println!("${ch} is a vowel")
+        println("${ch} is a vowel")
     }
 }
 ```
@@ -1777,7 +1777,7 @@ struct Point {
 // Now you can:
 let p1 = Point { x: 10, y: 20 }
 let p2 = p1  // Copy
-println!("{:?}", p1)  // Debug
+println("${p1:?}")  // Debug
 
 // Common derives
 @auto(Debug, Clone, PartialEq, Eq)
@@ -1921,7 +1921,7 @@ struct Circle {
 
 impl Drawable for Circle {
     fn draw(&self) {
-        println!("Drawing circle with radius {}", self.radius)
+        println("Drawing circle with radius ${self.radius}")
     }
     
     fn area(&self) -> float {
@@ -1938,7 +1938,7 @@ Trait bounds specify requirements for generic type parameters:
 
 ```windjammer
 fn print_value<T: Display>(value: T) {
-    println!("{}", value)
+    println("${value}")
 }
 ```
 
@@ -1947,8 +1947,8 @@ fn print_value<T: Display>(value: T) {
 ```windjammer
 fn display_and_clone<T: Display + Clone>(value: T) {
     let copy = value.clone()
-    println!("Original: {}", value)
-    println!("Clone: {}", copy)
+    println("Original: ${value}")
+    println("Clone: ${copy}")
 }
 ```
 
@@ -1970,8 +1970,8 @@ impl<T: Clone> Container<T> {
 
 ```windjammer
 fn compare<T: Display, U: Display>(a: T, b: U) {
-    println!("A: {}", a)
-    println!("B: {}", b)
+    println("A: ${a}")
+    println("B: ${b}")
 }
 ```
 
@@ -1987,8 +1987,8 @@ where
     T: Display,
     U: Debug
 {
-    println!("First: {}", first)
-    println!("Second: {:?}", second)
+    println("First: ${first}")
+    println("Second: ${second:?}")
 }
 ```
 
@@ -2002,7 +2002,7 @@ where
 {
     let a_copy = a.clone()
     let b_copy = b.clone()
-    println!("Processing: {}, {:?}", a, b)
+    println("Processing: ${a}, ${b:?}")
 }
 ```
 
@@ -2024,8 +2024,8 @@ where
     U: Clone + Display
 {
     fn display_both(&self) {
-        println!("First: {}", self.first)
-        println!("Second: {}", self.second)
+        println("First: ${self.first}")
+        println("Second: ${self.second}")
     }
 }
 ```
@@ -2118,7 +2118,7 @@ where
     C::Item: Display
 {
     let item = container.get()
-    println!("Container item: {}", item)
+    println("Container item: ${item}")
 }
 ```
 
@@ -2181,7 +2181,7 @@ fn create_pet(choice: int) -> dyn Pet {
 **In collections**:
 
 ```windjammer
-let shapes: Vec<dyn Drawable> = vec![
+let shapes: Vec<dyn Drawable> = [
     Circle { radius: 5 },
     Square { side: 10 }
 ]
@@ -2220,13 +2220,13 @@ struct Dog {
 
 impl Animal for Dog {
     fn make_sound(&self) {
-        println!("Woof!")
+        println("Woof!")
     }
 }
 
 impl Pet for Dog {
     fn play(&self) {
-        println!("{} is playing!", self.name)
+        println("${self.name} is playing!")
     }
 }
 ```
@@ -2317,8 +2317,8 @@ bound Comparable = PartialEq + PartialOrd
 
 // Use in function signatures
 fn log<T: Printable>(value: T) {
-    println!("Display: {}", value)
-    println!("Debug: {:?}", value)
+    println("Display: ${value}")
+    println("Debug: ${value:?}")
 }
 
 fn duplicate<T: Copyable>(value: T) -> T {
@@ -2336,7 +2336,7 @@ bound Printable = Display + Debug
 
 // Use both
 fn save_and_log<T: Serializable + Printable>(item: T) {
-    println!("Saving: {:?}", item);
+    println("Saving: ${item:?}");
     // ... serialize and save ...
 }
 ```
@@ -2439,8 +2439,8 @@ fn main() {
     
     // Get optional
     match env.get("HOME") {
-        Some(home) => println!("Home: {}", home),
-        None => println!("No HOME set")
+        Some(home) => println("Home: ${home}"),
+        None => println("No HOME set")
     }
     
     // Set and remove
@@ -2463,19 +2463,19 @@ use std.process
 fn main() {
     // Run shell command
     match process.run("ls -la") {
-        Ok(output) => println!("Output: {}", output),
-        Err(err) => println!("Error: {}", err)
+        Ok(output) => println("Output: ${output}"),
+        Err(err) => println("Error: ${err}")
     }
     
     // Run with explicit arguments
-    let args = vec!["--version"]
+    let args = ["--version"]
     match process.run_with_args("rustc", args) {
-        Ok(output) => println!("{}", output),
-        Err(err) => eprintln!("{}", err)
+        Ok(output) => println("${output}"),
+        Err(err) => stderr.println("${err}")
     }
     
     // Process info
-    println!("PID: {}", process.pid())
+    println("PID: ${process.pid()}")
     
     // Exit (use sparingly!)
     // process.exit(0)
@@ -2498,14 +2498,14 @@ fn main() {
     let coin_flip = random.bool()
     
     // Shuffle a vector
-    let numbers = vec![1, 2, 3, 4, 5]
+    let numbers = [1, 2, 3, 4, 5]
     let shuffled = random.shuffle(numbers)
     
     // Pick random element
-    let items = vec!["apple", "banana", "cherry"]
+    let items = ["apple", "banana", "cherry"]
     match random.choice(items) {
-        Some(fruit) => println!("Picked: {}", fruit),
-        None => println!("Empty list!")
+        Some(fruit) => println("Picked: ${fruit}"),
+        None => println("Empty list!")
     }
 }
 ```
@@ -2517,9 +2517,9 @@ use std.async
 
 @async
 fn main() {
-    println!("Waiting...")
+    println("Waiting...")
     async.sleep_ms(1000).await
-    println!("Done!")
+    println("Done!")
 }
 ```
 
@@ -2533,27 +2533,24 @@ use std.fs
 fn main() {
     // Read and write files
     match fs.write("config.txt", "port=3000") {
-        Ok(_) => println!("File written"),
-        Err(e) => println!("Error: {}", e)
+        Ok(_) => println("File written"),
+        Err(e) => println("Error: ${e}")
     }
     
     let content = fs.read_to_string("config.txt")?
-    println!("Content: {}", content)
+    println("Content: ${content}")
     
     // Directory operations
     fs.create_dir_all("data/logs")?
     let entries = fs.read_dir(".")?
     
     for entry in entries {
-        println!("{} ({})", 
-            entry.name(),
-            if entry.is_dir() { "dir" } else { "file" }
-        )
+        println("${entry.name()} (${if entry.is_dir() { "dir" } else { "file" }})")
     }
     
     // File metadata
     let meta = fs.metadata("config.txt")?
-    println!("Size: {} bytes", meta.size())
+    println("Size: ${meta.size()} bytes")
     
     // Path operations
     let path = fs.join("data", "file.txt")
@@ -2603,22 +2600,22 @@ fn main() {
     let email_re = regex.compile(r"[\w.]+@[\w.]+")?
     
     if email_re.is_match("alice@example.com") {
-        println!("Valid email!")
+        println("Valid email!")
     }
     
     // Find all matches
     let text = "Emails: alice@test.com, bob@test.org"
     for m in email_re.find_all(text) {
-        println!("Found: {}", m.text())
+        println("Found: ${m.text()}")
     }
     
     // Capture groups
     let date_re = regex.compile(r"(\d{4})-(\d{2})-(\d{2})")?
     match date_re.captures("Date: 2025-10-09") {
         Some(caps) => {
-            println!("Year: {}", caps.get(1)?)
-            println!("Month: {}", caps.get(2)?)
-            println!("Day: {}", caps.get(3)?)
+            println("Year: ${caps.get(1)?}")
+            println("Month: ${caps.get(2)?}")
+            println("Day: ${caps.get(3)?}")
         },
         None => {}
     }
@@ -2628,7 +2625,7 @@ fn main() {
     
     // Quick one-off operations
     if regex.is_match(r"^\d+$", "12345")? {
-        println!("All digits!")
+        println("All digits!")
     }
 }
 ```
@@ -2658,15 +2655,15 @@ struct Args {
 fn main() {
     let args = cli.parse::<Args>()
     
-    println!("Processing: {}", args.input)
+    println("Processing: ${args.input}")
     
     if args.verbose {
-        println!("Verbose mode enabled")
+        println("Verbose mode enabled")
     }
     
     match args.output {
-        Some(out) => println!("Output: {}", out),
-        None => println!("Output to stdout")
+        Some(out) => println("Output: ${out}"),
+        None => println("Output to stdout")
     }
 }
 ```
@@ -2682,15 +2679,15 @@ let name = "Alice"
 let age = 30
 
 // Old way
-println!("Hello, {}! You are {} years old.", name, age)
+println("Hello, ${name}! You are ${age} years old.")
 
 // New way (string interpolation)
-println!("Hello, ${name}! You are ${age} years old.")
+println("Hello, ${name}! You are ${age} years old.")
 
 // Works with expressions
 let x = 5
 let y = 10
-println!("The sum of ${x} and ${y} is ${x + y}")
+println("The sum of ${x} and ${y} is ${x + y}")
 ```
 
 **Complex expressions:**
@@ -2702,7 +2699,7 @@ struct User {
 }
 
 let user = User { name: "Bob", email: "bob@example.com" }
-println!("User: ${user.name} (${user.email})")
+println("User: ${user.name} (${user.email})")
 ```
 
 ---
@@ -2817,7 +2814,7 @@ impl Counter {
 
 fn main() {
     let counter = Counter::new()
-    println!("Rendered: {:?}", counter.render())
+    println("Rendered: ${counter.render():?}")
 }
 ```
 
@@ -2913,7 +2910,7 @@ fn main() {
         "My App",
         my_component
     )
-    println!("{}", html)
+    println("${html}")
 }
 ```
 
@@ -3128,8 +3125,8 @@ fn get_size(data: HashMap<usize, Vec<usize>>) -> usize {
 ```windjammer
 // You write this:
 fn greet(name: string) {
-    let msg = format!("Hello, {}!", name)
-    println!("{}", msg)
+    let msg = "Hello, ${name}!"
+    println("${msg}")
 }
 
 // Compiler generates this:
@@ -3140,7 +3137,7 @@ fn greet(name: &str) {
         write!(&mut __s, "Hello, {}!", name).unwrap();
         __s
     };
-    println!("{}", msg)
+    println("${msg}")
 }
 ```
 
@@ -3359,7 +3356,7 @@ fn factorial(n: int) -> int {
 
 fn main() {
     let result = factorial(5)
-    println!("Result: {}", result)
+    println("Result: ${result}")
 }
 ```
 
@@ -3679,7 +3676,7 @@ The ejected Rust code includes all optimizations that Windjammer applied automat
 ```windjammer
 // Original Windjammer (main.wj)
 fn greet(name: string) {
-    println!("Hello, {}!", name)
+    println("Hello, ${name}!")
 }
 ```
 

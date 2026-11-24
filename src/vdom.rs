@@ -109,7 +109,9 @@ impl From<VNode> for crate::simple_vnode::VNode {
         fn sorted(map: &HashMap<String, String>, prefix: &str) -> Vec<(String, VAttr)> {
             let mut kv: Vec<_> = map.iter().collect();
             kv.sort();
-            kv.into_iter().map(|(k, v)| (format!("{prefix}{k}"), VAttr::Static(v.clone()))).collect()
+            kv.into_iter()
+                .map(|(k, v)| (format!("{prefix}{k}"), VAttr::Static(v.clone())))
+                .collect()
         }
         match v {
             VNode::Text(t) => C::Text(t.content),
@@ -122,7 +124,11 @@ impl From<VNode> for crate::simple_vnode::VNode {
             VNode::Component(c) => {
                 let mut attrs = vec![("data-name".to_string(), VAttr::Static(c.name))];
                 attrs.extend(sorted(&c.props, "data-"));
-                C::Element { tag: "wj-component".into(), attrs, children: vec![] }
+                C::Element {
+                    tag: "wj-component".into(),
+                    attrs,
+                    children: vec![],
+                }
             }
         }
     }
@@ -252,13 +258,15 @@ mod tests {
     fn legacy_tree_converts_and_mounts_through_the_keyed_patcher() {
         use crate::dom_patch::{fake_dom::FakeDom, Mounted};
         let legacy = VNode::Element(
-            VElement::new("ul").attr("class", "l").child(VNode::Element(VElement::new("li").attr("key", "a"))),
+            VElement::new("ul")
+                .attr("class", "l")
+                .child(VNode::Element(VElement::new("li").attr("key", "a"))),
         );
         let canon: crate::simple_vnode::VNode = legacy.into();
         let mut m = Mounted::new(FakeDom::new());
         m.update(&canon);
         let li = m.port.find_by_attr("key", "a").expect("li mounted");
-        assert_eq!(m.port.find_by_attr("class", "l").is_some(), true);
+        assert!(m.port.find_by_attr("class", "l").is_some());
         let _ = li;
     }
 
@@ -266,10 +274,18 @@ mod tests {
     fn component_and_empty_nodes_convert_to_safe_placeholders() {
         let mut props = HashMap::new();
         props.insert("x".to_string(), "<1>".to_string());
-        let c: crate::simple_vnode::VNode =
-            VNode::Component(VComponent { name: "Foo".into(), props }).into();
+        let c: crate::simple_vnode::VNode = VNode::Component(VComponent {
+            name: "Foo".into(),
+            props,
+        })
+        .into();
         let html = crate::simple_renderer::render_to_html(&c);
-        assert!(html.contains("<wj-component") && html.contains("data-name=\"Foo\"") && html.contains("data-x=\"&lt;1&gt;\""), "{html}");
+        assert!(
+            html.contains("<wj-component")
+                && html.contains("data-name=\"Foo\"")
+                && html.contains("data-x=\"&lt;1&gt;\""),
+            "{html}"
+        );
         let e: crate::simple_vnode::VNode = VNode::Empty.into();
         assert_eq!(crate::simple_renderer::render_to_html(&e), "");
     }

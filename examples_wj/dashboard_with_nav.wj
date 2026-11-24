@@ -4,14 +4,14 @@
 use windjammer_ui::*
 
 fn main() {
-    println!("📊 Starting Windjammer Dashboard")
+    println("📊 Starting Windjammer Dashboard")
     
     let ui = Container::new()
         .child(build_navbar())
         .child(build_layout())
         .render()
     
-    println!("{}", ui)
+    println("${ui}")
 }
 
 fn build_navbar() -> string {

@@ -226,7 +226,7 @@ fn render(&self) -> String {
                     if i > 0_usize {
                         { use std::fmt::Write as _; write!(gradient_stops, "{}", ", ").expect("a formatting trait implementation returned an error"); };
                     }
-                    gradient_stops = gradient_stops + &stop.color.clone() + &String::from(" ") + &format!("{}%", (stop.position * 100.0_f64 as f32) as i32);
+                    gradient_stops = gradient_stops + &stop.color.clone() + &String::from(" ") + &format!("{}%", (stop.position * 100.0_f32) as i32);
                 },
                 None => {
                 },
@@ -237,7 +237,7 @@ fn render(&self) -> String {
             let s = self.stops.get(i);
             match s {
                 Some(stop) => {
-                    let left = (stop.position * 100.0_f64 as f32) as i32;
+                    let left = (stop.position * 100.0_f32) as i32;
                     { use std::fmt::Write as _; write!(markers_html, "\n                        <div class='gradient-stop' style='left: {}%; background: {};' \n                             data-index='{}'></div>\n                    ", left, stop.color, i).expect("a formatting trait implementation returned an error"); };
                 },
                 None => {

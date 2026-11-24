@@ -93,7 +93,7 @@ fn render(&self) -> String {
 }
 
 #[inline]
-pub fn step_button_class(enabled: bool) -> String {
+fn step_button_class(enabled: bool) -> String {
     if enabled {
         String::new()
     } else {
@@ -107,7 +107,7 @@ pub fn frame_debugger_panel_styles() -> String {
 }
 
 #[inline]
-pub fn frame_position_label(current_index: u64, total_frames: usize, frame_time_ms: f32) -> String {
+fn frame_position_label(current_index: u64, total_frames: usize, frame_time_ms: f32) -> String {
     if total_frames == 0_usize {
         String::from("No frames captured")
     } else {

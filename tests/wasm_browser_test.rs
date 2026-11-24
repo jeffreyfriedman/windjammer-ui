@@ -11,14 +11,17 @@ use std::rc::Rc;
 use wasm_bindgen::JsCast;
 use wasm_bindgen_test::*;
 use web_sys::{Document, Element, HtmlElement};
-use windjammer_ui::dom_patch::web::new_mounted;
 use windjammer_ui::dom_patch::stop_propagation;
+use windjammer_ui::dom_patch::web::new_mounted;
 use windjammer_ui::simple_vnode::{VAttr, VNode};
 
 wasm_bindgen_test_configure!(run_in_browser);
 
 fn document() -> Document {
-    web_sys::window().expect("window").document().expect("document")
+    web_sys::window()
+        .expect("window")
+        .document()
+        .expect("document")
 }
 
 fn fresh_container() -> Element {
@@ -52,7 +55,9 @@ fn inputs(keys: &[&str]) -> VNode {
     el(
         "div",
         vec![],
-        keys.iter().map(|k| el("input", vec![("key", st(k)), ("id", st(k))], vec![])).collect(),
+        keys.iter()
+            .map(|k| el("input", vec![("key", st(k)), ("id", st(k))], vec![]))
+            .collect(),
     )
 }
 
@@ -61,16 +66,37 @@ fn focus_survives_a_keyed_move() {
     let container = fresh_container();
     let m = new_mounted(document(), container.clone());
     m.borrow_mut().update(&inputs(&["a", "b", "c"]));
-    let b: HtmlElement = document().get_element_by_id("b").unwrap().dyn_into().unwrap();
+    let b: HtmlElement = document()
+        .get_element_by_id("b")
+        .unwrap()
+        .dyn_into()
+        .unwrap();
     b.focus().unwrap();
     assert_eq!(document().active_element().unwrap().id(), "b");
 
     m.borrow_mut().update(&inputs(&["c", "b", "a"]));
 
     let b_after = document().get_element_by_id("b").unwrap();
-    assert!(b_after == *b.as_ref(), "the keyed node is moved, not rebuilt");
-    assert_eq!(document().active_element().unwrap().id(), "b", "focus stays on the moved input");
-    let ids: Vec<String> = (0..3).map(|i| container.first_element_child().unwrap().children().item(i).unwrap().id()).collect();
+    assert!(
+        b_after == *b.as_ref(),
+        "the keyed node is moved, not rebuilt"
+    );
+    assert_eq!(
+        document().active_element().unwrap().id(),
+        "b",
+        "focus stays on the moved input"
+    );
+    let ids: Vec<String> = (0..3)
+        .map(|i| {
+            container
+                .first_element_child()
+                .unwrap()
+                .children()
+                .item(i)
+                .unwrap()
+                .id()
+        })
+        .collect();
     assert_eq!(ids, ["c", "b", "a"]);
 }
 
@@ -79,17 +105,32 @@ fn typed_value_and_caret_survive_a_rerender() {
     let container = fresh_container();
     let m = new_mounted(document(), container);
     let page = |label: &str| {
-        el("div", vec![], vec![el("h1", vec![], vec![VNode::text(label)]), el("input", vec![("id", st("name")), ("value", st(""))], vec![])])
+        el(
+            "div",
+            vec![],
+            vec![
+                el("h1", vec![], vec![VNode::text(label)]),
+                el("input", vec![("id", st("name")), ("value", st(""))], vec![]),
+            ],
+        )
     };
     m.borrow_mut().update(&page("one"));
-    let input: web_sys::HtmlInputElement = document().get_element_by_id("name").unwrap().dyn_into().unwrap();
+    let input: web_sys::HtmlInputElement = document()
+        .get_element_by_id("name")
+        .unwrap()
+        .dyn_into()
+        .unwrap();
     input.focus().unwrap();
     input.set_value("hello");
     input.set_selection_range(3, 3).unwrap();
 
     m.borrow_mut().update(&page("two"));
 
-    assert_eq!(input.value(), "hello", "an unrelated patch keeps what the user typed");
+    assert_eq!(
+        input.value(),
+        "hello",
+        "an unrelated patch keeps what the user typed"
+    );
     assert_eq!(input.selection_start().unwrap(), Some(3));
     assert_eq!(document().active_element().unwrap().id(), "name");
 }
@@ -100,11 +141,33 @@ fn a_delegated_click_fires_its_handler_once() {
     let m = new_mounted(document(), container.clone());
     let count = Rc::new(RefCell::new(0));
     let c = count.clone();
-    let tree = el("div", vec![], vec![el("button", vec![("id", st("go")), ("on_click", handler(move || *c.borrow_mut() += 1))], vec![VNode::text("go")])]);
+    let tree = el(
+        "div",
+        vec![],
+        vec![el(
+            "button",
+            vec![
+                ("id", st("go")),
+                ("on_click", handler(move || *c.borrow_mut() += 1)),
+            ],
+            vec![VNode::text("go")],
+        )],
+    );
     m.borrow_mut().update(&tree);
     // Re-rendering must not stack a second listener.
     let c2 = count.clone();
-    let tree2 = el("div", vec![], vec![el("button", vec![("id", st("go")), ("on_click", handler(move || *c2.borrow_mut() += 1))], vec![VNode::text("go again")])]);
+    let tree2 = el(
+        "div",
+        vec![],
+        vec![el(
+            "button",
+            vec![
+                ("id", st("go")),
+                ("on_click", handler(move || *c2.borrow_mut() += 1)),
+            ],
+            vec![VNode::text("go again")],
+        )],
+    );
     m.borrow_mut().update(&tree2);
 
     click(&document().get_element_by_id("go").unwrap());
@@ -121,15 +184,21 @@ fn stop_propagation_skips_ancestor_handlers_in_the_browser() {
     let (outer, inner) = (log.clone(), log.clone());
     let tree = el(
         "div",
-        vec![("on_click", handler(move || outer.borrow_mut().push("outer")))],
+        vec![(
+            "on_click",
+            handler(move || outer.borrow_mut().push("outer")),
+        )],
         vec![el(
             "button",
             vec![
                 ("id", st("inner")),
-                ("on_click", handler(move || {
-                    inner.borrow_mut().push("inner");
-                    stop_propagation();
-                })),
+                (
+                    "on_click",
+                    handler(move || {
+                        inner.borrow_mut().push("inner");
+                        stop_propagation();
+                    }),
+                ),
             ],
             vec![],
         )],
@@ -143,7 +212,14 @@ fn stop_propagation_skips_ancestor_handlers_in_the_browser() {
 fn untrusted_text_never_becomes_markup() {
     let container = fresh_container();
     let m = new_mounted(document(), container.clone());
-    m.borrow_mut().update(&el("p", vec![], vec![VNode::text("<img src=x onerror=alert(1)>")]));
+    m.borrow_mut().update(&el(
+        "p",
+        vec![],
+        vec![VNode::text("<img src=x onerror=alert(1)>")],
+    ));
     assert_eq!(container.query_selector("img").unwrap().is_none(), true);
-    assert_eq!(container.text_content().unwrap(), "<img src=x onerror=alert(1)>");
+    assert_eq!(
+        container.text_content().unwrap(),
+        "<img src=x onerror=alert(1)>"
+    );
 }

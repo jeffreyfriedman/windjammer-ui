@@ -46,19 +46,19 @@ pub fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<div");
         if !self.id.is_empty() {
-            let _ = html.push_str(" id=\"");
-            let _ = html.push_str(&self.id);
-            let _ = html.push('"');
+            html.push_str(" id=\"");
+            html.push_str(&self.id);
+            html.push('"');
         }
         if !self.class.is_empty() {
-            let _ = html.push_str(" class=\"");
-            let _ = html.push_str(&self.class);
-            let _ = html.push('"');
+            html.push_str(" class=\"");
+            html.push_str(&self.class);
+            html.push('"');
         }
         if !self.style.is_empty() {
-            let _ = html.push_str(" style=\"");
-            let _ = html.push_str(&self.style);
-            let _ = html.push('"');
+            html.push_str(" style=\"");
+            html.push_str(&self.style);
+            html.push('"');
         }
         html.push('>');
         for child in &self.children {
@@ -110,14 +110,14 @@ fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<span");
         if !self.class.is_empty() {
-            let _ = html.push_str(" class=\"");
-            let _ = html.push_str(&self.class);
-            let _ = html.push('"');
+            html.push_str(" class=\"");
+            html.push_str(&self.class);
+            html.push('"');
         }
         if !self.style.is_empty() {
-            let _ = html.push_str(" style=\"");
-            let _ = html.push_str(&self.style);
-            let _ = html.push('"');
+            html.push_str(" style=\"");
+            html.push_str(&self.style);
+            html.push('"');
         }
         html.push('>');
         for child in &self.children {
@@ -169,14 +169,14 @@ fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<p");
         if !self.class.is_empty() {
-            let _ = html.push_str(" class=\"");
-            let _ = html.push_str(&self.class);
-            let _ = html.push('"');
+            html.push_str(" class=\"");
+            html.push_str(&self.class);
+            html.push('"');
         }
         if !self.style.is_empty() {
-            let _ = html.push_str(" style=\"");
-            let _ = html.push_str(&self.style);
-            let _ = html.push('"');
+            html.push_str(" style=\"");
+            html.push_str(&self.style);
+            html.push('"');
         }
         html.push('>');
         for child in &self.children {
@@ -218,14 +218,14 @@ fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<h1");
         if !self.class.is_empty() {
-            let _ = html.push_str(" class=\"");
-            let _ = html.push_str(&self.class);
-            let _ = html.push('"');
+            html.push_str(" class=\"");
+            html.push_str(&self.class);
+            html.push('"');
         }
         if !self.style.is_empty() {
-            let _ = html.push_str(" style=\"");
-            let _ = html.push_str(&self.style);
-            let _ = html.push('"');
+            html.push_str(" style=\"");
+            html.push_str(&self.style);
+            html.push('"');
         }
         html.push('>');
         html.push_str(&self.text);
@@ -265,14 +265,14 @@ fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<h2");
         if !self.class.is_empty() {
-            let _ = html.push_str(" class=\"");
-            let _ = html.push_str(&self.class);
-            let _ = html.push('"');
+            html.push_str(" class=\"");
+            html.push_str(&self.class);
+            html.push('"');
         }
         if !self.style.is_empty() {
-            let _ = html.push_str(" style=\"");
-            let _ = html.push_str(&self.style);
-            let _ = html.push('"');
+            html.push_str(" style=\"");
+            html.push_str(&self.style);
+            html.push('"');
         }
         html.push('>');
         html.push_str(&self.text);
@@ -312,14 +312,14 @@ fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<h3");
         if !self.class.is_empty() {
-            let _ = html.push_str(" class=\"");
-            let _ = html.push_str(&self.class);
-            let _ = html.push('"');
+            html.push_str(" class=\"");
+            html.push_str(&self.class);
+            html.push('"');
         }
         if !self.style.is_empty() {
-            let _ = html.push_str(" style=\"");
-            let _ = html.push_str(&self.style);
-            let _ = html.push('"');
+            html.push_str(" style=\"");
+            html.push_str(&self.style);
+            html.push('"');
         }
         html.push('>');
         html.push_str(&self.text);

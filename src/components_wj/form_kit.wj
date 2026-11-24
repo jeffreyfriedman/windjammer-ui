@@ -141,15 +141,15 @@ impl FormField {
                 }
             }
             FieldKind::Date => {
-                let v = self.value.as_str()
+                let v = self.value
                 let shaped = v.len() == 10 && v.chars().nth(4) == Some('-') && v.chars().nth(7) == Some('-')
                 if !shaped {
                     return "${self.label} must be a date (YYYY-MM-DD)"
                 }
-                if self.min.len() > 0 && v < self.min.as_str() {
+                if self.min.len() > 0 && v < self.min {
                     return "${self.label} must be on or after ${self.min}"
                 }
-                if self.max.len() > 0 && v > self.max.as_str() {
+                if self.max.len() > 0 && v > self.max {
                     return "${self.label} must be on or before ${self.max}"
                 }
                 ""

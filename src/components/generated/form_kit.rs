@@ -184,7 +184,7 @@ pub fn error_count(&self) -> i32 {
             if !self.fields[i].error_message().is_empty() {
                 n += 1;
             }
-            i += 1;
+            i = i.wrapping_add(1);
         }
         n
 }
@@ -214,7 +214,7 @@ pub fn submit(&mut self) {
                     first_bad = i as i32;
                 }
             }
-            i += 1;
+            i = i.wrapping_add(1);
         }
         if bad > 0_i64 {
             self.status = {
@@ -234,7 +234,7 @@ pub fn submit(&mut self) {
                 { use std::fmt::Write as _; write!(pairs, "&").expect("a formatting trait implementation returned an error"); };
             }
             { use std::fmt::Write as _; write!(pairs, "{}={}", self.fields[j].name, self.fields[j].value).expect("a formatting trait implementation returned an error"); };
-            j += 1;
+            j = j.wrapping_add(1);
         }
         self.submitted = pairs;
         self.submit_count += 1;
@@ -247,7 +247,7 @@ pub fn reset(&mut self) {
         while i < self.fields.len() {
             self.fields[i].value = self.fields[i].initial.clone();
             self.fields[i].touched = false;
-            i += 1;
+            i = i.wrapping_add(1);
         }
         self.attempted = false;
         self.status = String::from("Form reset");
@@ -304,7 +304,7 @@ fn view(&self) -> VNode {
         let mut i = 0_i32;
         while i < (self.fields.len() as i32) {
             form = form.child(self.field_view(i));
-            i += 1;
+            i = i.wrapping_add(1);
         }
         let actions = VNode::div().add_class("wj-form-actions".to_string()).child(VNode::button().add_class("wj-button wj-button-primary".to_string()).set_id(part_id(&self.base, "submit", 0_i32)).add_attr("type".to_string(), "submit".to_string()).add_attr("data-wj-act".to_string(), "submit".to_string()).add_text("Submit".to_string())).child(VNode::button().add_class("wj-button".to_string()).set_id(part_id(&self.base, "reset", 0_i32)).add_attr("type".to_string(), "reset".to_string()).add_attr("data-wj-act".to_string(), "reset".to_string()).add_text("Reset".to_string()));
         let status = VNode::div().add_class("wj-form-status".to_string()).set_id(part_id(&self.base, "status", 0_i32)).add_attr("role".to_string(), "status".to_string()).add_attr("aria-live".to_string(), "polite".to_string()).add_text(self.status.clone());
@@ -348,23 +348,23 @@ pub fn field_view(&self, i: i32) -> VNode {
             _ => false,
         };
         if is_group {
-            let mut group = VNode::element("fieldset".to_string()).add_class("wj-fieldset".to_string()).set_id(id.clone()).add_attr("aria-required".to_string(), aria_bool(f.required)).add_attr("aria-invalid".to_string(), aria_bool(shown)).child(VNode::element("legend".to_string()).add_text(label_text.clone()));
+            let mut group = VNode::element("fieldset".to_string()).add_class("wj-fieldset".to_string()).set_id(id.clone()).add_attr("aria-required".to_string(), aria_bool(f.required)).add_attr("aria-invalid".to_string(), aria_bool(shown)).child(VNode::element("legend".to_string()).add_text(label_text.to_string()));
             if !described.is_empty() {
                 group = group.add_attr("aria-describedby".to_string(), described.clone());
             }
             let mut j = 0_usize;
             while j < f.options.len() {
                 let opt_id = format!("{}-opt-{}", id, j);
-                let mut radio = VNode::input().set_id(opt_id).set_type("radio".to_string()).add_attr("name".to_string(), f.name.clone()).set_value(f.options[j].clone()).add_attr("data-wj-act".to_string(), act.clone());
+                let mut radio = VNode::input().set_id(opt_id.to_string()).set_type("radio".to_string()).add_attr("name".to_string(), f.name.clone()).set_value(f.options[j].clone()).add_attr("data-wj-act".to_string(), act.to_string());
                 if f.value == f.options[j] {
                     radio = radio.add_attr("checked".to_string(), "true".to_string());
                 }
                 group = { group.child({ let _temp0 = format!("{}-opt-{}", id, j); VNode::element("label".to_string()).add_attr("for".to_string(), _temp0) }.child(radio).child(VNode::span().add_text(f.option_labels[j].clone()))) };
-                j += 1;
+                j = j.wrapping_add(1);
             }
             wrap = wrap.child(group);
         } else {
-            let label = VNode::element("label".to_string()).add_attr("for".to_string(), id.clone()).add_text(label_text);
+            let label = VNode::element("label".to_string()).add_attr("for".to_string(), id.clone()).add_text(label_text.to_string());
             let mut control = match f.kind {
                 FieldKind::Select => {
                     let mut sel = VNode::element("select".to_string()).set_value(f.value.clone());
@@ -376,7 +376,7 @@ pub fn field_view(&self, i: i32) -> VNode {
                             opt = opt.add_attr("selected".to_string(), "true".to_string());
                         }
                         sel = sel.child(opt);
-                        j += 1;
+                        j = j.wrapping_add(1);
                     }
                     sel
                 },
@@ -392,7 +392,7 @@ pub fn field_view(&self, i: i32) -> VNode {
                 FieldKind::Email => VNode::input().set_type("email".to_string()).set_value(f.value.clone()),
                 _ => VNode::input().set_type("text".to_string()).set_value(f.value.clone()),
             };
-            control = control.set_id(id).add_attr("name".to_string(), f.name.clone()).add_attr("aria-required".to_string(), aria_bool(f.required)).add_attr("aria-invalid".to_string(), aria_bool(shown)).add_attr("data-wj-act".to_string(), act);
+            control = control.set_id(id).add_attr("name".to_string(), f.name.clone()).add_attr("aria-required".to_string(), aria_bool(f.required)).add_attr("aria-invalid".to_string(), aria_bool(shown)).add_attr("data-wj-act".to_string(), act.to_string());
             if !described.is_empty() {
                 control = control.add_attr("aria-describedby".to_string(), described);
             }

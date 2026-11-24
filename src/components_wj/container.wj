@@ -123,21 +123,3 @@ pub fn render(self) -> string {
         "<div class='wj-container' style='${style}'>\n  ${children_html}\n</div>"
     }
 }
-
-fn main() {
-    let container1 = Container::new()
-        .max_width("800px")
-        .padding("24px")
-        .child("<p>First child</p>")
-        .child("<p>Second child</p>")
-    
-    let container2 = Container::new()
-        .max_width("1200px")
-        .max_height("600px")
-        .background_color("#f0f0f0")
-        .children(vec!["<h1>Title</h1>", "<p>Content</p>"])
-    
-    println("Container 1:\n${container1.render()}")
-    println("\nContainer 2:\n${container2.render()}")
-}
-

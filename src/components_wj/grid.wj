@@ -49,16 +49,3 @@ pub fn render(self) -> string {
         "<div class='wj-grid' style='${style}'>\n${children_html}\n</div>"
     }
 }
-
-fn main() {
-    let grid = Grid::new(3)
-        .gap("20px")
-        .child("<div style='padding:20px; background:#e3f2fd;'>Item 1</div>")
-        .child("<div style='padding:20px; background:#e3f2fd;'>Item 2</div>")
-        .child("<div style='padding:20px; background:#e3f2fd;'>Item 3</div>")
-        .child("<div style='padding:20px; background:#e3f2fd;'>Item 4</div>")
-
-    println("${grid.render()}")
-}
-
-

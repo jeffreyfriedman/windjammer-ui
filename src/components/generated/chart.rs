@@ -58,7 +58,7 @@ fn render(&self) -> String {
             if v > max_v {
                 max_v = v;
             }
-            i += 1;
+            i = i.wrapping_add(1);
         }
         let mut bars_html = String::new();
         let mut bi = 0_usize;
@@ -75,7 +75,7 @@ fn render(&self) -> String {
             let x = 20_usize + bi * segment;
             let y = self.height - 20_i64 - h;
             { use std::fmt::Write as _; write!(bars_html, "<rect class='wj-chart-bar' x='{}' y='{}' width='24' height='{}' data-label='{}' data-value='{}'/>", x, y, h, bar.label, bar.value).expect("a formatting trait implementation returned an error"); };
-            bi += 1;
+            bi = bi.wrapping_add(1);
         }
         let title_html = {
             if !self.title.is_empty() {

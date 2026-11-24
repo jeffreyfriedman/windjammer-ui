@@ -69,7 +69,7 @@ fn render(&self) -> String {
                 }
             };
             { use std::fmt::Write as _; write!(tabs_html, "<button class='wj-tab{}{}' data-tab-id='{}'>{}</button>", active_class, disabled_class, tab.id, tab.label).expect("a formatting trait implementation returned an error"); };
-            i += 1;
+            i = i.wrapping_add(1);
         }
         { use std::fmt::Write as _; write!(tabs_html, "</div>").expect("a formatting trait implementation returned an error"); };
         let mut content_html: String = String::from("<div class='wj-tabs-content'>");
@@ -84,7 +84,7 @@ fn render(&self) -> String {
                 }
             };
             { use std::fmt::Write as _; write!(content_html, "<div class='wj-tab-panel' data-tab-id='{}' style='{}'>{}</div>", tab.id, display_style, tab.content).expect("a formatting trait implementation returned an error"); };
-            j += 1;
+            j = j.wrapping_add(1);
         }
         { use std::fmt::Write as _; write!(content_html, "</div>").expect("a formatting trait implementation returned an error"); };
         format!("<div class='wj-tabs'>{}{}</div>", tabs_html, content_html)

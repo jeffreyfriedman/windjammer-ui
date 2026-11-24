@@ -63,14 +63,3 @@ fn render(self) -> string {
 </div>"
     }
 }
-
-fn main() {
-    let dropdown = Dropdown::new("Actions")
-        .item(DropdownItem::new("Edit", "edit"))
-        .item(DropdownItem::new("Delete", "delete"))
-        .item(DropdownItem::new("Archive", "archive").disabled(true))
-
-    println("${dropdown.render()}")
-}
-
-

@@ -102,18 +102,3 @@ pub fn render(self) -> string {
         "<div class='wj-spacer' style='${style}'></div>"
     }
 }
-
-fn main() {
-    let spacer1 = Spacer::horizontal("20px")
-    println("Horizontal: ${spacer1.render()}")
-
-    let spacer2 = Spacer::vertical("30px")
-    println("Vertical: ${spacer2.render()}")
-
-    let spacer3 = Spacer::flexible()
-    println("Flexible: ${spacer3.render()}")
-
-    let spacer4 = Spacer::md()
-    println("Medium (16px): ${spacer4.render()}")
-}
-

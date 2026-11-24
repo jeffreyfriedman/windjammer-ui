@@ -20,7 +20,7 @@ impl Renderable for BtPalettePanel {
         mk = mk + "<p class=\"bt-hint\">Drag onto the canvas grid. Host tooling wires callbacks to Rust/Windjammer delegates.</p>"
         let mut shell = "".to_string()
         shell = shell + "<aside class=\"bt-palette-pane\">"
-        shell = format!("{}{}", shell, mk)
+        shell = "${shell}${mk}"
         shell + "</aside>"
     }
 }

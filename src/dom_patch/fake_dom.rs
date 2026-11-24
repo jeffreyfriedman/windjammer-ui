@@ -10,7 +10,10 @@ pub struct FakeNode(pub usize);
 
 #[derive(Debug)]
 enum Kind {
-    Element { tag: String, attrs: BTreeMap<String, String> },
+    Element {
+        tag: String,
+        attrs: BTreeMap<String, String>,
+    },
     Text(String),
     Raw(String),
 }
@@ -47,18 +50,34 @@ impl Default for FakeDom {
 impl FakeDom {
     pub fn new() -> Self {
         let root = Entry {
-            kind: Kind::Element { tag: "#container".into(), attrs: BTreeMap::new() },
+            kind: Kind::Element {
+                tag: "#container".into(),
+                attrs: BTreeMap::new(),
+            },
             parent: None,
             children: vec![],
             value: None,
             caret: 0,
         };
-        FakeDom { nodes: vec![root], focused: None, listening: BTreeSet::new(), created: 0, supports_move_before: false, atomic_moves: 0 }
+        FakeDom {
+            nodes: vec![root],
+            focused: None,
+            listening: BTreeSet::new(),
+            created: 0,
+            supports_move_before: false,
+            atomic_moves: 0,
+        }
     }
 
     fn add(&mut self, kind: Kind) -> FakeNode {
         self.created += 1;
-        self.nodes.push(Entry { kind, parent: None, children: vec![], value: None, caret: 0 });
+        self.nodes.push(Entry {
+            kind,
+            parent: None,
+            children: vec![],
+            value: None,
+            caret: 0,
+        });
         FakeNode(self.nodes.len() - 1)
     }
 
@@ -98,7 +117,11 @@ impl FakeDom {
             Kind::Element { tag, attrs } => Canon::El {
                 tag: tag.clone(),
                 attrs: attrs.iter().map(|(k, v)| (k.clone(), v.clone())).collect(),
-                kids: self.nodes[n].children.iter().map(|&c| self.canon(c)).collect(),
+                kids: self.nodes[n]
+                    .children
+                    .iter()
+                    .map(|&c| self.canon(c))
+                    .collect(),
             },
         }
     }
@@ -159,7 +182,10 @@ impl DomPort for FakeDom {
         FakeNode(0)
     }
     fn create_element(&mut self, tag: &str) -> FakeNode {
-        self.add(Kind::Element { tag: tag.into(), attrs: BTreeMap::new() })
+        self.add(Kind::Element {
+            tag: tag.into(),
+            attrs: BTreeMap::new(),
+        })
     }
     fn create_text(&mut self, text: &str) -> FakeNode {
         self.add(Kind::Text(text.into()))
@@ -187,7 +213,10 @@ impl DomPort for FakeDom {
         self.nodes[node.0].kind = Kind::Text(text.into());
     }
     fn child_at(&self, parent: &FakeNode, index: usize) -> Option<FakeNode> {
-        self.nodes[parent.0].children.get(index).map(|&c| FakeNode(c))
+        self.nodes[parent.0]
+            .children
+            .get(index)
+            .map(|&c| FakeNode(c))
     }
     fn parent(&self, node: &FakeNode) -> Option<FakeNode> {
         self.nodes[node.0].parent.map(FakeNode)
@@ -208,12 +237,17 @@ impl DomPort for FakeDom {
         }
     }
     fn replace(&mut self, old: &FakeNode, new: &FakeNode) {
-        let (p, i) = (self.parent(old).expect("attached"), self.index_in_parent(old).unwrap());
+        let (p, i) = (
+            self.parent(old).expect("attached"),
+            self.index_in_parent(old).unwrap(),
+        );
         self.remove(old);
         self.insert_child(&p, i, new);
     }
     fn focused_within(&self, node: &FakeNode) -> Option<FakeNode> {
-        self.focused.filter(|&f| self.contains(node.0, f)).map(FakeNode)
+        self.focused
+            .filter(|&f| self.contains(node.0, f))
+            .map(FakeNode)
     }
     fn selection_of(&self, node: &FakeNode) -> Option<(usize, usize)> {
         Some((self.nodes[node.0].caret, self.nodes[node.0].caret))
@@ -232,7 +266,9 @@ impl DomPort for FakeDom {
             self.focused = keep;
             self.atomic_moves += 1;
         } else {
-            let had = self.focused_within(child).map(|f| (self.selection_of(&f), f));
+            let had = self
+                .focused_within(child)
+                .map(|f| (self.selection_of(&f), f));
             self.insert_child(parent, index, child);
             if let Some((sel, f)) = had {
                 self.focus_node(&f, sel);

@@ -74,19 +74,19 @@ fn render(&self) -> String {
                     String::from("pointer")
                 }
             };
-            let _ = html.push_str("<span style='font-size: ");
-            let _ = html.push_str(&star_size);
-            let _ = html.push_str("; color: ");
-            let _ = html.push_str(&star_color);
-            let _ = html.push_str("; cursor: ");
-            let _ = html.push_str(&cursor);
-            let _ = html.push_str(";'>");
+            html.push_str("<span style='font-size: ");
+            html.push_str(&star_size);
+            html.push_str("; color: ");
+            html.push_str(&star_color);
+            html.push_str("; cursor: ");
+            html.push_str(&cursor);
+            html.push_str(";'>");
             if half_filled {
-                let _ = html.push('⯨');
+                html.push('⯨');
             } else {
-                let _ = html.push('★');
+                html.push('★');
             }
-            let _ = html.push_str("</span>");
+            html.push_str("</span>");
             i += 1;
         }
         html.push_str("</div>");

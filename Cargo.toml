@@ -5,7 +5,7 @@ members = [
 ]
 
 [workspace.package]
-version = "0.3.6"
+version = "0.4.0"
 edition = "2021"
 authors = ["Windjammer Contributors"]
 license = "MIT OR Apache-2.0"
@@ -55,7 +55,7 @@ path = "src/bin/counter_wasm.rs"
 
 [dependencies]
 # Proc macro for #[component]
-windjammer-ui-macro = { path = "windjammer-ui-macro", version = "0.3.6" }
+windjammer-ui-macro = { path = "windjammer-ui-macro", version = "0.4.0" }
 
 # Core dependencies
 serde = { version = "1.0", features = ["derive"] }
@@ -125,7 +125,7 @@ console_error_panic_hook = { version = "0.1", optional = true }
 [target.'cfg(not(target_arch = "wasm32"))'.dev-dependencies]
 tokio-test = "0.4"
 criterion = "0.5"
-windjammer-runtime = { path = "../windjammer/crates/windjammer-runtime", default-features = false }
+windjammer-runtime = { version = "0.48", default-features = false }
 # egui_kittest = "0.29"  # Disabled due to version conflicts
 
 # Browserless wasm tests: run under node with `wasm-bindgen-test-runner` (see docs/TESTING_GUIDE.md).

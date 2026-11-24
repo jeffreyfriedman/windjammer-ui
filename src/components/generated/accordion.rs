@@ -61,7 +61,7 @@ fn render(&self) -> String {
                 }
             };
             { use std::fmt::Write as _; write!(html, "<details class='wj-accordion-item'{}>\n  <summary class='wj-accordion-title'>{}</summary>\n  <div class='wj-accordion-content'>\n    {}\n  </div>\n</details>", open_attr, item.title, item.content).expect("a formatting trait implementation returned an error"); };
-            i += 1;
+            i = i.wrapping_add(1);
         }
         format!("{}</div>", html)
 }

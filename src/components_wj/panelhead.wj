@@ -93,19 +93,3 @@ impl Renderable for PanelHead {
             + "</div>"
     }
 }
-
-fn main() {
-    let html = PanelHead::new("Controls", "Compliance controls")
-        .actions("<button type=\"button\" class=\"btn-secondary\">Refresh</button>")
-        .render()
-    println("${html}")
-    let breadcrumb = PanelHead::new("FP&A", "Budgets")
-        .inline()
-        .lede("Account lines vs actual.")
-        .render()
-    println("${breadcrumb}")
-    let kicker_only = PanelHead::new("Memorized", "")
-        .inline()
-        .render()
-    println("${kicker_only}")
-}

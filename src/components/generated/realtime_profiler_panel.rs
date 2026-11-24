@@ -47,7 +47,7 @@ fn render(&self) -> String {
 }
 
 
-pub fn render_scope_row(row: ProfilerScopeRow) -> String {
+fn render_scope_row(row: ProfilerScopeRow) -> String {
     let kind_label: String = match row.kind {
         ProfilerScopeKind::Cpu => String::from("CPU"),
         ProfilerScopeKind::Gpu => String::from("GPU"),
@@ -63,7 +63,7 @@ pub fn render_scope_row(row: ProfilerScopeRow) -> String {
 }
 
 #[inline]
-pub fn render_scope_list(scopes: Vec<ProfilerScopeRow>) -> String {
+fn render_scope_list(scopes: Vec<ProfilerScopeRow>) -> String {
     if scopes.is_empty() {
         return String::from("<div class='rt-profiler-empty'>No scope metrics (wire engine snapshot)</div>");
     }
@@ -80,7 +80,7 @@ pub fn realtime_profiler_styles() -> String {
 }
 
 
-pub fn render_budget_bar(frame_time_ms: f32, budget_ms: f32) -> String {
+fn render_budget_bar(frame_time_ms: f32, budget_ms: f32) -> String {
     let util = {
         if budget_ms <= 0.0_f32 {
             0.0_f32

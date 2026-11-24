@@ -67,10 +67,10 @@ pub fn roving_next(key: string, current: i32, count: i32, vertical: bool) -> i32
 /// The index in an act such as "tab:3" given its prefix "tab", or -1 when the act has another name.
 pub fn act_index(act: string, prefix: string) -> i32 {
     let head = "${prefix}:"
-    if !act.starts_with(head.as_str()) {
+    if !act.starts_with(head) {
         return -1
     }
-    let rest = act.replace(head.as_str(), "")
+    let rest = act.replace(head, "")
     match rest.parse::<i32>() {
         Ok(n) => n,
         Err(_) => -1,

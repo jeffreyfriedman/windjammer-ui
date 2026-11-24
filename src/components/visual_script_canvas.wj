@@ -37,15 +37,7 @@ impl Renderable for VisualScriptCanvas {
         let base = node_graph_styles()
         let extra = visual_script_canvas_styles()
         let body = self.graph.render()
-        format!(
-            "<style>{}{}</style>\n<div class='vs-shell'>\n<div class='vs-topbar'><h2>{}</h2>\n<button class='vs-action' onclick='{}'>Compile → .wj</button>\n<button class='vs-action secondary' onclick='{}'>Simulate (interp)</button></div>\n<div class='vs-canvas-host'>{}</div>\n</div>",
-            base,
-            extra,
-            self.script_name,
-            self.compile_handler,
-            self.simulate_handler,
-            body
-        )
+        "<style>${base}${extra}</style>\n<div class='vs-shell'>\n<div class='vs-topbar'><h2>${self.script_name}</h2>\n<button class='vs-action' onclick='${self.compile_handler}'>Compile → .wj</button>\n<button class='vs-action secondary' onclick='${self.simulate_handler}'>Simulate (interp)</button></div>\n<div class='vs-canvas-host'>${body}</div>\n</div>"
     }
 }
 

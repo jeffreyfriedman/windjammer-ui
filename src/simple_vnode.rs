@@ -76,7 +76,11 @@ impl VNode {
     /// attribute names collapse (last wins). `RawHtml` is left untouched.
     pub fn sanitized(&self) -> VNode {
         match self {
-            VNode::Element { tag, attrs, children } => {
+            VNode::Element {
+                tag,
+                attrs,
+                children,
+            } => {
                 if !crate::escape::is_valid_tag(tag) {
                     return VNode::Text(String::new());
                 }
@@ -177,7 +181,9 @@ fn sanitize_attrs(attrs: &[(String, VAttr)]) -> Vec<(String, VAttr)> {
             }
         };
         if let Some(c) = cleaned {
-            out.retain(|(n, v)| !(n == name && matches!(v, VAttr::Static(_)) == matches!(c, VAttr::Static(_))));
+            out.retain(|(n, v)| {
+                !(n == name && matches!(v, VAttr::Static(_)) == matches!(c, VAttr::Static(_)))
+            });
             out.push((name.clone(), c));
         }
     }

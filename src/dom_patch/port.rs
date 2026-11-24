@@ -40,7 +40,9 @@ pub trait DomPort {
     /// node in browsers; hosts with an atomic move (`Element.moveBefore`) override this,
     /// the default restores focus and selection after `insert_child`.
     fn move_child(&mut self, parent: &Self::Node, index: usize, child: &Self::Node) {
-        let had_focus = self.focused_within(child).map(|f| (self.selection_of(&f), f));
+        let had_focus = self
+            .focused_within(child)
+            .map(|f| (self.selection_of(&f), f));
         self.insert_child(parent, index, child);
         if let Some((sel, f)) = had_focus {
             self.focus_node(&f, sel);
@@ -55,7 +57,11 @@ pub fn create_tree<P: DomPort>(port: &mut P, vnode: &VNode) -> P::Node {
     match vnode {
         VNode::Text(t) => port.create_text(t),
         VNode::RawHtml(h) => port.create_raw(h),
-        VNode::Element { tag, attrs, children } => {
+        VNode::Element {
+            tag,
+            attrs,
+            children,
+        } => {
             let el = port.create_element(tag);
             for (name, value) in super::diff::plain_attrs(attrs) {
                 port.set_attr(&el, name, value);
@@ -105,7 +111,11 @@ fn apply_op<P: DomPort>(port: &mut P, op: &PatchOp) {
             let new = create_tree(port, node);
             port.replace(&old, &new);
         }
-        PatchOp::Insert { parent, index, node } => {
+        PatchOp::Insert {
+            parent,
+            index,
+            node,
+        } => {
             let p = resolve(port, parent);
             let new = create_tree(port, node);
             port.insert_child(&p, *index, &new);
@@ -137,7 +147,10 @@ fn apply_op<P: DomPort>(port: &mut P, op: &PatchOp) {
 
 /// Event names (`on_click` -> `click`) of all event attributes in the tree.
 pub fn collect_event_names(vnode: &VNode, out: &mut std::collections::BTreeSet<String>) {
-    if let VNode::Element { attrs, children, .. } = vnode {
+    if let VNode::Element {
+        attrs, children, ..
+    } = vnode
+    {
         for (k, v) in attrs {
             if let (VAttr::Event(_), Some(ev)) = (v, k.strip_prefix("on_")) {
                 out.insert(ev.to_string());

@@ -241,7 +241,7 @@ fn view(&self) -> VNode {
         while i < (self.items.len() as i32) {
             let entry = { let _temp0 = format!("item:{}", i); VNode::button().add_class("wj-menu-item".to_string()).set_id(part_id(&self.base, "item", i)).add_attr("type".to_string(), "button".to_string()).add_attr("role".to_string(), "menuitem".to_string()).add_attr("tabindex".to_string(), "-1".to_string()).add_attr("data-wj-act".to_string(), _temp0) }.add_text(self.items[i as usize].clone());
             menu = menu.child(entry);
-            i += 1;
+            i = i.wrapping_add(1);
         }
         VNode::div().add_class("wj-menu-host".to_string()).child(trigger).child(menu)
 }

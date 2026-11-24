@@ -113,22 +113,22 @@ impl Renderable for BtCanvasModel {
             let n = self.nodes[i]
             let frag = "".to_string()
             let frag = frag + "<div class='bt-node-card "
-            let frag = format!("{}{} {}", frag, n.debug_class, "'")
-            let frag = format!("{}{}", frag, " data-bt-node='")
-            let frag = format!("{}{}", frag, n.editor_id)
+            let frag = "${frag}${n.debug_class} ${("'")}"
+            let frag = "${frag}${(" data-bt-node='")}"
+            let frag = "${frag}${n.editor_id}"
             let frag = frag + "' style=\"left:"
-            let frag = format!("{}{}", frag, n.cx)
+            let frag = "${frag}${n.cx}"
             let frag = frag + "px;top:"
-            let frag = format!("{}{}", frag, n.cy)
+            let frag = "${frag}${n.cy}"
             let frag = frag + "px;border-color:"
-            let frag = format!("{}{}", frag, n.accent)
+            let frag = "${frag}${n.accent}"
             let frag = frag + ";\">"
-            let frag = format!("{}{}", frag, "<div class='bt-node-head'>")
-            let frag = format!("{}{}", frag, n.title)
+            let frag = "${frag}${("<div class='bt-node-head'>")}"
+            let frag = "${frag}${n.title}"
             let frag = frag + "</div><div class='bt-node-meta'>"
-            let frag = format!("{}{}", frag, n.subtitle)
+            let frag = "${frag}${n.subtitle}"
             let frag = frag + "</div></div>"
-            body = format!("{}{}", body, frag)
+            body = "${body}${frag}"
             i = i + 1
         }
 
@@ -136,21 +136,16 @@ impl Renderable for BtCanvasModel {
         let mut w = 0
         while w < self.wires.len() {
             let edge = self.wires[w]
-            svg_paths = format!(
-                "{}<path class='bt-wire' data-from=\"{}\" data-to=\"{}\" />",
-                svg_paths,
-                edge.from_id,
-                edge.to_id
-            )
+            svg_paths = "${svg_paths}<path class='bt-wire' data-from=\"${edge.from_id}\" data-to=\"${edge.to_id}\" />"
             w = w + 1
         }
 
         let z = "".to_string() + "<div class='bt-canvas'>"
-        let z = z + "<div class='bt-canvas-inner' style=\"transform: scale(" + format!("{}", self.zoom) + ") translate(" + format!("{}", self.pan_x) + "px," + format!("{}", self.pan_y) + "px);\">"
+        let z = z + "<div class='bt-canvas-inner' style=\"transform: scale(" + "${self.zoom}" + ") translate(" + "${self.pan_x}" + "px," + "${self.pan_y}" + "px);\">"
         let z = z + "<svg class='bt-wire-layer'>"
-        let z = format!("{}{}", z, svg_paths)
+        let z = "${z}${svg_paths}"
         let z = z + "</svg><div class='bt-node-layer'>"
-        let z = format!("{}{}", z, body)
+        let z = "${z}${body}"
         z + "</div></div></div>"
     }
 }

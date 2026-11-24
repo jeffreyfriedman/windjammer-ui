@@ -62,13 +62,3 @@ pub fn render(self) -> string {
         "${html}</ul></nav>"
     }
 }
-
-fn main() {
-    let pagination = Pagination::new(3, 10)
-        .show_first_last(true)
-        .show_prev_next(true)
-
-    println("${pagination.render()}")
-}
-
-

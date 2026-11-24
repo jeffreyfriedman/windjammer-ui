@@ -35,7 +35,7 @@ impl EcsInspectorPanel {
     }
 }
 
-fn entity_row_class(entity_id: i64, selected_id: Option<i64>) -> string {
+fn entity_row_class(entity_id: i64, selected_id: i64?) -> string {
     if let Some(sel) = selected_id {
         if sel == entity_id {
             return "ecs-entity-row selected"
@@ -44,7 +44,7 @@ fn entity_row_class(entity_id: i64, selected_id: Option<i64>) -> string {
     "ecs-entity-row"
 }
 
-fn render_entity_row(row: EcsEntityRow, selected_id: Option<i64>, select_handler: string) -> string {
+fn render_entity_row(row: EcsEntityRow, selected_id: i64?, select_handler: string) -> string {
     let row_class = entity_row_class(row.entity_id, selected_id)
     let mut badges = ""
     let mut i = 0
@@ -61,7 +61,7 @@ fn render_entity_row(row: EcsEntityRow, selected_id: Option<i64>, select_handler
 
 fn render_entity_list(
     entities: Vec<EcsEntityRow>,
-    selected_id: Option<i64>,
+    selected_id: i64?,
     select_handler: string,
 ) -> string {
     if entities.len() == 0 {
@@ -109,7 +109,7 @@ fn render_component_pane(
     html
 }
 
-fn selected_entity_label_from_id(selected_id: Option<i64>) -> string {
+fn selected_entity_label_from_id(selected_id: i64?) -> string {
     if let Some(id) = selected_id {
         "Entity #${id}"
     } else {

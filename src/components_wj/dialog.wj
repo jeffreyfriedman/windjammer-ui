@@ -47,13 +47,3 @@ pub fn render(self) -> string {
 </div>"
     }
 }
-
-fn main() {
-    let dialog = Dialog::new("Confirm Action", "<p>Are you sure you want to proceed?</p>")
-        .open(true)
-        .width("400px")
-
-    println("${dialog.render()}")
-}
-
-

@@ -4,7 +4,8 @@
 use std::path::Path;
 
 fn read(rel: &str) -> String {
-    std::fs::read_to_string(Path::new(env!("CARGO_MANIFEST_DIR")).join(rel)).unwrap_or_else(|e| panic!("{rel}: {e}"))
+    std::fs::read_to_string(Path::new(env!("CARGO_MANIFEST_DIR")).join(rel))
+        .unwrap_or_else(|e| panic!("{rel}: {e}"))
 }
 
 fn interactive_types() -> Vec<String> {
@@ -25,15 +26,37 @@ fn interactive_types() -> Vec<String> {
 #[test]
 fn every_interactive_component_has_a_documented_example_and_a_dom_test() {
     let kit = interactive_types();
-    assert!(kit.len() >= 14, "expected the kit components, found {kit:?}");
+    assert!(
+        kit.len() >= 14,
+        "expected the kit components, found {kit:?}"
+    );
     let docs = read("docs/KIT.md");
-    let tests = format!("{}\n{}", read("tests/wasm_kit_a11y_test.rs"), read("tests/wasm_kit_data_test.rs"));
+    let tests = format!(
+        "{}\n{}",
+        read("tests/wasm_kit_a11y_test.rs"),
+        read("tests/wasm_kit_data_test.rs")
+    );
     for name in &kit {
-        let heading = docs.lines().position(|l| l.starts_with("### ") && l.contains(name.as_str()));
-        let Some(h) = heading else { panic!("docs/KIT.md has no `### {name}` section") };
-        let section: String = docs.lines().skip(h + 1).take_while(|l| !l.starts_with("### ") && !l.starts_with("## ")).collect::<Vec<_>>().join("\n");
-        assert!(section.contains("```rust"), "the `{name}` section needs a code example");
-        assert!(tests.contains(&format!("{name}::new(")), "no browser test constructs `{name}`");
+        let heading = docs
+            .lines()
+            .position(|l| l.starts_with("### ") && l.contains(name.as_str()));
+        let Some(h) = heading else {
+            panic!("docs/KIT.md has no `### {name}` section")
+        };
+        let section: String = docs
+            .lines()
+            .skip(h + 1)
+            .take_while(|l| !l.starts_with("### ") && !l.starts_with("## "))
+            .collect::<Vec<_>>()
+            .join("\n");
+        assert!(
+            section.contains("```rust"),
+            "the `{name}` section needs a code example"
+        );
+        assert!(
+            tests.contains(&format!("{name}::new(")),
+            "no browser test constructs `{name}`"
+        );
     }
     // Support types used by the examples are documented where they appear.
     for name in ["FormField", "GridColumn"] {

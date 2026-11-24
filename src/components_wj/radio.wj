@@ -66,15 +66,3 @@ fn render(self) -> string {
         "${html}</div>"
     }
 }
-
-fn main() {
-    let radio = RadioGroup::new("theme")
-        .option(RadioOption::new("light", "Light Theme"))
-        .option(RadioOption::new("dark", "Dark Theme"))
-        .option(RadioOption::new("auto", "Auto Theme"))
-        .selected("dark")
-
-    println("${radio.render()}")
-}
-
-

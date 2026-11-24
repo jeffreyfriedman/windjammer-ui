@@ -10,7 +10,10 @@ use windjammer_ui::components::generated::a11y::Interactive;
 use windjammer_ui::kit_mount::{mount, KitMount};
 
 pub fn document() -> Document {
-    web_sys::window().expect("window").document().expect("document")
+    web_sys::window()
+        .expect("window")
+        .document()
+        .expect("document")
 }
 
 pub fn fresh_container() -> Element {
@@ -27,7 +30,9 @@ pub fn mount_kit<M: Interactive + 'static>(model: M) -> (Rc<KitMount<M>>, Elemen
 }
 
 pub fn by_id(id: &str) -> Element {
-    document().get_element_by_id(id).unwrap_or_else(|| panic!("no element with id `{id}`"))
+    document()
+        .get_element_by_id(id)
+        .unwrap_or_else(|| panic!("no element with id `{id}`"))
 }
 
 pub fn attr(id: &str, name: &str) -> Option<String> {
@@ -39,11 +44,18 @@ pub fn exists(id: &str) -> bool {
 }
 
 pub fn active_id() -> String {
-    document().active_element().map(|e| e.id()).unwrap_or_default()
+    document()
+        .active_element()
+        .map(|e| e.id())
+        .unwrap_or_default()
 }
 
 pub fn focus(id: &str) {
-    by_id(id).dyn_into::<HtmlElement>().unwrap().focus().unwrap();
+    by_id(id)
+        .dyn_into::<HtmlElement>()
+        .unwrap()
+        .focus()
+        .unwrap();
 }
 
 /// Dispatch a `keydown` for `key` on `id`; returns true when a handler cancelled the default action.
@@ -93,7 +105,9 @@ pub fn choose(id: &str, value: &str) {
 /// Ids of the elements a Tab key press could land on, in document order: natively focusable or with a
 /// non-negative `tabindex`, not disabled, not inside a `hidden` subtree.
 pub fn tab_order(container: &Element) -> Vec<String> {
-    let list = container.query_selector_all("button, input, select, textarea, a[href], [tabindex]").unwrap();
+    let list = container
+        .query_selector_all("button, input, select, textarea, a[href], [tabindex]")
+        .unwrap();
     let mut out = Vec::new();
     for i in 0..list.length() {
         let el: Element = list.item(i).unwrap().dyn_into().unwrap();
@@ -116,11 +130,19 @@ pub fn text_of(id: &str) -> String {
 
 /// The accessible name an `aria-labelledby` reference resolves to.
 pub fn labelled_by_text(id: &str) -> String {
-    let refs = attr(id, "aria-labelledby").unwrap_or_else(|| panic!("`{id}` has no aria-labelledby"));
-    refs.split_whitespace().map(text_of).collect::<Vec<_>>().join(" ")
+    let refs =
+        attr(id, "aria-labelledby").unwrap_or_else(|| panic!("`{id}` has no aria-labelledby"));
+    refs.split_whitespace()
+        .map(text_of)
+        .collect::<Vec<_>>()
+        .join(" ")
 }
 
 pub fn described_by_text(id: &str) -> String {
-    let refs = attr(id, "aria-describedby").unwrap_or_else(|| panic!("`{id}` has no aria-describedby"));
-    refs.split_whitespace().map(text_of).collect::<Vec<_>>().join(" ")
+    let refs =
+        attr(id, "aria-describedby").unwrap_or_else(|| panic!("`{id}` has no aria-describedby"));
+    refs.split_whitespace()
+        .map(text_of)
+        .collect::<Vec<_>>()
+        .join(" ")
 }

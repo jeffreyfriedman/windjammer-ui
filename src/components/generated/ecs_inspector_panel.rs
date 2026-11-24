@@ -40,14 +40,14 @@ fn render(&self) -> String {
         let components: Vec<EcsComponentSection> = self.snapshot.components.clone();
         let selected_label = selected_entity_label_from_id(selected_id);
         let entity_count = entities.len();
-        let entity_html = render_entity_list(entities.clone(), selected_id, &self.select_entity_handler);
+        let entity_html = render_entity_list(entities, selected_id, &self.select_entity_handler);
         let component_html = render_component_pane(components, &selected_label);
         format!("<style>{}</style>\n<div class='ecs-inspector-panel'>\n  <header class='ecs-inspector-header'>\n    <h3>ECS Inspector</h3>\n    <button type='button' onclick='{}'>Refresh</button>\n    <span class='ecs-entity-count'>{} entities</span>\n  </header>\n  <div class='ecs-inspector-body'>\n    <aside class='ecs-entity-list'>\n      <h4>Entities</h4>\n      {}\n    </aside>\n    <section class='ecs-component-pane'>\n      {}\n    </section>\n  </div>\n</div>", styles, self.refresh_handler, entity_count, entity_html, component_html)
 }
 }
 
 #[inline]
-pub fn entity_row_class(entity_id: i64, selected_id: Option<i64>) -> String {
+fn entity_row_class(entity_id: i64, selected_id: Option<i64>) -> String {
     if let Some(sel) = selected_id {
         if sel == entity_id {
             return String::from("ecs-entity-row selected");
@@ -57,12 +57,12 @@ pub fn entity_row_class(entity_id: i64, selected_id: Option<i64>) -> String {
 }
 
 #[inline]
-pub fn render_field_row(field: &EcsInspectorField) -> String {
+fn render_field_row(field: &EcsInspectorField) -> String {
     format!("<div class='ecs-field-row'>\n  <label class='ecs-field-name'>{}</label>\n  <input class='ecs-field-value' type='text' value='{}' readonly />\n</div>", field.name, field.display_value)
 }
 
 #[inline]
-pub fn render_component_section(section: &EcsComponentSection) -> String {
+fn render_component_section(section: &EcsComponentSection) -> String {
     let mut fields_html = String::new();
     for field in &section.fields {
         fields_html = fields_html + &render_field_row(field);
@@ -71,7 +71,7 @@ pub fn render_component_section(section: &EcsComponentSection) -> String {
 }
 
 #[inline]
-pub fn selected_entity_label_from_id(selected_id: Option<i64>) -> String {
+fn selected_entity_label_from_id(selected_id: Option<i64>) -> String {
     if let Some(id) = selected_id {
         format!("Entity #{}", id)
     } else {
@@ -85,20 +85,20 @@ pub fn ecs_inspector_panel_styles() -> String {
 }
 
 #[inline]
-pub fn render_entity_row(row: EcsEntityRow, selected_id: Option<i64>, select_handler: &str) -> String {
+fn render_entity_row(row: EcsEntityRow, selected_id: Option<i64>, select_handler: &str) -> String {
     let row_class = entity_row_class(row.entity_id, selected_id);
     let mut badges = String::new();
     let mut i = 0_usize;
     while i < row.component_names.len() {
         let name = row.component_names[i].to_string();
         badges = badges + &format!("<span class='ecs-comp-badge'>{}</span>", name);
-        i += 1;
+        i = i.wrapping_add(1);
     }
     format!("<button type='button' class='{}' onclick=\"{}({})\">\n  <span class='ecs-entity-id'>#{}</span>\n  <span class='ecs-entity-badges'>{}</span>\n</button>", row_class, select_handler, row.entity_id, row.entity_id, badges)
 }
 
 #[inline]
-pub fn render_entity_list(entities: Vec<EcsEntityRow>, selected_id: Option<i64>, select_handler: &str) -> String {
+fn render_entity_list(entities: Vec<EcsEntityRow>, selected_id: Option<i64>, select_handler: &str) -> String {
     if entities.is_empty() {
         return String::from("<div class='ecs-inspector-empty'>No entities in world</div>");
     }
@@ -110,7 +110,7 @@ pub fn render_entity_list(entities: Vec<EcsEntityRow>, selected_id: Option<i64>,
 }
 
 #[inline]
-pub fn render_component_pane(components: Vec<EcsComponentSection>, selected_label: &str) -> String {
+fn render_component_pane(components: Vec<EcsComponentSection>, selected_label: &str) -> String {
     if components.is_empty() {
         return format!("<div class='ecs-inspector-detail-empty'>\n  <p class='ecs-detail-title'>{}</p>\n  <p class='ecs-detail-hint'>Select an entity to view read-only component fields.</p>\n</div>", selected_label);
     }

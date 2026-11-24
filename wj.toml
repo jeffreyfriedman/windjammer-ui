@@ -1,6 +1,6 @@
 [package]
 name = "windjammer-ui"
-version = "0.3.6"
+version = "0.4.0"
 edition = "2025"
 
 [app_capabilities]

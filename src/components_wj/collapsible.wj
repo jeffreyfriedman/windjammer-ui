@@ -39,12 +39,3 @@ pub fn render(self) -> string {
 </div>"
     }
 }
-
-fn main() {
-    let collapsible = CollapsibleSection::new("Advanced Options", "<p>Hidden content here</p>")
-        .open(true)
-
-    println("${collapsible.render()}")
-}
-
-

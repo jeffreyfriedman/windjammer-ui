@@ -65,7 +65,7 @@ pub fn tokens() -> Vec<Token> {
 }
 
 #[inline]
-pub fn declarations(mode: ThemeMode) -> String {
+fn declarations(mode: ThemeMode) -> String {
     let mut css = String::new();
     for tok in tokens() {
         { use std::fmt::Write as _; write!(css, "  --wj-{}: {};\n", tok.name, tok.value(mode)).expect("a formatting trait implementation returned an error"); };

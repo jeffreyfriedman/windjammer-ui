@@ -73,19 +73,3 @@ pub fn render(self) -> string {
 </div>"
     }
 }
-
-fn main() {
-    let progress1 = Progress::new(75.0)
-    println("${progress1.render()}")
-
-    let progress2 = Progress::new(50.0)
-        .variant(ProgressVariant::Success)
-        .show_label(false)
-    println("${progress2.render()}")
-
-    let progress3 = Progress::new(30.0)
-        .max(50.0)
-        .variant(ProgressVariant::Warning)
-    println("${progress3.render()}")
-}
-

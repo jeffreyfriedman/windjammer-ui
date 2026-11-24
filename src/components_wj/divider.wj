@@ -74,12 +74,3 @@ pub fn render(self) -> string {
         "<div class='wj-divider ${orientation_class}' style='${style}'></div>"
     }
 }
-
-fn main() {
-    let divider1 = Divider::horizontal()
-    println("Horizontal: ${divider1.render()}")
-
-    let divider2 = Divider::vertical().color("#FF0000").thickness("2px")
-    println("Vertical: ${divider2.render()}")
-}
-

@@ -32,7 +32,11 @@ fn children_of<'a>(tree: &'a mut VNode, path: &[usize]) -> &'a mut Vec<VNode> {
 fn apply_one(tree: &mut VNode, op: &PatchOp) {
     match op {
         PatchOp::Replace { path, node } => *node_at(tree, path) = node.clone(),
-        PatchOp::Insert { parent, index, node } => children_of(tree, parent).insert(*index, node.clone()),
+        PatchOp::Insert {
+            parent,
+            index,
+            node,
+        } => children_of(tree, parent).insert(*index, node.clone()),
         PatchOp::Remove { path } => {
             let (last, parent) = path.split_last().expect("cannot remove root");
             children_of(tree, parent).remove(*last);
@@ -60,7 +64,11 @@ fn apply_one(tree: &mut VNode, op: &PatchOp) {
 /// Structural form for comparisons: attrs sorted, events dropped.
 #[derive(Debug, PartialEq, Clone)]
 pub enum Canon {
-    El { tag: String, attrs: Vec<(String, String)>, kids: Vec<Canon> },
+    El {
+        tag: String,
+        attrs: Vec<(String, String)>,
+        kids: Vec<Canon>,
+    },
     Text(String),
     Raw(String),
 }
@@ -69,13 +77,21 @@ pub fn canon(v: &VNode) -> Canon {
     match v {
         VNode::Text(t) => Canon::Text(t.clone()),
         VNode::RawHtml(h) => Canon::Raw(h.clone()),
-        VNode::Element { tag, attrs, children } => {
+        VNode::Element {
+            tag,
+            attrs,
+            children,
+        } => {
             let mut a: Vec<(String, String)> = super::diff::plain_attrs(attrs)
                 .into_iter()
                 .map(|(k, v)| (k.to_string(), v.to_string()))
                 .collect();
             a.sort();
-            Canon::El { tag: tag.clone(), attrs: a, kids: children.iter().map(canon).collect() }
+            Canon::El {
+                tag: tag.clone(),
+                attrs: a,
+                kids: children.iter().map(canon).collect(),
+            }
         }
     }
 }

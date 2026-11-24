@@ -8,32 +8,27 @@ use windjammer_ui::*
 
 fn main() {
     let html = build_complete_html_page()
-    println!("{}", html)
+    println("${html}")
 }
 
 fn build_complete_html_page() -> string {
-    format!(
-        "<!DOCTYPE html>
+    "<!DOCTYPE html>
 <html lang='en'>
 <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>Windjammer Todo App</title>
     <style>
-        {}
+        ${get_styles()}
     </style>
 </head>
 <body>
-    {}
+    ${build_app_ui()}
     <script>
-        {}
+        ${get_javascript()}
     </script>
 </body>
-</html>",
-        get_styles(),
-        build_app_ui(),
-        get_javascript()
-    )
+</html>"
 }
 
 fn build_app_ui() -> string {
@@ -186,12 +181,10 @@ fn build_stats_section() -> string {
 }
 
 fn build_footer() -> string {
-    format!(
-        "<footer style='text-align: center; padding: 32px; color: #6b7280; font-size: 14px;'>
+    "<footer style='text-align: center; padding: 32px; color: #6b7280; font-size: 14px;'>
             <p>Built with ❤️ using <strong>Windjammer</strong></p>
             <p style='margin-top: 8px;'>All components from <code>windjammer-ui</code> • 100% type-safe • Zero runtime errors</p>
         </footer>"
-    )
 }
 
 fn get_styles() -> string {

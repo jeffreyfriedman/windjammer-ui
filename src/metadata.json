@@ -797,7 +797,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Avatar\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -810,11 +810,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Avatar\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Avatar",
       "return_type": "Custom(\"Avatar\")",
@@ -826,7 +826,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Avatar\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -839,11 +839,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Avatar\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Avatar",
       "return_type": "Custom(\"Avatar\")",
@@ -855,7 +855,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Avatar\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -868,11 +868,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Avatar\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Avatar",
       "return_type": "Custom(\"Avatar\")",
@@ -907,7 +907,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")"
+        "Custom(\"Avatar\")"
       ],
       "forwarding_borrow_params": [
         false
@@ -920,7 +920,7 @@
         "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")"
+        "Custom(\"Avatar\")"
       ],
       "parent_type": "Avatar",
       "return_type": "String",
@@ -932,7 +932,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Avatar\")",
         "Custom(\"AvatarShape\")"
       ],
       "forwarding_borrow_params": [
@@ -948,8 +948,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Avatar\")",
+        "Custom(\"AvatarShape\")"
       ],
       "parent_type": "Avatar",
       "return_type": "Custom(\"Avatar\")",
@@ -961,7 +961,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Avatar\")",
         "Custom(\"AvatarSize\")"
       ],
       "forwarding_borrow_params": [
@@ -977,8 +977,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Avatar\")",
+        "Custom(\"AvatarSize\")"
       ],
       "parent_type": "Avatar",
       "return_type": "Custom(\"Avatar\")",
@@ -1096,7 +1096,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Breadcrumb\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -1109,11 +1109,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Breadcrumb\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Breadcrumb",
       "return_type": "Custom(\"Breadcrumb\")",
@@ -1127,7 +1127,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Breadcrumb\")",
         "String",
         "String",
         "Bool"
@@ -1149,10 +1149,10 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")",
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Breadcrumb\")",
+        "String",
+        "String",
+        "Bool"
       ],
       "parent_type": "Breadcrumb",
       "return_type": "Custom(\"Breadcrumb\")",
@@ -1177,7 +1177,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")"
+        "Custom(\"Breadcrumb\")"
       ],
       "forwarding_borrow_params": [
         false
@@ -1190,7 +1190,7 @@
         "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")"
+        "Custom(\"Breadcrumb\")"
       ],
       "parent_type": "Breadcrumb",
       "return_type": "String",
@@ -1202,7 +1202,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Breadcrumb\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -1215,11 +1215,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Breadcrumb\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Breadcrumb",
       "return_type": "Custom(\"Breadcrumb\")",
@@ -1827,7 +1827,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Center\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -1840,11 +1840,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Center\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Center",
       "return_type": "Custom(\"Center\")",
@@ -1856,7 +1856,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Center\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -1869,11 +1869,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Center\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Center",
       "return_type": "Custom(\"Center\")",
@@ -1908,7 +1908,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")"
+        "Custom(\"Center\")"
       ],
       "forwarding_borrow_params": [
         false
@@ -1921,7 +1921,7 @@
         "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")"
+        "Custom(\"Center\")"
       ],
       "parent_type": "Center",
       "return_type": "String",
@@ -1933,7 +1933,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Center\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -1946,11 +1946,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Center\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Center",
       "return_type": "Custom(\"Center\")",
@@ -3526,7 +3526,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Column\")",
         "Custom(\"ColumnAlign\")"
       ],
       "forwarding_borrow_params": [
@@ -3542,8 +3542,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Column\")",
+        "Custom(\"ColumnAlign\")"
       ],
       "parent_type": "Column",
       "return_type": "Custom(\"Column\")",
@@ -3555,7 +3555,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Column\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -3571,7 +3571,7 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
+        "Custom(\"Column\")",
         "String"
       ],
       "parent_type": "Column",
@@ -3584,7 +3584,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Column\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -3597,11 +3597,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Column\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Column",
       "return_type": "Custom(\"Column\")",
@@ -3613,7 +3613,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Column\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -3626,11 +3626,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Column\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Column",
       "return_type": "Custom(\"Column\")",
@@ -3642,7 +3642,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Column\")",
         "Custom(\"ColumnJustify\")"
       ],
       "forwarding_borrow_params": [
@@ -3658,8 +3658,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Column\")",
+        "Custom(\"ColumnJustify\")"
       ],
       "parent_type": "Column",
       "return_type": "Custom(\"Column\")",
@@ -3684,7 +3684,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")"
+        "Custom(\"Column\")"
       ],
       "forwarding_borrow_params": [
         false
@@ -3697,7 +3697,7 @@
         "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")"
+        "Custom(\"Column\")"
       ],
       "parent_type": "Column",
       "return_type": "String",
@@ -5286,7 +5286,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Div\")",
         "Custom(\"T\")"
       ],
       "forwarding_borrow_params": [
@@ -5302,7 +5302,7 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
+        "Custom(\"Div\")",
         "Custom(\"T\")"
       ],
       "parent_type": "Div",
@@ -5315,7 +5315,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Div\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -5328,11 +5328,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Div\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Div",
       "return_type": "Custom(\"Div\")",
@@ -5344,7 +5344,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Div\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -5357,11 +5357,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Div\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Div",
       "return_type": "Custom(\"Div\")",
@@ -5386,7 +5386,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")"
+        "Custom(\"Div\")"
       ],
       "forwarding_borrow_params": [
         false
@@ -5399,7 +5399,7 @@
         "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")"
+        "Custom(\"Div\")"
       ],
       "parent_type": "Div",
       "return_type": "String",
@@ -5411,7 +5411,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Div\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -5424,11 +5424,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Div\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Div",
       "return_type": "Custom(\"Div\")",
@@ -5440,7 +5440,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Div\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -5456,7 +5456,7 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
+        "Custom(\"Div\")",
         "String"
       ],
       "parent_type": "Div",
@@ -5622,7 +5622,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Drawer\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -5638,7 +5638,7 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
+        "Custom(\"Drawer\")",
         "String"
       ],
       "parent_type": "Drawer",
@@ -5651,7 +5651,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Drawer\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -5664,11 +5664,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Drawer\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Drawer",
       "return_type": "Custom(\"Drawer\")",
@@ -5694,7 +5694,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Drawer\")",
         "Bool"
       ],
       "forwarding_borrow_params": [
@@ -5710,7 +5710,7 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
+        "Custom(\"Drawer\")",
         "Bool"
       ],
       "parent_type": "Drawer",
@@ -5723,7 +5723,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Drawer\")",
         "Custom(\"DrawerPosition\")"
       ],
       "forwarding_borrow_params": [
@@ -5739,8 +5739,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Drawer\")",
+        "Custom(\"DrawerPosition\")"
       ],
       "parent_type": "Drawer",
       "return_type": "Custom(\"Drawer\")",
@@ -5751,7 +5751,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")"
+        "Custom(\"Drawer\")"
       ],
       "forwarding_borrow_params": [
         false
@@ -5764,7 +5764,7 @@
         "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")"
+        "Custom(\"Drawer\")"
       ],
       "parent_type": "Drawer",
       "return_type": "String",
@@ -5776,7 +5776,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Drawer\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -5789,11 +5789,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Drawer\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Drawer",
       "return_type": "Custom(\"Drawer\")",
@@ -8264,7 +8264,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"H1\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -8277,11 +8277,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"H1\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "H1",
       "return_type": "Custom(\"H1\")",
@@ -8341,7 +8341,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"H1\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -8354,11 +8354,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"H1\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "H1",
       "return_type": "Custom(\"H1\")",
@@ -8370,7 +8370,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"H2\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -8383,11 +8383,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"H2\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "H2",
       "return_type": "Custom(\"H2\")",
@@ -8447,7 +8447,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"H2\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -8460,11 +8460,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"H2\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "H2",
       "return_type": "Custom(\"H2\")",
@@ -8476,7 +8476,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"H3\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -8489,11 +8489,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"H3\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "H3",
       "return_type": "Custom(\"H3\")",
@@ -8553,7 +8553,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"H3\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -8566,11 +8566,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"H3\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "H3",
       "return_type": "Custom(\"H3\")",
@@ -9236,7 +9236,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Label\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -9249,11 +9249,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Label\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Label",
       "return_type": "Custom(\"Label\")",
@@ -9265,7 +9265,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Label\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -9278,11 +9278,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Label\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Label",
       "return_type": "Custom(\"Label\")",
@@ -9317,7 +9317,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")"
+        "Custom(\"Label\")"
       ],
       "forwarding_borrow_params": [
         false
@@ -9330,7 +9330,7 @@
         "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")"
+        "Custom(\"Label\")"
       ],
       "parent_type": "Label",
       "return_type": "String",
@@ -9342,7 +9342,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Label\")",
         "Bool"
       ],
       "forwarding_borrow_params": [
@@ -9358,7 +9358,7 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
+        "Custom(\"Label\")",
         "Bool"
       ],
       "parent_type": "Label",
@@ -9371,7 +9371,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"List\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -9384,11 +9384,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"List\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "List",
       "return_type": "Custom(\"List\")",
@@ -9400,7 +9400,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"List\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -9416,7 +9416,7 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
+        "Custom(\"List\")",
         "String"
       ],
       "parent_type": "List",
@@ -9443,7 +9443,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"List\")",
         "Bool"
       ],
       "forwarding_borrow_params": [
@@ -9459,7 +9459,7 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
+        "Custom(\"List\")",
         "Bool"
       ],
       "parent_type": "List",
@@ -9471,7 +9471,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")"
+        "Custom(\"List\")"
       ],
       "forwarding_borrow_params": [
         false
@@ -9484,7 +9484,7 @@
         "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")"
+        "Custom(\"List\")"
       ],
       "parent_type": "List",
       "return_type": "String",
@@ -9496,7 +9496,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"ListItem\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -9509,11 +9509,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"ListItem\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "ListItem",
       "return_type": "Custom(\"ListItem\")",
@@ -9548,7 +9548,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")"
+        "Custom(\"ListItem\")"
       ],
       "forwarding_borrow_params": [
         false
@@ -9561,7 +9561,7 @@
         "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")"
+        "Custom(\"ListItem\")"
       ],
       "parent_type": "ListItem",
       "return_type": "String",
@@ -9785,7 +9785,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Loading\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -9798,11 +9798,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Loading\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Loading",
       "return_type": "Custom(\"Loading\")",
@@ -9828,7 +9828,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Loading\")",
         "Bool"
       ],
       "forwarding_borrow_params": [
@@ -9844,7 +9844,7 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
+        "Custom(\"Loading\")",
         "Bool"
       ],
       "parent_type": "Loading",
@@ -9856,7 +9856,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")"
+        "Custom(\"Loading\")"
       ],
       "forwarding_borrow_params": [
         false
@@ -9869,7 +9869,7 @@
         "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")"
+        "Custom(\"Loading\")"
       ],
       "parent_type": "Loading",
       "return_type": "String",
@@ -9881,7 +9881,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Loading\")",
         "Custom(\"LoadingSize\")"
       ],
       "forwarding_borrow_params": [
@@ -9897,8 +9897,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Loading\")",
+        "Custom(\"LoadingSize\")"
       ],
       "parent_type": "Loading",
       "return_type": "Custom(\"Loading\")",
@@ -9910,7 +9910,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Loading\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -9923,11 +9923,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Loading\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Loading",
       "return_type": "Custom(\"Loading\")",
@@ -9939,7 +9939,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Menu\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -9952,11 +9952,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Menu\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Menu",
       "return_type": "Custom(\"Menu\")",
@@ -9968,7 +9968,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Menu\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -9984,7 +9984,7 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
+        "Custom(\"Menu\")",
         "String"
       ],
       "parent_type": "Menu",
@@ -10020,7 +10020,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")"
+        "Custom(\"Menu\")"
       ],
       "forwarding_borrow_params": [
         false
@@ -10033,7 +10033,7 @@
         "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")"
+        "Custom(\"Menu\")"
       ],
       "parent_type": "Menu",
       "return_type": "String",
@@ -10325,7 +10325,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"MenuItem\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -10338,11 +10338,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"MenuItem\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "MenuItem",
       "return_type": "Custom(\"MenuItem\")",
@@ -10354,7 +10354,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"MenuItem\")",
         "Bool"
       ],
       "forwarding_borrow_params": [
@@ -10370,7 +10370,7 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
+        "Custom(\"MenuItem\")",
         "Bool"
       ],
       "parent_type": "MenuItem",
@@ -10383,7 +10383,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"MenuItem\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -10396,11 +10396,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"MenuItem\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "MenuItem",
       "return_type": "Custom(\"MenuItem\")",
@@ -10412,7 +10412,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"MenuItem\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -10425,11 +10425,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"MenuItem\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "MenuItem",
       "return_type": "Custom(\"MenuItem\")",
@@ -10464,7 +10464,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")"
+        "Custom(\"MenuItem\")"
       ],
       "forwarding_borrow_params": [
         false
@@ -10477,7 +10477,7 @@
         "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")"
+        "Custom(\"MenuItem\")"
       ],
       "parent_type": "MenuItem",
       "return_type": "String",
@@ -11662,7 +11662,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"P\")",
         "Custom(\"T\")"
       ],
       "forwarding_borrow_params": [
@@ -11678,7 +11678,7 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
+        "Custom(\"P\")",
         "Custom(\"T\")"
       ],
       "parent_type": "P",
@@ -11691,7 +11691,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"P\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -11704,11 +11704,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"P\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "P",
       "return_type": "Custom(\"P\")",
@@ -11758,7 +11758,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"P\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -11771,11 +11771,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"P\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "P",
       "return_type": "Custom(\"P\")",
@@ -11787,7 +11787,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"P\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -11803,7 +11803,7 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
+        "Custom(\"P\")",
         "String"
       ],
       "parent_type": "P",
@@ -12511,7 +12511,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Popover\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -12524,11 +12524,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Popover\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Popover",
       "return_type": "Custom(\"Popover\")",
@@ -12569,7 +12569,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Popover\")",
         "Custom(\"PopoverPosition\")"
       ],
       "forwarding_borrow_params": [
@@ -12585,8 +12585,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Popover\")",
+        "Custom(\"PopoverPosition\")"
       ],
       "parent_type": "Popover",
       "return_type": "Custom(\"Popover\")",
@@ -12597,7 +12597,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")"
+        "Custom(\"Popover\")"
       ],
       "forwarding_borrow_params": [
         false
@@ -12610,7 +12610,7 @@
         "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")"
+        "Custom(\"Popover\")"
       ],
       "parent_type": "Popover",
       "return_type": "String",
@@ -13729,7 +13729,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Row\")",
         "Custom(\"RowAlign\")"
       ],
       "forwarding_borrow_params": [
@@ -13745,8 +13745,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Row\")",
+        "Custom(\"RowAlign\")"
       ],
       "parent_type": "Row",
       "return_type": "Custom(\"Row\")",
@@ -13758,7 +13758,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Row\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -13774,7 +13774,7 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
+        "Custom(\"Row\")",
         "String"
       ],
       "parent_type": "Row",
@@ -13787,7 +13787,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Row\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -13800,11 +13800,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Row\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Row",
       "return_type": "Custom(\"Row\")",
@@ -13816,7 +13816,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Row\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -13829,11 +13829,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Row\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Row",
       "return_type": "Custom(\"Row\")",
@@ -13845,7 +13845,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Row\")",
         "Custom(\"RowJustify\")"
       ],
       "forwarding_borrow_params": [
@@ -13861,8 +13861,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Row\")",
+        "Custom(\"RowJustify\")"
       ],
       "parent_type": "Row",
       "return_type": "Custom(\"Row\")",
@@ -13887,7 +13887,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")"
+        "Custom(\"Row\")"
       ],
       "forwarding_borrow_params": [
         false
@@ -13900,7 +13900,7 @@
         "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")"
+        "Custom(\"Row\")"
       ],
       "parent_type": "Row",
       "return_type": "String",
@@ -13912,7 +13912,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Row\")",
         "Bool"
       ],
       "forwarding_borrow_params": [
@@ -13928,7 +13928,7 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
+        "Custom(\"Row\")",
         "Bool"
       ],
       "parent_type": "Row",
@@ -13941,7 +13941,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Scroll\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -13957,7 +13957,7 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
+        "Custom(\"Scroll\")",
         "String"
       ],
       "parent_type": "Scroll",
@@ -13970,7 +13970,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Scroll\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -13983,11 +13983,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Scroll\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Scroll",
       "return_type": "Custom(\"Scroll\")",
@@ -13999,7 +13999,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Scroll\")",
         "Custom(\"ScrollDir\")"
       ],
       "forwarding_borrow_params": [
@@ -14015,8 +14015,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Scroll\")",
+        "Custom(\"ScrollDir\")"
       ],
       "parent_type": "Scroll",
       "return_type": "Custom(\"Scroll\")",
@@ -14028,7 +14028,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Scroll\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -14041,11 +14041,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Scroll\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Scroll",
       "return_type": "Custom(\"Scroll\")",
@@ -14070,7 +14070,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")"
+        "Custom(\"Scroll\")"
       ],
       "forwarding_borrow_params": [
         false
@@ -14083,7 +14083,7 @@
         "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")"
+        "Custom(\"Scroll\")"
       ],
       "parent_type": "Scroll",
       "return_type": "String",
@@ -14095,7 +14095,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Scroll\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -14108,11 +14108,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Scroll\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Scroll",
       "return_type": "Custom(\"Scroll\")",
@@ -14596,7 +14596,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Select\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -14609,11 +14609,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Select\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Select",
       "return_type": "Custom(\"Select\")",
@@ -14625,7 +14625,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Select\")",
         "Bool"
       ],
       "forwarding_borrow_params": [
@@ -14641,7 +14641,7 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
+        "Custom(\"Select\")",
         "Bool"
       ],
       "parent_type": "Select",
@@ -14669,7 +14669,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Select\")",
         "String",
         "String"
       ],
@@ -14688,9 +14688,9 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Select\")",
+        "String",
+        "String"
       ],
       "parent_type": "Select",
       "return_type": "Custom(\"Select\")",
@@ -14702,7 +14702,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Select\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -14715,11 +14715,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Select\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Select",
       "return_type": "Custom(\"Select\")",
@@ -14730,7 +14730,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")"
+        "Custom(\"Select\")"
       ],
       "forwarding_borrow_params": [
         false
@@ -14743,7 +14743,7 @@
         "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")"
+        "Custom(\"Select\")"
       ],
       "parent_type": "Select",
       "return_type": "String",
@@ -14755,7 +14755,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Select\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -14768,11 +14768,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Select\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Select",
       "return_type": "Custom(\"Select\")",
@@ -14784,7 +14784,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Select\")",
         "Custom(\"SelectSize\")"
       ],
       "forwarding_borrow_params": [
@@ -14800,8 +14800,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Select\")",
+        "Custom(\"SelectSize\")"
       ],
       "parent_type": "Select",
       "return_type": "Custom(\"Select\")",
@@ -15049,7 +15049,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Skeleton\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -15062,11 +15062,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Skeleton\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Skeleton",
       "return_type": "Custom(\"Skeleton\")",
@@ -15078,7 +15078,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Skeleton\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -15091,11 +15091,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Skeleton\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Skeleton",
       "return_type": "Custom(\"Skeleton\")",
@@ -15120,7 +15120,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")"
+        "Custom(\"Skeleton\")"
       ],
       "forwarding_borrow_params": [
         false
@@ -15133,7 +15133,7 @@
         "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")"
+        "Custom(\"Skeleton\")"
       ],
       "parent_type": "Skeleton",
       "return_type": "String",
@@ -15145,7 +15145,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Skeleton\")",
         "Custom(\"SkeletonVariant\")"
       ],
       "forwarding_borrow_params": [
@@ -15161,8 +15161,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Skeleton\")",
+        "Custom(\"SkeletonVariant\")"
       ],
       "parent_type": "Skeleton",
       "return_type": "Custom(\"Skeleton\")",
@@ -15174,7 +15174,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Skeleton\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -15187,11 +15187,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Skeleton\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Skeleton",
       "return_type": "Custom(\"Skeleton\")",
@@ -15913,7 +15913,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Span\")",
         "Custom(\"T\")"
       ],
       "forwarding_borrow_params": [
@@ -15929,7 +15929,7 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
+        "Custom(\"Span\")",
         "Custom(\"T\")"
       ],
       "parent_type": "Span",
@@ -15942,7 +15942,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Span\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -15955,11 +15955,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Span\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Span",
       "return_type": "Custom(\"Span\")",
@@ -16009,7 +16009,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Span\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -16022,11 +16022,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Span\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Span",
       "return_type": "Custom(\"Span\")",
@@ -16038,7 +16038,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Span\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -16054,7 +16054,7 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
+        "Custom(\"Span\")",
         "String"
       ],
       "parent_type": "Span",
@@ -16779,7 +16779,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -16795,8 +16795,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -16808,7 +16808,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -16824,8 +16824,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -16837,7 +16837,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -16853,8 +16853,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -16866,7 +16866,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -16882,8 +16882,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -16895,7 +16895,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -16911,8 +16911,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -16924,7 +16924,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -16940,8 +16940,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -16953,7 +16953,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -16969,8 +16969,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -16982,7 +16982,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -16998,8 +16998,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -17011,7 +17011,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -17027,8 +17027,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -17040,7 +17040,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -17056,8 +17056,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -17069,7 +17069,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -17085,8 +17085,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -17098,7 +17098,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -17114,8 +17114,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -17127,7 +17127,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -17143,8 +17143,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -17156,7 +17156,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -17172,8 +17172,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -17185,7 +17185,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -17201,8 +17201,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -17214,7 +17214,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -17230,8 +17230,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -17243,7 +17243,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -17259,8 +17259,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -17272,7 +17272,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -17288,8 +17288,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -17301,7 +17301,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -17317,8 +17317,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -17330,7 +17330,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -17346,8 +17346,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -17373,7 +17373,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -17389,8 +17389,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -17402,7 +17402,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -17418,8 +17418,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -17431,7 +17431,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -17447,8 +17447,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -17460,7 +17460,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -17476,8 +17476,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -17489,7 +17489,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -17505,8 +17505,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -17518,7 +17518,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -17534,8 +17534,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -17547,7 +17547,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -17563,8 +17563,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -17576,7 +17576,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -17592,8 +17592,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -17604,7 +17604,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")"
+        "Custom(\"Style\")"
       ],
       "forwarding_borrow_params": [
         false
@@ -17617,7 +17617,7 @@
         "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")"
+        "Custom(\"Style\")"
       ],
       "parent_type": "Style",
       "return_type": "String",
@@ -17629,7 +17629,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -17645,8 +17645,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -17658,7 +17658,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Style\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -17674,8 +17674,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Style\")",
+        "String"
       ],
       "parent_type": "Style",
       "return_type": "Custom(\"Style\")",
@@ -17687,7 +17687,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Switch\")",
         "Bool"
       ],
       "forwarding_borrow_params": [
@@ -17703,7 +17703,7 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
+        "Custom(\"Switch\")",
         "Bool"
       ],
       "parent_type": "Switch",
@@ -17716,7 +17716,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Switch\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -17729,11 +17729,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Switch\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Switch",
       "return_type": "Custom(\"Switch\")",
@@ -17745,7 +17745,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Switch\")",
         "Bool"
       ],
       "forwarding_borrow_params": [
@@ -17761,7 +17761,7 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
+        "Custom(\"Switch\")",
         "Bool"
       ],
       "parent_type": "Switch",
@@ -17774,7 +17774,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Switch\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -17787,11 +17787,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Switch\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Switch",
       "return_type": "Custom(\"Switch\")",
@@ -17816,7 +17816,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")"
+        "Custom(\"Switch\")"
       ],
       "forwarding_borrow_params": [
         false
@@ -17829,7 +17829,7 @@
         "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")"
+        "Custom(\"Switch\")"
       ],
       "parent_type": "Switch",
       "return_type": "String",
@@ -17841,7 +17841,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Switch\")",
         "Custom(\"SwitchSize\")"
       ],
       "forwarding_borrow_params": [
@@ -17857,8 +17857,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Switch\")",
+        "Custom(\"SwitchSize\")"
       ],
       "parent_type": "Switch",
       "return_type": "Custom(\"Switch\")",
@@ -19056,7 +19056,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Textarea\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -19069,11 +19069,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Textarea\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Textarea",
       "return_type": "Custom(\"Textarea\")",
@@ -19085,7 +19085,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Textarea\")",
         "Bool"
       ],
       "forwarding_borrow_params": [
@@ -19101,7 +19101,7 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
+        "Custom(\"Textarea\")",
         "Bool"
       ],
       "parent_type": "Textarea",
@@ -19114,7 +19114,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Textarea\")",
         "Custom(\"i32\")"
       ],
       "forwarding_borrow_params": [
@@ -19130,7 +19130,7 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
+        "Custom(\"Textarea\")",
         "Custom(\"i32\")"
       ],
       "parent_type": "Textarea",
@@ -19157,7 +19157,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Textarea\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -19170,11 +19170,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Textarea\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Textarea",
       "return_type": "Custom(\"Textarea\")",
@@ -19186,7 +19186,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Textarea\")",
         "Bool"
       ],
       "forwarding_borrow_params": [
@@ -19202,7 +19202,7 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
+        "Custom(\"Textarea\")",
         "Bool"
       ],
       "parent_type": "Textarea",
@@ -19214,7 +19214,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")"
+        "Custom(\"Textarea\")"
       ],
       "forwarding_borrow_params": [
         false
@@ -19227,7 +19227,7 @@
         "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")"
+        "Custom(\"Textarea\")"
       ],
       "parent_type": "Textarea",
       "return_type": "String",
@@ -19239,7 +19239,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Textarea\")",
         "Custom(\"TextareaResize\")"
       ],
       "forwarding_borrow_params": [
@@ -19255,8 +19255,8 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "Custom(\"Self\")"
+        "Custom(\"Textarea\")",
+        "Custom(\"TextareaResize\")"
       ],
       "parent_type": "Textarea",
       "return_type": "Custom(\"Textarea\")",
@@ -19268,7 +19268,7 @@
         false
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Textarea\")",
         "Custom(\"i32\")"
       ],
       "forwarding_borrow_params": [
@@ -19284,7 +19284,7 @@
         "Owned"
       ],
       "params": [
-        "Custom(\"Self\")",
+        "Custom(\"Textarea\")",
         "Custom(\"i32\")"
       ],
       "parent_type": "Textarea",
@@ -19297,7 +19297,7 @@
         true
       ],
       "formal_params": [
-        "Custom(\"Self\")",
+        "Custom(\"Textarea\")",
         "String"
       ],
       "forwarding_borrow_params": [
@@ -19310,11 +19310,11 @@
       "is_trait_method": false,
       "param_ownership": [
         "Owned",
-        "Owned"
+        "Borrowed"
       ],
       "params": [
-        "Custom(\"Self\")",
-        "String"
+        "Custom(\"Textarea\")",
+        "Reference(Custom(\"str\"))"
       ],
       "parent_type": "Textarea",
       "return_type": "Custom(\"Textarea\")",
@@ -21961,20 +21961,6 @@
       "return_type": "String",
       "string_ref_string_formal_params": []
     },
-    "main": {
-      "emitted_rust_ref_params": [],
-      "formal_params": [],
-      "forwarding_borrow_params": null,
-      "has_self_receiver": false,
-      "is_associated": false,
-      "is_extern": false,
-      "is_trait_method": false,
-      "param_ownership": [],
-      "params": [],
-      "parent_type": null,
-      "return_type": null,
-      "string_ref_string_formal_params": []
-    },
     "mark_for": {
       "emitted_rust_ref_params": [
         false
@@ -22599,6 +22585,7 @@
       "string_ref_string_formal_params": null
     }
   },
+  "serde_types": [],
   "string_consts": [],
   "structs": {
     "Accordion": {

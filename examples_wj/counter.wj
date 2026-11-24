@@ -52,5 +52,5 @@ pub fn build_counter_ui() -> VNode {
 
 fn main() {
     let ui = build_counter_ui()
-    println!("Counter UI built, VNode handle: {}", ui.raw_handle())
+    println("Counter UI built, VNode handle: ${ui.raw_handle()}")
 }

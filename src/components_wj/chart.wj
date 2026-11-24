@@ -80,12 +80,3 @@ impl Renderable for Chart {
         "<div class='wj-chart'><svg class='wj-chart-svg' width='${self.width}' height='${self.height}' viewBox='0 0 ${self.width} ${self.height}' role='img'>${title_html}${bars_html}</svg></div>"
     }
 }
-
-fn main() {
-    let html = Chart::new()
-        .title("Aging")
-        .bar(ChartBar::new("Current", 100))
-        .bar(ChartBar::new("30+", 40))
-        .render()
-    println("${html}")
-}

@@ -89,7 +89,7 @@ pub fn render(&self) -> String {
             html.push_str(&font_size);
             html.push_str(";\">");
             html.push_str(&self.fallback);
-            html.push_str("</div>")
+            html.push_str("</div>");
         } else {
             html.push_str("<img class=\"wj-avatar ");
             html.push_str(&self.class);
@@ -103,7 +103,7 @@ pub fn render(&self) -> String {
             html.push_str(&size_px);
             html.push_str("; border-radius: ");
             html.push_str(&border_radius);
-            html.push_str("; object-fit: cover;\">")
+            html.push_str("; object-fit: cover;\">");
         }
         html
 }

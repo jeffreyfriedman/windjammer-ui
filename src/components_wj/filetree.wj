@@ -65,16 +65,3 @@ impl Renderable for FileTree {
         "<div class='wj-file-tree'>\n${self.root.render(0)}</div>"
     }
 }
-
-fn main() {
-    let tree = FileTree::new(
-        FileNode::new("src", true)
-            .expanded(true)
-            .child(FileNode::new("main.rs", false))
-            .child(FileNode::new("lib.rs", false))
-    )
-
-    println("${tree.render()}")
-}
-
-

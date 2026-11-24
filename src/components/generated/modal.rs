@@ -92,18 +92,18 @@ fn render(&self) -> String {
         html.push_str(&self.title);
         html.push_str("</h2>");
         if self.closeable {
-            let _ = html.push_str("<button onclick='document.getElementById(\"");
-            let _ = html.push_str(&self.id);
-            let _ = html.push_str("-backdrop\").style.display=\"none\"' style='background: none; border: none; font-size: 24px; cursor: pointer; color: #718096; padding: 0; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;'>&times;</button>");
+            html.push_str("<button onclick='document.getElementById(\"");
+            html.push_str(&self.id);
+            html.push_str("-backdrop\").style.display=\"none\"' style='background: none; border: none; font-size: 24px; cursor: pointer; color: #718096; padding: 0; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;'>&times;</button>");
         }
         html.push_str("</div>");
         html.push_str("<div style='padding: 24px; flex: 1; overflow-y: auto;'>");
         html.push_str(&self.content);
         html.push_str("</div>");
         if !self.footer.is_empty() {
-            let _ = html.push_str("<div style='padding: 16px 24px; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 8px;'>");
-            let _ = html.push_str(&self.footer);
-            let _ = html.push_str("</div>");
+            html.push_str("<div style='padding: 16px 24px; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 8px;'>");
+            html.push_str(&self.footer);
+            html.push_str("</div>");
         }
         html.push_str("</div>");
         html.push_str("</div>");

@@ -122,11 +122,7 @@ pub fn signal_set_bool(handle: u64, value: bool) {
 // ============================================================================
 
 pub fn signal_new_string(value: &str) -> u64 {
-    STRING_SIGNALS.with(|registry| {
-        registry
-            .borrow_mut()
-            .insert(Signal::new(value.to_string()))
-    })
+    STRING_SIGNALS.with(|registry| registry.borrow_mut().insert(Signal::new(value.to_string())))
 }
 
 pub fn signal_get_string(handle: u64) -> String {
@@ -166,9 +162,9 @@ mod tests {
 
     #[test]
     fn test_f32_signal() {
-        let handle = signal_new_f32(3.14);
+        let handle = signal_new_f32(1.5);
         let val = signal_get_f32(handle);
-        assert!((val - 3.14).abs() < 0.001);
+        assert!((val - 1.5).abs() < 0.001);
         signal_set_f32(handle, 2.71);
         let val = signal_get_f32(handle);
         assert!((val - 2.71).abs() < 0.001);

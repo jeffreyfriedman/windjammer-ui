@@ -86,7 +86,7 @@ pub fn from_engine_live(budget_ms: f32) -> LiveProfilerSnapshot {
                 }
             };
             snap = snap.scope(ProfilerScopeRow { name, duration_ms, percentage: pct, kind });
-            i += 1;
+            i = i.wrapping_add(1);
         }
         snap
 }

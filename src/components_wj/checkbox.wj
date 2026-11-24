@@ -69,10 +69,10 @@ impl RenderableVNode for Checkbox {
             )
             .child(
                 VNode::span()
-                    .add_text(self.label.clone())
+                    .add_text(self.label)
             )
         if self.change_handler.len() > 0 {
-            label_node = label_node.on_change(self.change_handler.clone())
+            label_node = label_node.on_change(self.change_handler)
         }
         label_node
     }
@@ -92,12 +92,3 @@ pub fn render(self) -> string {
         "<label class='wj-checkbox wj-checkbox-${size_class}'><input type='checkbox'${checked_attr}${disabled_attr}/><span>${self.label}</span></label>"
     }
 }
-
-fn main() {
-    let cb1 = Checkbox::new("Accept terms").checked(true)
-    let cb2 = Checkbox::new("Subscribe").size(CheckboxSize::Large).disabled(true)
-    
-    println("${cb1.render()}")
-    println("${cb2.render()}")
-}
-

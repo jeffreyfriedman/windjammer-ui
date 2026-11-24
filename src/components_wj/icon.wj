@@ -74,8 +74,3 @@ impl Renderable for Icon {
         "<svg class='wj-icon' width='${self.size}' height='${self.size}' viewBox='0 0 24 24' ${aria} ${stroke}><path d='${d}'/></svg>"
     }
 }
-
-fn main() {
-    let html = Icon::new(IconName::Home).size(20).render()
-    println("${html}")
-}

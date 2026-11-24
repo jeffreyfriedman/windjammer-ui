@@ -80,8 +80,3 @@ impl Renderable for Alert {
         "<div class='wj-alert ${variant_class}' role='status'><span class='wj-alert-mark'>${mark}</span>${heading} <span class='wj-alert-msg'>${self.message}</span></div>"
     }
 }
-
-fn main() {
-    let html = Alert::warning("Review open items").title("Today").render()
-    println("${html}")
-}

@@ -67,14 +67,3 @@ ${self.code}</textarea>
 </div>"
     }
 }
-
-fn main() {
-    let editor = AdvancedCodeEditor::new("fn main() {\n    println!(\"Hello, Windjammer!\");\n}")
-        .language("rust")
-        .theme("monokai")
-        .minimap(true)
-
-    println("${editor.render()}")
-}
-
-

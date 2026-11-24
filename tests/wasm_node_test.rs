@@ -18,7 +18,16 @@ fn list(keys: &[&str]) -> VNode {
         "ul",
         vec![],
         keys.iter()
-            .map(|k| VNode::element("li", vec![("key", windjammer_ui::simple_vnode::VAttr::Static(k.to_string()))], vec![VNode::text(k)]))
+            .map(|k| {
+                VNode::element(
+                    "li",
+                    vec![(
+                        "key",
+                        windjammer_ui::simple_vnode::VAttr::Static(k.to_string()),
+                    )],
+                    vec![VNode::text(k)],
+                )
+            })
             .collect(),
     )
 }

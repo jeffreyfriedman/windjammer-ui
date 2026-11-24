@@ -78,7 +78,7 @@ fn view(&self) -> VNode {
                 panel = panel.add_attr("hidden".to_string(), "hidden".to_string());
             }
             panels = panels.child(panel);
-            i += 1;
+            i = i.wrapping_add(1);
         }
         VNode::div().add_class("wj-tabs".to_string()).child(list).child(panels)
 }
@@ -124,7 +124,7 @@ pub fn toggle(&mut self, index: i32) {
             let mut j = 0_usize;
             while j < self.open.len() {
                 self.open[j] = false;
-                j += 1;
+                j = j.wrapping_add(1);
             }
         }
         self.open[index as usize] = !was;
@@ -175,7 +175,7 @@ fn view(&self) -> VNode {
                 body = body.add_attr("hidden".to_string(), "hidden".to_string());
             }
             root = root.child(head).child(body);
-            i += 1;
+            i = i.wrapping_add(1);
         }
         root
 }

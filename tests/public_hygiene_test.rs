@@ -21,7 +21,10 @@ fn parse_patterns(text: &str) -> Vec<Term> {
         .filter(|l| !l.is_empty() && !l.starts_with('#'))
         .map(|l| {
             let (seps, pieces) = l.split_once(':').expect("pattern line needs ':'");
-            Term { seps: seps.chars().collect(), pieces: pieces.split('|').map(|p| p.to_lowercase()).collect() }
+            Term {
+                seps: seps.chars().collect(),
+                pieces: pieces.split('|').map(|p| p.to_lowercase()).collect(),
+            }
         })
         .collect()
 }
@@ -50,7 +53,10 @@ fn find_hits(text: &str) -> Vec<String> {
     let hay = text.to_lowercase();
     terms()
         .into_iter()
-        .filter(|t| hay.match_indices(t.pieces[0].as_str()).any(|(i, _)| match_from(t, &hay, 0, i)))
+        .filter(|t| {
+            hay.match_indices(t.pieces[0].as_str())
+                .any(|(i, _)| match_from(t, &hay, 0, i))
+        })
         .map(|t| t.pieces.join("+"))
         .collect()
 }
@@ -63,11 +69,17 @@ fn scan_tree(root: &Path) -> Vec<String> {
     let mut hits = Vec::new();
     let mut stack: Vec<PathBuf> = vec![root.to_path_buf()];
     while let Some(dir) = stack.pop() {
-        let Ok(entries) = fs::read_dir(&dir) else { continue };
+        let Ok(entries) = fs::read_dir(&dir) else {
+            continue;
+        };
         for e in entries.flatten() {
             let path = e.path();
             let name = e.file_name().to_string_lossy().to_string();
-            let rel = path.strip_prefix(root).unwrap_or(&path).display().to_string();
+            let rel = path
+                .strip_prefix(root)
+                .unwrap_or(&path)
+                .display()
+                .to_string();
             if path.is_dir() {
                 if !skip_dir(&name) {
                     stack.push(path);
@@ -95,7 +107,11 @@ fn scan_tree(root: &Path) -> Vec<String> {
 fn repository_has_no_private_project_references() {
     let root = Path::new(env!("CARGO_MANIFEST_DIR"));
     let hits = scan_tree(root);
-    assert!(hits.is_empty(), "private references found:\n{}", hits.join("\n"));
+    assert!(
+        hits.is_empty(),
+        "private references found:\n{}",
+        hits.join("\n")
+    );
 }
 
 #[test]
@@ -108,13 +124,28 @@ fn scanner_detects_planted_forbidden_strings() {
 
     for t in terms() {
         let adjacent = t.pieces.concat().to_uppercase();
-        fs::write(dir.join("sub/planted.txt"), format!("see {adjacent} for details")).unwrap();
+        fs::write(
+            dir.join("sub/planted.txt"),
+            format!("see {adjacent} for details"),
+        )
+        .unwrap();
         let hits = scan_tree(&dir);
-        assert!(hits.iter().any(|h| h.contains("content matches")), "term not detected: {}", t.pieces.join("+"));
+        assert!(
+            hits.iter().any(|h| h.contains("content matches")),
+            "term not detected: {}",
+            t.pieces.join("+")
+        );
         if let Some(sep) = t.seps.first() {
             let spaced = t.pieces.join(&sep.to_string());
-            fs::write(dir.join("sub/planted.txt"), format!("see {spaced} for details")).unwrap();
-            assert!(!scan_tree(&dir).is_empty(), "separated form not detected: {spaced}");
+            fs::write(
+                dir.join("sub/planted.txt"),
+                format!("see {spaced} for details"),
+            )
+            .unwrap();
+            assert!(
+                !scan_tree(&dir).is_empty(),
+                "separated form not detected: {spaced}"
+            );
         }
         fs::remove_file(dir.join("sub/planted.txt")).unwrap();
     }
@@ -126,5 +157,7 @@ fn scanner_detects_planted_forbidden_strings() {
 
 #[test]
 fn own_repository_url_is_not_flagged() {
-    assert!(find_hits("repository = \"https://github.com/jeffreyfriedman/windjammer-ui\"").is_empty());
+    assert!(
+        find_hits("repository = \"https://github.com/jeffreyfriedman/windjammer-ui\"").is_empty()
+    );
 }

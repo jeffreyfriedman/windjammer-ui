@@ -94,9 +94,9 @@ pub fn render(&self) -> String {
         html.push_str(&disabled_style);
         html.push_str(" transition: background-color 0.2s;\">");
         if !self.icon.is_empty() {
-            let _ = html.push_str("<span>");
-            let _ = html.push_str(&self.icon);
-            let _ = html.push_str("</span>");
+            html.push_str("<span>");
+            html.push_str(&self.icon);
+            html.push_str("</span>");
         }
         html.push_str("<span>");
         html.push_str(&self.label);

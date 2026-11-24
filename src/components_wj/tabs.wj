@@ -86,15 +86,3 @@ fn render(self) -> string {
         "<div class='wj-tabs'>${tabs_html}${content_html}</div>"
     }
 }
-
-fn main() {
-    let tabs = Tabs::new()
-        .tab(Tab::new("home", "Home", "<p>Home content</p>"))
-        .tab(Tab::new("profile", "Profile", "<p>Profile content</p>"))
-        .tab(Tab::new("settings", "Settings", "<p>Settings content</p>"))
-        .active("home")
-
-    println("${tabs.render()}")
-}
-
-

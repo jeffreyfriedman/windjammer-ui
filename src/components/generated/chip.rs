@@ -106,17 +106,17 @@ fn render(&self) -> String {
         html.push_str(&border_color);
         html.push_str(";'>");
         if !self.icon.is_empty() {
-            let _ = html.push_str("<span>");
-            let _ = html.push_str(&self.icon);
-            let _ = html.push_str("</span>");
+            html.push_str("<span>");
+            html.push_str(&self.icon);
+            html.push_str("</span>");
         }
         html.push_str("<span>");
         html.push_str(&self.label);
         html.push_str("</span>");
         if self.removable {
-            let _ = html.push_str("<button onclick='this.parentElement.remove()' style='background: none; border: none; cursor: pointer; padding: 0; margin: 0; display: flex; align-items: center; color: ");
-            let _ = html.push_str(&text_color);
-            let _ = html.push_str("; opacity: 0.7; font-size: 18px; line-height: 1;' onmouseover='this.style.opacity=\"1\"' onmouseout='this.style.opacity=\"0.7\"'>&times;</button>");
+            html.push_str("<button onclick='this.parentElement.remove()' style='background: none; border: none; cursor: pointer; padding: 0; margin: 0; display: flex; align-items: center; color: ");
+            html.push_str(&text_color);
+            html.push_str("; opacity: 0.7; font-size: 18px; line-height: 1;' onmouseover='this.style.opacity=\"1\"' onmouseout='this.style.opacity=\"0.7\"'>&times;</button>");
         }
         html.push_str("</span>");
         html

@@ -18,7 +18,7 @@ pub struct EcsComponentSection {
 
 pub struct EcsInspectorSnapshot {
     pub entities: Vec<EcsEntityRow>,
-    pub selected_entity_id: Option<i64>,
+    pub selected_entity_id: i64?,
     pub components: Vec<EcsComponentSection>,
 }
 

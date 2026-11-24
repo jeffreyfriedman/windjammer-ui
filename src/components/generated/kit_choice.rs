@@ -235,7 +235,7 @@ fn view(&self) -> VNode {
             let on = i == self.selected;
             let radio = { let _temp0 = format!("radio:{}", i); VNode::div().add_class("wj-radio".to_string()).set_id(part_id(&self.base, "radio", i)).add_attr("role".to_string(), "radio".to_string()).add_attr("aria-checked".to_string(), aria_bool(on)).add_attr("tabindex".to_string(), roving_tabindex(entry)).add_attr("data-wj-act".to_string(), _temp0) }.add_text(self.labels[i as usize].clone());
             group = group.child(radio);
-            i += 1;
+            i = i.wrapping_add(1);
         }
         group
 }

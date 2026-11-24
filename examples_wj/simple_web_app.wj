@@ -6,28 +6,23 @@
 
 fn main() {
     let html = build_html_page()
-    println!("{}", html)
+    println("${html}")
 }
 
 fn build_html_page() -> string {
-    format!(
-        "<!DOCTYPE html>
+    "<!DOCTYPE html>
 <html lang='en'>
 <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>Windjammer Demo App</title>
-    {}
+    ${build_styles()}
 </head>
 <body>
-    {}
-    {}
+    ${build_ui()}
+    ${build_scripts()}
 </body>
-</html>",
-        build_styles(),
-        build_ui(),
-        build_scripts()
-    )
+</html>"
 }
 
 fn build_styles() -> string {

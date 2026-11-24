@@ -57,9 +57,3 @@ impl Renderable for KpiGrid {
         "<div class='kpi-grid wj-kpi-grid'>${body}</div>"
     }
 }
-
-fn main() {
-    let tile = KpiTile::new("Cash").value_html("<span class='wj-money'>$10.00</span>").render()
-    let html = KpiGrid::new().tile(tile).render()
-    println("${html}")
-}

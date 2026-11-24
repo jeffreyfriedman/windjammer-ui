@@ -13,7 +13,7 @@ struct TodoItem {
 
 @export
 fn start() {
-    println!("📝 Starting Todo App")
+    println("📝 Starting Todo App")
     
     // State
     let todos = Signal::new(vec![
@@ -71,7 +71,7 @@ fn start() {
                                         todos_add.set(current_todos)
                                         next_id_add.set(id + 1)
                                         input_add.set("")
-                                        println!("Added todo: {}", text)
+                                        println("Added todo: ${text}")
                                     }
                                 })
                         )

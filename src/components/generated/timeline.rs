@@ -73,9 +73,9 @@ fn render(&self) -> String {
             html.push_str(&event.title);
             html.push_str("</div>");
             if !event.description.is_empty() {
-                let _ = html.push_str("<div style='font-size: 14px; color: #4a5568;'>");
-                let _ = html.push_str(&event.description);
-                let _ = html.push_str("</div>");
+                html.push_str("<div style='font-size: 14px; color: #4a5568;'>");
+                html.push_str(&event.description);
+                html.push_str("</div>");
             }
             html.push_str("</div>");
             html.push_str("</div>");

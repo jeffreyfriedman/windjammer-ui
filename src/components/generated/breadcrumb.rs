@@ -44,9 +44,9 @@ pub fn render(&self) -> String {
         html.push_str("\" style=\"display: flex; align-items: center; gap: 8px; font-size: 14px;\">");
         for (i, item) in self.items.iter().enumerate() {
             if i > 0_usize {
-                let _ = html.push_str("<span style=\"color: #9ca3af;\">");
-                let _ = html.push_str(&self.separator);
-                let _ = html.push_str("</span>");
+                html.push_str("<span style=\"color: #9ca3af;\">");
+                html.push_str(&self.separator);
+                html.push_str("</span>");
             }
             if item.active.clone() {
                 html.push_str("<span style=\"color: #3b82f6; font-weight: 500;\">");
