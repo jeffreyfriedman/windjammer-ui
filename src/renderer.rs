@@ -407,7 +407,9 @@ impl DesktopRenderer {
 
                 // Add attributes
                 for (key, value) in &element.attrs {
-                    html.push_str(&format!(" {}=\"{}\"", key, value));
+                    if let Some(v) = crate::escape::safe_attr(key, value) {
+                        html.push_str(&format!(" {}=\"{}\"", key, crate::escape::escape_attr(&v)));
+                    }
                 }
 
                 html.push('>');
@@ -420,7 +422,7 @@ impl DesktopRenderer {
                 html.push_str(&format!("</{}>", element.tag));
                 html
             }
-            VNode::Text(text) => text.content.clone(),
+            VNode::Text(text) => crate::escape::escape_text(&text.content).into_string(),
             VNode::Component(_) => String::new(),
             VNode::Empty => String::new(),
         }

@@ -150,6 +150,18 @@ fn test_card_component() {
 fn test_progress_component() {
     let progress = progress::Progress::new(75.0).render();
     assert!(progress.contains("75"));
+    assert!(
+        progress.contains("role='progressbar'"),
+        "Progress must expose ARIA progressbar role"
+    );
+    assert!(
+        progress.contains("aria-valuenow='75'"),
+        "Progress must expose aria-valuenow"
+    );
+    assert!(
+        progress.contains("aria-valuemin='0'") && progress.contains("aria-valuemax='100'"),
+        "Progress must expose aria-valuemin/max"
+    );
 }
 
 #[test]
@@ -213,7 +225,7 @@ fn test_dialog_component() {
 fn test_avatar_component() {
     // Test basic avatar with image
     let avatar_img = avatar::Avatar::new("user.jpg".to_string())
-        .alt("User profile".to_string())
+        .alt("User profile")
         .size(avatar::AvatarSize::Large)
         .shape(avatar::AvatarShape::Circle)
         .render();
@@ -224,7 +236,7 @@ fn test_avatar_component() {
 
     // Test fallback behavior (no image, shows initials)
     let avatar_fallback = avatar::Avatar::new(String::new())
-        .fallback("JF".to_string())
+        .fallback("JF")
         .size(avatar::AvatarSize::Small)
         .shape(avatar::AvatarShape::Rounded)
         .render();

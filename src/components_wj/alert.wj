@@ -1,7 +1,7 @@
-// Alert Component - Display messages and notifications
-
+// Alert — calm status banners (no emoji marks)
 
 use super::traits::Renderable
+
 pub enum AlertVariant {
     Error,
     Warning,
@@ -12,6 +12,7 @@ pub enum AlertVariant {
 pub struct Alert {
     message: string,
     variant: AlertVariant,
+    title: string,
 }
 
 impl Alert {
@@ -19,6 +20,7 @@ impl Alert {
         Alert {
             message: message,
             variant: AlertVariant::Error,
+            title: "",
         }
     }
 
@@ -26,6 +28,7 @@ impl Alert {
         Alert {
             message: message,
             variant: AlertVariant::Warning,
+            title: "",
         }
     }
 
@@ -33,6 +36,7 @@ impl Alert {
         Alert {
             message: message,
             variant: AlertVariant::Info,
+            title: "",
         }
     }
 
@@ -40,43 +44,39 @@ impl Alert {
         Alert {
             message: message,
             variant: AlertVariant::Success,
+            title: "",
         }
     }
 
+    pub fn title(self, title: string) -> Alert {
+        self.title = title
+        self
+    }
+}
 
+fn mark_for(variant: AlertVariant) -> string {
+    match variant {
+        AlertVariant::Error => "Error",
+        AlertVariant::Warning => "Warning",
+        AlertVariant::Info => "Note",
+        AlertVariant::Success => "Done",
+    }
 }
 
 impl Renderable for Alert {
-pub fn render(self) -> string {
+    fn render(self) -> string {
         let variant_class = match self.variant {
             AlertVariant::Error => "wj-alert-error",
             AlertVariant::Warning => "wj-alert-warning",
             AlertVariant::Info => "wj-alert-info",
             AlertVariant::Success => "wj-alert-success",
         }
-
-        let icon = match self.variant {
-            AlertVariant::Error => "❌",
-            AlertVariant::Warning => "⚠️",
-            AlertVariant::Info => "ℹ️",
-            AlertVariant::Success => "✅",
+        let mark = mark_for(self.variant)
+        let heading = if self.title.len() == 0 {
+            ""
+        } else {
+            "<strong class='wj-alert-title'>${self.title}</strong>"
         }
-
-        format!("<div class='wj-alert {}'>{} {}</div>", variant_class, icon, self.message)
+        "<div class='wj-alert ${variant_class}' role='status'><span class='wj-alert-mark'>${mark}</span>${heading} <span class='wj-alert-msg'>${self.message}</span></div>"
     }
 }
-
-fn main() {
-    let alert1 = Alert::error("Something went wrong!".to_string())
-    println!("Error: {}", alert1.render())
-
-    let alert2 = Alert::success("Operation completed successfully".to_string())
-    println!("Success: {}", alert2.render())
-
-    let alert3 = Alert::warning("Please review your input".to_string())
-    println!("Warning: {}", alert3.render())
-
-    let alert4 = Alert::info("Did you know...".to_string())
-    println!("Info: {}", alert4.render())
-}
-

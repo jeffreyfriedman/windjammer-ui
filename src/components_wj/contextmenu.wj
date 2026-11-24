@@ -11,8 +11,8 @@ impl ContextMenuItem {
     pub fn new(label: string) -> ContextMenuItem {
         ContextMenuItem {
             label: label,
-            icon: String::from(""),
-            action: String::from(""),
+            icon: "",
+            action: "",
             disabled: false,
         }
     }
@@ -59,33 +59,22 @@ fn render(self) -> string {
         
         for item in self.items {
             let icon_html = if item.icon.len() > 0 {
-                format!("<span class='wj-context-icon'>{}</span>", item.icon)
+                "<span class='wj-context-icon'>${item.icon}</span>"
             } else {
-                String::from("")
+                ""
             }
             
             let disabled_class = if item.disabled { " wj-context-item-disabled" } else { "" }
             let disabled_attr = if item.disabled { " disabled" } else { "" }
             
-            items_html.push(format!(
-                "<button class='wj-context-item{}' onclick='{}'{}>
-                    {}
-                    <span>{}</span>
-                </button>",
-                disabled_class,
-                item.action,
-                disabled_attr,
-                icon_html,
-                item.label
-            ))
+            items_html.push("<button class='wj-context-item${disabled_class}' onclick='${item.action}'${disabled_attr}>
+                    ${icon_html}
+                    <span>${item.label}</span>
+                </button>")
         }
         
-        format!(
-            "<div class='wj-context-menu' id='context-{}' style='display: none'>
-                {}
-            </div>",
-            self.trigger_id,
-            items_html.join("")
-        )
+        "<div class='wj-context-menu' id='context-${self.trigger_id}' style='display: none'>
+                ${items_html.join("")}
+            </div>"
     }
 }

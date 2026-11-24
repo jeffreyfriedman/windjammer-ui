@@ -1,6 +1,7 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#[derive(Debug, Clone)]
+#[allow(unused_imports)]
+use super::*;
+#[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Select {
     pub options: Vec<SelectOption>,
     pub selected: String,
@@ -11,6 +12,7 @@ pub struct Select {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct SelectOption {
     pub value: String,
     pub label: String,
@@ -24,92 +26,84 @@ pub enum SelectSize {
 }
 
 impl Select {
-    #[inline]
-    pub fn new() -> Select {
-        Select {
-            options: Vec::new(),
-            selected: String::new(),
-            placeholder: "Select an option".to_string(),
-            disabled: false,
-            size: SelectSize::Medium,
-            class: String::new(),
-        }
-    }
-    #[inline]
-    pub fn option(mut self, value: String, label: String) -> Select {
+#[inline]
+pub fn new() -> Select {
+        Select { options: Vec::new(), selected: String::new(), placeholder: String::from("Select an option"), disabled: false, size: SelectSize::Medium, class: String::new() }
+}
+#[inline]
+pub fn option(mut self, value: String, label: String) -> Select {
         self.options.push(SelectOption { value, label });
         self
-    }
-    #[inline]
-    pub fn selected(mut self, selected: String) -> Select {
-        self.selected = selected;
+}
+#[inline]
+pub fn selected(mut self, selected: &str) -> Select {
+        self.selected = selected.to_string();
         self
-    }
-    #[inline]
-    pub fn placeholder(mut self, placeholder: String) -> Select {
-        self.placeholder = placeholder;
+}
+#[inline]
+pub fn placeholder(mut self, placeholder: &str) -> Select {
+        self.placeholder = placeholder.to_string();
         self
-    }
-    #[inline]
-    pub fn disabled(mut self, disabled: bool) -> Select {
+}
+#[inline]
+pub fn disabled(mut self, disabled: bool) -> Select {
         self.disabled = disabled;
         self
-    }
-    #[inline]
-    pub fn size(mut self, size: SelectSize) -> Select {
+}
+#[inline]
+pub fn size(mut self, size: SelectSize) -> Select {
         self.size = size;
         self
-    }
-    #[inline]
-    pub fn class(mut self, class: String) -> Select {
-        self.class = class;
+}
+#[inline]
+pub fn class(mut self, class: &str) -> Select {
+        self.class = class.to_string();
         self
-    }
-    #[inline]
-    pub fn render(&self) -> String {
-        let size_style = match self.size {
-            SelectSize::Small => "padding: 4px 8px; font-size: 12px;".to_string(),
-            SelectSize::Medium => "padding: 8px 12px; font-size: 14px;".to_string(),
-            SelectSize::Large => "padding: 12px 16px; font-size: 16px;".to_string(),
+}
+
+pub fn render(&self) -> String {
+        let size_style: String = match &self.size {
+            SelectSize::Small => String::from("padding: 4px 8px; font-size: 12px;"),
+            SelectSize::Medium => String::from("padding: 8px 12px; font-size: 14px;"),
+            SelectSize::Large => String::from("padding: 12px 16px; font-size: 16px;"),
         };
         let disabled_attr = {
             if self.disabled {
-                " disabled".to_string()
+                String::from(" disabled")
             } else {
-                "".to_string()
+                String::new()
             }
         };
         let mut html = String::new();
         html.push_str("<select class=\"wj-select ");
-        html.push_str(&self.class.as_str());
+        html.push_str(&self.class);
         html.push_str("\" style=\"");
         html.push_str(&size_style);
-        html.push_str(
-            " border: 1px solid #d1d5db; border-radius: 6px; background: white; cursor: pointer;\"",
-        );
+        html.push_str(" border: 1px solid #d1d5db; border-radius: 6px; background: white; cursor: pointer;\"");
         html.push_str(&disabled_attr);
         html.push('>');
         if !self.placeholder.is_empty() {
             html.push_str("<option value=\"\" disabled");
             if self.selected.is_empty() {
-                html.push_str(" selected")
+                html.push_str(" selected");
             }
             html.push_str(">");
-            html.push_str(&self.placeholder.as_str());
-            html.push_str("</option>")
+            html.push_str(&self.placeholder);
+            html.push_str("</option>");
         }
         for opt in &self.options {
             html.push_str("<option value=\"");
-            html.push_str(&opt.value.clone().as_str());
+            html.push_str(&opt.value);
             html.push('"');
-            if opt.value.clone() == self.selected {
-                html.push_str(" selected")
+            if opt.value == self.selected {
+                html.push_str(" selected");
             }
             html.push('>');
-            html.push_str(&opt.label.clone().as_str());
+            html.push_str(&opt.label);
             html.push_str("</option>");
         }
         html.push_str("</select>");
         html
-    }
 }
+}
+

@@ -1,6 +1,7 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-#[derive(Debug, Clone, Default)]
+#[allow(unused_imports)]
+use super::*;
+#[derive(Debug, Clone, PartialEq, Default)]
+#[repr(C)]
 pub struct Breadcrumb {
     pub items: Vec<BreadcrumbItem>,
     pub separator: String,
@@ -8,6 +9,7 @@ pub struct Breadcrumb {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct BreadcrumbItem {
     pub label: String,
     pub href: String,
@@ -15,62 +17,51 @@ pub struct BreadcrumbItem {
 }
 
 impl Breadcrumb {
-    #[inline]
-    pub fn new() -> Breadcrumb {
-        Breadcrumb {
-            items: Vec::new(),
-            separator: "/".to_string(),
-            class: String::new(),
-        }
-    }
-    #[inline]
-    pub fn item(mut self, label: String, href: String, active: bool) -> Breadcrumb {
-        self.items.push(BreadcrumbItem {
-            label,
-            href,
-            active,
-        });
+#[inline]
+pub fn new() -> Breadcrumb {
+        Breadcrumb { items: Vec::new(), separator: String::from("/"), class: String::new() }
+}
+#[inline]
+pub fn item(mut self, label: String, href: String, active: bool) -> Breadcrumb {
+        self.items.push(BreadcrumbItem { label, href, active });
         self
-    }
-    #[inline]
-    pub fn separator(mut self, separator: String) -> Breadcrumb {
-        self.separator = separator;
+}
+#[inline]
+pub fn separator(mut self, separator: &str) -> Breadcrumb {
+        self.separator = separator.to_string();
         self
-    }
-    #[inline]
-    pub fn class(mut self, class: String) -> Breadcrumb {
-        self.class = class;
+}
+#[inline]
+pub fn class(mut self, class: &str) -> Breadcrumb {
+        self.class = class.to_string();
         self
-    }
-    #[inline]
-    pub fn render(&self) -> String {
+}
+
+pub fn render(&self) -> String {
         let mut html = String::new();
         html.push_str("<nav class=\"wj-breadcrumb ");
-        html.push_str(&self.class.as_str());
-        html.push_str(
-            "\" style=\"display: flex; align-items: center; gap: 8px; font-size: 14px;\">",
-        );
+        html.push_str(&self.class);
+        html.push_str("\" style=\"display: flex; align-items: center; gap: 8px; font-size: 14px;\">");
         for (i, item) in self.items.iter().enumerate() {
-            if i > 0 {
+            if i > 0_usize {
                 html.push_str("<span style=\"color: #9ca3af;\">");
-                html.push_str(&self.separator.as_str());
-                html.push_str("</span>")
+                html.push_str(&self.separator);
+                html.push_str("</span>");
             }
-            if item.active {
+            if item.active.clone() {
                 html.push_str("<span style=\"color: #3b82f6; font-weight: 500;\">");
-                html.push_str(&item.label.as_str());
+                html.push_str(&item.label);
                 html.push_str("</span>")
             } else {
                 html.push_str("<a href=\"");
-                html.push_str(&item.href.as_str());
-                html.push_str(
-                    "\" style=\"color: #6b7280; text-decoration: none; hover: color: #3b82f6;\">",
-                );
-                html.push_str(&item.label.as_str());
+                html.push_str(&item.href);
+                html.push_str("\" style=\"color: #6b7280; text-decoration: none; hover: color: #3b82f6;\">");
+                html.push_str(&item.label);
                 html.push_str("</a>")
             }
         }
         html.push_str("</nav>");
         html
-    }
 }
+}
+

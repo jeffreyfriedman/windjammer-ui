@@ -1,5 +1,6 @@
 /// Reactive application runtime for WASM
 /// Simpler version without the complex winit+wgpu setup
+use crate::reactive_mount::{default_mount_selector, MountTarget};
 use crate::simple_vnode::VNode;
 use std::rc::Rc;
 
@@ -32,6 +33,7 @@ pub struct ReactiveApp {
     title: String,
     #[allow(dead_code)]
     render_fn: Rc<dyn Fn() -> VNode>,
+    mount: MountTarget,
 }
 
 impl ReactiveApp {
@@ -42,7 +44,43 @@ impl ReactiveApp {
         Self {
             title,
             render_fn: Rc::new(render_fn),
+            mount: MountTarget::new(),
         }
+    }
+
+    /// Mount into a CSS selector instead of the default `#app`.
+    /// Hybrid app shell: `.mount_target("#main")` preserves chrome.
+    pub fn mount_target(mut self, selector: impl Into<String>) -> Self {
+        self.mount = self.mount.mount_target(selector);
+        self
+    }
+
+    /// Current mount selector (for tests / introspection).
+    pub fn mount_selector(&self) -> &str {
+        self.mount.selector()
+    }
+
+    /// HTML that would be written by [`Self::paint_once`] (host-testable via render).
+    pub fn paint_html(&self) -> String {
+        crate::reactive_mount::paint_once_html(&(self.render_fn)())
+    }
+
+    /// One-shot remount into `mount_target` without starting the RAF loop.
+    /// Hash-routed pilot: hash changes call this instead of stacking `run()` loops.
+    #[cfg(target_arch = "wasm32")]
+    pub fn paint_once(self) {
+        use wasm_bindgen::JsCast;
+        use web_sys::{window, HtmlElement};
+
+        let document = window().unwrap().document().unwrap();
+        let selector = self.mount.selector().to_string();
+        let root = document
+            .query_selector(&selector)
+            .expect("query_selector failed")
+            .unwrap_or_else(|| panic!("Failed to find mount target '{}'", selector))
+            .dyn_into::<HtmlElement>()
+            .unwrap();
+        root.set_inner_html(&self.paint_html());
     }
 
     #[cfg(target_arch = "wasm32")]
@@ -51,14 +89,19 @@ impl ReactiveApp {
         use web_sys::{window, HtmlElement};
 
         let document = window().unwrap().document().unwrap();
+        let selector = self.mount.selector().to_string();
         let root = document
-            .get_element_by_id("app")
-            .expect("Failed to find #app element")
+            .query_selector(&selector)
+            .expect("query_selector failed")
+            .unwrap_or_else(|| panic!("Failed to find mount target '{}'", selector))
             .dyn_into::<HtmlElement>()
             .unwrap();
 
         let render_fn = self.render_fn.clone();
         let needs_rerender = Rc::new(RefCell::new(true));
+        // Keyed DOM patcher: nodes (focus, caret, scroll, input values) survive re-renders,
+        // and event handlers are delegated from the mount root.
+        let mounted = crate::dom_patch::web::new_mounted(document.clone(), root.clone().into());
 
         let needs_rerender_clone = needs_rerender.clone();
         set_render_callback(move || {
@@ -76,11 +119,7 @@ impl ReactiveApp {
                 *needs_rerender_clone.borrow_mut() = false;
 
                 let vnode = render_fn_clone();
-                let html = crate::simple_renderer::render_to_html(&vnode);
-                root.set_inner_html(&html);
-
-                // Event listeners are attached in future version
-                // crate::renderer::attach_event_listeners(&root, &vnode);
+                mounted.borrow_mut().update(&vnode);
             }
 
             web_sys::window()
@@ -111,6 +150,7 @@ impl ReactiveApp {
 
     #[cfg(not(target_arch = "wasm32"))]
     pub fn run(self) {
+        let _ = default_mount_selector();
         panic!(
             "ReactiveApp::run() is only available on wasm32 targets.\n\
              For desktop applications, use ReactiveApp from app_reactive_eframe module.\n\

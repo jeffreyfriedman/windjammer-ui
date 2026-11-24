@@ -1,5 +1,7 @@
 // Badge Component - Display labels, tags, and status indicators
-
+//
+// Into formals are tip-GREEN for owned string builders (generated Badge uses
+// `impl Into<String>` on new — maximize Windjammer bare string lits).
 
 use super::traits::Renderable
 pub enum BadgeVariant {
@@ -64,18 +66,6 @@ pub fn render(self) -> string {
             BadgeSize::Large => "wj-badge-lg",
         }
 
-        format!("<span class='wj-badge {} {}'>{}</span>", variant_class, size_class, self.text)
+        "<span class='wj-badge ${variant_class} ${size_class}'>${self.text}</span>"
     }
 }
-
-fn main() {
-    let badge1 = Badge::new("New".to_string()).variant(BadgeVariant::Primary)
-    println!("Badge 1: {}", badge1.render())
-
-    let badge2 = Badge::new("Error".to_string()).variant(BadgeVariant::Error).size(BadgeSize::Large)
-    println!("Badge 2: {}", badge2.render())
-    
-    let badge3 = Badge::new("Success".to_string()).variant(BadgeVariant::Success)
-    println!("Badge 3: {}", badge3.render())
-}
-

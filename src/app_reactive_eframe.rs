@@ -1,9 +1,12 @@
 /// Reactive application runtime using eframe
 /// This is a simpler, more robust implementation than the manual winit+wgpu+egui approach
+use crate::reactive_mount::MountTarget;
 use crate::simple_vnode::VNode;
 use std::rc::Rc;
 use std::sync::{Arc, Mutex};
 
+#[cfg(target_arch = "wasm32")]
+use std::cell::RefCell;
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
 
@@ -30,6 +33,7 @@ pub struct ReactiveApp {
     title: String,
     render_fn: Rc<dyn Fn() -> VNode>,
     needs_rerender: Arc<Mutex<bool>>,
+    mount: MountTarget,
 }
 
 impl ReactiveApp {
@@ -41,19 +45,31 @@ impl ReactiveApp {
             title,
             render_fn: Rc::new(render_fn),
             needs_rerender: Arc::new(Mutex::new(true)),
+            mount: MountTarget::new(),
         }
+    }
+
+    /// Mount into a CSS selector instead of the default `#app`.
+    pub fn mount_target(mut self, selector: impl Into<String>) -> Self {
+        self.mount = self.mount.mount_target(selector);
+        self
+    }
+
+    pub fn mount_selector(&self) -> &str {
+        self.mount.selector()
     }
 
     #[cfg(target_arch = "wasm32")]
     pub fn run(self) {
-        // WASM implementation remains the same
         use wasm_bindgen::JsCast;
         use web_sys::{window, HtmlElement};
 
         let document = window().unwrap().document().unwrap();
+        let selector = self.mount.selector().to_string();
         let root = document
-            .get_element_by_id("app")
-            .expect("Failed to find #app element")
+            .query_selector(&selector)
+            .expect("query_selector failed")
+            .unwrap_or_else(|| panic!("Failed to find mount target '{}'", selector))
             .dyn_into::<HtmlElement>()
             .unwrap();
 
@@ -77,9 +93,6 @@ impl ReactiveApp {
                 let vnode = render_fn_clone();
                 let html = crate::simple_renderer::render_to_html(&vnode);
                 root.set_inner_html(&html);
-
-                // Event listeners are attached in future version
-                // crate::renderer::attach_event_listeners(&root, &vnode);
             }
 
             web_sys::window()

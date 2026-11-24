@@ -1,0 +1,44 @@
+# dom_patch
+
+**Purpose.** Keyed diff/patch of `simple_vnode::VNode` trees onto a DOM, plus delegated
+event routing. Replaces the old "set `innerHTML` every frame" loop in `ReactiveApp::run`.
+
+**Inputs.** A VNode tree per render (`Mounted::update`). Trees are `sanitized()` first.
+**Outputs.** Minimal `PatchOp`s (`Replace`, `Insert`, `Remove`, `Move`, `SetAttr`,
+`RemoveAttr`, `SetText`) applied through a `DomPort`; handler invocations on dispatch.
+
+**Invariants.**
+- Ops are sequential: each op's paths are valid after the previous ops.
+- `apply(diff(a, b), a)` is structurally equal to `b` (property test, 1500 cases).
+- Children match by `key` attribute, else by ordinal among unkeyed siblings; keyed
+  reorders are `Move`s, never rebuilds. Matched nodes are reused (focus, caret, typed
+  input value, scroll survive).
+- Event attributes are never diffed or written to the DOM. Handlers live in a
+  `(path, event)` table rebuilt from the current tree after every update; one capturing
+  listener per event name sits on the container; dispatch bubbles innermost first.
+- `value`/`checked` are written as properties only if they differ from the live value.
+
+- Moving an attached node (`DomPort::move_child`) preserves focus and selection: hosts with
+  `Element.moveBefore` (Chromium 133+ only) use it, others restore focus/selection after the move.
+  `FakeDom` blurs on reparent like a browser, so the restore path is tested.
+- Handlers may call `dom_patch::stop_propagation()` / `prevent_default()` (thread-local flags, reset per
+  dispatch); `Mounted::dispatch_event` returns a `DispatchOutcome`, and the web adapter forwards both to the native event.
+
+- `event_info`: the web adapter publishes the running event's key, nearest `data-wj-act` and target value (`current_event()`), so handlers
+  that take no argument can still act on keys. Shift+Tab is reported as `"Shift+Tab"`; `scroll` reports `scrollTop`.
+- An element with `data-wj-scroll-top="N"` has its `scrollTop` mirrored from the model (virtualized lists).
+
+**Owns.** Diff algorithm, op semantics, handler table, port contract.
+**Never decides.** Escaping/sanitizing rules (`escape.rs`, `VNode::sanitized`), when to
+re-render (`app_reactive.rs`), component structure.
+
+**Allowed imports.** `simple_vnode`, `escape` (via `sanitized`), std. `web.rs` only adds
+`wasm-bindgen`, `web-sys`, `js-sys` and is `cfg(wasm32 + web)`. `diff`, `apply`,
+`port`, `mounted`, `fake_dom` must stay wasm-agnostic.
+
+**Entry points.** `diff::diff`, `apply::apply` (pure oracle), `Mounted::{update, dispatch,
+handlers_for}`, `port::DomPort`, `fake_dom::FakeDom`, `web::new_mounted`.
+
+**Tests.** `tests/dom_patch_test.rs` (property test, keyed reorder, focus/caret,
+delegation, XSS through patching). Web adapter: compile-checked with
+`cargo check --target wasm32-unknown-unknown`; no browser test yet.

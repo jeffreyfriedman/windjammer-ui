@@ -5,9 +5,9 @@ members = [
 ]
 
 [workspace.package]
-version = "0.3.6"
+version = "0.4.0"
 edition = "2021"
-authors = ["Jeffrey Friedman <20387583+jeffreyfriedman@users.noreply.github.com>", "Windjammer Contributors"]
+authors = ["Windjammer Contributors"]
 license = "MIT OR Apache-2.0"
 rust-version = "1.90"
 repository = "https://github.com/jeffreyfriedman/windjammer-ui"
@@ -55,7 +55,7 @@ path = "src/bin/counter_wasm.rs"
 
 [dependencies]
 # Proc macro for #[component]
-windjammer-ui-macro = { path = "windjammer-ui-macro", version = "0.3.6" }
+windjammer-ui-macro = { path = "windjammer-ui-macro", version = "0.4.0" }
 
 # Core dependencies
 serde = { version = "1.0", features = ["derive"] }
@@ -81,7 +81,15 @@ web-sys = { version = "0.3", features = [
     "Event",
     "MouseEvent",
     "KeyboardEvent",
+    "KeyboardEventInit",
+    "EventInit",
+    "FocusEvent",
+    "HtmlSelectElement",
     "DomTokenList",
+    "HtmlCollection",
+    "HtmlInputElement",
+    "MouseEventInit",
+    "AddEventListenerOptions",
     "CssStyleDeclaration",
     "console",
 ], optional = true }
@@ -111,10 +119,19 @@ jni = { version = "0.21", optional = true }
 # WASM utilities
 console_error_panic_hook = { version = "0.1", optional = true }
 
-[dev-dependencies]
+# NOTE: do not depend on windjammer-runtime on the normal path — it pulls axum/tokio/mio
+# and breaks wasm32. Tests that need it use the dev-dependency below.
+
+[target.'cfg(not(target_arch = "wasm32"))'.dev-dependencies]
 tokio-test = "0.4"
 criterion = "0.5"
+windjammer-runtime = { version = "0.48", default-features = false }
 # egui_kittest = "0.29"  # Disabled due to version conflicts
+
+# Browserless wasm tests: run under node with `wasm-bindgen-test-runner` (see docs/TESTING_GUIDE.md).
+# The version must match the installed `wasm-bindgen` CLI (0.3.N <-> 0.2.(N+50)).
+[target.'cfg(target_arch = "wasm32")'.dev-dependencies]
+wasm-bindgen-test = "=0.3.58"
 
 [[bench]]
 name = "signal_benchmarks"

@@ -1,10 +1,9 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-use std::fmt::Write;
+#[allow(unused_imports)]
+use super::*;
 
 use super::traits::Renderable;
-
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
+#[repr(C)]
 pub struct Card {
     pub title: String,
     pub children: Vec<String>,
@@ -14,81 +13,55 @@ pub struct Card {
 }
 
 impl Card {
-    #[inline]
-    pub fn new() -> Card {
-        Card {
-            title: "".to_string(),
-            children: Vec::new(),
-            padding: "16px".to_string(),
-            background_color: "#fff".to_string(),
-            border_color: "#e0e0e0".to_string(),
-        }
-    }
-    #[inline]
-    pub fn title(mut self, title: String) -> Card {
-        self.title = title;
+#[inline]
+pub fn new() -> Card {
+        Card { title: String::new(), children: Vec::new(), padding: String::from("16px"), background_color: String::from("#fff"), border_color: String::from("#e0e0e0") }
+}
+#[inline]
+pub fn title(mut self, title: impl Into<String>) -> Card {
+        self.title = title.into();
         self
-    }
-    #[inline]
-    pub fn child(mut self, child: String) -> Card {
-        self.children.push(child);
+}
+#[inline]
+pub fn child(mut self, child: impl Into<String>) -> Card {
+        self.children.push(child.into());
         self
-    }
-    #[inline]
-    pub fn children(mut self, children: Vec<String>) -> Card {
+}
+#[inline]
+pub fn children(mut self, children: Vec<String>) -> Card {
         self.children = children;
         self
-    }
-    #[inline]
-    pub fn padding(mut self, padding: String) -> Card {
-        self.padding = padding;
+}
+#[inline]
+pub fn padding(mut self, padding: impl Into<String>) -> Card {
+        self.padding = padding.into();
         self
-    }
-    #[inline]
-    pub fn background_color(mut self, color: String) -> Card {
-        self.background_color = color;
+}
+#[inline]
+pub fn background_color(mut self, color: impl Into<String>) -> Card {
+        self.background_color = color.into();
         self
-    }
-    #[inline]
-    pub fn border_color(mut self, color: String) -> Card {
-        self.border_color = color;
+}
+#[inline]
+pub fn border_color(mut self, color: impl Into<String>) -> Card {
+        self.border_color = color.into();
         self
-    }
+}
 }
 
 impl Renderable for Card {
-    #[inline]
-    fn render(self) -> String {
-        let style = {
-            let mut __s = String::with_capacity(64);
-            write!(
-                &mut __s,
-                "padding: {}; background-color: {}; border: 1px solid {}; border-radius: 8px;",
-                self.padding, self.background_color, self.border_color
-            )
-            .unwrap();
-            __s
-        };
+
+fn render(&self) -> String {
+        let style = format!("padding: {}; background-color: {}; border: 1px solid {}; border-radius: 8px;", self.padding, self.background_color, self.border_color);
         let title_html = {
             if self.title != "" {
-                {
-                    let mut __s = String::with_capacity(64);
-                    write!(&mut __s, "<div class='wj-card-title' style='font-weight: bold; margin-bottom: 12px; font-size: 1.25rem;'>{}</div>", self.title).unwrap();
-                    __s
-                }
+                format!("<div class='wj-card-title' style='font-weight: bold; margin-bottom: 12px; font-size: 1.25rem;'>{}</div>", self.title)
             } else {
-                "".to_string()
+                String::new()
             }
         };
-        let children_html = self.children.join(
-            "
-",
-        );
-        format!(
-            "<div class='wj-card' style='{}'>
-{}{}
-</div>",
-            style, title_html, children_html
-        )
-    }
+        let children_html = self.children.join("\n");
+        format!("<div class='wj-card' style='{}'>\n{}{}\n</div>", style, title_html, children_html)
 }
+}
+

@@ -1,0 +1,16 @@
+[package]
+name = "wj-text"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Text shaping and layout (Parley) behind the wj-layout measure seam and the wj-paint layout seam"
+publish = false
+
+[dependencies]
+wj-paint = { path = "../wj_paint" }
+wj-layout = { path = "../wj_layout" }
+wj-scene = { path = "../wj_scene" }
+parley = "0.12"
+
+[dev-dependencies]
+ttf-parser = "0.25"

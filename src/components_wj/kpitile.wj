@@ -1,0 +1,59 @@
+// KpiTile / KpiGrid — KPI tile and grid (P0)
+//
+// NOTE: Generated Rust may use `impl Into<String>` on builders until
+// codegen_string_param_to_owned_method_test is green. After fix, regen emits
+// owned `String` params — callers must pass owned strings.
+
+use super::traits::Renderable
+
+pub struct KpiTile {
+    label: string,
+    value_html: string,
+}
+
+impl KpiTile {
+    pub fn new(label: string) -> KpiTile {
+        KpiTile {
+            label: label,
+            value_html: "",
+        }
+    }
+
+    pub fn value_html(self, html: string) -> KpiTile {
+        self.value_html = html
+        self
+    }
+}
+
+impl Renderable for KpiTile {
+    fn render(self) -> string {
+        "<div class='wj-kpi-tile kpi'><span class='kpi-label'>${self.label}</span><div class='kpi-value'>${self.value_html}</div></div>"
+    }
+}
+
+pub struct KpiGrid {
+    tiles: Vec<string>,
+}
+
+impl KpiGrid {
+    pub fn new() -> KpiGrid {
+        KpiGrid {
+            tiles: Vec::new(),
+        }
+    }
+
+    pub fn tile(self, html: string) -> KpiGrid {
+        self.tiles.push(html)
+        self
+    }
+}
+
+impl Renderable for KpiGrid {
+    fn render(self) -> string {
+        let mut body = ""
+        for t in &self.tiles {
+            body.push_str(t)
+        }
+        "<div class='kpi-grid wj-kpi-grid'>${body}</div>"
+    }
+}

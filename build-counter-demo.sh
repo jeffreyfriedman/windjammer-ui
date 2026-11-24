@@ -1,34 +1,13 @@
 #!/bin/bash
-# Build the interactive counter demo for WASM
+# Build the browser counter demo (wasm-pack, web target).
 set -e
 
-echo "🔨 Building Windjammer UI Counter Demo..."
-echo ""
-
-# Check if wasm-pack is installed
 if ! command -v wasm-pack &> /dev/null; then
-    echo "❌ wasm-pack not found!"
-    echo "Install it with: cargo install wasm-pack"
+    echo "error: wasm-pack not found (install it with: cargo install wasm-pack)" >&2
     exit 1
 fi
 
-# Build the WASM module
-echo "📦 Building WASM module..."
 wasm-pack build --target web --dev
 
-echo ""
-echo "✅ Build complete!"
-echo ""
-echo "📂 Output: pkg/windjammer_ui.js"
-echo ""
-echo "🚀 To run the demo:"
-echo "   python3 -m http.server 8000"
-echo "   Then open: http://localhost:8000/examples/counter_demo.html"
-echo ""
-echo "💡 The counter should be fully interactive with:"
-echo "   - Increment button (+)"
-echo "   - Decrement button (-)"
-echo "   - Reset button"
-echo "   - Reactive state updates"
-echo ""
-
+echo "Built pkg/windjammer_ui.js"
+echo "Serve the repo root (python3 -m http.server 8000) and open http://localhost:8000/examples/counter_demo.html"

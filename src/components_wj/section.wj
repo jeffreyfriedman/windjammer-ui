@@ -18,13 +18,13 @@ pub struct Section {
 impl Section {
     pub fn new(title: string) -> Section {
         Section {
-            icon: "".to_string(),
+            icon: "",
             title,
             children: Vec::new(),
             collapsed: false,
-            accent_color: "".to_string(),
+            accent_color: "",
             removable: false,
-            on_remove: "".to_string(),
+            on_remove: "",
         }
     }
     
@@ -66,38 +66,38 @@ impl Renderable for Section {
         let content_class = if self.collapsed { "section-content collapsed" } else { "section-content" }
         
         let icon_html = if self.icon != "" {
-            format!("<span class='section-icon'>{}</span>", self.icon)
+            "<span class='section-icon'>${self.icon}</span>"
         } else {
-            "".to_string()
+            ""
         }
         
         let accent_style = if self.accent_color != "" {
-            format!(" style='border-left: 3px solid {}'", self.accent_color)
+            " style='border-left: 3px solid ${self.accent_color}'"
         } else {
-            "".to_string()
+            ""
         }
         
         let remove_btn = if self.removable {
-            format!("<button class='section-remove' onclick='{}'>×</button>", self.on_remove)
+            "<button class='section-remove' onclick='${self.on_remove}'>×</button>"
         } else {
-            "".to_string()
+            ""
         }
         
         let children_html = self.children.join("\n")
         
-        format!("
-            <div class='wj-section'{}>
+        "
+            <div class='wj-section'${accent_style}>
                 <div class='section-header'>
-                    <span class='collapse-arrow'>{}</span>
-                    {}
-                    <span class='section-title'>{}</span>
-                    {}
+                    <span class='collapse-arrow'>${collapse_icon}</span>
+                    ${icon_html}
+                    <span class='section-title'>${self.title}</span>
+                    ${remove_btn}
                 </div>
-                <div class='{}'>
-                    {}
+                <div class='${content_class}'>
+                    ${children_html}
                 </div>
             </div>
-        ", accent_style, collapse_icon, icon_html, self.title, remove_btn, content_class, children_html)
+        "
     }
 }
 
@@ -129,14 +129,14 @@ impl SectionGroup {
 
 impl Renderable for SectionGroup {
     pub fn render(self) -> string {
-        let mut sections_html = "".to_string()
+        let mut sections_html = ""
         for s in self.sections {
-            sections_html = sections_html + s.clone().render().as_str() + "\n"
+            sections_html = sections_html + s.clone().render() + "\n"
         }
         
         let class = if self.accordion { "section-group accordion" } else { "section-group" }
         
-        format!("<div class='{}'>{}</div>", class, sections_html)
+        "<div class='${class}'>${sections_html}</div>"
     }
 }
 
@@ -239,6 +239,6 @@ pub fn section_styles() -> string {
     .section-group.accordion .wj-section:last-child {
         border-radius: 0 0 8px 8px;
     }
-    ".to_string()
+    "
 }
 

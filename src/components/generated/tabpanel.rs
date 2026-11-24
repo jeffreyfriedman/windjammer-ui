@@ -1,10 +1,9 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-use std::fmt::Write;
+#[allow(unused_imports)]
+use super::*;
 
 use super::traits::Renderable;
-
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct TabPanelTab {
     pub id: String,
     pub title: String,
@@ -12,13 +11,14 @@ pub struct TabPanelTab {
 }
 
 impl TabPanelTab {
-    #[inline]
-    pub fn new(id: String, title: String, content: String) -> TabPanelTab {
+#[inline]
+pub fn new(id: String, title: String, content: String) -> TabPanelTab {
         TabPanelTab { id, title, content }
-    }
+}
 }
 
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, PartialEq, Default)]
+#[repr(C)]
 pub struct TabPanel {
     pub tabs: Vec<TabPanelTab>,
     pub active: String,
@@ -26,102 +26,68 @@ pub struct TabPanel {
 }
 
 impl TabPanel {
-    #[inline]
-    pub fn new() -> TabPanel {
-        TabPanel {
-            tabs: Vec::new(),
-            active: "".to_string(),
-            orientation: "horizontal".to_string(),
-        }
-    }
-    #[inline]
-    pub fn tab(mut self, tab: TabPanelTab) -> TabPanel {
+#[inline]
+pub fn new() -> TabPanel {
+        TabPanel { tabs: Vec::new(), active: String::new(), orientation: String::from("horizontal") }
+}
+#[inline]
+pub fn tab(mut self, tab: TabPanelTab) -> TabPanel {
         self.tabs.push(tab);
         self
-    }
-    #[inline]
-    pub fn active(mut self, id: String) -> TabPanel {
-        self.active = id;
+}
+#[inline]
+pub fn active(mut self, id: impl Into<String>) -> TabPanel {
+        self.active = id.into();
         self
-    }
-    #[inline]
-    pub fn orientation(mut self, orientation: String) -> TabPanel {
-        self.orientation = orientation;
+}
+#[inline]
+pub fn orientation(mut self, orientation: impl Into<String>) -> TabPanel {
+        self.orientation = orientation.into();
         self
-    }
+}
 }
 
 impl Renderable for TabPanel {
-    #[inline]
-    fn render(self) -> String {
-        let flex_direction = {
-            if self.orientation == "vertical" {
-                "row".to_string()
+
+fn render(&self) -> String {
+        let flex_direction: String = {
+            if self.orientation == String::from("vertical") {
+                String::from("row")
             } else {
-                "column".to_string()
+                String::from("column")
             }
         };
-        let mut tabs_html = {
-            let mut __s = String::with_capacity(64);
-            write!(
-                &mut __s,
-                "<div class='wj-tab-panel-tabs wj-tab-panel-{}'>
-",
-                self.orientation
-            )
-            .unwrap();
-            __s
-        };
-        let mut i = 0;
-        while i < (self.tabs.len() as i64) {
-            let tab = &self.tabs[i as usize];
+        let mut tabs_html = format!("<div class='wj-tab-panel-tabs wj-tab-panel-{}'>\n", self.orientation);
+        let mut i = 0_usize;
+        while i < self.tabs.len() {
+            let tab = &self.tabs[i];
             let active_class = {
                 if tab.id == self.active {
-                    " wj-tab-active".to_string()
+                    String::from(" wj-tab-active")
                 } else {
-                    "".to_string()
+                    String::new()
                 }
             };
-            tabs_html = format!(
-                "{}  <button class='wj-tab-panel-tab{}' data-id='{}'>{}</button>
-",
-                tabs_html, active_class, tab.id, tab.title
-            );
-            i += 1;
+            tabs_html = format!("{}  <button class='wj-tab-panel-tab{}' data-id='{}'>{}</button>\n", tabs_html, active_class, tab.id, tab.title);
+            i = i.wrapping_add(1);
         }
-        tabs_html = format!(
-            "{}</div>
-",
-            tabs_html
-        );
-        let mut content_html = "<div class='wj-tab-panel-content'>
-"
-        .to_string();
-        let mut j = 0;
-        while j < (self.tabs.len() as i64) {
-            let tab = &self.tabs[j as usize];
-            let display = {
+        tabs_html = format!("{}</div>\n", tabs_html);
+        let mut content_html: String = String::from("<div class='wj-tab-panel-content'>\n");
+        let mut j = 0_usize;
+        while j < self.tabs.len() {
+            let tab = &self.tabs[j];
+            let display: String = {
                 if tab.id == self.active {
-                    "block".to_string()
+                    String::from("block")
                 } else {
-                    "none".to_string()
+                    String::from("none")
                 }
             };
-            content_html = format!(
-                "{}  <div class='wj-tab-panel-pane' data-id='{}' style='display: {};'>
-    {}
-  </div>
-",
-                content_html, tab.id, display, tab.content
-            );
-            j += 1;
+            { use std::fmt::Write as _; write!(content_html, "  <div class='wj-tab-panel-pane' data-id='{}' style='display: {};'>\n    {}\n  </div>\n", tab.id, display, tab.content).expect("a formatting trait implementation returned an error"); };
+            j = j.wrapping_add(1);
         }
-        content_html = format!("{}</div>", content_html);
-        format!(
-            "<div class='wj-tab-panel' style='display: flex; flex-direction: {};'>
-{}{}
-</div>",
-            flex_direction, tabs_html, content_html
-        )
-    }
+        { use std::fmt::Write as _; write!(content_html, "</div>").expect("a formatting trait implementation returned an error"); };
+        format!("<div class='wj-tab-panel' style='display: flex; flex-direction: {};'>\n{}{}\n</div>", flex_direction, tabs_html, content_html)
 }
+}
+

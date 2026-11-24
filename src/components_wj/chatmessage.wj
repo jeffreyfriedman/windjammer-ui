@@ -18,8 +18,8 @@ impl ChatMessage {
         ChatMessage {
             role: MessageRole::User,
             content: content,
-            avatar: String::from(""),
-            timestamp: String::from(""),
+            avatar: "",
+            timestamp: "",
         }
     }
     
@@ -50,34 +50,28 @@ pub fn render(self) -> string {
         }
         
         let avatar_html = if self.avatar.len() > 0 {
-            format!("<div class='wj-message-avatar'><img src='{}' alt='avatar'/></div>", self.avatar)
+            "<div class='wj-message-avatar'><img src='${self.avatar}' alt='avatar'/></div>"
         } else {
             let default_icon = match self.role {
                 MessageRole::User => "👤",
                 MessageRole::Assistant => "🤖",
                 MessageRole::System => "⚙️",
             }
-            format!("<div class='wj-message-avatar'>{}</div>", default_icon)
+            "<div class='wj-message-avatar'>${default_icon}</div>"
         }
         
         let timestamp_html = if self.timestamp.len() > 0 {
-            format!("<div class='wj-message-timestamp'>{}</div>", self.timestamp)
+            "<div class='wj-message-timestamp'>${self.timestamp}</div>"
         } else {
-            String::from("")
+            ""
         }
         
-        format!(
-            "<div class='wj-chat-message {}'>
-                {}
+        "<div class='wj-chat-message ${role_class}'>
+                ${avatar_html}
                 <div class='wj-message-content-wrapper'>
-                    <div class='wj-message-content'>{}</div>
-                    {}
+                    <div class='wj-message-content'>${self.content}</div>
+                    ${timestamp_html}
                 </div>
-            </div>",
-            role_class,
-            avatar_html,
-            self.content,
-            timestamp_html
-        )
+            </div>"
     }
 }

@@ -1,7 +1,7 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum ToastVariant {
     Success,
@@ -21,6 +21,7 @@ pub enum ToastPosition {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Toast {
     pub message: String,
     pub variant: ToastVariant,
@@ -30,75 +31,63 @@ pub struct Toast {
 }
 
 impl Toast {
-    #[inline]
-    pub fn new(message: String) -> Toast {
-        Toast {
-            message,
-            variant: ToastVariant::Info,
-            position: ToastPosition::TopRight,
-            duration: 3000,
-            show_close: true,
-        }
-    }
-    #[inline]
-    pub fn variant(mut self, variant: ToastVariant) -> Toast {
+#[inline]
+pub fn new(message: String) -> Toast {
+        Toast { message, variant: ToastVariant::Info, position: ToastPosition::TopRight, duration: 3000_i32, show_close: true }
+}
+#[inline]
+pub fn variant(mut self, variant: ToastVariant) -> Toast {
         self.variant = variant;
         self
-    }
-    #[inline]
-    pub fn position(mut self, position: ToastPosition) -> Toast {
+}
+#[inline]
+pub fn position(mut self, position: ToastPosition) -> Toast {
         self.position = position;
         self
-    }
-    #[inline]
-    pub fn duration(mut self, duration: i32) -> Toast {
+}
+#[inline]
+pub fn duration(mut self, duration: i32) -> Toast {
         self.duration = duration;
         self
-    }
-    #[inline]
-    pub fn show_close(mut self, show: bool) -> Toast {
+}
+#[inline]
+pub fn show_close(mut self, show: bool) -> Toast {
         self.show_close = show;
         self
-    }
+}
 }
 
 impl Renderable for Toast {
-    #[inline]
-    fn render(self) -> String {
-        let variant_class = match self.variant {
-            ToastVariant::Success => "wj-toast-success".to_string(),
-            ToastVariant::Error => "wj-toast-error".to_string(),
-            ToastVariant::Warning => "wj-toast-warning".to_string(),
-            ToastVariant::Info => "wj-toast-info".to_string(),
+
+fn render(&self) -> String {
+        let variant_class: String = match &self.variant {
+            ToastVariant::Success => String::from("wj-toast-success"),
+            ToastVariant::Error => String::from("wj-toast-error"),
+            ToastVariant::Warning => String::from("wj-toast-warning"),
+            ToastVariant::Info => String::from("wj-toast-info"),
         };
-        let position_class = match self.position {
-            ToastPosition::TopRight => "wj-toast-top-right".to_string(),
-            ToastPosition::TopLeft => "wj-toast-top-left".to_string(),
-            ToastPosition::BottomRight => "wj-toast-bottom-right".to_string(),
-            ToastPosition::BottomLeft => "wj-toast-bottom-left".to_string(),
-            ToastPosition::TopCenter => "wj-toast-top-center".to_string(),
-            ToastPosition::BottomCenter => "wj-toast-bottom-center".to_string(),
+        let position_class: String = match &self.position {
+            ToastPosition::TopRight => String::from("wj-toast-top-right"),
+            ToastPosition::TopLeft => String::from("wj-toast-top-left"),
+            ToastPosition::BottomRight => String::from("wj-toast-bottom-right"),
+            ToastPosition::BottomLeft => String::from("wj-toast-bottom-left"),
+            ToastPosition::TopCenter => String::from("wj-toast-top-center"),
+            ToastPosition::BottomCenter => String::from("wj-toast-bottom-center"),
         };
-        let icon = match self.variant {
-            ToastVariant::Success => "✓".to_string(),
-            ToastVariant::Error => "✗".to_string(),
-            ToastVariant::Warning => "⚠".to_string(),
-            ToastVariant::Info => "ℹ".to_string(),
+        let icon: String = match &self.variant {
+            ToastVariant::Success => String::from("✓"),
+            ToastVariant::Error => String::from("✗"),
+            ToastVariant::Warning => String::from("⚠"),
+            ToastVariant::Info => String::from("ℹ"),
         };
         let close_button = {
             if self.show_close {
-                "<button class='wj-toast-close'>×</button>".to_string()
+                String::from("<button class='wj-toast-close'>×</button>")
             } else {
-                "".to_string()
+                String::new()
             }
         };
-        format!(
-            "<div class='wj-toast {} {}' data-duration='{}'>
-  <span class='wj-toast-icon'>{}</span>
-  <span class='wj-toast-message'>{}</span>
-  {}
-</div>",
-            variant_class, position_class, self.duration, icon, self.message, close_button
-        )
-    }
+        format!("<div class='wj-toast {} {}' data-duration='{}'>\n  <span class='wj-toast-icon'>{}</span>\n  <span class='wj-toast-message'>{}</span>\n  {}\n</div>", variant_class, position_class, self.duration, icon, self.message, close_button)
 }
+}
+

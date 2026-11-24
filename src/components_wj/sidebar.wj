@@ -15,8 +15,8 @@ impl SidebarItem {
     pub fn new(label: string) -> SidebarItem {
         SidebarItem {
             label: label,
-            icon: String::from(""),
-            href: String::from("#"),
+            icon: "",
+            href: "#",
         }
     }
     
@@ -43,7 +43,7 @@ impl Sidebar {
         Sidebar {
             items: Vec::new(),
             position: SidebarPosition::Left,
-            width: String::from("250px"),
+            width: "250px",
             collapsed: false,
         }
     }
@@ -76,17 +76,12 @@ fn render(self) -> string {
         
         for item in self.items {
             let icon_html = if item.icon.len() > 0 {
-                format!("<span class='wj-sidebar-icon'>{}</span>", item.icon)
+                "<span class='wj-sidebar-icon'>${item.icon}</span>"
             } else {
-                String::from("")
+                ""
             }
             
-            items_html.push(format!(
-                "<a href='{}' class='wj-sidebar-item'>{}<span class='wj-sidebar-label'>{}</span></a>",
-                item.href,
-                icon_html,
-                item.label
-            ))
+            items_html.push("<a href='${item.href}' class='wj-sidebar-item'>${icon_html}<span class='wj-sidebar-label'>${item.label}</span></a>")
         }
         
         let position_class = match self.position {
@@ -96,17 +91,11 @@ fn render(self) -> string {
         
         let collapsed_class = if self.collapsed { " wj-sidebar-collapsed" } else { "" }
         
-        format!(
-            "<aside class='wj-sidebar {} {}' style='width: {}'>
+        "<aside class='wj-sidebar ${position_class} ${collapsed_class}' style='width: ${self.width}'>
                 <div class='wj-sidebar-toggle' onclick='this.parentElement.classList.toggle(\"wj-sidebar-collapsed\")'>
                     <span class='wj-sidebar-toggle-icon'>☰</span>
                 </div>
-                <nav class='wj-sidebar-nav'>{}</nav>
-            </aside>",
-            position_class,
-            collapsed_class,
-            self.width,
-            items_html.join("")
-        )
+                <nav class='wj-sidebar-nav'>${items_html.join("")}</nav>
+            </aside>"
     }
 }

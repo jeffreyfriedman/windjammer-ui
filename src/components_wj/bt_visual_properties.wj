@@ -1,0 +1,92 @@
+use super::traits::Renderable
+
+@auto
+pub struct BtInspectorModel {
+    pub title: string,
+    pub subtitle: string,
+    pub hotspot: string,
+    pub params_json: string,
+    pub breakpoint: bool,
+}
+
+impl BtInspectorModel {
+    pub fn demo() -> BtInspectorModel {
+        BtInspectorModel {
+            title: "attack",
+            subtitle: "action",
+            hotspot: "Break when reached",
+            params_json: "{ \"dmg\":12 }",
+            breakpoint: true,
+        }
+    }
+}
+
+impl Renderable for BtInspectorModel {
+    pub fn render(self) -> string {
+        let mut bp = ""
+        if self.breakpoint {
+            bp = "checked"
+        }
+        let mut panel = ""
+        panel = panel + "<div class=\"bt-inspector-title\">"
+        panel = "${panel}${self.title}"
+        panel = panel + "</div>"
+        panel = panel + "<div class=\"bt-inspector-sub\">"
+        panel = "${panel}${self.subtitle}"
+        panel = panel + "</div>"
+        panel = panel + "<label class=\"bt-toggle\"><input type=\"checkbox\" "
+        panel = "${panel}${bp}"
+        panel = panel + " /> Breakpoint · "
+        panel = "${panel}${self.hotspot}"
+        panel = panel + "</label>"
+        panel = panel + "<label class=\"bt-field\"><span>Payload</span>"
+        panel = panel + "<textarea rows=\"6\">"
+        panel = "${panel}${self.params_json}"
+        panel = panel + "</textarea></label>"
+        let mut wrapped = ""
+        wrapped = wrapped + "<section class=\"bt-properties-pane\">"
+        wrapped = "${wrapped}${panel}"
+        wrapped + "</section>"
+    }
+}
+
+pub fn bt_visual_properties_styles() -> string {
+    "
+    .bt-properties-pane {
+        width: 300px;
+        border-left: 1px solid rgba(255,255,255,0.08);
+        background: rgba(8,11,29,0.96);
+        color: #e5ecff;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .bt-inspector-title {
+        font-size: 20px;
+        font-weight: 600;
+    }
+    .bt-inspector-sub {
+        color: #8492c7;
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 0.22em;
+    }
+    .bt-toggle {
+        display: flex;
+        gap: 8px;
+        font-size: 13px;
+    }
+    .bt-field textarea {
+        width: 100%;
+        margin-top: 6px;
+        border-radius: 8px;
+        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(5,10,38,0.88);
+        color: inherit;
+        font-family: JetBrains Mono, monospace;
+        font-size: 12px;
+        padding: 8px;
+    }
+    "
+}

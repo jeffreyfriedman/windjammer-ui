@@ -1,0 +1,14 @@
+use wj_reactive::state
+use wj_ui::button
+use wj_ui::column
+use wj_ui::text_of
+
+pub fn counter() {
+    let count = state(0)
+    let view = column()
+        .center()
+        .gap(12.0)
+        .child(text_of(count))
+        .child(button("Add one").on_click(|| count.set(count.get() + 1)))
+    view.mount()
+}

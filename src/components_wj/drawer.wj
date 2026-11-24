@@ -20,9 +20,9 @@ impl Drawer {
         Drawer {
             children: Vec::new(),
             position: DrawerPosition::Right,
-            width: "320px".to_string(),
+            width: "320px",
             open: false,
-            class: String::new(),
+            class: "",
         }
     }
     
@@ -53,10 +53,10 @@ impl Drawer {
     
     pub fn render() -> string {
         let (position_style, size_prop) = match self.position {
-            DrawerPosition::Left => ("left: 0; top: 0; bottom: 0;", format!("width: {};", self.width)),
-            DrawerPosition::Right => ("right: 0; top: 0; bottom: 0;", format!("width: {};", self.width)),
-            DrawerPosition::Top => ("top: 0; left: 0; right: 0;", format!("height: {};", self.width)),
-            DrawerPosition::Bottom => ("bottom: 0; left: 0; right: 0;", format!("height: {};", self.width)),
+            DrawerPosition::Left => ("left: 0; top: 0; bottom: 0;", "width: ${self.width};"),
+            DrawerPosition::Right => ("right: 0; top: 0; bottom: 0;", "width: ${self.width};"),
+            DrawerPosition::Top => ("top: 0; left: 0; right: 0;", "height: ${self.width};"),
+            DrawerPosition::Bottom => ("bottom: 0; left: 0; right: 0;", "height: ${self.width};"),
         }
         
         let transform = if self.open {
@@ -72,7 +72,7 @@ impl Drawer {
         
         let display = if self.open { "display: block;" } else { "display: none;" }
         
-        let mut html = String::new()
+        let mut html = ""
         
         // Backdrop
         html.push_str("<div class=\"wj-drawer-backdrop\" style=\"")
@@ -81,17 +81,17 @@ impl Drawer {
         
         // Drawer panel
         html.push_str("<div class=\"wj-drawer ")
-        html.push_str(self.class.as_str())
+        html.push_str(self.class)
         html.push_str("\" style=\"position: fixed; ")
         html.push_str(position_style)
         html.push(' ')
-        html.push_str(size_prop.as_str())
+        html.push_str(size_prop)
         html.push(' ')
         html.push_str(transform)
         html.push_str(" background: white; box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); z-index: 1000; transition: transform 0.3s ease; overflow-y: auto; padding: 24px;\">")
         
         for child in self.children {
-            html.push_str(child.as_str())
+            html.push_str(child)
         }
         
         html.push_str("</div>")

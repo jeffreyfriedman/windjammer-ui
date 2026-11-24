@@ -14,10 +14,10 @@ impl Form {
     pub fn new(id: string) -> Form {
         Form {
             id: id,
-            action: "#".to_string(),
-            method: "POST".to_string(),
+            action: "#",
+            method: "POST",
             children: Vec::new(),
-            on_submit: "return false;".to_string(),
+            on_submit: "return false;",
         }
     }
 
@@ -58,9 +58,9 @@ impl FormField {
         FormField {
             label: label,
             input: input,
-            error: String::new(),
+            error: "",
             required: false,
-            help_text: String::new(),
+            help_text: "",
         }
     }
 
@@ -80,11 +80,11 @@ impl FormField {
     }
 
     pub fn render(self) -> string {
-        let mut html = String::new();
-        html.push_str("<div style='margin-bottom: 16px;'>");
+        let mut html = "";
+        html.push_str("<div class='wj-form-field' style='margin-bottom: 16px;'>");
 
         // Label
-        html.push_str("<label style='display: block; margin-bottom: 4px; font-weight: 500; color: #333;'>");
+        html.push_str("<label class='wj-form-field-label' style='display: block; margin-bottom: 4px; font-weight: 500; color: #333;'>");
         html.push_str(&self.label);
         if self.required {
             html.push_str(" <span style='color: #e53e3e;'>*</span>");
@@ -96,14 +96,14 @@ impl FormField {
 
         // Help text
         if self.help_text.len() > 0 {
-            html.push_str("<div style='margin-top: 4px; font-size: 12px; color: #718096;'>");
+            html.push_str("<div class='wj-form-field-hint' style='margin-top: 4px; font-size: 12px; color: #718096;'>");
             html.push_str(&self.help_text);
             html.push_str("</div>");
         }
 
         // Error message
         if self.error.len() > 0 {
-            html.push_str("<div style='margin-top: 4px; font-size: 12px; color: #e53e3e;'>");
+            html.push_str("<div class='wj-form-field-error' role='alert' style='margin-top: 4px; font-size: 12px; color: #e53e3e;'>");
             html.push_str(&self.error);
             html.push_str("</div>");
         }
@@ -115,7 +115,7 @@ impl FormField {
 
 impl Renderable for Form {
 pub fn render(self) -> string {
-        let mut html = String::new();
+        let mut html = "";
         html.push_str("<form id='");
         html.push_str(&self.id);
         html.push_str("' action='");

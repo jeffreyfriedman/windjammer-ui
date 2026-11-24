@@ -1,10 +1,9 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-use std::fmt::Write;
+#[allow(unused_imports)]
+use super::*;
 
 use super::traits::Renderable;
-
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(C)]
 pub struct RadioOption {
     pub value: String,
     pub label: String,
@@ -12,22 +11,19 @@ pub struct RadioOption {
 }
 
 impl RadioOption {
-    #[inline]
-    pub fn new(value: String, label: String) -> RadioOption {
-        RadioOption {
-            value,
-            label,
-            disabled: false,
-        }
-    }
-    #[inline]
-    pub fn disabled(mut self, disabled: bool) -> RadioOption {
+#[inline]
+pub fn new(value: String, label: String) -> RadioOption {
+        RadioOption { value, label, disabled: false }
+}
+#[inline]
+pub fn disabled(mut self, disabled: bool) -> RadioOption {
         self.disabled = disabled;
         self
-    }
+}
 }
 
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, PartialEq, Default)]
+#[repr(C)]
 pub struct RadioGroup {
     pub name: String,
     pub options: Vec<RadioOption>,
@@ -35,63 +31,47 @@ pub struct RadioGroup {
 }
 
 impl RadioGroup {
-    #[inline]
-    pub fn new(name: String) -> RadioGroup {
-        RadioGroup {
-            name,
-            options: Vec::new(),
-            selected: "".to_string(),
-        }
-    }
-    #[inline]
-    pub fn option(mut self, option: RadioOption) -> RadioGroup {
+#[inline]
+pub fn new(name: String) -> RadioGroup {
+        RadioGroup { name, options: Vec::new(), selected: String::new() }
+}
+#[inline]
+pub fn option(mut self, option: RadioOption) -> RadioGroup {
         self.options.push(option);
         self
-    }
-    #[inline]
-    pub fn selected(mut self, value: String) -> RadioGroup {
-        self.selected = value;
+}
+#[inline]
+pub fn selected(mut self, value: impl Into<String>) -> RadioGroup {
+        self.selected = value.into();
         self
-    }
+}
 }
 
 impl Renderable for RadioGroup {
-    #[inline]
-    fn render(self) -> String {
-        let mut html = {
-            let mut __s = String::with_capacity(64);
-            write!(
-                &mut __s,
-                "<div class='wj-radio-group' data-name='{}'>",
-                self.name
-            )
-            .unwrap();
-            __s
-        };
-        let mut i = 0;
-        while i < (self.options.len() as i64) {
-            let opt = &self.options[i as usize];
+
+fn render(&self) -> String {
+        let mut html = format!("<div class='wj-radio-group' data-name='{}'>", self.name);
+        let mut i = 0_usize;
+        while i < self.options.len() {
+            let opt = &self.options[i];
             let checked_attr = {
                 if opt.value == self.selected {
-                    " checked".to_string()
+                    String::from(" checked")
                 } else {
-                    "".to_string()
+                    String::new()
                 }
             };
             let disabled_attr = {
                 if opt.disabled {
-                    " disabled".to_string()
+                    String::from(" disabled")
                 } else {
-                    "".to_string()
+                    String::new()
                 }
             };
-            html = {
-                let mut __s = String::with_capacity(64);
-                write!(&mut __s, "{}<label class='wj-radio'><input type='radio' name='{}' value='{}'{}{}><span>{}</span></label>", html, self.name, opt.value, checked_attr, disabled_attr, opt.label).unwrap();
-                __s
-            };
-            i += 1;
+            html = format!("{}<label class='wj-radio'><input type='radio' name='{}' value='{}'{}{}><span>{}</span></label>", html, self.name, opt.value, checked_attr, disabled_attr, opt.label);
+            i = i.wrapping_add(1);
         }
         format!("{}</div>", html)
-    }
 }
+}
+

@@ -89,26 +89,10 @@ pub fn render(self) -> string {
             ""
         }
 
-        format!("<div class='wj-toast {} {}' data-duration='{}'>
-  <span class='wj-toast-icon'>{}</span>
-  <span class='wj-toast-message'>{}</span>
-  {}
-</div>", variant_class, position_class, self.duration, icon, self.message, close_button)
+        "<div class='wj-toast ${variant_class} ${position_class}' data-duration='${self.duration}'>
+  <span class='wj-toast-icon'>${icon}</span>
+  <span class='wj-toast-message'>${self.message}</span>
+  ${close_button}
+</div>"
     }
 }
-
-fn main() {
-    let toast1 = Toast::new("Operation successful!".to_string())
-        .variant(ToastVariant::Success)
-        .position(ToastPosition::TopRight)
-
-    println!("{}", toast1.render())
-
-    let toast2 = Toast::new("Error occurred".to_string())
-        .variant(ToastVariant::Error)
-        .duration(5000)
-
-    println!("{}", toast2.render())
-}
-
-

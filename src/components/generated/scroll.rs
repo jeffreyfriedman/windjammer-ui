@@ -1,6 +1,7 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
+#[allow(unused_imports)]
+use super::*;
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Scroll {
     pub children: Vec<String>,
     pub direction: ScrollDir,
@@ -18,63 +19,58 @@ pub enum ScrollDir {
 }
 
 impl Scroll {
-    #[inline]
-    pub fn new() -> Scroll {
-        Scroll {
-            children: Vec::new(),
-            direction: ScrollDir::Vertical,
-            height: "400px".to_string(),
-            width: "100%".to_string(),
-            class: String::new(),
-        }
-    }
-    #[inline]
-    pub fn child(mut self, child: String) -> Scroll {
+#[inline]
+pub fn new() -> Scroll {
+        Scroll { children: Vec::new(), direction: ScrollDir::Vertical, height: String::from("400px"), width: String::from("100%"), class: String::new() }
+}
+#[inline]
+pub fn child(mut self, child: String) -> Scroll {
         self.children.push(child);
         self
-    }
-    #[inline]
-    pub fn direction(mut self, direction: ScrollDir) -> Scroll {
+}
+#[inline]
+pub fn direction(mut self, direction: ScrollDir) -> Scroll {
         self.direction = direction;
         self
-    }
-    #[inline]
-    pub fn height(mut self, height: String) -> Scroll {
-        self.height = height;
+}
+#[inline]
+pub fn height(mut self, height: &str) -> Scroll {
+        self.height = height.to_string();
         self
-    }
-    #[inline]
-    pub fn width(mut self, width: String) -> Scroll {
-        self.width = width;
+}
+#[inline]
+pub fn width(mut self, width: &str) -> Scroll {
+        self.width = width.to_string();
         self
-    }
-    #[inline]
-    pub fn class(mut self, class: String) -> Scroll {
-        self.class = class;
+}
+#[inline]
+pub fn class(mut self, class: &str) -> Scroll {
+        self.class = class.to_string();
         self
-    }
-    #[inline]
-    pub fn render(&self) -> String {
-        let overflow = match self.direction {
-            ScrollDir::Vertical => "overflow-x: hidden; overflow-y: auto".to_string(),
-            ScrollDir::Horizontal => "overflow-x: auto; overflow-y: hidden".to_string(),
-            ScrollDir::Both => "overflow: auto".to_string(),
-            ScrollDir::None => "overflow: hidden".to_string(),
+}
+
+pub fn render(&self) -> String {
+        let overflow: String = match &self.direction {
+            ScrollDir::Vertical => String::from("overflow-x: hidden; overflow-y: auto"),
+            ScrollDir::Horizontal => String::from("overflow-x: auto; overflow-y: hidden"),
+            ScrollDir::Both => String::from("overflow: auto"),
+            ScrollDir::None => String::from("overflow: hidden"),
         };
         let mut html = String::new();
         html.push_str("<div class=\"wj-scroll ");
-        html.push_str(&self.class.as_str());
+        html.push_str(&self.class);
         html.push_str("\" style=\"");
         html.push_str(&overflow);
         html.push_str("; height: ");
-        html.push_str(&self.height.as_str());
+        html.push_str(&self.height);
         html.push_str("; width: ");
-        html.push_str(&self.width.as_str());
+        html.push_str(&self.width);
         html.push_str(";\">");
         for child in &self.children {
-            html.push_str(&child.as_str());
+            html.push_str(child);
         }
         html.push_str("</div>");
         html
-    }
 }
+}
+

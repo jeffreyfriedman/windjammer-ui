@@ -1,0 +1,20 @@
+[package]
+name = "wj-shell-desktop"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Desktop shell: winit window, Vello on wgpu, AccessKit adapter (macOS first)"
+publish = false
+
+[dependencies]
+wj-shell = { path = "../wj_shell" }
+wj-scene = { path = "../wj_scene" }
+wj-paint = { path = "../wj_paint" }
+wj-paint-vello = { path = "../wj_paint_vello" }
+wj-a11y = { path = "../wj_a11y" }
+wj-reactive = { path = "../wj_reactive" }
+winit = "0.30"
+accesskit = "0.25"
+accesskit_winit = "0.34"
+vello = "0.11"
+pollster = "0.4"

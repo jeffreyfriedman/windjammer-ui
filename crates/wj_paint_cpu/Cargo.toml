@@ -1,0 +1,12 @@
+[package]
+name = "wj-paint-cpu"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "CPU painter (vello_cpu): fallback renderer and the reference for golden-image tests"
+publish = false
+
+[dependencies]
+wj-paint = { path = "../wj_paint" }
+wj-scene = { path = "../wj_scene" }
+vello_cpu = { version = "0.3", default-features = true }

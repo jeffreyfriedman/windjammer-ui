@@ -1,0 +1,63 @@
+// DataTable — data table alias with empty state (P0)
+
+use super::traits::Renderable
+use super::table::{Table, TableColumn, TableRow}
+
+pub struct DataTable {
+    table: Table,
+    empty_message: string,
+    caption: string,
+    scrollable: bool,
+}
+
+impl DataTable {
+    pub fn new() -> DataTable {
+        DataTable {
+            table: Table::new(),
+            empty_message: "No rows",
+            caption: "",
+            scrollable: false,
+        }
+    }
+
+    pub fn caption(self, caption: string) -> DataTable {
+        self.caption = caption
+        self
+    }
+
+    pub fn empty_message(self, message: string) -> DataTable {
+        self.empty_message = message
+        self
+    }
+
+    pub fn scrollable(self, on: bool) -> DataTable {
+        self.scrollable = on
+        self
+    }
+
+    pub fn column(self, col: TableColumn) -> DataTable {
+        self.table = self.table.column(col)
+        self
+    }
+
+    pub fn row(self, row: TableRow) -> DataTable {
+        self.table = self.table.row(row)
+        self
+    }
+}
+
+impl Renderable for DataTable {
+    fn render(self) -> string {
+        let body = self.table.render()
+        let mut caption_html = ""
+        if self.caption.len() > 0 {
+            caption_html = "<div class='wj-datatable-caption'>${self.caption}</div>"
+        }
+        let table_block = if self.scrollable {
+            "<div class='lk-table-scroll'>${body}</div>"
+        } else {
+            body
+        }
+        "<div class='wj-datatable' data-empty-message='${self.empty_message}'>${caption_html}${table_block}</div>"
+    }
+}

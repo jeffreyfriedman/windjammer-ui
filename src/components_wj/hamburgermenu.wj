@@ -44,24 +44,20 @@ fn render(self) -> string {
         let mut items_html = Vec::new()
         
         for item in self.items {
-            items_html.push(format!("<a href='{}' class='wj-hamburger-item'>{}</a>", item.href, item.label))
+            items_html.push("<a href='${item.href}' class='wj-hamburger-item'>${item.label}</a>")
         }
         
         let open_class = if self.open { " wj-hamburger-open" } else { "" }
         
-        format!(
-            "<div class='wj-hamburger-menu{}'>
+        "<div class='wj-hamburger-menu${open_class}'>
                 <button class='wj-hamburger-button' onclick='this.parentElement.classList.toggle(\"wj-hamburger-open\")'>
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
                 <div class='wj-hamburger-drawer'>
-                    {}
+                    ${items_html.join("")}
                 </div>
-            </div>",
-            open_class,
-            items_html.join("")
-        )
+            </div>"
     }
 }

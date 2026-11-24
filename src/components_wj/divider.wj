@@ -18,9 +18,9 @@ impl Divider {
     pub fn new() -> Divider {
         Divider {
             orientation: DividerOrientation::Horizontal,
-            color: "#3E3E3E".to_string(),
-            thickness: "1px".to_string(),
-            margin: "0".to_string(),
+            color: "#3E3E3E",
+            thickness: "1px",
+            margin: "0",
         }
     }
 
@@ -31,9 +31,9 @@ impl Divider {
     pub fn vertical() -> Divider {
         Divider {
             orientation: DividerOrientation::Vertical,
-            color: "#3E3E3E".to_string(),
-            thickness: "1px".to_string(),
-            margin: "0".to_string(),
+            color: "#3E3E3E",
+            thickness: "1px",
+            margin: "0",
         }
     }
 
@@ -64,24 +64,13 @@ pub fn render(self) -> string {
 
         let style = match self.orientation {
             DividerOrientation::Horizontal => {
-                format!("width: 100%; height: {}; background: {}; margin: {} 0;", 
-                    self.thickness, self.color, self.margin)
+                "width: 100%; height: ${self.thickness}; background: ${self.color}; margin: ${self.margin} 0;"
             }
             DividerOrientation::Vertical => {
-                format!("width: {}; height: 100%; background: {}; margin: 0 {};",
-                    self.thickness, self.color, self.margin)
+                "width: ${self.thickness}; height: 100%; background: ${self.color}; margin: 0 ${self.margin};"
             }
         }
 
-        format!("<div class='wj-divider {}' style='{}'></div>", orientation_class, style)
+        "<div class='wj-divider ${orientation_class}' style='${style}'></div>"
     }
 }
-
-fn main() {
-    let divider1 = Divider::horizontal()
-    println!("Horizontal: {}", divider1.render())
-
-    let divider2 = Divider::vertical().color("#FF0000".to_string()).thickness("2px".to_string())
-    println!("Vertical: {}", divider2.render())
-}
-

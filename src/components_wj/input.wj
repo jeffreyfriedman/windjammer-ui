@@ -1,19 +1,25 @@
 // Input component - Pure Windjammer implementation
 
 use super::traits::Renderable
+use super::traits::RenderableVNode
+use super::vnode::VNode
 
 pub struct Input {
     value: string,
     placeholder: string,
     input_type: string,
+    change_handler: string,
+    input_handler: string,
 }
 
 impl Input {
     pub fn new() -> Input {
         Input {
-            value: "".to_string(),
-            placeholder: "".to_string(),
-            input_type: "text".to_string(),
+            value: "",
+            placeholder: "",
+            input_type: "text",
+            change_handler: "",
+            input_handler: "",
         }
     }
     
@@ -31,20 +37,37 @@ impl Input {
         self.input_type = input_type
         self
     }
+    
+    pub fn on_change(self, handler: string) -> Input {
+        self.change_handler = handler
+        self
+    }
+    
+    pub fn on_input(self, handler: string) -> Input {
+        self.input_handler = handler
+        self
+    }
+}
+
+impl RenderableVNode for Input {
+    fn to_vnode(&self) -> VNode {
+        let mut node = VNode::input()
+            .add_class("wj-input")
+            .set_type(self.input_type)
+            .set_value(self.value)
+            .set_placeholder(self.placeholder)
+        if self.change_handler.len() > 0 {
+            node = node.on_change(self.change_handler)
+        }
+        if self.input_handler.len() > 0 {
+            node = node.on_input(self.input_handler)
+        }
+        node
+    }
 }
 
 impl Renderable for Input {
     fn render(self) -> string {
-        format!("<input class='wj-input' type='{}' value='{}' placeholder='{}'/>", 
-                self.input_type, self.value, self.placeholder)
+        "<input class='wj-input' type='${self.input_type}' value='${self.value}' placeholder='${self.placeholder}'/>"
     }
 }
-
-fn main() {
-    let input = Input::new()
-        .value("Hello".to_string())
-        .placeholder("Enter text...".to_string())
-    
-    println!("{}", input.render())
-}
-

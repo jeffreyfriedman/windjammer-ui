@@ -1,0 +1,15 @@
+use wj_ui::column
+use wj_ui::row
+use wj_ui::heading
+use wj_ui::text
+use wj_ui::button
+
+pub fn profile_card() {
+    let view = column()
+        .gap(8.0)
+        .padding(16.0)
+        .child(heading("Ada Lovelace"))
+        .child(text("Analyst and writer"))
+        .child(row().gap(8.0).child(button("Follow")).child(button("Message")))
+    view.mount()
+}

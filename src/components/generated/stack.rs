@@ -1,7 +1,7 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum StackDirection {
     Vertical,
@@ -27,6 +27,7 @@ pub enum StackJustify {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Stack {
     pub direction: StackDirection,
     pub gap: String,
@@ -39,91 +40,82 @@ pub struct Stack {
 }
 
 impl Stack {
-    #[inline]
-    pub fn new() -> Stack {
-        Stack {
-            direction: StackDirection::Vertical,
-            gap: "8px".to_string(),
-            align: StackAlign::Stretch,
-            justify: StackJustify::Start,
-            children: Vec::new(),
-            padding: "0".to_string(),
-            width: "auto".to_string(),
-            height: "auto".to_string(),
-        }
-    }
-    #[inline]
-    pub fn vertical() -> Stack {
+#[inline]
+pub fn new() -> Stack {
+        Stack { direction: StackDirection::Vertical, gap: String::from("8px"), align: StackAlign::Stretch, justify: StackJustify::Start, children: Vec::new(), padding: String::from("0"), width: String::from("auto"), height: String::from("auto") }
+}
+#[inline]
+pub fn vertical() -> Stack {
         Stack::new()
-    }
-    #[inline]
-    pub fn horizontal() -> Stack {
+}
+#[inline]
+pub fn horizontal() -> Stack {
         let mut stack = Stack::new();
         stack.direction = StackDirection::Horizontal;
         stack
-    }
-    #[inline]
-    pub fn direction(mut self, dir: StackDirection) -> Stack {
+}
+#[inline]
+pub fn direction(mut self, dir: StackDirection) -> Stack {
         self.direction = dir;
         self
-    }
-    #[inline]
-    pub fn gap(mut self, gap: String) -> Stack {
-        self.gap = gap;
+}
+#[inline]
+pub fn gap(mut self, gap: impl Into<String>) -> Stack {
+        self.gap = gap.into();
         self
-    }
-    #[inline]
-    pub fn align(mut self, align: StackAlign) -> Stack {
+}
+#[inline]
+pub fn align(mut self, align: StackAlign) -> Stack {
         self.align = align;
         self
-    }
-    #[inline]
-    pub fn justify(mut self, justify: StackJustify) -> Stack {
+}
+#[inline]
+pub fn justify(mut self, justify: StackJustify) -> Stack {
         self.justify = justify;
         self
-    }
-    #[inline]
-    pub fn padding(mut self, padding: String) -> Stack {
-        self.padding = padding;
+}
+#[inline]
+pub fn padding(mut self, padding: impl Into<String>) -> Stack {
+        self.padding = padding.into();
         self
-    }
-    #[inline]
-    pub fn width(mut self, width: String) -> Stack {
-        self.width = width;
+}
+#[inline]
+pub fn width(mut self, width: impl Into<String>) -> Stack {
+        self.width = width.into();
         self
-    }
-    #[inline]
-    pub fn height(mut self, height: String) -> Stack {
-        self.height = height;
+}
+#[inline]
+pub fn height(mut self, height: impl Into<String>) -> Stack {
+        self.height = height.into();
         self
-    }
-    #[inline]
-    pub fn child(mut self, child: String) -> Stack {
-        self.children.push(child);
+}
+#[inline]
+pub fn child(mut self, child: impl Into<String>) -> Stack {
+        self.children.push(child.into());
         self
-    }
+}
 }
 
 impl Renderable for Stack {
-    #[inline]
-    fn render(self) -> String {
-        let flex_direction = match self.direction {
-            StackDirection::Vertical => "column".to_string(),
-            StackDirection::Horizontal => "row".to_string(),
+
+fn render(&self) -> String {
+        let flex_direction: String = match &self.direction {
+            StackDirection::Vertical => String::from("column"),
+            StackDirection::Horizontal => String::from("row"),
         };
-        let align_items = match self.align {
-            StackAlign::Start => "flex-start".to_string(),
-            StackAlign::Center => "center".to_string(),
-            StackAlign::End => "flex-end".to_string(),
-            StackAlign::Stretch => "stretch".to_string(),
+        let align_items: String = match &self.align {
+            StackAlign::Start => String::from("flex-start"),
+            StackAlign::Center => String::from("center"),
+            StackAlign::End => String::from("flex-end"),
+            StackAlign::Stretch => String::from("stretch"),
         };
-        let justify_content = match self.justify {
-            StackJustify::Start => "flex-start".to_string(),
-            StackJustify::Center => "center".to_string(),
-            StackJustify::End => "flex-end".to_string(),
-            StackJustify::SpaceBetween => "space-between".to_string(),
-            StackJustify::SpaceAround => "space-around".to_string(),
-            StackJustify::SpaceEvenly => "space-evenly".to_string(),
+        let justify_content: String = match &self.justify {
+            StackJustify::Start => String::from("flex-start"),
+            StackJustify::Center => String::from("center"),
+            StackJustify::End => String::from("flex-end"),
+            StackJustify::SpaceBetween => String::from("space-between"),
+            StackJustify::SpaceAround => String::from("space-around"),
+            StackJustify::SpaceEvenly => String::from("space-evenly"),
         };
         let mut html = String::new();
         html.push_str("<div style='display: flex; flex-direction: ");
@@ -142,9 +134,10 @@ impl Renderable for Stack {
         html.push_str(&self.height);
         html.push_str(";'>");
         for child in &self.children {
-            html.push_str(&child);
+            html.push_str(child);
         }
         html.push_str("</div>");
         html
-    }
 }
+}
+

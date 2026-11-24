@@ -32,7 +32,7 @@ impl Tabs {
     pub fn new() -> Tabs {
         Tabs {
             tabs: Vec::new(),
-            active: "".to_string(),
+            active: "",
         }
     }
 
@@ -50,7 +50,7 @@ impl Tabs {
 
 impl Renderable for Tabs {
 fn render(self) -> string {
-        let mut tabs_html = "<div class='wj-tabs-header'>".to_string()
+        let mut tabs_html = "<div class='wj-tabs-header'>"
 
         let mut i = 0
         while i < self.tabs.len() {
@@ -58,15 +58,14 @@ fn render(self) -> string {
             let active_class = if tab.id == self.active { " wj-tab-active" } else { "" }
             let disabled_class = if tab.disabled { " wj-tab-disabled" } else { "" }
 
-            tabs_html = format!("{}<button class='wj-tab{}{}' data-tab-id='{}'>{}</button>",
-                tabs_html, active_class, disabled_class, tab.id, tab.label)
+            tabs_html = "${tabs_html}<button class='wj-tab${active_class}${disabled_class}' data-tab-id='${tab.id}'>${tab.label}</button>"
 
             i = i + 1
         }
 
-        tabs_html = format!("{}</div>", tabs_html)
+        tabs_html = "${tabs_html}</div>"
 
-        let mut content_html = "<div class='wj-tabs-content'>".to_string()
+        let mut content_html = "<div class='wj-tabs-content'>"
 
         let mut j = 0
         while j < self.tabs.len() {
@@ -77,26 +76,13 @@ fn render(self) -> string {
                 "display: none;"
             }
 
-            content_html = format!("{}<div class='wj-tab-panel' data-tab-id='{}' style='{}'>{}</div>",
-                content_html, tab.id, display_style, tab.content)
+            content_html = "${content_html}<div class='wj-tab-panel' data-tab-id='${tab.id}' style='${display_style}'>${tab.content}</div>"
 
             j = j + 1
         }
 
-        content_html = format!("{}</div>", content_html)
+        content_html = "${content_html}</div>"
 
-        format!("<div class='wj-tabs'>{}{}</div>", tabs_html, content_html)
+        "<div class='wj-tabs'>${tabs_html}${content_html}</div>"
     }
 }
-
-fn main() {
-    let tabs = Tabs::new()
-        .tab(Tab::new("home".to_string(), "Home".to_string(), "<p>Home content</p>".to_string()))
-        .tab(Tab::new("profile".to_string(), "Profile".to_string(), "<p>Profile content</p>".to_string()))
-        .tab(Tab::new("settings".to_string(), "Settings".to_string(), "<p>Settings content</p>".to_string()))
-        .active("home".to_string())
-
-    println!("{}", tabs.render())
-}
-
-

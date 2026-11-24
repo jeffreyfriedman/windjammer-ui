@@ -2,6 +2,9 @@
 
 
 use super::traits::Renderable
+use super::traits::RenderableVNode
+use super::vnode::VNode
+
 pub enum CheckboxSize {
     Small,
     Medium,
@@ -13,6 +16,7 @@ pub struct Checkbox {
     checked: bool,
     disabled: bool,
     size: CheckboxSize,
+    change_handler: string,
 }
 
 impl Checkbox {
@@ -22,6 +26,7 @@ impl Checkbox {
             checked: false,
             disabled: false,
             size: CheckboxSize::Medium,
+            change_handler: "",
         }
     }
     
@@ -40,7 +45,37 @@ impl Checkbox {
         self
     }
     
+    pub fn on_change(self, handler: string) -> Checkbox {
+        self.change_handler = handler
+        self
+    }
+}
 
+impl RenderableVNode for Checkbox {
+    fn to_vnode(&self) -> VNode {
+        let size_class = match self.size {
+            CheckboxSize::Small => "wj-checkbox-sm",
+            CheckboxSize::Medium => "wj-checkbox-md",
+            CheckboxSize::Large => "wj-checkbox-lg",
+        }
+        let mut label_node = VNode::element("label")
+            .add_class("wj-checkbox")
+            .add_class(size_class.to_string())
+            .child(
+                VNode::input()
+                    .set_type("checkbox")
+                    .add_attr("checked", if self.checked { "true" } else { "false" }.to_string())
+                    .set_disabled(self.disabled)
+            )
+            .child(
+                VNode::span()
+                    .add_text(self.label)
+            )
+        if self.change_handler.len() > 0 {
+            label_node = label_node.on_change(self.change_handler)
+        }
+        label_node
+    }
 }
 
 impl Renderable for Checkbox {
@@ -54,16 +89,6 @@ pub fn render(self) -> string {
         let checked_attr = if self.checked { " checked" } else { "" }
         let disabled_attr = if self.disabled { " disabled" } else { "" }
         
-        format!("<label class='wj-checkbox wj-checkbox-{}'><input type='checkbox'{}{}/><span>{}</span></label>",
-                size_class, checked_attr, disabled_attr, self.label)
+        "<label class='wj-checkbox wj-checkbox-${size_class}'><input type='checkbox'${checked_attr}${disabled_attr}/><span>${self.label}</span></label>"
     }
 }
-
-fn main() {
-    let cb1 = Checkbox::new("Accept terms".to_string()).checked(true)
-    let cb2 = Checkbox::new("Subscribe".to_string()).size(CheckboxSize::Large).disabled(true)
-    
-    println!("{}", cb1.render())
-    println!("{}", cb2.render())
-}
-

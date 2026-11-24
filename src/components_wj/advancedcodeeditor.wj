@@ -13,8 +13,8 @@ impl AdvancedCodeEditor {
     pub fn new(code: string) -> AdvancedCodeEditor {
         AdvancedCodeEditor {
             code,
-            language: "rust".to_string(),
-            theme: "monokai".to_string(),
+            language: "rust",
+            theme: "monokai",
             line_numbers: true,
             minimap: true,
             autocomplete: true,
@@ -54,28 +54,16 @@ pub fn render(self) -> string {
         let features_class = if self.minimap { " wj-editor-with-minimap" } else { "" }
         let line_class = if self.line_numbers { " wj-editor-with-lines" } else { "" }
 
-        format!("<div class='wj-advanced-editor wj-editor-{} wj-editor-theme-{}{}{}'>
+        "<div class='wj-advanced-editor wj-editor-${self.language} wj-editor-theme-${self.theme}${features_class}${line_class}'>
   <div class='wj-editor-toolbar'>
-    <span>Language: {}</span>
-    <span>Theme: {}</span>
+    <span>Language: ${self.language}</span>
+    <span>Theme: ${self.theme}</span>
   </div>
   <div class='wj-editor-main'>
     <textarea class='wj-editor-textarea'>
-{}</textarea>
-    {}
+${self.code}</textarea>
+    ${if self.minimap { "<div class='wj-editor-minimap'></div>" } else { "" }}
   </div>
-</div>", self.language, self.theme, features_class, line_class, self.language, self.theme, self.code,
-    if self.minimap { "<div class='wj-editor-minimap'></div>" } else { "" })
+</div>"
     }
 }
-
-fn main() {
-    let editor = AdvancedCodeEditor::new("fn main() {\n    println!(\"Hello, Windjammer!\");\n}".to_string())
-        .language("rust".to_string())
-        .theme("monokai".to_string())
-        .minimap(true)
-
-    println!("{}", editor.render())
-}
-
-

@@ -17,7 +17,7 @@ impl Spinner {
     pub fn new() -> Spinner {
         Spinner {
             size: SpinnerSize::Medium,
-            label: "".to_string(),
+            label: "",
         }
     }
 
@@ -42,22 +42,12 @@ pub fn render(self) -> string {
             SpinnerSize::Large => "wj-spinner-lg",
         }
 
-        let spinner_html = format!("<div class='wj-spinner {}'></div>", size_class)
+        let spinner_html = "<div class='wj-spinner ${size_class}'></div>"
 
         if self.label != "" {
-            format!("<div class='wj-spinner-container'>{}<span class='wj-spinner-label'>{}</span></div>", 
-                spinner_html, self.label)
+            "<div class='wj-spinner-container'>${spinner_html}<span class='wj-spinner-label'>${self.label}</span></div>"
         } else {
             spinner_html
         }
     }
 }
-
-fn main() {
-    let spinner1 = Spinner::new()
-    println!("Default: {}", spinner1.render())
-
-    let spinner2 = Spinner::new().size(SpinnerSize::Large).label("Loading...".to_string())
-    println!("With label: {}", spinner2.render())
-}
-

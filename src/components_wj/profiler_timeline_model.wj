@@ -1,0 +1,157 @@
+// Data model for realtime profiler timeline (frame budget + scope rows).
+// Reads live engine metrics via crate::frame_trace_ffi when a provider is registered.
+
+use crate::frame_trace_ffi::has_live_data
+use crate::frame_trace_ffi::live_frame_index
+use crate::frame_trace_ffi::live_frame_time_ms
+use crate::frame_trace_ffi::live_scope_count
+use crate::frame_trace_ffi::live_scope_name
+use crate::frame_trace_ffi::live_scope_duration_ms
+use crate::frame_trace_ffi::live_scope_is_gpu
+
+pub enum ProfilerScopeKind {
+    Cpu,
+    Gpu,
+}
+
+pub struct ProfilerScopeRow {
+    pub name: string,
+    pub duration_ms: f32,
+    pub percentage: f32,
+    pub kind: ProfilerScopeKind,
+}
+
+pub struct LiveProfilerSnapshot {
+    pub frame_index: u64,
+    pub frame_time_ms: f32,
+    pub budget_ms: f32,
+    pub scopes: Vec<ProfilerScopeRow>,
+}
+
+impl LiveProfilerSnapshot {
+    pub fn new(frame_index: u64, frame_time_ms: f32, budget_ms: f32) -> LiveProfilerSnapshot {
+        LiveProfilerSnapshot {
+            frame_index: frame_index,
+            frame_time_ms: frame_time_ms,
+            budget_ms: budget_ms,
+            scopes: Vec::new(),
+        }
+    }
+
+    pub fn scope(self, row: ProfilerScopeRow) -> LiveProfilerSnapshot {
+        self.scopes.push(row)
+        self
+    }
+
+    pub fn budget_utilization_pct(self) -> f32 {
+        if self.budget_ms <= 0.0 {
+            return 0.0
+        }
+        (self.frame_time_ms / self.budget_ms) * 100.0
+    }
+
+    pub fn budget_band_class(self) -> string {
+        let util = self.budget_utilization_pct()
+        if util > 100.0 {
+            "wj-progress-danger"
+        } else if util > 85.0 {
+            "wj-progress-warning"
+        } else {
+            "wj-progress-success"
+        }
+    }
+
+    pub fn budget_band_color(self) -> string {
+        let util = self.budget_utilization_pct()
+        if util > 100.0 {
+            "#e74c3c"
+        } else if util > 85.0 {
+            "#f39c12"
+        } else {
+            "#2ecc71"
+        }
+    }
+
+    pub fn from_scope_rows(
+        frame_index: u64,
+        frame_time_ms: f32,
+        budget_ms: f32,
+        rows: Vec<ProfilerScopeRow>,
+    ) -> LiveProfilerSnapshot {
+        let mut snap = LiveProfilerSnapshot::new(frame_index, frame_time_ms, budget_ms)
+        for row in rows {
+            snap = snap.scope(row)
+        }
+        snap
+    }
+
+    pub fn from_engine_live(budget_ms: f32) -> LiveProfilerSnapshot {
+        if !has_live_data() {
+            return LiveProfilerSnapshot::new(0, 0.0, budget_ms)
+        }
+        let frame_index = live_frame_index()
+        let frame_time_ms = live_frame_time_ms()
+        let mut snap = LiveProfilerSnapshot::new(frame_index, frame_time_ms, budget_ms)
+        let count = live_scope_count()
+        let mut i: u32 = 0
+        while i < count {
+            let name = live_scope_name(i)
+            let duration_ms = live_scope_duration_ms(i)
+            let is_gpu = live_scope_is_gpu(i)
+            let kind = if is_gpu {
+                ProfilerScopeKind::Gpu
+            } else {
+                ProfilerScopeKind::Cpu
+            }
+            let pct = if frame_time_ms > 0.0 {
+                (duration_ms / frame_time_ms) * 100.0
+            } else {
+                0.0
+            }
+            snap = snap.scope(ProfilerScopeRow {
+                name: name,
+                duration_ms: duration_ms,
+                percentage: pct,
+                kind: kind,
+            })
+            i = i + 1
+        }
+        snap
+    }
+
+    pub fn mock_runtime_demo() -> LiveProfilerSnapshot {
+        let budget = 16.67
+        let mut snap = LiveProfilerSnapshot::new(42, 14.2, budget)
+        snap = snap.scope(ProfilerScopeRow {
+            name: "Update",
+            duration_ms: 2.1,
+            percentage: 14.8,
+            kind: ProfilerScopeKind::Cpu,
+        })
+        snap = snap.scope(ProfilerScopeRow {
+            name: "Physics",
+            duration_ms: 1.4,
+            percentage: 9.9,
+            kind: ProfilerScopeKind::Cpu,
+        })
+        snap = snap.scope(ProfilerScopeRow {
+            name: "Render",
+            duration_ms: 5.8,
+            percentage: 40.8,
+            kind: ProfilerScopeKind::Cpu,
+        })
+        snap = snap.scope(ProfilerScopeRow {
+            name: "raymarch",
+            duration_ms: 3.2,
+            percentage: 22.5,
+            kind: ProfilerScopeKind::Gpu,
+        })
+        snap = snap.scope(ProfilerScopeRow {
+            name: "lighting",
+            duration_ms: 1.7,
+            percentage: 12.0,
+            kind: ProfilerScopeKind::Gpu,
+        })
+        snap
+    }
+}

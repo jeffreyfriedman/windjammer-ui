@@ -57,6 +57,7 @@ pub mod app_reactive;
 #[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
 pub mod app_reactive_eframe;
 pub mod event_handler;
+pub mod reactive_mount;
 #[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
 // pub mod scene_gizmos; // TODO: Implement scene gizmos module
 pub mod undo_redo; // Available on all platforms
@@ -65,9 +66,14 @@ pub mod undo_redo; // Available on all platforms
 pub mod component;
 pub mod component_runtime;
 pub mod components; // Component library
+pub mod dom_patch;
+pub mod escape;
 pub mod events;
+#[cfg(all(target_arch = "wasm32", feature = "web"))]
+pub mod kit_mount;
 pub mod platform;
 pub mod reactivity;
+pub mod safe_dom_js;
 
 #[cfg(all(not(target_arch = "wasm32"), feature = "desktop"))]
 pub mod desktop_app_context;
@@ -77,12 +83,30 @@ pub mod reactivity_optimized;
 pub mod renderer;
 pub mod routing;
 pub mod runtime;
+pub mod signal_ffi;
 pub mod simple_renderer;
 pub mod simple_vnode;
 pub mod ssr;
 pub mod to_vnode;
 pub mod vdom;
-pub mod vnode_ffi; // FFI for Windjammer components to construct VNodes
+pub mod vnode_ffi; // FFI for Windjammer components to construct VNodes // FFI for Windjammer components to use reactive signals
+
+/// Canonical VNode type — use `simple_vnode::VNode` for all new code.
+/// The `vdom::VNode` type is legacy and will be migrated.
+pub mod ui {
+    pub use crate::signal_ffi::{
+        signal_get_bool, signal_get_f32, signal_get_i32, signal_get_string, signal_new_bool,
+        signal_new_f32, signal_new_i32, signal_new_string, signal_set_bool, signal_set_f32,
+        signal_set_i32, signal_set_string,
+    };
+    pub use crate::simple_vnode::{VAttr, VNode};
+    pub use crate::vnode_ffi::{
+        callback_clear, callback_invoke, callback_register, callback_remove, vnode_child,
+        vnode_clear, vnode_element, vnode_on_change, vnode_on_change_cb, vnode_on_click,
+        vnode_on_click_cb, vnode_on_input, vnode_take, vnode_text,
+    };
+}
+pub mod frame_trace_ffi; // Live engine frame trace read bridge for profiler panels
 #[cfg(target_arch = "wasm32")]
 pub mod wasm_events;
 
@@ -119,13 +143,11 @@ pub mod prelude {
     // Re-export the component macro
     pub use crate::component;
 
-    // Re-export common components (explicit imports due to symbol conflicts)
-    pub use crate::components::alert::{Alert, AlertVariant};
-    pub use crate::components::button::{Button, ButtonSize, ButtonVariant};
-    pub use crate::components::container::Container;
-    pub use crate::components::flex::{Flex, FlexDirection};
-    pub use crate::components::input::Input;
-    pub use crate::components::text::{Text, TextSize, TextWeight};
+    // Re-export common components (flattened via components::generated::*)
+    pub use crate::components::{
+        Alert, AlertVariant, Button, ButtonSize, ButtonVariant, Container, Flex, FlexDirection,
+        Input, Text, TextSize, TextWeight,
+    };
 }
 
 /// Mount a component to the DOM (WASM only)

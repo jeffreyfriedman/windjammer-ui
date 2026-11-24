@@ -1,0 +1,5 @@
+// Pinned signature surface of the wj_reactive crate for these samples (ADR-0026).
+// `wj_reactive::state` is generic over `T`, which a surface cannot declare yet, so the samples use the i32
+// instantiation; the returned handle is the crate's `Signal` (opaque to the surface). Widen this when generic
+// and opaque crate types land in the surface language.
+pub fn state(initial: i32) -> Signal

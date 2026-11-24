@@ -209,7 +209,7 @@ jobs:
         run: cargo clean
       
       - name: Generate coverage
-        run: cargo tarpaulin --verbose --features web --workspace --timeout 120 --out xml
+        run: cargo tarpaulin --verbose --features web --workspace --timeout 120 --engine llvm --out xml
       
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3

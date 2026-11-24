@@ -1,111 +1,51 @@
-// Dashboard Example - Business Metrics
-// Demonstrates: Cards, grids, statistics display, data visualization
+// Dashboard: a header, a row of statistic cards, and a recent-activity list.
 
-use windjammer_ui::*
+use crate::components_wj::vnode::VNode
+use crate::components_wj::container::Container
+use crate::components_wj::text::Text
+use crate::components_wj::text::TextSize
+use crate::components_wj::traits::RenderableVNode
 
-@export
-fn start() {
-    println!("📊 Starting Dashboard")
-    
-    // Mock data
-    let total_users = Signal::new(1247)
-    let active_users = Signal::new(892)
-    let revenue = Signal::new(45678)
-    let growth = Signal::new(12)
-    
-    // Clone signals for display
-    let total_display = total_users.clone()
-    let active_display = active_users.clone()
-    let revenue_display = revenue.clone()
-    let growth_display = growth.clone()
-    
-    // Build UI
-    let ui = Container::new()
-        .max_width("1200px")
-        .child(
-            Flex::new()
-                .direction(FlexDirection::Column)
-                .gap("24px")
-                .child(
-                    Flex::new()
-                        .direction(FlexDirection::Row)
-                        .gap("16px")
-                        .child(
-                            Text::new("📊 Dashboard")
-                                .size(TextSize::XLarge)
-                                .bold()
-                        )
-                )
-                .child(
-                    Flex::new()
-                        .direction(FlexDirection::Row)
-                        .gap("16px")
-                        .child(
-                            Card::new()
-                                .child(
-                                    Flex::new()
-                                        .direction(FlexDirection::Column)
-                                        .gap("8px")
-                                        .child(Text::new("👥 Total Users").size(TextSize::Small))
-                                        .child(
-                                            Text::new(format!("{}", total_display.get()))
-                                                .size(TextSize::XLarge)
-                                                .bold()
-                                        )
-                                )
-                        )
-                        .child(
-                            Card::new()
-                                .child(
-                                    Flex::new()
-                                        .direction(FlexDirection::Column)
-                                        .gap("8px")
-                                        .child(Text::new("✓ Active Users").size(TextSize::Small))
-                                        .child(
-                                            Text::new(format!("{}", active_display.get()))
-                                                .size(TextSize::XLarge)
-                                                .bold()
-                                        )
-                                )
-                        )
-                        .child(
-                            Card::new()
-                                .child(
-                                    Flex::new()
-                                        .direction(FlexDirection::Column)
-                                        .gap("8px")
-                                        .child(Text::new("💰 Revenue").size(TextSize::Small))
-                                        .child(
-                                            Text::new(format!("${}", revenue_display.get()))
-                                                .size(TextSize::XLarge)
-                                                .bold()
-                                        )
-                                )
-                        )
-                        .child(
-                            Card::new()
-                                .child(
-                                    Flex::new()
-                                        .direction(FlexDirection::Column)
-                                        .gap("8px")
-                                        .child(Text::new("📈 Growth").size(TextSize::Small))
-                                        .child(
-                                            Text::new(format!("{}%", growth_display.get()))
-                                                .size(TextSize::XLarge)
-                                                .bold()
-                                        )
-                                )
-                        )
-                )
-                .child(
-                    Text::new("Welcome back! Here's your overview.")
-                        .size(TextSize::Medium)
-                )
-        )
-    
-    App::new("Dashboard", ui.to_vnode()).run()
+fn stat_card(label: string, value: string, change: string) -> VNode {
+    VNode::div()
+        .add_class("stat-card")
+        .add_style("flex: 1; padding: 16px; border: 1px solid #e0e0e0; border-radius: 8px;")
+        .child(Text::new(label).color("#666").to_vnode())
+        .child(VNode::div().add_style("font-size: 32px; font-weight: bold;").add_text(value))
+        .child(Text::new(change).size(TextSize::Small).color("#2e7d32").to_vnode())
+}
+
+fn activity_row(who: string, what: string, when: string) -> VNode {
+    VNode::div()
+        .add_style("display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee;")
+        .child(VNode::span().add_text("${who} ${what}"))
+        .child(Text::new(when).size(TextSize::Small).color("#888").to_vnode())
+}
+
+/// Build the dashboard as a VNode tree.
+pub fn build_dashboard() -> VNode {
+    let stats = VNode::div()
+        .add_style("display: flex; gap: 16px; margin: 24px 0;")
+        .child(stat_card("Users", "12,345", "+12% this month"))
+        .child(stat_card("Revenue", "$48,200", "+8% this month"))
+        .child(stat_card("Orders", "1,284", "+3% this month"))
+
+    let activity = VNode::div()
+        .child(Text::new("Recent Activity").size(TextSize::Large).bold().to_vnode())
+        .child(activity_row("Alice", "created a project", "2m ago"))
+        .child(activity_row("Bob", "merged a pull request", "15m ago"))
+        .child(activity_row("Carol", "deployed to production", "1h ago"))
+
+    Container::new()
+        .max_width("1000px")
+        .padding("24px")
+        .add_child(Text::new("Dashboard").size(TextSize::XLarge).bold().to_vnode())
+        .add_child(stats)
+        .add_child(activity)
+        .to_vnode()
 }
 
 fn main() {
-    start()
+    let ui = build_dashboard()
+    println("Dashboard built, VNode handle: ${ui.raw_handle()}")
 }

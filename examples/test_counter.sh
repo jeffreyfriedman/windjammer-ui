@@ -8,7 +8,7 @@ cd "$(dirname "$0")/.."
 wasm-pack build --target web --out-dir examples/pkg
 
 echo ""
-echo "✅ Build successful!"
+echo "Build successful!"
 echo ""
 echo "To test the counter app:"
 echo "  1. cd examples"

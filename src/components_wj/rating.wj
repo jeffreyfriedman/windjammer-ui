@@ -23,7 +23,7 @@ impl Rating {
             max: 5,
             size: RatingSize::Medium,
             readonly: true,
-            color: "#fbbf24".to_string(),
+            color: "#fbbf24",
         }
     }
 
@@ -58,7 +58,7 @@ pub fn render(self) -> string {
             RatingSize::Large => "32px",
         };
 
-        let mut html = String::new();
+        let mut html = "";
         html.push_str("<div style='display: inline-flex; gap: 4px;'>");
 
         let mut i = 1;
@@ -67,7 +67,7 @@ pub fn render(self) -> string {
             let half_filled = i as f32 - 0.5 <= self.value && i as f32 > self.value;
 
             let star_color = if filled || half_filled {
-                self.color.as_str()
+                self.color
             } else {
                 "#e2e8f0"
             };

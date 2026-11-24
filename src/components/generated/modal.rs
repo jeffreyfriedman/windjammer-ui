@@ -1,7 +1,7 @@
-#![allow(clippy::all)]
-#![allow(noop_method_call)]
-use super::traits::Renderable;
+#[allow(unused_imports)]
+use super::*;
 
+use super::traits::Renderable;
 #[derive(Clone, Debug, PartialEq, Copy)]
 pub enum ModalSize {
     Small,
@@ -11,6 +11,7 @@ pub enum ModalSize {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(C)]
 pub struct Modal {
     pub id: String,
     pub title: String,
@@ -22,63 +23,55 @@ pub struct Modal {
 }
 
 impl Modal {
-    #[inline]
-    pub fn new(id: String, title: String) -> Modal {
-        Modal {
-            id,
-            title,
-            content: String::new(),
-            footer: String::new(),
-            size: ModalSize::Medium,
-            closeable: true,
-            visible: false,
-        }
-    }
-    #[inline]
-    pub fn content(mut self, content: String) -> Modal {
-        self.content = content;
+#[inline]
+pub fn new(id: String, title: String) -> Modal {
+        Modal { id, title, content: String::new(), footer: String::new(), size: ModalSize::Medium, closeable: true, visible: false }
+}
+#[inline]
+pub fn content(mut self, content: impl Into<String>) -> Modal {
+        self.content = content.into();
         self
-    }
-    #[inline]
-    pub fn footer(mut self, footer: String) -> Modal {
-        self.footer = footer;
+}
+#[inline]
+pub fn footer(mut self, footer: impl Into<String>) -> Modal {
+        self.footer = footer.into();
         self
-    }
-    #[inline]
-    pub fn size(mut self, size: ModalSize) -> Modal {
+}
+#[inline]
+pub fn size(mut self, size: ModalSize) -> Modal {
         self.size = size;
         self
-    }
-    #[inline]
-    pub fn closeable(mut self, closeable: bool) -> Modal {
+}
+#[inline]
+pub fn closeable(mut self, closeable: bool) -> Modal {
         self.closeable = closeable;
         self
-    }
-    #[inline]
-    pub fn visible(mut self, visible: bool) -> Modal {
+}
+#[inline]
+pub fn visible(mut self, visible: bool) -> Modal {
         self.visible = visible;
         self
-    }
+}
 }
 
 impl Renderable for Modal {
-    #[inline]
-    fn render(self) -> String {
-        let width = match self.size {
-            ModalSize::Small => "400px".to_string(),
-            ModalSize::Medium => "600px".to_string(),
-            ModalSize::Large => "800px".to_string(),
-            ModalSize::FullScreen => "100vw".to_string(),
+
+fn render(&self) -> String {
+        let width: String = match &self.size {
+            ModalSize::Small => String::from("400px"),
+            ModalSize::Medium => String::from("600px"),
+            ModalSize::Large => String::from("800px"),
+            ModalSize::FullScreen => String::from("100vw"),
         };
-        let height = match self.size {
-            ModalSize::FullScreen => "100vh".to_string(),
-            _ => "auto".to_string(),
+        let height: String = match &self.size {
+            ModalSize::FullScreen => String::from("100vh"),
+            _ => String::from("auto"),
         };
-        let display = {
+        let display: String = {
             if self.visible {
-                "flex".to_string()
+                String::from("flex")
             } else {
-                "none".to_string()
+                String::from("none")
             }
         };
         let mut html = String::new();
@@ -101,19 +94,20 @@ impl Renderable for Modal {
         if self.closeable {
             html.push_str("<button onclick='document.getElementById(\"");
             html.push_str(&self.id);
-            html.push_str("-backdrop\").style.display=\"none\"' style='background: none; border: none; font-size: 24px; cursor: pointer; color: #718096; padding: 0; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;'>&times;</button>")
+            html.push_str("-backdrop\").style.display=\"none\"' style='background: none; border: none; font-size: 24px; cursor: pointer; color: #718096; padding: 0; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;'>&times;</button>");
         }
         html.push_str("</div>");
         html.push_str("<div style='padding: 24px; flex: 1; overflow-y: auto;'>");
         html.push_str(&self.content);
         html.push_str("</div>");
-        if self.footer.len() > (0 as usize) {
+        if !self.footer.is_empty() {
             html.push_str("<div style='padding: 16px 24px; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 8px;'>");
             html.push_str(&self.footer);
-            html.push_str("</div>")
+            html.push_str("</div>");
         }
         html.push_str("</div>");
         html.push_str("</div>");
         html
-    }
 }
+}
+

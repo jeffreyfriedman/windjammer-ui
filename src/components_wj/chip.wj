@@ -32,7 +32,7 @@ impl Chip {
             variant: ChipVariant::Default,
             size: ChipSize::Medium,
             removable: false,
-            icon: String::new(),
+            icon: "",
         }
     }
 
@@ -100,7 +100,7 @@ pub fn render(self) -> string {
             ChipSize::Large => "16px",
         };
 
-        let mut html = String::new();
+        let mut html = "";
         html.push_str("<span style='display: inline-flex; align-items: center; gap: 6px; padding: ");
         html.push_str(padding);
         html.push_str("; font-size: ");

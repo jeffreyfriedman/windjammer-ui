@@ -1,0 +1,10 @@
+[package]
+name = "wj-paint"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Display list and Painter trait: the contract between the scene and every renderer"
+publish = false
+
+[dependencies]
+wj-scene = { path = "../wj_scene" }

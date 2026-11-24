@@ -30,8 +30,6 @@ updates:
     labels:
       - "dependencies"
       - "rust"
-    reviewers:
-      - "jeffreyfriedman"
   
   # Rust dependencies for macro crate
   - package-ecosystem: "cargo"
@@ -45,8 +43,6 @@ updates:
       - "dependencies"
       - "rust"
       - "macro"
-    reviewers:
-      - "jeffreyfriedman"
   
   # GitHub Actions
   - package-ecosystem: "github-actions"
@@ -59,7 +55,5 @@ updates:
     labels:
       - "dependencies"
       - "ci"
-    reviewers:
-      - "jeffreyfriedman"
 
 
