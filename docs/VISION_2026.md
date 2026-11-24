@@ -1,12 +1,10 @@
 # windjammer-ui vision, October 2026: one framework, one rendering model, every surface
 
-- **Status:** Proposed. Replaces the direction in `DESIGN_DIRECTION.md` (signal regions over HTML + Tauri shell), which the
-  owner rejected. Nothing here is accepted until the owner edits the ADR statuses (`docs/adr/`).
+- **Status:** Proposed. The direction is one scene renderer for every surface rather than signal regions over HTML in a WebView shell.
+  Each decision becomes binding when its ADR (`docs/adr/`) is accepted.
 - **Date:** 2026-10-11
-- **Scope of this change:** documents plus three small spikes (`spikes/`). No existing code was changed, no compiler or
-  game repo was touched.
-- **Evidence labels:** **[M]** measured by us on this machine in this change (numbers and caveats in section 9);
-  **[V]** read in a web source this session (URL in section 10); **[K]** prior knowledge, not re-verified;
+- **Evidence labels:** **[M]** measured by us on one development machine (numbers and caveats in section 9);
+  **[V]** read in a public web source (URL in section 10); **[K]** prior knowledge, not re-verified;
   **[U]** sources disagree or are weak. Vendor claims are marked as such. Nothing marked [K] or [U] should be quoted as fact.
 - **Companion files:** `docs/adr/0001..0011`, `docs/vision/SAMPLES.md` (side-by-side code), `spikes/*/README.md`.
 
@@ -31,7 +29,7 @@ If the spikes and milestones show we cannot meet the size and a11y rows, section
 
 ## 1. State of the art survey (what people actually choose these for)
 
-Honest caveat first: this survey is a desk survey. I fetched or searched primary pages where I could and say so; where
+Caveat: this survey is a desk survey. Primary pages were read where possible and are marked [V]; where
 only third-party blogs were available the claim is labelled [U]. No competitor benchmark was run by us except the Leptos
 signal-core comparison in section 9.
 
@@ -63,7 +61,7 @@ signal-core comparison in section 9.
 2. **SwiftUI / Compose: terse declarative syntax and native feel/a11y/IME for free.** Their syntax is the ergonomic bar. They
    win on "feels native" because they *are* native; a custom renderer must buy that back item by item (section 2.4).
 3. **Leptos/Solid/Svelte: the cheapest possible update and the smallest output on web, plus SSR/SEO.** Fine-grained
-   reactivity is now the consensus winning model for update cost [K; V partial in `ASSESSMENT_2026.md`, whose numbers are labelled uncertain].
+   reactivity is now the consensus winning model for update cost [K].
 4. **Slint / egui / Iced: Rust-native GUIs with small footprint, embedded targets, instant startup.** Chosen when the
    alternative is a browser engine. Weak on text, a11y, ergonomics.
 5. **GPUI / Makepad: raw speed and visual control.** Chosen by people building one flagship app.
@@ -220,7 +218,7 @@ Two layers, deliberately separable so we can ship value early:
 
 Control flow is first-class so lists and conditionals are also fine-grained: `for item in items key item.id { ... }` and
 `if`/`match` inside `view` lower to keyed list and switch primitives (like Solid's `<For>`/`<Show>`) instead of rebuilding
-the parent. My spike (section 9) implemented the reactive core as an arena with Copy handles: it passes three semantic tests
+the parent. The spike (section 9) implemented the reactive core as an arena with Copy handles: it passes three semantic tests
 (glitch-free diamond, equality cutoff, dynamic dependencies) and is 5x-1000x faster than Leptos's `reactive_graph` on four
 microbenchmarks **in our harness** (caveats there; not a statement that Leptos is slow in real apps).
 
@@ -293,8 +291,8 @@ magnitude slower than compiled code and does **not** support extern/FFI, async, 
 ### 3.7 Widgets must declare semantics
 
 The widget trait has a required `semantics(&self) -> Semantics` (role, name, value, actions). The stock widgets implement it; a
-custom widget that does not is a compile error. This is the structural answer to the finding in `ASSESSMENT_2026.md` section 2.7
-(13 of 120 components mention aria; no focus management): accessibility cannot be forgotten, only deliberately marked `decorative`.
+custom widget that does not is a compile error.
+Accessibility cannot be forgotten, only deliberately marked `decorative`.
 
 ### 3.8 Typed i18n
 
@@ -349,7 +347,7 @@ Goal: the HUD, menus, and the editor are the same framework as the app UI, drawn
 ### 4.2 The editor on the same framework
 
 The existing editor panels (inspectors, profilers, node graphs, curve editors, behaviour-tree views in `src/components_wj/`) currently reach desktop through an egui walker (`desktop_renderer*.rs`)
-that shares nothing with the web components (`ASSESSMENT_2026.md` 2.5). Under this vision they are ordinary components. The editor therefore runs as a native desktop app, in the browser (wasm + WebGPU),
+that shares nothing with the web components. Under this vision they are ordinary components. The editor therefore runs as a native desktop app, in the browser (wasm + WebGPU),
 and docked *inside* the running game window, with identical code. This is also the best dogfooding case: the editor is a large, text-heavy, a11y- and IME-sensitive application and will find the problems the demo apps hide.
 
 ### 4.3 What to reuse and what not
@@ -412,8 +410,8 @@ trait Shell {   // one implementation per platform; everything above this line i
 | `src/simple_vnode.rs` | **Migrate** into the SSR/semantic-HTML node type | Small canonical tree for HTML output. |
 | `src/signal.rs`, `reactivity*.rs`, `signal_ffi.rs` | **Replace** with `wj_reactive` (spike core) | Three overlapping modules; no batching; handles not Copy. Keep tests as behavior oracles. |
 | `src/routing.rs`, `undo_redo.rs` | **Migrate** (typed routes; undo service for the editor) | Reusable logic. |
-| `src/components_wj/*.wj` (~120 string-builder components) | **Rewrite incrementally** in the new DSL as widgets once M2 exists; **delete** each string-builder version when its replacement passes parity tests. Domain-specific business/finance components move out to the apps that use them (`EXTRACTION_PLAN.md`). Editor panels are rewritten first (they are the dogfood). | They emit HTML strings: wrong output model for a scene renderer. |
-| `src/components/generated/` (stale copies of core modules, 17 hand-maintained JS runtimes) | **Delete** (stale copies immediately; JS runtimes with their components) | Pure liability (`ASSESSMENT_2026.md` 2.9). C10 becomes moot. |
+| `src/components_wj/*.wj` (100 string-builder components) | **Rewrite incrementally** in the new DSL as widgets once M2 exists; **delete** each string-builder version when its replacement passes parity tests. Domain-specific business/finance components move out to the apps that use them (`EXTRACTION_PLAN.md`). Editor panels are rewritten first (they are the dogfood). | They emit HTML strings: wrong output model for a scene renderer. |
+| `src/components/generated/` | **Keep as compiler output only** (`tests/generated_fresh_test.rs` enforces it); no hand-maintained files | Output of the `.wj` sources, replaced as the widgets migrate. |
 | `vdom.rs`, `renderer.rs`, `runtime.rs`, `ssr.rs`, `platform/*`, `vnode_ffi.rs`, `component*.rs` | **Delete** after M2 | Legacy models; SSR re-implemented over the semantic tree. |
 | `desktop_renderer*.rs`, `app_reactive_eframe.rs`, `app*.rs` (egui/eframe) | **Keep until M6**, then delete | Existing editor depends on it; do not break it before parity. |
 | `windjammer-ui-macro` | **Delete** | Macros unusable from `.wj`; replaced by compiler support. |
@@ -437,11 +435,11 @@ Each milestone is also a go/no-go gate (section 8). "Compare" means run the same
 | **M8** | 1.0 hardening | docs, migration, perf regressions gated in CI | All benchmark gates in CI, no P0 a11y bugs. |
 
 Calendar numbers are engineer-effort estimates by one person-equivalent team of 3-4; they are guesses ([U]) and exist to size the plan, not to promise dates. Headline: roughly 14-18 months to a credible 1.0 on desktop+web+engine,
-mobile after. If the owner expects "Flutter-class everywhere" sooner, that is a different (much larger) staffing decision.
+mobile after. If the goal is "Flutter-class everywhere" sooner, that is a different (much larger) staffing decision.
 
 ### 6.3 Benchmark protocol
 
-- Reactive/update: js-framework-benchmark operations (it is the public baseline; its official results page is dynamic and could not be scraped this session, so we run our own harness against pinned Leptos, Dioxus, Solid versions).
+- Reactive/update: js-framework-benchmark operations (it is the public baseline; its official results page is dynamic and could not be scraped when this was written, so we run our own harness against pinned Leptos, Dioxus, Solid versions).
 - List scroll: 10k rows, 60 s scripted scroll, frame times from a frame-callback recorder; report p50/p95/p99 and dropped-frame %.
 - Startup: process start to first interactive frame (native), navigation start to first input response (web), cold and warm.
 - Size: brotli of wasm+js shim+shaders+fonts; native stripped binary.
@@ -461,7 +459,7 @@ mobile after. If the owner expects "Flutter-class everywhere" sooner, that is a 
 9. **Performance regression**: benchmarks in CI with stored baselines and a 10% gate; frame-time traces attached to failures.
 10. **Fuzzing**: event streams and tree mutations against the scene for panics/invariant violations; the DOM projection against `FakeDom` (exists).
 
-## 7. Compiler requirements (refines `docs/compiler-requests/README.md` C1-C10)
+## 7. Compiler requirements
 
 Priority: **P0** blocks M2 (the language milestone); **P1** needed by M3-M5; **P2** nice to have; **drop** no longer needed. "Touches" names the compiler ADR
 (`windjammer/docs/adr/`) or work package. None are implemented; the compiler repo was not modified.
@@ -490,7 +488,7 @@ Priority: **P0** blocks M2 (the language milestone); **P1** needed by M3-M5; **P
 
 Early de-risking: R1+R2+R12 can be prototyped as a *library convention* in a spike branch before the compiler work (trailing builders already exist as method chains today), so the DSL's ergonomics can be judged in M1 using the current compiler.
 
-## 8. Risks, kill criteria, owner decisions
+## 8. Risks, kill criteria, decisions
 
 ### 8.1 Risks (ranked)
 
@@ -505,7 +503,7 @@ Early de-risking: R1+R2+R12 can be prototyped as a *library convention* in a spi
 9. **Cross-origin isolation** for wasm threads limits deployment on some hosts (single-threaded v1 avoids this).
 10. **Wasm GC/Component Model** might make the Rust-wasm path obsolete-ish for Dart/Kotlin but not for us; low risk.
 
-### 8.2 Kill / pivot criteria (checked at the named gate; any single one triggers an owner review)
+### 8.2 Kill / pivot criteria (checked at the named gate; any single one triggers a maintainer review)
 
 | Gate | Condition | Pivot |
 |---|---|---|
@@ -517,15 +515,15 @@ Early de-risking: R1+R2+R12 can be prototyped as a *library convention* in a spi
 | M3 | Browser baseline: update-one-row > 10x Leptos in the same browser | Fix before continuing; no feature work |
 | M4 | Text conformance < 95% on the editing scenarios after two sprints | Narrow supported languages for v1 (document it); do not ship partial IME silently |
 | Any | Upstream (wgpu/vello/parley) abandonment or a breaking redesign we cannot track with < 0.5 FTE | Vendor and freeze, or switch to the alternative in the same layer (`Painter`/text traits keep this possible) |
-| Any | Two milestones in a row slip > 50% | Stop and re-plan with the owner; consider adopting Xilem/Masonry or Slint and contributing instead of building |
+| Any | Two milestones in a row slip > 50% | Stop and re-plan; consider adopting Xilem/Masonry or Slint and contributing instead of building |
 
-### 8.3 Top 5 decisions the owner must make
+### 8.3 Top 5 decisions
 
 1. **Commit to a custom-rendered primary target with a DOM *projection* (ADR-0001), accepting the web SEO/a11y engineering cost, vs a pure Flutter-style canvas, vs also building a DOM document-mode backend later.** Recommendation: projection now, document mode deferred.
-2. **Authorize the compiler work program (R1-R3, R9, R12 as P0) and name an owner for it**, since the ergonomics thesis depends on it (kill criterion at M2).
+2. **Authorize the compiler work program (R1-R3, R9, R12 as P0) and name a lead for it**, since the ergonomics thesis depends on it (kill criterion at M2).
 3. **Adopt vs build on the Linebender stack** (Vello + Parley + AccessKit; and possibly Masonry/Xilem instead of an own scene): recommendation adopt Vello/Parley/AccessKit/wgpu/winit/Taffy, build own reactive core and scene; revisit Masonry at M1 gate.
 4. **Scope and ordering of targets**: web + desktop + engine first (M1-M6), iOS/Android after (M7), or mobile in parallel at higher cost. Includes the headcount assumption (3-4 engineers).
-5. **What happens to the existing egui editor path and ~120 string-builder components**: recommendation as 6.1 (keep egui until M6, rewrite components incrementally, delete HTML-string components and stale generated copies now), plus whether business-domain components leave this repo.
+5. **What happens to the existing egui editor path and 100 string-builder components**: recommendation as 6.1 (keep egui until M6, rewrite components incrementally, delete HTML-string components and stale generated copies now), plus whether business-domain components leave this repo.
 
 ## 9. Spikes and measurements (real numbers, with caveats)
 
@@ -545,9 +543,9 @@ Three semantic tests pass (`cargo test --release`: glitch-free diamond runs the 
 | diamond, 100k updates | 25.6 ms | 159 ms |
 | 10k effects, 1000 single-source updates | 1.8 ms | not measured (needs async executor) |
 
-Caveats (important): (1) my first fan-out run was 529 ms because of an O(n^2) resubscription bug in my own code, fixed before the numbers above, an example of how easy it is to get this wrong; (2) I drove `reactive_graph`
-synchronously without an effect/executor, in an unusual pattern (memo reads from the owner thread), so the 100x+ gaps likely reflect that pattern and not what Leptos does in an app; **do not quote these as "Leptos is slow"**. The valid conclusion
-is only that an arena design is *not slower* than the Rc-based one and has no per-node allocation beyond the value box, so it is a safe foundation; (3) my core is incomplete (no scopes/disposal, batching, async, `Send`) and single-threaded.
+Caveats (important): (1) the first fan-out run was 529 ms because of an O(n^2) resubscription bug in the spike code, fixed before the numbers above, an example of how easy it is to get this wrong; (2) the spike drove `reactive_graph`
+synchronously without an effect/executor, in an unusual pattern (memo reads from the owning thread), so the 100x+ gaps likely reflect that pattern and not what Leptos does in an app; **do not quote these as "Leptos is slow"**. The valid conclusion
+is only that an arena design is *not slower* than the Rc-based one and has no per-node allocation beyond the value box, so it is a safe foundation; (3) the spike core is incomplete (no scopes/disposal, batching, async, `Send`) and single-threaded.
 
 ### 9.2 `spikes/gpu-scene`: wgpu 30 + Vello 0.11 + Parley 0.12, headless on Metal
 
@@ -570,7 +568,7 @@ is only that an arena design is *not slower* than the Rc-based one and has no pe
 What this shows: (a) culling/virtualization is non-negotiable; (b) per-frame cost for a UI-sized scene is comfortably inside 8.33 ms on this GPU, but the number includes `device.poll(wait)` in a headless loop and is not a vsync'd
 display measurement; (c) cold start is the problem (shader pipelines, system fonts), not steady state; (d) the web payload for the *engine* (without app code, fonts or ICU data beyond what linked) is ~0.6 MB brotli, far below Flutter's published
 CanvasKit +1.5 MB / Skwasm +1.1 MB [V via assessment], leaving room for app + fonts under the 2.0 MB target.
-Not measured: wasm execution (no browser run: the wasm was not passed through `wasm-bindgen` because my installed CLI (0.2.108) did not match the crate version resolved (0.2.129) and the downgrade attempt failed to build, so the byte counts are of the raw module and omit bindgen glue (tens of KB typically) and fonts; whether it runs under WebGPU in Chrome/Safari is **unverified**), Android/iOS, WebGL2 fallback, text editing/IME, accessibility.
+Not measured: wasm execution (no browser run: the wasm was not passed through `wasm-bindgen` because the installed CLI (0.2.108) did not match the crate version resolved (0.2.129) and the downgrade attempt failed to build, so the byte counts are of the raw module and omit bindgen glue (tens of KB typically) and fonts; whether it runs under WebGPU in Chrome/Safari is **unverified**), Android/iOS, WebGL2 fallback, text editing/IME, accessibility.
 
 ### 9.3 Not measured (so no claim is made)
 
@@ -593,5 +591,5 @@ Flutter/Compose/Dioxus/Leptos comparative benchmarks; web frame times; mobile an
 - Rive Flutter runtime migration (C++ runtime, data binding): https://rive.app/docs/runtimes/flutter/migration-guide
 - Makepad 2.0 (third-party skill docs, **U**): https://skillselion.com/skills/zhanghandong/makepad-skills/makepad-2.0-migration
 - Crate versions: `cargo info` against crates.io, 2026-10-11 [M].
-- Internal: `docs/ASSESSMENT_2026.md` (including its own source list), compiler `docs/INTERPRETER.md`, `docs/adr/0001-0015`, `docs/design/pipe-operator.md`.
+- Internal: compiler `docs/INTERPRETER.md`, `docs/adr/0001-0015`, `docs/design/pipe-operator.md`.
 - Not retrieved (404/blocked): Linebender Xilem roadmap page, Lynx intro page; Xilem/Masonry statements are **[K]** apart from crate versions.

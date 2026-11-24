@@ -2,7 +2,7 @@
 
 - **Status:** Proposed
 - **Date:** 2026-10-11
-- **Related:** `docs/VISION_2026.md`, `docs/vision/SAMPLES.md`, `docs/compiler-requests/README.md`
+- **Related:** `docs/VISION_2026.md`, `docs/vision/SAMPLES.md`
 
 ## Context
 Per-platform needs (window/surface, text input, a11y, IME, clipboard, dialogs) and available crates (winit 0.31 beta, wgpu 30, AccessKit 0.25, arboard, rfd). Policy: paint ours, delegate system services.
@@ -16,5 +16,5 @@ A. Own shells per platform. B. winit everywhere. C. winit where adequate (deskto
 ## Consequences
 Pre-1.0 upstream churn (pin; budget quarterly upgrades); iOS decision between winit's backend and own UIKit host at M7.
 
-## Decision needed from: project owner
+## Decision needed from: maintainers
 Approve adoption list.

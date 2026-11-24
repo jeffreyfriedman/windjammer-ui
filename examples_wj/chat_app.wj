@@ -1,76 +1,46 @@
-// Chat App Example - ChatGPT-style Interface
-// Demonstrates: ChatMessage, MessageList, ChatInput, TypingIndicator, CodeBlock
+// Chat app: a message history, a text input, and a send button.
 
-use windjammer_ui::*
+use crate::components_wj::vnode::VNode
+use crate::components_wj::button::Button
+use crate::components_wj::button::ButtonVariant
+use crate::components_wj::input::Input
+use crate::components_wj::text::Text
+use crate::components_wj::text::TextSize
+use crate::components_wj::traits::RenderableVNode
+
+fn message_bubble(author: string, body: string, mine: bool) -> VNode {
+    let align = if mine { "flex-end" } else { "flex-start" }
+    let colors = if mine { "background: #1976d2; color: #fff;" } else { "background: #eee;" }
+    VNode::div()
+        .add_class("chat-message")
+        .add_style("align-self: ${align}; max-width: 70%; padding: 8px 12px; border-radius: 12px; ${colors}")
+        .child(VNode::div().add_style("font-size: 12px; opacity: 0.7;").add_text(author))
+        .child(VNode::div().add_text(body))
+}
+
+/// Build the chat UI as a VNode tree.
+pub fn build_chat_ui() -> VNode {
+    let history = VNode::div()
+        .set_id("chat-history")
+        .add_style("display: flex; flex-direction: column; gap: 8px; height: 400px; overflow-y: auto; padding: 16px;")
+        .child(message_bubble("Alice", "Hi there! Ready for the demo?", false))
+        .child(message_bubble("You", "Almost. One more build to run.", true))
+        .child(message_bubble("Alice", "Take your time.", false))
+
+    let composer = VNode::div()
+        .add_style("display: flex; gap: 8px; padding: 12px;")
+        .child(Input::new().placeholder("Type a message").on_input("draft_changed").to_vnode())
+        .child(Button::new("Send").variant(ButtonVariant::Primary).on_click("send_message").to_vnode())
+
+    VNode::div()
+        .add_class("chat-app")
+        .add_style("max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px;")
+        .child(Text::new("Team Chat").size(TextSize::Large).bold().to_vnode())
+        .child(history)
+        .child(composer)
+}
 
 fn main() {
-    println("🤖 Starting Windjammer Chat App")
-    
-    // Build chat interface
-    let ui = Container::new()
-        .max_width("800px")
-        .child(
-            Card::new()
-                .title("Windjammer Chat Assistant")
-                .child(build_chat_history())
-                .child(build_chat_input())
-                .render()
-        )
-        .render()
-    
-    println("${ui}")
+    let ui = build_chat_ui()
+    println("Chat UI built, VNode handle: ${ui.raw_handle()}")
 }
-
-fn build_chat_history() -> string {
-    MessageList::new()
-        .height("500px")
-        .message(
-            ChatMessage::new("What is Windjammer?")
-                .role(MessageRole::User)
-                .timestamp("2:30 PM")
-                .render()
-        )
-        .message(
-            ChatMessage::new("Windjammer is a modern systems programming language that combines the power of Rust with significantly reduced complexity. It features automatic memory management inference, simplified syntax, and compiles directly to Rust!")
-                .role(MessageRole::Assistant)
-                .avatar("/ai-avatar.png")
-                .timestamp("2:30 PM")
-                .render()
-        )
-        .message(
-            ChatMessage::new("Can you show me a code example?")
-                .role(MessageRole::User)
-                .timestamp("2:31 PM")
-                .render()
-        )
-        .message(
-            ChatMessage::new("Of course! Here's a simple example:")
-                .role(MessageRole::Assistant)
-                .timestamp("2:31 PM")
-                .render()
-        )
-        .message(
-            CodeBlock::new("use windjammer_ui::*\n\nfn main() {\n    let button = Button::new(\"Click Me\")\n        .variant(ButtonVariant::Primary)\n        .render()\n    \n    println!(\"{}\", button)\n}")
-                .language("windjammer")
-                .show_copy_button(true)
-                .show_line_numbers(true)
-                .render()
-        )
-        .message(
-            TypingIndicator::new()
-                .label("AI is thinking...")
-                .render()
-        )
-        .auto_scroll(true)
-        .render()
-}
-
-fn build_chat_input() -> string {
-    ChatInput::new()
-        .placeholder("Ask me anything about Windjammer...")
-        .multiline(true)
-        .rows(3)
-        .render()
-}
-
-

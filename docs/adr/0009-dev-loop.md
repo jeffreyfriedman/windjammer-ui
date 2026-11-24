@@ -2,7 +2,7 @@
 
 - **Status:** Proposed
 - **Date:** 2026-10-11
-- **Related:** `docs/VISION_2026.md`, `docs/vision/SAMPLES.md`, `docs/compiler-requests/README.md`
+- **Related:** `docs/VISION_2026.md`, `docs/vision/SAMPLES.md`
 
 ## Context
 `wj run --interpret` starts in ~16 ms versus ~14 s for transpile+cargo (compiler docs, measured under load). The interpreter is a tree walker (~100x slower than compiled), has no extern/FFI, async, Rc/RefCell or UI modules, and captures closures by reference where compiled Rust copies on `move`.
@@ -16,5 +16,5 @@ A. Rust binary patching (Dioxus Subsecond). B. Interpreter with prebuilt Rust ho
 ## Consequences
 Interpreter UI performance unmeasured; interpreter on wasm unverified.
 
-## Decision needed from: project owner
+## Decision needed from: maintainers
 Approve R9/R12 as P0.

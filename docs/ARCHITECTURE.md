@@ -1,11 +1,11 @@
-# Architecture (current state)
+# Architecture
 
 Windjammer UI is a Rust crate plus a set of Windjammer (`.wj`) component sources.
-This document describes what exists today, not what is planned.
+This document describes the crate as it is today; the scene-renderer direction is in `docs/VISION_2026.md`.
 
 ## Layers
 
-1. **Components (`src/components_wj/*.wj`)** - about 120 files. Each one is a builder
+1. **Components (`src/components_wj/*.wj`)** - 100 files. Each one is a builder
    (`Button::new("x").variant(..).render()`) that returns an **HTML string**. They are
    transpiled by `wj` into `src/components/generated/*.rs`. There is no component
    tree at this layer; output is a string that the host inserts into the page.
@@ -32,19 +32,19 @@ This document describes what exists today, not what is planned.
 5. **Other runtime pieces** - `ssr.rs` (string SSR), `routing.rs`, `runtime.rs`,
    `component_runtime.rs`, `undo_redo.rs` (editor command pattern), `wasm_events.rs`.
 
-## Which targets are real
+## Targets
 
 | Target | State |
 |--------|-------|
-| Web / WASM (`web`, default) | Real. HTML strings plus the reactive loop in `app_reactive.rs`. |
+| Web / WASM (`web`, default) | Supported. HTML strings plus the reactive loop in `app_reactive.rs`. |
 | Desktop (`desktop`, eframe/egui) | Works for the editor-style UI; less covered by tests. |
 | SSR | Basic string rendering; hydration is minimal. |
-| iOS (`mobile-ios`) | Stub. `platform/ios.rs` has types but no working renderer. |
-| Android (`mobile-android`) | Stub. `platform/android.rs`, same status. |
-| Tauri (`desktop-tauri`) | Legacy optional dependency; not exercised. |
+| iOS (`mobile-ios`) | Stub: `platform/ios.rs` has types but no renderer yet. |
+| Android (`mobile-android`) | Stub: `platform/android.rs`, same status. |
+| Tauri (`desktop-tauri`) | Optional dependency. |
 | Terminal | Not implemented (`simple_renderer.rs` only prints nodes to console). |
 
-`platform/web.rs` and `platform/desktop.rs` are placeholders that re-export other modules.
+`platform/web.rs` and `platform/desktop.rs` re-export the web and desktop modules.
 
 ## Generated code
 
@@ -52,23 +52,22 @@ This document describes what exists today, not what is planned.
 regenerates it and fails on any difference. Hand-written Rust (reactivity, vdom, renderers, the VNode and signal FFI) lives
 at the crate root. Refresh the tree with the command in that test's header.
 
-## Known gaps
+## Current limitations
 
 - Escaping: the VNode path and SSR escape by
   default. Compiler-generated HTML-string builders (`.wj` sources) still interpolate raw
   values; see `docs/known-issues/escaping.md`.
 - `vdom.rs` is still used by `component.rs`, `renderer.rs`, `ssr.rs`, `platform/*`.
-- The web patcher has no in-browser test yet (host fake-DOM tests only).
+- The web patcher is covered by host fake-DOM tests, wasm32-in-node tests and a headless-Chrome suite (`docs/TESTING_GUIDE.md`).
 - Interactive behaviour in several components is JS embedded in Rust strings; the rule
   is to write it in Windjammer signals/closures.
-- Domain (ledger) components still live here; see `docs/EXTRACTION_PLAN.md`.
-- `.disabled` tests were resolved (see `docs/EXTRACTION_PLAN.md` section C).
+- Components are generic; domain-specific components belong in the consuming application.
 
 See `docs/MODULE_MAP.md` for per-module responsibilities.
 
 ## New core (crates/, separate Cargo workspace)
 
-The vision's scene renderer is being built beside the legacy crate in `crates/`: `wj-reactive` (L0), `wj-scene` (L1),
-`wj-layout`/`wj-text` (L2), `wj-paint`, `wj-paint-cpu`, `wj-paint-vello`, `wj-a11y` (L3), `wj-shell`, `wj-shell-desktop` (L4),
-`wj-ui` (Windjammer-facing API), `wj-samples`, `wj-golden`. Each has a `MODULE.md`. See ADR-0012 for decisions and measurements.
-Run a crate's tests with `cd crates && CARGO_TARGET_DIR=<cache> cargo test -p wj-scene --release`.
+The vision's scene renderer is built beside the main crate in `crates/`: `wj_reactive` (L0), `wj_scene` (L1),
+`wj_layout`/`wj_text` (L2), `wj_paint`, `wj_paint_cpu`, `wj_paint_vello`, `wj_a11y` (L3), `wj_shell`, `wj_shell_desktop` (L4),
+`wj_ui` (Windjammer-facing API), `wj_samples`, `wj_golden`. Each has a `MODULE.md`. See ADR-0012 for decisions and measurements.
+Run a crate's tests with `cd crates && cargo test -p wj_scene --release`.

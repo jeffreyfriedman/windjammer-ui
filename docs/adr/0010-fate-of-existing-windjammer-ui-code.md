@@ -2,10 +2,10 @@
 
 - **Status:** Proposed
 - **Date:** 2026-10-11
-- **Related:** `docs/VISION_2026.md`, `docs/vision/SAMPLES.md`, `docs/compiler-requests/README.md`
+- **Related:** `docs/VISION_2026.md`, `docs/vision/SAMPLES.md`
 
 ## Context
-~120 string-builder components emitting HTML, four component models, three reactive modules, stale generated copies of core modules, an egui desktop path, a correct and well-tested DOM patcher.
+100 string-builder components emitting HTML, four component models, three reactive modules, an egui desktop path, a correct and well-tested DOM patcher.
 
 ## Options
 A. Incremental evolution of the HTML approach. B. Rewrite from scratch. C. Keep the tested kernels, migrate or delete the rest on a schedule.
@@ -16,5 +16,5 @@ A. Incremental evolution of the HTML approach. B. Rewrite from scratch. C. Keep 
 ## Consequences
 Two systems coexist for a long period; discipline needed to delete.
 
-## Decision needed from: project owner
+## Decision needed from: maintainers
 Approve the deletion schedule; decide where business-domain components live.

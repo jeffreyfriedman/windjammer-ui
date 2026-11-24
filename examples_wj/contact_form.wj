@@ -1,119 +1,52 @@
-// Contact Form Example - Form Validation
-// Demonstrates: Form inputs, validation, error handling, submission
+// Contact form: labeled fields, a consent checkbox, and submit/reset buttons.
 
-use windjammer_ui::*
+use crate::components_wj::vnode::VNode
+use crate::components_wj::button::Button
+use crate::components_wj::button::ButtonVariant
+use crate::components_wj::checkbox::Checkbox
+use crate::components_wj::container::Container
+use crate::components_wj::input::Input
+use crate::components_wj::text::Text
+use crate::components_wj::text::TextSize
+use crate::components_wj::traits::RenderableVNode
 
-@export
-fn start() {
-    println("📬 Starting Contact Form")
-    
-    // Form state
-    let name = Signal::new("")
-    let email = Signal::new("")
-    let message = Signal::new("")
-    
-    // Validation errors
-    let name_error = Signal::new("")
-    let email_error = Signal::new("")
-    let message_error = Signal::new("")
-    
-    // Submission state
-    let is_submitting = Signal::new(false)
-    let submit_success = Signal::new(false)
-    
-    let name_display = name
-    let email_display = email
-    let message_display = message
-    let name_submit = name
-    let email_submit = email
-    let message_submit = message
-    let name_error_display = name_error
-    let email_error_display = email_error
-    let message_error_display = message_error
-    let is_submitting_display = is_submitting
-    let submit_success_display = submit_success
-    
-    // Build UI
-    let ui = Container::new()
-        .max_width("600px")
-        .child(
-            Flex::new()
-                .direction(FlexDirection::Column)
-                .gap("20px")
-                .child(
-                    Text::new("📬 Contact Us")
-                        .size(TextSize::XLarge)
-                        .bold()
-                )
-                .child(
-                    Text::new("We'd love to hear from you")
-                        .size(TextSize::Medium)
-                )
-                .child(
-                    Flex::new()
-                        .direction(FlexDirection::Column)
-                        .gap("16px")
-                        .child(
-                            Flex::new()
-                                .direction(FlexDirection::Column)
-                                .gap("4px")
-                                .child(Text::new("Name *").size(TextSize::Small))
-                                .child(
-                                    Input::new()
-                                        .placeholder("Your name")
-                                        .value(name_display.get())
-                                )
-                        )
-                        .child(
-                            Flex::new()
-                                .direction(FlexDirection::Column)
-                                .gap("4px")
-                                .child(Text::new("Email *").size(TextSize::Small))
-                                .child(
-                                    Input::new()
-                                        .placeholder("your.email@example.com")
-                                        .value(email_display.get())
-                                )
-                        )
-                        .child(
-                            Flex::new()
-                                .direction(FlexDirection::Column)
-                                .gap("4px")
-                                .child(Text::new("Message *").size(TextSize::Small))
-                                .child(
-                                    Input::new()
-                                        .placeholder("Your message...")
-                                        .value(message_display.get())
-                                )
-                        )
-                        .child(
-                            Button::new("Send Message")
-                                .variant(ButtonVariant::Primary)
-                                .on_click(move || {
-                                    // Simple validation
-                                    let has_name = !name_submit.get().is_empty()
-                                    let has_email = email_submit.get().contains("@")
-                                    let has_message = !message_submit.get().is_empty()
-                                    
-                                    if has_name && has_email && has_message {
-                                        is_submitting.set(true)
-                                        println("Form submitted successfully!")
-                                        submit_success.set(true)
-                                        // Reset form
-                                        name_submit.set("")
-                                        email_submit.set("")
-                                        message_submit.set("")
-                                    } else {
-                                        println("Validation failed")
-                                    }
-                                })
-                        )
-                )
+fn field(label: string, input: Input) -> VNode {
+    VNode::div()
+        .add_style("display: flex; flex-direction: column; gap: 4px; margin-bottom: 16px;")
+        .child(VNode::element("label").add_text(label))
+        .child(input.to_vnode())
+}
+
+/// Build the contact form as a VNode tree.
+pub fn build_contact_form() -> VNode {
+    let message = VNode::element("textarea")
+        .add_attr("rows", "5")
+        .set_placeholder("How can we help?")
+        .on_input("message_changed")
+
+    let buttons = VNode::div()
+        .add_style("display: flex; gap: 12px;")
+        .child(Button::new("Send").variant(ButtonVariant::Primary).on_click("submit").to_vnode())
+        .child(Button::new("Reset").variant(ButtonVariant::Secondary).on_click("reset").to_vnode())
+
+    Container::new()
+        .max_width("480px")
+        .padding("24px")
+        .add_child(Text::new("Contact Us").size(TextSize::XLarge).bold().to_vnode())
+        .add_child(field("Name", Input::new().placeholder("Your name").on_input("name_changed")))
+        .add_child(field("Email", Input::new().input_type("email").placeholder("you@example.com").on_input("email_changed")))
+        .add_child(
+            VNode::div()
+                .add_style("display: flex; flex-direction: column; gap: 4px; margin-bottom: 16px;")
+                .child(VNode::element("label").add_text("Message"))
+                .child(message)
         )
-    
-    App::new("Contact Form", ui.to_vnode()).run()
+        .add_child(Checkbox::new("Send me a copy").on_change("copy_toggled").to_vnode())
+        .add_child(buttons)
+        .to_vnode()
 }
 
 fn main() {
-    start()
+    let ui = build_contact_form()
+    println("Contact form built, VNode handle: ${ui.raw_handle()}")
 }

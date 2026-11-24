@@ -1,48 +1,21 @@
-// Note: This is a conceptual example showing Windjammer UI syntax
-// In a real application, types would be imported from windjammer_ui
+// Counter view: renders the UI for any count value.
+// The view is a pure function of its state, so the same builder serves every update.
 
-// Simple counter example using windjammer-ui
+use crate::components_wj::vnode::VNode
+use crate::components_wj::button::Button
+use crate::components_wj::button::ButtonVariant
+use crate::components_wj::traits::RenderableVNode
 
-
-@component
-struct Counter {
-    count: int,
-}
-
-impl Counter {
-    fn render() -> VNode {
-        VElement::new("div")
-            .attr("class", "counter")
-            .child(VNode::Element(
-                VElement::new("h1").child(VNode::Text(
-                    VText::new("Count: {count}")
-                ))
-            ))
-            .child(VNode::Element(
-                VElement::new("button")
-                    .attr("onclick", "increment")
-                    .child(VNode::Text(VText::new("Increment")))
-            ))
-            .into()
-    }
+/// Build the counter UI for the given count.
+pub fn build_counter(count: i32) -> VNode {
+    VNode::div()
+        .add_class("counter")
+        .child(VNode::element("h1").add_text("Count: ${count}"))
+        .child(Button::new("Increment").variant(ButtonVariant::Primary).on_click("increment").to_vnode())
 }
 
 fn main() {
-    // Create a counter component
-    let counter = Counter::new()
-    print("Counter component created")
-
-    // Create with initial state
-    let counter_with_state = Counter::with_state(42)
-    print("Counter with state 42 created")
-
-    // Render the component
-    let vnode = counter.render()
-    print("Rendered VNode: {vnode:?}")
-
-    let vnode_with_state = counter_with_state.render()
-    print("Rendered VNode with state: {vnode_with_state:?}")
-
-    print("\n✅ Counter example completed successfully!")
+    let initial = build_counter(0)
+    let restored = build_counter(42)
+    println("Initial handle: ${initial.raw_handle()}, restored handle: ${restored.raw_handle()}")
 }
-

@@ -2,7 +2,7 @@
 
 - **Status:** Proposed
 - **Date:** 2026-10-11
-- **Related:** `docs/VISION_2026.md`, `docs/vision/SAMPLES.md`, `docs/compiler-requests/README.md`
+- **Related:** `docs/VISION_2026.md`, `docs/vision/SAMPLES.md`
 
 ## Context
 The language has no macros; the compiler design doc proposes JSX-like literals that were never built; windjammer-ui has four coexisting component models. Pipe operator precedent: one desugaring site in the parser.
@@ -16,5 +16,5 @@ A. Builder methods only (today). B. Trailing-block builders with named args plus
 ## Consequences
 Entire thesis depends on compiler work outside this repo; syntax in docs is proposed, not implemented. Prototype as a library convention in M1 to judge ergonomics before language changes.
 
-## Decision needed from: project owner
-Approve the P0 compiler program and name its owner (kill criterion at M2).
+## Decision needed from: maintainers
+Approve the P0 compiler program and name its lead (kill criterion at M2).

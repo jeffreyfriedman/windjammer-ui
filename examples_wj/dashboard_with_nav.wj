@@ -1,193 +1,81 @@
-// Dashboard with Navigation Example
-// Demonstrates: Navbar, Sidebar, Grid, Card, Progress, Badge
+// Dashboard with navigation: a top bar, a side menu, and a main content area.
 
-use windjammer_ui::*
+use crate::components_wj::vnode::VNode
+use crate::components_wj::button::Button
+use crate::components_wj::button::ButtonVariant
+use crate::components_wj::button::ButtonSize
+use crate::components_wj::text::Text
+use crate::components_wj::text::TextSize
+use crate::components_wj::traits::RenderableVNode
+
+fn nav_link(label: string, route: string) -> VNode {
+    VNode::element("a")
+        .add_attr("href", route)
+        .add_style("color: inherit; text-decoration: none; padding: 8px 12px;")
+        .add_text(label)
+}
+
+fn top_bar() -> VNode {
+    VNode::element("nav")
+        .add_class("top-bar")
+        .add_style("display: flex; align-items: center; gap: 16px; padding: 12px 24px; background: #1e1e2e; color: #fff;")
+        .child(VNode::span().add_style("font-weight: bold; margin-right: auto;").add_text("Windjammer Dashboard"))
+        .child(nav_link("Home", "/"))
+        .child(nav_link("Analytics", "/analytics"))
+        .child(nav_link("Settings", "/settings"))
+}
+
+fn side_menu() -> VNode {
+    VNode::element("aside")
+        .add_class("side-menu")
+        .add_style("width: 220px; padding: 16px; border-right: 1px solid #e0e0e0; display: flex; flex-direction: column; gap: 8px;")
+        .child(Button::new("Dashboard").variant(ButtonVariant::Primary).on_click("go_dashboard").to_vnode())
+        .child(Button::new("Projects").variant(ButtonVariant::Ghost).on_click("go_projects").to_vnode())
+        .child(Button::new("Team").variant(ButtonVariant::Ghost).on_click("go_team").to_vnode())
+        .child(Button::new("Settings").variant(ButtonVariant::Ghost).on_click("go_settings").to_vnode())
+}
+
+fn progress_bar(label: string, percent: i32) -> VNode {
+    VNode::div()
+        .add_style("margin-bottom: 12px;")
+        .child(Text::new("${label} (${percent}%)").size(TextSize::Small).to_vnode())
+        .child(
+            VNode::div()
+                .add_style("background: #eee; border-radius: 4px; height: 8px;")
+                .child(VNode::div().add_style("background: #1976d2; border-radius: 4px; height: 8px; width: ${percent}%;"))
+        )
+}
+
+fn main_content() -> VNode {
+    VNode::element("main")
+        .add_style("flex: 1; padding: 24px;")
+        .child(Text::new("Overview").size(TextSize::XLarge).bold().to_vnode())
+        .child(progress_bar("Sprint completion", 72))
+        .child(progress_bar("Test coverage", 91))
+        .child(progress_bar("Storage used", 45))
+        .child(
+            Button::new("Refresh")
+                .variant(ButtonVariant::Secondary)
+                .size(ButtonSize::Small)
+                .on_click("refresh")
+                .to_vnode()
+        )
+}
+
+/// Build the full dashboard layout as a VNode tree.
+pub fn build_dashboard_with_nav() -> VNode {
+    VNode::div()
+        .add_style("display: flex; flex-direction: column; min-height: 100vh;")
+        .child(top_bar())
+        .child(
+            VNode::div()
+                .add_style("display: flex; flex: 1;")
+                .child(side_menu())
+                .child(main_content())
+        )
+}
 
 fn main() {
-    println("📊 Starting Windjammer Dashboard")
-    
-    let ui = Container::new()
-        .child(build_navbar())
-        .child(build_layout())
-        .render()
-    
-    println("${ui}")
+    let ui = build_dashboard_with_nav()
+    println("Dashboard with navigation built, VNode handle: ${ui.raw_handle()}")
 }
-
-fn build_navbar() -> string {
-    Navbar::new()
-        .brand("Windjammer Dashboard")
-        .item(NavbarItem::new("Home", "/"))
-        .item(NavbarItem::new("Analytics", "/analytics"))
-        .item(NavbarItem::new("Settings", "/settings"))
-        .position(NavbarPosition::Top)
-        .sticky(true)
-        .render()
-}
-
-fn build_layout() -> string {
-    Flex::new()
-        .direction(FlexDirection::Row)
-        .gap("0px")
-        .child(build_sidebar())
-        .child(build_main_content())
-        .render()
-}
-
-fn build_sidebar() -> string {
-    Sidebar::new()
-        .item(SidebarItem::new("Dashboard").icon("📊").href("/"))
-        .item(SidebarItem::new("Projects").icon("📁").href("/projects"))
-        .item(SidebarItem::new("Team").icon("👥").href("/team"))
-        .item(SidebarItem::new("Settings").icon("⚙️").href("/settings"))
-        .width("250px")
-        .collapsed(false)
-        .position(SidebarPosition::Left)
-        .render()
-}
-
-fn build_main_content() -> string {
-    Container::new()
-        .max_width("1200px")
-        .child(
-            Text::new("Overview")
-                .size(TextSize::XLarge)
-                .bold()
-                .render()
-        )
-        .child(build_stats_grid())
-        .child(build_activity_section())
-        .render()
-}
-
-fn build_stats_grid() -> string {
-    Grid::new()
-        .columns(3)
-        .gap("24px")
-        .child(
-            Card::new()
-                .title("Total Users")
-                .child(
-                    Flex::new()
-                        .direction(FlexDirection::Column)
-                        .gap("12px")
-                        .child(
-                            Text::new("1,234")
-                                .size(TextSize::XLarge)
-                                .bold()
-                                .render()
-                        )
-                        .child(
-                            Badge::new("▲ 12%")
-                                .variant(BadgeVariant::Success)
-                                .render()
-                        )
-                        .render()
-                )
-                .render()
-        )
-        .child(
-            Card::new()
-                .title("Revenue")
-                .child(
-                    Flex::new()
-                        .direction(FlexDirection::Column)
-                        .gap("12px")
-                        .child(
-                            Text::new("$45,678")
-                                .size(TextSize::XLarge)
-                                .bold()
-                                .render()
-                        )
-                        .child(
-                            Badge::new("▲ 8%")
-                                .variant(BadgeVariant::Success)
-                                .render()
-                        )
-                        .render()
-                )
-                .render()
-        )
-        .child(
-            Card::new()
-                .title("Active Projects")
-                .child(
-                    Flex::new()
-                        .direction(FlexDirection::Column)
-                        .gap("12px")
-                        .child(
-                            Text::new("23")
-                                .size(TextSize::XLarge)
-                                .bold()
-                                .render()
-                        )
-                        .child(
-                            Badge::new("▼ 3%")
-                                .variant(BadgeVariant::Warning)
-                                .render()
-                        )
-                        .render()
-                )
-                .render()
-        )
-        .render()
-}
-
-fn build_activity_section() -> string {
-    Card::new()
-        .title("Project Progress")
-        .child(
-            Flex::new()
-                .direction(FlexDirection::Column)
-                .gap("16px")
-                .child(
-                    Flex::new()
-                        .direction(FlexDirection::Column)
-                        .gap("8px")
-                        .child(Text::new("Website Redesign").render())
-                        .child(
-                            Progress::new()
-                                .value(75)
-                                .max(100)
-                                .variant(ProgressVariant::Success)
-                                .show_label(true)
-                                .render()
-                        )
-                        .render()
-                )
-                .child(
-                    Flex::new()
-                        .direction(FlexDirection::Column)
-                        .gap("8px")
-                        .child(Text::new("Mobile App Development").render())
-                        .child(
-                            Progress::new()
-                                .value(45)
-                                .max(100)
-                                .variant(ProgressVariant::Primary)
-                                .show_label(true)
-                                .render()
-                        )
-                        .render()
-                )
-                .child(
-                    Flex::new()
-                        .direction(FlexDirection::Column)
-                        .gap("8px")
-                        .child(Text::new("API Integration").render())
-                        .child(
-                            Progress::new()
-                                .value(90)
-                                .max(100)
-                                .variant(ProgressVariant::Success)
-                                .show_label(true)
-                                .render()
-                        )
-                        .render()
-                )
-                .render()
-        )
-        .render()
-}
-
-

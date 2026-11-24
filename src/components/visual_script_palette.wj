@@ -2,8 +2,7 @@
 
 use super::traits::Renderable
 
-
-
+pub struct VsPaletteEntry {
     pub label: string,
     pub template_key: string,
     pub accent: string,
@@ -23,7 +22,7 @@ pub struct VsPaletteSection {
 
 impl VsPaletteSection {
     pub fn new(title: string, accent: string) -> VsPaletteSection {
-        VsPaletteSection { title, accent, entries: Vec::new() }
+        VsPaletteSection { title, accent, entries: [] }
     }
 
     pub fn entry(self, e: VsPaletteEntry) -> VsPaletteSection {
@@ -41,7 +40,7 @@ impl VisualScriptPalette {
     pub fn default_gameplay_palette() -> VisualScriptPalette {
         let mut palette = VisualScriptPalette {
             on_drag_start: "vs_palette_drag(ev)",
-            sections: Vec::new(),
+            sections: [],
         }
         palette.sections.push(
             VsPaletteSection::new("Events", "#3b82f6")
@@ -84,19 +83,9 @@ impl Renderable for VisualScriptPalette {
         html = html + "<style>" + styles + "</style>"
         html = html + "<aside class='vs-palette'><header>Node Palette</header>"
         for sec in self.sections {
-            html = html + format!(
-                "<section class='vs-palette-section' style='border-left: 3px solid {};'><h4>{}</h4>",
-                sec.accent,
-                sec.title,
-            )
+            html = html + "<section class='vs-palette-section' style='border-left: 3px solid ${sec.accent};'><h4>${sec.title}</h4>"
             for ent in sec.entries {
-                html = html + format!(
-                    "<button class='vs-chip' draggable='true' style='border-color:{};' data-vs-template='{}' ondragstart='{}'>{}</button>",
-                    ent.accent,
-                    ent.template_key,
-                    self.on_drag_start,
-                    ent.label,
-                )
+                html = html + "<button class='vs-chip' draggable='true' style='border-color:${ent.accent};' data-vs-template='${ent.template_key}' ondragstart='${self.on_drag_start}'>${ent.label}</button>"
             }
             html = html + "</section>"
         }

@@ -2,7 +2,7 @@
 
 - **Status:** Proposed
 - **Date:** 2026-10-11
-- **Related:** `docs/VISION_2026.md`, `docs/vision/SAMPLES.md`, `docs/compiler-requests/README.md`
+- **Related:** `docs/VISION_2026.md`, `docs/vision/SAMPLES.md`
 
 ## Context
 An engine host owns a wgpu device and uses a hexagonal GPU port with a recording fake and a host/shader layout contract. The current editor reaches desktop via an egui walker that shares no components with the web UI.
@@ -16,5 +16,5 @@ A. Keep egui for engine/editor. B. Separate overlay process/window. C. Shared wi
 ## Consequences
 UI compute cost competes with the 3D frame (unmeasured); two painters.
 
-## Decision needed from: project owner
+## Decision needed from: maintainers
 Approve the M6 budget and the plan to retire egui.

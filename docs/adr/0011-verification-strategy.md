@@ -2,7 +2,7 @@
 
 - **Status:** Proposed
 - **Date:** 2026-10-11
-- **Related:** `docs/VISION_2026.md`, `docs/vision/SAMPLES.md`, `docs/compiler-requests/README.md`
+- **Related:** `docs/VISION_2026.md`, `docs/vision/SAMPLES.md`
 
 ## Context
 A custom-rendered UI cannot be trusted by inspection. The compiler repo's interpreter harness shows the value of independent oracles and mutant-kill thresholds.
@@ -16,5 +16,5 @@ A. Manual QA. B. Snapshot tests only. C. Layered oracles (reactive model-checkin
 ## Consequences
 Test infrastructure is a milestone cost (M1), not an afterthought; recorded Chrome/macOS fixtures need maintenance.
 
-## Decision needed from: project owner
+## Decision needed from: maintainers
 Approve funding test infrastructure as part of M1.

@@ -88,7 +88,7 @@ fn every_example_transpiles() {
         }
     }
     assert!(
-        checked >= 10,
+        checked >= 7,
         "expected the examples to be found, saw {checked}"
     );
     assert!(

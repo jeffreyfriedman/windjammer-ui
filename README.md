@@ -4,8 +4,8 @@ A UI component library and reactive runtime for Windjammer. Components are writt
 `.wj` as builders that render HTML strings; a Rust reactive core (signals, keyed DOM patcher) drives
 the browser (WASM) loop.
 
-**Status: experimental.** The web target works for the components and examples in this
-repo. Several platform targets are stubs (below). Do not treat this as production ready.
+The web target is the primary, supported path. Desktop (egui) works for editor-style
+UIs; iOS and Android are stubs (see the table below).
 
 ## Example
 
@@ -23,40 +23,49 @@ fn main() {
 
 ## What is here
 
-- `src/components_wj/`: about 120 `.wj` component sources (primitives, layout, forms,
-  data display, editor/profiler panels). Some are ledger-specific and are scheduled to
-  move out; see `docs/EXTRACTION_PLAN.md`.
+- `src/components_wj/`: 100 `.wj` component sources (primitives, layout, forms,
+  data display, editor and profiler panels).
 - `src/components_wj/{a11y,kit_*,form_kit,grid_kit,tokens}.wj`: the accessible component kit (tabs, accordion, dialog, menu,
   switch, radio, slider, pagination, tooltip, forms with validation, sortable/filterable/paged table, virtualized list,
   light/dark/high-contrast tokens). Each component is covered by a browser test that asserts its ARIA attributes, tab order
   and key handling; see `docs/KIT.md`.
 - `src/*.rs`: reactive core, vdom, app loops, SSR, routing.
-- `examples/`, `examples_wj/`: demos (some HTML demos predate the current API).
+- `crates/`: the next-generation scene renderer (reactive arena, layout, text, paint, accessibility, shells), in its own
+  Cargo workspace; see `docs/VISION_2026.md` and `docs/adr/`.
+- `examples/`, `examples_wj/`: demos.
 
-## Platform status
+## Platforms
 
 | Target | State |
 |--------|-------|
-| Web (WASM) | Supported; default feature |
-| Desktop (eframe/egui) | Works for editor-style UIs, lightly tested |
+| Web (WASM) | Supported; default feature (`web`) |
+| Desktop (eframe/egui) | Works for editor-style UIs (`desktop` feature) |
 | SSR | Basic string rendering |
-| iOS, Android | Stubs only (no renderer) |
-| Tauri | Legacy optional dependency, not exercised |
+| iOS, Android | Stubs (`mobile-ios`, `mobile-android` features; no renderer yet) |
+| Tauri | Optional dependency (`desktop-tauri` feature) |
 | Terminal | Not implemented |
 
-## Known limitations
+## Build
 
-- The component sources pass `wj check` and transpile with the current compiler (`tests/wj_sources_check_test.rs`);
-  `src/components/generated/` is compiler output, and `tests/generated_fresh_test.rs` fails when it drifts from them.
-- Some interactive behaviour is JS embedded in Rust strings.
-- Escape-by-default is enforced for the VNode renderer, the DOM patcher and SSR; compiler-generated string builders still need a
-  `.wj`-side audit (`docs/known-issues/escaping.md`).
+```bash
+WJ_UI_REGEN=1 cargo test --test generated_fresh_test                                          # regenerate components
+cargo test                                                                                    # host tests
+./build-wasm.sh                                                                               # wasm-pack packages (web, bundler, nodejs)
+```
+
+`./wj-build.sh` transpiles `src/components_wj/` with the `wj` on your `PATH`.
+`src/components/generated/` is compiler output; `tests/generated_fresh_test.rs` fails when it drifts from the `.wj` sources,
+and `tests/wj_sources_check_test.rs` runs `wj check` on every component source and example.
+
+## Security notes
+
+Escape-by-default is enforced for the VNode renderer, the DOM patcher and SSR. See `docs/known-issues/escaping.md`
+for the string-builder components that still interpolate field values directly.
 
 ## Docs
 
-`docs/ARCHITECTURE.md`, `docs/MODULE_MAP.md`, `docs/EXTRACTION_PLAN.md`, plus
-`docs/WEB_AND_WASM.md` (web and wasm status with a roadmap), `docs/QUICKSTART.md`, `docs/GUIDE.md`, `docs/API_REFERENCE.md`, `docs/STYLE_GUIDE.md`
-(the guides may lag the code).
+`docs/ARCHITECTURE.md`, `docs/MODULE_MAP.md`, `docs/KIT.md`, `docs/WEB_AND_WASM.md`, `docs/TESTING_GUIDE.md`,
+`docs/VISION_2026.md` and the decision records in `docs/adr/`.
 
 ## License
 

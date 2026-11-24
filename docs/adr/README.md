@@ -1,7 +1,7 @@
 # windjammer-ui ADRs
 
-All ADRs here are **Proposed**; none is accepted until the owner edits the status. They implement `docs/VISION_2026.md`.
-Template: see the compiler repo's `docs/adr/README.md`.
+These decision records implement `docs/VISION_2026.md`. Each ADR carries its own status (Proposed until the maintainers accept it; 0012 is Accepted).
+The template is the compiler repository's `docs/adr/README.md`.
 
 | ADR | Title |
 |---|---|
@@ -16,4 +16,4 @@ Template: see the compiler repo's `docs/adr/README.md`.
 | [0009](0009-dev-loop.md) | Dev loop: interpreter for hot reload, compiled Rust/wasm for release |
 | [0010](0010-fate-of-existing-windjammer-ui-code.md) | Fate of existing windjammer-ui code |
 | [0011](0011-verification-strategy.md) | Verification strategy: independent oracles, goldens, a11y snapshots, determinism, differential tests |
-- [0012](0012-m0-m1-implementation-decisions.md): M0/M1 implementation decisions and measured results.
+| [0012](0012-m0-m1-implementation-decisions.md) | M0/M1 implementation decisions and measured results |

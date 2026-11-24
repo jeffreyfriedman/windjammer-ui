@@ -37,10 +37,10 @@ MODULE.md contracts: `src/dom_patch/MODULE.md`, `docs/modules/{escape,simple_vno
 - Composite widgets (`datatable`, `tabs`, `modal`, `commandpalette`...): may use primitives, never each other cyclically.
 - Accessible kit (`a11y`, `kit_disclosure`, `kit_overlay`, `kit_choice`, `form_kit`, `grid_kit`, `tokens`): models implementing `a11y::Interactive`, built on `vnode` only; they read colors and spacing through the `tokens` custom properties. See `docs/KIT.md`.
 - Editor/tooling panels (`ecs_inspector_*`, `profiler_*`, `frame_debugger_panel`, `node_graph`, `curve_editor`, `bt_visual_*`): may use primitives; consumed by the engine editor.
-- Ledger/finance components: to be moved out (see `EXTRACTION_PLAN.md`); they currently depend on primitives and, for runtimes, on hand-maintained JS in `components/generated/`.
+- Domain-specific components (accounting, game HUDs) live in the consuming application.
 
 ## Support
-- `src/components/generated/`: transpiler output (plus the 17 hand-maintained files). Never edit generated files by hand.
+- `src/components/generated/`: transpiler output only. Never edit generated files by hand.
 - `tests/`: Rust integration tests, one per feature area.
 
 ## New core (`crates/`, own workspace; layers lower to higher, never upward)

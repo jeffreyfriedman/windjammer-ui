@@ -1,8 +1,8 @@
 # Side-by-side samples
 
-**Everything labelled "Windjammer" is proposed syntax that does not parse today** (see `VISION_2026.md` section 3 and the
+**Everything labelled "Windjammer" is proposed syntax that the compiler does not accept yet** (see `VISION_2026.md` section 3 and the
 compiler requirements R1-R4). The Flutter, Compose, Leptos and SwiftUI samples are written from knowledge of those APIs
-(**[K]**, not compiled here); they are idiomatic, not golf. Line counts count non-blank lines of the component only and are
+(**[K]**, not compiled); they are idiomatic, not golf. Line counts count non-blank lines of the component only and are
 indicative, not a benchmark.
 
 ## 1. Counter

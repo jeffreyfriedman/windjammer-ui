@@ -1,10 +1,10 @@
-# Web and WebAssembly: where windjammer-ui stands, and the road ahead
+# Web and WebAssembly
 
 Windjammer now runs in the browser: the interpreter compiles to `wasm32-unknown-unknown`, and the Windjammer Book
 playground (compiler ADR-0034) runs single-file and multi-file programs in the reader's tab, with the same capability
 model as `wj run --sandbox`. This note places windjammer-ui next to that work and lays out the steps that join them.
 
-## Two wasm stories, today
+## Two wasm stories
 
 | | windjammer-ui (this repo) | Windjammer playground (compiler repo) |
 |---|---|---|
@@ -15,7 +15,7 @@ model as `wj run --sandbox`. This note places windjammer-ui next to that work an
 
 They meet at one point: both want the component library to be ordinary Windjammer that renders a tree.
 
-## What is solid now
+## What works today
 
 - The patcher, the escape-by-default renderers and the keyed diff have host tests, and the patcher also runs as wasm32
   inside node (`docs/TESTING_GUIDE.md`).
@@ -25,29 +25,29 @@ They meet at one point: both want the component library to be ordinary Windjamme
 - `cargo check -p windjammer-ui --target wasm32-unknown-unknown --no-default-features --features web` is the link
   contract for the web feature (`tests/wasm_web_link_test.rs`).
 
-## What is not done yet
+## Next steps
 
 - Behaviour against a real browser DOM (`moveBefore`, focus restore, delegated listeners) is covered by
   `tests/wasm_browser_test.rs` (headless Chrome through `wasm-bindgen-test-runner`; command in `docs/TESTING_GUIDE.md`). A CI job with a pinned Chrome and chromedriver is the remaining piece.
 - Components that call into the crate's own Rust modules by module path (`vnode_ffi::f(..)`) need the module imported and the
   function called by bare name: the compiler has no boundary signature for module-qualified calls into hand-written
-  modules of the same crate (repro `findings/ui/rust_module_qualified_call`). A literal passed to an owned `String`
-  formal of a method that forwards it to such a module is not converted (repro `findings/ui/literal_to_owned_param_chain`);
+  modules of the same crate . A literal passed to an owned `String`
+  formal of a method that forwards it to such a module is not converted ;
   `VNode::hr()` exists because of it.
-- The size budgets of ADR-0005 (counter under 400 KB brotli) are targets; no measurement is committed.
+- The size budget of ADR-0005 (counter under 400 KB brotli) is a target; a measurement will be committed with it.
 - `crates/wj_samples` pins `wj/rust/wj_reactive.wji` with the `i32` instantiation of `state`: a surface cannot declare generic
   functions or opaque crate types yet (ADR-0026), so other element types wait for the compiler.
 - Desktop (egui) shares no code with the web components; iOS and Android are stubs.
 
 ## Roadmap
 
-Each step has a measurable exit, and a kill criterion where one applies.
+Each step has a measurable exit, and a fallback where one applies.
 
 1. **Regenerate for real.** Done: `src/components/generated/` is the compiler's output byte for byte, and
    `tests/generated_fresh_test.rs` regenerates it and fails on any difference.
 2. **Browser DOM tests.** Landed (5 tests, green in Chrome 157): one headless-Chrome suite for `dom_patch::web`: focus survives a keyed
    move, delegated clicks fire once, `stop_propagation` holds. Exit: green in CI on a pinned Chrome.
-3. **Render in the playground.** Prerequisite found by trying it: `components_wj/vnode.wj` builds its tree through the Rust
+3. **Render in the playground.** Prerequisite: `components_wj/vnode.wj` builds its tree through the Rust
    `vnode_ffi` registry, which the interpreter cannot call, so no component runs interpreted yet (`wj run --interpret`
    over `src/components_wj` stops at the first `VNode` method). The step starts with a pure-Windjammer `VNode` (a tree value
    with tag, attributes and children, rendered to HTML by a Windjammer function) that the compiled build can still map
@@ -59,7 +59,7 @@ Each step has a measurable exit, and a kill criterion where one applies.
    counter example increments in the playground without the Rust core.
 5. **One tree, two engines.** Run the same component program interpreted in the browser (instant edit-run) and
    compiled into the wasm bundle (small, fast), selected by a flag. Exit: the counter at under 400 KB brotli compiled,
-   and a hot edit in under a second interpreted. Kill criterion: if the interpreted path needs a fork of the
+   and a hot edit in under a second interpreted. Fallback: if the interpreted path needs a fork of the
    interpreter rather than host calls, stop and keep the compiled path only.
 6. **Ship it.** SSR plus hydration adoption (ADR-0005), accessibility checks per component, and published size numbers.
 

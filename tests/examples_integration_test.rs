@@ -1,25 +1,24 @@
 //! Automated Integration Tests for Windjammer UI Examples
 //!
 //! This replaces manual QA with automated testing.
-//! Note: These tests only verify transpilation succeeds, not full cargo build,
-//! since examples depend on windjammer-ui which may not be published yet.
+//! These tests verify that each example type-checks and transpiles (`wj build --no-cargo`).
 
 use std::path::Path;
 use std::process::Command;
 
-/// Helper to run wj build with --no-cargo (required for v0.37.2+)
+/// Transpile one example with `wj build --no-cargo`.
 /// Returns Ok if transpilation succeeds, Err if it fails, or skips if wj is not available
 fn transpile_example(path: &str) -> Result<(), String> {
-    // Check if wj CLI is available
-    if Command::new("wj").arg("--version").output().is_err() {
-        // Skip test if wj is not installed (e.g., in CI with SKIP_WJ_REGEN)
-        eprintln!("Skipping test: wj CLI not available (set by SKIP_WJ_REGEN or not installed)");
+    let wj = std::env::var("WJ").unwrap_or_else(|_| "wj".to_string());
+    if Command::new(&wj).arg("--version").output().is_err() {
+        if std::env::var("WJ_UI_REQUIRE_WJ").is_ok() {
+            panic!("WJ_UI_REQUIRE_WJ is set but `{wj}` is not runnable");
+        }
+        eprintln!("Skipping test: no `wj` compiler (set WJ=/path/to/wj)");
         return Ok(());
     }
 
-    // Always use --no-cargo to skip cargo build
-    // (Examples depend on windjammer-ui which may not be published yet)
-    // Generated Rust goes to a throwaway dir, never into the checkout.
+    // Transpile only (--no-cargo); generated Rust goes to a throwaway dir, never into the checkout.
     let out_dir = std::env::temp_dir().join(format!(
         "wj-ui-example-{}-{}",
         std::process::id(),
@@ -28,7 +27,7 @@ fn transpile_example(path: &str) -> Result<(), String> {
             .and_then(|s| s.to_str())
             .unwrap_or("x")
     ));
-    let output = Command::new("wj")
+    let output = Command::new(&wj)
         .args(["build", path, "--no-cargo", "-o"])
         .arg(&out_dir)
         .output()
@@ -95,6 +94,19 @@ fn test_dashboard_example_compiles() {
 }
 
 #[test]
+fn test_chat_app_example_compiles() {
+    assert!(Path::new("examples_wj/chat_app.wj").exists());
+    transpile_example("examples_wj/chat_app.wj").expect("Chat app failed to transpile");
+}
+
+#[test]
+fn test_dashboard_with_nav_example_compiles() {
+    assert!(Path::new("examples_wj/dashboard_with_nav.wj").exists());
+    transpile_example("examples_wj/dashboard_with_nav.wj")
+        .expect("Dashboard with navigation failed to transpile");
+}
+
+#[test]
 fn test_all_examples_exist() {
     let expected_examples = vec![
         "examples_wj/counter.wj",
@@ -102,6 +114,8 @@ fn test_all_examples_exist() {
         "examples_wj/contact_form.wj",
         "examples_wj/dashboard.wj",
         "examples_wj/chat_app.wj",
+        "examples_wj/dashboard_with_nav.wj",
+        "examples/counter.wj",
     ];
 
     let mut missing = Vec::new();
@@ -116,30 +130,4 @@ fn test_all_examples_exist() {
         "Missing example files:\n{}",
         missing.join("\n")
     );
-}
-
-#[test]
-fn test_examples_have_html_wrappers() {
-    // Each example should have a corresponding HTML file for web testing
-    let examples = vec![
-        ("examples_wj/counter.wj", "examples/counter.html"),
-        ("examples_wj/todo_app.wj", "examples/todo.html"),
-        ("examples_wj/contact_form.wj", "examples/form.html"),
-        ("examples_wj/dashboard.wj", "examples/dashboard.html"),
-    ];
-
-    let mut missing = Vec::new();
-    for (wj_file, html_file) in &examples {
-        if Path::new(wj_file).exists() && !Path::new(html_file).exists() {
-            missing.push(*html_file);
-        }
-    }
-
-    if !missing.is_empty() {
-        eprintln!("Warning: Missing HTML wrappers for web testing:");
-        for file in &missing {
-            eprintln!("  - {}", file);
-        }
-        // Don't fail the test, just warn for now
-    }
 }

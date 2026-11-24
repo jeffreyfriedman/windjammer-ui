@@ -1,0 +1,11 @@
+// Pinned signature surface of the wj_ui crate for these samples (ADR-0026).
+// `Node` is the crate's Copy node handle (opaque to the surface); its chained methods are checked by the crate.
+// `text_of` and `button_fn` take generic readables and closures, which a surface cannot declare yet, so the
+// samples reach them through the i32 `Signal` instantiation and a closure returning string.
+pub fn column() -> Node
+pub fn row() -> Node
+pub fn text(content: string) -> Node
+pub fn heading(content: string) -> Node
+pub fn button(label: string) -> Node
+pub fn text_of(source: Signal) -> Node
+pub fn button_fn(label: fn() -> string) -> Node
