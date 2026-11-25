@@ -131,7 +131,7 @@ windjammer-runtime = { version = "0.48", default-features = false }
 # Browserless wasm tests: run under node with `wasm-bindgen-test-runner` (see docs/TESTING_GUIDE.md).
 # The version must match the installed `wasm-bindgen` CLI (0.3.N <-> 0.2.(N+50)).
 [target.'cfg(target_arch = "wasm32")'.dev-dependencies]
-wasm-bindgen-test = "=0.3.58"
+wasm-bindgen-test = "=0.3.80"
 
 [[bench]]
 name = "signal_benchmarks"
